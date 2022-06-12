@@ -122,7 +122,7 @@ To render a `.Rmd` file, use the following syntax:
 render("filepath/filename.Rmd")
 ```
 
-# Look at variable names
+# Variable Names
 
 To look at the names of variables in a data frame, use the following syntax:
 
@@ -159,13 +159,58 @@ mydata[which(mydata$survived == 1),]
 
 # View data
 
+## All Data
+
 To view data, use the following syntax:
 
 ```{r, eval = FALSE}
 View(mydata)
 ```
 
-# Create new variables
+## First 6 Rows/Elements
+
+To view only the first six rows (if a data frame) or elements (if a vector), use the following syntax:
+
+```{r}
+head(mydata)
+head(mydata$age)
+```
+
+# Data Characteristics
+
+## Data Structure
+
+```{r}
+str(mydata)
+```
+
+## Data Dimensions
+
+Number of rows and columns:
+
+```{r}
+dim(mydata)
+```
+
+## Number of Elements
+
+```{r}
+length(mydata$age)
+```
+
+## Number of Missing Elements
+
+```{r}
+length(mydata$age[which(is.na(mydata$age))])
+```
+
+## Number of Non-Missing Elements
+
+```{r}
+length(na.omit(mydata$age))
+```
+
+# Create New Variables
 
 To create a new variable, use the following syntax:
 
@@ -179,7 +224,7 @@ Here is an example of creating a new variable:
 mydata$ID <- 1:nrow(mydata)
 ```
 
-# Create a data frame
+# Create a Data Frame
 
 Here is an example of creating a data frame:
 
@@ -192,13 +237,20 @@ mydata2 <- data.frame(
 mydata2
 ```
 
-# Recode variables
+# Recode Variables
 
 Here is an example of recoding a variable:
 
 ```{r}
-mydata$newVar[which(mydata$sex == "male")] <- 0
-mydata$newVar[which(mydata$sex == "female")] <- 1
+mydata$oldVar[which(mydata$sex == "male")] <- 0
+mydata$oldVar[which(mydata$sex == "female")] <- 1
+```
+
+# Rename Variables
+
+```{r}
+mydata <- mydata %>% 
+  rename(newVar = oldVar)
 ```
 
 # Merging/Joins
