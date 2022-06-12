@@ -137,7 +137,9 @@ bayesianRegularizedRegression <- brm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum +
                                      chains = 4,
                                      iter = 2000,
                                      seed = 52242)
+```
 
+```{r}
 summary(bayesianRegularizedRegression)
 ```
 
@@ -187,7 +189,9 @@ bayesianGeneralizedLinearRegression <- brm(countVariable ~ bpi_antisocialT1Sum +
                                            chains = 4,
                                            seed = 52242,
                                            iter = 2000)
+```
 
+```{r}
 summary(bayesianGeneralizedLinearRegression)
 ```
 
@@ -224,7 +228,9 @@ bayesianOrdinalRegression <- brm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anx
                                  chains = 4,
                                  seed = 52242,
                                  iter = 2000)
+```
 
+```{r}
 summary(bayesianOrdinalRegression)
 ```
 
@@ -237,7 +243,9 @@ bayesianCountRegression <- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxious
                                chains = 4,
                                seed = 52242,
                                iter = 2000)
+```
 
+```{r}
 summary(bayesianCountRegression)
 ```
 
@@ -262,7 +270,9 @@ bayesianLogisticRegression <- brm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepr
                                   chains = 4,
                                   seed = 52242,
                                   iter = 2000)
-                                       
+```
+
+```{r}
 summary(bayesianLogisticRegression)
 ```
 
@@ -367,7 +377,7 @@ hist(multipleRegressionModelBootstrapped)
 ## Generalized Regression
 
 ```{r}
-generalizedRegressionModelBootstrapped <- Boot(generalizedRegressionModel, R = 1000)
+generalizedRegressionModelBootstrapped <- Boot(multipleRegressionModelNoMissing, R = 1000)
 summary(generalizedRegressionModelBootstrapped)
 confint(generalizedRegressionModelBootstrapped, level = .95, type = "bca")
 hist(generalizedRegressionModelBootstrapped)
@@ -709,12 +719,10 @@ cor(mydata[,c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise
 ##### Tolerance
 
 The tolerance is an index of the influence of one independent variable on all other independent variables.
-With T < 0.2, there might be multicollinearity in the data and with T < 0.01, there certainly is multicollinearity.
 
 $$
 \text{tolerance} = 1/\text{VIF}
 $$
-
 
 T < 0.2: there might be multicollinearity in the data\
 T < 0.01: there certainly is multicollinarity in the data
@@ -784,13 +792,19 @@ ols_eigen_cindex(multipleRegressionModel)
 
 Useful if the outcome is strictly positive (or add a constant to outcome to make it strictly positive)
 
-lambda = -1: inverse transformation
-lambda = -0.5: 1/sqrt(Y)
-lambda = 0: log transformation
-lambda = 0.5: square root
-lambda = 0.333: cube root
-lambda = 1: no transformation
-lambda = 2: squared
+lambda = -1: inverse transformation\
+lambda = -0.5: 1/sqrt(Y)\
+lambda = 0: log transformation\
+lambda = 0.5: square root\
+lambda = 0.333: cube root\
+lambda = 1: no transformation\
+lambda = 2: squared\
+
+####### Raw distribution
+
+```{r}
+plot(density(na.omit(mydata$bpi_antisocialT2Sum)))
+```
 
 ####### Add constant to outcome to make it strictly positive
 
@@ -807,9 +821,17 @@ Consider rounding the power to a common value (square root = .5; cube root = .33
 ```{r}
 boxCox(strictlyPositiveDV)
 powerTransform(strictlyPositiveDV) 
-summary(transformedDV <- powerTransform(strictlyPositiveDV))
+transformedDV <- powerTransform(strictlyPositiveDV)
 
+summary(transformedDV)
+```
+
+####### Transform the DV
+
+```{r}
 mydata$bpi_antisocialT2SumTransformed <- bcPower(mydata$bpi_antisocialT2Sum + 1, coef(transformedDV))
+
+plot(density(na.omit(mydata$bpi_antisocialT2SumTransformed)))
 ```
 
 ####### Compare residuals from model with and without transformation
@@ -821,8 +843,6 @@ summary(modelWithoutTransformation <- lm(bpi_antisocialT2Sum + 1 ~ bpi_antisocia
                          data = mydata,
                          na.action = na.exclude))
 plot(density(na.omit(studres(modelWithoutTransformation))))
-
-
 ```
 
 ######## Model with transformation
@@ -837,16 +857,25 @@ plot(density(na.omit(studres(modelWithTransformation))))
 
 ####### Constructed Variable Test & Plot
 
+A significant *p*-value indicates a strong need to transform variable:
+
 ```{r}
 multipleRegressionModel_constructedVariable <- update(multipleRegressionModel, . ~ . + boxCoxVariable(bpi_antisocialT1Sum + 1))
-summary(multipleRegressionModel_constructedVariable)$coef["boxCoxVariable(bpi_antisocialT1Sum + 1)", , drop = FALSE] #significant p-value indicates strong need to transform variable
-avPlots(multipleRegressionModel_constructedVariable, "boxCoxVariable(bpi_antisocialT1Sum + 1)") #suggests need for transformation is spread through data, and not just dependent on a small fraction of observations
+summary(multipleRegressionModel_constructedVariable)$coef["boxCoxVariable(bpi_antisocialT1Sum + 1)", , drop = FALSE]
+```
+
+Plot allows us to see whether the need for transformation is spread through data or whether it is just dependent on a small fraction of observations:
+
+```{r}
+avPlots(multipleRegressionModel_constructedVariable, "boxCoxVariable(bpi_antisocialT1Sum + 1)")
 ```
 
 ####### Inverse Response Plot
 
+The black line is the best-fitting power transformation:
+
 ```{r}
-inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2)) #black line is best fitting power transformation
+inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2))
 ```
 
 ###### Yeo-Johnson Transformations
@@ -861,10 +890,20 @@ yjPower(DV, lambda)
 
 ###### Component-Plus-Residual Plots (Partial Residual Plots)
 
-```{r}
-crPlots(multipleRegressionModelNoMissing, order = 1) #linear
-crPlots(multipleRegressionModelNoMissing, order = 2) #quadratic
+Linear model:
 
+```{r}
+crPlots(multipleRegressionModelNoMissing, order = 1)
+```
+
+Quadratic model:
+
+```{r}
+crPlots(multipleRegressionModelNoMissing, order = 2)
+```
+
+
+```{r}
 multipleRegressionModel_quadratic <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + I(bpi_antisocialT1Sum^2) + bpi_anxiousDepressedSum,
                                         data = mydata,
                                         na.action = na.exclude)
@@ -963,22 +1002,20 @@ correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "b
 
 ####### Theil-Sen estimator
 
+The Theil-Sen single median estimator is robust to outliers; have to remove missing values first
+
 ```{r}
 mydata_subset <- na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")])[1:400,]
-mblm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum, dataframe = mydata_subset, repeated = FALSE) #Theil-Sen single median estimator, robust to outliers; have to remove missing values first
+mblm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum, dataframe = mydata_subset, repeated = FALSE)
 ```
 
 ###### Robust multiple regression
 
 Best when no outliers: MM-type regression estimator
 
-```{r}
-
-```
-
 ####### Robust linear regression
 
-Best:
+MM-type regression estimator (best):
 
 ```{r}
 lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
