@@ -1,0 +1,78 @@
+#https://orchid00.github.io/actions_sandbox/websites-using-pkgdown-bookdown-and-blogdown.html#deploy-blogdown
+# To Do:
+# 1. Create a personal access token (PAT) labeled `EMAIL`: https://github.com/settings/tokens; save the value in LastPass
+# 2. Create a secret labeled `EMAIL` in the repo (Settings -> Security -> Secrets -> Actions), and copy the PAT for `EMAIL` into the secret labeled `EMAIL`
+
+on:
+  push:
+     branches:
+       - main
+
+name: deploywebsite
+
+jobs:
+  rmarkdown:
+    name: Render-Website
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3 # update
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2 # update
+
+      - name: Session info
+        run: Rscript -e 'sessionInfo()'
+
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2 # update
+
+      - name: Install libcurl on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -y && sudo apt-get install -y libcurl4-openssl-dev
+
+      - name: Install package dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2 # update
+      
+      - name: Install remote packages
+        run: |
+         Rscript -e 'remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")'
+         Rscript -e "remotes::install_github('njtierney/naniar')"
+         Rscript -e "install.packages('rstan', repos = c('https://mc-stan.org/r-packages/', getOption('repos')))"
+
+      - name: Render blog
+        run: Rscript -e 'rmarkdown::render_site()'
+
+      - uses: actions/upload-artifact@v3 # update
+        with:
+          name: site
+          path: _site/
+
+# Need to first create an empty gh-pages branch
+# see https://pkgdown.r-lib.org/reference/deploy_site_github.html
+# and also add secrets for a GH_PAT and EMAIL to the repository
+# gh-action from Cecilapp/GitHub-Pages-deploy
+  checkout-and-deploy:
+   runs-on: ubuntu-latest
+   needs: rmarkdown
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v3 # update
+
+     - name: Download artifact
+       uses: actions/download-artifact@v3 # update
+       with:
+         # Artifact name
+         name: site # optional
+         # Destination path
+         path: _site # optional
+
+     - name: Deploy to GitHub Pages
+       uses: Cecilapp/GitHub-Pages-deploy@v3
+       env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+          build_dir: _site/                     # "_site/" by default
+          email: ${{ secrets.EMAIL }}  # must be a verified email
