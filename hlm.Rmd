@@ -9,6 +9,10 @@ knitr::opts_chunk$set(echo = TRUE,
                       class.source = "fold-show")
 ```
 
+To do:
+
+- Add data file and examples
+
 # Preamble
 
 ## Install Libraries
@@ -78,8 +82,8 @@ http://glmm.wikidot.com/faq
 
 ```{r}
 glmer(t_ext ~ m_ext + age + (age | tcid),
-      family=poisson(link = "log"),
-      data = CDP_tall,
+      family = poisson(link = "log"),
+      data = mydata,
       na.action = na.exclude)
 ```
 
@@ -89,7 +93,7 @@ glmer(t_ext ~ m_ext + age + (age | tcid),
 glmmPQL(t_ext ~ m_ext + age,
         random = ~1 + age|tcid,
         family = poisson(link = "log"),
-        data = CDP_tall)
+        data = mydata)
 ```
 
 ## `MCMCglmm`
@@ -98,7 +102,7 @@ glmmPQL(t_ext ~ m_ext + age,
 MCMCglmm(t_ext ~ m_ext + age,
          random = ~ us(age):tcid,
          family = "poisson",
-         data = na.omit(CDP_tall[,c("tcid","t_ext","m_ext","age")]))
+         data = na.omit(mydata[,c("tcid","t_ext","m_ext","age")]))
 ```
 
 # Nonlinear Mixed Models {#nonlinear}
