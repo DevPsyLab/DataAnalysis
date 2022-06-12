@@ -34,7 +34,6 @@ library("mgcv")
 library("AER")
 library("foreign")
 library("olsrr")
-library("asbio")
 library("quantreg")
 library("mblm")
 library("effects")
@@ -1031,8 +1030,7 @@ rq(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
 http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html
 
 ```{r}
-qqPlot(multipleRegressionModel, main="QQ Plot", id.n = 2)
-qqPlot(multipleRegressionModel, main="QQ Plot", id.n = "noteworthy")
+qqPlot(multipleRegressionModel, main = "QQ Plot", id = TRUE)
 
 qqnorm(resid(multipleRegressionModel))
 qqnorm(resid(rmsMultipleRegressionModel))
