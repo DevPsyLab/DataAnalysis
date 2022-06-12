@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Hierarchical Linear Modeling</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TYR0QMREEW');
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="includes/custom.css" type="text/css" />
+<link rel="stylesheet" href="font/css/roboto.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Analysis Guides for the Developmental Psychopathology Lab</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Guides</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://devpsylab.github.io/LabWiki">Lab Wiki</a>
+</li>
+<li>
+  <a href="https://developmental-psychopathology.lab.uiowa.edu">Lab Website</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Hierarchical Linear Modeling</h1>
+
+</div>
+
+
+<div id="preamble" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Preamble</h1>
+<div id="install-libraries" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Install Libraries</h2>
+<pre class="r"><code>#install.packages(&quot;remotes&quot;)
+#remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
+</div>
+<div id="load-libraries" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Load Libraries</h2>
+<pre class="r"><code>library(&quot;lme4&quot;)
+library(&quot;nlme&quot;)</code></pre>
+</div>
+</div>
+<div id="terms" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Terms</h1>
+<p>These models go by a variety of different terms:</p>
+<ul>
+<li>hierarchical linear model (HLM)</li>
+<li>multilevel model (MLM)</li>
+<li>mixed effects model</li>
+<li>mixed model</li>
+</ul>
+</div>
+<div id="overview" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Overview</h1>
+<p><a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels</a></p>
+</div>
+<div id="estimator-ml-or-reml" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Estimator: ML or REML</h1>
+<p>For small sample sizes, restricted maximum likelihood (REML) is preferred over maximum likelihood (ML). ML preferred when there is a small number (&lt; 4) of fixed effects; REML is preferred when there are more (&gt; 4) fixed effects. The greater the number of fixed effects, the greater the difference between REML and ML estimates. Likelihood ratio (LR) tests for REML require exactly the same fixed effects specification in both models. So, to compare models with different fixed effects with an LR test (to determine whether to include a particular fixed effect), ML must be used. In contrast to the maximum likelihood estimation, REML can produce unbiased estimates of variance and covariance parameters, variance estimates are larger in REML than ML. To compare whether an effect should be fixed or random, use REML. To simultaneously compare fixed and random effects, use ML.</p>
+</div>
+<div id="linear" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Linear Mixed Models</h1>
+<div id="lme4" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> <code>lme4</code></h2>
+<pre class="r fold-show"><code>lmer(t_ext ~ m_ext + age + (age | tcid),
+     data = mydata,
+     REML = FALSE, #for ML
+     na.action = na.exclude)</code></pre>
+<pre><code>Error: bad &#39;data&#39;: object &#39;mydata&#39; not found</code></pre>
+</div>
+<div id="nlme" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> <code>nlme</code></h2>
+<pre class="r fold-show"><code>lme(t_ext ~ m_ext + age,
+    random= ~1 + age|tcid,
+    data = mydata,
+    method = &quot;ML&quot;,
+    na.action = na.exclude)</code></pre>
+<pre><code>Error in is.data.frame(data): object &#39;mydata&#39; not found</code></pre>
+</div>
+</div>
+<div id="generalized" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Generalized Linear Mixed Models</h1>
+<p><a href="http://glmm.wikidot.com/faq" class="uri">http://glmm.wikidot.com/faq</a></p>
+<div id="lmer" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> <code>lmer</code></h2>
+<pre class="r fold-show"><code>glmer(t_ext ~ m_ext + age + (age | tcid),
+      family=poisson(link = &quot;log&quot;),
+      data = CDP_tall,
+      na.action = na.exclude)</code></pre>
+<pre><code>Error: bad &#39;data&#39;: object &#39;CDP_tall&#39; not found</code></pre>
+</div>
+<div id="mass" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> <code>MASS</code></h2>
+<pre class="r fold-show"><code>glmmPQL(t_ext ~ m_ext + age,
+        random = ~1 + age|tcid,
+        family = poisson(link = &quot;log&quot;),
+        data = CDP_tall)</code></pre>
+<pre><code>Error in glmmPQL(t_ext ~ m_ext + age, random = ~1 + age | tcid, family = poisson(link = &quot;log&quot;), : could not find function &quot;glmmPQL&quot;</code></pre>
+</div>
+<div id="mcmcglmm" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> <code>MCMCglmm</code></h2>
+<pre class="r fold-show"><code>MCMCglmm(t_ext ~ m_ext + age,
+         random = ~ us(age):tcid,
+         family = &quot;poisson&quot;,
+         data = na.omit(CDP_tall[,c(&quot;tcid&quot;,&quot;t_ext&quot;,&quot;m_ext&quot;,&quot;age&quot;)]))</code></pre>
+<pre><code>Error in MCMCglmm(t_ext ~ m_ext + age, random = ~us(age):tcid, family = &quot;poisson&quot;, : could not find function &quot;MCMCglmm&quot;</code></pre>
+</div>
+</div>
+<div id="nonlinear" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Nonlinear Mixed Models</h1>
+<pre class="r fold-show"><code>nlme(height ~ SSasymp(age, Asym, R0, lrc),
+     data = Loblolly,
+     fixed = Asym + R0 + lrc ~ 1,
+     random = Asym ~ 1,
+     start = c(Asym = 103, R0 = -8.5, lrc = -3.3))</code></pre>
+<pre><code>Nonlinear mixed-effects model fit by maximum likelihood
+  Model: height ~ SSasymp(age, Asym, R0, lrc) 
+  Data: Loblolly 
+  Log-likelihood: -114.7428
+  Fixed: Asym + R0 + lrc ~ 1 
+      Asym         R0        lrc 
+101.449600  -8.627331  -3.233751 
+
+Random effects:
+ Formula: Asym ~ 1 | Seed
+            Asym  Residual
+StdDev: 3.650642 0.7188625
+
+Number of Observations: 84
+Number of Groups: 14 </code></pre>
+</div>
+<div id="robust-mixed-models" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Robust Mixed Models</h1>
+<p>To evaluate the extent to which a finding could driven by outliers, this could be done in a number of different ways, such as:</p>
+<ul>
+<li>identifying and excluding influential observations based on DFBETAS or Cook’s distance (Nieuwenhuis, Grotenhuis, &amp; Pelzer, 2012)</li>
+<li>fitting mixed models using rank-based estimation (Bilgic &amp; Susmann, 2013; Finch, 2017) or robust estimating equations (Koller, 2016)</li>
+<li>estimating robust standard errors using a sandwich estimator (Wang &amp; Merkle, 2018)</li>
+</ul>
+</div>
+<div id="assumptions" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Assumptions</h1>
+<p>The within-group errors:</p>
+<ol style="list-style-type: decimal">
+<li>are independent</li>
+<li>are identically normally distributed</li>
+<li>have mean zero and variance sigma-squared</li>
+<li>are independent of the random effects</li>
+</ol>
+<p>The random effects:</p>
+<ol start="5" style="list-style-type: decimal">
+<li>are normally distributed</li>
+<li>have mean zero and covariance matrix Psi (not depending on the group)</li>
+<li>are independent for different groups</li>
+</ol>
+</div>
+<div id="examining-model-assumptions" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Examining Model Assumptions</h1>
+<div id="resources" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Resources</h2>
+<p>Pinheiro and Bates (2000) book (p. 174, section 4.3.1)</p>
+<p><a href="https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r" class="uri">https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r</a></p>
+</div>
+<div id="qq-plots" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> QQ Plots</h2>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModel, ~ranef(., level = 1)) #Multilevel model: make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModel, ~ranef(., level = 1)): object &#39;multilevelRegressionModel&#39; not found</code></pre>
+</div>
+<div id="pp-plots" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> PP Plots</h2>
+<pre class="r fold-show"><code>ppPlot(multilevelRegressionModel)</code></pre>
+<pre><code>Error in ppPlot(multilevelRegressionModel): could not find function &quot;ppPlot&quot;</code></pre>
+</div>
+<div id="qq-plot-of-residuals" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> QQ Plot of residuals</h2>
+<pre class="r fold-show"><code>qqnorm(resid(multilevelRegressionModel))</code></pre>
+<pre><code>Error in resid(multilevelRegressionModel): object &#39;multilevelRegressionModel&#39; not found</code></pre>
+</div>
+<div id="plot-residuals" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Plot residuals</h2>
+<pre class="r fold-show"><code>plot(multilevelRegressionModel)</code></pre>
+<pre><code>Error in plot(multilevelRegressionModel): object &#39;multilevelRegressionModel&#39; not found</code></pre>
+</div>
+<div id="plot-residuals-by-group-in-the-example-below-level-2-represents-the-individual" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Plot residuals by group (in the example below, level 2 represents the individual)</h2>
+<pre class="r fold-show"><code>plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0)</code></pre>
+<pre><code>Error in plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0): object &#39;multilevelRegressionModel&#39; not found</code></pre>
+</div>
+<div id="plot-residuals-by-levels-of-a-predictor" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Plot residuals by levels of a predictor</h2>
+<pre class="r fold-show"><code>plot(multilevelRegressionModel, resid(., type = &quot;p&quot;) ~ fitted(.) | female) #type=&quot;p&quot; specifies standardized residuals</code></pre>
+<pre><code>Error in plot(multilevelRegressionModel, resid(., type = &quot;p&quot;) ~ fitted(.) | : object &#39;multilevelRegressionModel&#39; not found</code></pre>
+</div>
+<div id="can-model-heteroscedasticity-of-the-within-group-error-with-the-weights-argument" class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> Can model heteroscedasticity of the within-group error with the weights argument</h2>
+<pre class="r fold-show"><code>multilevelRegressionModelVarStructure &lt;- lme(t_ext ~ m_ext + age + female,
+                                             random = ~1 + age|tcid,
+                                             weights = varIdent(form = ~ 1 | female),
+                                             method = &quot;ML&quot;,
+                                             data = mydata,
+                                             na.action = na.exclude)</code></pre>
+<pre><code>Error in is.data.frame(data): object &#39;mydata&#39; not found</code></pre>
+</div>
+<div id="plot-observed-and-fitted-values" class="section level2" number="10.9">
+<h2><span class="header-section-number">10.9</span> Plot observed and fitted values</h2>
+<pre class="r fold-show"><code>plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.))</code></pre>
+<pre><code>Error in plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+</div>
+<div id="plot-qq-plot-of-residuals-by-levels-of-a-predictor" class="section level2" number="10.10">
+<h2><span class="header-section-number">10.10</span> Plot QQ plot of residuals by levels of a predictor</h2>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ resid(.) | female)</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~resid(.) | female): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ resid(.))</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~resid(.)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+</div>
+<div id="qq-plot-of-random-effects" class="section level2" number="10.11">
+<h2><span class="header-section-number">10.11</span> QQ plot of random effects</h2>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)) #make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0))</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+</div>
+<div id="qq-plot-of-random-effects-by-levels-of-a-predictor" class="section level2" number="10.12">
+<h2><span class="header-section-number">10.12</span> QQ plot of random effects by levels of a predictor</h2>
+<pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)</code></pre>
+<pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | : object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+</div>
+<div id="pairs-plot" class="section level2" number="10.13">
+<h2><span class="header-section-number">10.13</span> Pairs plot</h2>
+<pre class="r fold-show"><code>pairs(multilevelRegressionModelVarStructure)</code></pre>
+<pre><code>Error in pairs(multilevelRegressionModelVarStructure): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+<pre class="r fold-show"><code>pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)</code></pre>
+<pre><code>Error in pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | : object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
+</div>
+<div id="variance-functions-for-modeling-heteroscedasticity" class="section level2" number="10.14">
+<h2><span class="header-section-number">10.14</span> Variance functions for modeling heteroscedasticity</h2>
+<ul>
+<li><code>varFixed</code>: fixed variance</li>
+<li><code>varIdent</code>: different variances per stratum</li>
+<li><code>varPower</code>: power of covariate</li>
+<li><code>varExp</code>: exponential of covariate</li>
+<li><code>varConstPower</code>: constant plus power of covariate</li>
+<li><code>varComb</code>: combination of variance functions</li>
+</ul>
+</div>
+<div id="correlation-structures-for-modeling-dependence" class="section level2" number="10.15">
+<h2><span class="header-section-number">10.15</span> Correlation structures for modeling dependence</h2>
+<ul>
+<li><code>corCompSymm</code>: compound symmetry</li>
+<li><code>corSymm</code>: general</li>
+<li><code>corAR1</code>: autoregressive of order 1</li>
+<li><code>corCAR1</code>: continuous-time AR(1)</li>
+<li><code>corARMA</code>: autoregressive-moving average</li>
+<li><code>corExp</code>: exponential</li>
+<li><code>corGaus</code>: Gaussian</li>
+<li><code>corLin</code>: linear</li>
+<li><code>corRatio</code>: rational quadratic</li>
+<li><code>corSpher</code>: spherical</li>
+</ul>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGllcmFyY2hpY2FsIExpbmVhciBNb2RlbGluZyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBQcmVhbWJsZQoKIyMgSW5zdGFsbCBMaWJyYXJpZXMKCmBgYHtyfQojaW5zdGFsbC5wYWNrYWdlcygicmVtb3RlcyIpCiNyZW1vdGVzOjppbnN0YWxsX2dpdCgiaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL3BldGVyc2VubGFiLmdpdCIpCmBgYAoKIyMgTG9hZCBMaWJyYXJpZXMKCmBgYHtyLCBtZXNzYWdlID0gRkFMU0UsIHdhcm5pbmcgPSBGQUxTRX0KbGlicmFyeSgibG1lNCIpCmxpYnJhcnkoIm5sbWUiKQpgYGAKCiMgVGVybXMKClRoZXNlIG1vZGVscyBnbyBieSBhIHZhcmlldHkgb2YgZGlmZmVyZW50IHRlcm1zOgoKLSBoaWVyYXJjaGljYWwgbGluZWFyIG1vZGVsIChITE0pCi0gbXVsdGlsZXZlbCBtb2RlbCAoTUxNKQotIG1peGVkIGVmZmVjdHMgbW9kZWwKLSBtaXhlZCBtb2RlbAoKIyBPdmVydmlldwoKaHR0cHM6Ly9pc2FhY3RwZXRlcnNlbi5naXRodWIuaW8vUHJpbmNpcGxlcy1Qc3ljaG9sb2dpY2FsLUFzc2Vzc21lbnQvcmVsaWFiaWxpdHkuaHRtbCNtaXhlZE1vZGVscwoKIyBFc3RpbWF0b3I6IE1MIG9yIFJFTUwKCkZvciBzbWFsbCBzYW1wbGUgc2l6ZXMsIHJlc3RyaWN0ZWQgbWF4aW11bSBsaWtlbGlob29kIChSRU1MKSBpcyBwcmVmZXJyZWQgb3ZlciBtYXhpbXVtIGxpa2VsaWhvb2QgKE1MKS4KTUwgcHJlZmVycmVkIHdoZW4gdGhlcmUgaXMgYSBzbWFsbCBudW1iZXIgKDwgNCkgb2YgZml4ZWQgZWZmZWN0czsgUkVNTCBpcyBwcmVmZXJyZWQgd2hlbiB0aGVyZSBhcmUgbW9yZSAoPiA0KSBmaXhlZCBlZmZlY3RzLgpUaGUgZ3JlYXRlciB0aGUgbnVtYmVyIG9mIGZpeGVkIGVmZmVjdHMsIHRoZSBncmVhdGVyIHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gUkVNTCBhbmQgTUwgZXN0aW1hdGVzLgpMaWtlbGlob29kIHJhdGlvIChMUikgdGVzdHMgZm9yIFJFTUwgcmVxdWlyZSBleGFjdGx5IHRoZSBzYW1lIGZpeGVkIGVmZmVjdHMgc3BlY2lmaWNhdGlvbiBpbiBib3RoIG1vZGVscy4KU28sIHRvIGNvbXBhcmUgbW9kZWxzIHdpdGggZGlmZmVyZW50IGZpeGVkIGVmZmVjdHMgd2l0aCBhbiBMUiB0ZXN0ICh0byBkZXRlcm1pbmUgd2hldGhlciB0byBpbmNsdWRlIGEgcGFydGljdWxhciBmaXhlZCBlZmZlY3QpLCBNTCBtdXN0IGJlIHVzZWQuCkluIGNvbnRyYXN0IHRvIHRoZSBtYXhpbXVtIGxpa2VsaWhvb2QgZXN0aW1hdGlvbiwgUkVNTCBjYW4gcHJvZHVjZSB1bmJpYXNlZCBlc3RpbWF0ZXMgb2YgdmFyaWFuY2UgYW5kIGNvdmFyaWFuY2UgcGFyYW1ldGVycywgdmFyaWFuY2UgZXN0aW1hdGVzIGFyZSBsYXJnZXIgaW4gUkVNTCB0aGFuIE1MLgpUbyBjb21wYXJlIHdoZXRoZXIgYW4gZWZmZWN0IHNob3VsZCBiZSBmaXhlZCBvciByYW5kb20sIHVzZSBSRU1MLgpUbyBzaW11bHRhbmVvdXNseSBjb21wYXJlIGZpeGVkIGFuZCByYW5kb20gZWZmZWN0cywgdXNlIE1MLgoKIyBMaW5lYXIgTWl4ZWQgTW9kZWxzIHsjbGluZWFyfQoKIyMgYGxtZTRgCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CmxtZXIodF9leHQgfiBtX2V4dCArIGFnZSArIChhZ2UgfCB0Y2lkKSwKICAgICBkYXRhID0gbXlkYXRhLAogICAgIFJFTUwgPSBGQUxTRSwgI2ZvciBNTAogICAgIG5hLmFjdGlvbiA9IG5hLmV4Y2x1ZGUpCmBgYAoKIyMgYG5sbWVgCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CmxtZSh0X2V4dCB+IG1fZXh0ICsgYWdlLAogICAgcmFuZG9tPSB+MSArIGFnZXx0Y2lkLAogICAgZGF0YSA9IG15ZGF0YSwKICAgIG1ldGhvZCA9ICJNTCIsCiAgICBuYS5hY3Rpb24gPSBuYS5leGNsdWRlKQpgYGAKCiMgR2VuZXJhbGl6ZWQgTGluZWFyIE1peGVkIE1vZGVscyB7I2dlbmVyYWxpemVkfQoKaHR0cDovL2dsbW0ud2lraWRvdC5jb20vZmFxCgojIyBgbG1lcmAKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93In0KZ2xtZXIodF9leHQgfiBtX2V4dCArIGFnZSArIChhZ2UgfCB0Y2lkKSwKICAgICAgZmFtaWx5PXBvaXNzb24obGluayA9ICJsb2ciKSwKICAgICAgZGF0YSA9IENEUF90YWxsLAogICAgICBuYS5hY3Rpb24gPSBuYS5leGNsdWRlKQpgYGAKCiMjIGBNQVNTYAoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpnbG1tUFFMKHRfZXh0IH4gbV9leHQgKyBhZ2UsCiAgICAgICAgcmFuZG9tID0gfjEgKyBhZ2V8dGNpZCwKICAgICAgICBmYW1pbHkgPSBwb2lzc29uKGxpbmsgPSAibG9nIiksCiAgICAgICAgZGF0YSA9IENEUF90YWxsKQpgYGAKCiMjIGBNQ01DZ2xtbWAKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93In0KTUNNQ2dsbW0odF9leHQgfiBtX2V4dCArIGFnZSwKICAgICAgICAgcmFuZG9tID0gfiB1cyhhZ2UpOnRjaWQsCiAgICAgICAgIGZhbWlseSA9ICJwb2lzc29uIiwKICAgICAgICAgZGF0YSA9IG5hLm9taXQoQ0RQX3RhbGxbLGMoInRjaWQiLCJ0X2V4dCIsIm1fZXh0IiwiYWdlIildKSkKYGBgCgojIE5vbmxpbmVhciBNaXhlZCBNb2RlbHMgeyNub25saW5lYXJ9CgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9Cm5sbWUoaGVpZ2h0IH4gU1Nhc3ltcChhZ2UsIEFzeW0sIFIwLCBscmMpLAogICAgIGRhdGEgPSBMb2Jsb2xseSwKICAgICBmaXhlZCA9IEFzeW0gKyBSMCArIGxyYyB+IDEsCiAgICAgcmFuZG9tID0gQXN5bSB+IDEsCiAgICAgc3RhcnQgPSBjKEFzeW0gPSAxMDMsIFIwID0gLTguNSwgbHJjID0gLTMuMykpCmBgYAoKIyBSb2J1c3QgTWl4ZWQgTW9kZWxzCgpUbyBldmFsdWF0ZSB0aGUgZXh0ZW50IHRvIHdoaWNoIGEgZmluZGluZyBjb3VsZCBkcml2ZW4gYnkgb3V0bGllcnMsIHRoaXMgY291bGQgYmUgZG9uZSBpbiBhIG51bWJlciBvZiBkaWZmZXJlbnQgd2F5cywgc3VjaCBhczoKCi0gaWRlbnRpZnlpbmcgYW5kIGV4Y2x1ZGluZyBpbmZsdWVudGlhbCBvYnNlcnZhdGlvbnMgYmFzZWQgb24gREZCRVRBUyBvciBDb29r4oCZcyBkaXN0YW5jZSAoTmlldXdlbmh1aXMsIEdyb3Rlbmh1aXMsICYgUGVsemVyLCAyMDEyKQotIGZpdHRpbmcgbWl4ZWQgbW9kZWxzIHVzaW5nIHJhbmstYmFzZWQgZXN0aW1hdGlvbiAoQmlsZ2ljICYgU3VzbWFubiwgMjAxMzsgRmluY2gsIDIwMTcpIG9yIHJvYnVzdCBlc3RpbWF0aW5nIGVxdWF0aW9ucyAoS29sbGVyLCAyMDE2KQotIGVzdGltYXRpbmcgcm9idXN0IHN0YW5kYXJkIGVycm9ycyB1c2luZyBhIHNhbmR3aWNoIGVzdGltYXRvciAoV2FuZyAmIE1lcmtsZSwgMjAxOCkKCiMgQXNzdW1wdGlvbnMKClRoZSB3aXRoaW4tZ3JvdXAgZXJyb3JzOgoKMS4gYXJlIGluZGVwZW5kZW50CjIuIGFyZSBpZGVudGljYWxseSBub3JtYWxseSBkaXN0cmlidXRlZAozLiBoYXZlIG1lYW4gemVybyBhbmQgdmFyaWFuY2Ugc2lnbWEtc3F1YXJlZAo0LiBhcmUgaW5kZXBlbmRlbnQgb2YgdGhlIHJhbmRvbSBlZmZlY3RzCgpUaGUgcmFuZG9tIGVmZmVjdHM6Cgo1LiBhcmUgbm9ybWFsbHkgZGlzdHJpYnV0ZWQKNi4gaGF2ZSBtZWFuIHplcm8gYW5kIGNvdmFyaWFuY2UgbWF0cml4IFBzaSAobm90IGRlcGVuZGluZyBvbiB0aGUgZ3JvdXApCjcuIGFyZSBpbmRlcGVuZGVudCBmb3IgZGlmZmVyZW50IGdyb3VwcwoKIyBFeGFtaW5pbmcgTW9kZWwgQXNzdW1wdGlvbnMKCiMjIFJlc291cmNlcwoKUGluaGVpcm8gYW5kIEJhdGVzICgyMDAwKSBib29rIChwLiAxNzQsIHNlY3Rpb24gNC4zLjEpCgpodHRwczovL3N0YXRzLnN0YWNrZXhjaGFuZ2UuY29tL3F1ZXN0aW9ucy83Nzg5MS9jaGVja2luZy1hc3N1bXB0aW9ucy1sbWVyLWxtZS1taXhlZC1tb2RlbHMtaW4tcgoKIyMgUVEgUGxvdHMKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93In0KcXFub3JtKG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWwsIH5yYW5lZiguLCBsZXZlbCA9IDEpKSAjTXVsdGlsZXZlbCBtb2RlbDogbWFrZSBRUSBwbG90cyBmb3IgZWFjaCBsZXZlbCBvZiB0aGUgcmFuZG9tIGVmZmVjdHMuIFZhcnkgdGhlIGxldmVsIGZyb20gMCwgMSwgdG8gMiBzbyB0aGF0IHlvdSBjYW4gY2hlY2sgdGhlIGJldHdlZW4tIGFuZCB3aXRoaW4tc3ViamVjdCByZXNpZHVhbHMKYGBgCgojIyBQUCBQbG90cwoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpwcFBsb3QobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbCkKYGBgCgojIyBRUSBQbG90IG9mIHJlc2lkdWFscwoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpxcW5vcm0ocmVzaWQobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbCkpCmBgYAoKIyMgUGxvdCByZXNpZHVhbHMKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93In0KcGxvdChtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsKQpgYGAKCiMjIFBsb3QgcmVzaWR1YWxzIGJ5IGdyb3VwIChpbiB0aGUgZXhhbXBsZSBiZWxvdywgbGV2ZWwgMiByZXByZXNlbnRzIHRoZSBpbmRpdmlkdWFsKQoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpwbG90KG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWwsIGFzLmZhY3Rvcih0Y2lkKSB+IHJlc2lkKC4pLCBhYmxpbmUgPSAwKQpgYGAKCiMjIFBsb3QgcmVzaWR1YWxzIGJ5IGxldmVscyBvZiBhIHByZWRpY3RvcgoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpwbG90KG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWwsIHJlc2lkKC4sIHR5cGUgPSAicCIpIH4gZml0dGVkKC4pIHwgZmVtYWxlKSAjdHlwZT0icCIgc3BlY2lmaWVzIHN0YW5kYXJkaXplZCByZXNpZHVhbHMKYGBgCgojIyBDYW4gbW9kZWwgaGV0ZXJvc2NlZGFzdGljaXR5IG9mIHRoZSB3aXRoaW4tZ3JvdXAgZXJyb3Igd2l0aCB0aGUgd2VpZ2h0cyBhcmd1bWVudAoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQptdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlIDwtIGxtZSh0X2V4dCB+IG1fZXh0ICsgYWdlICsgZmVtYWxlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByYW5kb20gPSB+MSArIGFnZXx0Y2lkLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3ZWlnaHRzID0gdmFySWRlbnQoZm9ybSA9IH4gMSB8IGZlbWFsZSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1ldGhvZCA9ICJNTCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRhdGEgPSBteWRhdGEsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hLmFjdGlvbiA9IG5hLmV4Y2x1ZGUpCmBgYAoKIyMgUGxvdCBvYnNlcnZlZCBhbmQgZml0dGVkIHZhbHVlcwoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3cifQpwbG90KG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUsIHRfZXh0IH4gZml0dGVkKC4pKQpgYGAKCiMjIFBsb3QgUVEgcGxvdCBvZiByZXNpZHVhbHMgYnkgbGV2ZWxzIG9mIGEgcHJlZGljdG9yCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+IHJlc2lkKC4pIHwgZmVtYWxlKQpxcW5vcm0obXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSwgfiByZXNpZCguKSkKYGBgCgojIyBRUSBwbG90IG9mIHJhbmRvbSBlZmZlY3RzCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+cmFuZWYoLiwgbGV2ZWwgPSAxKSkgI21ha2UgUVEgcGxvdHMgZm9yIGVhY2ggbGV2ZWwgb2YgdGhlIHJhbmRvbSBlZmZlY3RzLiBWYXJ5IHRoZSBsZXZlbCBmcm9tIDAsIDEsIHRvIDIgc28gdGhhdCB5b3UgY2FuIGNoZWNrIHRoZSBiZXR3ZWVuLSBhbmQgd2l0aGluLXN1YmplY3QgcmVzaWR1YWxzCnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+cmFuZWYoLiwgbGV2ZWwgPSAwKSkKcXFub3JtKG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUsIH5yYW5lZiguLCBsZXZlbCA9IDIpKQpgYGAKCiMjIFFRIHBsb3Qgb2YgcmFuZG9tIGVmZmVjdHMgYnkgbGV2ZWxzIG9mIGEgcHJlZGljdG9yCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+cmFuZWYoLiwgbGV2ZWwgPSAxKSB8IGZlbWFsZSkKYGBgCgojIyBQYWlycyBwbG90CgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyJ9CnBhaXJzKG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUpCnBhaXJzKG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUsIH5yYW5lZiguLCBsZXZlbCA9IDEpIHwgZmVtYWxlKQpgYGAKCiMjIFZhcmlhbmNlIGZ1bmN0aW9ucyBmb3IgbW9kZWxpbmcgaGV0ZXJvc2NlZGFzdGljaXR5CgotIGB2YXJGaXhlZGA6IGZpeGVkIHZhcmlhbmNlCi0gYHZhcklkZW50YDogZGlmZmVyZW50IHZhcmlhbmNlcyBwZXIgc3RyYXR1bQotIGB2YXJQb3dlcmA6IHBvd2VyIG9mIGNvdmFyaWF0ZQotIGB2YXJFeHBgOiBleHBvbmVudGlhbCBvZiBjb3ZhcmlhdGUKLSBgdmFyQ29uc3RQb3dlcmA6IGNvbnN0YW50IHBsdXMgcG93ZXIgb2YgY292YXJpYXRlCi0gYHZhckNvbWJgOiBjb21iaW5hdGlvbiBvZiB2YXJpYW5jZSBmdW5jdGlvbnMKCiMjIENvcnJlbGF0aW9uIHN0cnVjdHVyZXMgZm9yIG1vZGVsaW5nIGRlcGVuZGVuY2UKCi0gYGNvckNvbXBTeW1tYDogY29tcG91bmQgc3ltbWV0cnkKLSBgY29yU3ltbWA6IGdlbmVyYWwKLSBgY29yQVIxYDogYXV0b3JlZ3Jlc3NpdmUgb2Ygb3JkZXIgMQotIGBjb3JDQVIxYDogY29udGludW91cy10aW1lIEFSKDEpCi0gYGNvckFSTUFgOiBhdXRvcmVncmVzc2l2ZS1tb3ZpbmcgYXZlcmFnZQotIGBjb3JFeHBgOiBleHBvbmVudGlhbAotIGBjb3JHYXVzYDogR2F1c3NpYW4KLSBgY29yTGluYDogbGluZWFyCi0gYGNvclJhdGlvYDogcmF0aW9uYWwgcXVhZHJhdGljCi0gYGNvclNwaGVyYDogc3BoZXJpY2FsCg==</div>
+<script type="text/javascript" src="includes/external-links.js"></script>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://github.com/DevPsyLab" target="_blank" class="fa fa-github fa-fw fa-3x"></a>
+    <a href="https://twitter.com/devpsylab" target="_blank" class="fa fa-twitter fa-fw fa-3x"></a>
+    <a href="https://www.facebook.com/DevPsyLab" target="_blank" class="fa fa-facebook fa-fw fa-3x"></a>
+	<a href="https://www.instagram.com/dev_psy_lab" target="_blank" class="fa fa-instagram fa-fw fa-3x"></a>
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("hlm.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

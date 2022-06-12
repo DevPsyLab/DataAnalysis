@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Markdown</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TYR0QMREEW');
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="includes/custom.css" type="text/css" />
+<link rel="stylesheet" href="font/css/roboto.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Analysis Guides for the Developmental Psychopathology Lab</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Guides</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://devpsylab.github.io/LabWiki">Lab Wiki</a>
+</li>
+<li>
+  <a href="https://developmental-psychopathology.lab.uiowa.edu">Lab Website</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Markdown</h1>
+
+</div>
+
+
+<div id="r-markdown" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="markdown"><code>```{r}
+summary(cars)
+```</code></pre>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>     speed           dist       
+ Min.   : 4.0   Min.   :  2.00  
+ 1st Qu.:12.0   1st Qu.: 26.00  
+ Median :15.0   Median : 36.00  
+ Mean   :15.4   Mean   : 42.98  
+ 3rd Qu.:19.0   3rd Qu.: 56.00  
+ Max.   :25.0   Max.   :120.00  </code></pre>
+</div>
+<div id="best-practices" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Best Practices</h1>
+<ul>
+<li><strong>Use a new line for every sentence.</strong> This helps with version control—individually changed sentences will be highlighted upon commits (easy to parse) rather than whole paragraphs (nightmare to parse).
+<ul>
+<li>This formatting is incompatible with a double space after a period. Instead, use a single space after a period. To replace all double spaces with single spaces, do a find and replace for <code>".  "</code> → <code>". "</code> Be careful not to blanket remove all double spaces because tabbed bullets have 3 spaces.</li>
+</ul></li>
+<li>When making numbered (ordered) lists, just use <code>1.</code> for all numbers. Markdown will make them sequential automatically. This is helpful if you go back and add additional entries later.</li>
+</ul>
+</div>
+<div id="software" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Software</h1>
+<p>You can create/edit R Markdown (<code>.Rmd</code>) files with the following free software:</p>
+<ul>
+<li><a href="https://code.visualstudio.com/"><code>Microsoft Visual Studio Code</code></a></li>
+<li><a href="https://www.rstudio.com/"><code>RStudio</code></a></li>
+</ul>
+<div id="microsoft-visual-studio-code" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Microsoft Visual Studio Code</h2>
+<p>If you use <code>Visual Studio Code</code> to create/edit <code>.Rmd</code> documents, you can view the source code side-by-side with the markdown Preview (after selecting the code type as <code>markdown</code>): <img src="images/vsCode.png" alt="Visual Studio Code" /></p>
+</div>
+<div id="rstudio" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> RStudio</h2>
+<p>When you click the <strong>Knit</strong> button in RStudio, a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.</p>
+<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+</div>
+</div>
+<div id="including-plots" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Including Plots</h1>
+<p>You can embed plots, for example:</p>
+<pre class="markdown"><code>```{r, echo = FALSE}
+plot(pressure)
+```</code></pre>
+<p><img src="markdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>
+<div id="headings" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Headings</h1>
+<div id="subheading" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Subheading</h2>
+<div id="subsubheading" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Subsubheading</h3>
+<div id="subsubsubheading" class="section level4" number="5.1.1.1">
+<h4><span class="header-section-number">5.1.1.1</span> Subsubsubheading</h4>
+</div>
+</div>
+</div>
+</div>
+<div id="lists" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Lists</h1>
+<p>To add another element in a list while preserving the continuity of the list, indent the element four spaces or one tab.</p>
+<div id="unordered-lists" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Unordered Lists</h2>
+<p>To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in front of line items.</p>
+<ul>
+<li>one item</li>
+<li>one item</li>
+<li>one item
+<ul>
+<li>one more item</li>
+<li>one more item</li>
+<li>one more item
+<ul>
+<li>lower level
+<ul>
+<li>sub-item 1</li>
+<li>sub-item 2</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="ordered-lists" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Ordered Lists</h2>
+<ol style="list-style-type: decimal">
+<li>the first item
+<ol style="list-style-type: decimal">
+<li>test</li>
+<li>test
+<ol style="list-style-type: decimal">
+<li>new test</li>
+<li>new test</li>
+</ol></li>
+</ol></li>
+<li>the second item
+<ol style="list-style-type: decimal">
+<li>test</li>
+<li>test</li>
+</ol></li>
+<li>the third item
+<ul>
+<li>one unordered item
+<ul>
+<li>subitem</li>
+</ul></li>
+<li>one unordered item</li>
+</ul></li>
+<li>fourth item
+<ol style="list-style-type: decimal">
+<li>test</li>
+<li>test</li>
+<li>test</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="blockquotes" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Blockquotes</h1>
+<blockquote>
+<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>
+<p>Continued…</p>
+</blockquote>
+</div>
+<div id="comments" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Comments</h1>
+<pre class="markdown"><code>[This is how to write a hidden comment in Markdown.]: # </code></pre>
+</div>
+<div id="emphasis" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Emphasis</h1>
+<p>This text is <strong>bolded text</strong>. This text is <em>italicized text</em>. This text is <strong><em>bolded and italicized text</em></strong>. This text is <mark>highlighted text</mark>. This text is <mark style="background-color: lightblue">highlighted text in a different color</mark>. This text is <code>unicode text</code>. This text is <code><i>code in italics;</i> this text is <b>code in bold</b></code>. This text is <del>strikethrough text</del>. This text <ins>will be underlined</ins>. <font color="red">This text is red!</font></p>
+</div>
+<div id="formatting" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Formatting</h1>
+<center>
+This text is centered.
+</center>
+</div>
+<div id="codesyntax-highlighting" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Code/Syntax Highlighting</h1>
+<p>To use syntax highlighting to display code without running the code:</p>
+<pre class="markdown"><code>```r
+summary(cars)
+```</code></pre>
+<pre class="r"><code>summary(cars)</code></pre>
+<p>or</p>
+<pre class="markdown"><code>```{r, eval = FALSE}
+summary(cars)
+```</code></pre>
+<pre class="r"><code>summary(cars)</code></pre>
+<p>or</p>
+<pre class="markdown"><code>    summary(cars)</code></pre>
+<p>which yields:</p>
+<pre><code>summary(cars)</code></pre>
+</div>
+<div id="math-formulas" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Math Formulas</h1>
+<p>Inline:</p>
+<p>This is the formula: <span class="math inline">\(x = y + 5\)</span>. Solve for <span class="math inline">\(x\)</span>.</p>
+<p>Separate line:</p>
+<p><span class="math display">\[
+y = \frac{x}{7} \cdot 4 + 3 \times 2 - 1_{a1}/2^{1c/2} \dots
+\]</span></p>
+</div>
+<div id="links" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Links</h1>
+<p><a href="https://www.google.com">I’m an inline-style link</a></p>
+<p><a href="https://www.google.com" title="Google&#39;s Homepage">I’m an inline-style link with title</a></p>
+<p><a href="https://www.mozilla.org">I’m a reference-style link</a></p>
+<p><a href="../blob/master/LICENSE">I’m a relative reference to a repository file</a></p>
+<p><a href="http://slashdot.org">You can use numbers for reference-style link definitions</a></p>
+<p>URLs and URLs in angle brackets will automatically get turned into links. <a href="http://www.example.com" class="uri">http://www.example.com</a> or <a href="http://www.example.com" class="uri">http://www.example.com</a></p>
+<p>Some text to show that the reference links can follow later.</p>
+</div>
+<div id="footnotes" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Footnotes</h1>
+<p>Here is a simple footnote<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>A footnote can also have multiple lines<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>You can also use words, to fit your writing style more closely<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+</div>
+<div id="symbols" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Symbols</h1>
+<ul>
+<li>degree: (°) °</li>
+</ul>
+<div id="arrows" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Arrows</h2>
+<ul>
+<li>left arrow: ← ←</li>
+<li>upward arrow: ↑ ↑</li>
+<li>right arrow: → →</li>
+<li>downward arrow: ↓ ↓</li>
+</ul>
+</div>
+<div id="dashes-and-hyphens" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Dashes and Hyphens</h2>
+<ul>
+<li>hyphen: -</li>
+<li>en dash: –</li>
+<li>em dash: —</li>
+</ul>
+</div>
+<div id="subscriptsuperscript" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Subscript/Superscript</h2>
+<p>H<sub>2</sub>O X<sup>2</sup></p>
+</div>
+<div id="definition-list" class="section level2" number="15.4">
+<h2><span class="header-section-number">15.4</span> Definition List</h2>
+<dl>
+<dt>term</dt>
+<dd>definition
+</dd>
+</dl>
+</div>
+<div id="task-list" class="section level2" number="15.5">
+<h2><span class="header-section-number">15.5</span> Task list</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+Create the website</li>
+<li><input type="checkbox" disabled="" />
+Conduct the study</li>
+<li><input type="checkbox" disabled="" />
+Write it up</li>
+</ul>
+</div>
+</div>
+<div id="table" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Table</h1>
+<table>
+<thead>
+<tr class="header">
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header</td>
+<td>Title</td>
+</tr>
+<tr class="even">
+<td>Paragraph</td>
+<td>First paragraph. <br><br> Second paragraph.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Header</td>
+<td>Title</td>
+</tr>
+<tr class="even">
+<td>List</td>
+<td>Here’s a list! </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="session-info" class="section level1" number="17">
+<h1><span class="header-section-number">17</span> Session Info</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.4 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] digest_0.6.29   R6_2.5.1        jsonlite_1.8.0  magrittr_2.0.3 
+ [5] evaluate_0.15   highr_0.9       stringi_1.7.6   rlang_1.0.2    
+ [9] cli_3.3.0       jquerylib_0.1.4 bslib_0.3.1     rmarkdown_2.14 
+[13] tools_4.2.0     stringr_1.4.0   xfun_0.31       yaml_2.3.5     
+[17] fastmap_1.1.0   compiler_4.2.0  htmltools_0.5.2 knitr_1.39     
+[21] sass_0.4.1     </code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>My reference.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Every new line should be prefixed with 2 spaces.<br />
+This allows you to have a footnote with multiple lines.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Named footnotes will still render with numbers instead of the text but allow easier identification and linking.<br />
+This footnote also has been made with a different syntax using 4 spaces for new lines.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTWFya2Rvd24iCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiKQpgYGAKCiMgUiBNYXJrZG93bgoKVGhpcyBpcyBhbiBSIE1hcmtkb3duIGRvY3VtZW50LgpNYXJrZG93biBpcyBhIHNpbXBsZSBmb3JtYXR0aW5nIHN5bnRheCBmb3IgYXV0aG9yaW5nIEhUTUwsIFBERiwgYW5kIE1TIFdvcmQgZG9jdW1lbnRzLgpGb3IgbW9yZSBkZXRhaWxzIG9uIHVzaW5nIFIgTWFya2Rvd24gc2VlIDxodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tPi4KCllvdSBjYW4gZW1iZWQgYW4gUiBjb2RlIGNodW5rIGxpa2UgdGhpczoKCmBgYGBtYXJrZG93bgpgYGB7cn1gciAnJ2AKc3VtbWFyeShjYXJzKQpgYGAKYGBgYAoKYGBge3J9CnN1bW1hcnkoY2FycykKYGBgCgojIEJlc3QgUHJhY3RpY2VzCgotICoqVXNlIGEgbmV3IGxpbmUgZm9yIGV2ZXJ5IHNlbnRlbmNlLioqIApUaGlzIGhlbHBzIHdpdGggdmVyc2lvbiBjb250cm9s4oCUaW5kaXZpZHVhbGx5IGNoYW5nZWQgc2VudGVuY2VzIHdpbGwgYmUgaGlnaGxpZ2h0ZWQgdXBvbiBjb21taXRzIChlYXN5IHRvIHBhcnNlKSByYXRoZXIgdGhhbiB3aG9sZSBwYXJhZ3JhcGhzIChuaWdodG1hcmUgdG8gcGFyc2UpLgogICAgLSBUaGlzIGZvcm1hdHRpbmcgaXMgaW5jb21wYXRpYmxlIHdpdGggYSBkb3VibGUgc3BhY2UgYWZ0ZXIgYSBwZXJpb2QuCiAgICBJbnN0ZWFkLCB1c2UgYSBzaW5nbGUgc3BhY2UgYWZ0ZXIgYSBwZXJpb2QuCiAgICBUbyByZXBsYWNlIGFsbCBkb3VibGUgc3BhY2VzIHdpdGggc2luZ2xlIHNwYWNlcywgZG8gYSBmaW5kIGFuZCByZXBsYWNlIGZvciBgIi4gICJgIOKGkiBgIi4gImAgCiAgICBCZSBjYXJlZnVsIG5vdCB0byBibGFua2V0IHJlbW92ZSBhbGwgZG91YmxlIHNwYWNlcyBiZWNhdXNlIHRhYmJlZCBidWxsZXRzIGhhdmUgMyBzcGFjZXMuCi0gV2hlbiBtYWtpbmcgbnVtYmVyZWQgKG9yZGVyZWQpIGxpc3RzLCBqdXN0IHVzZSBgMS4gYCBmb3IgYWxsIG51bWJlcnMuCk1hcmtkb3duIHdpbGwgbWFrZSB0aGVtIHNlcXVlbnRpYWwgYXV0b21hdGljYWxseS4KVGhpcyBpcyBoZWxwZnVsIGlmIHlvdSBnbyBiYWNrIGFuZCBhZGQgYWRkaXRpb25hbCBlbnRyaWVzIGxhdGVyLgoKIyBTb2Z0d2FyZQoKWW91IGNhbiBjcmVhdGUvZWRpdCBSIE1hcmtkb3duIChgLlJtZGApIGZpbGVzIHdpdGggdGhlIGZvbGxvd2luZyBmcmVlIHNvZnR3YXJlOgoKLSBbYE1pY3Jvc29mdCBWaXN1YWwgU3R1ZGlvIENvZGVgXShodHRwczovL2NvZGUudmlzdWFsc3R1ZGlvLmNvbS8pCi0gW2BSU3R1ZGlvYF0oaHR0cHM6Ly93d3cucnN0dWRpby5jb20vKQoKIyMgTWljcm9zb2Z0IFZpc3VhbCBTdHVkaW8gQ29kZQoKSWYgeW91IHVzZSBgVmlzdWFsIFN0dWRpbyBDb2RlYCB0byBjcmVhdGUvZWRpdCBgLlJtZGAgZG9jdW1lbnRzLCB5b3UgY2FuIHZpZXcgdGhlIHNvdXJjZSBjb2RlIHNpZGUtYnktc2lkZSB3aXRoIHRoZSBtYXJrZG93biBQcmV2aWV3IChhZnRlciBzZWxlY3RpbmcgdGhlIGNvZGUgdHlwZSBhcyBgbWFya2Rvd25gKToKIVtWaXN1YWwgU3R1ZGlvIENvZGVdKGltYWdlcy92c0NvZGUucG5nKQoKIyMgUlN0dWRpbwoKV2hlbiB5b3UgY2xpY2sgdGhlICoqS25pdCoqIGJ1dHRvbiBpbiBSU3R1ZGlvLCBhIGRvY3VtZW50IHdpbGwgYmUgZ2VuZXJhdGVkIHRoYXQgaW5jbHVkZXMgYm90aCBjb250ZW50IGFzIHdlbGwgYXMgdGhlIG91dHB1dCBvZiBhbnkgZW1iZWRkZWQgUiBjb2RlIGNodW5rcyB3aXRoaW4gdGhlIGRvY3VtZW50LgoKQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLgoKV2hlbiB5b3Ugc2F2ZSB0aGUgbm90ZWJvb2ssIGFuIEhUTUwgZmlsZSBjb250YWluaW5nIHRoZSBjb2RlIGFuZCBvdXRwdXQgd2lsbCBiZSBzYXZlZCBhbG9uZ3NpZGUgaXQgKGNsaWNrIHRoZSAqUHJldmlldyogYnV0dG9uIG9yIHByZXNzICpDdHJsK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuCkNvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4KSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgojIEluY2x1ZGluZyBQbG90cwoKWW91IGNhbiBlbWJlZCBwbG90cywgZm9yIGV4YW1wbGU6CgpgYGBgbWFya2Rvd24KYGBge3IsIGVjaG8gPSBGQUxTRX1gciAnJ2AKcGxvdChwcmVzc3VyZSkKYGBgCmBgYGAKCmBgYHtyLCBlY2hvID0gRkFMU0V9CnBsb3QocHJlc3N1cmUpCmBgYAoKTm90ZSB0aGF0IHRoZSBgZWNobyA9IEZBTFNFYCBwYXJhbWV0ZXIgd2FzIGFkZGVkIHRvIHRoZSBjb2RlIGNodW5rIHRvIHByZXZlbnQgcHJpbnRpbmcgb2YgdGhlIFIgY29kZSB0aGF0IGdlbmVyYXRlZCB0aGUgcGxvdC4KCiMgSGVhZGluZ3MKCiMjIFN1YmhlYWRpbmcKCiMjIyBTdWJzdWJoZWFkaW5nCgojIyMjIFN1YnN1YnN1YmhlYWRpbmcKCiMgTGlzdHMKClRvIGFkZCBhbm90aGVyIGVsZW1lbnQgaW4gYSBsaXN0IHdoaWxlIHByZXNlcnZpbmcgdGhlIGNvbnRpbnVpdHkgb2YgdGhlIGxpc3QsIGluZGVudCB0aGUgZWxlbWVudCBmb3VyIHNwYWNlcyBvciBvbmUgdGFiLgoKIyMgVW5vcmRlcmVkIExpc3RzCgpUbyBjcmVhdGUgYW4gdW5vcmRlcmVkIGxpc3QsIGFkZCBkYXNoZXMgKC0pLCBhc3Rlcmlza3MgKCopLCBvciBwbHVzIHNpZ25zICgrKSBpbiBmcm9udCBvZiBsaW5lIGl0ZW1zLgoKLSBvbmUgaXRlbQotIG9uZSBpdGVtCi0gb25lIGl0ZW0KICAgIC0gb25lIG1vcmUgaXRlbQogICAgLSBvbmUgbW9yZSBpdGVtCiAgICAtIG9uZSBtb3JlIGl0ZW0KICAgICAgICAtIGxvd2VyIGxldmVsCiAgICAgICAgICAgIC0gc3ViLWl0ZW0gMQogICAgICAgICAgICAtIHN1Yi1pdGVtIDIKCiMjIE9yZGVyZWQgTGlzdHMKCjEuIHRoZSBmaXJzdCBpdGVtCiAgICAxLiB0ZXN0CiAgICAxLiB0ZXN0CiAgICAgICAgMS4gbmV3IHRlc3QKICAgICAgICAxLiBuZXcgdGVzdAoxLiB0aGUgc2Vjb25kIGl0ZW0KICAgIDEuIHRlc3QKICAgIDEuIHRlc3QKMS4gdGhlIHRoaXJkIGl0ZW0KICAgIC0gb25lIHVub3JkZXJlZCBpdGVtCiAgICAgICAgLSBzdWJpdGVtCiAgICAtIG9uZSB1bm9yZGVyZWQgaXRlbQoxLiBmb3VydGggaXRlbQogICAgMS4gdGVzdAogICAgMS4gdGVzdAogICAgMS4gdGVzdAogICAgCiMgQmxvY2txdW90ZXMKCj4gRG9yb3RoeSBmb2xsb3dlZCBoZXIgdGhyb3VnaCBtYW55IG9mIHRoZSBiZWF1dGlmdWwgcm9vbXMgaW4gaGVyIGNhc3RsZS4KPiAKPiBDb250aW51ZWQuLi4KCiMgQ29tbWVudHMKCmBgYGAgbWFya2Rvd24KW1RoaXMgaXMgaG93IHRvIHdyaXRlIGEgaGlkZGVuIGNvbW1lbnQgaW4gTWFya2Rvd24uXTogIyAKYGBgYAoKW1RoaXMgY29tbWVudCB3aWxsIGJlIGhpZGRlbi5dOiAjIAoKIyBFbXBoYXNpcwoKVGhpcyB0ZXh0IGlzICoqYm9sZGVkIHRleHQqKi4KVGhpcyB0ZXh0IGlzICppdGFsaWNpemVkIHRleHQqLgpUaGlzIHRleHQgaXMgKioqYm9sZGVkIGFuZCBpdGFsaWNpemVkIHRleHQqKiouClRoaXMgdGV4dCBpcyA8bWFyaz5oaWdobGlnaHRlZCB0ZXh0PC9tYXJrPi4KVGhpcyB0ZXh0IGlzIDxtYXJrIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiBsaWdodGJsdWUiPmhpZ2hsaWdodGVkIHRleHQgaW4gYSBkaWZmZXJlbnQgY29sb3I8L21hcms+LgpUaGlzIHRleHQgaXMgYHVuaWNvZGUgdGV4dGAuClRoaXMgdGV4dCBpcyA8Y29kZT48aT5jb2RlIGluIGl0YWxpY3M7PC9pPiB0aGlzIHRleHQgaXMgPGI+Y29kZSBpbiBib2xkPC9iPjwvY29kZT4uClRoaXMgdGV4dCBpcyB+fnN0cmlrZXRocm91Z2ggdGV4dH5+LgpUaGlzIHRleHQgPGlucz53aWxsIGJlIHVuZGVybGluZWQ8L2lucz4uCjxmb250IGNvbG9yPSJyZWQiPlRoaXMgdGV4dCBpcyByZWQhPC9mb250PgoKIyBGb3JtYXR0aW5nCgo8Y2VudGVyPlRoaXMgdGV4dCBpcyBjZW50ZXJlZC48L2NlbnRlcj4KCiMgQ29kZS9TeW50YXggSGlnaGxpZ2h0aW5nCgpUbyB1c2Ugc3ludGF4IGhpZ2hsaWdodGluZyB0byBkaXNwbGF5IGNvZGUgd2l0aG91dCBydW5uaW5nIHRoZSBjb2RlOgoKYGBgYCBtYXJrZG93bgpgYGByCnN1bW1hcnkoY2FycykKYGBgCmBgYGAKCmBgYHIKc3VtbWFyeShjYXJzKQpgYGAKCm9yCgpgYGBgbWFya2Rvd24KYGBge3IsIGV2YWwgPSBGQUxTRX1gciAnJ2AKc3VtbWFyeShjYXJzKQpgYGAKYGBgYAoKYGBge3IsIGV2YWwgPSBGQUxTRX0Kc3VtbWFyeShjYXJzKQpgYGAKCm9yCgpgYGBgIG1hcmtkb3duCiAgICBzdW1tYXJ5KGNhcnMpCmBgYGAKd2hpY2ggeWllbGRzOgoKICAgIHN1bW1hcnkoY2FycykKCiMgTWF0aCBGb3JtdWxhcwoKSW5saW5lOgoKVGhpcyBpcyB0aGUgZm9ybXVsYTogJHggPSB5ICsgNSQuIFNvbHZlIGZvciAkeCQuCgpTZXBhcmF0ZSBsaW5lOgoKJCQKeSA9IFxmcmFje3h9ezd9IFxjZG90IDQgKyAzIFx0aW1lcyAyIC0gMV97YTF9LzJeezFjLzJ9IFxkb3RzCiQkCgojIExpbmtzCgpbSSdtIGFuIGlubGluZS1zdHlsZSBsaW5rXShodHRwczovL3d3dy5nb29nbGUuY29tKQoKW0knbSBhbiBpbmxpbmUtc3R5bGUgbGluayB3aXRoIHRpdGxlXShodHRwczovL3d3dy5nb29nbGUuY29tICJHb29nbGUncyBIb21lcGFnZSIpCgpbSSdtIGEgcmVmZXJlbmNlLXN0eWxlIGxpbmtdW0FyYml0cmFyeSBjYXNlLWluc2Vuc2l0aXZlIHJlZmVyZW5jZSB0ZXh0XQoKW0knbSBhIHJlbGF0aXZlIHJlZmVyZW5jZSB0byBhIHJlcG9zaXRvcnkgZmlsZV0oLi4vYmxvYi9tYXN0ZXIvTElDRU5TRSkKCltZb3UgY2FuIHVzZSBudW1iZXJzIGZvciByZWZlcmVuY2Utc3R5bGUgbGluayBkZWZpbml0aW9uc11bMV0KClVSTHMgYW5kIFVSTHMgaW4gYW5nbGUgYnJhY2tldHMgd2lsbCBhdXRvbWF0aWNhbGx5IGdldCB0dXJuZWQgaW50byBsaW5rcy4gCmh0dHA6Ly93d3cuZXhhbXBsZS5jb20gb3IgPGh0dHA6Ly93d3cuZXhhbXBsZS5jb20+CgpTb21lIHRleHQgdG8gc2hvdyB0aGF0IHRoZSByZWZlcmVuY2UgbGlua3MgY2FuIGZvbGxvdyBsYXRlci4KClthcmJpdHJhcnkgY2FzZS1pbnNlbnNpdGl2ZSByZWZlcmVuY2UgdGV4dF06IGh0dHBzOi8vd3d3Lm1vemlsbGEub3JnClsxXTogaHR0cDovL3NsYXNoZG90Lm9yZwoKIyBGb290bm90ZXMKCkhlcmUgaXMgYSBzaW1wbGUgZm9vdG5vdGVbXjFdLgoKQSBmb290bm90ZSBjYW4gYWxzbyBoYXZlIG11bHRpcGxlIGxpbmVzW14yXS4gIAoKWW91IGNhbiBhbHNvIHVzZSB3b3JkcywgdG8gZml0IHlvdXIgd3JpdGluZyBzdHlsZSBtb3JlIGNsb3NlbHlbXm5vdGVdLgoKW14xXTogTXkgcmVmZXJlbmNlLgpbXjJdOiBFdmVyeSBuZXcgbGluZSBzaG91bGQgYmUgcHJlZml4ZWQgd2l0aCAyIHNwYWNlcy4gIAogIFRoaXMgYWxsb3dzIHlvdSB0byBoYXZlIGEgZm9vdG5vdGUgd2l0aCBtdWx0aXBsZSBsaW5lcy4KW15ub3RlXToKICAgIE5hbWVkIGZvb3Rub3RlcyB3aWxsIHN0aWxsIHJlbmRlciB3aXRoIG51bWJlcnMgaW5zdGVhZCBvZiB0aGUgdGV4dCBidXQgYWxsb3cgZWFzaWVyIGlkZW50aWZpY2F0aW9uIGFuZCBsaW5raW5nLiAgCiAgICBUaGlzIGZvb3Rub3RlIGFsc28gaGFzIGJlZW4gbWFkZSB3aXRoIGEgZGlmZmVyZW50IHN5bnRheCB1c2luZyA0IHNwYWNlcyBmb3IgbmV3IGxpbmVzLgoKIyBTeW1ib2xzCgotIGRlZ3JlZTogKMKwKSAmIzE3NjsKCiMjIEFycm93cwoKKiBsZWZ0IGFycm93OiDihpAgJiM4NTkyOwoqIHVwd2FyZCBhcnJvdzog4oaRICYjODU5MzsKKiByaWdodCBhcnJvdzog4oaSICYjODU5NDsKKiBkb3dud2FyZCBhcnJvdzog4oaTICYjODU5NTsKCiMjIERhc2hlcyBhbmQgSHlwaGVucwoKKiBoeXBoZW46IC0KKiBlbiBkYXNoOiDigJMKKiBlbSBkYXNoOiDigJQKCiMjIFN1YnNjcmlwdC9TdXBlcnNjcmlwdAoKSH4yfk8KWF4yXgoKIyMgRGVmaW5pdGlvbiBMaXN0Cgp0ZXJtCjogZGVmaW5pdGlvbgoKIyMgVGFzayBsaXN0CgotIFt4XSBDcmVhdGUgdGhlIHdlYnNpdGUKLSBbIF0gQ29uZHVjdCB0aGUgc3R1ZHkKLSBbIF0gV3JpdGUgaXQgdXAKCiMgVGFibGUKCnwgU3ludGF4ICAgICAgfCBEZXNjcmlwdGlvbiB8CnwgLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLSB8CnwgSGVhZGVyICAgICAgfCBUaXRsZSB8CnwgUGFyYWdyYXBoICAgfCBGaXJzdCBwYXJhZ3JhcGguIDxicj48YnI+IFNlY29uZCBwYXJhZ3JhcGguIHwKCnwgU3ludGF4ICAgICAgfCBEZXNjcmlwdGlvbiB8CnwgLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLSB8CnwgSGVhZGVyICAgICAgfCBUaXRsZSB8CnwgTGlzdCAgICAgICAgfCBIZXJlJ3MgYSBsaXN0ISA8dWw+PGxpPkl0ZW0gb25lLjwvbGk+PGxpPkl0ZW0gdHdvLjwvbGk+PC91bD4gfAoKIyBTZXNzaW9uIEluZm8KCmBgYHtyfQpzZXNzaW9uSW5mbygpCmBgYAo=</div>
+<script type="text/javascript" src="includes/external-links.js"></script>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://github.com/DevPsyLab" target="_blank" class="fa fa-github fa-fw fa-3x"></a>
+    <a href="https://twitter.com/devpsylab" target="_blank" class="fa fa-twitter fa-fw fa-3x"></a>
+    <a href="https://www.facebook.com/DevPsyLab" target="_blank" class="fa fa-facebook fa-fw fa-3x"></a>
+	<a href="https://www.instagram.com/dev_psy_lab" target="_blank" class="fa fa-instagram fa-fw fa-3x"></a>
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("markdown.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

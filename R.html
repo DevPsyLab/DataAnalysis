@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>R</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TYR0QMREEW');
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="includes/custom.css" type="text/css" />
+<link rel="stylesheet" href="font/css/roboto.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Analysis Guides for the Developmental Psychopathology Lab</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Guides</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://devpsylab.github.io/LabWiki">Lab Wiki</a>
+</li>
+<li>
+  <a href="https://developmental-psychopathology.lab.uiowa.edu">Lab Website</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">R</h1>
+
+</div>
+
+
+<blockquote>
+<p>“<em><code>R</code> will always be arcane to those who do not make a serious effort to learn it. It is not meant to be intuitive and easy for casual users to just plunge into. It is far too complex and powerful for that. But the rewards are great for serious data analysts who put in the effort.</em>”</p>
+</blockquote>
+<p>— <a href="https://www.brodrigues.co/blog/2022-06-02-arcane/">Berton Gunter R-help August 2007</a></p>
+<blockquote>
+<p>“Evelyn Hall: I would like to know how (if) I can extract some of the information from the summary of my nlme.</p>
+<p>Simon Blomberg: This is <code>R</code>. There is no if. Only how.”</p>
+</blockquote>
+<p>— <a href="https://www.brodrigues.co/blog/2022-06-02-arcane/">Evelyn Hall and Simon ‘Yoda’ Blomberg, R-help April 2005</a></p>
+<div id="learn" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Learning <code>R</code></h1>
+<div id="base-r" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Base R</h2>
+<p>Here are a slew of resources for learning base <code>R</code> (in addition to the documents in the lab’s <a href="https://drive.google.com/drive/u/0/folders/1U0pNrjF2_tIPU6BiyCv0HqbOUA5P516r">Primer Articles folder</a>):</p>
+<ul>
+<li>Use this Intro to <code>R</code>: <a href="https://www.statmethods.net/" class="uri">https://www.statmethods.net/</a>
+<ul>
+<li>I used this resource considerably when I was learning <code>R</code></li>
+</ul></li>
+<li>Learn how to become a better coder: <a href="https://www.r-bloggers.com/10-top-tips-for-becoming-a-better-coder/" class="uri">https://www.r-bloggers.com/10-top-tips-for-becoming-a-better-coder/</a></li>
+<li>How to become fluent in <code>R</code>: <a href="https://www.sharpsightlabs.com/blog/are-you-fluent-r/" class="uri">https://www.sharpsightlabs.com/blog/are-you-fluent-r/</a></li>
+<li>Video training courses in <code>R</code> skills: <a href="https://www.pluralsight.com/search?q=R" class="uri">https://www.pluralsight.com/search?q=R</a></li>
+<li>Browse the <code>Cookbook for R</code> to find solutions to common tasks and problems: <a href="http://www.cookbook-r.com/" class="uri">http://www.cookbook-r.com/</a></li>
+<li>Free <code>Codeacademy</code> course on <code>R</code>: <a href="https://www.codecademy.com/learn/learn-r" class="uri">https://www.codecademy.com/learn/learn-r</a></li>
+<li>Free <code>Coursera</code> courses on <code>R</code>: <a href="https://pairach.com/2012/12/22/learn-to-use-r-for-free-with-coursera/" class="uri">https://pairach.com/2012/12/22/learn-to-use-r-for-free-with-coursera/</a></li>
+<li>MOOCs and courses to learn <code>R</code>: <a href="https://www.r-bloggers.com/moocs-and-courses-to-learn-r/" class="uri">https://www.r-bloggers.com/moocs-and-courses-to-learn-r/</a></li>
+<li>Watch these videos from <code>Coursera</code>: <a href="http://blog.revolutionanalytics.com/2012/12/coursera-videos.html" class="uri">http://blog.revolutionanalytics.com/2012/12/coursera-videos.html</a></li>
+<li><code>RStudio</code> Webinars: <a href="https://www.rstudio.com/resources/webinars/" class="uri">https://www.rstudio.com/resources/webinars/</a></li>
+<li>Check out these resources for getting started with R: <a href="https://stats.idre.ucla.edu/r/" class="uri">https://stats.idre.ucla.edu/r/</a></li>
+<li>Take this Introduction to <code>R</code> course: <a href="https://www.datacamp.com/courses/free-introduction-to-r" class="uri">https://www.datacamp.com/courses/free-introduction-to-r</a></li>
+<li>Learn <code>R</code> interactively with <code>swirl</code>: <a href="https://swirlstats.com/" class="uri">https://swirlstats.com/</a></li>
+<li>Use the <code>learnr</code> package: <a href="https://blog.rstudio.com/2017/07/11/introducing-learnr/" class="uri">https://blog.rstudio.com/2017/07/11/introducing-learnr/</a></li>
+<li>You will sometimes find relevant articles on <code>R-bloggers</code>: <a href="https://www.r-bloggers.com/" class="uri">https://www.r-bloggers.com/</a></li>
+</ul>
+</div>
+<div id="statistics-using-r" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Statistics (using <code>R</code>)</h2>
+<p>The following are resources for learning statistics using <code>R</code>.</p>
+<p>Free textbook on Learning Statistics with <code>R</code>: <a href="https://learningstatisticswithr.com" class="uri">https://learningstatisticswithr.com</a></p>
+<p>An excellent introductory textbook on Discovering Statistics using <code>R</code>: <a href="https://www.amazon.com/Discovering-Statistics-Using-Andy-Field/dp/1446200469" class="uri">https://www.amazon.com/Discovering-Statistics-Using-Andy-Field/dp/1446200469</a></p>
+</div>
+<div id="tidyverse" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> <code>tidyverse</code></h2>
+<p>The following are resources for learning <code>tidyverse</code>, which is a collection of <code>R</code> packages for data management:</p>
+<p><a href="https://www.tidyverse.org/learn/" class="uri">https://www.tidyverse.org/learn/</a></p>
+<p><a href="https://www.linkedin.com/learning/learning-the-r-tidyverse/welcome?u=42459020" class="uri">https://www.linkedin.com/learning/learning-the-r-tidyverse/welcome?u=42459020</a></p>
+</div>
+<div id="questions" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Questions</h2>
+<p>If you have questions:</p>
+<ul>
+<li>Post to the <code>R</code> mailing list: <a href="https://stat.ethz.ch/mailman/listinfo/r-help" class="uri">https://stat.ethz.ch/mailman/listinfo/r-help</a></li>
+<li>Post to forums: <a href="https://stackoverflow.com/questions/tagged/r" class="uri">https://stackoverflow.com/questions/tagged/r</a></li>
+<li>More info: <a href="https://www.r-bloggers.com/where-to-get-help-with-your-r-question/" class="uri">https://www.r-bloggers.com/where-to-get-help-with-your-r-question/</a></li>
+</ul>
+</div>
+</div>
+<div id="setup" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Initial Set Up</h1>
+<p>Note: many of these initial setup steps described below are not necessary for general use; many of these steps are necessary only for using lab-related repositories (e.g., to gain API access to export data from <code>REDCap</code>, to use absolute paths rather than relative paths so repos can communicate with each other, etc.).</p>
+<ol style="list-style-type: decimal">
+<li>Make sure you are logged onto a computer that can access the lab server (either a lab computer, or a computer you can VPN into the lab server), and that you have admin access to install and uninstall software</li>
+<li>Install <code>R</code> (<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>) into a directory that contains no spaces; On PC, change the location from the default <code>C:/Program Files/R/[R-VERSION]</code> (which contains a space) to <code>C:/R/[R-VERSION]</code> (<a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Windows">which does not contain any spaces</a>—this is because <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation">some packages that require compilation to install cannot read filepaths with spaces</a>); may have to right click and “Run As Administrator”
+<ul>
+<li>If <code>R</code> was already installed in a directory that contains spaces (e.g., <code>C:/Program Files/R/[R-VERSION]</code>), uninstall <code>R</code> before installing it in a directory that doesn’t contain spaces</li>
+</ul></li>
+<li>Install <code>RStudio</code> Desktop (<a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a>) in the main program files directory; may have to right click and “Run As Administrator”. <code>RStudio</code> is the best available graphical user interface for R.</li>
+<li>Set the executables for <code>R</code> and <code>RStudio</code> to always run with administrator permissions.
+<ul>
+<li>If on Windows, open File Explorer and find the main executable of <code>R</code> (<code>C:/R/[R-VERSION]/bin/R.exe</code>) and <code>RStudio</code> (<code>C:\Program Files\RStudio\bin\RStudio.exe</code>). Right-click it to open the contextual menu. Then, click or tap on “Properties”. In the Properties window, go to the Compatibility tab. At the bottom of the window, check the box next to the “Run this program as an administrator” option, and then click or tap on Apply or OK.</li>
+</ul></li>
+<li>Install tools to allow you to compile <code>R</code> packages so you can install packages from source, if necessary (i.e., if package binaries are not available):
+<ul>
+<li>If on Windows, install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>; may have to right click and “Run As Administrator”</li>
+<li>If on Mac, install <a href="https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/">R Compiler Tools for Rcpp on MacOS</a></li>
+</ul></li>
+<li>Set up git, GitLab, and the GitHub Desktop App in the main program files directory; may have to right click and “Run As Administrator”; For instructions setting up and using GitLab, see here: <a href="https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md" class="uri">https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md</a></li>
+<li>The <code>Rprofile.site</code> file in the <code>etc</code> folder of the <code>R</code> installation directory is the code that is run for <strong><em>every user</em></strong> at the beginning each time you load R. We will update the default <code>Rprofile.site</code> file with the lab’s <code>Rprofile.site</code> file so <code>R</code> installs packages in the correct location, sets the default package repository, updates packages, and gives you a fortune cookie. To do this, perform the following steps:
+<ul>
+<li>Rename the <code>Rprofile.site</code> file in the <code>R</code> installation directory (<code>C:/R/R-[InsertVersionNumber]/etc/Rprofile.site</code>) to be <code>Rprofile_BACKUP.site</code></li>
+<li>Download the lab’s <code>Rprofile.site</code> file located in this repository at the following location (<a href="https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site" class="uri">https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site</a>), and paste it into the <code>R</code> installation directory (PC: <code>C:/R/R-[InsertVersionNumber]/etc/Rprofile.site</code>; Mac: <code>/Library/Frameworks/R.framework/Versions/[InsertVersionNumber]/Resources/etc/Rprofile.site</code>)</li>
+</ul></li>
+<li>The <code>.Rprofile</code> file in the user’s <code>Documents</code> folder is the code that is run for <strong><em>the particular user</em></strong> at the beginning each time you load R. We will update the default <code>.Rprofile</code> file (if there is one) with the lab’s <code>.Rprofile</code> file so <code>R</code> knows which computer you are using and which path to use (relative to where your <code>R</code> projects are located). To do this, perform the following steps:
+<ul>
+<li>Download the lab’s <code>.Rprofile</code> template file in this repository at the following location, and make sure to remove anything besides <code>.Rprofile</code> in the filename: <a href="https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/.Rprofile" class="uri">https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/.Rprofile</a></li>
+<li>Open the lab’s <code>.Rprofile</code> file, and revise it with your HawkID</li>
+<li>Revise the lab’s <code>.Rprofile</code> file with the local path to the <code>Documents</code> folder for each of the computers you will use to access <code>R</code> (e.g., home computer, work computer, laptop). Make sure to use forward slashes (<code>/</code>), not back slashes (<code>\</code>) in the path.</li>
+<li>You will save the file in your <code>HOME</code> directory. To find the <code>HOME</code> directory, open <code>R</code> and type the following command: <code>Sys.getenv("HOME")</code>—the output of the command is the location of your <code>HOME</code> directory; If this is a lab computer, it may be located here: <code>//home.iowa.uiowa.edu/[user]/Documents</code>. If this is your personal computer, it may be located here: PC: <code>C:/Users/[user]/Documents</code>; Mac: <code>/Users/[user]</code>. Then close R.</li>
+<li>If your <code>HOME</code> directory is in a OneDrive folder (or another cloud-based sync folder), you will want to change the directory of your <code>HOME</code> path so that it is not in a OneDrive folder. To do that, open <a href="https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10"><code>Environment Variables</code></a> in Windows. Then, add/edit <code>HOME</code> as the “variable name” with the intended location as the “variable value” (e.g., <code>C:/Users/[user]/Documents</code>, where you replace “user” with your HawkID).</li>
+<li>Move the revised <code>.Rprofile</code> file to the <code>HOME</code> directory and overwrite the original <code>.Rprofile</code> file (if it exists). You may have to show hidden files in order to see the file (PC: see Windows Explorer settings; Mac: Command+Shift+Dot).</li>
+<li>Make sure to show filename extensions in your file explorer window, and make sure the file is named <code>.Rprofile</code> (not <code>.Rprofile.Rprofile</code>). Make sure there is a period at the beginning of the filename.</li>
+</ul></li>
+<li>Run <code>RStudio</code>. If the <code>Rprofile.site</code> and <code>.Rprofile</code> files are correctly set up, they should pre-populate your <code>path</code> location when you open R. If the contents of the <code>Global Environment</code> in <code>RStudio</code> are empty, your <code>Rprofile.site</code> and/or <code>.Rprofile</code> files are not set up correctly.
+<ul>
+<li>If you get this error (<code>Error: could not find function "install.packages"</code>), run the following line manually and then restart <code>RStudio</code> after the package finishes installing: <code>install.packages("fortunes")</code></li>
+</ul></li>
+<li>Install the <code>petersenlab</code> <code>R</code> package using the following steps:
+<ul>
+<li>Install the <code>remotes</code> package using the following command: <code>install.packages("remotes")</code></li>
+<li>Install the <code>petersenlab</code> package using the following command: <code>remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")</code></li>
+</ul></li>
+<li>Request an API token for both REDCap projects (School Readiness Study, School Readiness Study Screening): <a href="https://redcap.icts.uiowa.edu/redcap/api/help/?content=tokens" class="uri">https://redcap.icts.uiowa.edu/redcap/api/help/?content=tokens</a></li>
+<li>When your API token has been approved for both projects, open the <code>Encrypt REDCap Token.R</code> script: <a href="https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/REDCap%20Credentials/Encrypt%20REDCap%20Token.R" class="uri">https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/REDCap%20Credentials/Encrypt%20REDCap%20Token.R</a></li>
+<li>Revise the API tokens to reflect yours, then run the script to save your encrypted credentials on the lab server and your encryption key on your local computer
+<ul>
+<li>Verify that the Encryption Key (<code>REDCap Encryption Key.RData</code>) was saved where you intended it to be saved on your local computer</li>
+<li>Verify that a file named with your HawkID was saved here: <code>//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/Studies/School Readiness Study/Data Management/REDCap/Tokens/</code></li>
+</ul></li>
+<li>Copy the Encryption Key (<code>REDCap Encryption Key.RData</code>) to the comparable location of any other computers you own that you plan to access the data from
+<ul>
+<li>The file has to be in the comparable location (relative to the <code>path</code> variable you set in <code>Rprofile.site</code>) of every computer in order for it to be found by the <code>Export Data.R</code> script. The default location is: <code>file.path(path, "GitHub/R/Data/REDCap Encryption Key.RData")</code>, so if <code>path</code> is set as <code>"C:/User/YourName"</code>, the file would be saved in: <code>C:/User/YourName/GitHub/R/Data/REDCap Encryption Key.RData</code>. The recommended location for GitHub repos is to create a folder titled <code>GitHub</code> in your <code>Documents</code> folder, and to put repos in the <code>GitHub</code> folder; it is <em>NOT</em> recommended to put git repos in a OneDrive folder because <a href="https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended">git files tend not to play nice with syncing services</a> (e.g., OneDrive, Dropbox)</li>
+</ul></li>
+<li>Add the SRS Data Processing repo from the lab drive to your GitHub Desktop App (<code>//iowa.uiowa.edu/Shared/ResearchData/rdss_itpetersen/Lab/Studies/School Readiness Study/Data Processing</code>)
+<ul>
+<li>For instructions, see the section on “<a href="https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md#how-to-add-a-pre-existing-repo-from-the-lab-drive-rdssnetwork-share-to-your-computer">How to add a pre-existing repo from the lab drive (RDSS/network share) to your computer</a>” here: <a href="https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/GitLab/GitLab%20Instructions.md" class="uri">https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/GitLab/GitLab%20Instructions.md</a></li>
+</ul></li>
+<li>Open <code>RStudio</code> by using “Run as Administrator” (always open <code>RStudio</code> as an administrator so it has write access to the program files directory);</li>
+<li>Open the <code>Export Data.R</code> script in R: <a href="https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.%20Export%20Data/Export%20Data.R" class="uri">https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.%20Export%20Data/Export%20Data.R</a> <code>\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data Processing\1. Export Data\Export Data.R</code></li>
+<li>Ensure your HawkID and location of your encryption key in the script are correct, and then run the script to verify that you can export data from REDCap</li>
+<li>For antialiased plots in <code>RStudio</code>, change the Graphics backend to <code>Cairo</code>: Tools → Global Options → Graphics</li>
+</ol>
+</div>
+<div id="install-packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Install Packages</h1>
+<p>Use the syntax: <code>install.packages("name_of_package")</code> to install a single package, or <code>install.packages(c("name_of_package1","name_of_package2","name_of_package3"))</code> to install multiple packages.</p>
+</div>
+<div id="update-r" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Update <code>R</code></h1>
+<p>Instructions adapted from: <a href="https://mirror.las.iastate.edu/CRAN/bin/windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">https://mirror.las.iastate.edu/CRAN/bin/windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f</a></p>
+<ol style="list-style-type: decimal">
+<li>Uninstall <code>R</code></li>
+<li>Install the new <code>R</code> version into a directory that contains no spaces (see Step 2 in the <a href="#setup">Initial Set Up</a> section above)</li>
+<li>[You only need to do this step if you installed packages in the R-version-specific “Library” folder rather than the common/shared “Packages” folder—that is, you don’t need to do this step if you used the lab’s <code>Rprofile.site</code> file, as described above, which installs packages to the common/shared “Packages” folder]:
+<ul>
+<li>Copy installed packages in the “Library” folder to the “Library” folder in the new installation</li>
+</ul></li>
+<li>In new <code>R</code> version folder, copy the current <code>Rprofile.site</code> file as a backup (<code>Rprofile_BACKUP.site</code>) and overwrite the original file with the lab’s version of <code>Rprofile.site</code> from here: <a href="https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site" class="uri">https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site</a>
+<ul>
+<li><code>R</code> will run the file named <code>Rprofile.site</code> at initial runtime.</li>
+</ul></li>
+<li>Set the executables for <code>R</code> and <code>RStudio</code> to always run with administrator permissions.
+<ul>
+<li>If on Windows, open File Explorer and find the main executable of <code>R</code> (<code>C:\R\R-VERSION\bin\R.exe</code>) and <code>RStudio</code> (<code>C:\Program Files\RStudio\bin\RStudio.exe</code>). Right-click it to open the contextual menu. Then, click or tap on “Properties”. In the Properties window, go to the Compatibility tab. At the bottom of the window, check the box next to the “Run this program as an administrator” option, and then click or tap on Apply or OK.</li>
+</ul></li>
+<li>Open the new <code>R</code> version and run <code>update.packages(checkBuilt = TRUE, ask = FALSE)</code>, and install any necessary packages</li>
+<li>Close R</li>
+<li>Delete anything left of the old installation</li>
+</ol>
+</div>
+<div id="style-guide" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Style Guide</h1>
+<div id="use-r-notebooks-for-computational-notebooks" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Use <code>R</code> Notebooks for “Computational Notebooks”</h2>
+<p>Using <code>R</code> Notebooks for “Computational Notebooks” is helpful for reproducible code that can be shared with others. See links below for more info about how to create <code>R</code> Notebooks:</p>
+<ul>
+<li><a href="https://garrettgman.github.io/rmarkdown/r_notebooks" class="uri">https://garrettgman.github.io/rmarkdown/r_notebooks</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/notebook.html" class="uri">https://bookdown.org/yihui/rmarkdown/notebook.html</a></li>
+</ul>
+</div>
+<div id="separate-sections-in-code" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Separate sections in code</h2>
+<ul>
+<li>In <code>R</code> scripts, use sections.
+<ul>
+<li>To insert a section in <code>RStudio</code>, use CTRL-Shift-R or “Code” - “Insert Section”</li>
+</ul></li>
+<li>In <code>R</code> Notebooks/Markdown, use Headers and code chunks.
+<ul>
+<li>Headers: 1, 2, or 3 pound signs</li>
+<li>Code Chunks: Ctrl+Alt+I; or click “Insert” button then “R”</li>
+</ul></li>
+</ul>
+</div>
+<div id="naming-variables" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Naming variables</h2>
+<ul>
+<li>Use meaningful variable names; we want to know what a variable represents without having to consult an external codebook for every variable</li>
+<li>Variable names should include the prefix for the measure followed by an underscore
+<ul>
+<li>e.g., <code>cbcl_</code> for the Child Behavior Checklist variables</li>
+</ul></li>
+<li>Use lower camel case for variable naming
+<ul>
+<li>e.g., <code>prefix_thisIsTheVariableName</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="comment-code-frequently-and-clearly" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Comment code frequently and clearly!</h2>
+<p>It is important to comment code frequently and clearly. You want you (and others) to easily be able to understand your code if you come back to it several years later!</p>
+</div>
+</div>
+<div id="data-management" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Data Management</h1>
+<p>Tidyverse: <a href="https://www.tidyverse.org" class="uri">https://www.tidyverse.org</a></p>
+<p>University of Iowa Workshops</p>
+</div>
+<div id="saving-plots" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Saving Plots</h1>
+<p><code>png(); dev.off()</code></p>
+</div>
+<div id="saving-output" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Saving Output</h1>
+<p><code>R Markdown</code></p>
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/lesson-1.html" class="uri">https://rmarkdown.rstudio.com/lesson-1.html</a></li>
+<li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/" class="uri">https://bookdown.org/yihui/rmarkdown/</a></li>
+</ul>
+</div>
+<div id="shortcuts" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Shortcuts</h1>
+<ul>
+<li>Run selected line(s) of code: Ctrl + Enter</li>
+<li>Comment/uncomment code: Ctrl + Shift + C</li>
+<li>Pipe: Ctrl + Shift + M</li>
+<li>Insert Code Chunk: Ctrl + Alt + I</li>
+<li>Assignment operator: Alt + - (alt-dash)</li>
+<li>Select multiple lines: Ctrl + Alt, up or down; or Alt + drag mouse</li>
+<li>Search: Ctrl + Shift + F</li>
+<li>Show all keyboard shortcuts: Alt + Shift + K</li>
+</ul>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKID4gIipgUmAgd2lsbCBhbHdheXMgYmUgYXJjYW5lIHRvIHRob3NlIHdobyBkbyBub3QgbWFrZSBhIHNlcmlvdXMgZWZmb3J0IHRvIGxlYXJuIGl0LiBJdCBpcyBub3QgbWVhbnQgdG8gYmUgaW50dWl0aXZlIGFuZCBlYXN5IGZvciBjYXN1YWwgdXNlcnMgdG8ganVzdCBwbHVuZ2UgaW50by4gSXQgaXMgZmFyIHRvbyBjb21wbGV4IGFuZCBwb3dlcmZ1bCBmb3IgdGhhdC4gQnV0IHRoZSByZXdhcmRzIGFyZSBncmVhdCBmb3Igc2VyaW91cyBkYXRhIGFuYWx5c3RzIHdobyBwdXQgaW4gdGhlIGVmZm9ydC4qIgoK4oCUIFtCZXJ0b24gR3VudGVyIFItaGVscCBBdWd1c3QgMjAwN10oaHR0cHM6Ly93d3cuYnJvZHJpZ3Vlcy5jby9ibG9nLzIwMjItMDYtMDItYXJjYW5lLykKCj4gIkV2ZWx5biBIYWxsOiBJIHdvdWxkIGxpa2UgdG8ga25vdyBob3cgKGlmKSBJIGNhbiBleHRyYWN0IHNvbWUgb2YgdGhlIGluZm9ybWF0aW9uIGZyb20gdGhlIHN1bW1hcnkgb2YgbXkgbmxtZS4KPiAKPiBTaW1vbiBCbG9tYmVyZzogVGhpcyBpcyBgUmAuIFRoZXJlIGlzIG5vIGlmLiBPbmx5IGhvdy4iCgrigJQgW0V2ZWx5biBIYWxsIGFuZCBTaW1vbiAnWW9kYScgQmxvbWJlcmcsIFItaGVscCBBcHJpbCAyMDA1XShodHRwczovL3d3dy5icm9kcmlndWVzLmNvL2Jsb2cvMjAyMi0wNi0wMi1hcmNhbmUvKQoKIyBMZWFybmluZyBgUmAgeyNsZWFybn0KCiMjIEJhc2UgUgoKSGVyZSBhcmUgYSBzbGV3IG9mIHJlc291cmNlcyBmb3IgbGVhcm5pbmcgYmFzZSBgUmAgKGluIGFkZGl0aW9uIHRvIHRoZSBkb2N1bWVudHMgaW4gdGhlIGxhYidzIFtQcmltZXIgQXJ0aWNsZXMgZm9sZGVyXShodHRwczovL2RyaXZlLmdvb2dsZS5jb20vZHJpdmUvdS8wL2ZvbGRlcnMvMVUwcE5yakYyX3RJUFU2Qml5Q3YwSHFiT1VBNVA1MTZyKSk6CgotIFVzZSB0aGlzIEludHJvIHRvIGBSYDogaHR0cHM6Ly93d3cuc3RhdG1ldGhvZHMubmV0LwogICAgLSBJIHVzZWQgdGhpcyByZXNvdXJjZSBjb25zaWRlcmFibHkgd2hlbiBJIHdhcyBsZWFybmluZyBgUmAKLSBMZWFybiBob3cgdG8gYmVjb21lIGEgYmV0dGVyIGNvZGVyOiBodHRwczovL3d3dy5yLWJsb2dnZXJzLmNvbS8xMC10b3AtdGlwcy1mb3ItYmVjb21pbmctYS1iZXR0ZXItY29kZXIvCi0gSG93IHRvIGJlY29tZSBmbHVlbnQgaW4gYFJgOiBodHRwczovL3d3dy5zaGFycHNpZ2h0bGFicy5jb20vYmxvZy9hcmUteW91LWZsdWVudC1yLwotIFZpZGVvIHRyYWluaW5nIGNvdXJzZXMgaW4gYFJgIHNraWxsczogaHR0cHM6Ly93d3cucGx1cmFsc2lnaHQuY29tL3NlYXJjaD9xPVIKLSBCcm93c2UgdGhlIGBDb29rYm9vayBmb3IgUmAgdG8gZmluZCBzb2x1dGlvbnMgdG8gY29tbW9uIHRhc2tzIGFuZCBwcm9ibGVtczogaHR0cDovL3d3dy5jb29rYm9vay1yLmNvbS8KLSBGcmVlIGBDb2RlYWNhZGVteWAgY291cnNlIG9uIGBSYDogaHR0cHM6Ly93d3cuY29kZWNhZGVteS5jb20vbGVhcm4vbGVhcm4tcgotIEZyZWUgYENvdXJzZXJhYCBjb3Vyc2VzIG9uIGBSYDogaHR0cHM6Ly9wYWlyYWNoLmNvbS8yMDEyLzEyLzIyL2xlYXJuLXRvLXVzZS1yLWZvci1mcmVlLXdpdGgtY291cnNlcmEvCi0gTU9PQ3MgYW5kIGNvdXJzZXMgdG8gbGVhcm4gYFJgOiBodHRwczovL3d3dy5yLWJsb2dnZXJzLmNvbS9tb29jcy1hbmQtY291cnNlcy10by1sZWFybi1yLwotIFdhdGNoIHRoZXNlIHZpZGVvcyBmcm9tIGBDb3Vyc2VyYWA6IGh0dHA6Ly9ibG9nLnJldm9sdXRpb25hbmFseXRpY3MuY29tLzIwMTIvMTIvY291cnNlcmEtdmlkZW9zLmh0bWwKLSBgUlN0dWRpb2AgV2ViaW5hcnM6IGh0dHBzOi8vd3d3LnJzdHVkaW8uY29tL3Jlc291cmNlcy93ZWJpbmFycy8KLSBDaGVjayBvdXQgdGhlc2UgcmVzb3VyY2VzIGZvciBnZXR0aW5nIHN0YXJ0ZWQgd2l0aCBSOiBodHRwczovL3N0YXRzLmlkcmUudWNsYS5lZHUvci8KLSBUYWtlIHRoaXMgSW50cm9kdWN0aW9uIHRvIGBSYCBjb3Vyc2U6IGh0dHBzOi8vd3d3LmRhdGFjYW1wLmNvbS9jb3Vyc2VzL2ZyZWUtaW50cm9kdWN0aW9uLXRvLXIKLSBMZWFybiBgUmAgaW50ZXJhY3RpdmVseSB3aXRoIGBzd2lybGA6IGh0dHBzOi8vc3dpcmxzdGF0cy5jb20vCi0gVXNlIHRoZSBgbGVhcm5yYCBwYWNrYWdlOiBodHRwczovL2Jsb2cucnN0dWRpby5jb20vMjAxNy8wNy8xMS9pbnRyb2R1Y2luZy1sZWFybnIvCi0gWW91IHdpbGwgc29tZXRpbWVzIGZpbmQgcmVsZXZhbnQgYXJ0aWNsZXMgb24gYFItYmxvZ2dlcnNgOiBodHRwczovL3d3dy5yLWJsb2dnZXJzLmNvbS8KCiMjIFN0YXRpc3RpY3MgKHVzaW5nIGBSYCkKClRoZSBmb2xsb3dpbmcgYXJlIHJlc291cmNlcyBmb3IgbGVhcm5pbmcgc3RhdGlzdGljcyB1c2luZyBgUmAuCgpGcmVlIHRleHRib29rIG9uIExlYXJuaW5nIFN0YXRpc3RpY3Mgd2l0aCBgUmA6IGh0dHBzOi8vbGVhcm5pbmdzdGF0aXN0aWNzd2l0aHIuY29tCgpBbiBleGNlbGxlbnQgaW50cm9kdWN0b3J5IHRleHRib29rIG9uIERpc2NvdmVyaW5nIFN0YXRpc3RpY3MgdXNpbmcgYFJgOiBodHRwczovL3d3dy5hbWF6b24uY29tL0Rpc2NvdmVyaW5nLVN0YXRpc3RpY3MtVXNpbmctQW5keS1GaWVsZC9kcC8xNDQ2MjAwNDY5CgojIyBgdGlkeXZlcnNlYAoKVGhlIGZvbGxvd2luZyBhcmUgcmVzb3VyY2VzIGZvciBsZWFybmluZyBgdGlkeXZlcnNlYCwgd2hpY2ggaXMgYSBjb2xsZWN0aW9uIG9mIGBSYCBwYWNrYWdlcyBmb3IgZGF0YSBtYW5hZ2VtZW50OgoKaHR0cHM6Ly93d3cudGlkeXZlcnNlLm9yZy9sZWFybi8KCmh0dHBzOi8vd3d3LmxpbmtlZGluLmNvbS9sZWFybmluZy9sZWFybmluZy10aGUtci10aWR5dmVyc2Uvd2VsY29tZT91PTQyNDU5MDIwCgojIyBRdWVzdGlvbnMKCklmIHlvdSBoYXZlIHF1ZXN0aW9uczoKCi0gUG9zdCB0byB0aGUgYFJgIG1haWxpbmcgbGlzdDogaHR0cHM6Ly9zdGF0LmV0aHouY2gvbWFpbG1hbi9saXN0aW5mby9yLWhlbHAKLSBQb3N0IHRvIGZvcnVtczogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvdGFnZ2VkL3IKLSBNb3JlIGluZm86IGh0dHBzOi8vd3d3LnItYmxvZ2dlcnMuY29tL3doZXJlLXRvLWdldC1oZWxwLXdpdGgteW91ci1yLXF1ZXN0aW9uLwoKIyBJbml0aWFsIFNldCBVcCB7I3NldHVwfQoKTm90ZTogbWFueSBvZiB0aGVzZSBpbml0aWFsIHNldHVwIHN0ZXBzIGRlc2NyaWJlZCBiZWxvdyBhcmUgbm90IG5lY2Vzc2FyeSBmb3IgZ2VuZXJhbCB1c2U7IG1hbnkgb2YgdGhlc2Ugc3RlcHMgYXJlIG5lY2Vzc2FyeSBvbmx5IGZvciB1c2luZyBsYWItcmVsYXRlZCByZXBvc2l0b3JpZXMgKGUuZy4sIHRvIGdhaW4gQVBJIGFjY2VzcyB0byBleHBvcnQgZGF0YSBmcm9tIGBSRURDYXBgLCB0byB1c2UgYWJzb2x1dGUgcGF0aHMgcmF0aGVyIHRoYW4gcmVsYXRpdmUgcGF0aHMgc28gcmVwb3MgY2FuIGNvbW11bmljYXRlIHdpdGggZWFjaCBvdGhlciwgZXRjLikuCgoxLiBNYWtlIHN1cmUgeW91IGFyZSBsb2dnZWQgb250byBhIGNvbXB1dGVyIHRoYXQgY2FuIGFjY2VzcyB0aGUgbGFiIHNlcnZlciAoZWl0aGVyIGEgbGFiIGNvbXB1dGVyLCBvciBhIGNvbXB1dGVyIHlvdSBjYW4gVlBOIGludG8gdGhlIGxhYiBzZXJ2ZXIpLCBhbmQgdGhhdCB5b3UgaGF2ZSBhZG1pbiBhY2Nlc3MgdG8gaW5zdGFsbCBhbmQgdW5pbnN0YWxsIHNvZnR3YXJlCjEuIEluc3RhbGwgYFJgIChodHRwczovL3d3dy5yLXByb2plY3Qub3JnLykgaW50byBhIGRpcmVjdG9yeSB0aGF0IGNvbnRhaW5zIG5vIHNwYWNlczsgT24gUEMsIGNoYW5nZSB0aGUgbG9jYXRpb24gZnJvbSB0aGUgZGVmYXVsdCBgQzovUHJvZ3JhbSBGaWxlcy9SL1tSLVZFUlNJT05dYCAod2hpY2ggY29udGFpbnMgYSBzcGFjZSkgdG8gYEM6L1IvW1ItVkVSU0lPTl1gIChbd2hpY2ggZG9lcyBub3QgY29udGFpbiBhbnkgc3BhY2VzXShodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9kb2MvbWFudWFscy9yLXJlbGVhc2UvUi1hZG1pbi5odG1sI0luc3RhbGxpbmctUi11bmRlci1XaW5kb3dzKS0tLXRoaXMgaXMgYmVjYXVzZSBbc29tZSBwYWNrYWdlcyB0aGF0IHJlcXVpcmUgY29tcGlsYXRpb24gdG8gaW5zdGFsbCBjYW5ub3QgcmVhZCBmaWxlcGF0aHMgd2l0aCBzcGFjZXNdKGh0dHBzOi8vY3Jhbi5yLXByb2plY3Qub3JnL2RvYy9tYW51YWxzL3ItcmVsZWFzZS9SLWFkbWluLmh0bWwjSW5zdGFsbGF0aW9uKSk7IG1heSBoYXZlIHRvIHJpZ2h0IGNsaWNrIGFuZCAiUnVuIEFzIEFkbWluaXN0cmF0b3IiCiAgICAtIElmIGBSYCB3YXMgYWxyZWFkeSBpbnN0YWxsZWQgaW4gYSBkaXJlY3RvcnkgdGhhdCBjb250YWlucyBzcGFjZXMgKGUuZy4sIGBDOi9Qcm9ncmFtIEZpbGVzL1IvW1ItVkVSU0lPTl1gKSwgdW5pbnN0YWxsIGBSYCBiZWZvcmUgaW5zdGFsbGluZyBpdCBpbiBhIGRpcmVjdG9yeSB0aGF0IGRvZXNuJ3QgY29udGFpbiBzcGFjZXMKMS4gSW5zdGFsbCBgUlN0dWRpb2AgRGVza3RvcCAoaHR0cHM6Ly93d3cucnN0dWRpby5jb20vcHJvZHVjdHMvcnN0dWRpby9kb3dubG9hZC8pIGluIHRoZSBtYWluIHByb2dyYW0gZmlsZXMgZGlyZWN0b3J5OyBtYXkgaGF2ZSB0byByaWdodCBjbGljayBhbmQgIlJ1biBBcyBBZG1pbmlzdHJhdG9yIi4KYFJTdHVkaW9gIGlzIHRoZSBiZXN0IGF2YWlsYWJsZSBncmFwaGljYWwgdXNlciBpbnRlcmZhY2UgZm9yIFIuCjEuIFNldCB0aGUgZXhlY3V0YWJsZXMgZm9yIGBSYCBhbmQgYFJTdHVkaW9gIHRvIGFsd2F5cyBydW4gd2l0aCBhZG1pbmlzdHJhdG9yIHBlcm1pc3Npb25zLgogICAgLSBJZiBvbiBXaW5kb3dzLCBvcGVuIEZpbGUgRXhwbG9yZXIgYW5kIGZpbmQgdGhlIG1haW4gZXhlY3V0YWJsZSBvZiBgUmAgKGBDOi9SL1tSLVZFUlNJT05dL2Jpbi9SLmV4ZWApIGFuZCBgUlN0dWRpb2AgKGBDOlxQcm9ncmFtIEZpbGVzXFJTdHVkaW9cYmluXFJTdHVkaW8uZXhlYCkuCiAgICBSaWdodC1jbGljayBpdCB0byBvcGVuIHRoZSBjb250ZXh0dWFsIG1lbnUuCiAgICBUaGVuLCBjbGljayBvciB0YXAgb24gIlByb3BlcnRpZXMiLgogICAgSW4gdGhlIFByb3BlcnRpZXMgd2luZG93LCBnbyB0byB0aGUgQ29tcGF0aWJpbGl0eSB0YWIuCiAgICBBdCB0aGUgYm90dG9tIG9mIHRoZSB3aW5kb3csIGNoZWNrIHRoZSBib3ggbmV4dCB0byB0aGUgIlJ1biB0aGlzIHByb2dyYW0gYXMgYW4gYWRtaW5pc3RyYXRvciIgb3B0aW9uLCBhbmQgdGhlbiBjbGljayBvciB0YXAgb24gQXBwbHkgb3IgT0suCjEuIEluc3RhbGwgdG9vbHMgdG8gYWxsb3cgeW91IHRvIGNvbXBpbGUgYFJgIHBhY2thZ2VzIHNvIHlvdSBjYW4gaW5zdGFsbCBwYWNrYWdlcyBmcm9tIHNvdXJjZSwgaWYgbmVjZXNzYXJ5IChpLmUuLCBpZiBwYWNrYWdlIGJpbmFyaWVzIGFyZSBub3QgYXZhaWxhYmxlKToKICAgIC0gSWYgb24gV2luZG93cywgaW5zdGFsbCBbUnRvb2xzXShodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy9iaW4vd2luZG93cy9SdG9vbHMvKTsgbWF5IGhhdmUgdG8gcmlnaHQgY2xpY2sgYW5kICJSdW4gQXMgQWRtaW5pc3RyYXRvciIKICAgIC0gSWYgb24gTWFjLCBpbnN0YWxsIFtSIENvbXBpbGVyIFRvb2xzIGZvciBSY3BwIG9uIE1hY09TXShodHRwczovL3RoZWNvYXRsZXNzcHJvZmVzc29yLmNvbS9wcm9ncmFtbWluZy9jcHAvci1jb21waWxlci10b29scy1mb3ItcmNwcC1vbi1tYWNvcy8pCjEuIFNldCB1cCBnaXQsIEdpdExhYiwgYW5kIHRoZSBHaXRIdWIgRGVza3RvcCBBcHAgaW4gdGhlIG1haW4gcHJvZ3JhbSBmaWxlcyBkaXJlY3Rvcnk7IG1heSBoYXZlIHRvIHJpZ2h0IGNsaWNrIGFuZCAiUnVuIEFzIEFkbWluaXN0cmF0b3IiOyBGb3IgaW5zdHJ1Y3Rpb25zIHNldHRpbmcgdXAgYW5kIHVzaW5nIEdpdExhYiwgc2VlIGhlcmU6IGh0dHBzOi8vcmVzZWFyY2gtZ2l0LnVpb3dhLmVkdS9QZXRlcnNlbkxhYi9SLUluaXRpYWxTZXR1cC8tL2Jsb2IvbWFzdGVyL0dpdExhYi9HaXRMYWIlMjBJbnN0cnVjdGlvbnMubWQKMS4gVGhlIGBScHJvZmlsZS5zaXRlYCBmaWxlIGluIHRoZSBgZXRjYCBmb2xkZXIgb2YgdGhlIGBSYCBpbnN0YWxsYXRpb24gZGlyZWN0b3J5IGlzIHRoZSBjb2RlIHRoYXQgaXMgcnVuIGZvciAqKipldmVyeSB1c2VyKioqIGF0IHRoZSBiZWdpbm5pbmcgZWFjaCB0aW1lIHlvdSBsb2FkIFIuICBXZSB3aWxsIHVwZGF0ZSB0aGUgZGVmYXVsdCBgUnByb2ZpbGUuc2l0ZWAgZmlsZSB3aXRoIHRoZSBsYWIncyBgUnByb2ZpbGUuc2l0ZWAgZmlsZSBzbyBgUmAgaW5zdGFsbHMgcGFja2FnZXMgaW4gdGhlIGNvcnJlY3QgbG9jYXRpb24sIHNldHMgdGhlIGRlZmF1bHQgcGFja2FnZSByZXBvc2l0b3J5LCB1cGRhdGVzIHBhY2thZ2VzLCBhbmQgZ2l2ZXMgeW91IGEgZm9ydHVuZSBjb29raWUuClRvIGRvIHRoaXMsIHBlcmZvcm0gdGhlIGZvbGxvd2luZyBzdGVwczoKICAgIC0gUmVuYW1lIHRoZSBgUnByb2ZpbGUuc2l0ZWAgZmlsZSBpbiB0aGUgYFJgIGluc3RhbGxhdGlvbiBkaXJlY3RvcnkgKGBDOi9SL1ItW0luc2VydFZlcnNpb25OdW1iZXJdL2V0Yy9ScHJvZmlsZS5zaXRlYCkgdG8gYmUgYFJwcm9maWxlX0JBQ0tVUC5zaXRlYAogICAgLSBEb3dubG9hZCB0aGUgbGFiJ3MgYFJwcm9maWxlLnNpdGVgIGZpbGUgbG9jYXRlZCBpbiB0aGlzIHJlcG9zaXRvcnkgYXQgdGhlIGZvbGxvd2luZyBsb2NhdGlvbiAoaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL1ItSW5pdGlhbFNldHVwLy0vYmxvYi9tYXN0ZXIvUiUyMFNldHVwJTIwRmlsZXMvUnByb2ZpbGUuc2l0ZSksIGFuZCBwYXN0ZSBpdCBpbnRvIHRoZSBgUmAgaW5zdGFsbGF0aW9uIGRpcmVjdG9yeSAoUEM6IGBDOi9SL1ItW0luc2VydFZlcnNpb25OdW1iZXJdL2V0Yy9ScHJvZmlsZS5zaXRlYDsgTWFjOiBgL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy9bSW5zZXJ0VmVyc2lvbk51bWJlcl0vUmVzb3VyY2VzL2V0Yy9ScHJvZmlsZS5zaXRlYCkKMS4gVGhlIGAuUnByb2ZpbGVgIGZpbGUgaW4gdGhlIHVzZXIncyBgRG9jdW1lbnRzYCBmb2xkZXIgaXMgdGhlIGNvZGUgdGhhdCBpcyBydW4gZm9yICoqKnRoZSBwYXJ0aWN1bGFyIHVzZXIqKiogYXQgdGhlIGJlZ2lubmluZyBlYWNoIHRpbWUgeW91IGxvYWQgUi4KV2Ugd2lsbCB1cGRhdGUgdGhlIGRlZmF1bHQgYC5ScHJvZmlsZWAgZmlsZSAoaWYgdGhlcmUgaXMgb25lKSB3aXRoIHRoZSBsYWIncyBgLlJwcm9maWxlYCBmaWxlIHNvIGBSYCBrbm93cyB3aGljaCBjb21wdXRlciB5b3UgYXJlIHVzaW5nIGFuZCB3aGljaCBwYXRoIHRvIHVzZSAocmVsYXRpdmUgdG8gd2hlcmUgeW91ciBgUmAgcHJvamVjdHMgYXJlIGxvY2F0ZWQpLgpUbyBkbyB0aGlzLCBwZXJmb3JtIHRoZSBmb2xsb3dpbmcgc3RlcHM6CiAgICAtIERvd25sb2FkIHRoZSBsYWIncyBgLlJwcm9maWxlYCB0ZW1wbGF0ZSBmaWxlIGluIHRoaXMgcmVwb3NpdG9yeSBhdCB0aGUgZm9sbG93aW5nIGxvY2F0aW9uLCBhbmQgbWFrZSBzdXJlIHRvIHJlbW92ZSBhbnl0aGluZyBiZXNpZGVzIGAuUnByb2ZpbGVgIGluIHRoZSBmaWxlbmFtZTogaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL1ItSW5pdGlhbFNldHVwLy0vYmxvYi9tYXN0ZXIvUiUyMFNldHVwJTIwRmlsZXMvLlJwcm9maWxlCiAgICAtIE9wZW4gdGhlIGxhYidzIGAuUnByb2ZpbGVgIGZpbGUsIGFuZCByZXZpc2UgaXQgd2l0aCB5b3VyIEhhd2tJRAogICAgLSBSZXZpc2UgdGhlIGxhYidzIGAuUnByb2ZpbGVgIGZpbGUgd2l0aCB0aGUgbG9jYWwgcGF0aCB0byB0aGUgYERvY3VtZW50c2AgZm9sZGVyIGZvciBlYWNoIG9mIHRoZSBjb21wdXRlcnMgeW91IHdpbGwgdXNlIHRvIGFjY2VzcyBgUmAgKGUuZy4sIGhvbWUgY29tcHV0ZXIsIHdvcmsgY29tcHV0ZXIsIGxhcHRvcCkuCiAgICBNYWtlIHN1cmUgdG8gdXNlIGZvcndhcmQgc2xhc2hlcyAoYC9gKSwgbm90IGJhY2sgc2xhc2hlcyAoYFxgKSBpbiB0aGUgcGF0aC4KICAgIC0gWW91IHdpbGwgc2F2ZSB0aGUgZmlsZSBpbiB5b3VyIGBIT01FYCBkaXJlY3RvcnkuCiAgICBUbyBmaW5kIHRoZSBgSE9NRWAgZGlyZWN0b3J5LCBvcGVuIGBSYCBhbmQgdHlwZSB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6IGBTeXMuZ2V0ZW52KCJIT01FIilg4oCUdGhlIG91dHB1dCBvZiB0aGUgY29tbWFuZCBpcyB0aGUgbG9jYXRpb24gb2YgeW91ciBgSE9NRWAgZGlyZWN0b3J5OyBJZiB0aGlzIGlzIGEgbGFiIGNvbXB1dGVyLCBpdCBtYXkgYmUgbG9jYXRlZCBoZXJlOiBgLy9ob21lLmlvd2EudWlvd2EuZWR1L1t1c2VyXS9Eb2N1bWVudHNgLgogICAgSWYgdGhpcyBpcyB5b3VyIHBlcnNvbmFsIGNvbXB1dGVyLCBpdCBtYXkgYmUgbG9jYXRlZCBoZXJlOiBQQzogYEM6L1VzZXJzL1t1c2VyXS9Eb2N1bWVudHNgOyBNYWM6IGAvVXNlcnMvW3VzZXJdYC4KICAgIFRoZW4gY2xvc2UgUi4KICAgIC0gSWYgeW91ciBgSE9NRWAgZGlyZWN0b3J5IGlzIGluIGEgT25lRHJpdmUgZm9sZGVyIChvciBhbm90aGVyIGNsb3VkLWJhc2VkIHN5bmMgZm9sZGVyKSwgeW91IHdpbGwgd2FudCB0byBjaGFuZ2UgdGhlIGRpcmVjdG9yeSBvZiB5b3VyIGBIT01FYCBwYXRoIHNvIHRoYXQgaXQgaXMgbm90IGluIGEgT25lRHJpdmUgZm9sZGVyLgogICAgVG8gZG8gdGhhdCwgb3BlbiBbYEVudmlyb25tZW50IFZhcmlhYmxlc2BdKGh0dHBzOi8vc3VwZXJ1c2VyLmNvbS9xdWVzdGlvbnMvOTQ5NTYwL2hvdy1kby1pLXNldC1zeXN0ZW0tZW52aXJvbm1lbnQtdmFyaWFibGVzLWluLXdpbmRvd3MtMTApIGluIFdpbmRvd3MuCiAgICBUaGVuLCBhZGQvZWRpdCBgSE9NRWAgYXMgdGhlICJ2YXJpYWJsZSBuYW1lIiB3aXRoIHRoZSBpbnRlbmRlZCBsb2NhdGlvbiBhcyB0aGUgInZhcmlhYmxlIHZhbHVlIiAoZS5nLiwgYEM6L1VzZXJzL1t1c2VyXS9Eb2N1bWVudHNgLCB3aGVyZSB5b3UgcmVwbGFjZSAidXNlciIgd2l0aCB5b3VyIEhhd2tJRCkuCiAgICAtIE1vdmUgdGhlIHJldmlzZWQgYC5ScHJvZmlsZWAgZmlsZSB0byB0aGUgYEhPTUVgIGRpcmVjdG9yeSBhbmQgb3ZlcndyaXRlIHRoZSBvcmlnaW5hbCBgLlJwcm9maWxlYCBmaWxlIChpZiBpdCBleGlzdHMpLgogICAgWW91IG1heSBoYXZlIHRvIHNob3cgaGlkZGVuIGZpbGVzIGluIG9yZGVyIHRvIHNlZSB0aGUgZmlsZSAoUEM6IHNlZSBXaW5kb3dzIEV4cGxvcmVyIHNldHRpbmdzOyBNYWM6IENvbW1hbmQrU2hpZnQrRG90KS4KICAgIC0gTWFrZSBzdXJlIHRvIHNob3cgZmlsZW5hbWUgZXh0ZW5zaW9ucyBpbiB5b3VyIGZpbGUgZXhwbG9yZXIgd2luZG93LCBhbmQgbWFrZSBzdXJlIHRoZSBmaWxlIGlzIG5hbWVkIGAuUnByb2ZpbGVgIChub3QgYC5ScHJvZmlsZS5ScHJvZmlsZWApLgogICAgTWFrZSBzdXJlIHRoZXJlIGlzIGEgcGVyaW9kIGF0IHRoZSBiZWdpbm5pbmcgb2YgdGhlIGZpbGVuYW1lLgoxLiBSdW4gYFJTdHVkaW9gLgpJZiB0aGUgYFJwcm9maWxlLnNpdGVgIGFuZCBgLlJwcm9maWxlYCBmaWxlcyBhcmUgY29ycmVjdGx5IHNldCB1cCwgdGhleSBzaG91bGQgcHJlLXBvcHVsYXRlIHlvdXIgYHBhdGhgIGxvY2F0aW9uIHdoZW4geW91IG9wZW4gUi4KSWYgdGhlIGNvbnRlbnRzIG9mIHRoZSBgR2xvYmFsIEVudmlyb25tZW50YCBpbiBgUlN0dWRpb2AgYXJlIGVtcHR5LCB5b3VyIGBScHJvZmlsZS5zaXRlYCBhbmQvb3IgYC5ScHJvZmlsZWAgZmlsZXMgYXJlIG5vdCBzZXQgdXAgY29ycmVjdGx5LgogICAgLSBJZiB5b3UgZ2V0IHRoaXMgZXJyb3IgKGBFcnJvcjogY291bGQgbm90IGZpbmQgZnVuY3Rpb24gImluc3RhbGwucGFja2FnZXMiYCksIHJ1biB0aGUgZm9sbG93aW5nIGxpbmUgbWFudWFsbHkgYW5kIHRoZW4gcmVzdGFydCBgUlN0dWRpb2AgYWZ0ZXIgdGhlIHBhY2thZ2UgZmluaXNoZXMgaW5zdGFsbGluZzogYGluc3RhbGwucGFja2FnZXMoImZvcnR1bmVzIilgCjEuIEluc3RhbGwgdGhlIGBwZXRlcnNlbmxhYmAgYFJgIHBhY2thZ2UgdXNpbmcgdGhlIGZvbGxvd2luZyBzdGVwczoKICAgIC0gSW5zdGFsbCB0aGUgYHJlbW90ZXNgIHBhY2thZ2UgdXNpbmcgdGhlIGZvbGxvd2luZyBjb21tYW5kOiBgaW5zdGFsbC5wYWNrYWdlcygicmVtb3RlcyIpYAogICAgLSBJbnN0YWxsIHRoZSBgcGV0ZXJzZW5sYWJgIHBhY2thZ2UgdXNpbmcgdGhlIGZvbGxvd2luZyBjb21tYW5kOiBgcmVtb3Rlczo6aW5zdGFsbF9naXQoImh0dHBzOi8vcmVzZWFyY2gtZ2l0LnVpb3dhLmVkdS9QZXRlcnNlbkxhYi9wZXRlcnNlbmxhYi5naXQiKWAKMS4gUmVxdWVzdCBhbiBBUEkgdG9rZW4gZm9yIGJvdGggUkVEQ2FwIHByb2plY3RzIChTY2hvb2wgUmVhZGluZXNzIFN0dWR5LCBTY2hvb2wgUmVhZGluZXNzIFN0dWR5IFNjcmVlbmluZyk6Cmh0dHBzOi8vcmVkY2FwLmljdHMudWlvd2EuZWR1L3JlZGNhcC9hcGkvaGVscC8/Y29udGVudD10b2tlbnMKMS4gV2hlbiB5b3VyIEFQSSB0b2tlbiBoYXMgYmVlbiBhcHByb3ZlZCBmb3IgYm90aCBwcm9qZWN0cywgb3BlbiB0aGUgYEVuY3J5cHQgUkVEQ2FwIFRva2VuLlJgIHNjcmlwdDoKaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L3BldGVyc2VubGFiL1ItSW5pdGlhbFNldHVwL2Jsb2IvbWFzdGVyL1JFRENhcCUyMENyZWRlbnRpYWxzL0VuY3J5cHQlMjBSRURDYXAlMjBUb2tlbi5SCjEuIFJldmlzZSB0aGUgQVBJIHRva2VucyB0byByZWZsZWN0IHlvdXJzLCB0aGVuIHJ1biB0aGUgc2NyaXB0IHRvIHNhdmUgeW91ciBlbmNyeXB0ZWQgY3JlZGVudGlhbHMgb24gdGhlIGxhYiBzZXJ2ZXIgYW5kIHlvdXIgZW5jcnlwdGlvbiBrZXkgb24geW91ciBsb2NhbCBjb21wdXRlcgogICAgLSBWZXJpZnkgdGhhdCB0aGUgRW5jcnlwdGlvbiBLZXkgKGBSRURDYXAgRW5jcnlwdGlvbiBLZXkuUkRhdGFgKSB3YXMgc2F2ZWQgd2hlcmUgeW91IGludGVuZGVkIGl0IHRvIGJlIHNhdmVkIG9uIHlvdXIgbG9jYWwgY29tcHV0ZXIKICAgIC0gVmVyaWZ5IHRoYXQgYSBmaWxlIG5hbWVkIHdpdGggeW91ciBIYXdrSUQgd2FzIHNhdmVkIGhlcmU6IGAvL2lvd2EudWlvd2EuZWR1L3NoYXJlZC9SZXNlYXJjaERhdGEvcmRzc19pdHBldGVyc2VuL0xhYi9TdHVkaWVzL1NjaG9vbCBSZWFkaW5lc3MgU3R1ZHkvRGF0YSBNYW5hZ2VtZW50L1JFRENhcC9Ub2tlbnMvYAoxLiBDb3B5IHRoZSBFbmNyeXB0aW9uIEtleSAoYFJFRENhcCBFbmNyeXB0aW9uIEtleS5SRGF0YWApIHRvIHRoZSBjb21wYXJhYmxlIGxvY2F0aW9uIG9mIGFueSBvdGhlciBjb21wdXRlcnMgeW91IG93biB0aGF0IHlvdSBwbGFuIHRvIGFjY2VzcyB0aGUgZGF0YSBmcm9tCiAgICAtIFRoZSBmaWxlIGhhcyB0byBiZSBpbiB0aGUgY29tcGFyYWJsZSBsb2NhdGlvbiAocmVsYXRpdmUgdG8gdGhlIGBwYXRoYCB2YXJpYWJsZSB5b3Ugc2V0IGluIGBScHJvZmlsZS5zaXRlYCkgb2YgZXZlcnkgY29tcHV0ZXIgaW4gb3JkZXIgZm9yIGl0IHRvIGJlIGZvdW5kIGJ5IHRoZSBgRXhwb3J0IERhdGEuUmAgc2NyaXB0LgogICAgVGhlIGRlZmF1bHQgbG9jYXRpb24gaXM6IGBmaWxlLnBhdGgocGF0aCwgIkdpdEh1Yi9SL0RhdGEvUkVEQ2FwIEVuY3J5cHRpb24gS2V5LlJEYXRhIilgLCBzbyBpZiBgcGF0aGAgaXMgc2V0IGFzIGAiQzovVXNlci9Zb3VyTmFtZSJgLCB0aGUgZmlsZSB3b3VsZCBiZSBzYXZlZCBpbjogYEM6L1VzZXIvWW91ck5hbWUvR2l0SHViL1IvRGF0YS9SRURDYXAgRW5jcnlwdGlvbiBLZXkuUkRhdGFgLgogICAgVGhlIHJlY29tbWVuZGVkIGxvY2F0aW9uIGZvciBHaXRIdWIgcmVwb3MgaXMgdG8gY3JlYXRlIGEgZm9sZGVyIHRpdGxlZCBgR2l0SHViYCBpbiB5b3VyIGBEb2N1bWVudHNgIGZvbGRlciwgYW5kIHRvIHB1dCByZXBvcyBpbiB0aGUgYEdpdEh1YmAgZm9sZGVyOyBpdCBpcyAqTk9UKiByZWNvbW1lbmRlZCB0byBwdXQgZ2l0IHJlcG9zIGluIGEgT25lRHJpdmUgZm9sZGVyIGJlY2F1c2UgW2dpdCBmaWxlcyB0ZW5kIG5vdCB0byBwbGF5IG5pY2Ugd2l0aCBzeW5jaW5nIHNlcnZpY2VzXShodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xOTMwNTAzMy93aHktaXMtcHV0dGluZy1naXQtcmVwb3NpdG9yaWVzLWluc2lkZS1vZi1hLWRyb3Bib3gtZm9sZGVyLW5vdC1yZWNvbW1lbmRlZCkgKGUuZy4sIE9uZURyaXZlLCBEcm9wYm94KQoxLiBBZGQgdGhlIFNSUyBEYXRhIFByb2Nlc3NpbmcgcmVwbyBmcm9tIHRoZSBsYWIgZHJpdmUgdG8geW91ciBHaXRIdWIgRGVza3RvcCBBcHAgKGAvL2lvd2EudWlvd2EuZWR1L1NoYXJlZC9SZXNlYXJjaERhdGEvcmRzc19pdHBldGVyc2VuL0xhYi9TdHVkaWVzL1NjaG9vbCBSZWFkaW5lc3MgU3R1ZHkvRGF0YSBQcm9jZXNzaW5nYCkKICAgIC0gRm9yIGluc3RydWN0aW9ucywgc2VlIHRoZSBzZWN0aW9uIG9uICJbSG93IHRvIGFkZCBhIHByZS1leGlzdGluZyByZXBvIGZyb20gdGhlIGxhYiBkcml2ZSAoUkRTUy9uZXR3b3JrIHNoYXJlKSB0byB5b3VyIGNvbXB1dGVyXShodHRwczovL3Jlc2VhcmNoLWdpdC51aW93YS5lZHUvUGV0ZXJzZW5MYWIvUi1Jbml0aWFsU2V0dXAvLS9ibG9iL21hc3Rlci9HaXRMYWIvR2l0TGFiJTIwSW5zdHJ1Y3Rpb25zLm1kI2hvdy10by1hZGQtYS1wcmUtZXhpc3RpbmctcmVwby1mcm9tLXRoZS1sYWItZHJpdmUtcmRzc25ldHdvcmstc2hhcmUtdG8teW91ci1jb21wdXRlcikiIGhlcmU6IGh0dHBzOi8vcmVzZWFyY2gtZ2l0LnVpb3dhLmVkdS9wZXRlcnNlbmxhYi9SLUluaXRpYWxTZXR1cC9ibG9iL21hc3Rlci9HaXRMYWIvR2l0TGFiJTIwSW5zdHJ1Y3Rpb25zLm1kCjEuIE9wZW4gYFJTdHVkaW9gIGJ5IHVzaW5nICJSdW4gYXMgQWRtaW5pc3RyYXRvciIgKGFsd2F5cyBvcGVuIGBSU3R1ZGlvYCBhcyBhbiBhZG1pbmlzdHJhdG9yIHNvIGl0IGhhcyB3cml0ZSBhY2Nlc3MgdG8gdGhlIHByb2dyYW0gZmlsZXMgZGlyZWN0b3J5KTsKMS4gT3BlbiB0aGUgYEV4cG9ydCBEYXRhLlJgIHNjcmlwdCBpbiBSOgpodHRwczovL3Jlc2VhcmNoLWdpdC51aW93YS5lZHUvcGV0ZXJzZW5sYWIvc3JzL1NSUy1EYXRhUHJvY2Vzc2luZy9ibG9iL21hc3Rlci8xLiUyMEV4cG9ydCUyMERhdGEvRXhwb3J0JTIwRGF0YS5SCmBcXGlvd2EudWlvd2EuZWR1XFNoYXJlZFxSZXNlYXJjaERhdGFccmRzc19pdHBldGVyc2VuXExhYlxTdHVkaWVzXFNjaG9vbCBSZWFkaW5lc3MgU3R1ZHlcRGF0YSBQcm9jZXNzaW5nXDEuIEV4cG9ydCBEYXRhXEV4cG9ydCBEYXRhLlJgCjEuIEVuc3VyZSB5b3VyIEhhd2tJRCBhbmQgbG9jYXRpb24gb2YgeW91ciBlbmNyeXB0aW9uIGtleSBpbiB0aGUgc2NyaXB0IGFyZSBjb3JyZWN0LCBhbmQgdGhlbiBydW4gdGhlIHNjcmlwdCB0byB2ZXJpZnkgdGhhdCB5b3UgY2FuIGV4cG9ydCBkYXRhIGZyb20gUkVEQ2FwCjEuIEZvciBhbnRpYWxpYXNlZCBwbG90cyBpbiBgUlN0dWRpb2AsIGNoYW5nZSB0aGUgR3JhcGhpY3MgYmFja2VuZCB0byBgQ2Fpcm9gOgpUb29scyDihpIgR2xvYmFsIE9wdGlvbnMg4oaSIEdyYXBoaWNzCgojIEluc3RhbGwgUGFja2FnZXMKClVzZSB0aGUgc3ludGF4OiBgaW5zdGFsbC5wYWNrYWdlcygibmFtZV9vZl9wYWNrYWdlIilgIHRvIGluc3RhbGwgYSBzaW5nbGUgcGFja2FnZSwgb3IgYGluc3RhbGwucGFja2FnZXMoYygibmFtZV9vZl9wYWNrYWdlMSIsIm5hbWVfb2ZfcGFja2FnZTIiLCJuYW1lX29mX3BhY2thZ2UzIikpYCB0byBpbnN0YWxsIG11bHRpcGxlIHBhY2thZ2VzLgoKIyBVcGRhdGUgYFJgCgpJbnN0cnVjdGlvbnMgYWRhcHRlZCBmcm9tOiBbaHR0cHM6Ly9taXJyb3IubGFzLmlhc3RhdGUuZWR1L0NSQU4vYmluL3dpbmRvd3MvYmFzZS9ydy1GQVEuaHRtbCNXaGF0XzAwMjdzLXRoZS1iZXN0LXdheS10by11cGdyYWRlXzAwM2ZdKGh0dHBzOi8vbWlycm9yLmxhcy5pYXN0YXRlLmVkdS9DUkFOL2Jpbi93aW5kb3dzL2Jhc2UvcnctRkFRLmh0bWwjV2hhdF8wMDI3cy10aGUtYmVzdC13YXktdG8tdXBncmFkZV8wMDNmKQoKMS4gVW5pbnN0YWxsIGBSYAoxLiBJbnN0YWxsIHRoZSBuZXcgYFJgIHZlcnNpb24gaW50byBhIGRpcmVjdG9yeSB0aGF0IGNvbnRhaW5zIG5vIHNwYWNlcyAoc2VlIFN0ZXAgMiBpbiB0aGUgW0luaXRpYWwgU2V0IFVwXSgjc2V0dXApIHNlY3Rpb24gYWJvdmUpCjEuIFtZb3Ugb25seSBuZWVkIHRvIGRvIHRoaXMgc3RlcCBpZiB5b3UgaW5zdGFsbGVkIHBhY2thZ2VzIGluIHRoZSBSLXZlcnNpb24tc3BlY2lmaWMgIkxpYnJhcnkiIGZvbGRlciByYXRoZXIgdGhhbiB0aGUgY29tbW9uL3NoYXJlZCAiUGFja2FnZXMiIGZvbGRlcuKAlHRoYXQgaXMsIHlvdSBkb24ndCBuZWVkIHRvIGRvIHRoaXMgc3RlcCBpZiB5b3UgdXNlZCB0aGUgbGFiJ3MgYFJwcm9maWxlLnNpdGVgIGZpbGUsIGFzIGRlc2NyaWJlZCBhYm92ZSwgd2hpY2ggaW5zdGFsbHMgcGFja2FnZXMgdG8gdGhlIGNvbW1vbi9zaGFyZWQgIlBhY2thZ2VzIiBmb2xkZXJdOgogICAgLSBDb3B5IGluc3RhbGxlZCBwYWNrYWdlcyBpbiB0aGUgIkxpYnJhcnkiIGZvbGRlciB0byB0aGUgIkxpYnJhcnkiIGZvbGRlciBpbiB0aGUgbmV3IGluc3RhbGxhdGlvbgoxLiBJbiBuZXcgYFJgIHZlcnNpb24gZm9sZGVyLCBjb3B5IHRoZSBjdXJyZW50IGBScHJvZmlsZS5zaXRlYCBmaWxlIGFzIGEgYmFja3VwIChgUnByb2ZpbGVfQkFDS1VQLnNpdGVgKSBhbmQgb3ZlcndyaXRlIHRoZSBvcmlnaW5hbCBmaWxlIHdpdGggdGhlIGxhYidzIHZlcnNpb24gb2YgYFJwcm9maWxlLnNpdGVgIGZyb20gaGVyZTogaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL1ItSW5pdGlhbFNldHVwLy0vYmxvYi9tYXN0ZXIvUiUyMFNldHVwJTIwRmlsZXMvUnByb2ZpbGUuc2l0ZQogICAgLSBgUmAgd2lsbCBydW4gdGhlIGZpbGUgbmFtZWQgYFJwcm9maWxlLnNpdGVgIGF0IGluaXRpYWwgcnVudGltZS4KMS4gU2V0IHRoZSBleGVjdXRhYmxlcyBmb3IgYFJgIGFuZCBgUlN0dWRpb2AgdG8gYWx3YXlzIHJ1biB3aXRoIGFkbWluaXN0cmF0b3IgcGVybWlzc2lvbnMuCiAgICAtIElmIG9uIFdpbmRvd3MsIG9wZW4gRmlsZSBFeHBsb3JlciBhbmQgZmluZCB0aGUgbWFpbiBleGVjdXRhYmxlIG9mIGBSYCAoYEM6XFJcUi1WRVJTSU9OXGJpblxSLmV4ZWApIGFuZCBgUlN0dWRpb2AgKGBDOlxQcm9ncmFtIEZpbGVzXFJTdHVkaW9cYmluXFJTdHVkaW8uZXhlYCkuCiAgICBSaWdodC1jbGljayBpdCB0byBvcGVuIHRoZSBjb250ZXh0dWFsIG1lbnUuCiAgICBUaGVuLCBjbGljayBvciB0YXAgb24gIlByb3BlcnRpZXMiLgogICAgSW4gdGhlIFByb3BlcnRpZXMgd2luZG93LCBnbyB0byB0aGUgQ29tcGF0aWJpbGl0eSB0YWIuCiAgICBBdCB0aGUgYm90dG9tIG9mIHRoZSB3aW5kb3csIGNoZWNrIHRoZSBib3ggbmV4dCB0byB0aGUgIlJ1biB0aGlzIHByb2dyYW0gYXMgYW4gYWRtaW5pc3RyYXRvciIgb3B0aW9uLCBhbmQgdGhlbiBjbGljayBvciB0YXAgb24gQXBwbHkgb3IgT0suCjEuIE9wZW4gdGhlIG5ldyBgUmAgdmVyc2lvbiBhbmQgcnVuIGB1cGRhdGUucGFja2FnZXMoY2hlY2tCdWlsdCA9IFRSVUUsIGFzayA9IEZBTFNFKWAsIGFuZCBpbnN0YWxsIGFueSBuZWNlc3NhcnkgcGFja2FnZXMKMS4gQ2xvc2UgUgoxLiBEZWxldGUgYW55dGhpbmcgbGVmdCBvZiB0aGUgb2xkIGluc3RhbGxhdGlvbgoKIyBTdHlsZSBHdWlkZQoKIyMgVXNlIGBSYCBOb3RlYm9va3MgZm9yICJDb21wdXRhdGlvbmFsIE5vdGVib29rcyIKClVzaW5nIGBSYCBOb3RlYm9va3MgZm9yICJDb21wdXRhdGlvbmFsIE5vdGVib29rcyIgaXMgaGVscGZ1bCBmb3IgcmVwcm9kdWNpYmxlIGNvZGUgdGhhdCBjYW4gYmUgc2hhcmVkIHdpdGggb3RoZXJzLgpTZWUgbGlua3MgYmVsb3cgZm9yIG1vcmUgaW5mbyBhYm91dCBob3cgdG8gY3JlYXRlIGBSYCBOb3RlYm9va3M6CgotIGh0dHBzOi8vZ2FycmV0dGdtYW4uZ2l0aHViLmlvL3JtYXJrZG93bi9yX25vdGVib29rcwotIGh0dHBzOi8vYm9va2Rvd24ub3JnL3lpaHVpL3JtYXJrZG93bi9ub3RlYm9vay5odG1sCgojIyBTZXBhcmF0ZSBzZWN0aW9ucyBpbiBjb2RlCgotIEluIGBSYCBzY3JpcHRzLCB1c2Ugc2VjdGlvbnMuCiAgICAtIFRvIGluc2VydCBhIHNlY3Rpb24gaW4gYFJTdHVkaW9gLCB1c2UgQ1RSTC1TaGlmdC1SIG9yICJDb2RlIiAtICJJbnNlcnQgU2VjdGlvbiIKLSBJbiBgUmAgTm90ZWJvb2tzL01hcmtkb3duLCB1c2UgSGVhZGVycyBhbmQgY29kZSBjaHVua3MuCiAgICAtIEhlYWRlcnM6IDEsIDIsIG9yIDMgcG91bmQgc2lnbnMKICAgIC0gQ29kZSBDaHVua3M6IEN0cmwrQWx0K0k7IG9yIGNsaWNrICJJbnNlcnQiIGJ1dHRvbiB0aGVuICJSIgoKIyMgTmFtaW5nIHZhcmlhYmxlcwoKLSBVc2UgbWVhbmluZ2Z1bCB2YXJpYWJsZSBuYW1lczsgd2Ugd2FudCB0byBrbm93IHdoYXQgYSB2YXJpYWJsZSByZXByZXNlbnRzIHdpdGhvdXQgaGF2aW5nIHRvIGNvbnN1bHQgYW4gZXh0ZXJuYWwgY29kZWJvb2sgZm9yIGV2ZXJ5IHZhcmlhYmxlCi0gVmFyaWFibGUgbmFtZXMgc2hvdWxkIGluY2x1ZGUgdGhlIHByZWZpeCBmb3IgdGhlIG1lYXN1cmUgZm9sbG93ZWQgYnkgYW4gdW5kZXJzY29yZQogICAgLSBlLmcuLCBgY2JjbF9gIGZvciB0aGUgQ2hpbGQgQmVoYXZpb3IgQ2hlY2tsaXN0IHZhcmlhYmxlcwotIFVzZSBsb3dlciBjYW1lbCBjYXNlIGZvciB2YXJpYWJsZSBuYW1pbmcKICAgIC0gZS5nLiwgYHByZWZpeF90aGlzSXNUaGVWYXJpYWJsZU5hbWVgCgojIyBDb21tZW50IGNvZGUgZnJlcXVlbnRseSBhbmQgY2xlYXJseSEKCkl0IGlzIGltcG9ydGFudCB0byBjb21tZW50IGNvZGUgZnJlcXVlbnRseSBhbmQgY2xlYXJseS4KWW91IHdhbnQgeW91IChhbmQgb3RoZXJzKSB0byBlYXNpbHkgYmUgYWJsZSB0byB1bmRlcnN0YW5kIHlvdXIgY29kZSBpZiB5b3UgY29tZSBiYWNrIHRvIGl0IHNldmVyYWwgeWVhcnMgbGF0ZXIhCgojIERhdGEgTWFuYWdlbWVudAoKVGlkeXZlcnNlOiBodHRwczovL3d3dy50aWR5dmVyc2Uub3JnCgpVbml2ZXJzaXR5IG9mIElvd2EgV29ya3Nob3BzCgojIFNhdmluZyBQbG90cwoKYHBuZygpOyBkZXYub2ZmKClgCgojIFNhdmluZyBPdXRwdXQKCmBSIE1hcmtkb3duYAoKLSBodHRwczovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbS9sZXNzb24tMS5odG1sCi0gaHR0cHM6Ly93d3cucnN0dWRpby5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMTUvMDIvcm1hcmtkb3duLWNoZWF0c2hlZXQucGRmCi0gaHR0cHM6Ly9ib29rZG93bi5vcmcveWlodWkvcm1hcmtkb3duLwoKIyBTaG9ydGN1dHMKCi0gUnVuIHNlbGVjdGVkIGxpbmUocykgb2YgY29kZTogQ3RybCArIEVudGVyCi0gQ29tbWVudC91bmNvbW1lbnQgY29kZTogQ3RybCArIFNoaWZ0ICsgQwotIFBpcGU6IEN0cmwgKyBTaGlmdCArIE0KLSBJbnNlcnQgQ29kZSBDaHVuazogQ3RybCArIEFsdCArIEkKLSBBc3NpZ25tZW50IG9wZXJhdG9yOiBBbHQgKyAtIChhbHQtZGFzaCkKLSBTZWxlY3QgbXVsdGlwbGUgbGluZXM6IEN0cmwgKyBBbHQsIHVwIG9yIGRvd247IG9yIEFsdCArIGRyYWcgbW91c2UKLSBTZWFyY2g6IEN0cmwgKyBTaGlmdCArIEYKLSBTaG93IGFsbCBrZXlib2FyZCBzaG9ydGN1dHM6IEFsdCArIFNoaWZ0ICsgSwo=</div>
+<script type="text/javascript" src="includes/external-links.js"></script>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://github.com/DevPsyLab" target="_blank" class="fa fa-github fa-fw fa-3x"></a>
+    <a href="https://twitter.com/devpsylab" target="_blank" class="fa fa-twitter fa-fw fa-3x"></a>
+    <a href="https://www.facebook.com/DevPsyLab" target="_blank" class="fa fa-facebook fa-fw fa-3x"></a>
+	<a href="https://www.instagram.com/dev_psy_lab" target="_blank" class="fa fa-instagram fa-fw fa-3x"></a>
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("R.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
