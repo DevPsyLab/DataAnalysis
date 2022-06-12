@@ -1,0 +1,245 @@
+---
+title: "Hierarchical Linear Modeling"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+## Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("lme4")
+library("nlme")
+```
+
+# Terms
+
+These models go by a variety of different terms:
+
+- hierarchical linear model (HLM)
+- multilevel model (MLM)
+- mixed effects model
+- mixed model
+
+# Overview
+
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels
+
+# Estimator: ML or REML
+
+For small sample sizes, restricted maximum likelihood (REML) is preferred over maximum likelihood (ML).
+ML preferred when there is a small number (< 4) of fixed effects; REML is preferred when there are more (> 4) fixed effects.
+The greater the number of fixed effects, the greater the difference between REML and ML estimates.
+Likelihood ratio (LR) tests for REML require exactly the same fixed effects specification in both models.
+So, to compare models with different fixed effects with an LR test (to determine whether to include a particular fixed effect), ML must be used.
+In contrast to the maximum likelihood estimation, REML can produce unbiased estimates of variance and covariance parameters, variance estimates are larger in REML than ML.
+To compare whether an effect should be fixed or random, use REML.
+To simultaneously compare fixed and random effects, use ML.
+
+# Linear Mixed Models {#linear}
+
+## `lme4`
+
+```{r, class.source = "fold-show"}
+lmer(t_ext ~ m_ext + age + (age | tcid),
+     data = mydata,
+     REML = FALSE, #for ML
+     na.action = na.exclude)
+```
+
+## `nlme`
+
+```{r, class.source = "fold-show"}
+lme(t_ext ~ m_ext + age,
+    random= ~1 + age|tcid,
+    data = mydata,
+    method = "ML",
+    na.action = na.exclude)
+```
+
+# Generalized Linear Mixed Models {#generalized}
+
+http://glmm.wikidot.com/faq
+
+## `lmer`
+
+```{r, class.source = "fold-show"}
+glmer(t_ext ~ m_ext + age + (age | tcid),
+      family=poisson(link = "log"),
+      data = CDP_tall,
+      na.action = na.exclude)
+```
+
+## `MASS`
+
+```{r, class.source = "fold-show"}
+glmmPQL(t_ext ~ m_ext + age,
+        random = ~1 + age|tcid,
+        family = poisson(link = "log"),
+        data = CDP_tall)
+```
+
+## `MCMCglmm`
+
+```{r, class.source = "fold-show"}
+MCMCglmm(t_ext ~ m_ext + age,
+         random = ~ us(age):tcid,
+         family = "poisson",
+         data = na.omit(CDP_tall[,c("tcid","t_ext","m_ext","age")]))
+```
+
+# Nonlinear Mixed Models {#nonlinear}
+
+```{r, class.source = "fold-show"}
+nlme(height ~ SSasymp(age, Asym, R0, lrc),
+     data = Loblolly,
+     fixed = Asym + R0 + lrc ~ 1,
+     random = Asym ~ 1,
+     start = c(Asym = 103, R0 = -8.5, lrc = -3.3))
+```
+
+# Robust Mixed Models
+
+To evaluate the extent to which a finding could driven by outliers, this could be done in a number of different ways, such as:
+
+- identifying and excluding influential observations based on DFBETAS or Cook’s distance (Nieuwenhuis, Grotenhuis, & Pelzer, 2012)
+- fitting mixed models using rank-based estimation (Bilgic & Susmann, 2013; Finch, 2017) or robust estimating equations (Koller, 2016)
+- estimating robust standard errors using a sandwich estimator (Wang & Merkle, 2018)
+
+# Assumptions
+
+The within-group errors:
+
+1. are independent
+2. are identically normally distributed
+3. have mean zero and variance sigma-squared
+4. are independent of the random effects
+
+The random effects:
+
+5. are normally distributed
+6. have mean zero and covariance matrix Psi (not depending on the group)
+7. are independent for different groups
+
+# Examining Model Assumptions
+
+## Resources
+
+Pinheiro and Bates (2000) book (p. 174, section 4.3.1)
+
+https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r
+
+## QQ Plots
+
+```{r, class.source = "fold-show"}
+qqnorm(multilevelRegressionModel, ~ranef(., level = 1)) #Multilevel model: make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
+```
+
+## PP Plots
+
+```{r, class.source = "fold-show"}
+ppPlot(multilevelRegressionModel)
+```
+
+## QQ Plot of residuals
+
+```{r, class.source = "fold-show"}
+qqnorm(resid(multilevelRegressionModel))
+```
+
+## Plot residuals
+
+```{r, class.source = "fold-show"}
+plot(multilevelRegressionModel)
+```
+
+## Plot residuals by group (in the example below, level 2 represents the individual)
+
+```{r, class.source = "fold-show"}
+plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0)
+```
+
+## Plot residuals by levels of a predictor
+
+```{r, class.source = "fold-show"}
+plot(multilevelRegressionModel, resid(., type = "p") ~ fitted(.) | female) #type="p" specifies standardized residuals
+```
+
+## Can model heteroscedasticity of the within-group error with the weights argument
+
+```{r, class.source = "fold-show"}
+multilevelRegressionModelVarStructure <- lme(t_ext ~ m_ext + age + female,
+                                             random = ~1 + age|tcid,
+                                             weights = varIdent(form = ~ 1 | female),
+                                             method = "ML",
+                                             data = mydata,
+                                             na.action = na.exclude)
+```
+
+## Plot observed and fitted values
+
+```{r, class.source = "fold-show"}
+plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.))
+```
+
+## Plot QQ plot of residuals by levels of a predictor
+
+```{r, class.source = "fold-show"}
+qqnorm(multilevelRegressionModelVarStructure, ~ resid(.) | female)
+qqnorm(multilevelRegressionModelVarStructure, ~ resid(.))
+```
+
+## QQ plot of random effects
+
+```{r, class.source = "fold-show"}
+qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)) #make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
+qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0))
+qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))
+```
+
+## QQ plot of random effects by levels of a predictor
+
+```{r, class.source = "fold-show"}
+qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
+```
+
+## Pairs plot
+
+```{r, class.source = "fold-show"}
+pairs(multilevelRegressionModelVarStructure)
+pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
+```
+
+## Variance functions for modeling heteroscedasticity
+
+- `varFixed`: fixed variance
+- `varIdent`: different variances per stratum
+- `varPower`: power of covariate
+- `varExp`: exponential of covariate
+- `varConstPower`: constant plus power of covariate
+- `varComb`: combination of variance functions
+
+## Correlation structures for modeling dependence
+
+- `corCompSymm`: compound symmetry
+- `corSymm`: general
+- `corAR1`: autoregressive of order 1
+- `corCAR1`: continuous-time AR(1)
+- `corARMA`: autoregressive-moving average
+- `corExp`: exponential
+- `corGaus`: Gaussian
+- `corLin`: linear
+- `corRatio`: rational quadratic
+- `corSpher`: spherical

@@ -1,0 +1,258 @@
+---
+title: "Git, GitLab, and GitHub"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+For code below, Open Git (or Powershell, Terminal, Command Prompt, etc.) in directory of repository and use the relevant code.
+
+# Why Important
+
+- Provides backups of all files in the cloud
+- Can access the files in the cloud from any computer with access to the internet, even if you are away from your local computer
+- Version control: Provides history of all (committed) changes made to all files
+- If you make a mistake in your code, you can easily revert to a prior version because you took snapshots (commits) of your files!
+    - Allows you to write cleaner code (you do not need to keep all the "commented out" lines of code)
+    - No longer have to keep files or folders named "project_old" (or whatever)
+- Keeps all files for project self-contained, helps increase reproducibility
+- Allows easier collaboration with others on the project
+- Allows easier sharing with outside researchers
+
+# How to Use
+
+## To begin
+
+1. Install git (https://git-scm.com/downloads)
+1. Install GitHub Desktop app (https://desktop.github.com)
+1. Create Personal Access Token (https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html or https://research-git.uiowa.edu/profile/personal_access_tokens) to access GitLab repositories from GitHub Desktop.
+    -  For application name, put "GitHub"
+    -  For expiration date, leave it blank
+    -  For scopes, select everything
+1. When cloning a repository from GitLab using GitHub desktop, GitHub Desktop will ask for your username and password. Enter your HawkID as your username and your Personal Access Token as your password.
+
+## Best practices working with version control
+
+- Create a new repository (repo) whenever you start a new project
+- Follow the Petersen Lab template for how to structure your repo (folder structure, .gitignore file, etc.):
+    - https://research-git.uiowa.edu/PetersenLab/Template
+- To collaborate with others:
+    - Navigate to the repo on the UI GitLab website
+    - When in the repo, click "Members"
+    - Add the Collaborator
+- Each time you want to work on the files in the repo, follow this cycle:
+    1. Using the GitHub Desktop app, sync the repo files from the cloud to the repo on your local computer (i.e., fetch any repo updates to your local machine from the cloud)
+        - Make sure to do this before many code changes so you are working with the latest version of files
+    1. Do your work on the repo: make any code/file/folder additions, changes, or deletions
+    1. Using the GitHub Desktop app, commit the changes
+        - Commit changes to the cloud early and often; when deciding what to commit and when, try to group "similar changes" into the same commit ("like goes with like")
+        - Use a separate "commit" for each separable "functional unit" changed
+    1. Using the GitHub Desktop app, sync the repo files from your local computer to the repo on the cloud (i.e., push all of your committed changes to the cloud)
+        - Never leave file changes uncommitted or unsynced when you stop working on the repo for the day!
+
+## Instructions for using GitHub Desktop app with GitLab
+
+- https://itnext.io/how-to-use-github-desktop-with-gitlab-cd4d2de3d104
+- https://community.reclaimhosting.com/t/using-github-desktop-with-gitlab/876
+- https://stackoverflow.com/questions/22639815/does-github-for-windows-work-with-gitlab
+- https://github.com/desktop/desktop/issues/852#issuecomment-402546848
+- https://github.com/desktop/desktop/issues/3816#issuecomment-421060974
+
+## How to create a repo on local computer
+
+1. Create repository on UI GitLab website (https://research-git.uiowa.edu)
+1. Open GitHub Desktop app
+1. Clone repository
+1. Add `.gitignore` file (from Template project: https://research-git.uiowa.edu/petersenlab/Template/blob/master/.gitignore) to the root of the cloned project folder
+1. Follow the Petersen Lab template for how to structure your repo (folder structure, `.gitignore` file, etc.): https://research-git.uiowa.edu/PetersenLab/Template
+    -  Note that a folder will not be synced if there are no files in them (i.e., if the folder is empty)
+1. Sync file changes using GitHub Desktop ("Fetch origin", "Push origin")
+
+## How to add a pre-existing repo from the lab drive (`RDSS`/network share) to your computer
+
+For example, the `SRS-DataProcessing` repo lives on the lab drive.
+
+1. Make sure Dr. Petersen has given you collaborator access to the repo
+1. Open GitHub Desktop app
+1. Navigate to the folder location of the repo on the lab drive
+1. Drag the `.git` folder within the repo to the GitHub Desktop app
+
+## How to clone a repo from GitLab to local
+
+1. Navigate to relevant repo on GitLab (https://research-git.uiowa.edu)
+1. Click `Clone` in right-hand corner, select `Clone with HTTPS`
+1. Open GitHub Desktop App and click `File`, `Clone Repository`
+1. Click the `URL` tab
+1. Paste in the URL
+1. Navigate to where you want to save it
+    -  The recommended location for your repos is to create a folder titled `GitHub` in your `Documents` folder, and to put repos in the `GitHub` folder (by default: PC: `C:/Users/[USERNAME]/Documents/GitHub/`; Mac: `/Users/[user]/Documents/GitHub/`) because various lab scripts try to read the lab functions from this location; it is *NOT* recommended to put git repos in a OneDrive folder because [git files tend not to play nice with syncing services](https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended) (e.g., OneDrive, Dropbox)
+1. Click `Clone`
+1. Enter your GitLab username as your username and your Personal Access Token as your password
+
+## How to add, modify, or delete files in a repo
+
+1. Open relevant repo in GitHub Desktop app
+1. Pull any repo updates from the server to the local files ("Fetch origin", "Pull origin")
+1. Make necessary additions, modifications, and deletions to the files
+1. Create commits for all changes in GitHub Desktop app (one commit per substantive change): Enter "Summary" and "Commit to master"
+1. After making all changes and commits, push local file changes to the server using GitHub Desktop ("Fetch origin", "Push origin")
+
+## How to collaborate with others
+
+1. Navigate to the repo on the UI GitLab website
+1. When in the repo, click "Settings"
+1. Click "Members"
+1. Add the Collaborator
+
+## How to clone a repo into local directory with a different folder name (directory must be empty)
+
+1. Git Bash into directory
+```
+git clone https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing.git .
+git remote set-url --add origin https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing.git
+git remote -v
+```
+
+## How to transfer a repo to a new location/group/subgroup
+
+1. Create location/group/subgroup (e.g., `PetersenLab/School Readiness Study`)
+1. When in the repo, click "Settings"
+1. Go to "Advanced", and click "Expand"
+1. Go to "Transfer project", and select the location/group/subgroup you want to transfer the repo to under "Select a new namespace"
+1. In the local repo, edit the repo URL in the `.git/config` file
+1. When asked for your password, enter your username (HawkID) and GitLab Personal Access Token
+
+## How to use large file storage (LFS)
+
+1. Make sure the large files are not in the repo yet.
+1. In GitHub Desktop, open the repo you want to use LFS for
+1. In GitHub Desktop, select the `Repository` tab, then select `Command Prompt` or similar
+1. In the command prompt, type (https://docs.gitlab.com/ee/topics/git/lfs/):
+```
+git lfs install                       # initialize the Git LFS project
+git lfs track "*.Rdata"               # select the file extensions that you want to treat as large files
+```
+5. This should have created a `.gitattributes` file in the repo. In GitHub Desktop, commit and push the `.gitattributes` file to the cloud version of the repo.
+6. Copy the large files into the repo.
+7. In GitHub Desktop, commit and push the large file to the cloud version of the repo.
+8. (Or, if not using GitHub Desktop, can commit in the command prompt (https://docs.gitlab.com/ee/topics/git/lfs/):
+```
+git add .                                               # add the large file to the project
+git commit -am "insert name of commit message here"     # commit the file meta data
+git push origin master                                  # sync the git repo and large file to the GitLab server
+```
+9. When asked for credentials, use your HawkID as your username and your personal access token as your password
+
+# Troubleshooting
+
+## GitHub shows all files as being changed even though the files haven't changed
+
+Windows and Mac use different line endings (https://github.com/Microsoft/WSL/issues/184):
+
+```
+git config --global core.autocrlf true
+```
+  
+## Error: `You are not allowed to push code to protected branches on this project`
+
+1. Make sure the owner of the repo unprotects the branch (https://stackoverflow.com/questions/32246503/fix-gitlab-error-you-are-not-allowed-to-push-code-to-protected-branches-on-thi)
+1. Open the repo, click "Settings", "Repository", "Protected Branches"
+1. Change "Allowed to merge" and "Allowed to push" to "Developers and Maintainers", and click "Unprotect"
+
+## Error creating commit
+
+```
+git add -A
+git status
+git commit -m "Message"` (where "Message" is the summary message of the commit)
+git push
+git status
+```
+
+## Undo commit (but retain file changes)
+
+```
+git reset --soft HEAD^
+```
+
+## Error: "Sync failed"
+
+```
+git status
+git push
+```
+
+## Error: "Sync failed -- Syncing would overwrite your uncommitted changes"
+
+https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-would-be-over-written-by-syncing:
+
+1. `git stash -u`
+1. (perform manual sync in GitHub Desktop)
+1. `git stash pop`
+  
+## Error: "Pipeline has failed for master"
+
+https://docs.gitlab.com/ee/topics/autodevops/#at-the-project-level
+
+1. Open the repo in GitLab
+1. Go to your project's "Settings" > "CI/CD" > "Auto DevOps"
+1. Disable (uncheck) the "Default to Auto DevOps pipeline"
+1. Click "Save changes"
+
+# OLD
+
+## Creating Repo on Local Directory (if Directory is empty)
+
+1. Create Repo on GitHub
+1. Don't add README yet
+1. Open Git Shell, navigate to directory, and type:
+```
+git init
+git remote add origin https://research-git.uiowa.edu/itpetersen/PetersenLab.git
+git remote -v
+```
+4. Drag and drop the folder with the repository into the GUI app
+5. Add .gitignore file with .Rhistory
+
+## Creating Repo on Local Directory (if Directory is *not* empty)
+
+1. Create Repo on GitHub
+1. Don't add README yet
+1. Open Git Shell, navigate to directory, and type:
+```
+git init
+git add .
+git commit -m 'First commit'
+git remote add origin https://research-git.uiowa.edu/itpetersen/PetersenLab.git
+git remote -v
+git push -u origin master
+```
+4. Drag and drop the folder with the repository into the GUI app
+5. Add .gitignore file with .Rhistory
+
+## Creating R Scripts Repo on Lab Server
+
+1. Create R Scripts Repo
+1. Open R Scripts folder and delete .git folder
+1. Open Git Shell and type:
+```
+git init
+git add .
+git commit -m 'First commit'
+git remote add origin https://research-git.uiowa.edu/PetersenLab/R-Scripts.git
+git remote -v
+git push -u origin master
+```
+4. Move R Scripts folder to another location
+5. Clone repo into folder:
+    - open Git Shell
+    - navigate to `Z:\TDS II\Data\R Scripts\`
+    ```
+    git clone https://research-git.uiowa.edu/PetersenLab/R-Scripts.git .
+    ```
+    The dot on the end of the git clone command means "the current directory"
+6. Drag and drop the folder with the repository into the GUI app
+7. Add `.gitignore` file with `.Rhistory`

@@ -1,0 +1,452 @@
+---
+title: "Exploratory Data Analysis"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# Rationale
+
+Exploratory data analysis is important for understanding your data, checking for data issues/errors, and checking assumptions for different statistical models.
+
+LOOK AT YOUR DATA—this is one of the most overlooked steps in data analysis!
+
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+## Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("petersenlab")
+library("car")
+library("vioplot")
+library("ellipse")
+library("nlme")
+library("effects")
+library("corrplot")
+library("ggplot2")
+library("psych")
+library("tidyverse")
+library("purrr")
+library("naniar")
+library("mvnormtest")
+```
+
+# Simulate Data
+
+```{r}
+set.seed(52242)
+
+n <- 1000
+
+ID <- rep(1:100, each = 10)
+predictor <- rbeta(n, 1.5, 5) * 100
+outcome <- predictor + rnorm(n, mean = 0, sd = 20) + 50
+
+predictorOverplot <- sample(1:50, n, replace = TRUE)
+outcomeOverplot <- predictorOverplot + sample(1:75, n, replace = TRUE)
+
+categorical1 <- sample(1:5, size = n, replace = TRUE)
+categorical2 <- sample(1:5, size = n, replace = TRUE)
+
+mydata <- data.frame(ID = ID,
+                     predictor = predictor,
+                     outcome = outcome,
+                     predictorOverplot = predictorOverplot,
+                     outcomeOverplot = outcomeOverplot,
+                     categorical1 = categorical1,
+                     categorical2 = categorical2)
+
+mydata[sample(1:n, size = 10), "predictor"] <- NA
+mydata[sample(1:n, size = 10), "outcome"] <- NA
+mydata[sample(1:n, size = 10), "predictorOverplot"] <- NA
+mydata[sample(1:n, size = 10), "outcomeOverplot"] <- NA
+mydata[sample(1:n, size = 30), "categorical1"] <- NA
+mydata[sample(1:n, size = 70), "categorical2"] <- NA
+```
+
+# Descriptive statistics
+
+```{r}
+round(data.frame(psych::describe(mydata)), 2)
+```
+
+## Sample
+
+- Check the sample size (*N*)
+  - Is the sample size in the data the expected sample size?
+  Are there cases (participants) that are missing?
+  Are there cases that should not be there?
+  - Here is the sample size:
+  
+```{r}
+length(unique(mydata$ID))
+```   
+
+- Check the extent of missingness
+    - How much data are missing in the model variables—including the predictor, outcome, and covariates?
+    - Here are the proportion of missing data in each variable:
+    
+```{r}
+map(mydata, ~mean(is.na(.))) %>% t %>% t
+```
+
+## Distribution
+
+- Frequencies
+    - Examine the frequencies of categorical variables:
+
+```{r}
+mydata %>% 
+  select(categorical1, categorical2) %>%
+  sapply(function(x) table(x, useNA = "always")) %>% 
+  t()
+```
+
+## Central Tendency
+
+- Mean
+
+```{r}
+round(colMeans(mydata, na.rm = TRUE), 2)
+round(apply(mydata, 2, function(x) mean(x, na.rm = TRUE)), 2)
+
+mydata %>% 
+  summarise_all(list(~ mean(., na.rm = TRUE))) %>% 
+  round(., 2)
+```
+
+- Median
+
+```{r}
+round(apply(mydata, 2, function(x) median(x, na.rm = TRUE)), 2)
+
+mydata %>% 
+  summarise_all(list(~ median(., na.rm = TRUE))) %>% 
+  round(., 2)
+```
+
+- Mode
+
+```{r}
+round(apply(mydata, 2, function(x) Mode(x, multipleModes = "mean")), 2)
+
+mydata %>% 
+  summarise_all(list(~ Mode(., multipleModes = "mean"))) %>% 
+  round(., 2)
+```
+
+Compute all of these measures of central tendency:
+
+```{r}
+mydata %>% 
+  summarise_all(list(~ mean(., na.rm = TRUE),
+                     ~ median(., na.rm = TRUE),
+                     ~ Mode(., multipleModes = "mean"))) %>% 
+  round(., 2) %>% 
+  pivot_longer(cols = everything(),
+               names_to = c("variable","index"),
+               names_sep = "_") %>% 
+  pivot_wider(names_from = index,
+              values_from = value) %>% 
+  rename(mode = Mode)
+```
+
+## Dispersion
+
+- Standard deviation
+- Observed minimum and maximum (vis-à-vis possible minimum and maximum)
+- Skewness
+- Kurtosis
+
+Compute all of these measures of dispersion:
+
+```{r}
+mydata %>% 
+  summarise_all(list(~ sd(., na.rm = TRUE),
+                     ~ min(., na.rm = TRUE),
+                     ~ max(., na.rm = TRUE),
+                     ~ skew(., na.rm = TRUE),
+                     ~ kurtosi(., na.rm = TRUE))) %>% 
+  round(., 2) %>% 
+  pivot_longer(cols = everything(),
+               names_to = c("variable","index"),
+               names_sep = "_") %>% 
+  pivot_wider(names_from = index,
+              values_from = value) %>% 
+  rename(skewness = skew,
+         kurtosis = kurtosi)
+```
+
+Consider transforming data if skewness > |0.8| or if kurtosis > |3.0|.
+
+## Summary Statistics
+
+Add summary statistics to the bottom of correlation matrices in papers:
+
+```{r}
+summaryTable <- mydata %>% 
+  summarise_all(list(~ length(na.omit(.)),
+                     ~ mean(is.na(.)) * 100,
+                     ~ mean(., na.rm = TRUE),
+                     ~ sd(., na.rm = TRUE),
+                     ~ skew(., na.rm = TRUE),
+                     ~ kurtosi(., na.rm = TRUE))) %>% 
+  round(., 2) %>% 
+  pivot_longer(cols = everything(),
+               names_to = c("variable","index"),
+               names_sep = "_") %>% 
+  pivot_wider(names_from = index,
+              values_from = value) %>% 
+  rename(n = length,
+         missingness = "*",
+         M = mean,
+         SD = sd,
+         skewness = skew,
+         kurtosis = kurtosi)
+
+summaryTableTransposed <- summaryTable[-1] %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  setNames(summaryTable$variable) %>% 
+  round(., digits = 2)
+
+cor.table(mydata, type = "manuscript")
+summaryTableTransposed
+```
+
+## Distribution Plots
+
+See [here](figures.html) for resources for creating figures in R.
+
+### Histogram
+
+#### Base R
+
+```{r}
+hist(mydata$outcome)
+```
+
+#### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = outcome)) +
+  geom_histogram(color = 1)
+```
+
+### Histogram overlaid with density plot and rug plot
+
+#### Base R
+
+```{r}
+hist(mydata$outcome, prob = TRUE)
+lines(density(mydata$outcome, na.rm = TRUE))
+rug(mydata$outcome)
+```
+
+#### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = outcome)) +
+  geom_histogram(aes(y = ..density..), color = 1) +
+  geom_density() +
+  geom_rug()
+```
+
+### Density Plot
+
+#### Base R
+
+```{r}
+plot(density(mydata$outcome, na.rm = TRUE))
+```
+
+#### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = outcome)) +
+  geom_density()
+```
+
+### Box and whisker plot (boxplot)
+
+#### Base R
+
+```{r}
+boxplot(mydata$outcome, horizontal = TRUE)
+```
+
+#### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = outcome)) +
+  geom_boxplot()
+```
+
+### Violin plot
+
+#### Base R
+
+```{r}
+vioplot(na.omit(mydata$outcome), horizontal = TRUE)
+```
+
+#### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = "", y = outcome)) +
+  geom_violin()
+```
+
+# Bivariate Associations
+
+## High Density Scatterplot
+
+```{r}
+ggplot(mydata, aes(x = predictorOverplot, y = outcomeOverplot)) + 
+  geom_point(position = "jitter", alpha = 0.3) + 
+  geom_density2d()
+
+smoothScatter(mydata$predictorOverplot, mydata$outcomeOverplot)
+```
+
+## Data Ellipse
+
+```{r}
+mydata_nomissing <- na.omit(mydata[,c("predictor","outcome")])
+dataEllipse(mydata_nomissing$predictor, mydata_nomissing$outcome, levels = c(0.5, .95))
+```
+
+## Visually Weighted Regression
+
+```{r, message = FALSE, results = "hide"}
+vwReg(outcome ~ predictor, data = mydata)
+```
+
+# Basic inferential statistics
+
+## Tests of Normality
+
+### Shapiro-Wilk test of normality
+
+The Shapiro-Wilk test of normality does not accept more than 5000 cases because it will reject the hypothesis that data come from a normal distribution with even slight deviations from normality.
+
+```{r}
+shapiro.test(na.omit(mydata$outcome)) #subset to keep only the first 5000 rows: mydata$outcome[1:5000]
+```
+
+### Test of multivariate normality
+
+```{r}
+mydata %>% 
+  na.omit %>% 
+  t %>% 
+  mshapiro.test
+```
+
+## Statistical decision tree
+
+## Tests of systematic missingness (i.e., whether missingness on a variable depends on other variables)
+
+- Generally test:
+    - Whether data are consistent with a missing completely at random (MCAR) pattern—Little's MCAR Test
+    - Whether outcome variable(s) differ as a function of any model variables (predictors and covariates) and as a function of any key demographic characteristics (e.g., sex, ethnicity, socioeconomic status)
+    - Whether focal predictor variable(s) differ as a function of any model variables (including outcome variable) and as a function of any key demographic characteristics
+- For instance:
+    - Whether males are more likely than girls to be missing scores on the dependent variable
+    - Whether longitudinal attrition is greater in lower socioeconomic status families
+- If missingness differs systematically as a function of other variables, you can include that variable as a control variable in models, and/or can include that variable in multiple imputation to inform imputed scores for missing values
+
+### Little's MCAR Test
+
+```{r}
+mcar_test(mydata)
+```
+
+## Multivariate Associations
+
+### Correlation Matrix
+
+#### Pearson Correlations
+
+```{r}
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscript")
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscriptBig")
+```
+
+#### Spearman Correlations
+
+```{r}
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], correlation = "spearman")
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscript", correlation = "spearman")
+cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscriptBig", correlation = "spearman")
+```
+
+#### Partial Correlations
+
+Examine the associations among variables controlling for a covariate (`outcomeOverplot`).
+
+```{r}
+partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")])
+partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")], type = "manuscript")
+partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")], type = "manuscriptBig")
+```
+
+### Correlogram
+
+```{r}
+corrplot(cor(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], use = "pairwise.complete.obs"))
+```
+
+### Scatterplot matrix
+
+```{r}
+scatterplotMatrix(~ predictor + outcome + predictorOverplot + outcomeOverplot, data = mydata, use = "pairwise.complete.obs")
+```
+
+### Pairs panels
+
+```{r}
+pairs.panels(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
+```
+
+## Effect Plots
+
+### Multiple Regression Model
+
+```{r}
+multipleRegressionModel <- lm(outcome ~ predictor + predictorOverplot,
+                              data = mydata,
+                              na.action = "na.exclude")
+
+allEffects(multipleRegressionModel)
+plot(allEffects(multipleRegressionModel))
+```
+
+### Multilevel Regression Model
+
+```{r}
+multilevelRegressionModel <- lme(outcome ~ predictor + predictorOverplot, random = ~ 1|ID,
+                                 method = "ML",
+                                 data = mydata,
+                                 na.action = "na.exclude")
+
+allEffects(multilevelRegressionModel)
+plot(allEffects(multilevelRegressionModel))
+```
+
+# Session Info
+
+```{r}
+sessionInfo()
+```

@@ -1,0 +1,100 @@
+---
+title: "Structural Equation Modeling"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+## Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("lavaan")
+```
+
+# Simulate Data
+
+```{r}
+set.seed(52242)
+
+X <- rnorm(100)
+M <- 0.5*X + rnorm(100)
+Y <- 0.7*M + rnorm(100)
+
+mydata <- data.frame(X = X, Y = Y, M = M)
+```
+
+# Import data
+
+# Overview
+
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html
+
+# Analysis examples
+
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModel-sem
+
+# Mediation
+
+## Model Syntax
+
+```{r, class.source = "fold-show"}
+mediationModel <- '
+# direct effect (cPrime)
+Y ~ direct*X
+
+# mediator
+M ~ a*X
+Y ~ b*M
+
+# indirect effect = a*b
+indirect := a*b
+
+# total effect (c)
+total := direct + indirect
+'
+```
+
+## Fit the Model
+
+```{r, class.source = "fold-show"}
+mediationFit <- sem(mediationModel,
+                    data = mydata,
+                    se = "bootstrap",
+                    bootstrap = 1000, # generally use 10,000 bootstrap draws; this example uses 1,000 for speed
+                    missing = "ML",
+                    estimator = "ML",
+                    std.lv = TRUE)
+```
+
+## Summary Output
+
+```{r, class.source = "fold-show"}
+summary(mediationFit,
+        fit.measures = TRUE,
+        standardized = TRUE,
+        rsquare = TRUE)
+```
+
+## Indirect Effect
+
+```{r, class.source = "fold-show"}
+parameterEstimates(mediationFit,
+                   boot.ci.type = "bca.simple",
+                   standardized = TRUE)
+```
+
+# Power analysis
+
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis

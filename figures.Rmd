@@ -1,0 +1,642 @@
+---
+title: "Figures in R"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+# Picking a Chart Type
+
+https://www.data-to-viz.com
+
+# Gallery
+
+https://www.r-graph-gallery.com
+
+# Resources for Learning R Syntax for Figures
+
+https://www.statmethods.net/graphs/index.html
+
+http://www.cookbook-r.com/Graphs/
+
+# Petersen Lab Examples
+
+https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses
+
+## Preamble
+
+### Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+### Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("petersenlab")
+library("ellipse")
+library("ggplot2")
+library("grid")
+library("reshape")
+library("plyr")
+library("RColorBrewer")
+library("reshape2")
+library("ggExtra")
+library("viridis")
+library("ggthemes")
+```
+
+## Simulate Data
+
+```{r}
+set.seed(52242)
+
+n <- 1000
+
+predictor <- rbeta(n, 1.5, 5) * 100
+outcome <- predictor + rnorm(n, mean = 0, sd = 20) + 50
+number <- sample(1:1000, replace = TRUE)
+
+predictorOverplot <- sample(1:50, n, replace = TRUE)
+outcomeOverplot <- predictorOverplot + sample(1:75, n, replace = TRUE)
+
+df <- data.frame(predictor = predictor,
+                 outcome = outcome,
+                 predictorOverplot = predictorOverplot,
+                 outcomeOverplot = outcomeOverplot)
+
+df[sample(1:n, size = 10), "predictor"] <- NA
+df[sample(1:n, size = 10), "outcome"] <- NA
+df[sample(1:n, size = 10), "predictorOverplot"] <- NA
+df[sample(1:n, size = 10), "outcomeOverplot"] <- NA
+```
+
+## Basic Scatterplot
+
+### Base R
+
+```{r}
+plot(outcome ~ predictor, data = df)
+plot(df$predictor, df$outcome)
+```
+
+#### Best-fit line
+
+```{r}
+plot(outcome ~ predictor, data = df)
+abline(lm(outcome ~ predictor, data = df), col = "red") #regression line (y~x)
+```
+
+#### Loess line
+```{r}
+plot(outcome ~ predictor, data = df)
+lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)
+```
+
+### `ggplot2`
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  theme_classic()
+```
+
+#### Best-fit line
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  stat_smooth(method = "lm", formula = y ~ x) +
+  theme_classic()
+```
+
+#### Loess line
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  stat_smooth(method = "loess", formula = y ~ x) +
+  theme_classic()
+```
+
+## Change Plot Style
+
+### Change Theme
+
+```{r}
+basePlot <- ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point()
+```
+
+#### Default Theme
+
+```{r}
+basePlot
+```
+
+#### Grayscale: `theme_gray()`
+
+```{r}
+basePlot + theme_gray() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Black-and-White: `theme_bw()`
+
+```{r}
+basePlot + theme_bw() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Line Drawing: `theme_linedraw()`
+
+A theme with only black lines of various widths on white backgrounds, reminiscent of a line drawing.
+Note that this theme has some very thin lines (<< 1 pt) which some journals may refuse.
+
+```{r}
+basePlot + theme_linedraw() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Light: `theme_light()`
+
+```{r}
+basePlot + theme_light() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Dark: `theme_dark()`
+
+```{r}
+basePlot + theme_dark() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Minimal: `theme_minimal()`
+
+```{r}
+basePlot + theme_minimal() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Classic: `theme_classic()`
+
+```{r}
+basePlot + theme_classic() + theme(text = element_text(family = "Gotham"))
+```
+
+#### A Completely Empty Theme: `theme_void()`
+
+```{r}
+basePlot + theme_void() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Visual Unit Tests: `theme_test()`
+
+```{r}
+basePlot + theme_test() + theme(text = element_text(family = "Gotham"))
+```
+
+#### Edward Tufte: `theme_tufte()`
+
+Theme based on Edward Tufte.
+
+```{r}
+basePlot + theme_tufte()
+```
+
+#### Wall Street Journal: `theme_wsj()`
+
+Theme based on the publication, the Wall Street Journal.
+
+```{r}
+basePlot + theme_wsj()
+```
+
+#### FiveThirtyEight: `theme_fivethirtyeight()`
+
+Theme based on the publication, FiveThirtyEight.
+
+```{r}
+basePlot + theme_fivethirtyeight()
+```
+
+#### The Economist: `theme_economist()`
+
+Theme based on the publication, The Economist.
+
+```{r}
+basePlot + theme_economist()
+```
+
+#### Stephen Few: `theme_few()`
+
+Theme based on the rules and examples from Stephen Few's *Show Me the Numbers* and "Practical Rules for Using Color in Charts".
+
+```{r}
+basePlot + theme_few()
+```
+
+## Add Marginal Distributions
+
+```{r}
+scatterplot <- ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Density Plot
+
+```{r}
+densityMarginal <- ggMarginal(scatterplot, type = "density", xparams = list(fill = "gray"), yparams = list(fill = "gray"))
+```
+
+```{r}
+print(densityMarginal, newpage = TRUE)
+```
+
+### Histogram
+
+```{r}
+histogramMarginal <- ggMarginal(scatterplot, type = "histogram", xparams = list(fill = "gray"), yparams = list(fill = "gray"))
+```
+
+```{r}
+print(histogramMarginal, newpage = TRUE)
+```
+
+### Boxplot
+
+```{r}
+boxplotMarginal <- ggMarginal(scatterplot, type = "boxplot", xparams = list(fill = "gray"), yparams = list(fill = "gray"))
+```
+
+```{r}
+print(boxplotMarginal, newpage = TRUE)
+```
+
+### Violin Plot
+
+```{r}
+violinMarginal <- ggMarginal(scatterplot, type = "violin", xparams = list(fill = "gray"), yparams = list(fill = "gray"))
+```
+
+```{r}
+print(violinMarginal, newpage = TRUE)
+```
+
+### Density Plot and Histogram
+
+```{r}
+densigramMarginal <- ggMarginal(scatterplot, type = "densigram", xparams = list(fill = "gray"), yparams = list(fill = "gray"))
+```
+
+```{r}
+print(densigramMarginal, newpage = TRUE)
+```
+
+## Ellipse
+
+### Basic Ellipse
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  stat_ellipse(alpha = 0.4, level = 0.95, geom = "polygon", fill = "red", color = "red") +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Align Coordinates
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  stat_ellipse(alpha = 0.4, level = 0.95, geom = "polygon", fill = "red", color = "red") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed(ratio = (max(predictor, na.rm = TRUE) - min(predictor, na.rm = TRUE))/(max(outcome, na.rm = TRUE) - min(outcome, na.rm = TRUE)),
+              xlim = c(0, max(predictor, na.rm = TRUE)), 
+              ylim = c(0, max(outcome, na.rm = TRUE))) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Reduce Dot Size
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point(size = 0.5) +
+  stat_ellipse(alpha = 0.4, level = 0.95, geom = "polygon", fill = "red", color = "red") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed(ratio = (max(predictor, na.rm = TRUE) - min(predictor, na.rm = TRUE))/(max(outcome, na.rm = TRUE) - min(outcome, na.rm = TRUE)),
+              xlim = c(0, max(predictor, na.rm = TRUE)), 
+              ylim = c(0, max(outcome, na.rm = TRUE))) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Transparency
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point(alpha = 0.3) +
+  stat_ellipse(alpha = 0.4, level = 0.95, geom = "polygon", fill = "red", color = "red") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed(ratio = (max(predictor, na.rm = TRUE) - min(predictor, na.rm = TRUE))/(max(outcome, na.rm = TRUE) - min(outcome, na.rm = TRUE)),
+              xlim = c(0, max(predictor, na.rm = TRUE)), 
+              ylim = c(0, max(outcome, na.rm = TRUE))) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+## Bubble Chart
+
+### Basic Bubble Chart
+
+```{r}
+ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
+  geom_count(aes(size = ..n..)) +
+  scale_size_area() +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Specify Sizes
+
+```{r}
+ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
+  geom_count(aes(size = ..n..)) +
+  scale_size_continuous(breaks = c(1, 2, 3, 4), range = c(1, 7)) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+## 2-Dimensional Density
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_fill_viridis() +
+  theme(
+    legend.position = "none",
+    text = element_text(family = "Gotham")
+  )
+```
+
+## Combined Ellipse and Bubble Chart
+
+### `ggplot2`
+
+```{r}
+ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
+  geom_count(alpha = .6, color = rgb(0,0,.7,.5)) +
+  scale_size_continuous(breaks = c(1, 2, 3, 4), range = c(1, 7)) +
+  stat_smooth(method = "loess", se = TRUE, color = "green") + 
+  stat_smooth(method = "lm") +
+  stat_ellipse(alpha = 0.4, level = 0.95, geom = "polygon", fill = "red", color = "red") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed(ratio = (max(predictorOverplot, na.rm = TRUE) - min(predictorOverplot, na.rm = TRUE))/(max(outcomeOverplot, na.rm = TRUE) - min(outcomeOverplot, na.rm = TRUE)),
+              xlim = c(0, max(predictorOverplot, na.rm = TRUE)), 
+              ylim = c(0, max(outcomeOverplot, na.rm = TRUE))) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+
+ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
+  geom_count(alpha = .6, color = rgb(0,0,.7,.5)) +
+  scale_size_continuous(breaks = c(1, 2, 3, 4), range = c(1, 7)) +
+  stat_smooth(method = "loess", se = TRUE, color = "green") + 
+  stat_smooth(method = "lm") +
+  stat_ellipse(color = "red", size = 1.5) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_fixed(ratio = (max(predictorOverplot, na.rm = TRUE) - min(predictorOverplot, na.rm = TRUE))/(max(outcomeOverplot, na.rm = TRUE) - min(outcomeOverplot, na.rm = TRUE)),
+              xlim = c(0, max(predictorOverplot, na.rm = TRUE)), 
+              ylim = c(0, max(outcomeOverplot, na.rm = TRUE))) +
+  theme_classic() +
+  theme(text = element_text(family = "Gotham"))
+```
+
+### Other implementation
+
+From: https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r
+
+#### `ggplot2`
+
+```{r}
+df$x <- df$predictorOverplot
+df$y <- df$outcomeOverplot
+
+xc <- with(df, xyTable(x, y))
+df2 <- cbind.data.frame(x = xc$x, y = xc$y, number = xc$number)
+df2$n <- cut(df2$number, c(0,1.5,2.5,Inf), labels = c(1,2,4))
+df.ell <- as.data.frame(with(df, ellipse(cor(df$x, df$y, use = "pairwise.complete.obs"),
+                                         scale = c(sd(df$x, na.rm = TRUE), sd(df$y, na.rm = TRUE)),
+                                         centre = c(mean(df$x, na.rm = TRUE), mean(df$y, na.rm = TRUE)),
+                                         level = .95)))
+
+ggplot(data = na.omit(df2), aes(x = x, y = y)) + 
+  geom_point(aes(size = n), alpha = .6, color = rgb(0,0,.7,.5)) + 
+  stat_smooth(data = df, method = "loess", se = FALSE, color = "green") + 
+  stat_smooth(data = df, method = "lm", col = "red") +
+  geom_path(data = df.ell, colour = "green", size = 1) +
+  coord_cartesian(xlim = c(-1,60), ylim = c(-1,130))
+```
+
+#### Base `R`
+
+```{r}
+do.it <- function(df, type="confidence", ...) {
+  require(ellipse)
+  lm0 <- lm(y ~ x, data=df)
+  xc <- with(df, xyTable(x, y))
+  df.new <- data.frame(x = seq(min(df$x), max(df$x), 0.1))
+  pred.ulb <- predict(lm0, df.new, interval = type)
+  pred.lo <- predict(loess(y ~ x, data = df), df.new)
+  plot(xc$x, xc$y, cex = xc$number*1/4, xlab = "x", ylab = "y", ...) #change number*X to change dot size
+  abline(lm0, col = "red")
+  lines(df.new$x, pred.lo, col="green", lwd = 2)
+  lines(df.new$x, pred.ulb[,"lwr"], lty = 2, col = "red")
+  lines(df.new$x, pred.ulb[,"upr"], lty = 2, col = "red")    
+  lines(ellipse(cor(df$x, df$y), scale=c(sd(df$x),sd(df$y)), 
+                centre = c(mean(df$x), mean(df$y)), level = .95), lwd = 2, col = "green")
+  invisible(lm0)
+}
+
+df3 <- na.omit(df[sample(nrow(df), nrow(df), rep = TRUE),])
+df3$x <- df3$predictorOverplot
+df3$y <- df3$outcomeOverplot
+
+do.it(df3, pch = 19, col = rgb(0,0,.7,.5))
+```
+
+## Visually-Weighted Regression
+
+### Default
+
+```{r, message = FALSE, results = "hide"}
+vwReg(outcome ~ predictor, data = df)
+```
+
+### Shade
+
+```{r, message = FALSE, results = "hide"}
+vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000, quantize = "continuous")
+vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000, quantize = "SD")
+```
+
+### Spaghetti
+
+```{r, message = FALSE, results = "hide"}
+vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000)
+vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = FALSE, show.CI = FALSE, bw = FALSE, B = 1000)
+```
+
+### Black/white
+
+```{r, message = FALSE, results = "hide"}
+vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "continuous")
+vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "SD")
+vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "SD")
+```
+
+# Graphic Design Principles for Data Visualization
+
+https://www.data-to-viz.com/caveats.html
+
+# Types of Plots
+
+## Univariate Distribution
+
+Used for: distribution of one numeric variable
+
+### Gallery
+
+- Violin chart: https://r-graph-gallery.com/violin.html
+- Density chart: https://r-graph-gallery.com/density-plot.html
+- Histogram: https://r-graph-gallery.com/histogram.html
+- Boxplot: https://r-graph-gallery.com/boxplot.html
+- Ridgeline chart: https://r-graph-gallery.com/ridgeline-plot.html
+
+## Bivariate Scatterplots
+
+Used for: association between two numeric variables
+
+### Base `R`
+
+```
+plot(x, y)
+```
+
+### ggplot2 package
+
+http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/
+
+```
+ggplot(data, aes(x, y)) +
+    geom_point()
+```
+
+### Gallery
+
+- Scatterplot: https://r-graph-gallery.com/scatterplot.html
+- Bubble plot: https://r-graph-gallery.com/bubble-chart.html
+- 2D density chart: https://r-graph-gallery.com/2d-density-chart.html
+- Heatmap: https://r-graph-gallery.com/heatmap.html
+
+### Add lines
+
+- Line chart: https://r-graph-gallery.com/line-plot.html
+- Connected scatterplot: https://r-graph-gallery.com/connected-scatterplot.html
+- Visually-weighted regression: http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote
+- Use the `vwReg()` function from the `petersenlab` package: https://research-git.uiowa.edu/PetersenLab/petersenlab/-/blob/master/R/vwReg.R
+
+### Area
+
+- Area chart: https://r-graph-gallery.com/area-chart.html
+- Stacked area chart: https://r-graph-gallery.com/stacked-area-graph.html
+- Streamgraph: https://r-graph-gallery.com/streamgraph.html
+
+## Bivariate Barplots
+
+Used for: association between one categorical variable and one numeric variable (or for depicting the frequency of categories of a categorical variable)
+
+### Gallery
+
+- Barplot: https://r-graph-gallery.com/barplot.html
+- Lollipop plot: https://r-graph-gallery.com/lollipop-plot.html
+
+## Multivariate Correlation Matrices
+
+Used for: association between multiple numeric variables
+
+For correlation matrices, I do the following:
+
+1. I use the lab's `cor.table()` function (with `type = "manuscript"`) from the `petersenlab` package to create a correlation matrix.
+1. I save the correlation matrix to a `.csv` file.
+    a. For example: https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures
+1. I open the .csv file in Excel and create the table in Excel that can be copied and pasted to Word/Powerpoint/etc.
+
+### Correlograms
+
+- `corrplot` package: https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html
+- `corrgram` package: https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html
+
+#### Gallery
+
+https://r-graph-gallery.com/correlogram.html
+
+### Pairs panels
+
+`psych` package: https://personality-project.org/r/psych/help/pairs.panels.html
+
+I depict examples of correlograms and pairs panels here: https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations
+
+## Path Diagrams
+
+Used for: SEM/CFA/path analysis
+
+If you are just trying to visualize the results of a SEM model fitted using the lavaan package, I recommend the `semPlot` package (http://sachaepskamp.com/semPlot/examples) in `R`.
+You can see examples of my implementation here: https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#path-diagram-1
+
+If you are trying to create a figure for a paper or poster, you might want something that you can draw and customize yourself.
+I use Adobe Illustrator for hand-drawn figures.
+
+You can look at various options below:
+
+- `semPlot` package
+- `Adobe Illustrator`
+- `Onyx`: https://onyx-sem.com
+- `yworks`: https://www.yworks.com
+- `Microsoft Visio`: https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software
+- `Microsoft Powerpoint`
+- `AMOS`
+- `Warppls`
+- `Graphviz`: https://graphviz.org
+    - has an R port—this is what we use for our study flowchart via the `DiagrammeR` package: https://rich-iannone.github.io/DiagrammeR/index.html
+- https://app.diagrams.net
+- https://github.com/jgraph/drawio-desktop/releases
+
+## Interactive
+
+Gallery: https://r-graph-gallery.com/interactive-charts.html
+
+## Animation
+
+Gallery: https://r-graph-gallery.com/animation.html
+
+## 3D
+
+Gallery: https://r-graph-gallery.com/3d.html
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
