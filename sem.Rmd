@@ -5,27 +5,28 @@ title: "Structural Equation Modeling"
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       error = TRUE,
-                      comment = "")
+                      comment = "",
+                      class.source = "fold-show")
 ```
 
 # Preamble
 
 ## Install Libraries
 
-```{r}
+```{r, class.source = "fold-hide"}
 #install.packages("remotes")
 #remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
 ```
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
 library("lavaan")
 ```
 
 # Simulate Data
 
-```{r}
+```{r, class.source = "fold-hide"}
 set.seed(52242)
 
 X <- rnorm(100)
@@ -49,7 +50,7 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#se
 
 ## Model Syntax
 
-```{r, class.source = "fold-show"}
+```{r}
 mediationModel <- '
 # direct effect (cPrime)
 Y ~ direct*X
@@ -68,7 +69,7 @@ total := direct + indirect
 
 ## Fit the Model
 
-```{r, class.source = "fold-show"}
+```{r}
 mediationFit <- sem(mediationModel,
                     data = mydata,
                     se = "bootstrap",
@@ -80,7 +81,7 @@ mediationFit <- sem(mediationModel,
 
 ## Summary Output
 
-```{r, class.source = "fold-show"}
+```{r}
 summary(mediationFit,
         fit.measures = TRUE,
         standardized = TRUE,
@@ -89,7 +90,7 @@ summary(mediationFit,
 
 ## Indirect Effect
 
-```{r, class.source = "fold-show"}
+```{r}
 parameterEstimates(mediationFit,
                    boot.ci.type = "bca.simple",
                    standardized = TRUE)
@@ -98,3 +99,10 @@ parameterEstimates(mediationFit,
 # Power analysis
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis
+
+# Session Info
+
+```{r, class.source = "fold-hide"}
+sessionInfo()
+```
+

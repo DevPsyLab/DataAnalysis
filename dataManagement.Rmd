@@ -5,14 +5,15 @@ title: "Data Management"
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       error = TRUE,
-                      comment = "")
+                      comment = "",
+                      class.source = "fold-show")
 ```
 
 # Import data
 
 Importing data takes syntax of the following form for `.csv` files:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 data <- read.csv("filepath/filename.csv")
 ```
 
@@ -20,13 +21,13 @@ Note: it is important to use forward slashes ("/") rather than backslashes ("\\"
 
 Below, I import a `.csv` file and save it into an object called `mydata` (you could call this object whatever you want):
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata <- read.csv("https://osf.io/s6wrm/download")
 ```
 
 Importing data takes syntax of the following form for `.RData` files:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 load("filepath/filename.RData")
 ```
 
@@ -34,19 +35,19 @@ load("filepath/filename.RData")
 
 Saving data takes syntax of the following form for `.csv` files:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 write.csv(object, file = "filepath/filename.csv")
 ```
 
 For example:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 write.csv(mydata, file = "mydata.csv")
 ```
 
 Saving data takes syntax of the following form for `.RData` files:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 save(object, file = "filepath/filename.RData")
 ```
 
@@ -54,20 +55,20 @@ save(object, file = "filepath/filename.RData")
 
 To use lab functions, first install the `petersenlab` package:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 install.packages("remotes")
 remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
 ```
 
 Once you have the `petersenlab` package installed, load the package:
 
-```{r, class.source = "fold-show"}
+```{r}
 library("petersenlab")
 ```
 
 To run scripts on the lab drive, set the path to the lab drive (`//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/`) using the following code:
 
-```{r, class.source = "fold-show"}
+```{r}
 petersenLabPath <- setLabPath()
 ```
 
@@ -75,14 +76,14 @@ petersenLabPath <- setLabPath()
 
 The way to install a package in `R` is:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 install.packages("packageName1")
 install.packages(c("packageName1","packageName2","packageName3"))
 ```
 
 The default way to load a package in `R` is:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 library("packageName1")
 library("packageName2")
 library("packageName3")
@@ -95,13 +96,13 @@ If the package is not installed, the function installs and loads the package.
 If the package is installed, the function loads the package.
 To use this function, you must have the `petersenlab` package loaded.
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 load_or_install(c("packageName1","packageName2","packageName3"))
 ```
 
 For example:
 
-```{r, class.source = "fold-show"}
+```{r}
 load_or_install(c("tidyverse","psych"))
 ```
 
@@ -109,7 +110,7 @@ load_or_install(c("tidyverse","psych"))
 
 To run an `R` script, use the following syntax:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 source("filepath/filename.R")
 ```
 
@@ -117,7 +118,7 @@ source("filepath/filename.R")
 
 To render a `.Rmd` file, use the following syntax:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 render("filepath/filename.Rmd")
 ```
 
@@ -125,7 +126,7 @@ render("filepath/filename.Rmd")
 
 To look at the names of variables in a data frame, use the following syntax:
 
-```{r, class.source = "fold-show"}
+```{r}
 names(mydata)
 ```
 
@@ -135,7 +136,7 @@ names(mydata)
 
 To subset one variable, use the following syntax:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata$age
 ```
 
@@ -143,7 +144,7 @@ mydata$age
 
 To subset multiple variables, use the following syntax:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata[,c("survived","age","prediction")]
 ```
 
@@ -151,7 +152,7 @@ mydata[,c("survived","age","prediction")]
 
 To subset particular rows, use the following syntax:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata[c(1,3,5),]
 mydata[which(mydata$survived == 1),]
 ```
@@ -160,7 +161,7 @@ mydata[which(mydata$survived == 1),]
 
 To view data, use the following syntax:
 
-```{r, eval = FALSE, class.source = "fold-show"}
+```{r, eval = FALSE}
 View(mydata)
 ```
 
@@ -168,13 +169,13 @@ View(mydata)
 
 To create a new variable, use the following syntax:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata$newVar <- NA
 ```
 
 Here is an example of creating a new variable:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata$ID <- 1:nrow(mydata)
 ```
 
@@ -182,7 +183,7 @@ mydata$ID <- 1:nrow(mydata)
 
 Here is an example of creating a data frame:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata2 <- data.frame(
   ID = c(1:5, 1047:1051),
   cat = sample(0:1, 10, replace = TRUE)
@@ -195,7 +196,7 @@ mydata2
 
 Here is an example of recoding a variable:
 
-```{r, class.source = "fold-show"}
+```{r}
 mydata$newVar[which(mydata$sex == "male")] <- 0
 mydata$newVar[which(mydata$sex == "female")] <- 1
 ```
@@ -212,7 +213,7 @@ Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-join
 
 Here is how to merge two data frames using a full join:
 
-```{r, class.source = "fold-show"}
+```{r}
 fullJoinData <- merge(mydata, mydata2, by = "ID", all = TRUE)
 
 fullJoinData
@@ -221,7 +222,7 @@ dim(fullJoinData)
 
 Or, alternatively, using `tidyverse`:
 
-```{r, class.source = "fold-show"}
+```{r}
 full_join(mydata, mydata2, by = "ID")
 ```
 
@@ -229,7 +230,7 @@ full_join(mydata, mydata2, by = "ID")
 
 Here is how to merge two data frames using a left join:
 
-```{r, class.source = "fold-show"}
+```{r}
 leftJoinData <- merge(mydata, mydata2, by = "ID", all.x = TRUE)
 
 leftJoinData
@@ -238,7 +239,7 @@ dim(leftJoinData)
 
 Or, alternatively, using `tidyverse`:
 
-```{r, class.source = "fold-show"}
+```{r}
 left_join(mydata, mydata2, by = "ID")
 ```
 
@@ -246,7 +247,7 @@ left_join(mydata, mydata2, by = "ID")
 
 Here is how to merge two data frames using a right join:
 
-```{r, class.source = "fold-show"}
+```{r}
 rightJoinData <- merge(mydata, mydata2, by = "ID", all.y = TRUE)
 
 rightJoinData
@@ -255,7 +256,7 @@ dim(rightJoinData)
 
 Or, alternatively, using `tidyverse`:
 
-```{r, class.source = "fold-show"}
+```{r}
 right_join(mydata, mydata2, by = "ID")
 ```
 
@@ -263,7 +264,7 @@ right_join(mydata, mydata2, by = "ID")
 
 Here is how to merge two data frames using a right join:
 
-```{r, class.source = "fold-show"}
+```{r}
 innerJoinData <- merge(mydata, mydata2, by = "ID", all.x = FALSE, all.y = FALSE)
 
 innerJoinData
@@ -272,7 +273,7 @@ dim(innerJoinData)
 
 Or, alternatively, using `tidyverse`:
 
-```{r, class.source = "fold-show"}
+```{r}
 inner_join(mydata, mydata2, by = "ID")
 ```
 
@@ -280,7 +281,7 @@ inner_join(mydata, mydata2, by = "ID")
 
 An anti join return all rows from $x$ without a match in $y$:
 
-```{r, class.source = "fold-show"}
+```{r}
 antiJoinData <- anti_join(mydata, mydata2, by = "ID")
 
 antiJoinData
@@ -291,13 +292,13 @@ dim(antiJoinData)
 
 Original data:
 
-```{r, class.source = "fold-show"}
+```{r}
 fish_encounters
 ```
 
 Data widened by a variable (`station`), using `tidyverse`: 
 
-```{r, class.source = "fold-show"}
+```{r}
 fish_encounters %>% 
   pivot_wider(names_from = station,
               values_from = seen)
@@ -307,13 +308,13 @@ fish_encounters %>%
 
 Original data:
 
-```{r, class.source = "fold-show"}
+```{r}
 mtcars
 ```
 
 Data in long form, transformed from wide form using `tidyverse`:
 
-```{r, class.source = "fold-show"}
+```{r}
 mtcars %>% 
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -322,6 +323,6 @@ mtcars %>%
 
 # Session Info
 
-```{r}
+```{r, class.source = "fold-hide"}
 sessionInfo()
 ```

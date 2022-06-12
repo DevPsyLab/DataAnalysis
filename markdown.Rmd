@@ -62,6 +62,68 @@ The preview shows you a rendered HTML copy of the contents of the editor.
 Consequently, unlike *Knit*, *Preview* does not run any R code chunks.
 Instead, the output of the chunk when it was last run in the editor is displayed.
 
+# Computational Notebook
+
+You can use an R Markdown Notebook to create a computational notebook.
+Create a `.Rmd` file with the following `YAML` header at the top of the file:
+
+```yaml
+---
+title: "INSERT TITLE"
+author: "INSERT AUTHOR NAME(S)"
+date: "`r knitr::inline_expr("format(Sys.time(), '%d %B, %Y')")`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    df_print: paged
+---
+```
+
+Then, include the following as the first code chunk:
+
+````markdown
+```{r setup, include = FALSE}`r ''`
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE)
+```
+````
+
+Then, include whatever text and/or code chunks.
+
+# Steps to Create `rmarkdown` Website using GitHub Actions
+
+1. Create a new GitHub repo under the [DevPsyLab organization](https://github.com/DevPsyLab) in GitHub
+1. Create a `README.md` file
+    - this is the file that people see when navigating to the repo
+1. Add a `.gitignore` file
+    - this file says what file types to ignore and not add to the repo
+1. Create a new branch called `gh-pages`
+1. Delete all files in the `gh-pages` branch
+1. In your [GitHub account settings](https://github.com/settings/tokens), Create a "Personal Access Token" called `EMAIL` (if it doesn't already exist)
+    - Settings > Developer Settings > Personal access tokens
+    - make sure to save the contents of the personal access token somewhere safe (you will need it later)
+1. In the repo settings, add a secret called `EMAIL, and add the Personal Access Token (that you created in the previous step)
+    - Settings > Secrets > Actions > New repository secret
+    - Name: `EMAIL`
+    - Value: [INSERT PERSONAL ACCESS TOKEN]
+1. To the repo, add the following contents:
+    - [`/.github/workflows/deploy_markdown.yml`](https://github.com/DevPsyLab/LabWiki/blob/main/.github/workflows/deploy_rmarkdown.yml) file
+        - this file tells GitHub Actions was steps to run
+    - `_site.yml` file
+        - this file creates the navbar
+    - `LICENSE` file
+        - this file is the license
+    - `DESCRIPTION` file
+        - this file tells GitHub Actions was R packages to install
+1. Add each `.Rmd` file
+1. Add folders for the [`font`](https://github.com/DevPsyLab/LabWiki/tree/main/font), [`images`](https://github.com/DevPsyLab/LabWiki/tree/main/images), and [`includes`](https://github.com/DevPsyLab/LabWiki/tree/main/includes)
+    - `includes` contains `css` files, javascript files, footers, and Google Analytics
+1. Create a new Google Analytics property, and replace the URL and gtag in the `google_analytics.html` file
+1. Commit the repo to GitHub
+
 # Including Plots
 
 You can embed plots, for example:

@@ -5,21 +5,22 @@ title: "Hierarchical Linear Modeling"
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       error = TRUE,
-                      comment = "")
+                      comment = "",
+                      class.source = "fold-show")
 ```
 
 # Preamble
 
 ## Install Libraries
 
-```{r}
+```{r, class.source = "fold-hide"}
 #install.packages("remotes")
 #remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
 ```
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
 library("lme4")
 library("nlme")
 ```
@@ -52,7 +53,7 @@ To simultaneously compare fixed and random effects, use ML.
 
 ## `lme4`
 
-```{r, class.source = "fold-show"}
+```{r}
 lmer(t_ext ~ m_ext + age + (age | tcid),
      data = mydata,
      REML = FALSE, #for ML
@@ -61,7 +62,7 @@ lmer(t_ext ~ m_ext + age + (age | tcid),
 
 ## `nlme`
 
-```{r, class.source = "fold-show"}
+```{r}
 lme(t_ext ~ m_ext + age,
     random= ~1 + age|tcid,
     data = mydata,
@@ -75,7 +76,7 @@ http://glmm.wikidot.com/faq
 
 ## `lmer`
 
-```{r, class.source = "fold-show"}
+```{r}
 glmer(t_ext ~ m_ext + age + (age | tcid),
       family=poisson(link = "log"),
       data = CDP_tall,
@@ -84,7 +85,7 @@ glmer(t_ext ~ m_ext + age + (age | tcid),
 
 ## `MASS`
 
-```{r, class.source = "fold-show"}
+```{r}
 glmmPQL(t_ext ~ m_ext + age,
         random = ~1 + age|tcid,
         family = poisson(link = "log"),
@@ -93,7 +94,7 @@ glmmPQL(t_ext ~ m_ext + age,
 
 ## `MCMCglmm`
 
-```{r, class.source = "fold-show"}
+```{r}
 MCMCglmm(t_ext ~ m_ext + age,
          random = ~ us(age):tcid,
          family = "poisson",
@@ -102,7 +103,7 @@ MCMCglmm(t_ext ~ m_ext + age,
 
 # Nonlinear Mixed Models {#nonlinear}
 
-```{r, class.source = "fold-show"}
+```{r}
 nlme(height ~ SSasymp(age, Asym, R0, lrc),
      data = Loblolly,
      fixed = Asym + R0 + lrc ~ 1,
@@ -143,43 +144,43 @@ https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mi
 
 ## QQ Plots
 
-```{r, class.source = "fold-show"}
+```{r}
 qqnorm(multilevelRegressionModel, ~ranef(., level = 1)) #Multilevel model: make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
 ```
 
 ## PP Plots
 
-```{r, class.source = "fold-show"}
+```{r}
 ppPlot(multilevelRegressionModel)
 ```
 
 ## QQ Plot of residuals
 
-```{r, class.source = "fold-show"}
+```{r}
 qqnorm(resid(multilevelRegressionModel))
 ```
 
 ## Plot residuals
 
-```{r, class.source = "fold-show"}
+```{r}
 plot(multilevelRegressionModel)
 ```
 
 ## Plot residuals by group (in the example below, level 2 represents the individual)
 
-```{r, class.source = "fold-show"}
+```{r}
 plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0)
 ```
 
 ## Plot residuals by levels of a predictor
 
-```{r, class.source = "fold-show"}
+```{r}
 plot(multilevelRegressionModel, resid(., type = "p") ~ fitted(.) | female) #type="p" specifies standardized residuals
 ```
 
 ## Can model heteroscedasticity of the within-group error with the weights argument
 
-```{r, class.source = "fold-show"}
+```{r}
 multilevelRegressionModelVarStructure <- lme(t_ext ~ m_ext + age + female,
                                              random = ~1 + age|tcid,
                                              weights = varIdent(form = ~ 1 | female),
@@ -190,20 +191,20 @@ multilevelRegressionModelVarStructure <- lme(t_ext ~ m_ext + age + female,
 
 ## Plot observed and fitted values
 
-```{r, class.source = "fold-show"}
+```{r}
 plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.))
 ```
 
 ## Plot QQ plot of residuals by levels of a predictor
 
-```{r, class.source = "fold-show"}
+```{r}
 qqnorm(multilevelRegressionModelVarStructure, ~ resid(.) | female)
 qqnorm(multilevelRegressionModelVarStructure, ~ resid(.))
 ```
 
 ## QQ plot of random effects
 
-```{r, class.source = "fold-show"}
+```{r}
 qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)) #make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
 qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0))
 qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))
@@ -211,13 +212,13 @@ qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))
 
 ## QQ plot of random effects by levels of a predictor
 
-```{r, class.source = "fold-show"}
+```{r}
 qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
 ```
 
 ## Pairs plot
 
-```{r, class.source = "fold-show"}
+```{r}
 pairs(multilevelRegressionModelVarStructure)
 pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
 ```
@@ -243,3 +244,10 @@ pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
 - `corLin`: linear
 - `corRatio`: rational quadratic
 - `corSpher`: spherical
+
+# Session Info
+
+```{r, class.source = "fold-hide"}
+sessionInfo()
+```
+

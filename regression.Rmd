@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = TRUE,
 ## Load Libraries
 
 ```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+library("MASS")
 library("tidyverse")
 library("psych")
 library("rms")
@@ -32,11 +33,11 @@ library("mgcv")
 library("AER")
 library("foreign")
 library("olsrr")
-library("MASS")
-library("WRS2")
 library("asbio")
 library("quantreg")
 library("mblm")
+library("effects")
+library("correlation")
 ```
 
 # Import data
@@ -75,6 +76,7 @@ confint(multipleRegressionModel)
 multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                        data = mydata,
                                        na.action = na.omit)
+
 multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                        data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit)
 ```
@@ -83,7 +85,7 @@ multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum
 
 Also see here: https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002
 
-```{r}
+```{r, warning = FALSE}
 multipleRegressionModelPairwise <- setCor(y = "bpi_antisocialT2Sum",
                                           x = c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum"),
                                           data = cov(mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise.complete.obs"),
@@ -128,7 +130,7 @@ summary(ltsRegression)
 
 ## Bayesian linear regression
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, results = FALSE}
 bayesianRegularizedRegression <- brm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                      data = mydata,
                                      chains = 4,
@@ -177,7 +179,7 @@ In this example, we predict a count variable that has a poisson distribution.
 We could change the distribution.
 For example, we could use Gamma regression, `family = Gamma`, when the response variable is continuous and positive, and the coefficient of variation--rather than the variance--is constant.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, results = FALSE}
 bayesianGeneralizedLinearRegression <- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                            data = mydata,
                                            family = poisson,
@@ -214,7 +216,7 @@ confint(ordinalRegressionModel)
 
 ## Bayesian ordinal regression model
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, results = FALSE}
 bayesianOrdinalRegression <- brm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                  data = mydata,
                                  family = cumulative(),
@@ -227,7 +229,7 @@ summary(bayesianOrdinalRegression)
 
 ## Bayesian count regression model
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, results = FALSE}
 bayesianCountRegression <- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                data = mydata,
                                family = "poisson",
@@ -252,7 +254,7 @@ confint(logisticRegressionModel)
 
 ## Bayesian logistic regression model
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, results = FALSE}
 bayesianLogisticRegression <- brm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                   data = mydata,
                                   family = bernoulli,
@@ -377,11 +379,20 @@ dataEllipse(mydata_nomissing$bpi_antisocialT1Sum, mydata_nomissing$bpi_antisocia
 ##### Before Model Fitting
 
 - scatterplot matrix
+- distance correlation
 
 ###### Scatterplot Matrix
 
 ```{r}
 scatterplotMatrix(~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepressedSum, data = mydata)
+```
+
+###### Distance correlation
+
+The distance correlation is an index of the degree of the linear and non-linear association between two variables.
+
+```{r}
+correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "distance", p_adjust = "none")
 ```
 
 ##### After Model Fitting
@@ -775,7 +786,6 @@ avPlots(multipleRegressionModel_constructedVariable, "boxCoxVariable(bpi_antisoc
 inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2)) #black line is best fitting power transformation
 ```
 
-
 ###### Yeo-Johnson Transformations
 
 Useful if the outcome is not strictly positive.
@@ -783,7 +793,6 @@ Useful if the outcome is not strictly positive.
 ```{r, eval = FALSE}
 yjPower(DV, lambda)
 ```
-
 
 ##### Transformations of Predictor Variable
 
@@ -850,6 +859,8 @@ Resources
 
 ####### Spearman's rho
 
+Spearman's rho is a non-parametric correlation.
+
 ```{r}
 cor.test(mydata$bpi_antisocialT1Sum, mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers
 cor.test(mydata$bpi_antisocialT1Sum, mydata$bpi_antisocialT2Sum, method = "spearman") #Spearman's rho, a rank correlation that is less sensitive to outliers
@@ -870,20 +881,19 @@ cov.mcd(na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]), cor = 
 ####### Winsorized correlation
 
 ```{r}
-wincor(mydata[,"bpi_antisocialT1Sum"], mydata[,"bpi_antisocialT2Sum"], tr = .2)
+correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], winsorize = 0.2, p_adjust = "none")
 ```
 
 ####### Percentage bend correlation
 
 ```{r}
-pbcor(mydata[,"bpi_antisocialT1Sum"], mydata[,"bpi_antisocialT2Sum"])
+correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "percentage", p_adjust = "none")
 ```
 
 ####### Biweight midcorrelation
 
 ```{r}
-r.bw(mydata[which(!is.na(mydata$bpi_antisocialT1Sum) & !is.na(mydata$bpi_antisocialT2Sum)),"bpi_antisocialT1Sum"],
-     mydata[which(!is.na(mydata$bpi_antisocialT1Sum) & !is.na(mydata$bpi_antisocialT2Sum)),"bpi_antisocialT2Sum"])
+correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "biweight", p_adjust = "none")
 ```
 
 ###### Robust regression with a single predictor
@@ -923,7 +933,7 @@ rlm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
 
 ####### Robust generalized regression
 
-```{r}
+```{r, warning = FALSE}
 glmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
     data = mydata,
     family = "poisson",
@@ -1008,9 +1018,7 @@ Tests include:
 - Tukey's test for nonadditivity: adding the squares of the fitted values to the model and refitting (evaluates adequacy of model fit)
 
 ```{r}
-residualPlots(multipleRegressionModelNoMissing)
-residualPlots(multipleRegressionModelNoMissing, id.n = 2)
-residualPlots(multipleRegressionModelNoMissing, id.n = "noteworthy")
+residualPlots(multipleRegressionModelNoMissing, id = TRUE)
 ```
 
 ### Marginal Model Plots {#marginalModelPlots}
@@ -1020,10 +1028,7 @@ Marginal model plots are plots of the outcome versus predictors/fitted values.
 Includes plots of a) observed outcome values versus values on predictors (ignoring the other predictors) and b) observed outcome values versus model fitted values.
 
 ```{r}
-marginalModelPlots(multipleRegressionModel)
-marginalModelPlots(multipleRegressionModel, sd = TRUE)
-marginalModelPlots(multipleRegressionModel, sd = TRUE, id.n = 2)
-marginalModelPlots(multipleRegressionModel, sd = TRUE, id.n = "noteworthy")
+marginalModelPlots(multipleRegressionModel, sd = TRUE, id = TRUE)
 ```
 
 ### Added-Variable Plots {#addedVariablePlots}
@@ -1037,8 +1042,7 @@ y-axis: residuals from model with all predictors excluding the predictor of inte
 x-axis: residuals from model regressing predictor of interest on all other predictors
 
 ```{r}
-avPlots(multipleRegressionModel)
-avPlots(multipleRegressionModel, id.n = 2)
+avPlots(multipleRegressionModel, id = TRUE)
 ```
 
 #### Refit model removing jointly influential observations
@@ -1049,7 +1053,7 @@ multipleRegressionModel_removeJointlyInfluentialObs <- lm(bpi_antisocialT2Sum ~ 
                                                           na.action = na.exclude,
                                                           subset = -c(6318,6023,4022,4040))
 
-avPlots(multipleRegressionModel_removeJointlyInfluentialObs, id.n = 2)
+avPlots(multipleRegressionModel_removeJointlyInfluentialObs, id = TRUE)
 
 compareCoefs(multipleRegressionModel, multipleRegressionModel_removeJointlyInfluentialObs)
 ```
@@ -1074,14 +1078,13 @@ hat values are an index of leverage (observations that are far from the center o
 
 ```{r}
 hist(hatvalues(multipleRegressionModel))
+plot(hatvalues(multipleRegressionModel))
 
-influenceIndexPlot(multipleRegressionModel, id.n = 2)
-influenceIndexPlot(multipleRegressionModel, id.n = "noteworthy")
+influenceIndexPlot(multipleRegressionModel, id = TRUE)
 
-influencePlot(multipleRegressionModel, id.n = 10) # circle size is proportional to Cook's Distance
+influencePlot(multipleRegressionModel, id = TRUE) # circle size is proportional to Cook's Distance
 
-leveragePlots(multipleRegressionModel, id.n = 2)
-leveragePlots(multipleRegressionModel, id.n = "noteworthy")
+leveragePlots(multipleRegressionModel, id = TRUE)
 ```
 
 ### Observations with high influence (on OLS regression coefficients)
@@ -1089,22 +1092,26 @@ leveragePlots(multipleRegressionModel, id.n = "noteworthy")
 https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html
 
 ```{r}
-influence.measures(multipleRegressionModel)
+head(influence.measures(multipleRegressionModel)$infmat)
 ```
 
 ### DFBETA {#dfbeta}
 
 ```{r}
+head(dfbeta(multipleRegressionModel))
+
 hist(dfbeta(multipleRegressionModel))
-dfbetasPlots(multipleRegressionModel, id.n = 2)
-dfbeta(multipleRegressionModel)
+dfbetasPlots(multipleRegressionModel, id = TRUE)
 ```
 
 ### DFFITS {#dffits}
 
 ```{r}
+head(dffits(multipleRegressionModel)[order(dffits(multipleRegressionModel), decreasing = TRUE)])
+
 hist(dffits(multipleRegressionModel))
-dffits(multipleRegressionModel)
+plot(dffits(multipleRegressionModel))
+plot(dffits(multipleRegressionModel)[order(dffits(multipleRegressionModel), decreasing = TRUE)])
 ```
 
 ### Cook's Distance {#cooksDistance}
@@ -1113,7 +1120,9 @@ Observations that are both outlying (have a high residual from the regression li
 An observation will have less influence if it lies on the regression line (not an outlier, i.e., has a low residual) or if it has low leverage (i.e., has a value near the center of a predictor's distribution).
 
 ```{r}
-cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegressionModel), decreasing = TRUE)]
+head(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegressionModel), decreasing = TRUE)])
+
+hist(cooks.distance(multipleRegressionModel))
 plot(cooks.distance(multipleRegressionModel))
 plot(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegressionModel), decreasing = TRUE)])
 ```
@@ -1122,34 +1131,34 @@ plot(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegres
 
 ```{r}
 multipleRegressionModel_2 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371))
 
 multipleRegressionModel_3 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371,2767))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371,2767))
 
 multipleRegressionModel_4 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371,2767,8472))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371,2767,8472))
 
 multipleRegressionModel_5 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371,2767,8472,6170))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371,2767,8472,6170))
 
 multipleRegressionModel_6 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371,2767,8472,6170,6023))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371,2767,8472,6170,6023))
 
 multipleRegressionModel_7 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(2765,1371,2767,8472,6170,6023,2766))
+                                data = mydata,
+                                na.action = na.exclude,
+                                subset = -c(2765,1371,2767,8472,6170,6023,2766))
 ```
 
 ##### Examine how much regression coefficients change when excluding influential observations
@@ -1164,6 +1173,7 @@ compareCoefs(multipleRegressionModel, multipleRegressionModel_2, multipleRegress
 coef(lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
         data = mydata,
         na.action="na.exclude"))
+
 coef(ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
             data = mydata,
             na.action = "na.exclude"))
@@ -1183,6 +1193,6 @@ https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions
 
 # Session Info
 
-```{r}
+```{r, class.source = "fold-hide"}
 sessionInfo()
 ```
