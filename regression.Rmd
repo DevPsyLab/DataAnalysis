@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = TRUE,
 ## Load Libraries
 
 ```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+library("petersenlab")
 library("MASS")
 library("tidyverse")
 library("psych")
@@ -38,6 +39,7 @@ library("quantreg")
 library("mblm")
 library("effects")
 library("correlation")
+library("interactions")
 ```
 
 # Import data
@@ -267,7 +269,69 @@ summary(bayesianLogisticRegression)
 
 # Hierarchical Linear Regression
 
-# Moderated Multiple Regression
+```{r}
+model1 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
+             data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+             na.action = na.exclude)
+
+model2 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+             data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+             na.action = na.exclude)
+
+summary(model2)$adj.r.squared
+
+anova(model1, model2)
+summary(model2)$adj.r.squared - summary(model1)$adj.r.squared
+```
+
+# Moderated Multiple Regression {#moderation}
+
+https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html
+
+Make sure to mean-center or orthogonalize predictors before computing the interaction term.
+
+## Model
+
+```{r}
+states <- as.data.frame(state.x77)
+interactionModel <- lm(Income ~ Illiteracy * Murder + `HS Grad`, data = states)
+```
+
+## Plots
+
+```{r}
+interact_plot(interactionModel, pred = Illiteracy, modx = Murder)
+interact_plot(interactionModel, pred = Illiteracy, modx = Murder, plot.points = TRUE)
+interact_plot(interactionModel, pred = Illiteracy, modx = Murder, interval = TRUE)
+
+johnson_neyman(interactionModel, pred = Illiteracy, modx = Murder, alpha = .05)
+```
+
+## Simple Slopes Analysis
+
+```{r}
+sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = FALSE)
+sim_slopes(interactionModel,
+           pred = Illiteracy,
+           modx = Murder,
+           modx.values = c(0, 5, 10),
+           johnson_neyman = FALSE)
+```
+
+## Johnson-Neyman intervals
+
+Indicates all the values of the moderator for which the slope of the predictor is statistically significant.
+
+```{r}
+sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = TRUE)
+
+probe_interaction(interactionModel,
+                  pred = Illiteracy,
+                  modx = Murder,
+                  cond.int = TRUE,
+                  interval = TRUE,
+                  jnplot = TRUE)
+```
 
 # Model Building Steps
 
