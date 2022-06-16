@@ -22,6 +22,8 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
 library("lavaan")
+library("semTools")
+library("semPlot")
 ```
 
 # Simulate Data
@@ -96,6 +98,40 @@ parameterEstimates(mediationFit,
                    standardized = TRUE)
 ```
 
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(mediationFit, fit.measures = c("chisq", "df", "pvalue",
+                                           "rmsea", "cfi", "tli", "srmr"))
+```
+
+## Residuals
+
+```{r}
+residuals(mediationFit, type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(mediationFit, sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(mediationFit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(mediationFit,
+         what = "Std.all",
+         layout = "tree2",
+         edge.label.cex = 1.5)
+```
+
 # Power analysis
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis
@@ -105,4 +141,3 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#mo
 ```{r, class.source = "fold-hide"}
 sessionInfo()
 ```
-
