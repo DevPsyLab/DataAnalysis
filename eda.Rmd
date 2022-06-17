@@ -195,24 +195,19 @@ Add summary statistics to the bottom of correlation matrices in papers:
 
 ```{r}
 summaryTable <- mydata %>% 
-  summarise_all(list(~ length(na.omit(.)),
-                     ~ mean(is.na(.)) * 100,
-                     ~ mean(., na.rm = TRUE),
-                     ~ sd(., na.rm = TRUE),
-                     ~ skew(., na.rm = TRUE),
-                     ~ kurtosi(., na.rm = TRUE))) %>% 
-  round(., 2) %>% 
+  summarise(across(everything(),
+                   .fns = list(n = ~ length(na.omit(.)),
+                               missingness = ~ mean(is.na(.)) * 100,
+                               M = ~ mean(., na.rm = TRUE),
+                               SD = ~ sd(., na.rm = TRUE),
+                               skewness = ~ skew(., na.rm = TRUE),
+                               kurtosis = ~ kurtosi(., na.rm = TRUE)),
+                   .names = "{.col}.{.fn}")) %>%  
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "_") %>% 
+               names_sep = "\\.") %>% 
   pivot_wider(names_from = index,
-              values_from = value) %>% 
-  rename(n = length,
-         missingness = "*",
-         M = mean,
-         SD = sd,
-         skewness = skew,
-         kurtosis = kurtosi)
+              values_from = value)
 
 summaryTableTransposed <- summaryTable[-1] %>% 
   t() %>% 
