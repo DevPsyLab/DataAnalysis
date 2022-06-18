@@ -194,6 +194,8 @@ Consider transforming data if skewness > |0.8| or if kurtosis > |3.0|.
 Add summary statistics to the bottom of correlation matrices in papers:
 
 ```{r}
+cor.table(mydata, type = "manuscript")
+
 summaryTable <- mydata %>% 
   summarise(across(everything(),
                    .fns = list(n = ~ length(na.omit(.)),
@@ -215,7 +217,6 @@ summaryTableTransposed <- summaryTable[-1] %>%
   setNames(summaryTable$variable) %>% 
   round(., digits = 2)
 
-cor.table(mydata, type = "manuscript")
 summaryTableTransposed
 ```
 
