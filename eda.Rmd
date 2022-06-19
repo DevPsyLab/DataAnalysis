@@ -121,7 +121,8 @@ round(colMeans(mydata, na.rm = TRUE), 2)
 round(apply(mydata, 2, function(x) mean(x, na.rm = TRUE)), 2)
 
 mydata %>% 
-  summarise_all(list(~ mean(., na.rm = TRUE))) %>% 
+  summarise(across(everything(),
+                   .fns = list(mean = ~ mean(., na.rm = TRUE)))) %>% 
   round(., 2)
 ```
 
@@ -131,7 +132,8 @@ mydata %>%
 round(apply(mydata, 2, function(x) median(x, na.rm = TRUE)), 2)
 
 mydata %>% 
-  summarise_all(list(~ median(., na.rm = TRUE))) %>% 
+  summarise(across(everything(),
+                   .fns = list(median = ~ median(., na.rm = TRUE)))) %>% 
   round(., 2)
 ```
 
@@ -141,7 +143,8 @@ mydata %>%
 round(apply(mydata, 2, function(x) Mode(x, multipleModes = "mean")), 2)
 
 mydata %>% 
-  summarise_all(list(~ Mode(., multipleModes = "mean"))) %>% 
+  summarise(across(everything(),
+                   .fns = list(mode = ~ Mode(., multipleModes = "mean")))) %>% 
   round(., 2)
 ```
 
@@ -149,16 +152,17 @@ Compute all of these measures of central tendency:
 
 ```{r}
 mydata %>% 
-  summarise_all(list(~ mean(., na.rm = TRUE),
-                     ~ median(., na.rm = TRUE),
-                     ~ Mode(., multipleModes = "mean"))) %>% 
+  summarise(across(everything(),
+                   .fns = list(mean = ~ mean(., na.rm = TRUE),
+                               median = ~ median(., na.rm = TRUE),
+                               mode = ~ Mode(., multipleModes = "mean")),
+                   .names = "{.col}.{.fn}")) %>% 
   round(., 2) %>% 
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "_") %>% 
+               names_sep = "\\.") %>% 
   pivot_wider(names_from = index,
-              values_from = value) %>% 
-  rename(mode = Mode)
+              values_from = value)
 ```
 
 ## Dispersion
@@ -172,19 +176,19 @@ Compute all of these measures of dispersion:
 
 ```{r}
 mydata %>% 
-  summarise_all(list(~ sd(., na.rm = TRUE),
-                     ~ min(., na.rm = TRUE),
-                     ~ max(., na.rm = TRUE),
-                     ~ skew(., na.rm = TRUE),
-                     ~ kurtosi(., na.rm = TRUE))) %>% 
+  summarise(across(everything(),
+                   .fns = list(SD = ~ sd(., na.rm = TRUE),
+                               min = ~ min(., na.rm = TRUE),
+                               max = ~ max(., na.rm = TRUE),
+                               skewness = ~ skew(., na.rm = TRUE),
+                               kurtosis = ~ kurtosi(., na.rm = TRUE)),
+                   .names = "{.col}.{.fn}")) %>% 
   round(., 2) %>% 
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "_") %>% 
+               names_sep = "\\.") %>% 
   pivot_wider(names_from = index,
-              values_from = value) %>% 
-  rename(skewness = skew,
-         kurtosis = kurtosi)
+              values_from = value)
 ```
 
 Consider transforming data if skewness > |0.8| or if kurtosis > |3.0|.
@@ -202,6 +206,8 @@ summaryTable <- mydata %>%
                                missingness = ~ mean(is.na(.)) * 100,
                                M = ~ mean(., na.rm = TRUE),
                                SD = ~ sd(., na.rm = TRUE),
+                               min = ~ min(., na.rm = TRUE),
+                               max = ~ max(., na.rm = TRUE),
                                skewness = ~ skew(., na.rm = TRUE),
                                kurtosis = ~ kurtosi(., na.rm = TRUE)),
                    .names = "{.col}.{.fn}")) %>%  
