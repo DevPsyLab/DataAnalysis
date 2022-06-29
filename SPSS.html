@@ -388,18 +388,72 @@ div.tocify {
 </div>
 <div id="import" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Creating a SPSS Syntax File to Import a <code>.csv</code> Data File</h1>
-<p># Best Practices {#bestPractices}</p>
+<p>A <code>.csv</code> file is a “comma-separated values” file—a file whose values are separated by commas. The lab will provide you with a <code>.csv</code> in your member user folder. You will then need to create a SPSS syntax file to import and save the data into SPSS format. This data file imports the data and only needs to be run when there’s a new data set.</p>
+<ol style="list-style-type: decimal">
+<li>Open SPSS in the search bar</li>
+<li>Go to file, import data, select .csv data</li>
+<li>Navigate to the desired .csv file</li>
+<li>Select data file and select paste</li>
+<li>Once the data preview opens, select paste again</li>
+<li>A SPSS syntax file will open, select save as and move the file to the desired location
+<ul>
+<li>save file as (<code>import</code>)</li>
+</ul></li>
+<li>Open the syntax file and make sure lab path is saved as the absolute file path in the (<code>/FILE=</code>) field
+<ul>
+<li><strong><em>Insert full path here</em></strong></li>
+</ul></li>
+<li>To run your script, select CTRL A and press the green play button to run the script</li>
+<li>In the import script, SPSS will automatically determine the type of variable each should be, but it does not always classify them correctly.
+<ul>
+<li></li>
+</ul></li>
+<li>For numeric variables used in analysis, use the following command to change the variable to numeric
+<ul>
+<li>E.g., (<code>tcid AUTO</code>) to (<code>tcid F4.2</code>)</li>
+</ul></li>
+<li>The data file should appear. To save the data file, select save as and paste. Copy and paste the syntax at the <strong>end of the syntax file</strong> in the import file to save your spss data.</li>
+</ol>
+</div>
+<div id="analysis" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Creating a SPSS Syntax file for analysis</h1>
+<ol style="list-style-type: decimal">
+<li>To create a new syntax file, select file then new then syntax
+<ul>
+<li>Save as (<code>descriptives</code>)</li>
+</ul></li>
+<li>In your syntax file, create comments for your different types of analyses.
+<ul>
+<li>e.g., frequencies, descriptives, correlations</li>
+</ul></li>
+<li>In your new data file, select an analysis and choose paste. In your despriptives syntax file, the analysis should now be added. For each subsequent analysis, select paste to add it to the descriptives file under the appropriate syntax.</li>
+<li>Create a new SPSS syntax file for your analysis. In this syntax file, add your analysis
+<ul>
+<li>E.g., regressions</li>
+</ul></li>
+</ol>
+</div>
+<div id="bestPractices" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Best Practices</h1>
 <ul>
 <li>Use SPSS syntax files (<code>.sps</code>) for performing all commands, including <a href="#import">importing data</a>, computing variables, recoding variables, running analyses, etc. The benefit of using SPSS syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file. This is important so you do not have to remember all of the steps you followed to generate the analysis. This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data. If you are unsure what SPSS command is needed, run the command via “point and click” in the interface; however, instead of clicking “OK”, click “Paste”. This will paste the syntax that is used to run the command into a syntax file.
 <ul>
 <li>Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., <code>import.sps</code>).</li>
 <li>Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., <code>descriptives.sps</code>).</li>
 <li>Have a separate syntax file for running analyses (e.g., <code>analyses.sps</code>).</li>
+<li>Comment your syntax frequently
+<ul>
+<li>to comment use the convention
+<ul>
+<li>*type comment.</li>
+</ul></li>
+</ul></li>
+<li>Save frequently</li>
 </ul></li>
 </ul>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiU1BTUyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBXaGVuIHRvIHVzZSBTUFNTCgogV2UgdXNlIFtSXShSLmh0bWwpIGZvciBhbG1vc3QgYWxsIGRhdGEgYW5hbHlzaXMuCiBIb3dldmVyLCBSIGlzIGNvZGUtYmFzZWQgYW5kIGhhcyBhIHN0ZWVwIGxlYXJuaW5nIGN1cnZlLgogQXMgYSByZXN1bHQsIHVuZGVyZ3JhZHVhdGUgc3R1ZGVudHMgaW4gdGhlIGxhYiBtb3N0IG9mdGVuIHVzZSBTUFNTIGZvciB0aGVpciByZXNlYXJjaCBwcm9qZWN0cyAoZS5nLiwgW0hvbm9ycyBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvaG9ub3JzLmh0bWwpIGFuZCBbU1JPUCBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvZXhwZWN0YXRpb25zLVNST1AuaHRtbCkpLCBiZWNhdXNlIFNQU1MgaGFzIGEgcG9pbnQtYW5kLWNsaWNrIGludGVyZmFjZS4KIAojIENyZWF0aW5nIGEgU1BTUyBTeW50YXggRmlsZSB0byBJbXBvcnQgYSBgLmNzdmAgRGF0YSBGaWxlIHsjaW1wb3J0fQoKICMgQmVzdCBQcmFjdGljZXMgeyNiZXN0UHJhY3RpY2VzfQoKIC0gVXNlIFNQU1Mgc3ludGF4IGZpbGVzIChgLnNwc2ApIGZvciBwZXJmb3JtaW5nIGFsbCBjb21tYW5kcywgaW5jbHVkaW5nIFtpbXBvcnRpbmcgZGF0YV0oI2ltcG9ydCksIGNvbXB1dGluZyB2YXJpYWJsZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgcnVubmluZyBhbmFseXNlcywgZXRjLgogVGhlIGJlbmVmaXQgb2YgdXNpbmcgU1BTUyBzeW50YXggZmlsZXMgKGFuZCBjb2RlLWJhc2VkIGZpbGVzLCBtb3JlIGdlbmVyYWxseSkgaXMgdGhhdCB0aGV5IGFsbG93IHlvdSB0byByZXByb2R1Y2UgeW91ciBmaW5kaW5ncyBhZ2FpbiB3aXRoIHRoZSBzYW1lIGRhdGEgZmlsZS4KIFRoaXMgaXMgaW1wb3J0YW50IHNvIHlvdSBkbyBub3QgaGF2ZSB0byByZW1lbWJlciBhbGwgb2YgdGhlIHN0ZXBzIHlvdSBmb2xsb3dlZCB0byBnZW5lcmF0ZSB0aGUgYW5hbHlzaXMuCiBUaGlzIGFsc28gYWxsb3dzIHlvdSB0byBxdWlja2x5IHJlLXJ1biB0aGUgYW5hbHlzaXMgaWYgdGhlIGRhdGEgZmlsZSBpcyB1cGRhdGVkIGR1ZSB0byB0aGUgY29sbGVjdGlvbiBvZiBtb3JlIGRhdGEuCiBJZiB5b3UgYXJlIHVuc3VyZSB3aGF0IFNQU1MgY29tbWFuZCBpcyBuZWVkZWQsIHJ1biB0aGUgY29tbWFuZCB2aWEgInBvaW50IGFuZCBjbGljayIgaW4gdGhlIGludGVyZmFjZTsgaG93ZXZlciwgaW5zdGVhZCBvZiBjbGlja2luZyAiT0siLCBjbGljayAiUGFzdGUiLgogVGhpcyB3aWxsIHBhc3RlIHRoZSBzeW50YXggdGhhdCBpcyB1c2VkIHRvIHJ1biB0aGUgY29tbWFuZCBpbnRvIGEgc3ludGF4IGZpbGUuCiAgICAtIEhhdmUgb25lIHN5bnRheCBmaWxlIGZvciBpbXBvcnRpbmcgZGF0YSwgY29tcHV0aW5nIGNvbXBvc2l0ZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgYW5kIHNhdmluZyBkYXRhIChlLmcuLCBgaW1wb3J0LnNwc2ApLgogICAgLSBIYXZlIGEgc2VwYXJhdGUgc3ludGF4IGZpbGUgZm9yIGdlbmVyYXRpbmcgZnJlcXVlbmNpZXMsIGRlc2NyaXB0aXZlIHN0YXRpc3RpY3MsIGFuZCBjb3JyZWxhdGlvbiBtYXRyaWNlcyAoZS5nLiwgYGRlc2NyaXB0aXZlcy5zcHNgKS4KICAgIC0gSGF2ZSBhIHNlcGFyYXRlIHN5bnRheCBmaWxlIGZvciBydW5uaW5nIGFuYWx5c2VzIChlLmcuLCBgYW5hbHlzZXMuc3BzYCku</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiU1BTUyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBXaGVuIHRvIHVzZSBTUFNTCgogV2UgdXNlIFtSXShSLmh0bWwpIGZvciBhbG1vc3QgYWxsIGRhdGEgYW5hbHlzaXMuCiBIb3dldmVyLCBSIGlzIGNvZGUtYmFzZWQgYW5kIGhhcyBhIHN0ZWVwIGxlYXJuaW5nIGN1cnZlLgogQXMgYSByZXN1bHQsIHVuZGVyZ3JhZHVhdGUgc3R1ZGVudHMgaW4gdGhlIGxhYiBtb3N0IG9mdGVuIHVzZSBTUFNTIGZvciB0aGVpciByZXNlYXJjaCBwcm9qZWN0cyAoZS5nLiwgW0hvbm9ycyBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvaG9ub3JzLmh0bWwpIGFuZCBbU1JPUCBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvZXhwZWN0YXRpb25zLVNST1AuaHRtbCkpLCBiZWNhdXNlIFNQU1MgaGFzIGEgcG9pbnQtYW5kLWNsaWNrIGludGVyZmFjZS4KIAojIENyZWF0aW5nIGEgU1BTUyBTeW50YXggRmlsZSB0byBJbXBvcnQgYSBgLmNzdmAgRGF0YSBGaWxlIHsjaW1wb3J0fQoKQSBgLmNzdmAgZmlsZSBpcyBhICJjb21tYS1zZXBhcmF0ZWQgdmFsdWVzIiBmaWxl4oCUYSBmaWxlIHdob3NlIHZhbHVlcyBhcmUgc2VwYXJhdGVkIGJ5IGNvbW1hcy4KVGhlIGxhYiB3aWxsIHByb3ZpZGUgeW91IHdpdGggYSBgLmNzdmAgaW4geW91ciBtZW1iZXIgdXNlciBmb2xkZXIuCllvdSB3aWxsIHRoZW4gbmVlZCB0byBjcmVhdGUgYSBTUFNTIHN5bnRheCBmaWxlIHRvIGltcG9ydCBhbmQgc2F2ZSB0aGUgZGF0YSBpbnRvIFNQU1MgZm9ybWF0LiAKVGhpcyBkYXRhIGZpbGUgaW1wb3J0cyB0aGUgZGF0YSBhbmQgb25seSBuZWVkcyB0byBiZSBydW4gd2hlbiB0aGVyZSdzIGEgbmV3IGRhdGEgc2V0LgoKMS4gT3BlbiBTUFNTIGluIHRoZSBzZWFyY2ggYmFyCjEuIEdvIHRvIGZpbGUsIGltcG9ydCBkYXRhLCBzZWxlY3QgLmNzdiBkYXRhCjEuIE5hdmlnYXRlIHRvIHRoZSBkZXNpcmVkIC5jc3YgZmlsZQoxLiBTZWxlY3QgZGF0YSBmaWxlIGFuZCBzZWxlY3QgcGFzdGUKMS4gT25jZSB0aGUgZGF0YSBwcmV2aWV3IG9wZW5zLCBzZWxlY3QgcGFzdGUgYWdhaW4KMS4gQSBTUFNTIHN5bnRheCBmaWxlIHdpbGwgb3Blbiwgc2VsZWN0IHNhdmUgYXMgYW5kIG1vdmUgdGhlIGZpbGUgdG8gdGhlIGRlc2lyZWQgbG9jYXRpb24KICAgICogc2F2ZSBmaWxlIGFzIChgaW1wb3J0YCkKMS4gT3BlbiB0aGUgc3ludGF4IGZpbGUgYW5kIG1ha2Ugc3VyZSBsYWIgcGF0aCBpcyBzYXZlZCBhcyB0aGUgYWJzb2x1dGUgZmlsZSBwYXRoIGluIHRoZSAoYC9GSUxFPWApIGZpZWxkCiAgICogKioqSW5zZXJ0IGZ1bGwgcGF0aCBoZXJlKioqCjEuIFRvIHJ1biB5b3VyIHNjcmlwdCwgc2VsZWN0IENUUkwgQSAgYW5kIHByZXNzIHRoZSBncmVlbiBwbGF5IGJ1dHRvbiB0byBydW4gdGhlIHNjcmlwdAoxLiBJbiB0aGUgaW1wb3J0IHNjcmlwdCwgU1BTUyB3aWxsIGF1dG9tYXRpY2FsbHkgZGV0ZXJtaW5lIHRoZSB0eXBlIG9mIHZhcmlhYmxlIGVhY2ggc2hvdWxkIGJlLCBidXQgaXQgZG9lcyBub3QgYWx3YXlzIGNsYXNzaWZ5IHRoZW0gY29ycmVjdGx5LgogICAqIAoxLiBGb3IgbnVtZXJpYyB2YXJpYWJsZXMgdXNlZCBpbiBhbmFseXNpcywgdXNlIHRoZSBmb2xsb3dpbmcgY29tbWFuZCB0byBjaGFuZ2UgdGhlIHZhcmlhYmxlIHRvIG51bWVyaWMKICAgKiBFLmcuLCAoYHRjaWQgQVVUT2ApIHRvICAoYHRjaWQgRjQuMmApCjEuIFRoZSBkYXRhIGZpbGUgc2hvdWxkIGFwcGVhci4KVG8gc2F2ZSB0aGUgZGF0YSBmaWxlLCBzZWxlY3Qgc2F2ZSBhcyBhbmQgcGFzdGUuIApDb3B5IGFuZCBwYXN0ZSB0aGUgc3ludGF4IGF0IHRoZSAqKmVuZCBvZiB0aGUgc3ludGF4IGZpbGUqKiBpbiB0aGUgaW1wb3J0IGZpbGUgdG8gc2F2ZSB5b3VyIHNwc3MgZGF0YS4KCiMgQ3JlYXRpbmcgYSBTUFNTIFN5bnRheCBmaWxlIGZvciBhbmFseXNpcyB7I2FuYWx5c2lzfQoKMS4gVG8gY3JlYXRlIGEgbmV3IHN5bnRheCBmaWxlLCBzZWxlY3QgZmlsZSB0aGVuIG5ldyB0aGVuIHN5bnRheAogICAqIFNhdmUgYXMgKGBkZXNjcmlwdGl2ZXNgKQoxLiBJbiB5b3VyIHN5bnRheCBmaWxlLCBjcmVhdGUgY29tbWVudHMgZm9yIHlvdXIgZGlmZmVyZW50IHR5cGVzIG9mIGFuYWx5c2VzLgogICAqIGUuZy4sIGZyZXF1ZW5jaWVzLCBkZXNjcmlwdGl2ZXMsIGNvcnJlbGF0aW9ucwoxLiBJbiB5b3VyIG5ldyBkYXRhIGZpbGUsIHNlbGVjdCBhbiBhbmFseXNpcyBhbmQgY2hvb3NlIHBhc3RlLgpJbiB5b3VyIGRlc3ByaXB0aXZlcyBzeW50YXggZmlsZSwgdGhlIGFuYWx5c2lzIHNob3VsZCBub3cgYmUgYWRkZWQuIEZvciBlYWNoIHN1YnNlcXVlbnQgYW5hbHlzaXMsIHNlbGVjdCBwYXN0ZSB0byBhZGQgaXQgdG8gdGhlIGRlc2NyaXB0aXZlcyBmaWxlIHVuZGVyIHRoZSBhcHByb3ByaWF0ZSBzeW50YXguCjEuIENyZWF0ZSBhIG5ldyBTUFNTIHN5bnRheCBmaWxlIGZvciB5b3VyIGFuYWx5c2lzLiBJbiB0aGlzIHN5bnRheCBmaWxlLCBhZGQgeW91ciBhbmFseXNpcwogICAqIEUuZy4sIHJlZ3Jlc3Npb25zIAoKCgoKCgoKCgojIEJlc3QgUHJhY3RpY2VzIHsjYmVzdFByYWN0aWNlc30KCiAtIFVzZSBTUFNTIHN5bnRheCBmaWxlcyAoYC5zcHNgKSBmb3IgcGVyZm9ybWluZyBhbGwgY29tbWFuZHMsIGluY2x1ZGluZyBbaW1wb3J0aW5nIGRhdGFdKCNpbXBvcnQpLCBjb21wdXRpbmcgdmFyaWFibGVzLCByZWNvZGluZyB2YXJpYWJsZXMsIHJ1bm5pbmcgYW5hbHlzZXMsIGV0Yy4KIFRoZSBiZW5lZml0IG9mIHVzaW5nIFNQU1Mgc3ludGF4IGZpbGVzIChhbmQgY29kZS1iYXNlZCBmaWxlcywgbW9yZSBnZW5lcmFsbHkpIGlzIHRoYXQgdGhleSBhbGxvdyB5b3UgdG8gcmVwcm9kdWNlIHlvdXIgZmluZGluZ3MgYWdhaW4gd2l0aCB0aGUgc2FtZSBkYXRhIGZpbGUuCiBUaGlzIGlzIGltcG9ydGFudCBzbyB5b3UgZG8gbm90IGhhdmUgdG8gcmVtZW1iZXIgYWxsIG9mIHRoZSBzdGVwcyB5b3UgZm9sbG93ZWQgdG8gZ2VuZXJhdGUgdGhlIGFuYWx5c2lzLgogVGhpcyBhbHNvIGFsbG93cyB5b3UgdG8gcXVpY2tseSByZS1ydW4gdGhlIGFuYWx5c2lzIGlmIHRoZSBkYXRhIGZpbGUgaXMgdXBkYXRlZCBkdWUgdG8gdGhlIGNvbGxlY3Rpb24gb2YgbW9yZSBkYXRhLgogSWYgeW91IGFyZSB1bnN1cmUgd2hhdCBTUFNTIGNvbW1hbmQgaXMgbmVlZGVkLCBydW4gdGhlIGNvbW1hbmQgdmlhICJwb2ludCBhbmQgY2xpY2siIGluIHRoZSBpbnRlcmZhY2U7IGhvd2V2ZXIsIGluc3RlYWQgb2YgY2xpY2tpbmcgIk9LIiwgY2xpY2sgIlBhc3RlIi4KIFRoaXMgd2lsbCBwYXN0ZSB0aGUgc3ludGF4IHRoYXQgaXMgdXNlZCB0byBydW4gdGhlIGNvbW1hbmQgaW50byBhIHN5bnRheCBmaWxlLgogICAgLSBIYXZlIG9uZSBzeW50YXggZmlsZSBmb3IgaW1wb3J0aW5nIGRhdGEsIGNvbXB1dGluZyBjb21wb3NpdGVzLCByZWNvZGluZyB2YXJpYWJsZXMsIGFuZCBzYXZpbmcgZGF0YSAoZS5nLiwgYGltcG9ydC5zcHNgKS4KICAgIC0gSGF2ZSBhIHNlcGFyYXRlIHN5bnRheCBmaWxlIGZvciBnZW5lcmF0aW5nIGZyZXF1ZW5jaWVzLCBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzLCBhbmQgY29ycmVsYXRpb24gbWF0cmljZXMgKGUuZy4sIGBkZXNjcmlwdGl2ZXMuc3BzYCkuCiAgICAtIEhhdmUgYSBzZXBhcmF0ZSBzeW50YXggZmlsZSBmb3IgcnVubmluZyBhbmFseXNlcyAoZS5nLiwgYGFuYWx5c2VzLnNwc2ApLgogICAgLSBDb21tZW50IHlvdXIgc3ludGF4IGZyZXF1ZW50bHkKICAgICAgIC0gdG8gY29tbWVudCB1c2UgdGhlIGNvbnZlbnRpb24gCiAgICAgICAgICAtICp0eXBlIGNvbW1lbnQuCiAgICAtIFNhdmUgZnJlcXVlbnRseQogICAgCg==</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <!-- Add icon library -->
