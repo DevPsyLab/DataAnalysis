@@ -1,0 +1,29 @@
+---
+title: "SPSS"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# When to use SPSS
+
+ We use [R](R.html) for almost all data analysis.
+ However, R is code-based and has a steep learning curve.
+ As a result, undergraduate students in the lab most often use SPSS for their research projects (e.g., [Honors projects](https://devpsylab.github.io/LabWiki/honors.html) and [SROP projects](https://devpsylab.github.io/LabWiki/expectations-SROP.html)), because SPSS has a point-and-click interface.
+ 
+# Creating a SPSS Syntax File to Import a `.csv` Data File {#import}
+
+ # Best Practices {#bestPractices}
+
+ - Use SPSS syntax files (`.sps`) for performing all commands, including [importing data](#import), computing variables, recoding variables, running analyses, etc.
+ The benefit of using SPSS syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file.
+ This is important so you do not have to remember all of the steps you followed to generate the analysis.
+ This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data.
+ If you are unsure what SPSS command is needed, run the command via "point and click" in the interface; however, instead of clicking "OK", click "Paste".
+ This will paste the syntax that is used to run the command into a syntax file.
+    - Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., `import.sps`).
+    - Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., `descriptives.sps`).
+    - Have a separate syntax file for running analyses (e.g., `analyses.sps`).
