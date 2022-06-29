@@ -11,7 +11,7 @@
 
 
 
-<title>About This Website</title>
+<title>SPSS</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -377,51 +377,29 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">About This Website</h1>
+<h1 class="title toc-ignore">SPSS</h1>
 
 </div>
 
 
-<p>The Lab Wiki was generated with <a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html"><code>rmarkdown</code></a>. The codebase that was used to generate the Data Analysis Guides is located <a href="https://github.com/DevPsyLab/DataAnalysis">here</a>.</p>
-<div id="contact" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Contact</h1>
-<p>If you have questions about the lab and are not sure who to contact, please contact <a href="mailto:devpsy-lab@uiowa.edu" class="email">devpsy-lab@uiowa.edu</a>.</p>
+<div id="when-to-use-spss" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> When to use SPSS</h1>
+<p>We use <a href="R.html">R</a> for almost all data analysis. However, R is code-based and has a steep learning curve. As a result, undergraduate students in the lab most often use SPSS for their research projects (e.g., <a href="https://devpsylab.github.io/LabWiki/honors.html">Honors projects</a> and <a href="https://devpsylab.github.io/LabWiki/expectations-SROP.html">SROP projects</a>), because SPSS has a point-and-click interface.</p>
 </div>
-<div id="license" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> License</h1>
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg" alt="CC BY 4.0" /></a></p>
-<p>This work is licensed under a <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="CC BY 4.0" /></a></p>
-</div>
-<div id="session-info" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Session Info</h1>
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.2.0 (2022-04-22)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.04.4 LTS
-
-Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
-
-locale:
- [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
- [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
- [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
-[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] digest_0.6.29   R6_2.5.1        jsonlite_1.8.0  magrittr_2.0.3 
- [5] evaluate_0.15   stringi_1.7.6   rlang_1.0.3     cli_3.3.0      
- [9] jquerylib_0.1.4 bslib_0.3.1     rmarkdown_2.14  tools_4.2.0    
-[13] stringr_1.4.0   xfun_0.31       yaml_2.3.5      fastmap_1.1.0  
-[17] compiler_4.2.0  htmltools_0.5.2 knitr_1.39      sass_0.4.1     </code></pre>
+<div id="import" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Creating a SPSS Syntax File to Import a <code>.csv</code> Data File</h1>
+<p># Best Practices {#bestPractices}</p>
+<ul>
+<li>Use SPSS syntax files (<code>.sps</code>) for performing all commands, including <a href="#import">importing data</a>, computing variables, recoding variables, running analyses, etc. The benefit of using SPSS syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file. This is important so you do not have to remember all of the steps you followed to generate the analysis. This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data. If you are unsure what SPSS command is needed, run the command via “point and click” in the interface; however, instead of clicking “OK”, click “Paste”. This will paste the syntax that is used to run the command into a syntax file.
+<ul>
+<li>Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., <code>import.sps</code>).</li>
+<li>Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., <code>descriptives.sps</code>).</li>
+<li>Have a separate syntax file for running analyses (e.g., <code>analyses.sps</code>).</li>
+</ul></li>
+</ul>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWJvdXQgVGhpcyBXZWJzaXRlIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIikKYGBgCgpUaGUgTGFiIFdpa2kgd2FzIGdlbmVyYXRlZCB3aXRoIFtgcm1hcmtkb3duYF0oaHR0cHM6Ly9ib29rZG93bi5vcmcveWlodWkvcm1hcmtkb3duL3JtYXJrZG93bi1zaXRlLmh0bWwpLgpUaGUgY29kZWJhc2UgdGhhdCB3YXMgdXNlZCB0byBnZW5lcmF0ZSB0aGUgRGF0YSBBbmFseXNpcyBHdWlkZXMgaXMgbG9jYXRlZCBbaGVyZV0oaHR0cHM6Ly9naXRodWIuY29tL0RldlBzeUxhYi9EYXRhQW5hbHlzaXMpLgoKIyBDb250YWN0CgpJZiB5b3UgaGF2ZSBxdWVzdGlvbnMgYWJvdXQgdGhlIGxhYiBhbmQgYXJlIG5vdCBzdXJlIHdobyB0byBjb250YWN0LCBwbGVhc2UgY29udGFjdCBkZXZwc3ktbGFiQHVpb3dhLmVkdS4KCiMgTGljZW5zZQoKWyFbQ0MgQlkgNC4wXVtjYy1ieS1zaGllbGRdXVtjYy1ieV0KClRoaXMgd29yayBpcyBsaWNlbnNlZCB1bmRlciBhCltDcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2VdW2NjLWJ5XS4KClshW0NDIEJZIDQuMF1bY2MtYnktaW1hZ2VdXVtjYy1ieV0KCltjYy1ieV06IGh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzQuMC8KW2NjLWJ5LWltYWdlXTogaHR0cHM6Ly9pLmNyZWF0aXZlY29tbW9ucy5vcmcvbC9ieS80LjAvODh4MzEucG5nCltjYy1ieS1zaGllbGRdOiBodHRwczovL2ltZy5zaGllbGRzLmlvL2JhZGdlL0xpY2Vuc2UtQ0MlMjBCWSUyMDQuMC1saWdodGdyZXkuc3ZnCgojIFNlc3Npb24gSW5mbwoKYGBge3J9CnNlc3Npb25JbmZvKCkKYGBgCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiU1BTUyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBXaGVuIHRvIHVzZSBTUFNTCgogV2UgdXNlIFtSXShSLmh0bWwpIGZvciBhbG1vc3QgYWxsIGRhdGEgYW5hbHlzaXMuCiBIb3dldmVyLCBSIGlzIGNvZGUtYmFzZWQgYW5kIGhhcyBhIHN0ZWVwIGxlYXJuaW5nIGN1cnZlLgogQXMgYSByZXN1bHQsIHVuZGVyZ3JhZHVhdGUgc3R1ZGVudHMgaW4gdGhlIGxhYiBtb3N0IG9mdGVuIHVzZSBTUFNTIGZvciB0aGVpciByZXNlYXJjaCBwcm9qZWN0cyAoZS5nLiwgW0hvbm9ycyBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvaG9ub3JzLmh0bWwpIGFuZCBbU1JPUCBwcm9qZWN0c10oaHR0cHM6Ly9kZXZwc3lsYWIuZ2l0aHViLmlvL0xhYldpa2kvZXhwZWN0YXRpb25zLVNST1AuaHRtbCkpLCBiZWNhdXNlIFNQU1MgaGFzIGEgcG9pbnQtYW5kLWNsaWNrIGludGVyZmFjZS4KIAojIENyZWF0aW5nIGEgU1BTUyBTeW50YXggRmlsZSB0byBJbXBvcnQgYSBgLmNzdmAgRGF0YSBGaWxlIHsjaW1wb3J0fQoKICMgQmVzdCBQcmFjdGljZXMgeyNiZXN0UHJhY3RpY2VzfQoKIC0gVXNlIFNQU1Mgc3ludGF4IGZpbGVzIChgLnNwc2ApIGZvciBwZXJmb3JtaW5nIGFsbCBjb21tYW5kcywgaW5jbHVkaW5nIFtpbXBvcnRpbmcgZGF0YV0oI2ltcG9ydCksIGNvbXB1dGluZyB2YXJpYWJsZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgcnVubmluZyBhbmFseXNlcywgZXRjLgogVGhlIGJlbmVmaXQgb2YgdXNpbmcgU1BTUyBzeW50YXggZmlsZXMgKGFuZCBjb2RlLWJhc2VkIGZpbGVzLCBtb3JlIGdlbmVyYWxseSkgaXMgdGhhdCB0aGV5IGFsbG93IHlvdSB0byByZXByb2R1Y2UgeW91ciBmaW5kaW5ncyBhZ2FpbiB3aXRoIHRoZSBzYW1lIGRhdGEgZmlsZS4KIFRoaXMgaXMgaW1wb3J0YW50IHNvIHlvdSBkbyBub3QgaGF2ZSB0byByZW1lbWJlciBhbGwgb2YgdGhlIHN0ZXBzIHlvdSBmb2xsb3dlZCB0byBnZW5lcmF0ZSB0aGUgYW5hbHlzaXMuCiBUaGlzIGFsc28gYWxsb3dzIHlvdSB0byBxdWlja2x5IHJlLXJ1biB0aGUgYW5hbHlzaXMgaWYgdGhlIGRhdGEgZmlsZSBpcyB1cGRhdGVkIGR1ZSB0byB0aGUgY29sbGVjdGlvbiBvZiBtb3JlIGRhdGEuCiBJZiB5b3UgYXJlIHVuc3VyZSB3aGF0IFNQU1MgY29tbWFuZCBpcyBuZWVkZWQsIHJ1biB0aGUgY29tbWFuZCB2aWEgInBvaW50IGFuZCBjbGljayIgaW4gdGhlIGludGVyZmFjZTsgaG93ZXZlciwgaW5zdGVhZCBvZiBjbGlja2luZyAiT0siLCBjbGljayAiUGFzdGUiLgogVGhpcyB3aWxsIHBhc3RlIHRoZSBzeW50YXggdGhhdCBpcyB1c2VkIHRvIHJ1biB0aGUgY29tbWFuZCBpbnRvIGEgc3ludGF4IGZpbGUuCiAgICAtIEhhdmUgb25lIHN5bnRheCBmaWxlIGZvciBpbXBvcnRpbmcgZGF0YSwgY29tcHV0aW5nIGNvbXBvc2l0ZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgYW5kIHNhdmluZyBkYXRhIChlLmcuLCBgaW1wb3J0LnNwc2ApLgogICAgLSBIYXZlIGEgc2VwYXJhdGUgc3ludGF4IGZpbGUgZm9yIGdlbmVyYXRpbmcgZnJlcXVlbmNpZXMsIGRlc2NyaXB0aXZlIHN0YXRpc3RpY3MsIGFuZCBjb3JyZWxhdGlvbiBtYXRyaWNlcyAoZS5nLiwgYGRlc2NyaXB0aXZlcy5zcHNgKS4KICAgIC0gSGF2ZSBhIHNlcGFyYXRlIHN5bnRheCBmaWxlIGZvciBydW5uaW5nIGFuYWx5c2VzIChlLmcuLCBgYW5hbHlzZXMuc3BzYCku</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <!-- Add icon library -->
@@ -471,7 +449,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("about.Rmd");
+  window.initializeSourceEmbed("SPSS.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
