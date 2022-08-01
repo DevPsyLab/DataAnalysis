@@ -88,6 +88,14 @@ https://garrettgman.github.io/rmarkdown/r_notebooks
 
 https://bookdown.org/yihui/rmarkdown/notebook.html
 
+## Files
+
+You should have two computational notebooks: 1) a "Prepare Data" script (`prepareData.Rmd`) and 2) a "Computational Notebook" script (`computationalNotebook.Rmd`).
+The "Prepare Data" script is used to update the data file by re-exporting, merging, re-running calculations, etc.
+This script should be separate from the "Computational Notebook" file that is used for running analyses on the data.
+Every time you run the "Computational Notebook" file with the exact same data, you should get the exact same findings (i.e., reproducibility).
+Thus, we keep the "Prepare Data script" separate from the "Computational Notebook" file so that you update the data only when you intend to.
+
 ## Structure
 
 To create a computational notebook, create a `.Rmd` file with the following `YAML` header at the top of the file:
@@ -105,28 +113,38 @@ output:
     number_sections: true
     code_folding: show
     df_print: paged
-    code_download: true
 ---
 ```
 
-Then, include the following as the first code chunk:
+If this is your "Computational Notebook" script, include the following as the first code chunk:
 
 ````markdown
 ```{r setup, include = FALSE}`r ''`
-knitr::opts_chunk$set(echo = TRUE,
-                      error = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE, # print code
+  error = TRUE # do not interrupt in case of errors
+)
+
+# Use for higher quality figures on Windows devices
+trace(grDevices::png, quote({
+  if (missing(type) && missing(antialias)) {
+    type <- "cairo-png"
+    antialias <- "subpixel"
+  }
+}), print = FALSE)
 ```
 ````
 
+If this is your "Prepare Data" script, include the following as the first code chunk:
+
+````markdown
+```{r setup, include = FALSE}`r ''`
+knitr::opts_chunk$set(
+  echo = TRUE # print code
+)
+```
+````
 Then, include whatever text and/or code chunks.
-
-## Files
-
-You should have two computational notebooks: 1) a "Prepare Data" script (`prepareData.Rmd`) and 2) a "Computational Notebook" script (`computationalNotebook.Rmd`).
-The "Prepare Data" script is used to update the data file by re-exporting, merging, re-running calculations, etc.
-This script should be separate from the "Computational Notebook" file that is used for running analyses on the data.
-Every time you run the "Computational Notebook" file with the exact same data, you should get the exact same findings (i.e., reproducibility).
-Thus, we keep the "Prepare Data script" separate from the "Computational Notebook" file so that you update the data only when you intend to.
 
 # Steps to Create `rmarkdown` Website using GitHub Actions
 
