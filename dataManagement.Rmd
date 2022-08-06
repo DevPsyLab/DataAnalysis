@@ -261,9 +261,11 @@ Here is a visual that depicts various types of merges/joins:
 
 Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-joins-with-pandas)
 
-## Full Join
+## Full Outer Join
 
-Here is how to merge two data frames using a full join:
+A full outer join includes all rows in $x$ **or** $y$.
+It returns columns from $x$ and $y$.
+Here is how to merge two data frames using a full outer join (i.e., "full join"):
 
 ```{r}
 fullJoinData <- merge(mydata, mydata2, by = "ID", all = TRUE)
@@ -278,9 +280,11 @@ Or, alternatively, using `tidyverse`:
 full_join(mydata, mydata2, by = "ID")
 ```
 
-## Left Join
+## Left Outer Join
 
-Here is how to merge two data frames using a left join:
+A left outer join includes all rows in $x$.
+It returns columns from $x$ and $y$.
+Here is how to merge two data frames using a left outer join ("left join"):
 
 ```{r}
 leftJoinData <- merge(mydata, mydata2, by = "ID", all.x = TRUE)
@@ -295,9 +299,11 @@ Or, alternatively, using `tidyverse`:
 left_join(mydata, mydata2, by = "ID")
 ```
 
-## Right Join
+## Right Outer Join
 
-Here is how to merge two data frames using a right join:
+A right outer join includes all rows in $y$.
+It returns columns from $x$ and $y$.
+Here is how to merge two data frames using a right outer join ("right join"):
 
 ```{r}
 rightJoinData <- merge(mydata, mydata2, by = "ID", all.y = TRUE)
@@ -314,7 +320,10 @@ right_join(mydata, mydata2, by = "ID")
 
 ## Inner Join
 
-Here is how to merge two data frames using a right join:
+An inner join includes all rows that are in **both** $x$ **and** $y$.
+An inner join will return one row of $x$ for each matching row of $y$, and can duplicate values of records on either side (left or right) if $x$ and $y$ have more than one matching record.
+It returns columns from $x$ and $y$.
+Here is how to merge two data frames using an inner join:
 
 ```{r}
 innerJoinData <- merge(mydata, mydata2, by = "ID", all.x = FALSE, all.y = FALSE)
@@ -329,9 +338,28 @@ Or, alternatively, using `tidyverse`:
 inner_join(mydata, mydata2, by = "ID")
 ```
 
+## Semi Join
+
+A semi join is a filter.
+A left semi join returns all rows from $x$ **with** a match in $y$.
+That is, it filters out records from $x$ that are not in $y$.
+Unlike an inner join, a left semi join will never duplicate rows of $x$, and it includes columns from only $x$ (not from $y$). 
+Here is how to merge two data frames using a left semi join:
+
+```{r}
+semiJoinData <- semi_join(mydata, mydata2, by = "ID")
+
+semiJoinData
+dim(semiJoinData)
+```
+
 ## Anti Join
 
-An anti join return all rows from $x$ without a match in $y$:
+An anti join is a filter.
+A left anti join returns all rows from $x$ **without** a match in $y$.
+That is, it filters out records from $x$ that are in $y$.
+It returns columns from only $x$ (not from $y$).
+Here is how to merge two data frames using a left anti join:
 
 ```{r}
 antiJoinData <- anti_join(mydata, mydata2, by = "ID")
