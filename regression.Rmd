@@ -40,6 +40,7 @@ library("effects")
 library("correlation")
 library("interactions")
 library("lavaan")
+library("regtools")
 ```
 
 # Import Data
@@ -72,7 +73,7 @@ summary(multipleRegressionModel)
 confint(multipleRegressionModel)
 ```
 
-### Remove Missing Data
+### Remove missing data
 
 ```{r}
 multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
@@ -84,39 +85,6 @@ multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum
 ```
 
 ## Linear regression model on correlation/covariance matrix (for pairwise deletion)
-
-Also see here:
-
-- https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002
-- https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure
-- https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re
-- https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values
-- https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps
-
-Adapted from here: https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise
-
-```{r}
-pairwiseData <- mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")]
-varMeans <- colMeans(pairwiseData, na.rm = TRUE)
-varCovariances <- cov(pairwiseData, use = "pairwise")
-
-pairwiseRegression_syntax <- '
-  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
-  bpi_antisocialT2Sum ~~ bpi_antisocialT2Sum
-'
-
-pairwiseRegression_fit <- lavaan(
-  pairwiseRegression_syntax,
-  sample.mean = varMeans,
-  sample.cov = varCovariances,
-  sample.nobs = sum(complete.cases(pairwiseData))
-)
-
-summary(
-  pairwiseRegression_fit,
-  standardized = TRUE,
-  rsquare = TRUE)
-```
 
 ```{r, warning = FALSE}
 multipleRegressionModelPairwise <- setCor(
@@ -374,6 +342,80 @@ probe_interaction(interactionModel,
                   interval = TRUE,
                   jnplot = TRUE)
 ```
+
+# Approaches to Handling Missingness
+
+## Listwise deletion
+
+Listwise deletion deletes every row in the data file that has a missing value for one of the model variables.
+
+```{r}
+listwiseDeletionModel <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
+
+summary(listwiseDeletionModel)
+confint(listwiseDeletionModel)
+```
+
+## Pairwise deletion
+
+Also see here:
+
+- https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002
+- https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure
+- https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re
+- https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values
+- https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps
+
+Adapted from here: https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise
+
+```{r}
+modelData <- mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")]
+varMeans <- colMeans(modelData, na.rm = TRUE)
+varCovariances <- cov(modelData, use = "pairwise")
+
+pairwiseRegression_syntax <- '
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
+  bpi_antisocialT2Sum ~~ bpi_antisocialT2Sum
+  bpi_antisocialT2Sum ~ 1
+'
+
+pairwiseRegression_fit <- lavaan(
+  pairwiseRegression_syntax,
+  sample.mean = varMeans,
+  sample.cov = varCovariances,
+  sample.nobs = sum(complete.cases(modelData))
+)
+
+summary(
+  pairwiseRegression_fit,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Full-information maximum likelihood (FIML)
+
+```{r}
+fimlRegression_syntax <- '
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
+  bpi_antisocialT2Sum ~~ bpi_antisocialT2Sum
+  bpi_antisocialT2Sum ~ 1
+'
+
+fimlRegression_fit <- lavaan(
+  fimlRegression_syntax,
+  data = mydata,
+)
+
+summary(
+  fimlRegression_fit,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Multiple imputation
 
 # Model Building Steps
 
