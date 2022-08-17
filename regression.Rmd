@@ -39,15 +39,16 @@ library("mblm")
 library("effects")
 library("correlation")
 library("interactions")
+library("lavaan")
 ```
 
-# Import data
+# Import Data
 
 ```{r, class.source = "fold-hide"}
 mydata <- read.csv("https://osf.io/8syp5/download")
 ```
 
-# Data preparation
+# Data Preparation
 
 ```{r, class.source = "fold-hide"}
 mydata$countVariable <- as.integer(mydata$bpi_antisocialT2Sum)
@@ -86,11 +87,37 @@ multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum
 
 Also see here: https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002
 
+Adapted from here: https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise
+
+```{r}
+pairwiseData <- mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")]
+varMeans <- colMeans(pairwiseData, na.rm = TRUE)
+varCovariances <- cov(pairwiseData, use = "pairwise")
+
+pairwiseRegression_syntax <- '
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
+  bpi_antisocialT2Sum ~~ bpi_antisocialT2Sum
+'
+
+pairwiseRegression_fit <- lavaan(
+  pairwiseRegression_syntax,
+  sample.mean = varMeans,
+  sample.cov = varCovariances,
+  sample.nobs = sum(complete.cases(pairwiseData))
+)
+
+summary(
+  pairwiseRegression_fit,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
 ```{r, warning = FALSE}
-multipleRegressionModelPairwise <- setCor(y = "bpi_antisocialT2Sum",
-                                          x = c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum"),
-                                          data = cov(mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise.complete.obs"),
-                                          n.obs = nrow(mydata))
+multipleRegressionModelPairwise <- setCor(
+  y = "bpi_antisocialT2Sum",
+  x = c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum"),
+  data = cov(mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise.complete.obs"),
+  n.obs = nrow(mydata))
 
 summary(multipleRegressionModelPairwise)
 multipleRegressionModelPairwise[c("coefficients","se","Probability","R2","shrunkenR2")]
