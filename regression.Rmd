@@ -41,6 +41,7 @@ library("correlation")
 library("interactions")
 library("lavaan")
 library("regtools")
+library("mice")
 ```
 
 # Import Data
@@ -416,6 +417,20 @@ summary(
 ```
 
 ## Multiple imputation
+
+```{r}
+modelData_imputed <- mice(
+  modelData,
+  m = 5,
+  method = "pmm") # predictive mean matching; can choose among many methods
+
+imputedData_fit <- with(
+  modelData_imputed,
+  lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum))
+
+imputedData_pooledEstimates <- pool(imputedData_fit)
+summary(imputedData_pooledEstimates)
+```
 
 # Model Building Steps
 
