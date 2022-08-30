@@ -1,0 +1,137 @@
+---
+title: "EEG and ERP Processing and Analysis"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# Processing Steps
+
+https://eeglab.org/tutorials/
+
+1. Filtering
+1. Average Referencing
+1. Artifact Rejection
+    1. Automated artifact rejection
+    1. Visual inspection/rejection of bad channels
+    1. Visual inspection/rejection of bad time periods
+        - reject non-stereotypic artifacts
+        - don't reject blinks/saccades, because ICA will remove those
+    1. Independent Component Analysis
+1. Segmentation
+1. Baseline Correction
+
+# EEGLAB
+
+## Install Plugins
+
+MFFMatlabIO plugin
+
+## Import Data
+
+File → Import Data → Using EEGLAB functions and plugins → Import Magstim/EGI .mff file
+
+```matlab
+EEG = pop_mffimport({'\\\\iowa.uiowa.edu\\Shared\\ResearchData\\rdss_itpetersen\\Lab\\Studies\\School Readiness Study\\Data\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
+
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off'); 
+```
+
+Select .mff file(s)
+
+Event type field (may select multiple): `code`
+
+## Filter Data
+
+Filter → Basic FIR Filter
+
+0.1 -- 30 Hz
+
+save as new name
+
+```matlab
+EEG = pop_eegfiltnew(EEG, 'locutoff',0.1,'hicutoff',30,'plotfreqz',1);
+```
+
+## Average Referencing
+
+Tools → Re-reference the data → Compute average reference
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_reref( EEG, []);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','1613_90_oddball_fil_ref','overwrite','on','gui','off'); 
+eeglab redraw;
+```
+
+## Artifact Rejection
+
+### Automated Artifact Rejection
+
+Tools → Reject data using Clean Rawdata and ASR
+
+```matlab
+```
+
+### Visual inspection/rejection of bad channels
+
+View data to identify bad channels to reject.
+
+Edit → Select data
+
+Specify channels to reject
+
+Specify "on -> remove these"
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_select( EEG, 'nochannel',{'E44','E56','E57','E113'});
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','1613_90_oddball_fil_ref_chn','overwrite','on','gui','off'); 
+eeglab redraw;
+```
+
+### Visual inspection/rejection of bad time periods
+
+Plot → Channel data (scroll)
+
+Change voltage scale to 50
+
+Settings → Time range to display
+
+Change to 10 seconds
+
+Settings → Number of channels to display
+
+Change to number of channels to view at one time (e.g., 64)
+
+To erase a selected portion of the data, first drag the mouse (holding down the left mouse button) horizontally across the time region of interest to mark it for rejection.
+To deselect a portion of the data, simply click on the selected region.
+
+After marking some portions of the data for rejection, press REJECT and a new data set will be created with the rejected data omitted.
+A new dataset will be created with the marked regions removed.
+
+Clicking "Stack" stacks all electrodes on top of each other to more easily identify noisy data.
+
+Click "REJECT" to remove the bad time periods from the data file.
+
+### Independent Component Analysis
+
+Tools → Decompose data by ICA
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','on');
+[ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+eeglab redraw;
+```
+
+Plot → Component maps → 2D
+
+Visually identify independent components to remove
+
+Tools → Inspect/label components by map
+
+Toggle the "Accept" button to reject an independent component, press "OK" to reject it
