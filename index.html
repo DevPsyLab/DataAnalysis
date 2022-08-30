@@ -362,6 +362,9 @@ div.tocify {
       <a href="developmentalScaling.html">Developmental Scaling</a>
     </li>
     <li>
+      <a href="eegERP.html">Electroencaphalography/Event-Related Potentials</a>
+    </li>
+    <li>
       <a href="eda.html">Exploratory Data Analysis</a>
     </li>
     <li>
@@ -443,6 +446,7 @@ div.tocify {
 <ul>
 <li><a href="dataManagement.html">Data Management</a></li>
 <li><a href="developmentalScaling.html">Developmental Scaling</a></li>
+<li><a href="eegERP.html">Electroencaphalography/Event-Related Potentials</a></li>
 <li><a href="eda.html">Exploratory Data Analysis</a></li>
 <li><a href="factorAnalysis.html">Factor Analysis</a></li>
 <li><a href="figures.html">Figures</a></li>
@@ -459,7 +463,7 @@ div.tocify {
 <li><a href="sem.html">Structural Equation Modeling</a></li>
 </ul>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBBbmFseXNpcyBHdWlkZXMgZm9yIHRoZSBEZXZlbG9wbWVudGFsIFBzeWNob3BhdGhvbG9neSBMYWIiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiKQpgYGAKCi0gW0RhdGEgTWFuYWdlbWVudF0oZGF0YU1hbmFnZW1lbnQuaHRtbCkKLSBbRGV2ZWxvcG1lbnRhbCBTY2FsaW5nXShkZXZlbG9wbWVudGFsU2NhbGluZy5odG1sKQotIFtFeHBsb3JhdG9yeSBEYXRhIEFuYWx5c2lzXShlZGEuaHRtbCkKLSBbRmFjdG9yIEFuYWx5c2lzXShmYWN0b3JBbmFseXNpcy5odG1sKQotIFtGaWd1cmVzXShmaWd1cmVzLmh0bWwpCi0gW0dpdCwgR2l0TGFiLCBhbmQgR2l0SHViXShnaXQuaHRtbCkKLSBbSGllcmFyY2hpY2FsIExpbmVhciBNb2RlbGluZ10oaGxtLmh0bWwpCi0gW0l0ZW0gUmVzcG9uc2UgVGhlb3J5XShpcnQuaHRtbCkKLSBbTWFya2Rvd25dKG1hcmtkb3duLmh0bWwpCi0gW01lZGlhdGlvbl0oc2VtLmh0bWwjbWVkaWF0aW9uKQotIFtNb2RlcmF0aW9uL0ludGVyYWN0aW9uXShyZWdyZXNzaW9uLmh0bWwjbW9kZXJhdGlvbikKLSBbUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpc10ocGNhLmh0bWwpCi0gW1JdKFIuaHRtbCkKLSBbUmVncmVzc2lvbl0ocmVncmVzc2lvbi5odG1sKQotIFtTUFNTXShTUFNTLmh0bWwpCi0gW1N0cnVjdHVyYWwgRXF1YXRpb24gTW9kZWxpbmddKHNlbS5odG1sKQo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBBbmFseXNpcyBHdWlkZXMgZm9yIHRoZSBEZXZlbG9wbWVudGFsIFBzeWNob3BhdGhvbG9neSBMYWIiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiKQpgYGAKCi0gW0RhdGEgTWFuYWdlbWVudF0oZGF0YU1hbmFnZW1lbnQuaHRtbCkKLSBbRGV2ZWxvcG1lbnRhbCBTY2FsaW5nXShkZXZlbG9wbWVudGFsU2NhbGluZy5odG1sKQotIFtFbGVjdHJvZW5jYXBoYWxvZ3JhcGh5L0V2ZW50LVJlbGF0ZWQgUG90ZW50aWFsc10oZWVnRVJQLmh0bWwpCi0gW0V4cGxvcmF0b3J5IERhdGEgQW5hbHlzaXNdKGVkYS5odG1sKQotIFtGYWN0b3IgQW5hbHlzaXNdKGZhY3RvckFuYWx5c2lzLmh0bWwpCi0gW0ZpZ3VyZXNdKGZpZ3VyZXMuaHRtbCkKLSBbR2l0LCBHaXRMYWIsIGFuZCBHaXRIdWJdKGdpdC5odG1sKQotIFtIaWVyYXJjaGljYWwgTGluZWFyIE1vZGVsaW5nXShobG0uaHRtbCkKLSBbSXRlbSBSZXNwb25zZSBUaGVvcnldKGlydC5odG1sKQotIFtNYXJrZG93bl0obWFya2Rvd24uaHRtbCkKLSBbTWVkaWF0aW9uXShzZW0uaHRtbCNtZWRpYXRpb24pCi0gW01vZGVyYXRpb24vSW50ZXJhY3Rpb25dKHJlZ3Jlc3Npb24uaHRtbCNtb2RlcmF0aW9uKQotIFtQcmluY2lwYWwgQ29tcG9uZW50IEFuYWx5c2lzXShwY2EuaHRtbCkKLSBbUl0oUi5odG1sKQotIFtSZWdyZXNzaW9uXShyZWdyZXNzaW9uLmh0bWwpCi0gW1NQU1NdKFNQU1MuaHRtbCkKLSBbU3RydWN0dXJhbCBFcXVhdGlvbiBNb2RlbGluZ10oc2VtLmh0bWwpCg==</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
