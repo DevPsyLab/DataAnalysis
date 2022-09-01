@@ -106,6 +106,14 @@ For example:
 load_or_install(c("tidyverse","psych"))
 ```
 
+# Set a seed
+
+Set a seed (any number) to reproduce the results of analyses that involve random number generation.
+
+```{r}
+set.seed(52242)
+```
+
 # Run an `R` script
 
 To run an `R` script, use the following syntax:
@@ -399,6 +407,40 @@ mtcars %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
                values_to = "value")
+```
+
+# Average Across Coders
+
+Create data with multiple coders:
+
+```{r}
+idWaveCoder <- 
+  expand.grid(
+    id = 1:100,
+    wave = 1:3,
+    coder = 1:3,
+    positiveAffect = NA,
+    negativeAffect = NA
+  )
+
+idWaveCoder$positiveAffect <- rnorm(nrow(idWaveCoder))
+idWaveCoder$negativeAffect <- rnorm(nrow(idWaveCoder))
+
+head(idWaveCoder)
+```
+
+Average data across coders:
+
+```{r}
+idWave <- idWaveCoder %>% 
+  group_by(id, wave) %>% 
+  summarise(
+    across(everything(),
+      ~ mean(.x, na.rm = TRUE)),
+    .groups = "drop") %>% 
+  select(-coder)
+
+head(idWave)
 ```
 
 # Session Info
