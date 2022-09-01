@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       class.source = "fold-show")
 ```
 
-# Import data
+# Import Data
 
 Importing data takes syntax of the following form for `.csv` files:
 
@@ -31,7 +31,7 @@ Importing data takes syntax of the following form for `.RData` files:
 load("filepath/filename.RData")
 ```
 
-# Save data
+# Save Data
 
 Saving data takes syntax of the following form for `.csv` files:
 
@@ -51,7 +51,7 @@ Saving data takes syntax of the following form for `.RData` files:
 save(object, file = "filepath/filename.RData")
 ```
 
-# Use lab functions
+# Use Lab Functions
 
 To use lab functions, first install the `petersenlab` package:
 
@@ -72,7 +72,7 @@ To run scripts on the lab drive, set the path to the lab drive (`//iowa.uiowa.ed
 petersenLabPath <- setLabPath()
 ```
 
-# Load/install packages
+# Load/Install Packages
 
 The way to install a package in `R` is:
 
@@ -106,7 +106,7 @@ For example:
 load_or_install(c("tidyverse","psych"))
 ```
 
-# Set a seed
+# Set a Seed
 
 Set a seed (any number) to reproduce the results of analyses that involve random number generation.
 
@@ -114,7 +114,7 @@ Set a seed (any number) to reproduce the results of analyses that involve random
 set.seed(52242)
 ```
 
-# Run an `R` script
+# Run an `R` Script
 
 To run an `R` script, use the following syntax:
 
@@ -122,7 +122,7 @@ To run an `R` script, use the following syntax:
 source("filepath/filename.R")
 ```
 
-# Render a `.Rmd` file
+# Render an R Markdown (`.Rmd`) File
 
 To render a `.Rmd` file, use the following syntax:
 
@@ -165,7 +165,7 @@ mydata[c(1,3,5),]
 mydata[which(mydata$survived == 1),]
 ```
 
-# View data
+# View Data
 
 ## All Data
 
@@ -376,7 +376,7 @@ antiJoinData
 dim(antiJoinData)
 ```
 
-# Long to wide
+# Long to Wide
 
 Original data:
 
@@ -392,7 +392,7 @@ fish_encounters %>%
               values_from = seen)
 ```
 
-# Wide to long
+# Wide to Long
 
 Original data:
 
@@ -409,7 +409,7 @@ mtcars %>%
                values_to = "value")
 ```
 
-# Average Across Coders
+# Average Ratings Across Coders
 
 Create data with multiple coders:
 
@@ -426,7 +426,8 @@ idWaveCoder <-
 idWaveCoder$positiveAffect <- rnorm(nrow(idWaveCoder))
 idWaveCoder$negativeAffect <- rnorm(nrow(idWaveCoder))
 
-head(idWaveCoder)
+idWaveCoder %>% 
+  arrange(id, wave, coder)
 ```
 
 Average data across coders:
@@ -440,7 +441,7 @@ idWave <- idWaveCoder %>%
     .groups = "drop") %>% 
   select(-coder)
 
-head(idWave)
+idWave
 ```
 
 # Session Info
