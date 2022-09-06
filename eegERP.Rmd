@@ -8,6 +8,15 @@ knitr::opts_chunk$set(echo = TRUE,
                       comment = "")
 ```
 
+# To-do
+
+- Ben: Figure out error when conducting automated artifact rejection
+- Ben: Figure out how to interpolate removed channels
+- Decide on settings for automated artifact rejection
+- Decide on whether/how to use automated ICA rejection
+- Alexis: Identifying ICA components to reject
+- Alexis: Finalizing order of processing
+
 # Processing Steps
 
 https://eeglab.org/tutorials/
@@ -16,11 +25,12 @@ https://eeglab.org/tutorials/
 1. Average Referencing
 1. Artifact Rejection
     1. Automated artifact rejection
-    1. Visual inspection/rejection of bad channels
-    1. Visual inspection/rejection of bad time periods
+    1. Selection of bad channels
+    1. Selection of bad time periods
         - reject non-stereotypic artifacts
-        - don't reject blinks/saccades, because ICA will remove those
-    1. Independent Component Analysis
+        - do not reject blinks/saccades, because [ICA](#ica) will remove those
+    1. [Independent Component Analysis](#ica)
+1. Interpolate Bad Channels
 1. Segmentation
 1. Baseline Correction
 
@@ -76,7 +86,7 @@ Tools → Reject data using Clean Rawdata and ASR
 ```matlab
 ```
 
-### Visual inspection/rejection of bad channels
+### Selection of Bad Channels
 
 View data to identify bad channels to reject.
 
@@ -93,7 +103,7 @@ EEG = pop_select( EEG, 'nochannel',{'E44','E56','E57','E113'});
 eeglab redraw;
 ```
 
-### Visual inspection/rejection of bad time periods
+### Selection of Bad Time Periods
 
 Plot → Channel data (scroll)
 
@@ -117,7 +127,13 @@ Clicking "Stack" stacks all electrodes on top of each other to more easily ident
 
 Click "REJECT" to remove the bad time periods from the data file.
 
-### Independent Component Analysis
+### Independent Component Analysis {#ica}
+
+https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html
+
+https://socialsci.libretexts.org/Bookshelves/Psychology/Book%3A_Applied_Event-Related_Potential_Data_Analysis_(Luck)/14%3A_Appendix_3%3A_Example_Processing_Pipeline
+
+The component order returned by runica.m is in decreasing order of the EEG variance accounted for by each component.
 
 Tools → Decompose data by ICA
 
@@ -134,4 +150,66 @@ Visually identify independent components to remove
 
 Tools → Inspect/label components by map
 
-Toggle the "Accept" button to reject an independent component, press "OK" to reject it
+Toggle the "Accept" button to reject an independent component, press "OK" to specify it for rejection
+
+Automated detection of artifactual ICA components:
+
+https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#automated-detection-of-artifactual-ica-components
+
+There are six categories of components Brain, Muscle, Eye, Heart, Line Noise, Channel Noise, and Other
+
+Tools → Classify components using ICLabel → Label components
+
+Tools → Classify components using ICLabel → Flag components as artifacts
+
+Substracting rejected ICA components:
+
+https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#subtracting-ica-components-from-data
+
+Tools → Remove components
+
+## Interpolate Bad Channels
+
+https://sccn.ucsd.edu/pipermail/eeglablist/2016/011199.html
+
+To interpolate channels you would load up one file that has only the good
+channels, then load up a second file that has the full channel list, and then run the
+channel interpolation function from the eeglab gui.
+
+Removed channels:
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_interp(EEG, EEG.chaninfo.nodatchans([44  56  57  113]), 'spherical');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 3,'gui','off'); 
+EEG = eeg_checkset( EEG );
+eeglab redraw;
+```
+
+Data channels:
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_interp(EEG, [44  56  57  113], 'spherical');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off'); 
+eeglab redraw;
+```
+
+## Segmentation
+
+Tools → Extract Epochs
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_epoch( EEG, {  'frq+'  'tgt+'  }, [-0.2           1], 'newname', '1613_90_oddball_fil_ref epochs', 'epochinfo', 'yes');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off'); 
+```
+
+## Baseline Correction
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_rmbase( EEG, [-200 0] ,[]);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off'); 
+eeglab redraw;
+```
