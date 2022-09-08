@@ -46,7 +46,7 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html
 
 # Analysis examples
 
-https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModel-sem
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem
 
 # Mediation {#mediation}
 
@@ -70,6 +70,9 @@ total := direct + indirect
 ```
 
 ## Fit the Model
+
+To get a robust estimate of the indirect effect, we obtain bootstrapped estimates from 1,000 bootstrap draws.
+Typically, we would obtain bootstrapped estimates from 10,000 bootstrap draws, but this example uses only 1,000 bootstrap draws for a shorter runtime.
 
 ```{r}
 mediationFit <- sem(
@@ -103,11 +106,15 @@ parameterEstimates(
 
 ## Estimates of Model Fit
 
+The model is saturated because it has as many estimated parameters as there are data points (i.e., in terms of means, variances, and covariances), so it has zero degrees of freedom.
+Because the model is saturated, it has "perfect" fit.
+
 ```{r}
 fitMeasures(
   mediationFit,
   fit.measures = c(
     "chisq", "df", "pvalue",
+    "baseline.chisq","baseline.df","baseline.pvalue",
     "rmsea", "cfi", "tli", "srmr"))
 ```
 
