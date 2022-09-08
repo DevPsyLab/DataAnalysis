@@ -72,37 +72,43 @@ total := direct + indirect
 ## Fit the Model
 
 ```{r}
-mediationFit <- sem(mediationModel,
-                    data = mydata,
-                    se = "bootstrap",
-                    bootstrap = 1000, # generally use 10,000 bootstrap draws; this example uses 1,000 for speed
-                    missing = "ML",
-                    estimator = "ML",
-                    std.lv = TRUE)
+mediationFit <- sem(
+  mediationModel,
+  data = mydata,
+  se = "bootstrap",
+  bootstrap = 1000, # generally use 10,000 bootstrap draws; this example uses 1,000 for speed
+  missing = "ML",
+  estimator = "ML",
+  std.lv = TRUE)
 ```
 
 ## Summary Output
 
 ```{r}
-summary(mediationFit,
-        fit.measures = TRUE,
-        standardized = TRUE,
-        rsquare = TRUE)
+summary(
+  mediationFit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
 ```
 
 ## Indirect Effect
 
 ```{r}
-parameterEstimates(mediationFit,
-                   boot.ci.type = "bca.simple",
-                   standardized = TRUE)
+parameterEstimates(
+  mediationFit,
+  boot.ci.type = "bca.simple",
+  standardized = TRUE)
 ```
 
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(mediationFit, fit.measures = c("chisq", "df", "pvalue",
-                                           "rmsea", "cfi", "tli", "srmr"))
+fitMeasures(
+  mediationFit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "rmsea", "cfi", "tli", "srmr"))
 ```
 
 ## Residuals
@@ -126,10 +132,11 @@ compRelSEM(mediationFit)
 ## Path Diagram
 
 ```{r}
-semPaths(mediationFit,
-         what = "Std.all",
-         layout = "tree2",
-         edge.label.cex = 1.5)
+semPaths(
+  mediationFit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
 ```
 
 # Power analysis
