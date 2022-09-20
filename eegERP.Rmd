@@ -10,12 +10,18 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # To-do
 
-- Ben: Figure out error when conducting automated artifact rejection
-- Ben: Figure out how to interpolate removed channels
+- Ben:
+    - clean up pre-processing steps
+    - create folder structure for intermediate files;
+    - save intermediate files at each step
+    - figure out how to incorporate bad channel interpolation in code vis-a-vis intermediate files
+- Alexis:
+    - get code for automated ICA rejection
+    - figure out optimal threshold for automated ICA rejection with our data
 - Decide on settings for automated artifact rejection
 - Decide on whether/how to use automated ICA rejection
-- Alexis: Identifying ICA components to reject
-- Alexis: Finalizing order of processing
+- Evaluate the semi-automated pipeline from Desjardins et al. (2021)
+- Finalize order of processing
 
 # Processing Steps
 
@@ -27,10 +33,8 @@ https://eeglab.org/tutorials/
     1. Automated artifact rejection
     1. Selection of bad channels
     1. Selection of bad time periods
-        - reject non-stereotypic artifacts
-        - do not reject blinks/saccades, because [ICA](#ica) will remove those
     1. [Independent Component Analysis](#ica)
-1. Interpolate Bad Channels
+1. Interpolation of Bad Channels
 1. Segmentation
 1. Baseline Correction
 
