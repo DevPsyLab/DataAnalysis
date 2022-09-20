@@ -45,9 +45,9 @@ MFFMatlabIO plugin
 File → Import Data → Using EEGLAB functions and plugins → Import Magstim/EGI .mff file
 
 ```matlab
-EEG = pop_mffimport({'\\\\iowa.uiowa.edu\\Shared\\ResearchData\\rdss_itpetersen\\Lab\\Studies\\School Readiness Study\\Data\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
+EEG = pop_mffimport({'\\\\iowa.uiowa.edu\\Shared\\ResearchData\\rdss_itpetersen\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
 
-[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off'); 
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off');
 ```
 
 Select .mff file(s)
@@ -84,6 +84,28 @@ eeglab redraw;
 Tools → Reject data using Clean Rawdata and ASR
 
 ```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_clean_rawdata(EEG, 'FlatlineCriterion',5,'ChannelCriterion',0.8,'LineNoiseCriterion',4,'Highpass','off','BurstCriterion',20,'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian','WindowCriterionTolerances',[-Inf 7] );
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off'); 
+eeglab redraw;
+```
+
+Currently, we run into a bug that yields the following error:
+
+```
+Not enough memory, This is not a bug (Error occurred in function asr_process() at line 132)
+```
+
+As a workaround, type the following code in MATLAB to edit the function:
+
+```matlab
+edit clean_artifacts
+```
+
+Then, change the number in the following line to a larger number (e.g., 256) and click save:
+
+```matlab
+{'max_mem','MaxMem'}, 256, ...
 ```
 
 ### Selection of Bad Channels
@@ -156,7 +178,9 @@ Automated detection of artifactual ICA components:
 
 https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#automated-detection-of-artifactual-ica-components
 
-There are six categories of components Brain, Muscle, Eye, Heart, Line Noise, Channel Noise, and Other
+There are six categories of components: Brain, Muscle, Eye, Heart, Line Noise, Channel Noise, and Other
+
+Our goal is to keep the brain components and to remove everything else (i.e., artifacts).
 
 Tools → Classify components using ICLabel → Label components
 
@@ -175,6 +199,26 @@ https://sccn.ucsd.edu/pipermail/eeglablist/2016/011199.html
 To interpolate channels you would load up one file that has only the good
 channels, then load up a second file that has the full channel list, and then run the
 channel interpolation function from the eeglab gui.
+
+Tools → Interpolate Electrodes → Use all channels (or specific channels?) of other dataset
+
+Using all channels of other dataset:
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_interp(EEG, ALLEEG(3).chanlocs, 'spherical');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 4,'gui','off'); 
+eeglab redraw;
+```
+
+Using specific channels of other dataset:
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_interp(EEG, ALLEEG(3).chanlocs([44   56   57  113]), 'spherical');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off'); 
+eeglab redraw;
+```
 
 Removed channels:
 
