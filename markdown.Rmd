@@ -26,7 +26,11 @@ summary(cars)
 summary(cars)
 ```
 
-# Best Practices {#bestPractices}
+# Lab Wiki
+
+## Best Practices
+
+Adapted from [here](https://github.com/lowepowerlab/protocols/blob/main/markdown_best_practices.md):
 
 - **Use a new line for every sentence.** 
 This helps with version control—individually changed sentences will be highlighted upon commits (easy to parse) rather than whole paragraphs (nightmare to parse).
@@ -34,9 +38,40 @@ This helps with version control—individually changed sentences will be highlig
     Instead, use a single space after a period.
     To replace all double spaces with single spaces, do a find and replace for `".  "` → `". "` 
     Be careful not to blanket remove all double spaces because tabbed bullets have 3 spaces.
+- Add protocol entries as links to the parent `.Rmd` file (or to `README.md`)
+- Add linked content (e.g., images) to sub-directories
+- Use no spaces in file or folder names.
+Use a dash (-) instead of a space.
+- If you use `Visual Studio Code` to edit the Lab Wiki, you can view the source code side-by-side with the markdown Preview (after selecting the code type as `markdown`):
+![Visual Studio Code](images/vsCode.png)
 - When making numbered (ordered) lists, just use `1. ` for all numbers.
 Markdown will make them sequential automatically.
 This is helpful if you go back and add additional entries later.
+- Use `"[XXX]"` to indicate an area that needs editing.
+This will allow the lab to `CTRL+F` for `"[XXX]"` and find areas that need editing.
+- To update the list of `R` packages that are installed for running the `.Rmd` files, update the `DESCRIPTION` file.
+
+## Updating
+
+To update the lab wiki, perform the following steps:
+
+1. (Perform this step if you do not already have the the [LabWiki `GitHub` repo](https://github.com/DevPsyLab/LabWiki) on your local machine:) Clone the `GitHub` repo to your local machine.
+1. Fetch the latest version of the repo.
+It is important to do this to make sure you have the latest version locally before making any changes.
+1. Edit the relevant `.Rmd` files using `RStudio` or `Visual Studio Code`.
+1. Preview the wiki before you commit changes to the site; create the `.html` files locally (in a folder called `_site`) by running the following command:
+   - `rmarkdown::render_site()`
+1. If the `.html` files look correct, commit the changes.
+1. Push the changes to the `GitHub` repo.
+After pushing the changes to the `GitHub` repo, `GitHub Actions` will automatically re-run the code and deploy the updated website, assuming there were no errors.
+You can track the workflow for errors here: https://github.com/DevPsyLab/LabWiki/actions.
+
+For more information about the `rmarkdown` package that was used to generate the site, see the following links:
+
+- https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html
+- https://bookdown.org/yihui/rmarkdown/html-document.html
+
+
 
 # Software
 
