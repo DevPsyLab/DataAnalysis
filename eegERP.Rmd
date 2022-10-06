@@ -279,3 +279,77 @@ EEG = pop_rmbase( EEG, [-200 0] ,[]);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off'); 
 eeglab redraw;
 ```
+
+# Automatic Script example 
+
+```matlab
+% Starting EEG Lab 
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
+
+%% Helpful documentation is located here
+% https://eeglab.org/tutorials/11_Scripting/Using_EEGLAB_history.html
+% https://eeglab.org/tutorials/ConceptsGuide/Data_Structures.html
+
+
+%Loading in the Dataset
+EEG = pop_mffimport({'R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
+EEG.setname='raw';
+EEG = eeg_checkset( EEG );
+%Storing the current dataset
+[ALLEEG, EEG] = eeg_store( ALLEEG, EEG, 1);
+% refreshing the graphical interface
+eeglab redraw;
+
+%Filter the data
+EEG = pop_eegfiltnew(ALLEEG(1), 'locutoff',0.1,'hicutoff',30,'plotfreqz',1);
+%Save the Filtered dataset 
+%ALLEEG EEG CURRENTSET seems to just be a name for all of the current data
+%sets 
+%pop_newset seems to save the dataset in both memory and in the toolkit
+[ALLEEG, EEG, CURRENTSET] = pop_newset(ALLEEG, EEG, 2,'setname','fil','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\1-Filtering (fil)\\tcid_wave.set','gui','off'); 
+eeglab redraw;
+
+% Average referencing
+%EEG = eeg_checkset( EEG );
+EEG = pop_reref( ALLEEG(2), []);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 3,'setname','Avg Ref','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\9-Average Reference (ref)\\tcid_wave_avg.set','gui','off');
+eeglab redraw;
+
+% Rejecting the artifacts
+% testing bumping the 
+EEG = pop_clean_rawdata(ALLEEG(3), 'FlatlineCriterion',5,'ChannelCriterion',0.8,'LineNoiseCriterion',4,'Highpass','off','BurstCriterion',30,'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian','WindowCriterionTolerances',[-Inf 7] );
+%Saving cleaned dataset
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 4,'setname','clean data','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\10-Clean Artificats (clean)\\tcid_wave_clean.set','gui','off'); 
+eeglab redraw;
+
+% Placeholder to manually remove bad channels
+
+
+% ICA components
+EEG = pop_runica(ALLEEG(4), 'icatype', 'runica', 'extended', 1,'interrupt','on');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 5,'setname','ICA test','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\11-ICA\\tcid_wave_ICA.set','gui','off'); 
+eeglab redraw;
+
+%Manually reject ICA components here?
+
+% Place holder to remind to manually remove the channels that we would
+% like to reject
+% taking the EEG channel lock of the first (raw) dataset
+EEG = eeg_checkset( EEG );
+EEG = pop_interp(ALLEEG(5), ALLEEG(1).chanlocs, 'spherical');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 6,'setname','Interpolated','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\12-Interpolate\\tcid_wave_Interpolate.set','gui','off'); 
+eeglab redraw;
+
+% Segmenting the Data
+EEG = eeg_checkset( EEG );
+EEG = pop_epoch( ALLEEG(6), {  'frq+'  'tgt+'  }, [-0.2 1], 'newname', 'tcid_wave_segmented', 'epochinfo', 'yes');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 7,'setname','Segmented','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\13-Segment\\tcid_wave_Segment.set','gui','off'); 
+eeglab redraw;
+
+% Baseline Correcting the Data
+EEG = eeg_checkset( EEG );
+EEG = pop_rmbase( ALLEEG(7), [-200 0] ,[]);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 8,'setname','Baseline Correct','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\14-Baseline-Correct\\tcid_wave_baseline-correct.set','gui','off'); 
+eeglab redraw;
+
+```
