@@ -200,6 +200,16 @@ Automated detection of artifactual ICA components:
 
 https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#automated-detection-of-artifactual-ica-components
 
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_iclabel(EEG, 'default');
+[ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+EEG = eeg_checkset( EEG );
+EEG = pop_icflag(EEG, [NaN NaN;0.9 1;0.9 1;NaN NaN;NaN NaN;NaN NaN;NaN NaN]);
+[ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+eeglab redraw;
+```
+
 There are six categories of components: Brain, Muscle, Eye, Heart, Line Noise, Channel Noise, and Other
 
 Our goal is to keep the brain components and to remove everything else (i.e., artifacts).
