@@ -13,14 +13,15 @@ knitr::opts_chunk$set(echo = TRUE,
 - Ben:
     - clean up pre-processing steps
     - create folder structure for intermediate files;
-    - save intermediate files at each step
-    - figure out how to incorporate bad channel interpolation in code vis-a-vis intermediate files
+    - save intermediate files after automatic processing steps and before each manual processing step
+    - figure out batch processing
 - Alexis:
+    - figure out and get code for AMICA procedure
     - get code for automated ICA rejection
     - figure out optimal threshold for automated ICA rejection with our data
 - Decide on settings for automated artifact rejection
 - Decide on whether/how to use automated ICA rejection
-- Evaluate the semi-automated pipeline from Desjardins et al. (2021)
+- Evaluate the semi-automated pipeline from [Desjardins et al. (2021)](https://www.sciencedirect.com/science/article/pii/S0165027020303848); [Haresign et al (2021)](https://www.sciencedirect.com/science/article/pii/S1878929321001146); [Flo et al. 2022](https://www.sciencedirect.com/science/article/pii/S1878929322000214?via%3Dihub)
 - Finalize order of processing
 
 # Processing Steps
@@ -31,9 +32,12 @@ https://eeglab.org/tutorials/
 1. Average Referencing
 1. Artifact Rejection
     1. Automated artifact rejection
-    1. Selection of bad channels
-    1. Selection of bad time periods
-    1. [Independent Component Analysis](#ica)
+    1. Manual selection of bad channels
+    1. Manual selection of bad time periods
+    1. [Independent Component Analysis](#ica) (ICA)
+        1. Automated removal of ICA components
+        1. Re-run ICA
+        1. Manual removal of ICA components
 1. Interpolation of Bad Channels
 1. Segmentation
 1. Baseline Correction
@@ -224,6 +228,12 @@ https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#subtracting-ica-comp
 
 Tools → Remove components
 
+```matlab
+EEG = pop_subcomp( EEG, [1    2    6    7   10   13   21   24   26   31   32   33   36   43   44   51   54   55   59   61   67   68   74   83   90   91   93   99  103  112  113  116  118  121], 0);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 6,'gui','off'); 
+eeglab redraw;
+```
+
 ## Interpolate Bad Channels
 
 https://sccn.ucsd.edu/pipermail/eeglablist/2016/011199.html
@@ -340,7 +350,10 @@ EEG = pop_runica(ALLEEG(4), 'icatype', 'runica', 'extended', 1,'interrupt','on')
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 5,'setname','ICA test','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\11-ICA\\tcid_wave_ICA.set','gui','off'); 
 eeglab redraw;
 
-%Manually reject ICA components here?
+%Manually reject ICA components
+EEG = pop_subcomp( EEG, [1    2    6    7   10   13   21   24   26   31   32   33   36   43   44   51   54   55   59   61   67   68   74   83   90   91   93   99  103  112  113  116  118  121], 0);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 6,'gui','off'); 
+eeglab redraw;
 
 % Place holder to remind to manually remove the channels that we would
 % like to reject
