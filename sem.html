@@ -13,7 +13,7 @@
 
 <title>Structural Equation Modeling</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -201,8 +201,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -210,16 +210,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -694,13 +687,13 @@ loaded via a namespace (and not attached):
   [4] tools_4.2.1         backports_1.4.1     bslib_0.4.0        
   [7] utf8_1.2.2          R6_2.5.1            rpart_4.1.16       
  [10] Hmisc_4.7-1         DBI_1.1.3           colorspace_2.0-3   
- [13] nnet_7.3-17         tidyselect_1.1.2    gridExtra_2.3      
+ [13] nnet_7.3-17         tidyselect_1.2.0    gridExtra_2.3      
  [16] mnormt_2.1.1        compiler_4.2.1      fdrtool_1.2.17     
  [19] qgraph_1.9.2        cli_3.4.1           htmlTable_2.4.1    
  [22] sass_0.4.2          scales_1.2.1        checkmate_2.1.0    
  [25] psych_2.2.9         pbapply_1.5-0       sem_3.1-15         
  [28] stringr_1.4.1       digest_0.6.29       pbivnorm_0.6.0     
- [31] foreign_0.8-82      minqa_1.2.4         rmarkdown_2.16     
+ [31] foreign_0.8-82      minqa_1.2.4         rmarkdown_2.17     
  [34] base64enc_0.1-3     jpeg_0.1-9          pkgconfig_2.0.3    
  [37] htmltools_0.5.3     lme4_1.1-30         lisrelToR_0.1.5    
  [40] highr_0.9           fastmap_1.1.0       htmlwidgets_1.5.4  
@@ -719,11 +712,11 @@ loaded via a namespace (and not attached):
  [79] stats4_4.2.1        XML_3.99-0.11       glue_1.6.2         
  [82] evaluate_0.17       latticeExtra_0.6-30 RcppParallel_5.1.5 
  [85] data.table_1.14.2   png_0.1-7           vctrs_0.4.2        
- [88] nloptr_2.0.3        gtable_0.3.1        purrr_0.3.5        
- [91] assertthat_0.2.1    cachem_1.0.6        ggplot2_3.3.6      
- [94] xfun_0.33           openxlsx_4.2.5      xtable_1.8-4       
- [97] coda_0.19-4         glasso_1.11         survival_3.3-1     
-[100] tibble_3.1.8        arm_1.13-1          cluster_2.1.3      </code></pre>
+ [88] nloptr_2.0.3        gtable_0.3.1        assertthat_0.2.1   
+ [91] cachem_1.0.6        ggplot2_3.3.6       xfun_0.33          
+ [94] openxlsx_4.2.5      xtable_1.8-4        coda_0.19-4        
+ [97] glasso_1.11         survival_3.3-1      tibble_3.1.8       
+[100] arm_1.13-1          cluster_2.1.3      </code></pre>
 </div>
 
 <div id="rmd-source-code">LS0tCnRpdGxlOiAiU3RydWN0dXJhbCBFcXVhdGlvbiBNb2RlbGluZyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93IikKYGBgCgojIFByZWFtYmxlCgojIyBJbnN0YWxsIExpYnJhcmllcwoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLWhpZGUifQojaW5zdGFsbC5wYWNrYWdlcygicmVtb3RlcyIpCiNyZW1vdGVzOjppbnN0YWxsX2dpdCgiaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL3BldGVyc2VubGFiLmdpdCIpCmBgYAoKIyMgTG9hZCBMaWJyYXJpZXMKCmBgYHtyLCBtZXNzYWdlID0gRkFMU0UsIHdhcm5pbmcgPSBGQUxTRSwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CmxpYnJhcnkoImxhdmFhbiIpCmxpYnJhcnkoInNlbVRvb2xzIikKbGlicmFyeSgic2VtUGxvdCIpCmBgYAoKIyBTaW11bGF0ZSBEYXRhCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CnNldC5zZWVkKDUyMjQyKQoKWCA8LSBybm9ybSgxMDApCk0gPC0gMC41KlggKyBybm9ybSgxMDApClkgPC0gMC43Kk0gKyBybm9ybSgxMDApCgpteWRhdGEgPC0gZGF0YS5mcmFtZShYID0gWCwgWSA9IFksIE0gPSBNKQpgYGAKCiMgSW1wb3J0IGRhdGEKCiMgT3ZlcnZpZXcKCmh0dHBzOi8vaXNhYWN0cGV0ZXJzZW4uZ2l0aHViLmlvL1ByaW5jaXBsZXMtUHN5Y2hvbG9naWNhbC1Bc3Nlc3NtZW50L3NlbS5odG1sCgojIEFuYWx5c2lzIGV4YW1wbGVzCgpodHRwczovL2lzYWFjdHBldGVyc2VuLmdpdGh1Yi5pby9QcmluY2lwbGVzLVBzeWNob2xvZ2ljYWwtQXNzZXNzbWVudC9zZW0uaHRtbCNzZW1Nb2RlbEV4YW1wbGUtc2VtCgojIE1lZGlhdGlvbiB7I21lZGlhdGlvbn0KCiMjIE1vZGVsIFN5bnRheAoKYGBge3J9Cm1lZGlhdGlvbk1vZGVsIDwtICcKIyBkaXJlY3QgZWZmZWN0IChjUHJpbWUpClkgfiBkaXJlY3QqWAoKIyBtZWRpYXRvcgpNIH4gYSpYClkgfiBiKk0KCiMgaW5kaXJlY3QgZWZmZWN0ID0gYSpiCmluZGlyZWN0IDo9IGEqYgoKIyB0b3RhbCBlZmZlY3QgKGMpCnRvdGFsIDo9IGRpcmVjdCArIGluZGlyZWN0CicKYGBgCgojIyBGaXQgdGhlIE1vZGVsCgpUbyBnZXQgYSByb2J1c3QgZXN0aW1hdGUgb2YgdGhlIGluZGlyZWN0IGVmZmVjdCwgd2Ugb2J0YWluIGJvb3RzdHJhcHBlZCBlc3RpbWF0ZXMgZnJvbSAxLDAwMCBib290c3RyYXAgZHJhd3MuClR5cGljYWxseSwgd2Ugd291bGQgb2J0YWluIGJvb3RzdHJhcHBlZCBlc3RpbWF0ZXMgZnJvbSAxMCwwMDAgYm9vdHN0cmFwIGRyYXdzLCBidXQgdGhpcyBleGFtcGxlIHVzZXMgb25seSAxLDAwMCBib290c3RyYXAgZHJhd3MgZm9yIGEgc2hvcnRlciBydW50aW1lLgoKYGBge3J9Cm1lZGlhdGlvbkZpdCA8LSBzZW0oCiAgbWVkaWF0aW9uTW9kZWwsCiAgZGF0YSA9IG15ZGF0YSwKICBzZSA9ICJib290c3RyYXAiLAogIGJvb3RzdHJhcCA9IDEwMDAsICMgZ2VuZXJhbGx5IHVzZSAxMCwwMDAgYm9vdHN0cmFwIGRyYXdzOyB0aGlzIGV4YW1wbGUgdXNlcyAxLDAwMCBmb3Igc3BlZWQKICBtaXNzaW5nID0gIk1MIiwKICBlc3RpbWF0b3IgPSAiTUwiLAogIHN0ZC5sdiA9IFRSVUUpCmBgYAoKIyMgU3VtbWFyeSBPdXRwdXQKCmBgYHtyfQpzdW1tYXJ5KAogIG1lZGlhdGlvbkZpdCwKICBmaXQubWVhc3VyZXMgPSBUUlVFLAogIHN0YW5kYXJkaXplZCA9IFRSVUUsCiAgcnNxdWFyZSA9IFRSVUUpCmBgYAoKIyMgSW5kaXJlY3QgRWZmZWN0CgpgYGB7cn0KcGFyYW1ldGVyRXN0aW1hdGVzKAogIG1lZGlhdGlvbkZpdCwKICBib290LmNpLnR5cGUgPSAiYmNhLnNpbXBsZSIsCiAgc3RhbmRhcmRpemVkID0gVFJVRSkKYGBgCgojIyBFc3RpbWF0ZXMgb2YgTW9kZWwgRml0CgpUaGUgbW9kZWwgaXMgc2F0dXJhdGVkIGJlY2F1c2UgaXQgaGFzIGFzIG1hbnkgZXN0aW1hdGVkIHBhcmFtZXRlcnMgYXMgdGhlcmUgYXJlIGRhdGEgcG9pbnRzIChpLmUuLCBpbiB0ZXJtcyBvZiBtZWFucywgdmFyaWFuY2VzLCBhbmQgY292YXJpYW5jZXMpLCBzbyBpdCBoYXMgemVybyBkZWdyZWVzIG9mIGZyZWVkb20uCkJlY2F1c2UgdGhlIG1vZGVsIGlzIHNhdHVyYXRlZCwgaXQgaGFzICJwZXJmZWN0IiBmaXQuCgpgYGB7cn0KZml0TWVhc3VyZXMoCiAgbWVkaWF0aW9uRml0LAogIGZpdC5tZWFzdXJlcyA9IGMoCiAgICAiY2hpc3EiLCAiZGYiLCAicHZhbHVlIiwKICAgICJiYXNlbGluZS5jaGlzcSIsImJhc2VsaW5lLmRmIiwiYmFzZWxpbmUucHZhbHVlIiwKICAgICJybXNlYSIsICJjZmkiLCAidGxpIiwgInNybXIiKSkKYGBgCgojIyBSZXNpZHVhbHMKCmBgYHtyfQpyZXNpZHVhbHMobWVkaWF0aW9uRml0LCB0eXBlID0gImNvciIpCmBgYAoKIyMgTW9kaWZpY2F0aW9uIEluZGljZXMKCmBgYHtyfQptb2RpZmljYXRpb25pbmRpY2VzKG1lZGlhdGlvbkZpdCwgc29ydC4gPSBUUlVFKQpgYGAKCiMjIEludGVybmFsIENvbnNpc3RlbmN5IFJlbGlhYmlsaXR5CgpgYGB7cn0KY29tcFJlbFNFTShtZWRpYXRpb25GaXQpCmBgYAoKIyMgUGF0aCBEaWFncmFtCgpgYGB7cn0Kc2VtUGF0aHMoCiAgbWVkaWF0aW9uRml0LAogIHdoYXQgPSAiU3RkLmFsbCIsCiAgbGF5b3V0ID0gInRyZWUyIiwKICBlZGdlLmxhYmVsLmNleCA9IDEuNSkKYGBgCgojIFBvd2VyIGFuYWx5c2lzCgpodHRwczovL2lzYWFjdHBldGVyc2VuLmdpdGh1Yi5pby9QcmluY2lwbGVzLVBzeWNob2xvZ2ljYWwtQXNzZXNzbWVudC9zZW0uaHRtbCNtb250ZUNhcmxvUG93ZXJBbmFseXNpcwoKIyBTZXNzaW9uIEluZm8KCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0Kc2Vzc2lvbkluZm8oKQpgYGAK</div>
