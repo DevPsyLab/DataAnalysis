@@ -39,6 +39,8 @@ This data file imports the data and only needs to be run when there's a new data
 To save the data file, select save as and paste. 
 Copy and paste the syntax at the **end of the syntax file** in the import file to save your spss data.
 
+Example:
+
 # Creating a SPSS Syntax file for analysis {#analysis}
 
 1. To create a new syntax file, select file then new then syntax
@@ -48,7 +50,48 @@ Copy and paste the syntax at the **end of the syntax file** in the import file t
 1. In your new data file, select an analysis and choose paste.
 In your despriptives syntax file, the analysis should now be added. For each subsequent analysis, select paste to add it to the descriptives file under the appropriate syntax.
 1. Create a new SPSS syntax file for your analysis. In this syntax file, add your analysis
-   * e.g., regressions 
+   * e.g., regressions
+
+## Frequencies
+
+## Descriptives
+
+## Correlations
+
+## Mediation
+
+Model without covariates—replace `outcome` with name of outcome variable, `predictor` with name of predictor variable, and `mediator` with name of mediating variable:
+
+```
+PROCESS 
+  y=outcome
+  /x=predictor
+  /m=mediator1 mediator2 mediator3
+  /model=4
+  /total=1
+  /effsize=1
+  /stand=1
+  /boot=10000
+  .
+```
+
+Model with covariates (p. 126):
+
+```
+PROCESS 
+  y=outcome
+  /x=predictor
+  /m=mediator1 mediator2 mediator3
+  /cov=covariate1 covariate2 covariate3
+  /model=4
+  /total=1
+  /effsize=1
+  /stand=1
+  /boot=10000
+  .
+```
+
+## Moderation
 
 # Best Practices {#bestPractices}
 
