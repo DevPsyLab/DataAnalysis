@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       comment = "")
 ```
 
-# When to use SPSS
+# When to use SPSS {#whenSPSS}
 
  We use [R](R.html) for almost all data analysis.
  However, R is code-based and has a steep learning curve.
@@ -29,7 +29,7 @@ This data file imports the data and only needs to be run when there's a new data
 1. A SPSS syntax file will open, select save as and move the file to the desired location
     * save file as: `import.sps`
 1. Open the syntax file and make sure lab path is saved as the absolute file path in the (`/FILE=`) field (**not** a mapped network drive like `R:`)
-   * ***Insert full path here***
+   * `\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.csv`
 1. To run your script, select CTRL A  and press the green play button to run the script
 1. In the import script, SPSS will automatically determine the type of variable each should be, but it does not always classify them correctly.
    * 
@@ -41,7 +41,71 @@ Copy and paste the syntax at the **end of the syntax file** in the import file t
 
 Example:
 
-# Creating a SPSS Syntax file for analysis {#analysis}
+```
+GET DATA  /TYPE=TXT
+  /FILE="\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.csv"
+  /ENCODING='UTF8'
+  /DELIMITERS=","
+  /QUALIFIER='"'
+  /ARRANGEMENT=DELIMITED
+  /FIRSTCASE=2
+  /DATATYPEMIN PERCENTAGE=95.0
+  /VARIABLES=
+  tcid AUTO
+  wave AUTO
+  tc_sex AUTO
+  tc_ageLV1 F4.2
+  /MAP.
+RESTORE.
+CACHE.
+EXECUTE.
+*DATASET NAME DataSet1 WINDOW=FRONT.
+
+SAVE OUTFILE='\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.sav'
+  /COMPRESSED.
+```
+
+# Data Management {#dataManagement}
+
+Add any data management/transformations at the end of your `import.sps` file (after importing your data), so you re-run the transformations each time you update the data file.
+
+## Average Across Variables {#averageVars}
+
+```
+COMPUTE cbcl_externalizingPOM_Average = MEAN(cbcl_externalizingPOM_Father,cbcl_externalizingPOM_Mother,cbcl_externalizingPOM_Secondary).
+COMPUTE cbq_inhibitoryControl_Average = MEAN(cbq_inhibitoryControl_Father,cbq_inhibitoryControl_Mother,cbq_inhibitoryControl_Secondary).
+EXECUTE.
+```
+
+## Rename Variables {#renameVars}
+
+```
+RENAME VARIABLES (ses_hollingsheadSES = SES).
+```
+
+## Mean-Center Variables {#meanCenter}
+
+```
+COMPUTE ses_hollingsheadSES_mc = ses_hollingsheadSES - mean_ses.
+COMPUTE adi_nationalRank_mc = adi_nationalRank - mean_adiN.
+EXECUTE.
+```
+
+## Compute Interaction Terms {#interaction}
+
+```
+COMPUTE ses_adi_interaction =  ses_hollingsheadSES_mc * adi_nationalRank_mc.
+EXECUTE.
+```
+
+## Save Data File {#saveData}
+
+```
+SAVE OUTFILE='\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.sav'
+  /COMPRESSED.
+```
+
+# Creating a SPSS Syntax File for Analysis {#analysis}
 
 1. To create a new syntax file, select file then new then syntax
    * Save file as: `descriptives.sps`
@@ -52,15 +116,54 @@ In your despriptives syntax file, the analysis should now be added. For each sub
 1. Create a new SPSS syntax file for your analysis. In this syntax file, add your analysis
    * e.g., regressions
 
-## Frequencies
+## Frequencies {#frequencies}
 
-## Descriptives
+```
+FREQUENCIES VARIABLES=tc_sex tc_hispanic tc_race tc_ethnicity 
+  /ORDER=ANALYSIS.
+```
 
-## Correlations
+## Descriptives {#descriptives}
 
-## Mediation
+```
+DESCRIPTIVES VARIABLES=ICsim IClim IChg ICcbq ses_hollingsheadSES ADINat EXTBx 
+  /STATISTICS=MEAN STDDEV MIN MAX KURTOSIS SKEWNESS.
+```
 
-Model without covariates—replace `outcome` with name of outcome variable, `predictor` with name of predictor variable, and `mediator` with name of mediating variable:
+## Histograms {#histograms}
+
+```
+GRAPH
+  /HISTOGRAM=ses_hollingsheadSES.
+```
+
+## Correlations {#correlations}
+
+```
+CORRELATIONS
+  /VARIABLES=tc_ageLV1 ses_hollingsheadParent cbq_inhibitoryControl_Average 
+    lim_scoreExcludingPreferencePOM hg_scorePOM sim_goXnoGoPOM cbcl_externalizingPOM_Average
+  /PRINT=TWOTAIL NOSIG FULL
+  /MISSING=PAIRWISE.
+```
+
+## Multiple Regression {#multipleRegression}
+
+```
+REGRESSION
+/MISSING PAIRWISE
+/STATISTICS COEFF OUTS R ANOVA
+/CRITERIA=PIN(.05) POUT(.10)
+/NOORIGIN 
+/DEPENDENT outcome
+/METHOD=ENTER predictor1 predictor2 predictor3.
+```
+
+## Mediation {#mediation}
+
+First, run the `PROCESS` macro.
+
+Below is the syntax for a model without covariates—replace `outcome` with name of outcome variable, `predictor` with name of predictor variable, and `mediator` with name of mediating variable:
 
 ```
 PROCESS 
@@ -91,7 +194,46 @@ PROCESS
   .
 ```
 
-## Moderation
+## Moderation {#moderation}
+
+1. Calculate means of the predictor and moderator
+   ```
+   aggregate outfile * mode addvariables
+   /predictor_mean = mean(predictor).
+
+   aggregate outfile * mode addvariables
+   /moderator_mean = mean(moderator).
+   ```
+1. Mean-center the predictor and moderator
+   ```
+   compute predictor_MC = predictor - predictor_mean.
+   compute moderator_MC = moderator - moderator_mean.
+   execute.
+   ```
+1. Verify that predictor and moderator are mean-centered (i.e., have a mean of zero)
+   ```
+   DESCRIPTIVES VARIABLES=predictor moderator predictor_MC moderator_MC
+   /STATISTICS=MEAN STDDEV MIN MAX.
+   ```
+1. Create the interaction terms
+   ```
+   compute predictorXmoderator = predictor_MC * moderator_MC.
+   execute.
+   ```
+1. Run moderated multiple regression model
+   ```
+   REGRESSION
+   /MISSING PAIRWISE
+   /STATISTICS COEFF OUTS R ANOVA
+   /CRITERIA=PIN(.05) POUT(.10)
+   /NOORIGIN 
+   /DEPENDENT outcome
+   /METHOD=ENTER predictor_MC moderator_MC predictorXmoderator.
+   ```
+1. Create plot of interaction
+   - see McCabe et al. (2018) and following links:
+      - https://github.com/connorjmccabe/InterActive
+      - https://connorjmccabe.shinyapps.io/interactive/
 
 # Best Practices {#bestPractices}
 
