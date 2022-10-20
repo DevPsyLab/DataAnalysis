@@ -31,20 +31,20 @@ https://eeglab.org/tutorials/
 1. Filtering
 1. Average Referencing
 1. Artifact Rejection
-    1. Automated artifact rejection
+    1. Automated artifact rejection (save intermediate file)
     1. Manual selection of bad channels
-    1. Manual selection of bad time periods
+    1. Manual selection of bad time periods (save intermediate file)
     1. Removal of manually selected bad channels
-    1. Removal of manually selected bad time periods
+    1. Removal of manually selected bad time periods (save intermediate file)
     1. [Independent Component Analysis](#ica) (ICA)
         1. Run ICA
         1. Automated removal of bad ICA components
-        1. Re-run ICA
-        1. Manual selection of bad ICA components
+        1. Re-run ICA (save intermediate file)
+        1. Manual selection of bad ICA components (save intermediate file)
         1. Removal of manually selected bad ICA components
 1. Interpolation of Bad Channels
 1. Segmentation
-1. Baseline Correction
+1. Baseline Correction (save final file)
 
 # EEGLAB
 
@@ -379,4 +379,106 @@ EEG = pop_rmbase( ALLEEG(7), [-200 0] ,[]);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 8,'setname','Baseline Correct','savenew','R:\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\MATLAB\\14-Baseline-Correct\\tcid_wave_baseline-correct.set','gui','off'); 
 eeglab redraw;
 
+```
+
+# Automatic script that loops files
+
+```matlab
+%10/20/22 Working script that reads everything into matlab
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Location of Raw oddball files
+rawOddballFiles = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\0-Raw\';
+%Location of path to save cleaned files
+cleanAutoPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
+
+%all oddball files in the directory to be processed
+filesInDirectory = dir(fullfile(rawOddballFiles, '*.mff')); %Reading the files in the directory
+
+%Listing the number of subjects for the number of times to loop
+numberOfSubject = height(filesInDirectory);
+
+%Names of all the files in the directory
+listOfSubjects={filesInDirectory.name}; 
+
+%splitting the filename up
+filenameSplit = regexp(listOfSubjects, '_', 'split');  
+id = cellfun(@(x) x{1},filenameSplit,'un',0);  %getting the id's
+wave = cellfun(@(x) x{2},filenameSplit,'un',0); %getting the waves
+
+
+
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
+
+for i=1:numberOfSubject
+
+    %%%% Importing Data
+    path = [rawOddballFiles,filesInDirectory(i).name];
+    tcid = char(strcat(id(i),'_', wave(i))); %combining the TCID and wave
+
+    EEG = pop_mffimport({path},{'code'},0,0);
+    % Saving the data in memory
+   [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'setname', tcid,'gui','off');
+
+    % Filtering the data
+    EEG = pop_eegfiltnew(ALLEEG(i), 'locutoff',0.1,'hicutoff',30,'plotfreqz',1);
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'overwrite','on','gui','off');
+    
+    % Average Referencing
+    EEG = pop_reref( ALLEEG(i), []);
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'overwrite','on','gui','off');
+
+    % They strongly advise importing channel locations before using this
+    % function.
+    %Cleaning the Data
+    EEG = pop_clean_rawdata(ALLEEG(i), 'FlatlineCriterion',5,'ChannelCriterion',0.8,'LineNoiseCriterion',4,'Highpass','off','BurstCriterion',30,'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian','WindowCriterionTolerances',[-Inf 7]);
+    nameClean = [tcid,'_autoClean.set'];
+    savePathClean = [cleanAutoPath,nameClean];
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'setname', nameClean, 'savenew', savePathClean, 'gui','off', 'overwrite', 'on');
+
+
+end
+eeglab redraw:
+
+%% Reading in automatically cleaned datasets
+
+%%%%%%%%%%%%%%
+% Clear Data becasue to overwrite anything in memory
+%%%%%%%%%%%%%%
+ALLEEG = [];
+EEG = [];
+
+% Adding the path for cleaned files
+cleanAutoPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
+
+%Starting EEGLAB
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
+
+
+%Location of cleaned oddball data
+filesInDirectoryClean = dir(fullfile(cleanAutoPath, '*.set')); %Reading the files in the directory
+
+
+%Listing the number of subjects for the number of times to loop
+numberOfSubjectClean = height(filesInDirectoryClean);
+
+%Names of all the files in the directory
+listOfSubjectsClean = {filesInDirectoryClean.name}; 
+
+%splitting the filename up
+filenameSplitClean = regexp(listOfSubjectsClean, '_', 'split');  
+id = cellfun(@(x) x{1},filenameSplitClean,'un',0);  %getting the id's
+wave = cellfun(@(x) x{2},filenameSplitClean,'un',0); %getting the waves
+
+
+for i=1:numberOfSubjectClean
+
+    %%%% Importing Data
+    tcidClean = char(strcat(id(i),'_', wave(i), '_autoClean.set')); %combining the TCID and wave to name the file
+    EEG = pop_loadset('filename', tcidClean, 'filepath', cleanAutoPath); 
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'setname', tcidClean,'gui','off');
+
+end
+eeglab redraw;
 ```
