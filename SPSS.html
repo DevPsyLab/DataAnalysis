@@ -438,35 +438,56 @@ div.tocify {
 
 <div id="whenSPSS" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> When to use SPSS</h1>
-<p>We use <a href="R.html">R</a> for almost all data analysis. However, <a href="R.html">R</a> is code-based and has a steep learning curve. As a result, undergraduate students in the lab most often use SPSS for their research projects (e.g., <a href="https://devpsylab.github.io/LabWiki/honors.html">Honors projects</a> and <a href="https://devpsylab.github.io/LabWiki/expectations-SROP.html">SROP projects</a>), because SPSS has a point-and-click interface.</p>
+<p>We use <a href="R.html">R</a> for almost all data analysis. However,
+<a href="R.html">R</a> is code-based and has a steep learning curve. As
+a result, undergraduate students in the lab most often use SPSS for
+their research projects (e.g., <a
+href="https://devpsylab.github.io/LabWiki/honors.html">Honors
+projects</a> and <a
+href="https://devpsylab.github.io/LabWiki/expectations-SROP.html">SROP
+projects</a>), because SPSS has a point-and-click interface.</p>
 </div>
 <div id="import" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Creating a SPSS Syntax File to Import a <code>.csv</code> Data File</h1>
-<p>A <code>.csv</code> file is a “comma-separated values” file—a file whose values are separated by commas. The lab will provide you with a <code>.csv</code> in your member user folder. You will then need to create a SPSS syntax file to import and save the data into SPSS format. This data file imports the data and only needs to be run when there’s a new data set.</p>
+<h1><span class="header-section-number">2</span> Creating a SPSS Syntax
+File to Import a <code>.csv</code> Data File</h1>
+<p>A <code>.csv</code> file is a “comma-separated values” file—a file
+whose values are separated by commas. The lab will provide you with a
+<code>.csv</code> in your member user folder. You will then need to
+create a SPSS syntax file to import and save the data into SPSS format.
+This data file imports the data and only needs to be run when there’s a
+new data set.</p>
 <ol style="list-style-type: decimal">
 <li>Open SPSS in the search bar</li>
 <li>Go to file, import data, select .csv data</li>
 <li>Navigate to the desired .csv file</li>
 <li>Select data file and select paste</li>
 <li>Once the data preview opens, select paste again</li>
-<li>A SPSS syntax file will open, select save as and move the file to the desired location
+<li>A SPSS syntax file will open, select save as and move the file to
+the desired location
 <ul>
 <li>save file as: <code>import.sps</code></li>
 </ul></li>
-<li>Open the syntax file and make sure lab path is saved as the absolute file path in the (<code>/FILE=</code>) field (<strong>not</strong> a mapped network drive like <code>R:</code>)
+<li>Open the syntax file and make sure lab path is saved as the absolute
+file path in the (<code>/FILE=</code>) field (<strong>not</strong> a
+mapped network drive like <code>R:</code>)
 <ul>
 <li><code>\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.csv</code></li>
 </ul></li>
-<li>To run your script, select CTRL A and press the green play button to run the script</li>
-<li>In the import script, SPSS will automatically determine the type of variable each should be, but it does not always classify them correctly.
+<li>To run your script, select CTRL A and press the green play button to
+run the script</li>
+<li>In the import script, SPSS will automatically determine the type of
+variable each should be, but it does not always classify them correctly.
 <ul>
 <li></li>
 </ul></li>
-<li>For numeric variables used in analysis, use the following command to change the variable to numeric
+<li>For numeric variables used in analysis, use the following command to
+change the variable to numeric
 <ul>
 <li>E.g., (<code>tcid AUTO</code>) to (<code>tcid F4.2</code>)</li>
 </ul></li>
-<li>The data file should appear. To save the data file, select save as and paste. Copy and paste the syntax at the <strong>end of the syntax file</strong> in the import file to save your spss data.</li>
+<li>The data file should appear. To save the data file, select save as
+and paste. Copy and paste the syntax at the <strong>end of the syntax
+file</strong> in the import file to save your spss data.</li>
 </ol>
 <p>Example:</p>
 <pre><code>GET DATA  /TYPE=TXT
@@ -492,9 +513,12 @@ SAVE OUTFILE=&#39;\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Membe
 </div>
 <div id="dataManagement" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Data Management</h1>
-<p>Add any data management/transformations at the end of your <code>import.sps</code> file (after importing your data), so you re-run the transformations each time you update the data file.</p>
+<p>Add any data management/transformations at the end of your
+<code>import.sps</code> file (after importing your data), so you re-run
+the transformations each time you update the data file.</p>
 <div id="averageVars" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Average Across Variables</h2>
+<h2><span class="header-section-number">3.1</span> Average Across
+Variables</h2>
 <pre><code>COMPUTE cbcl_externalizingPOM_Average = MEAN(cbcl_externalizingPOM_Father,cbcl_externalizingPOM_Mother,cbcl_externalizingPOM_Secondary).
 COMPUTE cbq_inhibitoryControl_Average = MEAN(cbq_inhibitoryControl_Father,cbq_inhibitoryControl_Mother,cbq_inhibitoryControl_Secondary).
 EXECUTE.</code></pre>
@@ -504,13 +528,15 @@ EXECUTE.</code></pre>
 <pre><code>RENAME VARIABLES (ses_hollingsheadSES = SES).</code></pre>
 </div>
 <div id="meanCenter" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Mean-Center Variables</h2>
+<h2><span class="header-section-number">3.3</span> Mean-Center
+Variables</h2>
 <pre><code>COMPUTE ses_hollingsheadSES_mc = ses_hollingsheadSES - mean_ses.
 COMPUTE adi_nationalRank_mc = adi_nationalRank - mean_adiN.
 EXECUTE.</code></pre>
 </div>
 <div id="interaction" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Compute Interaction Terms</h2>
+<h2><span class="header-section-number">3.4</span> Compute Interaction
+Terms</h2>
 <pre><code>COMPUTE ses_adi_interaction =  ses_hollingsheadSES_mc * adi_nationalRank_mc.
 EXECUTE.</code></pre>
 </div>
@@ -521,18 +547,24 @@ EXECUTE.</code></pre>
 </div>
 </div>
 <div id="analysis" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Creating a SPSS Syntax File for Analysis</h1>
+<h1><span class="header-section-number">4</span> Creating a SPSS Syntax
+File for Analysis</h1>
 <ol style="list-style-type: decimal">
 <li>To create a new syntax file, select file then new then syntax
 <ul>
 <li>Save file as: <code>descriptives.sps</code></li>
 </ul></li>
-<li>In your syntax file, create comments for your different types of analyses.
+<li>In your syntax file, create comments for your different types of
+analyses.
 <ul>
 <li>e.g., frequencies, descriptives, correlations</li>
 </ul></li>
-<li>In your new data file, select an analysis and choose paste. In your despriptives syntax file, the analysis should now be added. For each subsequent analysis, select paste to add it to the descriptives file under the appropriate syntax.</li>
-<li>Create a new SPSS syntax file for your analysis. In this syntax file, add your analysis
+<li>In your new data file, select an analysis and choose paste. In your
+despriptives syntax file, the analysis should now be added. For each
+subsequent analysis, select paste to add it to the descriptives file
+under the appropriate syntax.</li>
+<li>Create a new SPSS syntax file for your analysis. In this syntax
+file, add your analysis
 <ul>
 <li>e.g., regressions</li>
 </ul></li>
@@ -561,7 +593,8 @@ EXECUTE.</code></pre>
   /MISSING=PAIRWISE.</code></pre>
 </div>
 <div id="multipleRegression" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Multiple Regression</h2>
+<h2><span class="header-section-number">4.5</span> Multiple
+Regression</h2>
 <pre><code>REGRESSION
 /MISSING PAIRWISE
 /STATISTICS COEFF OUTS R ANOVA
@@ -572,8 +605,13 @@ EXECUTE.</code></pre>
 </div>
 <div id="mediation" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> Mediation</h2>
-<p>First, download and run the <a href="http://www.processmacro.org/download.html"><code>PROCESS</code> macro</a>.</p>
-<p>Below is the syntax for a model without covariates—replace <code>outcome</code> with name of outcome variable, <code>predictor</code> with name of predictor variable, and <code>mediator</code> with name of mediating variable:</p>
+<p>First, download and run the <a
+href="http://www.processmacro.org/download.html"><code>PROCESS</code>
+macro</a>.</p>
+<p>Below is the syntax for a model without covariates—replace
+<code>outcome</code> with name of outcome variable,
+<code>predictor</code> with name of predictor variable, and
+<code>mediator</code> with name of mediating variable:</p>
 <pre><code>PROCESS 
   y=outcome
   /x=predictor
@@ -610,7 +648,8 @@ aggregate outfile * mode addvariables
 <pre><code>compute predictor_MC = predictor - predictor_mean.
 compute moderator_MC = moderator - moderator_mean.
 execute.</code></pre></li>
-<li><p>Verify that predictor and moderator are mean-centered (i.e., have a mean of zero)</p>
+<li><p>Verify that predictor and moderator are mean-centered (i.e., have
+a mean of zero)</p>
 <pre><code>DESCRIPTIVES VARIABLES=predictor moderator predictor_MC moderator_MC
 /STATISTICS=MEAN STDDEV MIN MAX.</code></pre></li>
 <li><p>Create the interaction terms</p>
@@ -628,8 +667,10 @@ execute.</code></pre></li>
 <ul>
 <li>see McCabe et al. (2018) and following links:
 <ul>
-<li><a href="https://github.com/connorjmccabe/InterActive" class="uri">https://github.com/connorjmccabe/InterActive</a></li>
-<li><a href="https://connorjmccabe.shinyapps.io/interactive/" class="uri">https://connorjmccabe.shinyapps.io/interactive/</a></li>
+<li><a href="https://github.com/connorjmccabe/InterActive"
+class="uri">https://github.com/connorjmccabe/InterActive</a></li>
+<li><a href="https://connorjmccabe.shinyapps.io/interactive/"
+class="uri">https://connorjmccabe.shinyapps.io/interactive/</a></li>
 </ul></li>
 </ul></li>
 </ol>
@@ -638,11 +679,27 @@ execute.</code></pre></li>
 <div id="bestPractices" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Best Practices</h1>
 <ul>
-<li>Use SPSS syntax files (<code>.sps</code>) for performing all commands, including <a href="#import">importing data</a>, computing variables, recoding variables, running analyses, etc. The benefit of using SPSS syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file. This is important so you do not have to remember all of the steps you followed to generate the analysis. This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data. If you are unsure what SPSS command is needed, run the command via “point and click” in the interface; however, instead of clicking “OK”, click “Paste”. This will paste the syntax that is used to run the command into a syntax file.
+<li>Use SPSS syntax files (<code>.sps</code>) for performing all
+commands, including <a href="#import">importing data</a>, computing
+variables, recoding variables, running analyses, etc. The benefit of
+using SPSS syntax files (and code-based files, more generally) is that
+they allow you to reproduce your findings again with the same data file.
+This is important so you do not have to remember all of the steps you
+followed to generate the analysis. This also allows you to quickly
+re-run the analysis if the data file is updated due to the collection of
+more data. If you are unsure what SPSS command is needed, run the
+command via “point and click” in the interface; however, instead of
+clicking “OK”, click “Paste”. This will paste the syntax that is used to
+run the command into a syntax file.
 <ul>
-<li>Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., <code>import.sps</code>).</li>
-<li>Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., <code>descriptives.sps</code>).</li>
-<li>Have a separate syntax file for running analyses (e.g., <code>analyses.sps</code>).</li>
+<li>Have one syntax file for importing data, computing composites,
+recoding variables, and saving data (e.g.,
+<code>import.sps</code>).</li>
+<li>Have a separate syntax file for generating frequencies, descriptive
+statistics, and correlation matrices (e.g.,
+<code>descriptives.sps</code>).</li>
+<li>Have a separate syntax file for running analyses (e.g.,
+<code>analyses.sps</code>).</li>
 <li>Comment your syntax frequently
 <ul>
 <li>to comment use the following convention:

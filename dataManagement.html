@@ -438,35 +438,47 @@ div.tocify {
 
 <div id="import-data" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Import Data</h1>
-<p>Importing data takes syntax of the following form for <code>.csv</code> files:</p>
+<p>Importing data takes syntax of the following form for
+<code>.csv</code> files:</p>
 <pre class="r fold-show"><code>data &lt;- read.csv(&quot;filepath/filename.csv&quot;)</code></pre>
-<p>Note: it is important to use forward slashes (“/”) rather than backslashes (“\”) when specifying filepaths in <code>R</code>.</p>
-<p>Below, I import a <code>.csv</code> file and save it into an object called <code>mydata</code> (you could call this object whatever you want):</p>
+<p>Note: it is important to use forward slashes (“/”) rather than
+backslashes (“\”) when specifying filepaths in <code>R</code>.</p>
+<p>Below, I import a <code>.csv</code> file and save it into an object
+called <code>mydata</code> (you could call this object whatever you
+want):</p>
 <pre class="r fold-show"><code>mydata &lt;- read.csv(&quot;https://osf.io/s6wrm/download&quot;)</code></pre>
-<p>Importing data takes syntax of the following form for <code>.RData</code> files:</p>
+<p>Importing data takes syntax of the following form for
+<code>.RData</code> files:</p>
 <pre class="r fold-show"><code>load(&quot;filepath/filename.RData&quot;)</code></pre>
 </div>
 <div id="save-data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Save Data</h1>
-<p>Saving data takes syntax of the following form for <code>.csv</code> files:</p>
+<p>Saving data takes syntax of the following form for <code>.csv</code>
+files:</p>
 <pre class="r fold-show"><code>write.csv(object, file = &quot;filepath/filename.csv&quot;)</code></pre>
 <p>For example:</p>
 <pre class="r fold-show"><code>write.csv(mydata, file = &quot;mydata.csv&quot;)</code></pre>
-<p>Saving data takes syntax of the following form for <code>.RData</code> files:</p>
+<p>Saving data takes syntax of the following form for
+<code>.RData</code> files:</p>
 <pre class="r fold-show"><code>save(object, file = &quot;filepath/filename.RData&quot;)</code></pre>
 </div>
 <div id="use-lab-functions" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Use Lab Functions</h1>
-<p>To use lab functions, first install the <code>petersenlab</code> package:</p>
+<p>To use lab functions, first install the <code>petersenlab</code>
+package:</p>
 <pre class="r fold-show"><code>install.packages(&quot;remotes&quot;)
 remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
-<p>Once you have the <code>petersenlab</code> package installed, load the package:</p>
+<p>Once you have the <code>petersenlab</code> package installed, load
+the package:</p>
 <pre class="r fold-show"><code>library(&quot;petersenlab&quot;)</code></pre>
-<p>To run scripts on the lab drive, set the path to the lab drive (<code>//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/</code>) using the following code:</p>
+<p>To run scripts on the lab drive, set the path to the lab drive
+(<code>//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/</code>)
+using the following code:</p>
 <pre class="r fold-show"><code>petersenLabPath &lt;- setLabPath()</code></pre>
 </div>
 <div id="loadinstall-packages" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Load/Install Packages</h1>
+<h1><span class="header-section-number">4</span> Load/Install
+Packages</h1>
 <p>The way to install a package in <code>R</code> is:</p>
 <pre class="r fold-show"><code>install.packages(&quot;packageName1&quot;)
 install.packages(c(&quot;packageName1&quot;,&quot;packageName2&quot;,&quot;packageName3&quot;))</code></pre>
@@ -474,7 +486,16 @@ install.packages(c(&quot;packageName1&quot;,&quot;packageName2&quot;,&quot;packa
 <pre class="r fold-show"><code>library(&quot;packageName1&quot;)
 library(&quot;packageName2&quot;)
 library(&quot;packageName3&quot;)</code></pre>
-<p>However, when sourcing (i.e., running) other <code>R</code> scripts, it is possible that you will run scripts that use packages that you do not have installed, resulting in an error that prevents the script from running. Thus, it can be safer to load packages using the lab function, <code>load_or_install(),</code> rather than using <code>library()</code>. The <code>load_or_install()</code> function checks whether a package is installed. If the package is not installed, the function installs and loads the package. If the package is installed, the function loads the package. To use this function, you must have the <code>petersenlab</code> package loaded.</p>
+<p>However, when sourcing (i.e., running) other <code>R</code> scripts,
+it is possible that you will run scripts that use packages that you do
+not have installed, resulting in an error that prevents the script from
+running. Thus, it can be safer to load packages using the lab function,
+<code>load_or_install(),</code> rather than using
+<code>library()</code>. The <code>load_or_install()</code> function
+checks whether a package is installed. If the package is not installed,
+the function installs and loads the package. If the package is
+installed, the function loads the package. To use this function, you
+must have the <code>petersenlab</code> package loaded.</p>
 <pre class="r fold-show"><code>load_or_install(c(&quot;packageName1&quot;,&quot;packageName2&quot;,&quot;packageName3&quot;))</code></pre>
 <p>For example:</p>
 <pre class="r fold-show"><code>load_or_install(c(&quot;tidyverse&quot;,&quot;psych&quot;))</code></pre>
@@ -496,22 +517,27 @@ The following objects are masked from &#39;package:ggplot2&#39;:
 </div>
 <div id="set-a-seed" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Set a Seed</h1>
-<p>Set a seed (any number) to reproduce the results of analyses that involve random number generation.</p>
+<p>Set a seed (any number) to reproduce the results of analyses that
+involve random number generation.</p>
 <pre class="r fold-show"><code>set.seed(52242)</code></pre>
 </div>
 <div id="run-an-r-script" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Run an <code>R</code> Script</h1>
+<h1><span class="header-section-number">6</span> Run an <code>R</code>
+Script</h1>
 <p>To run an <code>R</code> script, use the following syntax:</p>
 <pre class="r fold-show"><code>source(&quot;filepath/filename.R&quot;)</code></pre>
 </div>
-<div id="render-an-r-markdown-.rmd-file" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Render an R Markdown (<code>.Rmd</code>) File</h1>
+<div id="render-an-r-markdown-.rmd-file" class="section level1"
+number="7">
+<h1><span class="header-section-number">7</span> Render an R Markdown
+(<code>.Rmd</code>) File</h1>
 <p>To render a <code>.Rmd</code> file, use the following syntax:</p>
 <pre class="r fold-show"><code>render(&quot;filepath/filename.Rmd&quot;)</code></pre>
 </div>
 <div id="variable-names" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Variable Names</h1>
-<p>To look at the names of variables in a data frame, use the following syntax:</p>
+<p>To look at the names of variables in a data frame, use the following
+syntax:</p>
 <pre class="r fold-show"><code>names(mydata)</code></pre>
 <pre><code>[1] &quot;survived&quot;   &quot;pclass&quot;     &quot;sex&quot;        &quot;age&quot;        &quot;sibsp&quot;     
 [6] &quot;parch&quot;      &quot;prediction&quot;</code></pre>
@@ -612,7 +638,8 @@ The following objects are masked from &#39;package:ggplot2&#39;:
 [1045] 27.00 29.00</code></pre>
 </div>
 <div id="multiple-variables" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Multiple Variables</h2>
+<h2><span class="header-section-number">9.2</span> Multiple
+Variables</h2>
 <p>To subset multiple variables, use the following syntax:</p>
 <pre class="r fold-show"><code>mydata[,c(&quot;survived&quot;,&quot;age&quot;,&quot;prediction&quot;)]</code></pre>
 <div data-pagedtable="false">
@@ -646,8 +673,10 @@ The following objects are masked from &#39;package:ggplot2&#39;:
 <pre class="r fold-show"><code>View(mydata)</code></pre>
 </div>
 <div id="first-6-rowselements" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> First 6 Rows/Elements</h2>
-<p>To view only the first six rows (if a data frame) or elements (if a vector), use the following syntax:</p>
+<h2><span class="header-section-number">10.2</span> First 6
+Rows/Elements</h2>
+<p>To view only the first six rows (if a data frame) or elements (if a
+vector), use the following syntax:</p>
 <pre class="r fold-show"><code>head(mydata)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -659,7 +688,8 @@ The following objects are masked from &#39;package:ggplot2&#39;:
 </div>
 </div>
 <div id="data-characteristics" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Data Characteristics</h1>
+<h1><span class="header-section-number">11</span> Data
+Characteristics</h1>
 <div id="data-structure" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Data Structure</h2>
 <pre class="r fold-show"><code>str(mydata)</code></pre>
@@ -679,30 +709,37 @@ The following objects are masked from &#39;package:ggplot2&#39;:
 <pre><code>[1] 1046    7</code></pre>
 </div>
 <div id="number-of-elements" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Number of Elements</h2>
+<h2><span class="header-section-number">11.3</span> Number of
+Elements</h2>
 <pre class="r fold-show"><code>length(mydata$age)</code></pre>
 <pre><code>[1] 1046</code></pre>
 </div>
-<div id="number-of-missing-elements" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Number of Missing Elements</h2>
+<div id="number-of-missing-elements" class="section level2"
+number="11.4">
+<h2><span class="header-section-number">11.4</span> Number of Missing
+Elements</h2>
 <pre class="r fold-show"><code>length(mydata$age[which(is.na(mydata$age))])</code></pre>
 <pre><code>[1] 0</code></pre>
 </div>
-<div id="number-of-non-missing-elements" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> Number of Non-Missing Elements</h2>
+<div id="number-of-non-missing-elements" class="section level2"
+number="11.5">
+<h2><span class="header-section-number">11.5</span> Number of
+Non-Missing Elements</h2>
 <pre class="r fold-show"><code>length(na.omit(mydata$age))</code></pre>
 <pre><code>[1] 1046</code></pre>
 </div>
 </div>
 <div id="create-new-variables" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Create New Variables</h1>
+<h1><span class="header-section-number">12</span> Create New
+Variables</h1>
 <p>To create a new variable, use the following syntax:</p>
 <pre class="r fold-show"><code>mydata$newVar &lt;- NA</code></pre>
 <p>Here is an example of creating a new variable:</p>
 <pre class="r fold-show"><code>mydata$ID &lt;- 1:nrow(mydata)</code></pre>
 </div>
 <div id="create-a-data-frame" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Create a Data Frame</h1>
+<h1><span class="header-section-number">13</span> Create a Data
+Frame</h1>
 <p>Here is an example of creating a data frame:</p>
 <pre class="r fold-show"><code>mydata2 &lt;- data.frame(
   ID = c(1:5, 1047:1051),
@@ -738,10 +775,17 @@ mydata$oldVar[which(mydata$sex == &quot;female&quot;)] &lt;- 1</code></pre>
 <img src="images/joins.png" alt="" />
 <p class="caption">Types of merges/joins</p>
 </div>
-<p>Image source: <a href="https://predictivehacks.com/?all-tips=anti-joins-with-pandas">Predictive Hacks</a></p>
+<p>Image source: <a
+href="https://predictivehacks.com/?all-tips=anti-joins-with-pandas">Predictive
+Hacks</a></p>
 <div id="fullJoin" class="section level2" number="16.1">
 <h2><span class="header-section-number">16.1</span> Full Outer Join</h2>
-<p>A full outer join includes all rows in <span class="math inline">\(x\)</span> <strong>or</strong> <span class="math inline">\(y\)</span>. It returns columns from <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Here is how to merge two data frames using a full outer join (i.e., “full join”):</p>
+<p>A full outer join includes all rows in <span
+class="math inline">\(x\)</span> <strong>or</strong> <span
+class="math inline">\(y\)</span>. It returns columns from <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. Here is how to merge two data frames
+using a full outer join (i.e., “full join”):</p>
 <pre class="r fold-show"><code>fullJoinData &lt;- merge(mydata, mydata2, by = &quot;ID&quot;, all = TRUE)
 
 fullJoinData</code></pre>
@@ -762,7 +806,11 @@ fullJoinData</code></pre>
 </div>
 <div id="leftJoin" class="section level2" number="16.2">
 <h2><span class="header-section-number">16.2</span> Left Outer Join</h2>
-<p>A left outer join includes all rows in <span class="math inline">\(x\)</span>. It returns columns from <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Here is how to merge two data frames using a left outer join (“left join”):</p>
+<p>A left outer join includes all rows in <span
+class="math inline">\(x\)</span>. It returns columns from <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. Here is how to merge two data frames
+using a left outer join (“left join”):</p>
 <pre class="r fold-show"><code>leftJoinData &lt;- merge(mydata, mydata2, by = &quot;ID&quot;, all.x = TRUE)
 
 leftJoinData</code></pre>
@@ -782,8 +830,13 @@ leftJoinData</code></pre>
 </div>
 </div>
 <div id="rightJoin" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> Right Outer Join</h2>
-<p>A right outer join includes all rows in <span class="math inline">\(y\)</span>. It returns columns from <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Here is how to merge two data frames using a right outer join (“right join”):</p>
+<h2><span class="header-section-number">16.3</span> Right Outer
+Join</h2>
+<p>A right outer join includes all rows in <span
+class="math inline">\(y\)</span>. It returns columns from <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. Here is how to merge two data frames
+using a right outer join (“right join”):</p>
 <pre class="r fold-show"><code>rightJoinData &lt;- merge(mydata, mydata2, by = &quot;ID&quot;, all.y = TRUE)
 
 rightJoinData</code></pre>
@@ -804,7 +857,16 @@ rightJoinData</code></pre>
 </div>
 <div id="innerJoin" class="section level2" number="16.4">
 <h2><span class="header-section-number">16.4</span> Inner Join</h2>
-<p>An inner join includes all rows that are in <strong>both</strong> <span class="math inline">\(x\)</span> <strong>and</strong> <span class="math inline">\(y\)</span>. An inner join will return one row of <span class="math inline">\(x\)</span> for each matching row of <span class="math inline">\(y\)</span>, and can duplicate values of records on either side (left or right) if <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> have more than one matching record. It returns columns from <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Here is how to merge two data frames using an inner join:</p>
+<p>An inner join includes all rows that are in <strong>both</strong>
+<span class="math inline">\(x\)</span> <strong>and</strong> <span
+class="math inline">\(y\)</span>. An inner join will return one row of
+<span class="math inline">\(x\)</span> for each matching row of <span
+class="math inline">\(y\)</span>, and can duplicate values of records on
+either side (left or right) if <span class="math inline">\(x\)</span>
+and <span class="math inline">\(y\)</span> have more than one matching
+record. It returns columns from <span class="math inline">\(x\)</span>
+and <span class="math inline">\(y\)</span>. Here is how to merge two
+data frames using an inner join:</p>
 <pre class="r fold-show"><code>innerJoinData &lt;- merge(mydata, mydata2, by = &quot;ID&quot;, all.x = FALSE, all.y = FALSE)
 
 innerJoinData</code></pre>
@@ -825,7 +887,16 @@ innerJoinData</code></pre>
 </div>
 <div id="semiJoin" class="section level2" number="16.5">
 <h2><span class="header-section-number">16.5</span> Semi Join</h2>
-<p>A semi join is a filter. A left semi join returns all rows from <span class="math inline">\(x\)</span> <strong>with</strong> a match in <span class="math inline">\(y\)</span>. That is, it filters out records from <span class="math inline">\(x\)</span> that are not in <span class="math inline">\(y\)</span>. Unlike an <a href="#innerJoin">inner join</a>, a left semi join will never duplicate rows of <span class="math inline">\(x\)</span>, and it includes columns from only <span class="math inline">\(x\)</span> (not from <span class="math inline">\(y\)</span>). Here is how to merge two data frames using a left semi join:</p>
+<p>A semi join is a filter. A left semi join returns all rows from <span
+class="math inline">\(x\)</span> <strong>with</strong> a match in <span
+class="math inline">\(y\)</span>. That is, it filters out records from
+<span class="math inline">\(x\)</span> that are not in <span
+class="math inline">\(y\)</span>. Unlike an <a href="#innerJoin">inner
+join</a>, a left semi join will never duplicate rows of <span
+class="math inline">\(x\)</span>, and it includes columns from only
+<span class="math inline">\(x\)</span> (not from <span
+class="math inline">\(y\)</span>). Here is how to merge two data frames
+using a left semi join:</p>
 <pre class="r fold-show"><code>semiJoinData &lt;- semi_join(mydata, mydata2, by = &quot;ID&quot;)
 
 semiJoinData</code></pre>
@@ -839,7 +910,14 @@ semiJoinData</code></pre>
 </div>
 <div id="antiJoin" class="section level2" number="16.6">
 <h2><span class="header-section-number">16.6</span> Anti Join</h2>
-<p>An anti join is a filter. A left anti join returns all rows from <span class="math inline">\(x\)</span> <strong>without</strong> a match in <span class="math inline">\(y\)</span>. That is, it filters out records from <span class="math inline">\(x\)</span> that are in <span class="math inline">\(y\)</span>. It returns columns from only <span class="math inline">\(x\)</span> (not from <span class="math inline">\(y\)</span>). Here is how to merge two data frames using a left anti join:</p>
+<p>An anti join is a filter. A left anti join returns all rows from
+<span class="math inline">\(x\)</span> <strong>without</strong> a match
+in <span class="math inline">\(y\)</span>. That is, it filters out
+records from <span class="math inline">\(x\)</span> that are in <span
+class="math inline">\(y\)</span>. It returns columns from only <span
+class="math inline">\(x\)</span> (not from <span
+class="math inline">\(y\)</span>). Here is how to merge two data frames
+using a left anti join:</p>
 <pre class="r fold-show"><code>antiJoinData &lt;- anti_join(mydata, mydata2, by = &quot;ID&quot;)
 
 antiJoinData</code></pre>
@@ -861,7 +939,8 @@ antiJoinData</code></pre>
 {"columns":[{"label":["fish"],"name":[1],"type":["fct"],"align":["left"]},{"label":["station"],"name":[2],"type":["fct"],"align":["left"]},{"label":["seen"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"4842","2":"Release","3":"1"},{"1":"4842","2":"I80_1","3":"1"},{"1":"4842","2":"Lisbon","3":"1"},{"1":"4842","2":"Rstr","3":"1"},{"1":"4842","2":"Base_TD","3":"1"},{"1":"4842","2":"BCE","3":"1"},{"1":"4842","2":"BCW","3":"1"},{"1":"4842","2":"BCE2","3":"1"},{"1":"4842","2":"BCW2","3":"1"},{"1":"4842","2":"MAE","3":"1"},{"1":"4842","2":"MAW","3":"1"},{"1":"4843","2":"Release","3":"1"},{"1":"4843","2":"I80_1","3":"1"},{"1":"4843","2":"Lisbon","3":"1"},{"1":"4843","2":"Rstr","3":"1"},{"1":"4843","2":"Base_TD","3":"1"},{"1":"4843","2":"BCE","3":"1"},{"1":"4843","2":"BCW","3":"1"},{"1":"4843","2":"BCE2","3":"1"},{"1":"4843","2":"BCW2","3":"1"},{"1":"4843","2":"MAE","3":"1"},{"1":"4843","2":"MAW","3":"1"},{"1":"4844","2":"Release","3":"1"},{"1":"4844","2":"I80_1","3":"1"},{"1":"4844","2":"Lisbon","3":"1"},{"1":"4844","2":"Rstr","3":"1"},{"1":"4844","2":"Base_TD","3":"1"},{"1":"4844","2":"BCE","3":"1"},{"1":"4844","2":"BCW","3":"1"},{"1":"4844","2":"BCE2","3":"1"},{"1":"4844","2":"BCW2","3":"1"},{"1":"4844","2":"MAE","3":"1"},{"1":"4844","2":"MAW","3":"1"},{"1":"4845","2":"Release","3":"1"},{"1":"4845","2":"I80_1","3":"1"},{"1":"4845","2":"Lisbon","3":"1"},{"1":"4845","2":"Rstr","3":"1"},{"1":"4845","2":"Base_TD","3":"1"},{"1":"4847","2":"Release","3":"1"},{"1":"4847","2":"I80_1","3":"1"},{"1":"4847","2":"Lisbon","3":"1"},{"1":"4848","2":"Release","3":"1"},{"1":"4848","2":"I80_1","3":"1"},{"1":"4848","2":"Lisbon","3":"1"},{"1":"4848","2":"Rstr","3":"1"},{"1":"4849","2":"Release","3":"1"},{"1":"4849","2":"I80_1","3":"1"},{"1":"4850","2":"Release","3":"1"},{"1":"4850","2":"I80_1","3":"1"},{"1":"4850","2":"Rstr","3":"1"},{"1":"4850","2":"Base_TD","3":"1"},{"1":"4850","2":"BCE","3":"1"},{"1":"4850","2":"BCW","3":"1"},{"1":"4851","2":"Release","3":"1"},{"1":"4851","2":"I80_1","3":"1"},{"1":"4854","2":"Release","3":"1"},{"1":"4854","2":"I80_1","3":"1"},{"1":"4855","2":"Release","3":"1"},{"1":"4855","2":"I80_1","3":"1"},{"1":"4855","2":"Lisbon","3":"1"},{"1":"4855","2":"Rstr","3":"1"},{"1":"4855","2":"Base_TD","3":"1"},{"1":"4857","2":"Release","3":"1"},{"1":"4857","2":"I80_1","3":"1"},{"1":"4857","2":"Lisbon","3":"1"},{"1":"4857","2":"Rstr","3":"1"},{"1":"4857","2":"Base_TD","3":"1"},{"1":"4857","2":"BCE","3":"1"},{"1":"4857","2":"BCW","3":"1"},{"1":"4857","2":"BCE2","3":"1"},{"1":"4857","2":"BCW2","3":"1"},{"1":"4858","2":"Release","3":"1"},{"1":"4858","2":"I80_1","3":"1"},{"1":"4858","2":"Lisbon","3":"1"},{"1":"4858","2":"Rstr","3":"1"},{"1":"4858","2":"Base_TD","3":"1"},{"1":"4858","2":"BCE","3":"1"},{"1":"4858","2":"BCW","3":"1"},{"1":"4858","2":"BCE2","3":"1"},{"1":"4858","2":"BCW2","3":"1"},{"1":"4858","2":"MAE","3":"1"},{"1":"4858","2":"MAW","3":"1"},{"1":"4859","2":"Release","3":"1"},{"1":"4859","2":"I80_1","3":"1"},{"1":"4859","2":"Lisbon","3":"1"},{"1":"4859","2":"Rstr","3":"1"},{"1":"4859","2":"Base_TD","3":"1"},{"1":"4861","2":"Release","3":"1"},{"1":"4861","2":"I80_1","3":"1"},{"1":"4861","2":"Lisbon","3":"1"},{"1":"4861","2":"Rstr","3":"1"},{"1":"4861","2":"Base_TD","3":"1"},{"1":"4861","2":"BCE","3":"1"},{"1":"4861","2":"BCW","3":"1"},{"1":"4861","2":"BCE2","3":"1"},{"1":"4861","2":"BCW2","3":"1"},{"1":"4861","2":"MAE","3":"1"},{"1":"4861","2":"MAW","3":"1"},{"1":"4862","2":"Release","3":"1"},{"1":"4862","2":"I80_1","3":"1"},{"1":"4862","2":"Lisbon","3":"1"},{"1":"4862","2":"Rstr","3":"1"},{"1":"4862","2":"Base_TD","3":"1"},{"1":"4862","2":"BCE","3":"1"},{"1":"4862","2":"BCW","3":"1"},{"1":"4862","2":"BCE2","3":"1"},{"1":"4862","2":"BCW2","3":"1"},{"1":"4863","2":"Release","3":"1"},{"1":"4863","2":"I80_1","3":"1"},{"1":"4864","2":"Release","3":"1"},{"1":"4864","2":"I80_1","3":"1"},{"1":"4865","2":"Release","3":"1"},{"1":"4865","2":"I80_1","3":"1"},{"1":"4865","2":"Lisbon","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Data widened by a variable (<code>station</code>), using <code>tidyverse</code>:</p>
+<p>Data widened by a variable (<code>station</code>), using
+<code>tidyverse</code>:</p>
 <pre class="r fold-show"><code>fish_encounters %&gt;% 
   pivot_wider(names_from = station,
               values_from = seen)</code></pre>
@@ -880,7 +959,8 @@ antiJoinData</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360.0","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"},{"1":"14.3","2":"8","3":"360.0","4":"245","5":"3.21","6":"3.570","7":"15.84","8":"0","9":"0","10":"3","11":"4","_rn_":"Duster 360"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4","_rn_":"Merc 280C"},{"1":"16.4","2":"8","3":"275.8","4":"180","5":"3.07","6":"4.070","7":"17.40","8":"0","9":"0","10":"3","11":"3","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.730","7":"17.60","8":"0","9":"0","10":"3","11":"3","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.780","7":"18.00","8":"0","9":"0","10":"3","11":"3","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","3":"472.0","4":"205","5":"2.93","6":"5.250","7":"17.98","8":"0","9":"0","10":"3","11":"4","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","3":"460.0","4":"215","5":"3.00","6":"5.424","7":"17.82","8":"0","9":"0","10":"3","11":"4","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","3":"440.0","4":"230","5":"3.23","6":"5.345","7":"17.42","8":"0","9":"0","10":"3","11":"4","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","3":"318.0","4":"150","5":"2.76","6":"3.520","7":"16.87","8":"0","9":"0","10":"3","11":"2","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","3":"304.0","4":"150","5":"3.15","6":"3.435","7":"17.30","8":"0","9":"0","10":"3","11":"2","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","3":"350.0","4":"245","5":"3.73","6":"3.840","7":"15.41","8":"0","9":"0","10":"3","11":"4","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","3":"400.0","4":"175","5":"3.08","6":"3.845","7":"17.05","8":"0","9":"0","10":"3","11":"2","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","3":"351.0","4":"264","5":"4.22","6":"3.170","7":"14.50","8":"0","9":"1","10":"5","11":"4","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","3":"301.0","4":"335","5":"3.54","6":"3.570","7":"14.60","8":"0","9":"1","10":"5","11":"8","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Data in long form, transformed from wide form using <code>tidyverse</code>:</p>
+<p>Data in long form, transformed from wide form using
+<code>tidyverse</code>:</p>
 <pre class="r fold-show"><code>mtcars %&gt;% 
   pivot_longer(cols = everything(),
                names_to = &quot;variable&quot;,
@@ -891,8 +971,10 @@ antiJoinData</code></pre>
   </script>
 </div>
 </div>
-<div id="average-ratings-across-coders" class="section level1" number="19">
-<h1><span class="header-section-number">19</span> Average Ratings Across Coders</h1>
+<div id="average-ratings-across-coders" class="section level1"
+number="19">
+<h1><span class="header-section-number">19</span> Average Ratings Across
+Coders</h1>
 <p>Create data with multiple coders:</p>
 <pre class="r fold-hide"><code>idWaveCoder &lt;- 
   expand.grid(
@@ -971,7 +1053,7 @@ loaded via a namespace (and not attached):
 [37] htmltools_0.5.3     dbplyr_2.2.1        fastmap_1.1.0      
 [40] readxl_1.4.1        htmlwidgets_1.5.4   rlang_1.0.6        
 [43] rstudioapi_0.14     jquerylib_0.1.4     generics_0.1.3     
-[46] jsonlite_1.8.2      googlesheets4_1.0.1 magrittr_2.0.3     
+[46] jsonlite_1.8.3      googlesheets4_1.0.1 magrittr_2.0.3     
 [49] Formula_1.2-4       interp_1.1-3        Matrix_1.5-1       
 [52] Rcpp_1.0.9          munsell_0.5.0       fansi_1.0.3        
 [55] lifecycle_1.0.3     stringi_1.7.8       yaml_2.3.6         
@@ -982,7 +1064,7 @@ loaded via a namespace (and not attached):
 [70] reshape2_1.4.4      stats4_4.2.1        reprex_2.0.2       
 [73] glue_1.6.2          evaluate_0.17       mitools_2.4        
 [76] latticeExtra_0.6-30 modelr_0.1.9        data.table_1.14.4  
-[79] tzdb_0.3.0          png_0.1-7           vctrs_0.4.2        
+[79] tzdb_0.3.0          png_0.1-7           vctrs_0.5.0        
 [82] cellranger_1.1.0    gtable_0.3.1        assertthat_0.2.1   
 [85] cachem_1.0.6        xfun_0.34           xtable_1.8-4       
 [88] broom_1.0.1         survival_3.3-1      googledrive_2.0.0  

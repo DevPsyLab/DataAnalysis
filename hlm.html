@@ -443,7 +443,8 @@ div.tocify {
 <div id="preamble" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Preamble</h1>
 <div id="install-libraries" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Install Libraries</h2>
+<h2><span class="header-section-number">1.1</span> Install
+Libraries</h2>
 <pre class="r fold-hide"><code>#install.packages(&quot;remotes&quot;)
 #remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
 </div>
@@ -465,16 +466,33 @@ library(&quot;nlme&quot;)</code></pre>
 </div>
 <div id="overview" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Overview</h1>
-<p><a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels</a></p>
+<p><a
+href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels"
+class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels</a></p>
 </div>
 <div id="estimator-ml-or-reml" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Estimator: ML or REML</h1>
-<p>For small sample sizes, restricted maximum likelihood (REML) is preferred over maximum likelihood (ML). ML preferred when there is a small number (&lt; 4) of fixed effects; REML is preferred when there are more (&gt; 4) fixed effects. The greater the number of fixed effects, the greater the difference between REML and ML estimates. Likelihood ratio (LR) tests for REML require exactly the same fixed effects specification in both models. So, to compare models with different fixed effects with an LR test (to determine whether to include a particular fixed effect), ML must be used. In contrast to the maximum likelihood estimation, REML can produce unbiased estimates of variance and covariance parameters, variance estimates are larger in REML than ML. To compare whether an effect should be fixed or random, use REML. To simultaneously compare fixed and random effects, use ML.</p>
+<h1><span class="header-section-number">4</span> Estimator: ML or
+REML</h1>
+<p>For small sample sizes, restricted maximum likelihood (REML) is
+preferred over maximum likelihood (ML). ML preferred when there is a
+small number (&lt; 4) of fixed effects; REML is preferred when there are
+more (&gt; 4) fixed effects. The greater the number of fixed effects,
+the greater the difference between REML and ML estimates. Likelihood
+ratio (LR) tests for REML require exactly the same fixed effects
+specification in both models. So, to compare models with different fixed
+effects with an LR test (to determine whether to include a particular
+fixed effect), ML must be used. In contrast to the maximum likelihood
+estimation, REML can produce unbiased estimates of variance and
+covariance parameters, variance estimates are larger in REML than ML. To
+compare whether an effect should be fixed or random, use REML. To
+simultaneously compare fixed and random effects, use ML.</p>
 </div>
 <div id="linear" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Linear Mixed Models</h1>
+<h1><span class="header-section-number">5</span> Linear Mixed
+Models</h1>
 <div id="lme4" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> <code>lme4</code></h2>
+<h2><span class="header-section-number">5.1</span>
+<code>lme4</code></h2>
 <pre class="r fold-show"><code>lmer(t_ext ~ m_ext + age + (age | tcid),
      data = mydata,
      REML = FALSE, #for ML
@@ -482,7 +500,8 @@ library(&quot;nlme&quot;)</code></pre>
 <pre><code>Error: bad &#39;data&#39;: object &#39;mydata&#39; not found</code></pre>
 </div>
 <div id="nlme" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> <code>nlme</code></h2>
+<h2><span class="header-section-number">5.2</span>
+<code>nlme</code></h2>
 <pre class="r fold-show"><code>lme(t_ext ~ m_ext + age,
     random= ~1 + age|tcid,
     data = mydata,
@@ -492,10 +511,13 @@ library(&quot;nlme&quot;)</code></pre>
 </div>
 </div>
 <div id="generalized" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Generalized Linear Mixed Models</h1>
-<p><a href="http://glmm.wikidot.com/faq" class="uri">http://glmm.wikidot.com/faq</a></p>
+<h1><span class="header-section-number">6</span> Generalized Linear
+Mixed Models</h1>
+<p><a href="http://glmm.wikidot.com/faq"
+class="uri">http://glmm.wikidot.com/faq</a></p>
 <div id="lmer" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> <code>lmer</code></h2>
+<h2><span class="header-section-number">6.1</span>
+<code>lmer</code></h2>
 <pre class="r fold-show"><code>glmer(t_ext ~ m_ext + age + (age | tcid),
       family = poisson(link = &quot;log&quot;),
       data = mydata,
@@ -503,7 +525,8 @@ library(&quot;nlme&quot;)</code></pre>
 <pre><code>Error: bad &#39;data&#39;: object &#39;mydata&#39; not found</code></pre>
 </div>
 <div id="mass" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> <code>MASS</code></h2>
+<h2><span class="header-section-number">6.2</span>
+<code>MASS</code></h2>
 <pre class="r fold-show"><code>glmmPQL(t_ext ~ m_ext + age,
         random = ~1 + age|tcid,
         family = poisson(link = &quot;log&quot;),
@@ -511,7 +534,8 @@ library(&quot;nlme&quot;)</code></pre>
 <pre><code>Error in glmmPQL(t_ext ~ m_ext + age, random = ~1 + age | tcid, family = poisson(link = &quot;log&quot;), : could not find function &quot;glmmPQL&quot;</code></pre>
 </div>
 <div id="mcmcglmm" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> <code>MCMCglmm</code></h2>
+<h2><span class="header-section-number">6.3</span>
+<code>MCMCglmm</code></h2>
 <pre class="r fold-show"><code>MCMCglmm(t_ext ~ m_ext + age,
          random = ~ us(age):tcid,
          family = &quot;poisson&quot;,
@@ -520,7 +544,8 @@ library(&quot;nlme&quot;)</code></pre>
 </div>
 </div>
 <div id="nonlinear" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Nonlinear Mixed Models</h1>
+<h1><span class="header-section-number">7</span> Nonlinear Mixed
+Models</h1>
 <pre class="r fold-show"><code>nlme(height ~ SSasymp(age, Asym, R0, lrc),
      data = Loblolly,
      fixed = Asym + R0 + lrc ~ 1,
@@ -543,12 +568,18 @@ Number of Observations: 84
 Number of Groups: 14 </code></pre>
 </div>
 <div id="robust-mixed-models" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Robust Mixed Models</h1>
-<p>To evaluate the extent to which a finding could driven by outliers, this could be done in a number of different ways, such as:</p>
+<h1><span class="header-section-number">8</span> Robust Mixed
+Models</h1>
+<p>To evaluate the extent to which a finding could driven by outliers,
+this could be done in a number of different ways, such as:</p>
 <ul>
-<li>identifying and excluding influential observations based on DFBETAS or Cook’s distance (Nieuwenhuis, Grotenhuis, &amp; Pelzer, 2012)</li>
-<li>fitting mixed models using rank-based estimation (Bilgic &amp; Susmann, 2013; Finch, 2017) or robust estimating equations (Koller, 2016)</li>
-<li>estimating robust standard errors using a sandwich estimator (Wang &amp; Merkle, 2018)</li>
+<li>identifying and excluding influential observations based on DFBETAS
+or Cook’s distance (Nieuwenhuis, Grotenhuis, &amp; Pelzer, 2012)</li>
+<li>fitting mixed models using rank-based estimation (Bilgic &amp;
+Susmann, 2013; Finch, 2017) or robust estimating equations (Koller,
+2016)</li>
+<li>estimating robust standard errors using a sandwich estimator (Wang
+&amp; Merkle, 2018)</li>
 </ul>
 </div>
 <div id="assumptions" class="section level1" number="9">
@@ -563,16 +594,21 @@ Number of Groups: 14 </code></pre>
 <p>The random effects:</p>
 <ol start="5" style="list-style-type: decimal">
 <li>are normally distributed</li>
-<li>have mean zero and covariance matrix Psi (not depending on the group)</li>
+<li>have mean zero and covariance matrix Psi (not depending on the
+group)</li>
 <li>are independent for different groups</li>
 </ol>
 </div>
-<div id="examining-model-assumptions" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Examining Model Assumptions</h1>
+<div id="examining-model-assumptions" class="section level1"
+number="10">
+<h1><span class="header-section-number">10</span> Examining Model
+Assumptions</h1>
 <div id="resources" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Resources</h2>
 <p>Pinheiro and Bates (2000) book (p. 174, section 4.3.1)</p>
-<p><a href="https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r" class="uri">https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r</a></p>
+<p><a
+href="https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r"
+class="uri">https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r</a></p>
 </div>
 <div id="qq-plots" class="section level2" number="10.2">
 <h2><span class="header-section-number">10.2</span> QQ Plots</h2>
@@ -585,7 +621,8 @@ Number of Groups: 14 </code></pre>
 <pre><code>Error in ppPlot(multilevelRegressionModel): could not find function &quot;ppPlot&quot;</code></pre>
 </div>
 <div id="qq-plot-of-residuals" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> QQ Plot of residuals</h2>
+<h2><span class="header-section-number">10.4</span> QQ Plot of
+residuals</h2>
 <pre class="r fold-show"><code>qqnorm(resid(multilevelRegressionModel))</code></pre>
 <pre><code>Error in resid(multilevelRegressionModel): object &#39;multilevelRegressionModel&#39; not found</code></pre>
 </div>
@@ -594,18 +631,27 @@ Number of Groups: 14 </code></pre>
 <pre class="r fold-show"><code>plot(multilevelRegressionModel)</code></pre>
 <pre><code>Error in plot(multilevelRegressionModel): object &#39;multilevelRegressionModel&#39; not found</code></pre>
 </div>
-<div id="plot-residuals-by-group-in-the-example-below-level-2-represents-the-individual" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Plot residuals by group (in the example below, level 2 represents the individual)</h2>
+<div
+id="plot-residuals-by-group-in-the-example-below-level-2-represents-the-individual"
+class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Plot residuals by
+group (in the example below, level 2 represents the individual)</h2>
 <pre class="r fold-show"><code>plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0)</code></pre>
 <pre><code>Error in plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0): object &#39;multilevelRegressionModel&#39; not found</code></pre>
 </div>
-<div id="plot-residuals-by-levels-of-a-predictor" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Plot residuals by levels of a predictor</h2>
+<div id="plot-residuals-by-levels-of-a-predictor" class="section level2"
+number="10.7">
+<h2><span class="header-section-number">10.7</span> Plot residuals by
+levels of a predictor</h2>
 <pre class="r fold-show"><code>plot(multilevelRegressionModel, resid(., type = &quot;p&quot;) ~ fitted(.) | female) #type=&quot;p&quot; specifies standardized residuals</code></pre>
 <pre><code>Error in plot(multilevelRegressionModel, resid(., type = &quot;p&quot;) ~ fitted(.) | : object &#39;multilevelRegressionModel&#39; not found</code></pre>
 </div>
-<div id="can-model-heteroscedasticity-of-the-within-group-error-with-the-weights-argument" class="section level2" number="10.8">
-<h2><span class="header-section-number">10.8</span> Can model heteroscedasticity of the within-group error with the weights argument</h2>
+<div
+id="can-model-heteroscedasticity-of-the-within-group-error-with-the-weights-argument"
+class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> Can model
+heteroscedasticity of the within-group error with the weights
+argument</h2>
 <pre class="r fold-show"><code>multilevelRegressionModelVarStructure &lt;- lme(t_ext ~ m_ext + age + female,
                                              random = ~1 + age|tcid,
                                              weights = varIdent(form = ~ 1 | female),
@@ -614,20 +660,26 @@ Number of Groups: 14 </code></pre>
                                              na.action = na.exclude)</code></pre>
 <pre><code>Error in is.data.frame(data): object &#39;mydata&#39; not found</code></pre>
 </div>
-<div id="plot-observed-and-fitted-values" class="section level2" number="10.9">
-<h2><span class="header-section-number">10.9</span> Plot observed and fitted values</h2>
+<div id="plot-observed-and-fitted-values" class="section level2"
+number="10.9">
+<h2><span class="header-section-number">10.9</span> Plot observed and
+fitted values</h2>
 <pre class="r fold-show"><code>plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.))</code></pre>
 <pre><code>Error in plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 </div>
-<div id="plot-qq-plot-of-residuals-by-levels-of-a-predictor" class="section level2" number="10.10">
-<h2><span class="header-section-number">10.10</span> Plot QQ plot of residuals by levels of a predictor</h2>
+<div id="plot-qq-plot-of-residuals-by-levels-of-a-predictor"
+class="section level2" number="10.10">
+<h2><span class="header-section-number">10.10</span> Plot QQ plot of
+residuals by levels of a predictor</h2>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ resid(.) | female)</code></pre>
 <pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~resid(.) | female): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ resid(.))</code></pre>
 <pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~resid(.)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 </div>
-<div id="qq-plot-of-random-effects" class="section level2" number="10.11">
-<h2><span class="header-section-number">10.11</span> QQ plot of random effects</h2>
+<div id="qq-plot-of-random-effects" class="section level2"
+number="10.11">
+<h2><span class="header-section-number">10.11</span> QQ plot of random
+effects</h2>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)) #make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals</code></pre>
 <pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0))</code></pre>
@@ -635,8 +687,10 @@ Number of Groups: 14 </code></pre>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))</code></pre>
 <pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2)): object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 </div>
-<div id="qq-plot-of-random-effects-by-levels-of-a-predictor" class="section level2" number="10.12">
-<h2><span class="header-section-number">10.12</span> QQ plot of random effects by levels of a predictor</h2>
+<div id="qq-plot-of-random-effects-by-levels-of-a-predictor"
+class="section level2" number="10.12">
+<h2><span class="header-section-number">10.12</span> QQ plot of random
+effects by levels of a predictor</h2>
 <pre class="r fold-show"><code>qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)</code></pre>
 <pre><code>Error in qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | : object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 </div>
@@ -647,8 +701,10 @@ Number of Groups: 14 </code></pre>
 <pre class="r fold-show"><code>pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)</code></pre>
 <pre><code>Error in pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | : object &#39;multilevelRegressionModelVarStructure&#39; not found</code></pre>
 </div>
-<div id="variance-functions-for-modeling-heteroscedasticity" class="section level2" number="10.14">
-<h2><span class="header-section-number">10.14</span> Variance functions for modeling heteroscedasticity</h2>
+<div id="variance-functions-for-modeling-heteroscedasticity"
+class="section level2" number="10.14">
+<h2><span class="header-section-number">10.14</span> Variance functions
+for modeling heteroscedasticity</h2>
 <ul>
 <li><code>varFixed</code>: fixed variance</li>
 <li><code>varIdent</code>: different variances per stratum</li>
@@ -658,8 +714,10 @@ Number of Groups: 14 </code></pre>
 <li><code>varComb</code>: combination of variance functions</li>
 </ul>
 </div>
-<div id="correlation-structures-for-modeling-dependence" class="section level2" number="10.15">
-<h2><span class="header-section-number">10.15</span> Correlation structures for modeling dependence</h2>
+<div id="correlation-structures-for-modeling-dependence"
+class="section level2" number="10.15">
+<h2><span class="header-section-number">10.15</span> Correlation
+structures for modeling dependence</h2>
 <ul>
 <li><code>corCompSymm</code>: compound symmetry</li>
 <li><code>corSymm</code>: general</li>
@@ -705,7 +763,7 @@ loaded via a namespace (and not attached):
 [17] htmltools_0.5.3 yaml_2.3.6      digest_0.6.30   nloptr_2.0.3   
 [21] sass_0.4.2      cachem_1.0.6    evaluate_0.17   rmarkdown_2.17 
 [25] stringi_1.7.8   compiler_4.2.1  bslib_0.4.0     boot_1.3-28    
-[29] jsonlite_1.8.2 </code></pre>
+[29] jsonlite_1.8.3 </code></pre>
 </div>
 
 <div id="rmd-source-code">LS0tCnRpdGxlOiAiSGllcmFyY2hpY2FsIExpbmVhciBNb2RlbGluZyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93IikKYGBgCgpUbyBkbzoKCi0gQWRkIGRhdGEgZmlsZSBhbmQgZXhhbXBsZXMKCiMgUHJlYW1ibGUKCiMjIEluc3RhbGwgTGlicmFyaWVzCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CiNpbnN0YWxsLnBhY2thZ2VzKCJyZW1vdGVzIikKI3JlbW90ZXM6Omluc3RhbGxfZ2l0KCJodHRwczovL3Jlc2VhcmNoLWdpdC51aW93YS5lZHUvUGV0ZXJzZW5MYWIvcGV0ZXJzZW5sYWIuZ2l0IikKYGBgCgojIyBMb2FkIExpYnJhcmllcwoKYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0KbGlicmFyeSgibG1lNCIpCmxpYnJhcnkoIm5sbWUiKQpgYGAKCiMgVGVybXMKClRoZXNlIG1vZGVscyBnbyBieSBhIHZhcmlldHkgb2YgZGlmZmVyZW50IHRlcm1zOgoKLSBoaWVyYXJjaGljYWwgbGluZWFyIG1vZGVsIChITE0pCi0gbXVsdGlsZXZlbCBtb2RlbCAoTUxNKQotIG1peGVkIGVmZmVjdHMgbW9kZWwKLSBtaXhlZCBtb2RlbAoKIyBPdmVydmlldwoKaHR0cHM6Ly9pc2FhY3RwZXRlcnNlbi5naXRodWIuaW8vUHJpbmNpcGxlcy1Qc3ljaG9sb2dpY2FsLUFzc2Vzc21lbnQvcmVsaWFiaWxpdHkuaHRtbCNtaXhlZE1vZGVscwoKIyBFc3RpbWF0b3I6IE1MIG9yIFJFTUwKCkZvciBzbWFsbCBzYW1wbGUgc2l6ZXMsIHJlc3RyaWN0ZWQgbWF4aW11bSBsaWtlbGlob29kIChSRU1MKSBpcyBwcmVmZXJyZWQgb3ZlciBtYXhpbXVtIGxpa2VsaWhvb2QgKE1MKS4KTUwgcHJlZmVycmVkIHdoZW4gdGhlcmUgaXMgYSBzbWFsbCBudW1iZXIgKDwgNCkgb2YgZml4ZWQgZWZmZWN0czsgUkVNTCBpcyBwcmVmZXJyZWQgd2hlbiB0aGVyZSBhcmUgbW9yZSAoPiA0KSBmaXhlZCBlZmZlY3RzLgpUaGUgZ3JlYXRlciB0aGUgbnVtYmVyIG9mIGZpeGVkIGVmZmVjdHMsIHRoZSBncmVhdGVyIHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gUkVNTCBhbmQgTUwgZXN0aW1hdGVzLgpMaWtlbGlob29kIHJhdGlvIChMUikgdGVzdHMgZm9yIFJFTUwgcmVxdWlyZSBleGFjdGx5IHRoZSBzYW1lIGZpeGVkIGVmZmVjdHMgc3BlY2lmaWNhdGlvbiBpbiBib3RoIG1vZGVscy4KU28sIHRvIGNvbXBhcmUgbW9kZWxzIHdpdGggZGlmZmVyZW50IGZpeGVkIGVmZmVjdHMgd2l0aCBhbiBMUiB0ZXN0ICh0byBkZXRlcm1pbmUgd2hldGhlciB0byBpbmNsdWRlIGEgcGFydGljdWxhciBmaXhlZCBlZmZlY3QpLCBNTCBtdXN0IGJlIHVzZWQuCkluIGNvbnRyYXN0IHRvIHRoZSBtYXhpbXVtIGxpa2VsaWhvb2QgZXN0aW1hdGlvbiwgUkVNTCBjYW4gcHJvZHVjZSB1bmJpYXNlZCBlc3RpbWF0ZXMgb2YgdmFyaWFuY2UgYW5kIGNvdmFyaWFuY2UgcGFyYW1ldGVycywgdmFyaWFuY2UgZXN0aW1hdGVzIGFyZSBsYXJnZXIgaW4gUkVNTCB0aGFuIE1MLgpUbyBjb21wYXJlIHdoZXRoZXIgYW4gZWZmZWN0IHNob3VsZCBiZSBmaXhlZCBvciByYW5kb20sIHVzZSBSRU1MLgpUbyBzaW11bHRhbmVvdXNseSBjb21wYXJlIGZpeGVkIGFuZCByYW5kb20gZWZmZWN0cywgdXNlIE1MLgoKIyBMaW5lYXIgTWl4ZWQgTW9kZWxzIHsjbGluZWFyfQoKIyMgYGxtZTRgCgpgYGB7cn0KbG1lcih0X2V4dCB+IG1fZXh0ICsgYWdlICsgKGFnZSB8IHRjaWQpLAogICAgIGRhdGEgPSBteWRhdGEsCiAgICAgUkVNTCA9IEZBTFNFLCAjZm9yIE1MCiAgICAgbmEuYWN0aW9uID0gbmEuZXhjbHVkZSkKYGBgCgojIyBgbmxtZWAKCmBgYHtyfQpsbWUodF9leHQgfiBtX2V4dCArIGFnZSwKICAgIHJhbmRvbT0gfjEgKyBhZ2V8dGNpZCwKICAgIGRhdGEgPSBteWRhdGEsCiAgICBtZXRob2QgPSAiTUwiLAogICAgbmEuYWN0aW9uID0gbmEuZXhjbHVkZSkKYGBgCgojIEdlbmVyYWxpemVkIExpbmVhciBNaXhlZCBNb2RlbHMgeyNnZW5lcmFsaXplZH0KCmh0dHA6Ly9nbG1tLndpa2lkb3QuY29tL2ZhcQoKIyMgYGxtZXJgCgpgYGB7cn0KZ2xtZXIodF9leHQgfiBtX2V4dCArIGFnZSArIChhZ2UgfCB0Y2lkKSwKICAgICAgZmFtaWx5ID0gcG9pc3NvbihsaW5rID0gImxvZyIpLAogICAgICBkYXRhID0gbXlkYXRhLAogICAgICBuYS5hY3Rpb24gPSBuYS5leGNsdWRlKQpgYGAKCiMjIGBNQVNTYAoKYGBge3J9CmdsbW1QUUwodF9leHQgfiBtX2V4dCArIGFnZSwKICAgICAgICByYW5kb20gPSB+MSArIGFnZXx0Y2lkLAogICAgICAgIGZhbWlseSA9IHBvaXNzb24obGluayA9ICJsb2ciKSwKICAgICAgICBkYXRhID0gbXlkYXRhKQpgYGAKCiMjIGBNQ01DZ2xtbWAKCmBgYHtyfQpNQ01DZ2xtbSh0X2V4dCB+IG1fZXh0ICsgYWdlLAogICAgICAgICByYW5kb20gPSB+IHVzKGFnZSk6dGNpZCwKICAgICAgICAgZmFtaWx5ID0gInBvaXNzb24iLAogICAgICAgICBkYXRhID0gbmEub21pdChteWRhdGFbLGMoInRjaWQiLCJ0X2V4dCIsIm1fZXh0IiwiYWdlIildKSkKYGBgCgojIE5vbmxpbmVhciBNaXhlZCBNb2RlbHMgeyNub25saW5lYXJ9CgpgYGB7cn0KbmxtZShoZWlnaHQgfiBTU2FzeW1wKGFnZSwgQXN5bSwgUjAsIGxyYyksCiAgICAgZGF0YSA9IExvYmxvbGx5LAogICAgIGZpeGVkID0gQXN5bSArIFIwICsgbHJjIH4gMSwKICAgICByYW5kb20gPSBBc3ltIH4gMSwKICAgICBzdGFydCA9IGMoQXN5bSA9IDEwMywgUjAgPSAtOC41LCBscmMgPSAtMy4zKSkKYGBgCgojIFJvYnVzdCBNaXhlZCBNb2RlbHMKClRvIGV2YWx1YXRlIHRoZSBleHRlbnQgdG8gd2hpY2ggYSBmaW5kaW5nIGNvdWxkIGRyaXZlbiBieSBvdXRsaWVycywgdGhpcyBjb3VsZCBiZSBkb25lIGluIGEgbnVtYmVyIG9mIGRpZmZlcmVudCB3YXlzLCBzdWNoIGFzOgoKLSBpZGVudGlmeWluZyBhbmQgZXhjbHVkaW5nIGluZmx1ZW50aWFsIG9ic2VydmF0aW9ucyBiYXNlZCBvbiBERkJFVEFTIG9yIENvb2vigJlzIGRpc3RhbmNlIChOaWV1d2VuaHVpcywgR3JvdGVuaHVpcywgJiBQZWx6ZXIsIDIwMTIpCi0gZml0dGluZyBtaXhlZCBtb2RlbHMgdXNpbmcgcmFuay1iYXNlZCBlc3RpbWF0aW9uIChCaWxnaWMgJiBTdXNtYW5uLCAyMDEzOyBGaW5jaCwgMjAxNykgb3Igcm9idXN0IGVzdGltYXRpbmcgZXF1YXRpb25zIChLb2xsZXIsIDIwMTYpCi0gZXN0aW1hdGluZyByb2J1c3Qgc3RhbmRhcmQgZXJyb3JzIHVzaW5nIGEgc2FuZHdpY2ggZXN0aW1hdG9yIChXYW5nICYgTWVya2xlLCAyMDE4KQoKIyBBc3N1bXB0aW9ucwoKVGhlIHdpdGhpbi1ncm91cCBlcnJvcnM6CgoxLiBhcmUgaW5kZXBlbmRlbnQKMi4gYXJlIGlkZW50aWNhbGx5IG5vcm1hbGx5IGRpc3RyaWJ1dGVkCjMuIGhhdmUgbWVhbiB6ZXJvIGFuZCB2YXJpYW5jZSBzaWdtYS1zcXVhcmVkCjQuIGFyZSBpbmRlcGVuZGVudCBvZiB0aGUgcmFuZG9tIGVmZmVjdHMKClRoZSByYW5kb20gZWZmZWN0czoKCjUuIGFyZSBub3JtYWxseSBkaXN0cmlidXRlZAo2LiBoYXZlIG1lYW4gemVybyBhbmQgY292YXJpYW5jZSBtYXRyaXggUHNpIChub3QgZGVwZW5kaW5nIG9uIHRoZSBncm91cCkKNy4gYXJlIGluZGVwZW5kZW50IGZvciBkaWZmZXJlbnQgZ3JvdXBzCgojIEV4YW1pbmluZyBNb2RlbCBBc3N1bXB0aW9ucwoKIyMgUmVzb3VyY2VzCgpQaW5oZWlybyBhbmQgQmF0ZXMgKDIwMDApIGJvb2sgKHAuIDE3NCwgc2VjdGlvbiA0LjMuMSkKCmh0dHBzOi8vc3RhdHMuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzc3ODkxL2NoZWNraW5nLWFzc3VtcHRpb25zLWxtZXItbG1lLW1peGVkLW1vZGVscy1pbi1yCgojIyBRUSBQbG90cwoKYGBge3J9CnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsLCB+cmFuZWYoLiwgbGV2ZWwgPSAxKSkgI011bHRpbGV2ZWwgbW9kZWw6IG1ha2UgUVEgcGxvdHMgZm9yIGVhY2ggbGV2ZWwgb2YgdGhlIHJhbmRvbSBlZmZlY3RzLiBWYXJ5IHRoZSBsZXZlbCBmcm9tIDAsIDEsIHRvIDIgc28gdGhhdCB5b3UgY2FuIGNoZWNrIHRoZSBiZXR3ZWVuLSBhbmQgd2l0aGluLXN1YmplY3QgcmVzaWR1YWxzCmBgYAoKIyMgUFAgUGxvdHMKCmBgYHtyfQpwcFBsb3QobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbCkKYGBgCgojIyBRUSBQbG90IG9mIHJlc2lkdWFscwoKYGBge3J9CnFxbm9ybShyZXNpZChtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsKSkKYGBgCgojIyBQbG90IHJlc2lkdWFscwoKYGBge3J9CnBsb3QobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbCkKYGBgCgojIyBQbG90IHJlc2lkdWFscyBieSBncm91cCAoaW4gdGhlIGV4YW1wbGUgYmVsb3csIGxldmVsIDIgcmVwcmVzZW50cyB0aGUgaW5kaXZpZHVhbCkKCmBgYHtyfQpwbG90KG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWwsIGFzLmZhY3Rvcih0Y2lkKSB+IHJlc2lkKC4pLCBhYmxpbmUgPSAwKQpgYGAKCiMjIFBsb3QgcmVzaWR1YWxzIGJ5IGxldmVscyBvZiBhIHByZWRpY3RvcgoKYGBge3J9CnBsb3QobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbCwgcmVzaWQoLiwgdHlwZSA9ICJwIikgfiBmaXR0ZWQoLikgfCBmZW1hbGUpICN0eXBlPSJwIiBzcGVjaWZpZXMgc3RhbmRhcmRpemVkIHJlc2lkdWFscwpgYGAKCiMjIENhbiBtb2RlbCBoZXRlcm9zY2VkYXN0aWNpdHkgb2YgdGhlIHdpdGhpbi1ncm91cCBlcnJvciB3aXRoIHRoZSB3ZWlnaHRzIGFyZ3VtZW50CgpgYGB7cn0KbXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSA8LSBsbWUodF9leHQgfiBtX2V4dCArIGFnZSArIGZlbWFsZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmFuZG9tID0gfjEgKyBhZ2V8dGNpZCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgd2VpZ2h0cyA9IHZhcklkZW50KGZvcm0gPSB+IDEgfCBmZW1hbGUpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRob2QgPSAiTUwiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkYXRhID0gbXlkYXRhLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBuYS5hY3Rpb24gPSBuYS5leGNsdWRlKQpgYGAKCiMjIFBsb3Qgb2JzZXJ2ZWQgYW5kIGZpdHRlZCB2YWx1ZXMKCmBgYHtyfQpwbG90KG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUsIHRfZXh0IH4gZml0dGVkKC4pKQpgYGAKCiMjIFBsb3QgUVEgcGxvdCBvZiByZXNpZHVhbHMgYnkgbGV2ZWxzIG9mIGEgcHJlZGljdG9yCgpgYGB7cn0KcXFub3JtKG11bHRpbGV2ZWxSZWdyZXNzaW9uTW9kZWxWYXJTdHJ1Y3R1cmUsIH4gcmVzaWQoLikgfCBmZW1hbGUpCnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+IHJlc2lkKC4pKQpgYGAKCiMjIFFRIHBsb3Qgb2YgcmFuZG9tIGVmZmVjdHMKCmBgYHtyfQpxcW5vcm0obXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSwgfnJhbmVmKC4sIGxldmVsID0gMSkpICNtYWtlIFFRIHBsb3RzIGZvciBlYWNoIGxldmVsIG9mIHRoZSByYW5kb20gZWZmZWN0cy4gVmFyeSB0aGUgbGV2ZWwgZnJvbSAwLCAxLCB0byAyIHNvIHRoYXQgeW91IGNhbiBjaGVjayB0aGUgYmV0d2Vlbi0gYW5kIHdpdGhpbi1zdWJqZWN0IHJlc2lkdWFscwpxcW5vcm0obXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSwgfnJhbmVmKC4sIGxldmVsID0gMCkpCnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+cmFuZWYoLiwgbGV2ZWwgPSAyKSkKYGBgCgojIyBRUSBwbG90IG9mIHJhbmRvbSBlZmZlY3RzIGJ5IGxldmVscyBvZiBhIHByZWRpY3RvcgoKYGBge3J9CnFxbm9ybShtdWx0aWxldmVsUmVncmVzc2lvbk1vZGVsVmFyU3RydWN0dXJlLCB+cmFuZWYoLiwgbGV2ZWwgPSAxKSB8IGZlbWFsZSkKYGBgCgojIyBQYWlycyBwbG90CgpgYGB7cn0KcGFpcnMobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSkKcGFpcnMobXVsdGlsZXZlbFJlZ3Jlc3Npb25Nb2RlbFZhclN0cnVjdHVyZSwgfnJhbmVmKC4sIGxldmVsID0gMSkgfCBmZW1hbGUpCmBgYAoKIyMgVmFyaWFuY2UgZnVuY3Rpb25zIGZvciBtb2RlbGluZyBoZXRlcm9zY2VkYXN0aWNpdHkKCi0gYHZhckZpeGVkYDogZml4ZWQgdmFyaWFuY2UKLSBgdmFySWRlbnRgOiBkaWZmZXJlbnQgdmFyaWFuY2VzIHBlciBzdHJhdHVtCi0gYHZhclBvd2VyYDogcG93ZXIgb2YgY292YXJpYXRlCi0gYHZhckV4cGA6IGV4cG9uZW50aWFsIG9mIGNvdmFyaWF0ZQotIGB2YXJDb25zdFBvd2VyYDogY29uc3RhbnQgcGx1cyBwb3dlciBvZiBjb3ZhcmlhdGUKLSBgdmFyQ29tYmA6IGNvbWJpbmF0aW9uIG9mIHZhcmlhbmNlIGZ1bmN0aW9ucwoKIyMgQ29ycmVsYXRpb24gc3RydWN0dXJlcyBmb3IgbW9kZWxpbmcgZGVwZW5kZW5jZQoKLSBgY29yQ29tcFN5bW1gOiBjb21wb3VuZCBzeW1tZXRyeQotIGBjb3JTeW1tYDogZ2VuZXJhbAotIGBjb3JBUjFgOiBhdXRvcmVncmVzc2l2ZSBvZiBvcmRlciAxCi0gYGNvckNBUjFgOiBjb250aW51b3VzLXRpbWUgQVIoMSkKLSBgY29yQVJNQWA6IGF1dG9yZWdyZXNzaXZlLW1vdmluZyBhdmVyYWdlCi0gYGNvckV4cGA6IGV4cG9uZW50aWFsCi0gYGNvckdhdXNgOiBHYXVzc2lhbgotIGBjb3JMaW5gOiBsaW5lYXIKLSBgY29yUmF0aW9gOiByYXRpb25hbCBxdWFkcmF0aWMKLSBgY29yU3BoZXJgOiBzcGhlcmljYWwKCiMgU2Vzc2lvbiBJbmZvCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CnNlc3Npb25JbmZvKCkKYGBgCgo=</div>

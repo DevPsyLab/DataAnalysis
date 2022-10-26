@@ -438,13 +438,17 @@ div.tocify {
 
 <div id="rationale" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Rationale</h1>
-<p>Exploratory data analysis is important for understanding your data, checking for data issues/errors, and checking assumptions for different statistical models.</p>
-<p>LOOK AT YOUR DATA—this is one of the most overlooked steps in data analysis!</p>
+<p>Exploratory data analysis is important for understanding your data,
+checking for data issues/errors, and checking assumptions for different
+statistical models.</p>
+<p>LOOK AT YOUR DATA—this is one of the most overlooked steps in data
+analysis!</p>
 </div>
 <div id="preamble" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Preamble</h1>
 <div id="install-libraries" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Install Libraries</h2>
+<h2><span class="header-section-number">2.1</span> Install
+Libraries</h2>
 <pre class="r"><code>#install.packages(&quot;remotes&quot;)
 #remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
 </div>
@@ -497,7 +501,8 @@ mydata[sample(1:n, size = 30), &quot;categorical1&quot;] &lt;- NA
 mydata[sample(1:n, size = 70), &quot;categorical2&quot;] &lt;- NA</code></pre>
 </div>
 <div id="descriptive-statistics" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Descriptive statistics</h1>
+<h1><span class="header-section-number">4</span> Descriptive
+statistics</h1>
 <pre class="r"><code>round(data.frame(psych::describe(mydata)), 2)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -509,7 +514,9 @@ mydata[sample(1:n, size = 70), &quot;categorical2&quot;] &lt;- NA</code></pre>
 <ul>
 <li>Check the sample size (<em>N</em>)
 <ul>
-<li>Is the sample size in the data the expected sample size? Are there cases (participants) that are missing? Are there cases that should not be there?</li>
+<li>Is the sample size in the data the expected sample size? Are there
+cases (participants) that are missing? Are there cases that should not
+be there?</li>
 <li>Here is the sample size:</li>
 </ul></li>
 </ul>
@@ -518,7 +525,8 @@ mydata[sample(1:n, size = 70), &quot;categorical2&quot;] &lt;- NA</code></pre>
 <ul>
 <li>Check the extent of missingness
 <ul>
-<li>How much data are missing in the model variables—including the predictor, outcome, and covariates?</li>
+<li>How much data are missing in the model variables—including the
+predictor, outcome, and covariates?</li>
 <li>Here are the proportion of missing data in each variable:</li>
 </ul></li>
 </ul>
@@ -629,7 +637,8 @@ categorical2 195 179 193 202 161   70</code></pre>
 <h2><span class="header-section-number">4.4</span> Dispersion</h2>
 <ul>
 <li>Standard deviation</li>
-<li>Observed minimum and maximum (vis-à-vis possible minimum and maximum)</li>
+<li>Observed minimum and maximum (vis-à-vis possible minimum and
+maximum)</li>
 <li>Skewness</li>
 <li>Kurtosis</li>
 </ul>
@@ -653,11 +662,14 @@ categorical2 195 179 193 202 161   70</code></pre>
 {"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["SD"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["skewness"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["kurtosis"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"ID","2":"28.88","3":"1.00","4":"100.00","5":"0.00","6":"-1.20"},{"1":"predictor","2":"15.42","3":"0.11","4":"81.69","5":"0.97","6":"0.71"},{"1":"outcome","2":"25.88","3":"5.82","4":"171.90","5":"0.18","6":"0.11"},{"1":"predictorOverplot","2":"14.45","3":"1.00","4":"50.00","5":"-0.05","6":"-1.19"},{"1":"outcomeOverplot","2":"25.58","3":"2.00","4":"123.00","5":"-0.04","6":"-0.75"},{"1":"categorical1","2":"1.40","3":"1.00","4":"5.00","5":"0.03","6":"-1.29"},{"1":"categorical2","2":"1.39","3":"1.00","4":"5.00","5":"0.01","6":"-1.27"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Consider transforming data if skewness &gt; |0.8| or if kurtosis &gt; |3.0|.</p>
+<p>Consider transforming data if skewness &gt; |0.8| or if kurtosis &gt;
+|3.0|.</p>
 </div>
 <div id="summary-statistics" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Summary Statistics</h2>
-<p>Add summary statistics to the bottom of correlation matrices in papers:</p>
+<h2><span class="header-section-number">4.5</span> Summary
+Statistics</h2>
+<p>Add summary statistics to the bottom of correlation matrices in
+papers:</p>
 <pre class="r"><code>cor.table(mydata, type = &quot;manuscript&quot;)</code></pre>
 <pre><code>                       ID predictor outcome predictorOverplot outcomeOverplot
 1. ID                1.00                                                    
@@ -706,8 +718,10 @@ summaryTableTransposed</code></pre>
 </div>
 </div>
 <div id="distribution-plots" class="section level2" number="4.6">
-<h2><span class="header-section-number">4.6</span> Distribution Plots</h2>
-<p>See <a href="figures.html">here</a> for resources for creating figures in R.</p>
+<h2><span class="header-section-number">4.6</span> Distribution
+Plots</h2>
+<p>See <a href="figures.html">here</a> for resources for creating
+figures in R.</p>
 <div id="histogram" class="section level3" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> Histogram</h3>
 <div id="base-r" class="section level4" number="4.6.1.1">
@@ -716,7 +730,8 @@ summaryTableTransposed</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 <div id="ggplot2" class="section level4" number="4.6.1.2">
-<h4><span class="header-section-number">4.6.1.2</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">4.6.1.2</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_histogram(color = 1)</code></pre>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -724,8 +739,10 @@ summaryTableTransposed</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>
-<div id="histogram-overlaid-with-density-plot-and-rug-plot" class="section level3" number="4.6.2">
-<h3><span class="header-section-number">4.6.2</span> Histogram overlaid with density plot and rug plot</h3>
+<div id="histogram-overlaid-with-density-plot-and-rug-plot"
+class="section level3" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Histogram overlaid
+with density plot and rug plot</h3>
 <div id="base-r-1" class="section level4" number="4.6.2.1">
 <h4><span class="header-section-number">4.6.2.1</span> Base R</h4>
 <pre class="r"><code>hist(mydata$outcome, prob = TRUE)
@@ -734,7 +751,8 @@ rug(mydata$outcome)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="ggplot2-1" class="section level4" number="4.6.2.2">
-<h4><span class="header-section-number">4.6.2.2</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">4.6.2.2</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_histogram(aes(y = ..density..), color = 1) +
   geom_density() +
@@ -753,22 +771,26 @@ rug(mydata$outcome)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 <div id="ggplot2-2" class="section level4" number="4.6.3.2">
-<h4><span class="header-section-number">4.6.3.2</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">4.6.3.2</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_density()</code></pre>
 <pre><code>Warning: Removed 10 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 </div>
-<div id="box-and-whisker-plot-boxplot" class="section level3" number="4.6.4">
-<h3><span class="header-section-number">4.6.4</span> Box and whisker plot (boxplot)</h3>
+<div id="box-and-whisker-plot-boxplot" class="section level3"
+number="4.6.4">
+<h3><span class="header-section-number">4.6.4</span> Box and whisker
+plot (boxplot)</h3>
 <div id="base-r-3" class="section level4" number="4.6.4.1">
 <h4><span class="header-section-number">4.6.4.1</span> Base R</h4>
 <pre class="r"><code>boxplot(mydata$outcome, horizontal = TRUE)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="ggplot2-3" class="section level4" number="4.6.4.2">
-<h4><span class="header-section-number">4.6.4.2</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">4.6.4.2</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_boxplot()</code></pre>
 <pre><code>Warning: Removed 10 rows containing non-finite values (stat_boxplot).</code></pre>
@@ -783,7 +805,8 @@ rug(mydata$outcome)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="ggplot2-4" class="section level4" number="4.6.5.2">
-<h4><span class="header-section-number">4.6.5.2</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">4.6.5.2</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = &quot;&quot;, y = outcome)) +
   geom_violin()</code></pre>
 <pre><code>Warning: Removed 10 rows containing non-finite values (stat_ydensity).</code></pre>
@@ -793,9 +816,11 @@ rug(mydata$outcome)</code></pre>
 </div>
 </div>
 <div id="bivariate-associations" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Bivariate Associations</h1>
+<h1><span class="header-section-number">5</span> Bivariate
+Associations</h1>
 <div id="high-density-scatterplot" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> High Density Scatterplot</h2>
+<h2><span class="header-section-number">5.1</span> High Density
+Scatterplot</h2>
 <pre class="r"><code>ggplot(mydata, aes(x = predictorOverplot, y = outcomeOverplot)) + 
   geom_point(position = &quot;jitter&quot;, alpha = 0.3) + 
   geom_density2d()</code></pre>
@@ -811,19 +836,28 @@ rug(mydata$outcome)</code></pre>
 dataEllipse(mydata_nomissing$predictor, mydata_nomissing$outcome, levels = c(0.5, .95))</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
-<div id="visually-weighted-regression" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Visually Weighted Regression</h2>
+<div id="visually-weighted-regression" class="section level2"
+number="5.3">
+<h2><span class="header-section-number">5.3</span> Visually Weighted
+Regression</h2>
 <pre class="r"><code>vwReg(outcome ~ predictor, data = mydata)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 </div>
-<div id="basic-inferential-statistics" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Basic inferential statistics</h1>
+<div id="basic-inferential-statistics" class="section level1"
+number="6">
+<h1><span class="header-section-number">6</span> Basic inferential
+statistics</h1>
 <div id="tests-of-normality" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Tests of Normality</h2>
-<div id="shapiro-wilk-test-of-normality" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Shapiro-Wilk test of normality</h3>
-<p>The Shapiro-Wilk test of normality does not accept more than 5000 cases because it will reject the hypothesis that data come from a normal distribution with even slight deviations from normality.</p>
+<h2><span class="header-section-number">6.1</span> Tests of
+Normality</h2>
+<div id="shapiro-wilk-test-of-normality" class="section level3"
+number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Shapiro-Wilk test
+of normality</h3>
+<p>The Shapiro-Wilk test of normality does not accept more than 5000
+cases because it will reject the hypothesis that data come from a normal
+distribution with even slight deviations from normality.</p>
 <pre class="r"><code>shapiro.test(na.omit(mydata$outcome)) #subset to keep only the first 5000 rows: mydata$outcome[1:5000]</code></pre>
 <pre><code>
     Shapiro-Wilk normality test
@@ -831,8 +865,10 @@ dataEllipse(mydata_nomissing$predictor, mydata_nomissing$outcome, levels = c(0.5
 data:  na.omit(mydata$outcome)
 W = 0.9971, p-value = 0.06998</code></pre>
 </div>
-<div id="test-of-multivariate-normality" class="section level3" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> Test of multivariate normality</h3>
+<div id="test-of-multivariate-normality" class="section level3"
+number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Test of
+multivariate normality</h3>
 <pre class="r"><code>mydata %&gt;% 
   na.omit %&gt;% 
   t %&gt;% 
@@ -845,27 +881,46 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 </div>
 </div>
 <div id="statistical-decision-tree" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Statistical decision tree</h2>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf" class="uri">https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf</a></p>
+<h2><span class="header-section-number">6.2</span> Statistical decision
+tree</h2>
+<p><a
+href="https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf"
+class="uri">https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf</a></p>
 </div>
-<div id="tests-of-systematic-missingness-i.e.-whether-missingness-on-a-variable-depends-on-other-variables" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Tests of systematic missingness (i.e., whether missingness on a variable depends on other variables)</h2>
+<div
+id="tests-of-systematic-missingness-i.e.-whether-missingness-on-a-variable-depends-on-other-variables"
+class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Tests of systematic
+missingness (i.e., whether missingness on a variable depends on other
+variables)</h2>
 <ul>
 <li>Generally test:
 <ul>
-<li>Whether data are consistent with a missing completely at random (MCAR) pattern—Little’s MCAR Test</li>
-<li>Whether outcome variable(s) differ as a function of any model variables (predictors and covariates) and as a function of any key demographic characteristics (e.g., sex, ethnicity, socioeconomic status)</li>
-<li>Whether focal predictor variable(s) differ as a function of any model variables (including outcome variable) and as a function of any key demographic characteristics</li>
+<li>Whether data are consistent with a missing completely at random
+(MCAR) pattern—Little’s MCAR Test</li>
+<li>Whether outcome variable(s) differ as a function of any model
+variables (predictors and covariates) and as a function of any key
+demographic characteristics (e.g., sex, ethnicity, socioeconomic
+status)</li>
+<li>Whether focal predictor variable(s) differ as a function of any
+model variables (including outcome variable) and as a function of any
+key demographic characteristics</li>
 </ul></li>
 <li>For instance:
 <ul>
-<li>Whether males are more likely than girls to be missing scores on the dependent variable</li>
-<li>Whether longitudinal attrition is greater in lower socioeconomic status families</li>
+<li>Whether males are more likely than girls to be missing scores on the
+dependent variable</li>
+<li>Whether longitudinal attrition is greater in lower socioeconomic
+status families</li>
 </ul></li>
-<li>If missingness differs systematically as a function of other variables, you can include that variable as a control variable in models, and/or can include that variable in multiple imputation to inform imputed scores for missing values</li>
+<li>If missingness differs systematically as a function of other
+variables, you can include that variable as a control variable in
+models, and/or can include that variable in multiple imputation to
+inform imputed scores for missing values</li>
 </ul>
 <div id="littles-mcar-test" class="section level3" number="6.3.1">
-<h3><span class="header-section-number">6.3.1</span> Little’s MCAR Test</h3>
+<h3><span class="header-section-number">6.3.1</span> Little’s MCAR
+Test</h3>
 <pre class="r"><code>mcar_test(mydata)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -875,11 +930,14 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 </div>
 </div>
 <div id="multivariate-associations" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Multivariate Associations</h2>
+<h2><span class="header-section-number">6.4</span> Multivariate
+Associations</h2>
 <div id="correlation-matrix" class="section level3" number="6.4.1">
-<h3><span class="header-section-number">6.4.1</span> Correlation Matrix</h3>
+<h3><span class="header-section-number">6.4.1</span> Correlation
+Matrix</h3>
 <div id="pearson-correlations" class="section level4" number="6.4.1.1">
-<h4><span class="header-section-number">6.4.1.1</span> Pearson Correlations</h4>
+<h4><span class="header-section-number">6.4.1.1</span> Pearson
+Correlations</h4>
 <pre class="r"><code>cor.table(mydata[,c(&quot;predictor&quot;,&quot;outcome&quot;,&quot;predictorOverplot&quot;,&quot;outcomeOverplot&quot;)])</code></pre>
 <pre><code>                       predictor outcome predictorOverplot outcomeOverplot
 1. predictor.r              1.00  .64***               .04             .04
@@ -908,7 +966,8 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 4. outcomeOverplot         .04     .06               .57            1.00</code></pre>
 </div>
 <div id="spearman-correlations" class="section level4" number="6.4.1.2">
-<h4><span class="header-section-number">6.4.1.2</span> Spearman Correlations</h4>
+<h4><span class="header-section-number">6.4.1.2</span> Spearman
+Correlations</h4>
 <pre class="r"><code>cor.table(mydata[,c(&quot;predictor&quot;,&quot;outcome&quot;,&quot;predictorOverplot&quot;,&quot;outcomeOverplot&quot;)], correlation = &quot;spearman&quot;)</code></pre>
 <pre><code>                       predictor outcome predictorOverplot outcomeOverplot
 1. predictor.r              1.00  .60***               .03             .03
@@ -937,8 +996,10 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 4. outcomeOverplot         .03     .07               .55            1.00</code></pre>
 </div>
 <div id="partial-correlations" class="section level4" number="6.4.1.3">
-<h4><span class="header-section-number">6.4.1.3</span> Partial Correlations</h4>
-<p>Examine the associations among variables controlling for a covariate (<code>outcomeOverplot</code>).</p>
+<h4><span class="header-section-number">6.4.1.3</span> Partial
+Correlations</h4>
+<p>Examine the associations among variables controlling for a covariate
+(<code>outcomeOverplot</code>).</p>
 <pre class="r"><code>partialcor.table(mydata[,c(&quot;predictor&quot;,&quot;outcome&quot;,&quot;predictorOverplot&quot;)], z = mydata[,c(&quot;outcomeOverplot&quot;)])</code></pre>
 <pre><code>                       predictor outcome predictorOverplot
 1. predictor.r              1.00  .63***               .02
@@ -968,7 +1029,8 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
 <div id="scatterplot-matrix" class="section level3" number="6.4.3">
-<h3><span class="header-section-number">6.4.3</span> Scatterplot matrix</h3>
+<h3><span class="header-section-number">6.4.3</span> Scatterplot
+matrix</h3>
 <pre class="r"><code>scatterplotMatrix(~ predictor + outcome + predictorOverplot + outcomeOverplot, data = mydata, use = &quot;pairwise.complete.obs&quot;)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
@@ -980,8 +1042,10 @@ W = 0.98542, p-value = 1.339e-07</code></pre>
 </div>
 <div id="effect-plots" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Effect Plots</h2>
-<div id="multiple-regression-model" class="section level3" number="6.5.1">
-<h3><span class="header-section-number">6.5.1</span> Multiple Regression Model</h3>
+<div id="multiple-regression-model" class="section level3"
+number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Multiple Regression
+Model</h3>
 <pre class="r"><code>multipleRegressionModel &lt;- lm(outcome ~ predictor + predictorOverplot,
                               data = mydata,
                               na.action = &quot;na.exclude&quot;)
@@ -1001,8 +1065,10 @@ predictorOverplot
 <pre class="r"><code>plot(allEffects(multipleRegressionModel))</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 </div>
-<div id="multilevel-regression-model" class="section level3" number="6.5.2">
-<h3><span class="header-section-number">6.5.2</span> Multilevel Regression Model</h3>
+<div id="multilevel-regression-model" class="section level3"
+number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Multilevel
+Regression Model</h3>
 <pre class="r"><code>multilevelRegressionModel &lt;- lme(outcome ~ predictor + predictorOverplot, random = ~ 1|ID,
                                  method = &quot;ML&quot;,
                                  data = mydata,
@@ -1063,7 +1129,7 @@ loaded via a namespace (and not attached):
  [13] farver_2.1.1        lavaan_0.6-12       fansi_1.0.3        
  [16] mvtnorm_1.1-3       lubridate_1.8.0     xml2_1.3.3         
  [19] splines_4.2.1       mnormt_2.1.1        cachem_1.0.6       
- [22] knitr_1.40          Formula_1.2-4       jsonlite_1.8.2     
+ [22] knitr_1.40          Formula_1.2-4       jsonlite_1.8.3     
  [25] nloptr_2.0.3        broom_1.0.1         cluster_2.1.3      
  [28] dbplyr_2.2.1        png_0.1-7           compiler_4.2.1     
  [31] httr_1.4.4          backports_1.4.1     assertthat_0.2.1   
@@ -1071,7 +1137,7 @@ loaded via a namespace (and not attached):
  [37] survey_4.1-1        cli_3.4.1           htmltools_0.5.3    
  [40] tools_4.2.1         gtable_0.3.1        glue_1.6.2         
  [43] reshape2_1.4.4      Rcpp_1.0.9          cellranger_1.1.0   
- [46] jquerylib_0.1.4     vctrs_0.4.2         insight_0.18.5     
+ [46] jquerylib_0.1.4     vctrs_0.5.0         insight_0.18.6     
  [49] xfun_0.34           rvest_1.0.3         lme4_1.1-30        
  [52] lifecycle_1.0.3     googlesheets4_1.0.1 MASS_7.3-57        
  [55] scales_1.2.1        hms_1.1.2           parallel_4.2.1     

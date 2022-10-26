@@ -438,7 +438,10 @@ div.tocify {
 
 <div id="r-markdown" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> R Markdown</h1>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see <a href="http://rmarkdown.rstudio.com"
+class="uri">http://rmarkdown.rstudio.com</a>.</p>
 <p>You can embed an R code chunk like this:</p>
 <pre class="markdown"><code>```{r}
 summary(cars)
@@ -456,62 +459,112 @@ summary(cars)
 <h1><span class="header-section-number">2</span> Lab Wiki</h1>
 <div id="best-practices" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Best Practices</h2>
-<p>Adapted from <a href="https://github.com/lowepowerlab/protocols/blob/main/markdown_best_practices.md">here</a>:</p>
+<p>Adapted from <a
+href="https://github.com/lowepowerlab/protocols/blob/main/markdown_best_practices.md">here</a>:</p>
 <ul>
-<li><strong>Use a new line for every sentence.</strong> This helps with version control—individually changed sentences will be highlighted upon commits (easy to parse) rather than whole paragraphs (nightmare to parse).
+<li><strong>Use a new line for every sentence.</strong> This helps with
+version control—individually changed sentences will be highlighted upon
+commits (easy to parse) rather than whole paragraphs (nightmare to
+parse).
 <ul>
-<li>This formatting is incompatible with a double space after a period. Instead, use a single space after a period. To replace all double spaces with single spaces, do a find and replace for <code>".  "</code> → <code>". "</code> Be careful not to blanket remove all double spaces because tabbed bullets have 3 spaces.</li>
+<li>This formatting is incompatible with a double space after a period.
+Instead, use a single space after a period. To replace all double spaces
+with single spaces, do a find and replace for <code>".  "</code> →
+<code>". "</code> Be careful not to blanket remove all double spaces
+because tabbed bullets have 3 spaces.</li>
 </ul></li>
-<li>Add protocol entries as links to the parent <code>.Rmd</code> file (or to <code>README.md</code>)</li>
+<li>Add protocol entries as links to the parent <code>.Rmd</code> file
+(or to <code>README.md</code>)</li>
 <li>Add linked content (e.g., images) to sub-directories</li>
-<li>Use no spaces in file or folder names. Use a dash (-) instead of a space.</li>
-<li>If you use <code>Visual Studio Code</code> to edit the Lab Wiki, you can view the source code side-by-side with the markdown Preview (after selecting the code type as <code>markdown</code>): <img src="images/vsCode.png" alt="Visual Studio Code" /></li>
-<li>When making numbered (ordered) lists, just use <code>1.</code> for all numbers. Markdown will make them sequential automatically. This is helpful if you go back and add additional entries later.</li>
-<li>Use <code>"[XXX]"</code> to indicate an area that needs editing. This will allow the lab to <code>CTRL+F</code> for <code>"[XXX]"</code> and find areas that need editing.</li>
-<li>To update the list of <code>R</code> packages that are installed for running the <code>.Rmd</code> files, update the <code>DESCRIPTION</code> file.</li>
+<li>Use no spaces in file or folder names. Use a dash (-) instead of a
+space.</li>
+<li>If you use <code>Visual Studio Code</code> to edit the Lab Wiki, you
+can view the source code side-by-side with the markdown Preview (after
+selecting the code type as <code>markdown</code>): <img
+src="images/vsCode.png" alt="Visual Studio Code" /></li>
+<li>When making numbered (ordered) lists, just use <code>1.</code> for
+all numbers. Markdown will make them sequential automatically. This is
+helpful if you go back and add additional entries later.</li>
+<li>Use <code>"[XXX]"</code> to indicate an area that needs editing.
+This will allow the lab to <code>CTRL+F</code> for <code>"[XXX]"</code>
+and find areas that need editing.</li>
+<li>To update the list of <code>R</code> packages that are installed for
+running the <code>.Rmd</code> files, update the <code>DESCRIPTION</code>
+file.</li>
 </ul>
 </div>
 <div id="updating" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Updating</h2>
 <p>To update the lab wiki, perform the following steps:</p>
 <ol style="list-style-type: decimal">
-<li>(Perform this step if you do not already have the the <a href="https://github.com/DevPsyLab/LabWiki">LabWiki <code>GitHub</code> repo</a> on your local machine:) Clone the <code>GitHub</code> repo to your local machine.</li>
-<li>Fetch the latest version of the repo. It is important to do this to make sure you have the latest version locally before making any changes.</li>
-<li>Edit the relevant <code>.Rmd</code> files using <code>RStudio</code> or <code>Visual Studio Code</code>.</li>
-<li>Preview the wiki before you commit changes to the site; create the <code>.html</code> files locally (in a folder called <code>_site</code>) by running the following command:
+<li>(Perform this step if you do not already have the the <a
+href="https://github.com/DevPsyLab/LabWiki">LabWiki <code>GitHub</code>
+repo</a> on your local machine:) Clone the <code>GitHub</code> repo to
+your local machine.</li>
+<li>Fetch the latest version of the repo. It is important to do this to
+make sure you have the latest version locally before making any
+changes.</li>
+<li>Edit the relevant <code>.Rmd</code> files using <code>RStudio</code>
+or <code>Visual Studio Code</code>.</li>
+<li>Preview the wiki before you commit changes to the site; create the
+<code>.html</code> files locally (in a folder called <code>_site</code>)
+by running the following command:
 <ul>
 <li><code>rmarkdown::render_site()</code></li>
 </ul></li>
-<li>If the <code>.html</code> files look correct, commit the changes.</li>
-<li>Push the changes to the <code>GitHub</code> repo. After pushing the changes to the <code>GitHub</code> repo, <code>GitHub Actions</code> will automatically re-run the code and deploy the updated website, assuming there were no errors. You can track the workflow for errors here: <a href="https://github.com/DevPsyLab/LabWiki/actions" class="uri">https://github.com/DevPsyLab/LabWiki/actions</a>.</li>
+<li>If the <code>.html</code> files look correct, commit the
+changes.</li>
+<li>Push the changes to the <code>GitHub</code> repo. After pushing the
+changes to the <code>GitHub</code> repo, <code>GitHub Actions</code>
+will automatically re-run the code and deploy the updated website,
+assuming there were no errors. You can track the workflow for errors
+here: <a href="https://github.com/DevPsyLab/LabWiki/actions"
+class="uri">https://github.com/DevPsyLab/LabWiki/actions</a>.</li>
 </ol>
-<p>For more information about the <code>rmarkdown</code> package that was used to generate the site, see the following links:</p>
+<p>For more information about the <code>rmarkdown</code> package that
+was used to generate the site, see the following links:</p>
 <ul>
-<li><a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html" class="uri">https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html</a></li>
-<li><a href="https://bookdown.org/yihui/rmarkdown/html-document.html" class="uri">https://bookdown.org/yihui/rmarkdown/html-document.html</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html"
+class="uri">https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/html-document.html"
+class="uri">https://bookdown.org/yihui/rmarkdown/html-document.html</a></li>
 </ul>
 </div>
 </div>
 <div id="software" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Software</h1>
-<p>You can create/edit R Markdown (<code>.Rmd</code>) files with the following free software:</p>
+<p>You can create/edit R Markdown (<code>.Rmd</code>) files with the
+following free software:</p>
 <ul>
-<li><a href="https://code.visualstudio.com"><code>Microsoft Visual Studio Code</code></a></li>
+<li><a
+href="https://code.visualstudio.com"><code>Microsoft Visual Studio Code</code></a></li>
 <li><a href="https://www.rstudio.com"><code>RStudio</code></a></li>
 </ul>
-<div id="microsoft-visual-studio-code" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Microsoft Visual Studio Code</h2>
-<p>If you use <code>Visual Studio Code</code> to create/edit <code>.Rmd</code> documents, you can view the source code side-by-side with the markdown Preview (after selecting the code type as <code>markdown</code>): <img src="images/vsCode.png" alt="Visual Studio Code" /></p>
+<div id="microsoft-visual-studio-code" class="section level2"
+number="3.1">
+<h2><span class="header-section-number">3.1</span> Microsoft Visual
+Studio Code</h2>
+<p>If you use <code>Visual Studio Code</code> to create/edit
+<code>.Rmd</code> documents, you can view the source code side-by-side
+with the markdown Preview (after selecting the code type as
+<code>markdown</code>): <img src="images/vsCode.png"
+alt="Visual Studio Code" /></p>
 </div>
 <div id="rstudio" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> RStudio</h2>
 <div id="creating-a-code-chunk" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Creating a Code Chunk</h3>
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<h3><span class="header-section-number">3.2.1</span> Creating a Code
+Chunk</h3>
+<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the
+toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
 </div>
 <div id="running-a-code-chunk" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Running a Code Chunk</h3>
-<p>You can execute a code chunk in an R Markdown Notebook by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>. To run more than one code chunk, you have several options:</p>
+<h3><span class="header-section-number">3.2.2</span> Running a Code
+Chunk</h3>
+<p>You can execute a code chunk in an R Markdown Notebook by clicking
+the <em>Run</em> button within the chunk or by placing your cursor
+inside it and pressing <em>Ctrl+Shift+Enter</em>. To run more than one
+code chunk, you have several options:</p>
 <ul>
 <li>click the <em>Run</em> button within the chunks you want to run</li>
 <li>select “Run All Chunks Above”</li>
@@ -519,29 +572,65 @@ summary(cars)
 <li>select “Run All”</li>
 </ul>
 </div>
-<div id="creating-the-html-output" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Creating the HTML Output</h3>
-<p>When you click the <strong>Knit</strong> button, a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.</p>
-<p>When you save the computational notebook (<code>.Rmd</code>), an HTML (<code>.html</code>) file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+<div id="creating-the-html-output" class="section level3"
+number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Creating the HTML
+Output</h3>
+<p>When you click the <strong>Knit</strong> button, a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document.</p>
+<p>When you save the computational notebook (<code>.Rmd</code>), an HTML
+(<code>.html</code>) file containing the code and output will be saved
+alongside it (click the <em>Preview</em> button or press
+<em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the
+editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not
+run any R code chunks. Instead, the output of the chunk when it was last
+run in the editor is displayed.</p>
 </div>
 </div>
 </div>
 <div id="computationalNotebook" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Computational Notebook</h1>
+<h1><span class="header-section-number">4</span> Computational
+Notebook</h1>
 <div id="general-info" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> General Info</h2>
-<p>You can use an R Markdown Notebook to create a computational notebook. For more information on the value of computational notebooks, see the article titled “<a href="https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/">The Scientific Paper Is Obsolete</a>”. For more information about how to create R Notebooks, see here:</p>
-<p><a href="https://garrettgman.github.io/rmarkdown/r_notebooks" class="uri">https://garrettgman.github.io/rmarkdown/r_notebooks</a></p>
-<p><a href="https://bookdown.org/yihui/rmarkdown/notebook.html" class="uri">https://bookdown.org/yihui/rmarkdown/notebook.html</a></p>
+<p>You can use an R Markdown Notebook to create a computational
+notebook. For more information on the value of computational notebooks,
+see the article titled “<a
+href="https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/">The
+Scientific Paper Is Obsolete</a>”. For more information about how to
+create R Notebooks, see here:</p>
+<p><a href="https://garrettgman.github.io/rmarkdown/r_notebooks"
+class="uri">https://garrettgman.github.io/rmarkdown/r_notebooks</a></p>
+<p><a href="https://bookdown.org/yihui/rmarkdown/notebook.html"
+class="uri">https://bookdown.org/yihui/rmarkdown/notebook.html</a></p>
 </div>
 <div id="files" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Files</h2>
-<p>Consistent with the <a href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab template</a> for how to structure your repo, you should have two computational notebooks: 1) a “Prepare Data” script (<code>prepareData.Rmd</code>) and 2) a “Computational Notebook” script (<code>computationalNotebook.Rmd</code>). The “Prepare Data” script is used to update the data file by re-exporting, merging, re-running calculations, etc. This script should be separate from the “Computational Notebook” file that is used for running analyses on the data. Every time you run the “Computational Notebook” file with the exact same data, you should get the exact same findings (i.e., reproducibility). Thus, we keep the “Prepare Data script” separate from the “Computational Notebook” file so that you update the data only when you intend to.</p>
+<p>Consistent with the <a
+href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab
+template</a> for how to structure your repo, you should have two
+computational notebooks: 1) a “Prepare Data” script
+(<code>prepareData.Rmd</code>) and 2) a “Computational Notebook” script
+(<code>computationalNotebook.Rmd</code>). The “Prepare Data” script is
+used to update the data file by re-exporting, merging, re-running
+calculations, etc. This script should be separate from the
+“Computational Notebook” file that is used for running analyses on the
+data. Every time you run the “Computational Notebook” file with the
+exact same data, you should get the exact same findings (i.e.,
+reproducibility). Thus, we keep the “Prepare Data script” separate from
+the “Computational Notebook” file so that you update the data only when
+you intend to.</p>
 </div>
 <div id="structure" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Structure</h2>
-<p>When creating a computational notebook, follow the structure of the computational notebooks in the <a href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab template</a>. To create a computational notebook, create a <code>.Rmd</code> file with the following <code>YAML</code> header at the top of the file:</p>
+<p>When creating a computational notebook, follow the structure of the
+computational notebooks in the <a
+href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab
+template</a>. To create a computational notebook, create a
+<code>.Rmd</code> file with the following <code>YAML</code> header at
+the top of the file:</p>
 <pre class="yaml"><code>---
 title: &quot;INSERT TITLE&quot;
 author: &quot;INSERT AUTHOR NAME(S)&quot;
@@ -555,7 +644,8 @@ output:
     code_folding: show
     df_print: paged
 ---</code></pre>
-<p>If this is your “Computational Notebook” script, include the following as the first code chunk:</p>
+<p>If this is your “Computational Notebook” script, include the
+following as the first code chunk:</p>
 <pre class="markdown"><code>```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, # print code
@@ -570,7 +660,8 @@ trace(grDevices::png, quote({
   }
 }), print = FALSE)
 ```</code></pre>
-<p>If this is your “Prepare Data” script, include the following as the first code chunk:</p>
+<p>If this is your “Prepare Data” script, include the following as the
+first code chunk:</p>
 <pre class="markdown"><code>```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   echo = TRUE # print code
@@ -579,26 +670,35 @@ knitr::opts_chunk$set(
 <p>Then, include whatever text and/or code chunks.</p>
 </div>
 </div>
-<div id="steps-to-create-rmarkdown-website-using-github-actions" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Steps to Create <code>rmarkdown</code> Website using GitHub Actions</h1>
+<div id="steps-to-create-rmarkdown-website-using-github-actions"
+class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Steps to Create
+<code>rmarkdown</code> Website using GitHub Actions</h1>
 <ol style="list-style-type: decimal">
-<li>Create a new GitHub repo under the <a href="https://github.com/DevPsyLab">DevPsyLab organization</a> in GitHub</li>
+<li>Create a new GitHub repo under the <a
+href="https://github.com/DevPsyLab">DevPsyLab organization</a> in
+GitHub</li>
 <li>Create a <code>README.md</code> file
 <ul>
 <li>this is the file that people see when navigating to the repo</li>
 </ul></li>
 <li>Add a <code>.gitignore</code> file
 <ul>
-<li>this file says what file types to ignore and not add to the repo</li>
+<li>this file says what file types to ignore and not add to the
+repo</li>
 </ul></li>
 <li>Create a new branch called <code>gh-pages</code></li>
 <li>Delete all files in the <code>gh-pages</code> branch</li>
-<li>In your <a href="https://github.com/settings/tokens">GitHub account settings</a>, Create a “Personal Access Token” called <code>EMAIL</code> (if it doesn’t already exist)
+<li>In your <a href="https://github.com/settings/tokens">GitHub account
+settings</a>, Create a “Personal Access Token” called <code>EMAIL</code>
+(if it doesn’t already exist)
 <ul>
 <li>Settings &gt; Developer Settings &gt; Personal access tokens</li>
-<li>make sure to save the contents of the personal access token somewhere safe (you will need it later)</li>
+<li>make sure to save the contents of the personal access token
+somewhere safe (you will need it later)</li>
 </ul></li>
-<li>In the repo settings, add a secret called <code>EMAIL</code>, and add the Personal Access Token (that you created in the previous step)
+<li>In the repo settings, add a secret called <code>EMAIL</code>, and
+add the Personal Access Token (that you created in the previous step)
 <ul>
 <li>Settings &gt; Secrets &gt; Actions &gt; New repository secret</li>
 <li>Name: <code>EMAIL</code></li>
@@ -606,7 +706,9 @@ knitr::opts_chunk$set(
 </ul></li>
 <li>To the repo, add the following contents:
 <ul>
-<li><a href="https://github.com/DevPsyLab/LabWiki/blob/main/.github/workflows/deploy_rmarkdown.yml"><code>/.github/workflows/deploy_markdown.yml</code></a> file
+<li><a
+href="https://github.com/DevPsyLab/LabWiki/blob/main/.github/workflows/deploy_rmarkdown.yml"><code>/.github/workflows/deploy_markdown.yml</code></a>
+file
 <ul>
 <li>this file tells GitHub Actions was steps to run</li>
 </ul></li>
@@ -620,15 +722,23 @@ knitr::opts_chunk$set(
 </ul></li>
 <li><code>DESCRIPTION</code> file
 <ul>
-<li>this file tells GitHub Actions what <code>R</code> packages to install</li>
+<li>this file tells GitHub Actions what <code>R</code> packages to
+install</li>
 </ul></li>
 </ul></li>
 <li>Add each <code>.Rmd</code> file</li>
-<li>Add folders for the <a href="https://github.com/DevPsyLab/LabWiki/tree/main/font"><code>font</code></a>, <a href="https://github.com/DevPsyLab/LabWiki/tree/main/images"><code>images</code></a>, and <a href="https://github.com/DevPsyLab/LabWiki/tree/main/includes"><code>includes</code></a>
+<li>Add folders for the <a
+href="https://github.com/DevPsyLab/LabWiki/tree/main/font"><code>font</code></a>,
+<a
+href="https://github.com/DevPsyLab/LabWiki/tree/main/images"><code>images</code></a>,
+and <a
+href="https://github.com/DevPsyLab/LabWiki/tree/main/includes"><code>includes</code></a>
 <ul>
-<li><code>includes</code> contains <code>css</code> files, javascript files, footers, and Google Analytics</li>
+<li><code>includes</code> contains <code>css</code> files, javascript
+files, footers, and Google Analytics</li>
 </ul></li>
-<li>Create a new Google Analytics property, and replace the URL and gtag in the <code>google_analytics.html</code> file</li>
+<li>Create a new Google Analytics property, and replace the URL and gtag
+in the <code>google_analytics.html</code> file</li>
 <li>Commit the repo to GitHub</li>
 </ol>
 </div>
@@ -639,7 +749,9 @@ knitr::opts_chunk$set(
 plot(pressure)
 ```</code></pre>
 <p><img src="markdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
 </div>
 <div id="headings" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Headings Examples</h1>
@@ -658,17 +770,20 @@ plot(pressure)
 <div id="subsubheading" class="section level3" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Subsubheading</h3>
 <div id="subsubsubheading" class="section level4" number="8.1.1.1">
-<h4><span class="header-section-number">8.1.1.1</span> Subsubsubheading</h4>
+<h4><span class="header-section-number">8.1.1.1</span>
+Subsubsubheading</h4>
 </div>
 </div>
 </div>
 </div>
 <div id="lists" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Lists</h1>
-<p>To add another element in a list while preserving the continuity of the list, indent the element four spaces or one tab.</p>
+<p>To add another element in a list while preserving the continuity of
+the list, indent the element four spaces or one tab.</p>
 <div id="unordered-lists" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Unordered Lists</h2>
-<p>To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in front of line items.</p>
+<p>To create an unordered list, add dashes (-), asterisks (*), or plus
+signs (+) in front of line items.</p>
 <pre class="markdown"><code>- one item
 - one item
 - one item
@@ -752,7 +867,8 @@ plot(pressure)
 &gt; 
 &gt; Continued...</code></pre>
 <blockquote>
-<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>
+<p>Dorothy followed her through many of the beautiful rooms in her
+castle.</p>
 <p>Continued…</p>
 </blockquote>
 </div>
@@ -776,7 +892,15 @@ This text is &lt;code&gt;&lt;i&gt;code in italics;&lt;/i&gt; this text is &lt;b&
 This text is ~~strikethrough text~~.
 This text &lt;ins&gt;will be underlined&lt;/ins&gt;.
 &lt;font color=&quot;red&quot;&gt;This text is red!&lt;/font&gt;</code></pre>
-<p>This text is <strong>bolded text</strong>. This text is <em>italicized text</em>. This text is <strong><em>bolded and italicized text</em></strong>. This text is <mark>highlighted text</mark>. This text is <mark style="background-color: lightblue">highlighted text in a different color</mark>. This text is <code>unicode text</code>. This text is <code><i>code in italics;</i> this text is <b>code in bold</b></code>. This text is <del>strikethrough text</del>. This text <ins>will be underlined</ins>. <font color="red">This text is red!</font></p>
+<p>This text is <strong>bolded text</strong>. This text is
+<em>italicized text</em>. This text is <strong><em>bolded and italicized
+text</em></strong>. This text is <mark>highlighted text</mark>. This
+text is <mark style="background-color: lightblue">highlighted text in a
+different color</mark>. This text is <code>unicode text</code>. This
+text is <code><i>code in italics;</i> this text is <b>code in
+bold</b></code>. This text is <del>strikethrough text</del>. This text
+<ins>will be underlined</ins>. <font color="red">This text is
+red!</font></p>
 </div>
 <div id="formatting" class="section level1" number="13">
 <h1><span class="header-section-number">13</span> Formatting</h1>
@@ -786,8 +910,10 @@ This text is centered.
 </center>
 </div>
 <div id="codesyntax-highlighting" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Code/Syntax Highlighting</h1>
-<p>To use syntax highlighting to display code without running the code:</p>
+<h1><span class="header-section-number">14</span> Code/Syntax
+Highlighting</h1>
+<p>To use syntax highlighting to display code without running the
+code:</p>
 <pre class="markdown"><code>```r
 summary(cars)
 ```</code></pre>
@@ -805,7 +931,8 @@ summary(cars)
 <div id="math-formulas" class="section level1" number="15">
 <h1><span class="header-section-number">15</span> Math Formulas</h1>
 <p>Inline:</p>
-<p>This is the formula: <span class="math inline">\(x = y + 5\)</span>. Solve for <span class="math inline">\(x\)</span>.</p>
+<p>This is the formula: <span class="math inline">\(x = y + 5\)</span>.
+Solve for <span class="math inline">\(x\)</span>.</p>
 <p>Separate line:</p>
 <pre class="markdown"><code>$$
 y = \frac{x}{7} \cdot 4 + 3 \times 2 - 1_{a1}/2^{1c/2} \dots
@@ -838,13 +965,20 @@ Some text to show that the reference links can follow later.
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
 [1]: http://slashdot.org</code></pre>
 <p><a href="https://www.google.com">I’m an inline-style link</a></p>
-<p><a href="https://www.google.com" title="Google&#39;s Homepage">I’m an inline-style link with title</a></p>
+<p><a href="https://www.google.com" title="Google&#39;s Homepage">I’m an
+inline-style link with title</a></p>
 <p><a href="https://www.mozilla.org">I’m a reference-style link</a></p>
-<p><a href="../blob/master/LICENSE">I’m a relative reference to a repository file</a></p>
-<p><a href="http://slashdot.org">You can use numbers for reference-style link definitions</a></p>
-<p><a href="pca.html#overview">I am a link to another file in this project</a></p>
+<p><a href="../blob/master/LICENSE">I’m a relative reference to a
+repository file</a></p>
+<p><a href="http://slashdot.org">You can use numbers for reference-style
+link definitions</a></p>
+<p><a href="pca.html#overview">I am a link to another file in this
+project</a></p>
 <p><a href="#headings">I’m a link within this document</a></p>
-<p>URLs and URLs in angle brackets will automatically get turned into links. <a href="http://www.example.com" class="uri">http://www.example.com</a> or <a href="http://www.example.com" class="uri">http://www.example.com</a></p>
+<p>URLs and URLs in angle brackets will automatically get turned into
+links. <a href="http://www.example.com"
+class="uri">http://www.example.com</a> or <a
+href="http://www.example.com" class="uri">http://www.example.com</a></p>
 <p>Some text to show that the reference links can follow later.</p>
 </div>
 <div id="footnotes" class="section level1" number="17">
@@ -861,9 +995,12 @@ You can also use words, to fit your writing style more closely[^note].
 [^note]:
     Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  
     This footnote also has been made with a different syntax using 4 spaces for new lines.</code></pre>
-<p>Here is a simple footnote<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
-<p>A footnote can also have multiple lines<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
-<p>You can also use words, to fit your writing style more closely<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<p>Here is a simple footnote<a href="#fn1" class="footnote-ref"
+id="fnref1"><sup>1</sup></a>.</p>
+<p>A footnote can also have multiple lines<a href="#fn2"
+class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>You can also use words, to fit your writing style more closely<a
+href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 </div>
 <div id="symbols" class="section level1" number="18">
 <h1><span class="header-section-number">18</span> Symbols</h1>
@@ -885,7 +1022,8 @@ You can also use words, to fit your writing style more closely[^note].
 </ul>
 </div>
 <div id="dashes-and-hyphens" class="section level2" number="18.2">
-<h2><span class="header-section-number">18.2</span> Dashes and Hyphens</h2>
+<h2><span class="header-section-number">18.2</span> Dashes and
+Hyphens</h2>
 <pre class="markdown"><code>* hyphen: -
 * en dash: –
 * em dash: —</code></pre>
@@ -896,7 +1034,8 @@ You can also use words, to fit your writing style more closely[^note].
 </ul>
 </div>
 <div id="subscriptsuperscript" class="section level2" number="18.3">
-<h2><span class="header-section-number">18.3</span> Subscript/Superscript</h2>
+<h2><span class="header-section-number">18.3</span>
+Subscript/Superscript</h2>
 <pre class="markdown"><code>H~2~O
 X^2^</code></pre>
 <p>H<sub>2</sub>O X<sup>2</sup></p>
@@ -907,7 +1046,8 @@ X^2^</code></pre>
 : definition</code></pre>
 <dl>
 <dt>term</dt>
-<dd>definition
+<dd>
+definition
 </dd>
 </dl>
 </div>
@@ -917,12 +1057,10 @@ X^2^</code></pre>
 - [ ] Conduct the study
 - [ ] Write it up</code></pre>
 <ul class="task-list">
-<li><input type="checkbox" disabled="" checked="" />
-Create the website</li>
-<li><input type="checkbox" disabled="" />
-Conduct the study</li>
-<li><input type="checkbox" disabled="" />
-Write it up</li>
+<li><input type="checkbox" disabled="" checked="" />Create the
+website</li>
+<li><input type="checkbox" disabled="" />Conduct the study</li>
+<li><input type="checkbox" disabled="" />Write it up</li>
 </ul>
 </div>
 </div>
@@ -956,6 +1094,10 @@ Write it up</li>
 </tbody>
 </table>
 <table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Syntax</th>
@@ -973,11 +1115,17 @@ Write it up</li>
 </tr>
 </tbody>
 </table>
-<p>You can easily create tables in Markdown from an Excel or csv file using the following website: <a href="https://www.tablesgenerator.com/markdown_tables" class="uri">https://www.tablesgenerator.com/markdown_tables</a></p>
+<p>You can easily create tables in Markdown from an Excel or csv file
+using the following website: <a
+href="https://www.tablesgenerator.com/markdown_tables"
+class="uri">https://www.tablesgenerator.com/markdown_tables</a></p>
 </div>
 <div id="adding-a-drop-down-list" class="section level1" number="20">
-<h1><span class="header-section-number">20</span> Adding a Drop Down List</h1>
-<p><strong>Note:</strong>: When creating dropdown menus, it is important to have spaces between font breaks <code>&lt;/font&gt;</code>. Without these breaks, Markdown cannot detect how to</p>
+<h1><span class="header-section-number">20</span> Adding a Drop Down
+List</h1>
+<p><strong>Note:</strong>: When creating dropdown menus, it is important
+to have spaces between font breaks <code>&lt;/font&gt;</code>. Without
+these breaks, Markdown cannot detect how to</p>
 <pre class="markdown"><code>
 &lt;details&gt;
 &lt;summary&gt;**&lt;font size = &quot;6&quot;&gt;This is a dropdown menu**&lt;/summary&gt;
@@ -1000,7 +1148,8 @@ Insert Text Here
 <p><br> <br></p>
 </div>
 <div id="embedding-a-picture" class="section level1" number="21">
-<h1><span class="header-section-number">21</span> Embedding a Picture</h1>
+<h1><span class="header-section-number">21</span> Embedding a
+Picture</h1>
 <pre class="markdown"><code>![Insert Figure Caption here](Insert image filename and location here)</code></pre>
 <p>For instance:</p>
 <pre class="markdown"><code>![Visual Studio Code](images/vsCode.png)</code></pre>
@@ -1008,32 +1157,50 @@ Insert Text Here
 <div id="embedding-a-video" class="section level1" number="22">
 <h1><span class="header-section-number">22</span> Embedding a Video</h1>
 <ul>
-<li><p>First, make sure the repository is configured for large file storage. Follow the instructions <a href="git.html#gitLfs">here</a> to do so.</p></li>
-<li><p>A helpful example repository for embedding videos can be found <a href="https://github.com/PLAY-behaviorome/PLAY-project.org/blob/master/collection_homevisit.Rmd">here</a></p></li>
+<li><p>First, make sure the repository is configured for large file
+storage. Follow the instructions <a href="git.html#gitLfs">here</a> to
+do so.</p></li>
+<li><p>A helpful example repository for embedding videos can be found <a
+href="https://github.com/PLAY-behaviorome/PLAY-project.org/blob/master/collection_homevisit.Rmd">here</a></p></li>
 </ul>
 <pre class="markdown"><code>&lt;video width=&quot;100%&quot; controls=&quot;&quot; preload=&quot;none&quot;&gt; #video settings
 &lt;source src=&quot;images/lv2-saving-procedures.mp4&quot; type=&quot;video/mp4&quot;&gt; #location and type of video
 &lt;/video&gt;</code></pre>
 </div>
-<div id="converting-word-documents-to-markdown" class="section level1" number="23">
-<h1><span class="header-section-number">23</span> Converting Word Documents to Markdown</h1>
-<p>The process of converting word documents to Markdown is aided by having knowledge of the <a href="#bestPractices">best practices</a> steps. Furthermore, read the section on <a href="https://devpsylab.github.io/LabWiki/manual.html#12_Lab_Wiki">Visual Studio Code</a> to become familiar with.</p>
+<div id="converting-word-documents-to-markdown" class="section level1"
+number="23">
+<h1><span class="header-section-number">23</span> Converting Word
+Documents to Markdown</h1>
+<p>The process of converting word documents to Markdown is aided by
+having knowledge of the <a href="#bestPractices">best practices</a>
+steps. Furthermore, read the section on <a
+href="https://devpsylab.github.io/LabWiki/manual.html#12_Lab_Wiki">Visual
+Studio Code</a> to become familiar with.</p>
 <p>To convert documents, follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li>Open both word doc to be converted and new markdown document</li>
 <li>Copy and paste the text to convert</li>
-<li>Follow the <a href="#bestPractices">best practices</a> to convert the document to Markdown format
+<li>Follow the <a href="#bestPractices">best practices</a> to convert
+the document to Markdown format
 <ul>
-<li>For example, in the manuals for the School Readiness Study, each <a href="#headings">new header</a> should denote a new task</li>
+<li>For example, in the manuals for the School Readiness Study, each <a
+href="#headings">new header</a> should denote a new task</li>
 </ul></li>
-<li><strong>Importantly, each sentence will correspond to one line in markdown.</strong> To convert sentences out of paragraph form:
+<li><strong>Importantly, each sentence will correspond to one line in
+markdown.</strong> To convert sentences out of paragraph form:
 <ul>
 <li>Press <code>Ctrl f</code></li>
 <li>search <code>.</code></li>
-<li>Next, click the arrow on the left side of the search window to open up the replace function in Visual Studio Code.</li>
-<li>The goal of this process is to create one sentence per line. Creating one sentence per line. By using one sentence for line, changes can be tracked easier.</li>
-<li>In the <code>Replace</code> line, type <code>Ctrl Enter</code> to create a new line.</li>
-<li>Go through each find to determine if a new line should be created. <strong>Do not replace all</strong>. Bulleted lists may also contain a <code>.</code> that should not be removed.</li>
+<li>Next, click the arrow on the left side of the search window to open
+up the replace function in Visual Studio Code.</li>
+<li>The goal of this process is to create one sentence per line.
+Creating one sentence per line. By using one sentence for line, changes
+can be tracked easier.</li>
+<li>In the <code>Replace</code> line, type <code>Ctrl Enter</code> to
+create a new line.</li>
+<li>Go through each find to determine if a new line should be created.
+<strong>Do not replace all</strong>. Bulleted lists may also contain a
+<code>.</code> that should not be removed.</li>
 </ul></li>
 </ol>
 </div>
@@ -1058,21 +1225,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] digest_0.6.30   R6_2.5.1        jsonlite_1.8.2  magrittr_2.0.3 
+ [1] digest_0.6.30   R6_2.5.1        jsonlite_1.8.3  magrittr_2.0.3 
  [5] evaluate_0.17   highr_0.9       stringi_1.7.8   rlang_1.0.6    
  [9] cachem_1.0.6    cli_3.4.1       jquerylib_0.1.4 bslib_0.4.0    
 [13] rmarkdown_2.17  tools_4.2.1     stringr_1.4.1   xfun_0.34      
 [17] yaml_2.3.6      fastmap_1.1.0   compiler_4.2.1  htmltools_0.5.3
 [21] knitr_1.40      sass_0.4.2     </code></pre>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>My reference.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>My reference.<a href="#fnref1"
+class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>Every new line should be prefixed with 2 spaces.<br />
-This allows you to have a footnote with multiple lines.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Named footnotes will still render with numbers instead of the text but allow easier identification and linking.<br />
-This footnote also has been made with a different syntax using 4 spaces for new lines.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+This allows you to have a footnote with multiple lines.<a href="#fnref2"
+class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Named footnotes will still render with numbers instead
+of the text but allow easier identification and linking.<br />
+This footnote also has been made with a different syntax using 4 spaces
+for new lines.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

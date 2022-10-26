@@ -439,7 +439,8 @@ div.tocify {
 <div id="preamble" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Preamble</h1>
 <div id="install-libraries" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Install Libraries</h2>
+<h2><span class="header-section-number">1.1</span> Install
+Libraries</h2>
 <pre class="r fold-hide"><code>#install.packages(&quot;remotes&quot;)
 #remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
 </div>
@@ -484,7 +485,8 @@ mydata$female[which(mydata$sex == &quot;female&quot;)] &lt;- 1</code></pre>
 <div id="linear-regression" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Linear Regression</h1>
 <div id="linear-regression-model" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Linear regression model</h2>
+<h2><span class="header-section-number">4.1</span> Linear regression
+model</h2>
 <pre class="r fold-show"><code>multipleRegressionModel &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                               data = mydata,
                               na.action = na.exclude)
@@ -517,7 +519,8 @@ F-statistic: 509.6 on 2 and 2871 DF,  p-value: &lt; 2.2e-16</code></pre>
 bpi_antisocialT1Sum     0.4290884 0.5019688
 bpi_anxiousDepressedSum 0.1035825 0.2179258</code></pre>
 <div id="remove-missing-data" class="section level3" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span> Remove missing data</h3>
+<h3><span class="header-section-number">4.1.1</span> Remove missing
+data</h3>
 <pre class="r fold-show"><code>multipleRegressionModelNoMissing &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                        data = mydata,
                                        na.action = na.omit)
@@ -526,8 +529,11 @@ multipleRegressionModelNoMissing &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1
                                        data = mydata %&gt;% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %&gt;% na.omit)</code></pre>
 </div>
 </div>
-<div id="linear-regression-model-on-correlationcovariance-matrix-for-pairwise-deletion" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Linear regression model on correlation/covariance matrix (for pairwise deletion)</h2>
+<div
+id="linear-regression-model-on-correlationcovariance-matrix-for-pairwise-deletion"
+class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Linear regression
+model on correlation/covariance matrix (for pairwise deletion)</h2>
 <pre class="r fold-show"><code>multipleRegressionModelPairwise &lt;- setCor(
   y = &quot;bpi_antisocialT2Sum&quot;,
   x = c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_anxiousDepressedSum&quot;),
@@ -590,8 +596,10 @@ $shrunkenR2
 bpi_antisocialT2Sum 
                 Inf </code></pre>
 </div>
-<div id="linear-regression-model-with-robust-covariance-matrix-rms" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Linear regression model with robust covariance matrix (rms)</h2>
+<div id="linear-regression-model-with-robust-covariance-matrix-rms"
+class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Linear regression
+model with robust covariance matrix (rms)</h2>
 <pre class="r fold-show"><code>rmsMultipleRegressionModel &lt;- robcov(ols(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                          data = mydata,
                                          x = TRUE,
@@ -631,8 +639,12 @@ Intercept               1.07631713 1.3202837
 bpi_antisocialT1Sum     0.42056957 0.5104877
 bpi_anxiousDepressedSum 0.09606644 0.2254418</code></pre>
 </div>
-<div id="robust-linear-regression-mm-type-iteratively-reweighted-least-squares-regression" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Robust linear regression (MM-type iteratively reweighted least squares regression)</h2>
+<div
+id="robust-linear-regression-mm-type-iteratively-reweighted-least-squares-regression"
+class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Robust linear
+regression (MM-type iteratively reweighted least squares
+regression)</h2>
 <pre class="r fold-show"><code>robustLinearRegression &lt;- lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                 data = mydata,
                                 na.action = na.exclude)
@@ -684,12 +696,14 @@ compute.outlier.stats
 seed : int(0) </code></pre>
 <pre class="r fold-show"><code>confint(robustLinearRegression)</code></pre>
 <pre><code>                             2.5 %    97.5 %
-(Intercept)             0.83801565 1.0499981
+(Intercept)             0.83801566 1.0499981
 bpi_antisocialT1Sum     0.44749135 0.5352118
 bpi_anxiousDepressedSum 0.09683728 0.2184779</code></pre>
 </div>
-<div id="least-trimmed-squares-regression-for-removing-outliers" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Least trimmed squares regression (for removing outliers)</h2>
+<div id="least-trimmed-squares-regression-for-removing-outliers"
+class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Least trimmed squares
+regression (for removing outliers)</h2>
 <pre class="r fold-show"><code>ltsRegression &lt;- ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                         data = mydata,
                         na.action = na.exclude)
@@ -702,22 +716,24 @@ ltsReg.formula(formula = bpi_antisocialT2Sum ~ bpi_antisocialT1Sum +
 
 Residuals (from reweighted LS):
     Min      1Q  Median      3Q     Max 
--3.9387 -0.9170  0.0000  0.9957  3.9305 
+-3.9305 -0.9091  0.0000  0.9997  3.9036 
 
 Coefficients:
                         Estimate Std. Error t value Pr(&gt;|t|)    
-Intercept                0.74396    0.04808  15.474  &lt; 2e-16 ***
-bpi_antisocialT1Sum      0.54326    0.01527  35.579  &lt; 2e-16 ***
-bpi_anxiousDepressedSum  0.15249    0.02350   6.489 1.02e-10 ***
+Intercept                0.74932    0.04795  15.626  &lt; 2e-16 ***
+bpi_antisocialT1Sum      0.54338    0.01524  35.647  &lt; 2e-16 ***
+bpi_anxiousDepressedSum  0.13826    0.02343   5.901 4.06e-09 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 1.539 on 2713 degrees of freedom
-Multiple R-Squared: 0.4154, Adjusted R-squared: 0.4149 
-F-statistic: 963.8 on 2 and 2713 DF,  p-value: &lt; 2.2e-16 </code></pre>
+Residual standard error: 1.534 on 2710 degrees of freedom
+Multiple R-Squared: 0.4121, Adjusted R-squared: 0.4116 
+F-statistic: 949.7 on 2 and 2710 DF,  p-value: &lt; 2.2e-16 </code></pre>
 </div>
-<div id="bayesian-linear-regression" class="section level2" number="4.6">
-<h2><span class="header-section-number">4.6</span> Bayesian linear regression</h2>
+<div id="bayesian-linear-regression" class="section level2"
+number="4.6">
+<h2><span class="header-section-number">4.6</span> Bayesian linear
+regression</h2>
 <pre class="r fold-show"><code>bayesianRegularizedRegression &lt;- brm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                      data = mydata,
                                      chains = 4,
@@ -750,11 +766,16 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
-<div id="generalized-linear-regression" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Generalized Linear Regression</h1>
-<div id="generalized-regression-model" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Generalized regression model</h2>
-<p>In this example, we predict a count variable that has a poisson distribution. We could change the distribution.</p>
+<div id="generalized-linear-regression" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Generalized Linear
+Regression</h1>
+<div id="generalized-regression-model" class="section level2"
+number="5.1">
+<h2><span class="header-section-number">5.1</span> Generalized
+regression model</h2>
+<p>In this example, we predict a count variable that has a poisson
+distribution. We could change the distribution.</p>
 <pre class="r fold-show"><code>generalizedRegressionModel &lt;- glm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                   data = mydata,
                                   family = &quot;poisson&quot;,
@@ -793,9 +814,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
 bpi_antisocialT1Sum     0.13196544 0.15113708
 bpi_anxiousDepressedSum 0.03177425 0.06327445</code></pre>
 </div>
-<div id="generalized-regression-model-rms" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Generalized regression model (rms)</h2>
-<p>In this example, we predict a count variable that has a poisson distribution. We could change the distribution.</p>
+<div id="generalized-regression-model-rms" class="section level2"
+number="5.2">
+<h2><span class="header-section-number">5.2</span> Generalized
+regression model (rms)</h2>
+<p>In this example, we predict a count variable that has a poisson
+distribution. We could change the distribution.</p>
 <pre class="r fold-show"><code>rmsGeneralizedRegressionModel &lt;- Glm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                      data = mydata,
                                      x = TRUE,
@@ -828,9 +852,15 @@ General Linear Model
 <pre><code>Waiting for profiling to be done...</code></pre>
 <pre><code>Error in summary.rms(fitted): adjustment values not defined here or with datadist for bpi_antisocialT1Sum bpi_anxiousDepressedSum</code></pre>
 </div>
-<div id="bayesian-generalized-linear-model" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Bayesian generalized linear model</h2>
-<p>In this example, we predict a count variable that has a poisson distribution. We could change the distribution. For example, we could use Gamma regression, <code>family = Gamma</code>, when the response variable is continuous and positive, and the coefficient of variation–rather than the variance–is constant.</p>
+<div id="bayesian-generalized-linear-model" class="section level2"
+number="5.3">
+<h2><span class="header-section-number">5.3</span> Bayesian generalized
+linear model</h2>
+<p>In this example, we predict a count variable that has a poisson
+distribution. We could change the distribution. For example, we could
+use Gamma regression, <code>family = Gamma</code>, when the response
+variable is continuous and positive, and the coefficient of
+variation–rather than the variance–is constant.</p>
 <pre class="r fold-show"><code>bayesianGeneralizedLinearRegression &lt;- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                            data = mydata,
                                            family = poisson,
@@ -859,8 +889,10 @@ Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
-<div id="robust-generalized-regression" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Robust generalized regression</h2>
+<div id="robust-generalized-regression" class="section level2"
+number="5.4">
+<h2><span class="header-section-number">5.4</span> Robust generalized
+regression</h2>
 <pre class="r fold-show"><code>robustGeneralizedRegression &lt;- glmrob(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                       data = mydata,
                                       family = &quot;poisson&quot;,
@@ -900,8 +932,10 @@ test.acc
 <pre><code>Waiting for profiling to be done...</code></pre>
 <pre><code>Error in glm.control(acc = 1e-04, test.acc = &quot;coef&quot;, maxit = 50, tcc = 1.345): unused arguments (acc = 1e-04, test.acc = &quot;coef&quot;, tcc = 1.345)</code></pre>
 </div>
-<div id="ordinal-regression-model-rms" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Ordinal regression model (rms)</h2>
+<div id="ordinal-regression-model-rms" class="section level2"
+number="5.5">
+<h2><span class="header-section-number">5.5</span> Ordinal regression
+model (rms)</h2>
 <pre class="r fold-show"><code>ordinalRegressionModel &lt;- robcov(orm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                      data = mydata,
                                      x = TRUE,
@@ -954,8 +988,10 @@ y&gt;=14                            NA         NA
 bpi_antisocialT1Sum      0.39961501  0.4811892
 bpi_anxiousDepressedSum  0.09053245  0.1948370</code></pre>
 </div>
-<div id="bayesian-ordinal-regression-model" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Bayesian ordinal regression model</h2>
+<div id="bayesian-ordinal-regression-model" class="section level2"
+number="5.6">
+<h2><span class="header-section-number">5.6</span> Bayesian ordinal
+regression model</h2>
 <pre class="r fold-show"><code>bayesianOrdinalRegression &lt;- brm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                  data = mydata,
                                  family = cumulative(),
@@ -1012,8 +1048,10 @@ Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
-<div id="bayesian-count-regression-model" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> Bayesian count regression model</h2>
+<div id="bayesian-count-regression-model" class="section level2"
+number="5.7">
+<h2><span class="header-section-number">5.7</span> Bayesian count
+regression model</h2>
 <pre class="r fold-show"><code>bayesianCountRegression &lt;- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                data = mydata,
                                family = &quot;poisson&quot;,
@@ -1042,8 +1080,10 @@ Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
-<div id="logistic-regression-model-rms" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Logistic regression model (rms)</h2>
+<div id="logistic-regression-model-rms" class="section level2"
+number="5.8">
+<h2><span class="header-section-number">5.8</span> Logistic regression
+model (rms)</h2>
 <pre class="r fold-show"><code>logisticRegressionModel &lt;- robcov(lrm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                       data = mydata,
                                       x = TRUE,
@@ -1076,8 +1116,10 @@ Logistic Regression Model
 <pre><code>Waiting for profiling to be done...</code></pre>
 <pre><code>Error in summary.rms(fitted): adjustment values not defined here or with datadist for bpi_antisocialT1Sum bpi_anxiousDepressedSum</code></pre>
 </div>
-<div id="bayesian-logistic-regression-model" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Bayesian logistic regression model</h2>
+<div id="bayesian-logistic-regression-model" class="section level2"
+number="5.9">
+<h2><span class="header-section-number">5.9</span> Bayesian logistic
+regression model</h2>
 <pre class="r fold-show"><code>bayesianLogisticRegression &lt;- brm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                   data = mydata,
                                   family = bernoulli,
@@ -1107,8 +1149,10 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
-<div id="hierarchical-linear-regression" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Hierarchical Linear Regression</h1>
+<div id="hierarchical-linear-regression" class="section level1"
+number="6">
+<h1><span class="header-section-number">6</span> Hierarchical Linear
+Regression</h1>
 <pre class="r fold-show"><code>model1 &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
              data = mydata %&gt;% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %&gt;% na.omit,
              na.action = na.exclude)
@@ -1129,9 +1173,13 @@ summary(model2)$adj.r.squared</code></pre>
 <pre><code>[1] 0.007559301</code></pre>
 </div>
 <div id="moderation" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Moderated Multiple Regression</h1>
-<p><a href="https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html" class="uri">https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html</a></p>
-<p>Make sure to mean-center or orthogonalize predictors before computing the interaction term.</p>
+<h1><span class="header-section-number">7</span> Moderated Multiple
+Regression</h1>
+<p><a
+href="https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html"
+class="uri">https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html</a></p>
+<p>Make sure to mean-center or orthogonalize predictors before computing
+the interaction term.</p>
 <div id="model" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Model</h2>
 <pre class="r fold-show"><code>states &lt;- as.data.frame(state.x77)
@@ -1155,7 +1203,8 @@ Note: The range of observed values of Murder is [1.40, 15.10]</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-28-4.png" width="672" /></p>
 </div>
 <div id="simple-slopes-analysis" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Simple Slopes Analysis</h2>
+<h2><span class="header-section-number">7.3</span> Simple Slopes
+Analysis</h2>
 <pre class="r fold-show"><code>sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = FALSE)</code></pre>
 <pre><code>SIMPLE SLOPES ANALYSIS 
 
@@ -1202,8 +1251,10 @@ Slope of Illiteracy when Murder = 10.00:
   -217.32   176.21    -1.23   0.22</code></pre>
 </div>
 <div id="johnson-neyman-intervals" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Johnson-Neyman intervals</h2>
-<p>Indicates all the values of the moderator for which the slope of the predictor is statistically significant.</p>
+<h2><span class="header-section-number">7.4</span> Johnson-Neyman
+intervals</h2>
+<p>Indicates all the values of the moderator for which the slope of the
+predictor is statistically significant.</p>
 <pre class="r fold-show"><code>sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = TRUE)</code></pre>
 <pre><code>JOHNSON-NEYMAN INTERVAL 
 
@@ -1270,10 +1321,13 @@ Conditional intercept         4649.22   118.97    39.08   0.00</code></pre>
 </div>
 </div>
 <div id="missingness" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Approaches to Handling Missingness</h1>
+<h1><span class="header-section-number">8</span> Approaches to Handling
+Missingness</h1>
 <div id="listwiseDeletion" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Listwise deletion</h2>
-<p>Listwise deletion deletes every row in the data file that has a missing value for one of the model variables.</p>
+<h2><span class="header-section-number">8.1</span> Listwise
+deletion</h2>
+<p>Listwise deletion deletes every row in the data file that has a
+missing value for one of the model variables.</p>
 <pre class="r fold-show"><code>listwiseDeletionModel &lt;- lm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
@@ -1308,16 +1362,29 @@ bpi_antisocialT1Sum     0.4290884 0.5019688
 bpi_anxiousDepressedSum 0.1035825 0.2179258</code></pre>
 </div>
 <div id="pairwiseDeletion" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Pairwise deletion</h2>
+<h2><span class="header-section-number">8.2</span> Pairwise
+deletion</h2>
 <p>Also see here:</p>
 <ul>
-<li><a href="https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002" class="uri">https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002</a></li>
-<li><a href="https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure" class="uri">https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure</a></li>
-<li><a href="https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re" class="uri">https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re</a></li>
-<li><a href="https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values" class="uri">https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values</a></li>
-<li><a href="https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps" class="uri">https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps</a></li>
+<li><a
+href="https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002"
+class="uri">https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002</a></li>
+<li><a
+href="https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure"
+class="uri">https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure</a></li>
+<li><a
+href="https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re"
+class="uri">https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re</a></li>
+<li><a
+href="https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values"
+class="uri">https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values</a></li>
+<li><a
+href="https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps"
+class="uri">https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps</a></li>
 </ul>
-<p>Adapted from here: <a href="https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise" class="uri">https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise</a></p>
+<p>Adapted from here: <a
+href="https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise"
+class="uri">https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise</a></p>
 <pre class="r fold-show"><code>modelData &lt;- mydata[,c(&quot;bpi_antisocialT2Sum&quot;,&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_anxiousDepressedSum&quot;)]
 varMeans &lt;- colMeans(modelData, na.rm = TRUE)
 varCovariances &lt;- cov(modelData, use = &quot;pairwise&quot;)
@@ -1377,7 +1444,8 @@ R-Square:
     bpi_antsclT2Sm    0.257</code></pre>
 </div>
 <div id="fiml" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Full-information maximum likelihood (FIML)</h2>
+<h2><span class="header-section-number">8.3</span> Full-information
+maximum likelihood (FIML)</h2>
 <pre class="r fold-show"><code>fimlRegression_syntax &lt;- &#39;
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
   bpi_antisocialT2Sum ~~ bpi_antisocialT2Sum
@@ -1435,7 +1503,8 @@ R-Square:
     bpi_antsclT2Sm    0.275</code></pre>
 </div>
 <div id="imputation" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Multiple imputation</h2>
+<h2><span class="header-section-number">8.4</span> Multiple
+imputation</h2>
 <pre class="r fold-show"><code>modelData_imputed &lt;- mice(
   modelData,
   m = 5,
@@ -1475,46 +1544,71 @@ imputedData_pooledEstimates &lt;- pool(imputedData_fit)
 summary(imputedData_pooledEstimates)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["fct"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"1.1496131","3":"0.33873496","4":"3.393842","5":"3.844307","6":"0.029174707"},{"1":"bpi_antisocialT1Sum","2":"0.4519460","3":"0.06295944","4":"7.178367","5":"4.086276","6":"0.001838008"},{"1":"bpi_anxiousDepressedSum","2":"0.1421312","3":"0.08373061","4":"1.697482","5":"4.182908","6":"0.161705237"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["term"],"name":[1],"type":["fct"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"1.2431082","3":"0.18863039","4":"6.590180","5":"4.117116","6":"0.002479350"},{"1":"bpi_antisocialT1Sum","2":"0.3953274","3":"0.08029055","4":"4.923710","5":"3.985803","6":"0.007980888"},{"1":"bpi_anxiousDepressedSum","2":"0.1574133","3":"0.09690326","4":"1.624437","5":"4.120046","6":"0.177532760"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <div id="model-building-steps" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Model Building Steps</h1>
+<h1><span class="header-section-number">9</span> Model Building
+Steps</h1>
 <ol style="list-style-type: decimal">
-<li>Examine extent and type of missing data, consider <a href="#missingness">how to handle missing values</a> (<a href="#imputation">multiple imputation</a>, <a href="#fiml">FIML</a>, <a href="#pairwiseDeletion">pairwise deletion</a>, <a href="#listwiseDeletion">listwise deletion</a>)
+<li>Examine extent and type of missing data, consider <a
+href="#missingness">how to handle missing values</a> (<a
+href="#imputation">multiple imputation</a>, <a href="#fiml">FIML</a>, <a
+href="#pairwiseDeletion">pairwise deletion</a>, <a
+href="#listwiseDeletion">listwise deletion</a>)
 <ul>
-<li>Little’s MCAR test from <code>mcar_test()</code> function of the <code>njtierney/naniar</code> package</li>
-<li>Bayesian handling of missing data: <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html" class="uri">https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html</a></li>
+<li>Little’s MCAR test from <code>mcar_test()</code> function of the
+<code>njtierney/naniar</code> package</li>
+<li>Bayesian handling of missing data: <a
+href="https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html"
+class="uri">https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html</a></li>
 </ul></li>
-<li>Examine descriptive statistics, consider variable transformations</li>
-<li>Examine scatterplot matrix to examine whether associations between predictor and outcomes are linear or nonlinear</li>
-<li>Model building: theory and empiricism (stepwise regression, likelihood ratio tests, k-fold cross validation to check for over-fitting compared to simpler model)</li>
+<li>Examine descriptive statistics, consider variable
+transformations</li>
+<li>Examine scatterplot matrix to examine whether associations between
+predictor and outcomes are linear or nonlinear</li>
+<li>Model building: theory and empiricism (stepwise regression,
+likelihood ratio tests, k-fold cross validation to check for
+over-fitting compared to simpler model)</li>
 <li>Test assumptions
 <ul>
-<li>Examine whether predictors have linear association with outcome (Residual Plots, Marginal Model Plots, Added-Variable Plots—check for non-horizontal lines)</li>
-<li>Examine whether residuals have constant variance across levels of outcome and predictors Residual Plots, Spread-Level Plots—check for fan-shaped plot or other increasing/decreasing structure)</li>
+<li>Examine whether predictors have linear association with outcome
+(Residual Plots, Marginal Model Plots, Added-Variable Plots—check for
+non-horizontal lines)</li>
+<li>Examine whether residuals have constant variance across levels of
+outcome and predictors Residual Plots, Spread-Level Plots—check for
+fan-shaped plot or other increasing/decreasing structure)</li>
 <li>Examine whether predictors show multicollinearity (VIF)</li>
-<li>Examine whether residuals are normally distributed (QQ plot and density plot)</li>
-<li>Examine influence of influential observations (high outlyingness and leverage) on parameter stimates by iteratively removing influential observations and refitting (Added-Variable Plots)</li>
+<li>Examine whether residuals are normally distributed (QQ plot and
+density plot)</li>
+<li>Examine influence of influential observations (high outlyingness and
+leverage) on parameter stimates by iteratively removing influential
+observations and refitting (Added-Variable Plots)</li>
 </ul></li>
-<li>Handle violated assumptions, select final set of predictors/outcomes and transformation of each</li>
-<li>Use k-fold cross validation to identify the best estimation procedure (OLS, MM, or LTS) on the final model</li>
-<li>Use identified estimation procedure to fit final model and determine the best parameter point estimates</li>
-<li>Calculate bootstrapped estimates to determine the confidence intervals around the parameter estimates of the final model</li>
+<li>Handle violated assumptions, select final set of predictors/outcomes
+and transformation of each</li>
+<li>Use k-fold cross validation to identify the best estimation
+procedure (OLS, MM, or LTS) on the final model</li>
+<li>Use identified estimation procedure to fit final model and determine
+the best parameter point estimates</li>
+<li>Calculate bootstrapped estimates to determine the confidence
+intervals around the parameter estimates of the final model</li>
 </ol>
 </div>
 <div id="bootstrapped-estimates" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Bootstrapped Estimates</h1>
+<h1><span class="header-section-number">10</span> Bootstrapped
+Estimates</h1>
 <p>To determine the confidence intervals of parameter estimates</p>
 <div id="linear-regression-1" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Linear Regression</h2>
+<h2><span class="header-section-number">10.1</span> Linear
+Regression</h2>
 <pre class="r fold-show"><code>multipleRegressionModelBootstrapped &lt;- Boot(multipleRegressionModelNoMissing, R = 1000)
 summary(multipleRegressionModelBootstrapped)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["R"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["original"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["bootBias"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bootSE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bootMed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1000","2":"1.1983004","3":"-0.0020650239","4":"0.06260899","5":"1.1937452","_rn_":"(Intercept)"},{"1":"1000","2":"0.4655286","3":"-0.0002166331","4":"0.02257364","5":"0.4645726","_rn_":"bpi_antisocialT1Sum"},{"1":"1000","2":"0.1607541","3":"0.0009803234","4":"0.03225796","5":"0.1629572","_rn_":"bpi_anxiousDepressedSum"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["R"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["original"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["bootBias"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bootSE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bootMed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1000","2":"1.1983004","3":"0.0016588849","4":"0.06051151","5":"1.1999145","_rn_":"(Intercept)"},{"1":"1000","2":"0.4655286","3":"0.0004908465","4":"0.02209304","5":"0.4664188","_rn_":"bpi_antisocialT1Sum"},{"1":"1000","2":"0.1607541","3":"-0.0023320714","4":"0.03316647","5":"0.1570184","_rn_":"bpi_anxiousDepressedSum"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r fold-show"><code>confint(multipleRegressionModelBootstrapped, level = .95, type = &quot;bca&quot;)</code></pre>
@@ -1523,21 +1617,22 @@ method fails for this problem. Using &#39;perc&#39; instead</code></pre>
 <pre><code>Bootstrap percent confidence intervals
 
                              2.5 %    97.5 %
-(Intercept)             1.07978243 1.3202587
-bpi_antisocialT1Sum     0.42280920 0.5106638
-bpi_anxiousDepressedSum 0.09394863 0.2240906</code></pre>
+(Intercept)             1.07940710 1.3184012
+bpi_antisocialT1Sum     0.42192661 0.5088474
+bpi_anxiousDepressedSum 0.09638666 0.2246717</code></pre>
 <pre class="r fold-show"><code>hist(multipleRegressionModelBootstrapped)</code></pre>
 <pre><code>Warning in confint.boot(x, type = ci, level = level): BCa method fails for this
 problem. Using &#39;perc&#39; instead</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 </div>
 <div id="generalized-regression" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Generalized Regression</h2>
+<h2><span class="header-section-number">10.2</span> Generalized
+Regression</h2>
 <pre class="r fold-show"><code>generalizedRegressionModelBootstrapped &lt;- Boot(multipleRegressionModelNoMissing, R = 1000)
 summary(generalizedRegressionModelBootstrapped)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["R"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["original"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["bootBias"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bootSE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bootMed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1000","2":"1.1983004","3":"-0.0035372221","4":"0.06039828","5":"1.1954923","_rn_":"(Intercept)"},{"1":"1000","2":"0.4655286","3":"0.0008095313","4":"0.02323998","5":"0.4657310","_rn_":"bpi_antisocialT1Sum"},{"1":"1000","2":"0.1607541","3":"0.0010794171","4":"0.03320828","5":"0.1618655","_rn_":"bpi_anxiousDepressedSum"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["R"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["original"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["bootBias"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bootSE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bootMed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1000","2":"1.1983004","3":"0.0003901679","4":"0.06206810","5":"1.1995645","_rn_":"(Intercept)"},{"1":"1000","2":"0.4655286","3":"-0.0008161633","4":"0.02330936","5":"0.4653355","_rn_":"bpi_antisocialT1Sum"},{"1":"1000","2":"0.1607541","3":"0.0005846689","4":"0.03397451","5":"0.1611240","_rn_":"bpi_anxiousDepressedSum"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r fold-show"><code>confint(generalizedRegressionModelBootstrapped, level = .95, type = &quot;bca&quot;)</code></pre>
@@ -1546,9 +1641,9 @@ BCa method fails for this problem. Using &#39;perc&#39; instead</code></pre>
 <pre><code>Bootstrap percent confidence intervals
 
                              2.5 %    97.5 %
-(Intercept)             1.07309371 1.3162161
-bpi_antisocialT1Sum     0.41851426 0.5106812
-bpi_anxiousDepressedSum 0.09705889 0.2283298</code></pre>
+(Intercept)             1.07870358 1.3143538
+bpi_antisocialT1Sum     0.41845234 0.5102172
+bpi_anxiousDepressedSum 0.09633655 0.2286581</code></pre>
 <pre class="r fold-show"><code>hist(generalizedRegressionModelBootstrapped)</code></pre>
 <pre><code>Warning in confint.boot(x, type = ci, level = level): BCa method fails for this
 problem. Using &#39;perc&#39; instead</code></pre>
@@ -1557,9 +1652,13 @@ problem. Using &#39;perc&#39; instead</code></pre>
 </div>
 <div id="cross-validation" class="section level1" number="11">
 <h1><span class="header-section-number">11</span> Cross Validation</h1>
-<p>To examine degree of prediction error and over-fitting to determine best model <a href="https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best" class="uri">https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best</a></p>
+<p>To examine degree of prediction error and over-fitting to determine
+best model <a
+href="https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best"
+class="uri">https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best</a></p>
 <div id="k-fold-cross-validation" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> K-fold cross validation</h2>
+<h2><span class="header-section-number">11.1</span> K-fold cross
+validation</h2>
 <pre class="r fold-show"><code>kFolds &lt;- 10
 replications &lt;- 20
 
@@ -1587,9 +1686,9 @@ cvFits</code></pre>
 <pre><code>
 10-fold CV results:
   Fit       CV
-1 OLS 1.980392
-2  MM 1.026590
-3 LTS 1.007140
+1 OLS 1.980882
+2  MM 1.026468
+3 LTS 1.007002
 
 Best model:
    CV 
@@ -1599,7 +1698,8 @@ Best model:
 </div>
 </div>
 <div id="examining-model-fits" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Examining Model Fits</h1>
+<h1><span class="header-section-number">12</span> Examining Model
+Fits</h1>
 <div id="effect-plots" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> Effect Plots</h2>
 <pre class="r fold-show"><code>allEffects(multipleRegressionModel)</code></pre>
@@ -1618,7 +1718,8 @@ bpi_anxiousDepressedSum
 <p><img src="regression_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 </div>
 <div id="confidence-ellipses" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Confidence Ellipses</h2>
+<h2><span class="header-section-number">12.2</span> Confidence
+Ellipses</h2>
 <pre class="r fold-show"><code>confidenceEllipse(multipleRegressionModel, levels = c(0.5, .95))</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 </div>
@@ -1634,23 +1735,32 @@ dataEllipse(mydata_nomissing$bpi_antisocialT1Sum, mydata_nomissing$bpi_antisocia
 <div id="assumptions" class="section level2" number="13.1">
 <h2><span class="header-section-number">13.1</span> Assumptions</h2>
 <div id="linearAssociation" class="section level3" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> 1. Linear relation between predictors and outcome</h3>
+<h3><span class="header-section-number">13.1.1</span> 1. Linear relation
+between predictors and outcome</h3>
 <div id="ways-to-test" class="section level4" number="13.1.1.1">
-<h4><span class="header-section-number">13.1.1.1</span> Ways to Test</h4>
-<div id="before-model-fitting" class="section level5" number="13.1.1.1.1">
-<h5><span class="header-section-number">13.1.1.1.1</span> Before Model Fitting</h5>
+<h4><span class="header-section-number">13.1.1.1</span> Ways to
+Test</h4>
+<div id="before-model-fitting" class="section level5"
+number="13.1.1.1.1">
+<h5><span class="header-section-number">13.1.1.1.1</span> Before Model
+Fitting</h5>
 <ul>
 <li>scatterplot matrix</li>
 <li>distance correlation</li>
 </ul>
-<div id="scatterplot-matrix" class="section level6" number="13.1.1.1.1.1">
-<h6><span class="header-section-number">13.1.1.1.1.1</span> Scatterplot Matrix</h6>
+<div id="scatterplot-matrix" class="section level6"
+number="13.1.1.1.1.1">
+<h6><span class="header-section-number">13.1.1.1.1.1</span> Scatterplot
+Matrix</h6>
 <pre class="r fold-show"><code>scatterplotMatrix(~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepressedSum, data = mydata)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 </div>
-<div id="distance-correlation" class="section level6" number="13.1.1.1.1.2">
-<h6><span class="header-section-number">13.1.1.1.1.2</span> Distance correlation</h6>
-<p>The distance correlation is an index of the degree of the linear and non-linear association between two variables.</p>
+<div id="distance-correlation" class="section level6"
+number="13.1.1.1.1.2">
+<h6><span class="header-section-number">13.1.1.1.1.2</span> Distance
+correlation</h6>
+<p>The distance correlation is an index of the degree of the linear and
+non-linear association between two variables.</p>
 <pre class="r fold-show"><code>correlation(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)], method = &quot;distance&quot;, p_adjust = &quot;none&quot;)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1659,32 +1769,53 @@ dataEllipse(mydata_nomissing$bpi_antisocialT1Sum, mydata_nomissing$bpi_antisocia
 </div>
 </div>
 </div>
-<div id="after-model-fitting" class="section level5" number="13.1.1.1.2">
-<h5><span class="header-section-number">13.1.1.1.2</span> After Model Fitting</h5>
+<div id="after-model-fitting" class="section level5"
+number="13.1.1.1.2">
+<h5><span class="header-section-number">13.1.1.1.2</span> After Model
+Fitting</h5>
 <p>Check for nonlinearities (non-horizontal line) in plots of:</p>
 <ul>
-<li>Residuals versus fitted values (<a href="#residualPlots">Residual Plots</a>)—best</li>
-<li>Residuals versus predictors (<a href="#residualPlots">Residual Plots</a>)</li>
-<li>Outcome versus fitted values (<a href="#marginalModelPlots">Marginal Model Plots</a>)</li>
-<li>Outcome versus predictors, ignoring other predictors (<a href="#marginalModelPlots">Marginal Model Plots</a>)</li>
-<li>Outcome versus predictors, controlling for other predictors (<a href="#addedVariablePlots">Added-Variable Plots</a>)</li>
+<li>Residuals versus fitted values (<a href="#residualPlots">Residual
+Plots</a>)—best</li>
+<li>Residuals versus predictors (<a href="#residualPlots">Residual
+Plots</a>)</li>
+<li>Outcome versus fitted values (<a href="#marginalModelPlots">Marginal
+Model Plots</a>)</li>
+<li>Outcome versus predictors, ignoring other predictors (<a
+href="#marginalModelPlots">Marginal Model Plots</a>)</li>
+<li>Outcome versus predictors, controlling for other predictors (<a
+href="#addedVariablePlots">Added-Variable Plots</a>)</li>
 </ul>
 </div>
 </div>
 <div id="ways-to-handle" class="section level4" number="13.1.1.2">
-<h4><span class="header-section-number">13.1.1.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.1.2</span> Ways to
+Handle</h4>
 <ul>
 <li>Transform outcome/predictor variables (Box-Cox transformations)</li>
-<li>Semi-parametric regression models: Generalized additive models (GAM)</li>
-<li>Non-parametric regression models: Nearest-Neighbor Kernel Regression</li>
+<li>Semi-parametric regression models: Generalized additive models
+(GAM)</li>
+<li>Non-parametric regression models: Nearest-Neighbor Kernel
+Regression</li>
 </ul>
-<div id="semi-parametric-or-non-parametric-regression-models" class="section level5" number="13.1.1.2.1">
-<h5><span class="header-section-number">13.1.1.2.1</span> Semi-parametric or non-parametric regression models</h5>
-<p><a href="http://www.lisa.stat.vt.edu/?q=node/7517" class="uri">http://www.lisa.stat.vt.edu/?q=node/7517</a></p>
-<p>Note: using semi-parametric or non-parametric models increases fit in context of nonlinearity at the expense of added complexity. Make sure to avoid fitting an overly complex model (e.g., use k-fold cross validation). Often, the simpler (generalized) linear model is preferable to semi-paremetric or non-parametric approaches</p>
-<div id="semi-parametric-generalized-additive-models" class="section level6" number="13.1.1.2.1.1">
-<h6><span class="header-section-number">13.1.1.2.1.1</span> Semi-parametric: Generalized Additive Models</h6>
-<p><a href="http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models" class="uri">http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models</a></p>
+<div id="semi-parametric-or-non-parametric-regression-models"
+class="section level5" number="13.1.1.2.1">
+<h5><span class="header-section-number">13.1.1.2.1</span>
+Semi-parametric or non-parametric regression models</h5>
+<p><a href="http://www.lisa.stat.vt.edu/?q=node/7517"
+class="uri">http://www.lisa.stat.vt.edu/?q=node/7517</a></p>
+<p>Note: using semi-parametric or non-parametric models increases fit in
+context of nonlinearity at the expense of added complexity. Make sure to
+avoid fitting an overly complex model (e.g., use k-fold cross
+validation). Often, the simpler (generalized) linear model is preferable
+to semi-paremetric or non-parametric approaches</p>
+<div id="semi-parametric-generalized-additive-models"
+class="section level6" number="13.1.1.2.1.1">
+<h6><span class="header-section-number">13.1.1.2.1.1</span>
+Semi-parametric: Generalized Additive Models</h6>
+<p><a
+href="http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models"
+class="uri">http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models</a></p>
 <pre class="r fold-show"><code>generalizedAdditiveModel &lt;- gam(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                 family = gaussian(),
                                 data = mydata, na.action = na.exclude)
@@ -1714,25 +1845,34 @@ GCV = 3.9191  Scale est. = 3.915     n = 2874</code></pre>
 a multiple of shorter object length</code></pre>
 <pre><code>Error in glm.control(nthreads = 1, irls.reg = 0, epsilon = 1e-07, maxit = 200, : unused arguments (nthreads = 1, irls.reg = 0, mgcv.tol = 1e-07, mgcv.half = 15, rank.tol = 1.49011611938477e-08, nlm = list(7, 1e-06, 2, 1e-04, 200, FALSE), optim = list(1e+07), newton = list(1e-06, 5, 2, 30, FALSE), outerPIsteps = 0, idLinksBases = TRUE, scalePenalty = TRUE, efs.lspmax = 15, efs.tol = 0.1, keepData = FALSE, scale.est = &quot;fletcher&quot;, edge.correct = FALSE)</code></pre>
 </div>
-<div id="non-parametric-nearest-neighbor-kernel-regression" class="section level6" number="13.1.1.2.1.2">
-<h6><span class="header-section-number">13.1.1.2.1.2</span> Non-parametric: Nearest-Neighbor Kernel Regression</h6>
+<div id="non-parametric-nearest-neighbor-kernel-regression"
+class="section level6" number="13.1.1.2.1.2">
+<h6><span class="header-section-number">13.1.1.2.1.2</span>
+Non-parametric: Nearest-Neighbor Kernel Regression</h6>
 </div>
 </div>
 </div>
 </div>
 <div id="exogeneity" class="section level3" number="13.1.2">
 <h3><span class="header-section-number">13.1.2</span> 2. Exogeneity</h3>
-<p>Exogeneity means that the association between predictors and outcome is fully causal and unrelated to other variables.</p>
+<p>Exogeneity means that the association between predictors and outcome
+is fully causal and unrelated to other variables.</p>
 <div id="ways-to-test-1" class="section level4" number="13.1.2.1">
-<h4><span class="header-section-number">13.1.2.1</span> Ways to Test</h4>
+<h4><span class="header-section-number">13.1.2.1</span> Ways to
+Test</h4>
 <ul>
 <li>Durbin-Wu-Hausman test of endogeneity</li>
 </ul>
-<div id="durbin-wu-hausman-test-of-endogeneity" class="section level5" number="13.1.2.1.1">
-<h5><span class="header-section-number">13.1.2.1.1</span> Durbin-Wu-Hausman test of endogeneity</h5>
-<p>The instrumental variables (2SLS) estimator is implemented in the <code>R</code> package <code>AER</code> as command:</p>
+<div id="durbin-wu-hausman-test-of-endogeneity" class="section level5"
+number="13.1.2.1.1">
+<h5><span class="header-section-number">13.1.2.1.1</span>
+Durbin-Wu-Hausman test of endogeneity</h5>
+<p>The instrumental variables (2SLS) estimator is implemented in the
+<code>R</code> package <code>AER</code> as command:</p>
 <pre class="r fold-show"><code>ivreg(y ~ x1 + x2 + w1 + w2 | z1 + z2 + z3 + w1 + w2)</code></pre>
-<p>where <code>x1</code> and <code>x2</code> are endogenous regressors, <code>w1</code> and <code>w2</code> exogeneous regressors, and <code>z1</code> to <code>z3</code> are excluded instruments.</p>
+<p>where <code>x1</code> and <code>x2</code> are endogenous regressors,
+<code>w1</code> and <code>w2</code> exogeneous regressors, and
+<code>z1</code> to <code>z3</code> are excluded instruments.</p>
 <p>Durbin-Wu-Hausman test:</p>
 <pre class="r fold-show"><code>hsng2 &lt;- read.dta(&quot;http://www.stata-press.com/data/r11/hsng2.dta&quot;)
 
@@ -1765,8 +1905,11 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 22.86 on 47 degrees of freedom
 Multiple R-Squared: 0.5989, Adjusted R-squared: 0.5818 
 Wald test: 42.66 on 2 and 47 DF,  p-value: 2.731e-11 </code></pre>
-<p>The Eicker-Huber-White covariance estimator which is robust to heteroscedastic error terms is reported after estimation with <code>vcov = sandwich</code> in <code>coeftest()</code></p>
-<p>First stage results are reported by explicitly estimating them. For example:</p>
+<p>The Eicker-Huber-White covariance estimator which is robust to
+heteroscedastic error terms is reported after estimation with
+<code>vcov = sandwich</code> in <code>coeftest()</code></p>
+<p>First stage results are reported by explicitly estimating them. For
+example:</p>
 <pre class="r fold-show"><code>first &lt;- lm(hsngval ~ pcturban + faminc + reg2 + reg3 + reg4, data = hsng2)
 
 summary(first)</code></pre>
@@ -1793,7 +1936,9 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 9253 on 44 degrees of freedom
 Multiple R-squared:  0.6908,    Adjusted R-squared:  0.6557 
 F-statistic: 19.66 on 5 and 44 DF,  p-value: 3.032e-10</code></pre>
-<p>In case of a single endogenous variable (K = 1), the F-statistic to assess weak instruments is reported after estimating the first stage with, for example:</p>
+<p>In case of a single endogenous variable (K = 1), the F-statistic to
+assess weak instruments is reported after estimating the first stage
+with, for example:</p>
 <pre class="r fold-show"><code>waldtest(first, . ~ . - faminc - reg2 - reg3 - reg4)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1810,41 +1955,69 @@ F-statistic: 19.66 on 5 and 44 DF,  p-value: 3.032e-10</code></pre>
 </div>
 </div>
 <div id="ways-to-handle-1" class="section level4" number="13.1.2.2">
-<h4><span class="header-section-number">13.1.2.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.2.2</span> Ways to
+Handle</h4>
 <ul>
 <li>Conduct an experiment/RCT with random assignment</li>
 <li>Instrumental variables</li>
 </ul>
 </div>
 </div>
-<div id="homoscedasticity-of-residuals" class="section level3" number="13.1.3">
-<h3><span class="header-section-number">13.1.3</span> 3. Homoscedasticity of residuals</h3>
-<p>Homoscedasticity of the residuals means that the variance of the residuals does not differ as a function of the outcome/predictors (i.e., the residuals show constant variance as a function of outcome/predictors).</p>
+<div id="homoscedasticity-of-residuals" class="section level3"
+number="13.1.3">
+<h3><span class="header-section-number">13.1.3</span> 3.
+Homoscedasticity of residuals</h3>
+<p>Homoscedasticity of the residuals means that the variance of the
+residuals does not differ as a function of the outcome/predictors (i.e.,
+the residuals show constant variance as a function of
+outcome/predictors).</p>
 <div id="ways-to-test-2" class="section level4" number="13.1.3.1">
-<h4><span class="header-section-number">13.1.3.1</span> Ways to Test</h4>
+<h4><span class="header-section-number">13.1.3.1</span> Ways to
+Test</h4>
 <ul>
-<li>Plot residuals vs. outcome and predictor variables (<a href="#residualPlots">Residual Plots</a>)</li>
-<li>Plot residuals vs. fitted values (<a href="#residualPlots">Residual Plots</a>)</li>
+<li>Plot residuals vs. outcome and predictor variables (<a
+href="#residualPlots">Residual Plots</a>)</li>
+<li>Plot residuals vs. fitted values (<a href="#residualPlots">Residual
+Plots</a>)</li>
 <li>Time Series data: Plot residuals vs. time</li>
 <li>Spread-level plot</li>
-<li>Breusch-Pagan test: <code>bptest()</code> function from <code>lmtest</code> package</li>
+<li>Breusch-Pagan test: <code>bptest()</code> function from
+<code>lmtest</code> package</li>
 <li>Goldfeld-Quandt Test</li>
 </ul>
-<div id="residuals-vs.-outcome-and-predictor-variables" class="section level5" number="13.1.3.1.1">
-<h5><span class="header-section-number">13.1.3.1.1</span> Residuals vs. outcome and predictor variables</h5>
-<p>Plot residuals, or perhaps their absolute values, versus the outcome and predictor variables (<a href="#residualPlots">Residual Plots</a>). Examine whether residual variance is constant at all levels of other variables or whether it increases/decreases as a function of another variable (or shows some others structure, e.g., small variance at low and high levels of a predictor and high variance in the middle). Note that this is <em>different than whether the residuals show non-linearities</em>—i.e., a non-horizontal line, which would indicate a <a href="#linearAssociation">nonlinear association between variables</a> (see Assumption #1, above). Rather, here we are examining whether there is change in the variance as a function of another variable (e.g., a fan-shaped <a href="#residualPlots">Residual Plot</a>)</p>
+<div id="residuals-vs.-outcome-and-predictor-variables"
+class="section level5" number="13.1.3.1.1">
+<h5><span class="header-section-number">13.1.3.1.1</span> Residuals
+vs. outcome and predictor variables</h5>
+<p>Plot residuals, or perhaps their absolute values, versus the outcome
+and predictor variables (<a href="#residualPlots">Residual Plots</a>).
+Examine whether residual variance is constant at all levels of other
+variables or whether it increases/decreases as a function of another
+variable (or shows some others structure, e.g., small variance at low
+and high levels of a predictor and high variance in the middle). Note
+that this is <em>different than whether the residuals show
+non-linearities</em>—i.e., a non-horizontal line, which would indicate a
+<a href="#linearAssociation">nonlinear association between variables</a>
+(see Assumption #1, above). Rather, here we are examining whether there
+is change in the variance as a function of another variable (e.g., a
+fan-shaped <a href="#residualPlots">Residual Plot</a>)</p>
 </div>
 <div id="spread-level-plot" class="section level5" number="13.1.3.1.2">
-<h5><span class="header-section-number">13.1.3.1.2</span> Spread-level plot</h5>
-<p>Examining whether level (e.g., mean) depends on spread (e.g., variance)—plot of log of the absolute Studentized residuals against the log of the fitted values</p>
+<h5><span class="header-section-number">13.1.3.1.2</span> Spread-level
+plot</h5>
+<p>Examining whether level (e.g., mean) depends on spread (e.g.,
+variance)—plot of log of the absolute Studentized residuals against the
+log of the fitted values</p>
 <pre class="r fold-show"><code>spreadLevelPlot(multipleRegressionModel)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <pre><code>
 Suggested power transformation:  0.5304728 </code></pre>
 </div>
 <div id="breusch-pagan-test" class="section level5" number="13.1.3.1.3">
-<h5><span class="header-section-number">13.1.3.1.3</span> Breusch-Pagan test</h5>
-<p><a href="http://www.inside-r.org/packages/cran/lmtest/docs/bptest" class="uri">http://www.inside-r.org/packages/cran/lmtest/docs/bptest</a></p>
+<h5><span class="header-section-number">13.1.3.1.3</span> Breusch-Pagan
+test</h5>
+<p><a href="http://www.inside-r.org/packages/cran/lmtest/docs/bptest"
+class="uri">http://www.inside-r.org/packages/cran/lmtest/docs/bptest</a></p>
 <pre class="r fold-show"><code>bptest(multipleRegressionModel)</code></pre>
 <pre><code>
     studentized Breusch-Pagan test
@@ -1852,8 +2025,10 @@ Suggested power transformation:  0.5304728 </code></pre>
 data:  multipleRegressionModel
 BP = 94.638, df = 2, p-value &lt; 2.2e-16</code></pre>
 </div>
-<div id="goldfeld-quandt-test" class="section level5" number="13.1.3.1.4">
-<h5><span class="header-section-number">13.1.3.1.4</span> Goldfeld-Quandt Test</h5>
+<div id="goldfeld-quandt-test" class="section level5"
+number="13.1.3.1.4">
+<h5><span class="header-section-number">13.1.3.1.4</span>
+Goldfeld-Quandt Test</h5>
 <pre class="r fold-show"><code>gqtest(multipleRegressionModel)</code></pre>
 <pre><code>
     Goldfeld-Quandt test
@@ -1862,15 +2037,19 @@ data:  multipleRegressionModel
 GQ = 1.0755, df1 = 1434, df2 = 1434, p-value = 0.08417
 alternative hypothesis: variance increases from segment 1 to 2</code></pre>
 </div>
-<div id="test-of-dependence-of-spread-on-level" class="section level5" number="13.1.3.1.5">
-<h5><span class="header-section-number">13.1.3.1.5</span> Test of dependence of spread on level</h5>
+<div id="test-of-dependence-of-spread-on-level" class="section level5"
+number="13.1.3.1.5">
+<h5><span class="header-section-number">13.1.3.1.5</span> Test of
+dependence of spread on level</h5>
 <pre class="r fold-show"><code>ncvTest(multipleRegressionModel)</code></pre>
 <pre><code>Non-constant Variance Score Test 
 Variance formula: ~ fitted.values 
 Chisquare = 232.1196, Df = 1, p = &lt; 2.22e-16</code></pre>
 </div>
-<div id="test-of-dependence-of-spread-on-predictors" class="section level5" number="13.1.3.1.6">
-<h5><span class="header-section-number">13.1.3.1.6</span> Test of dependence of spread on predictors</h5>
+<div id="test-of-dependence-of-spread-on-predictors"
+class="section level5" number="13.1.3.1.6">
+<h5><span class="header-section-number">13.1.3.1.6</span> Test of
+dependence of spread on predictors</h5>
 <pre class="r fold-show"><code>ncvTest(multipleRegressionModel, ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum)</code></pre>
 <pre><code>Non-constant Variance Score Test 
 Variance formula: ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum 
@@ -1878,23 +2057,44 @@ Chisquare = 233.2878, Df = 2, p = &lt; 2.22e-16</code></pre>
 </div>
 </div>
 <div id="ways-to-handle-2" class="section level4" number="13.1.3.2">
-<h4><span class="header-section-number">13.1.3.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.3.2</span> Ways to
+Handle</h4>
 <ul>
-<li>If residual variance increases as a function of the fitted values, consider a poisson regression model (especially for count data), for which the variance does increase with the mean</li>
-<li>If residual variance differs as a function of model predictors, consider adding interactions/product terms (the effect of one variable depends on the level of another variable)</li>
-<li>Try transforming the outcome variable to be normally distributed (log-transform if the errors seem consistent in percentage rather than absolute terms)</li>
-<li>If the error variance is proportional to a variable <span class="math inline">\(z\)</span>, then fit the model using Weighted Least Squares (WLS), with the weights given be <span class="math inline">\(1/z\)</span></li>
-<li>Weighted least squares (WLS) using the “weights” argument of the <code>lm()</code> function; to get weights, see: <a href="https://stats.stackexchange.com/a/100410/20338" class="uri">https://stats.stackexchange.com/a/100410/20338</a></li>
-<li>Huber-White standard errors (a.k.a. “Sandwich” estimates) from a heteroscedasticity-corrected covariance matrix
+<li>If residual variance increases as a function of the fitted values,
+consider a poisson regression model (especially for count data), for
+which the variance does increase with the mean</li>
+<li>If residual variance differs as a function of model predictors,
+consider adding interactions/product terms (the effect of one variable
+depends on the level of another variable)</li>
+<li>Try transforming the outcome variable to be normally distributed
+(log-transform if the errors seem consistent in percentage rather than
+absolute terms)</li>
+<li>If the error variance is proportional to a variable <span
+class="math inline">\(z\)</span>, then fit the model using Weighted
+Least Squares (WLS), with the weights given be <span
+class="math inline">\(1/z\)</span></li>
+<li>Weighted least squares (WLS) using the “weights” argument of the
+<code>lm()</code> function; to get weights, see: <a
+href="https://stats.stackexchange.com/a/100410/20338"
+class="uri">https://stats.stackexchange.com/a/100410/20338</a></li>
+<li>Huber-White standard errors (a.k.a. “Sandwich” estimates) from a
+heteroscedasticity-corrected covariance matrix
 <ul>
-<li><code>coeftest()</code> function from the <code>sandwich</code> package along with hccm sandwich estimates from the <code>car</code> package</li>
-<li><code>robcov()</code> function from the <code>rms</code> package</li>
+<li><code>coeftest()</code> function from the <code>sandwich</code>
+package along with hccm sandwich estimates from the <code>car</code>
+package</li>
+<li><code>robcov()</code> function from the <code>rms</code>
+package</li>
 </ul></li>
-<li>Time series data: ARCH (auto-regressive conditional heteroscedasticity) models</li>
-<li>Time series data: seasonal patterns can be addressed by applying log transformation to outcome variable</li>
+<li>Time series data: ARCH (auto-regressive conditional
+heteroscedasticity) models</li>
+<li>Time series data: seasonal patterns can be addressed by applying log
+transformation to outcome variable</li>
 </ul>
-<div id="huber-white-standard-errors" class="section level5" number="13.1.3.2.1">
-<h5><span class="header-section-number">13.1.3.2.1</span> Huber-White standard errors</h5>
+<div id="huber-white-standard-errors" class="section level5"
+number="13.1.3.2.1">
+<h5><span class="header-section-number">13.1.3.2.1</span> Huber-White
+standard errors</h5>
 <p>Standard errors (SEs) on the diagonal increase</p>
 <pre class="r fold-show"><code>vcov(multipleRegressionModel)</code></pre>
 <pre><code>                          (Intercept) bpi_antisocialT1Sum
@@ -1982,21 +2182,31 @@ Linear Regression Model
 </div>
 </div>
 <div id="errors-are-independent" class="section level3" number="13.1.4">
-<h3><span class="header-section-number">13.1.4</span> 4. Errors are independent</h3>
-<p>Independent errors means that the errors are uncorrelated with each other.</p>
+<h3><span class="header-section-number">13.1.4</span> 4. Errors are
+independent</h3>
+<p>Independent errors means that the errors are uncorrelated with each
+other.</p>
 <div id="ways-to-test-3" class="section level4" number="13.1.4.1">
-<h4><span class="header-section-number">13.1.4.1</span> Ways to Test</h4>
+<h4><span class="header-section-number">13.1.4.1</span> Ways to
+Test</h4>
 <ul>
-<li>Plot residuals vs. predictors (<a href="#residualPlots">Residual Plots</a>)</li>
-<li>Time Series data: Residual time series plot (residuals vs. row number)</li>
+<li>Plot residuals vs. predictors (<a href="#residualPlots">Residual
+Plots</a>)</li>
+<li>Time Series data: Residual time series plot (residuals vs. row
+number)</li>
 <li>Time Series data: Table or plot of residual autocorrelations</li>
-<li>Time Series data: Durbin-Watson statistic for test of significant residual autocorrelation at lag 1</li>
+<li>Time Series data: Durbin-Watson statistic for test of significant
+residual autocorrelation at lag 1</li>
 </ul>
 </div>
 <div id="ways-to-handle-3" class="section level4" number="13.1.4.2">
-<h4><span class="header-section-number">13.1.4.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.4.2</span> Ways to
+Handle</h4>
 <ul>
-<li>Generalized least squares (GLS) models are capable of handling correlated errors: <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html</a></li>
+<li>Generalized least squares (GLS) models are capable of handling
+correlated errors: <a
+href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html"
+class="uri">https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html</a></li>
 <li>Regression with cluster variable
 <ul>
 <li><code>robcov()</code> from <code>rms</code> package</li>
@@ -2004,30 +2214,43 @@ Linear Regression Model
 <li><a href="hlm.html">Hierarchical linear modeling</a>
 <ul>
 <li><a href="hlm.html#linear">Linear mixed effects models</a></li>
-<li><a href="hlm.html#generalized">Generalized linear mixed effects models</a></li>
+<li><a href="hlm.html#generalized">Generalized linear mixed effects
+models</a></li>
 <li><a href="hlm.html#nonlinear">Nonlinear mixed effects models</a></li>
 </ul></li>
 </ul>
 </div>
 </div>
 <div id="no-multicollinearity" class="section level3" number="13.1.5">
-<h3><span class="header-section-number">13.1.5</span> 5. No multicollinearity</h3>
-<p>Multicollinearity occurs when the predictors are correlated with each other.</p>
+<h3><span class="header-section-number">13.1.5</span> 5. No
+multicollinearity</h3>
+<p>Multicollinearity occurs when the predictors are correlated with each
+other.</p>
 <div id="ways-to-test-4" class="section level4" number="13.1.5.1">
-<h4><span class="header-section-number">13.1.5.1</span> Ways to Test</h4>
+<h4><span class="header-section-number">13.1.5.1</span> Ways to
+Test</h4>
 <ul>
 <li>Variance Inflation Factor (VIF)</li>
-<li>Generalized Variance Inflation Factor (GVIF)—when models have related regressors (multiple polynomial terms or contrasts from same predictor)</li>
+<li>Generalized Variance Inflation Factor (GVIF)—when models have
+related regressors (multiple polynomial terms or contrasts from same
+predictor)</li>
 <li>Correlation</li>
 <li>Tolerance</li>
 <li>Condition Index</li>
 </ul>
-<div id="variance-inflation-factor-vif" class="section level5" number="13.1.5.1.1">
-<h5><span class="header-section-number">13.1.5.1.1</span> Variance Inflation Factor (VIF)</h5>
+<div id="variance-inflation-factor-vif" class="section level5"
+number="13.1.5.1.1">
+<h5><span class="header-section-number">13.1.5.1.1</span> Variance
+Inflation Factor (VIF)</h5>
 <p><span class="math display">\[
 \text{VIF} = 1/\text{Tolerance}
 \]</span></p>
-<p>If the variance inflation factor of a predictor variable were 5.27 (<span class="math inline">\(\sqrt{5.27} = 2.3\)</span>), this means that the standard error for the coefficient of that predictor variable is 2.3 times as large (i.e., confidence interval is 2.3 times wider) as it would be if that predictor variable were uncorrelated with the other predictor variables.</p>
+<p>If the variance inflation factor of a predictor variable were 5.27
+(<span class="math inline">\(\sqrt{5.27} = 2.3\)</span>), this means
+that the standard error for the coefficient of that predictor variable
+is 2.3 times as large (i.e., confidence interval is 2.3 times wider) as
+it would be if that predictor variable were uncorrelated with the other
+predictor variables.</p>
 <p>VIF = 1: Not correlated<br />
 1 &lt; VIF &lt; 5: Moderately correlated<br />
 VIF &gt; 5 to 10: Highly correlated (multicollinearity present)</p>
@@ -2035,13 +2258,18 @@ VIF &gt; 5 to 10: Highly correlated (multicollinearity present)</p>
 <pre><code>    bpi_antisocialT1Sum bpi_anxiousDepressedSum 
                1.291545                1.291545 </code></pre>
 </div>
-<div id="generalized-variance-inflation-factor-gvif" class="section level5" number="13.1.5.1.2">
-<h5><span class="header-section-number">13.1.5.1.2</span> Generalized Variance Inflation Factor (GVIF)</h5>
-<p>Useful when models have related regressors (multiple polynomial terms or contrasts from same predictor)</p>
+<div id="generalized-variance-inflation-factor-gvif"
+class="section level5" number="13.1.5.1.2">
+<h5><span class="header-section-number">13.1.5.1.2</span> Generalized
+Variance Inflation Factor (GVIF)</h5>
+<p>Useful when models have related regressors (multiple polynomial terms
+or contrasts from same predictor)</p>
 </div>
 <div id="correlation" class="section level5" number="13.1.5.1.3">
-<h5><span class="header-section-number">13.1.5.1.3</span> Correlation</h5>
-<p>correlation among all independent variables the correlation coefficients should be smaller than .08</p>
+<h5><span class="header-section-number">13.1.5.1.3</span>
+Correlation</h5>
+<p>correlation among all independent variables the correlation
+coefficients should be smaller than .08</p>
 <pre class="r fold-show"><code>cor(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_anxiousDepressedSum&quot;)], use = &quot;pairwise.complete.obs&quot;)</code></pre>
 <pre><code>                        bpi_antisocialT1Sum bpi_anxiousDepressedSum
 bpi_antisocialT1Sum                1.000000                0.497279
@@ -2049,7 +2277,8 @@ bpi_anxiousDepressedSum            0.497279                1.000000</code></pre>
 </div>
 <div id="tolerance" class="section level5" number="13.1.5.1.4">
 <h5><span class="header-section-number">13.1.5.1.4</span> Tolerance</h5>
-<p>The tolerance is an index of the influence of one independent variable on all other independent variables.</p>
+<p>The tolerance is an index of the influence of one independent
+variable on all other independent variables.</p>
 <p><span class="math display">\[
 \text{tolerance} = 1/\text{VIF}
 \]</span></p>
@@ -2057,9 +2286,15 @@ bpi_anxiousDepressedSum            0.497279                1.000000</code></pre>
 T &lt; 0.01: there certainly is multicollinarity in the data</p>
 </div>
 <div id="condition-index" class="section level5" number="13.1.5.1.5">
-<h5><span class="header-section-number">13.1.5.1.5</span> Condition Index</h5>
-<p>The condition index is calculated using a factor analysis on the independent variables. Values of 10-30 indicate a mediocre multicollinearity in the regression variables. Values &gt; 30 indicate strong multicollinearity.</p>
-<p>For how to interpret, see here: <a href="https://stats.stackexchange.com/a/87610/20338" class="uri">https://stats.stackexchange.com/a/87610/20338</a></p>
+<h5><span class="header-section-number">13.1.5.1.5</span> Condition
+Index</h5>
+<p>The condition index is calculated using a factor analysis on the
+independent variables. Values of 10-30 indicate a mediocre
+multicollinearity in the regression variables. Values &gt; 30 indicate
+strong multicollinearity.</p>
+<p>For how to interpret, see here: <a
+href="https://stats.stackexchange.com/a/87610/20338"
+class="uri">https://stats.stackexchange.com/a/87610/20338</a></p>
 <pre class="r fold-show"><code>ols_eigen_cindex(multipleRegressionModel)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2069,27 +2304,36 @@ T &lt; 0.01: there certainly is multicollinarity in the data</p>
 </div>
 </div>
 <div id="ways-to-handle-4" class="section level4" number="13.1.5.2">
-<h4><span class="header-section-number">13.1.5.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.5.2</span> Ways to
+Handle</h4>
 <ul>
 <li>Remove highly correlated (i.e., redundant) predictors</li>
 <li>Average the correlated predictors</li>
-<li><a href="pca.html">Principal Component Analysis</a> for data reduction</li>
+<li><a href="pca.html">Principal Component Analysis</a> for data
+reduction</li>
 <li>Standardize predictors</li>
 <li>Center the data (deduct the mean)</li>
-<li>Singular-value decomposition of the model matrix or the mean-centered model matrix</li>
-<li>Conduct a <a href="#factorAnalysis.html">factor analysis</a> and rotate the factors to ensure independence of the factors</li>
+<li>Singular-value decomposition of the model matrix or the
+mean-centered model matrix</li>
+<li>Conduct a <a href="#factorAnalysis.html">factor analysis</a> and
+rotate the factors to ensure independence of the factors</li>
 </ul>
 </div>
 </div>
-<div id="errors-are-normally-distributed" class="section level3" number="13.1.6">
-<h3><span class="header-section-number">13.1.6</span> 6. Errors are normally distributed</h3>
+<div id="errors-are-normally-distributed" class="section level3"
+number="13.1.6">
+<h3><span class="header-section-number">13.1.6</span> 6. Errors are
+normally distributed</h3>
 <div id="ways-to-test-5" class="section level4" number="13.1.6.1">
-<h4><span class="header-section-number">13.1.6.1</span> Ways to Test</h4>
+<h4><span class="header-section-number">13.1.6.1</span> Ways to
+Test</h4>
 <ul>
 <li>Probability Plots
 <ul>
-<li><a href="#qqPlot">Normal Quantile (QQ) Plots</a> (based on non-cumulative distribution of residuals)</li>
-<li><a href="#ppPlot">Normal Probability (PP) Plots</a> (based on cumulative distribution of residuals)</li>
+<li><a href="#qqPlot">Normal Quantile (QQ) Plots</a> (based on
+non-cumulative distribution of residuals)</li>
+<li><a href="#ppPlot">Normal Probability (PP) Plots</a> (based on
+cumulative distribution of residuals)</li>
 </ul></li>
 <li><a href="#densityPlotResiduals">Density Plot of Residuals</a></li>
 <li>Statistical Tests
@@ -2103,7 +2347,8 @@ T &lt; 0.01: there certainly is multicollinarity in the data</p>
 </ul>
 </div>
 <div id="ways-to-handle-5" class="section level4" number="13.1.6.2">
-<h4><span class="header-section-number">13.1.6.2</span> Ways to Handle</h4>
+<h4><span class="header-section-number">13.1.6.2</span> Ways to
+Handle</h4>
 <ul>
 <li>Apply a transformation to the predictor or outcome variable</li>
 <li>Exclude outliers</li>
@@ -2111,16 +2356,23 @@ T &lt; 0.01: there certainly is multicollinarity in the data</p>
 <ul>
 <li>Best when no outliers: MM-type regression estimator
 <ul>
-<li><code>lmrob()</code>/<code>glmrob()</code> function of <code>robustbase</code> package</li>
-<li>Iteratively reweighted least squares (IRLS): <code>rlm(, method = "MM")</code> function of <code>MASS</code> package: <a href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm" class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></li>
+<li><code>lmrob()</code>/<code>glmrob()</code> function of
+<code>robustbase</code> package</li>
+<li>Iteratively reweighted least squares (IRLS):
+<code>rlm(, method = "MM")</code> function of <code>MASS</code> package:
+<a href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm"
+class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></li>
 </ul></li>
-<li>Most resistant to outliers: Least trimmed squares (LTS)—but not good as a standalone estimator, better for identifying outliers
+<li>Most resistant to outliers: Least trimmed squares (LTS)—but not good
+as a standalone estimator, better for identifying outliers
 <ul>
-<li><code>ltsReg()</code> function of <code>robustbase</code> package (best)</li>
+<li><code>ltsReg()</code> function of <code>robustbase</code> package
+(best)</li>
 </ul></li>
 <li>Best when single predictor: Theil-Sen estimator
 <ul>
-<li><code>mblm(, repeated = FALSE)</code> function of <code>mblm</code> package</li>
+<li><code>mblm(, repeated = FALSE)</code> function of <code>mblm</code>
+package</li>
 </ul></li>
 <li>Robust correlation
 <ul>
@@ -2133,15 +2385,21 @@ T &lt; 0.01: there certainly is multicollinarity in the data</p>
 </ul></li>
 <li>Not great options:
 <ul>
-<li>Quantile (L1) regression: <code>rq()</code> function of <code>quantreg</code> package</li>
+<li>Quantile (L1) regression: <code>rq()</code> function of
+<code>quantreg</code> package</li>
 </ul></li>
 </ul></li>
 </ul>
-<div id="transformations-of-outcome-variable" class="section level5" number="13.1.6.2.1">
-<h5><span class="header-section-number">13.1.6.2.1</span> Transformations of Outcome Variable</h5>
-<div id="box-cox-transformation" class="section level6" number="13.1.6.2.1.1">
-<h6><span class="header-section-number">13.1.6.2.1.1</span> Box-Cox Transformation</h6>
-<p>Useful if the outcome is strictly positive (or add a constant to outcome to make it strictly positive)</p>
+<div id="transformations-of-outcome-variable" class="section level5"
+number="13.1.6.2.1">
+<h5><span class="header-section-number">13.1.6.2.1</span>
+Transformations of Outcome Variable</h5>
+<div id="box-cox-transformation" class="section level6"
+number="13.1.6.2.1.1">
+<h6><span class="header-section-number">13.1.6.2.1.1</span> Box-Cox
+Transformation</h6>
+<p>Useful if the outcome is strictly positive (or add a constant to
+outcome to make it strictly positive)</p>
 <p>lambda = -1: inverse transformation<br />
 lambda = -0.5: 1/sqrt(Y)<br />
 lambda = 0: log transformation<br />
@@ -2150,20 +2408,29 @@ lambda = 0.333: cube root<br />
 lambda = 1: no transformation<br />
 lambda = 2: squared<br />
 </p>
-<div id="raw-distribution" class="section level7" number="13.1.6.2.1.1.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.1</span> Raw distribution</p>
+<div id="raw-distribution" class="section level7"
+number="13.1.6.2.1.1.1">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.1</span> Raw distribution</p>
 <pre class="r fold-show"><code>plot(density(na.omit(mydata$bpi_antisocialT2Sum)))</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 </div>
-<div id="add-constant-to-outcome-to-make-it-strictly-positive" class="section level7" number="13.1.6.2.1.1.2">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.2</span> Add constant to outcome to make it strictly positive</p>
+<div id="add-constant-to-outcome-to-make-it-strictly-positive"
+class="section level7" number="13.1.6.2.1.1.2">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.2</span> Add constant to
+outcome to make it strictly positive</p>
 <pre class="r fold-show"><code>strictlyPositiveDV &lt;- lm(bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                          data = mydata,
                          na.action = na.exclude)</code></pre>
 </div>
-<div id="identify-best-power-transformation-lambda" class="section level7" number="13.1.6.2.1.1.3">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.3</span> Identify best power transformation (lambda)</p>
-<p>Consider rounding the power to a common value (square root = .5; cube root = .333; squared = 2)</p>
+<div id="identify-best-power-transformation-lambda"
+class="section level7" number="13.1.6.2.1.1.3">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.3</span> Identify best power
+transformation (lambda)</p>
+<p>Consider rounding the power to a common value (square root = .5; cube
+root = .333; squared = 2)</p>
 <pre class="r fold-show"><code>boxCox(strictlyPositiveDV)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <pre class="r fold-show"><code>powerTransform(strictlyPositiveDV) </code></pre>
@@ -2186,17 +2453,25 @@ Likelihood ratio test that no transformation is needed
                            LRT df       pval
 LR test, lambda = (1) 853.8675  1 &lt; 2.22e-16</code></pre>
 </div>
-<div id="transform-the-dv" class="section level7" number="13.1.6.2.1.1.4">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.4</span> Transform the DV</p>
+<div id="transform-the-dv" class="section level7"
+number="13.1.6.2.1.1.4">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.4</span> Transform the DV</p>
 <pre class="r fold-show"><code>mydata$bpi_antisocialT2SumTransformed &lt;- bcPower(mydata$bpi_antisocialT2Sum + 1, coef(transformedDV))
 
 plot(density(na.omit(mydata$bpi_antisocialT2SumTransformed)))</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
 </div>
-<div id="compare-residuals-from-model-with-and-without-transformation" class="section level7" number="13.1.6.2.1.1.5">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.5</span> Compare residuals from model with and without transformation</p>
-<div id="model-without-transformation" class="section level8" number="13.1.6.2.1.1.5.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.5.1</span> Model without transformation</p>
+<div id="compare-residuals-from-model-with-and-without-transformation"
+class="section level7" number="13.1.6.2.1.1.5">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.5</span> Compare residuals
+from model with and without transformation</p>
+<div id="model-without-transformation" class="section level8"
+number="13.1.6.2.1.1.5.1">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.5.1</span> Model without
+transformation</p>
 <pre class="r fold-show"><code>summary(modelWithoutTransformation &lt;- lm(bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                          data = mydata,
                          na.action = na.exclude))</code></pre>
@@ -2224,8 +2499,11 @@ F-statistic: 509.6 on 2 and 2871 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre class="r fold-show"><code>plot(density(na.omit(studres(modelWithoutTransformation))))</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 </div>
-<div id="model-with-transformation" class="section level8" number="13.1.6.2.1.1.5.2">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.5.2</span> Model with transformation</p>
+<div id="model-with-transformation" class="section level8"
+number="13.1.6.2.1.1.5.2">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.5.2</span> Model with
+transformation</p>
 <pre class="r fold-show"><code>summary(modelWithTransformation &lt;- lm(bpi_antisocialT2SumTransformed ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                       data = mydata,
                                       na.action = na.exclude))</code></pre>
@@ -2254,21 +2532,30 @@ F-statistic: 472.7 on 2 and 2871 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 </div>
 </div>
-<div id="constructed-variable-test-plot" class="section level7" number="13.1.6.2.1.1.6">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.6</span> Constructed Variable Test &amp; Plot</p>
-<p>A significant <em>p</em>-value indicates a strong need to transform variable:</p>
+<div id="constructed-variable-test-plot" class="section level7"
+number="13.1.6.2.1.1.6">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.6</span> Constructed Variable
+Test &amp; Plot</p>
+<p>A significant <em>p</em>-value indicates a strong need to transform
+variable:</p>
 <pre class="r fold-show"><code>multipleRegressionModel_constructedVariable &lt;- update(multipleRegressionModel, . ~ . + boxCoxVariable(bpi_antisocialT1Sum + 1))
 summary(multipleRegressionModel_constructedVariable)$coef[&quot;boxCoxVariable(bpi_antisocialT1Sum + 1)&quot;, , drop = FALSE]</code></pre>
 <pre><code>                                           Estimate Std. Error   t value
 boxCoxVariable(bpi_antisocialT1Sum + 1) -0.06064732 0.04683415 -1.294938
                                          Pr(&gt;|t|)
 boxCoxVariable(bpi_antisocialT1Sum + 1) 0.1954457</code></pre>
-<p>Plot allows us to see whether the need for transformation is spread through data or whether it is just dependent on a small fraction of observations:</p>
+<p>Plot allows us to see whether the need for transformation is spread
+through data or whether it is just dependent on a small fraction of
+observations:</p>
 <pre class="r fold-show"><code>avPlots(multipleRegressionModel_constructedVariable, &quot;boxCoxVariable(bpi_antisocialT1Sum + 1)&quot;)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 </div>
-<div id="inverse-response-plot" class="section level7" number="13.1.6.2.1.1.7">
-<p class="heading"><span class="header-section-number">13.1.6.2.1.1.7</span> Inverse Response Plot</p>
+<div id="inverse-response-plot" class="section level7"
+number="13.1.6.2.1.1.7">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.1.1.7</span> Inverse Response
+Plot</p>
 <p>The black line is the best-fitting power transformation:</p>
 <pre class="r fold-show"><code>inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2))</code></pre>
 <img src="regression_files/figure-html/unnamed-chunk-66-1.png" width="672" />
@@ -2279,16 +2566,22 @@ boxCoxVariable(bpi_antisocialT1Sum + 1) 0.1954457</code></pre>
 </div>
 </div>
 </div>
-<div id="yeo-johnson-transformations" class="section level6" number="13.1.6.2.1.2">
-<h6><span class="header-section-number">13.1.6.2.1.2</span> Yeo-Johnson Transformations</h6>
+<div id="yeo-johnson-transformations" class="section level6"
+number="13.1.6.2.1.2">
+<h6><span class="header-section-number">13.1.6.2.1.2</span> Yeo-Johnson
+Transformations</h6>
 <p>Useful if the outcome is not strictly positive.</p>
 <pre class="r fold-show"><code>yjPower(DV, lambda)</code></pre>
 </div>
 </div>
-<div id="transformations-of-predictor-variable" class="section level5" number="13.1.6.2.2">
-<h5><span class="header-section-number">13.1.6.2.2</span> Transformations of Predictor Variable</h5>
-<div id="component-plus-residual-plots-partial-residual-plots" class="section level6" number="13.1.6.2.2.1">
-<h6><span class="header-section-number">13.1.6.2.2.1</span> Component-Plus-Residual Plots (Partial Residual Plots)</h6>
+<div id="transformations-of-predictor-variable" class="section level5"
+number="13.1.6.2.2">
+<h5><span class="header-section-number">13.1.6.2.2</span>
+Transformations of Predictor Variable</h5>
+<div id="component-plus-residual-plots-partial-residual-plots"
+class="section level6" number="13.1.6.2.2.1">
+<h6><span class="header-section-number">13.1.6.2.2.1</span>
+Component-Plus-Residual Plots (Partial Residual Plots)</h6>
 <p>Linear model:</p>
 <pre class="r fold-show"><code>crPlots(multipleRegressionModelNoMissing, order = 1)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
@@ -2331,9 +2624,13 @@ F-statistic: 341.5 on 3 and 2870 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre class="r fold-show"><code>crPlots(multipleRegressionModel_quadratic, order = 1)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 </div>
-<div id="ceres-plot-combining-conditional-expectations-and-residuals" class="section level6" number="13.1.6.2.2.2">
-<h6><span class="header-section-number">13.1.6.2.2.2</span> CERES Plot (Combining conditional Expectations and RESiduals)</h6>
-<p>Useful when nonlinear associations among the predictors are very strong (component-plus-residual plots may appear nonlinear even though the true partial regression is linear, a phenonomen called leakage)</p>
+<div id="ceres-plot-combining-conditional-expectations-and-residuals"
+class="section level6" number="13.1.6.2.2.2">
+<h6><span class="header-section-number">13.1.6.2.2.2</span> CERES Plot
+(Combining conditional Expectations and RESiduals)</h6>
+<p>Useful when nonlinear associations among the predictors are very
+strong (component-plus-residual plots may appear nonlinear even though
+the true partial regression is linear, a phenonomen called leakage)</p>
 <pre class="r fold-show"><code>ceresPlots(multipleRegressionModel)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
 <pre class="r fold-show"><code>ceresPlots(multipleRegressionModel_quadratic)</code></pre>
@@ -2344,9 +2641,12 @@ skipped in drawing CERES plots.</code></pre>
 <pre><code>Error in plot.window(...): need finite &#39;ylim&#39; values</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-71-2.png" width="672" /></p>
 </div>
-<div id="box-tidwell-method-for-choosing-predictor-transformations" class="section level6" number="13.1.6.2.2.3">
-<h6><span class="header-section-number">13.1.6.2.2.3</span> Box-Tidwell Method for Choosing Predictor Transformations</h6>
-<p>predictors must be strictly positive (or add a constant to make it strictly positive)</p>
+<div id="box-tidwell-method-for-choosing-predictor-transformations"
+class="section level6" number="13.1.6.2.2.3">
+<h6><span class="header-section-number">13.1.6.2.2.3</span> Box-Tidwell
+Method for Choosing Predictor Transformations</h6>
+<p>predictors must be strictly positive (or add a constant to make it
+strictly positive)</p>
 <pre class="r fold-show"><code>boxTidwell(bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1),
            other.x = NULL, #list variables not to be transformed in other.x
            data = mydata,
@@ -2357,8 +2657,10 @@ I(bpi_anxiousDepressedSum + 1)       0.36689             -1.0650   0.2869
 
 iterations =  4 </code></pre>
 </div>
-<div id="constructed-variables-plot" class="section level6" number="13.1.6.2.2.4">
-<h6><span class="header-section-number">13.1.6.2.2.4</span> Constructed-Variables Plot</h6>
+<div id="constructed-variables-plot" class="section level6"
+number="13.1.6.2.2.4">
+<h6><span class="header-section-number">13.1.6.2.2.4</span>
+Constructed-Variables Plot</h6>
 <pre class="r fold-show"><code>multipleRegressionModel_cv &lt;- lm(bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1) + I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum)) + I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum)),
                               data = mydata,
                               na.action = na.exclude)
@@ -2380,18 +2682,26 @@ I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum)) 0.05984953 0.9522831</
 </div>
 </div>
 <div id="robust-models" class="section level5" number="13.1.6.2.3">
-<h5><span class="header-section-number">13.1.6.2.3</span> Robust models</h5>
+<h5><span class="header-section-number">13.1.6.2.3</span> Robust
+models</h5>
 <p>Resources</p>
 <ul>
-<li>For comparison of methods, see Book: “Modern Methods for Robust Regression”</li>
-<li><a href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm" class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></li>
-<li><a href="http://stats.stackexchange.com/a/46234/20338" class="uri">http://stats.stackexchange.com/a/46234/20338</a></li>
-<li><a href="http://cran.r-project.org/web/views/Robust.html" class="uri">http://cran.r-project.org/web/views/Robust.html</a></li>
+<li>For comparison of methods, see Book: “Modern Methods for Robust
+Regression”</li>
+<li><a href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm"
+class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></li>
+<li><a href="http://stats.stackexchange.com/a/46234/20338"
+class="uri">http://stats.stackexchange.com/a/46234/20338</a></li>
+<li><a href="http://cran.r-project.org/web/views/Robust.html"
+class="uri">http://cran.r-project.org/web/views/Robust.html</a></li>
 </ul>
-<div id="robust-correlation" class="section level6" number="13.1.6.2.3.1">
-<h6><span class="header-section-number">13.1.6.2.3.1</span> Robust correlation</h6>
+<div id="robust-correlation" class="section level6"
+number="13.1.6.2.3.1">
+<h6><span class="header-section-number">13.1.6.2.3.1</span> Robust
+correlation</h6>
 <div id="spearmans-rho" class="section level7" number="13.1.6.2.3.1.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.1</span> Spearman’s rho</p>
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.1</span> Spearman’s rho</p>
 <p>Spearman’s rho is a non-parametric correlation.</p>
 <pre class="r fold-show"><code>cor.test(mydata$bpi_antisocialT1Sum, mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers</code></pre>
 <pre><code>
@@ -2418,140 +2728,145 @@ sample estimates:
       rho 
 0.4956973 </code></pre>
 </div>
-<div id="minimum-vollume-ellipsoid" class="section level7" number="13.1.6.2.3.1.2">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.2</span> Minimum vollume ellipsoid</p>
+<div id="minimum-vollume-ellipsoid" class="section level7"
+number="13.1.6.2.3.1.2">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.2</span> Minimum vollume
+ellipsoid</p>
 <pre class="r fold-show"><code>cov.mve(na.omit(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)]), cor = TRUE)</code></pre>
 <pre><code>$center
 bpi_antisocialT1Sum bpi_antisocialT2Sum 
-           2.245701            2.272330 
+           2.389211            2.061872 
 
 $cov
                     bpi_antisocialT1Sum bpi_antisocialT2Sum
-bpi_antisocialT1Sum            2.524242            1.493955
-bpi_antisocialT2Sum            1.493955            3.122528
+bpi_antisocialT1Sum            3.093205            1.515277
+bpi_antisocialT2Sum            1.515277            2.368370
 
 $msg
-[1] &quot;140 singular samples of size 3 out of 1500&quot;
+[1] &quot;138 singular samples of size 3 out of 1500&quot;
 
 $crit
-[1] 3.756884
+[1] 3.76178
 
 $best
    [1]    1    3    8    9   10   12   13   14   15   16   17   18   19   21
-  [15]   22   23   24   32   34   39   40   42   43   44   46   48   50   51
-  [29]   55   56   57   59   60   61   65   67   70   71   73   76   79   80
-  [43]   81   82   86   87   88   93   94   95   97   98   99  102  104  105
-  [57]  106  107  108  116  117  119  121  122  123  124  129  130  131  132
-  [71]  133  134  139  140  142  143  145  146  148  149  150  153  154  155
-  [85]  160  161  164  168  170  176  177  178  179  180  181  182  183  184
-  [99]  187  188  190  191  192  194  195  196  197  198  200  201  203  205
- [113]  206  207  209  213  214  227  228  229  231  232  233  234  235  236
- [127]  237  238  239  241  242  243  244  245  248  249  251  253  254  255
- [141]  256  261  263  265  268  272  275  280  281  282  284  288  289  290
- [155]  293  294  295  296  297  298  299  300  301  304  307  308  310  311
- [169]  313  315  317  329  330  331  332  333  334  335  339  341  342  343
- [183]  345  357  359  364  367  370  371  374  376  379  380  381  382  386
- [197]  387  388  389  390  391  392  397  399  403  404  407  408  409  410
- [211]  411  413  416  421  422  423  425  426  430  431  432  435  438  440
- [225]  441  442  443  444  445  448  449  450  451  453  454  455  456  459
- [239]  461  462  463  464  466  468  469  471  473  474  477  478  483  484
- [253]  486  492  495  497  498  499  501  502  503  504  505  506  507  509
- [267]  510  513  518  519  520  521  522  523  524  525  527  528  529  531
- [281]  532  533  534  535  536  537  538  539  541  543  545  546  550  553
- [295]  554  557  564  566  568  572  578  579  581  582  583  585  599  600
- [309]  605  608  615  616  617  618  619  620  621  622  623  625  626  627
- [323]  631  633  634  635  636  637  639  641  642  643  646  647  648  649
- [337]  650  651  654  660  661  662  667  670  673  674  675  676  679  680
- [351]  681  682  683  685  687  691  693  696  701  705  706  707  710  713
- [365]  714  715  717  718  719  720  721  722  723  724  728  730  732  733
- [379]  734  737  741  742  743  744  745  746  747  751  752  758  762  763
- [393]  769  772  774  776  779  780  783  785  786  789  791  798  799  801
- [407]  803  805  808  809  810  811  812  813  814  817  818  819  822  824
- [421]  826  827  828  829  832  834  836  837  838  839  840  847  848  849
- [435]  854  857  858  859  860  862  865  866  867  868  869  871  872  873
- [449]  874  880  881  883  888  889  890  892  895  898  899  900  901  902
- [463]  903  904  905  906  907  909  912  913  914  918  919  920  921  923
- [477]  925  926  927  928  931  932  933  934  935  936  937  939  940  943
- [491]  944  946  949  950  951  954  955  956  957  958  960  962  964  965
- [505]  967  970  972  973  974  975  976  977  980  983  985  987  988  990
- [519]  998 1001 1002 1003 1004 1005 1006 1007 1009 1013 1014 1015 1016 1017
- [533] 1021 1023 1024 1025 1026 1027 1029 1030 1032 1034 1035 1036 1037 1040
- [547] 1041 1043 1044 1047 1050 1051 1055 1057 1058 1061 1062 1064 1065 1066
- [561] 1067 1072 1075 1076 1079 1083 1086 1087 1088 1091 1094 1095 1097 1101
- [575] 1105 1109 1111 1112 1113 1115 1119 1121 1123 1124 1125 1128 1129 1136
- [589] 1138 1139 1144 1145 1146 1147 1148 1149 1150 1152 1154 1158 1160 1162
- [603] 1164 1165 1171 1172 1176 1177 1178 1179 1180 1181 1182 1184 1185 1186
- [617] 1187 1188 1189 1197 1198 1200 1201 1203 1205 1206 1207 1208 1214 1215
- [631] 1216 1217 1218 1219 1220 1221 1223 1225 1229 1230 1231 1232 1233 1234
- [645] 1235 1242 1243 1244 1245 1246 1247 1248 1249 1250 1251 1254 1255 1259
- [659] 1261 1262 1263 1265 1266 1267 1269 1271 1272 1274 1275 1276 1280 1282
- [673] 1283 1284 1285 1287 1288 1290 1291 1292 1293 1294 1296 1299 1301 1303
- [687] 1304 1306 1309 1310 1311 1312 1314 1315 1316 1318 1319 1320 1322 1323
- [701] 1325 1326 1333 1334 1336 1337 1338 1339 1343 1344 1346 1347 1349 1350
- [715] 1352 1353 1354 1355 1357 1358 1359 1360 1361 1362 1363 1365 1366 1369
- [729] 1370 1371 1372 1373 1374 1375 1377 1381 1383 1387 1388 1389 1390 1391
- [743] 1393 1395 1396 1397 1398 1399 1400 1401 1405 1408 1412 1413 1414 1417
- [757] 1419 1421 1422 1423 1426 1428 1430 1432 1433 1434 1438 1439 1440 1444
- [771] 1445 1448 1449 1451 1456 1458 1459 1464 1465 1467 1469 1471 1477 1479
- [785] 1483 1484 1485 1486 1489 1495 1499 1500 1502 1506 1508 1513 1514 1515
- [799] 1516 1518 1519 1521 1522 1524 1525 1527 1531 1532 1533 1534 1535 1536
- [813] 1537 1539 1540 1541 1542 1543 1544 1545 1547 1549 1560 1561 1563 1565
- [827] 1569 1571 1572 1575 1576 1577 1583 1585 1586 1588 1589 1590 1591 1592
- [841] 1593 1594 1595 1596 1597 1598 1600 1602 1604 1605 1611 1612 1613 1614
- [855] 1617 1621 1623 1625 1626 1627 1634 1640 1641 1644 1656 1657 1661 1662
- [869] 1664 1672 1673 1674 1675 1677 1686 1687 1689 1690 1691 1692 1694 1699
- [883] 1701 1704 1705 1708 1710 1711 1713 1714 1716 1719 1721 1722 1724 1731
- [897] 1732 1736 1738 1742 1750 1753 1754 1757 1759 1760 1761 1763 1764 1765
- [911] 1766 1770 1772 1774 1775 1778 1780 1781 1791 1795 1797 1798 1801 1802
- [925] 1803 1804 1806 1807 1808 1809 1812 1813 1814 1815 1817 1818 1824 1827
- [939] 1834 1835 1836 1837 1840 1842 1846 1847 1848 1849 1850 1852 1855 1859
- [953] 1860 1861 1863 1864 1865 1866 1867 1868 1870 1881 1884 1888 1890 1892
- [967] 1893 1902 1904 1915 1921 1924 1925 1926 1927 1932 1933 1935 1936 1938
- [981] 1940 1943 1948 1950 1951 1954 1955 1956 1957 1960 1961 1962 1963 1966
- [995] 1967 1970 1971 1972 1973 1974 1979 1982 1984 1986 1990 1992 1993 1994
-[1009] 1995 1999 2001 2002 2005 2006 2011 2012 2013 2017 2019 2021 2022 2027
-[1023] 2029 2032 2034 2036 2038 2042 2043 2045 2049 2051 2053 2054 2055 2059
-[1037] 2061 2062 2068 2070 2071 2073 2074 2076 2077 2078 2079 2080 2081 2082
-[1051] 2083 2084 2085 2086 2087 2088 2089 2094 2096 2097 2099 2100 2101 2102
-[1065] 2104 2105 2106 2108 2110 2112 2113 2114 2116 2117 2118 2119 2123 2124
-[1079] 2125 2127 2129 2130 2131 2137 2138 2142 2143 2145 2151 2157 2158 2160
-[1093] 2161 2164 2166 2167 2169 2174 2175 2176 2177 2178 2179 2180 2181 2183
-[1107] 2185 2188 2189 2190 2191 2200 2201 2202 2203 2205 2206 2207 2208 2210
-[1121] 2212 2215 2219 2221 2222 2223 2225 2226 2227 2228 2231 2232 2234 2236
-[1135] 2237 2238 2239 2241 2242 2244 2245 2248 2249 2250 2257 2258 2259 2260
-[1149] 2261 2262 2264 2265 2271 2272 2273 2274 2280 2281 2283 2285 2291 2294
-[1163] 2297 2298 2299 2301 2302 2306 2307 2310 2311 2316 2319 2320 2322 2323
-[1177] 2324 2325 2326 2329 2330 2331 2332 2334 2336 2337 2338 2340 2341 2342
-[1191] 2343 2344 2345 2348 2349 2350 2351 2352 2364 2367 2368 2369 2371 2373
-[1205] 2377 2378 2379 2384 2385 2398 2400 2402 2410 2411 2414 2415 2416 2418
-[1219] 2420 2424 2425 2428 2429 2437 2442 2443 2444 2445 2446 2447 2448 2449
-[1233] 2450 2451 2452 2457 2462 2463 2464 2465 2466 2473 2475 2476 2477 2481
-[1247] 2483 2489 2490 2491 2495 2496 2498 2499 2500 2503 2504 2506 2507 2508
-[1261] 2510 2511 2512 2513 2522 2523 2525 2526 2527 2528 2529 2530 2531 2532
-[1275] 2533 2535 2536 2537 2539 2541 2543 2546 2554 2558 2561 2562 2563 2564
-[1289] 2565 2566 2568 2570 2571 2572 2573 2575 2578 2579 2580 2582 2583 2584
-[1303] 2585 2588 2591 2595 2597 2598 2599 2605 2606 2607 2613 2614 2615 2617
-[1317] 2618 2619 2621 2627 2629 2632 2633 2636 2638 2639 2642 2643 2644 2645
-[1331] 2647 2653 2655 2656 2657 2658 2659 2662 2663 2664 2667 2668 2670 2671
-[1345] 2672 2673 2674 2676 2677 2679 2680 2682 2683 2685 2686 2687 2688 2689
-[1359] 2692 2693 2694 2695 2698 2699 2700 2701 2703 2709 2711 2713 2714 2718
-[1373] 2721 2722 2723 2724 2729 2733 2736 2737 2738 2739 2740 2741 2746 2748
-[1387] 2753 2754 2757 2759 2760 2763 2764 2765 2766 2776 2777 2778 2781 2783
-[1401] 2784 2786 2787 2788 2789 2790 2792 2794 2795 2799 2800 2803 2804 2805
-[1415] 2806 2807 2808 2809 2810 2813 2814 2816 2817 2818 2819 2821 2822 2823
-[1429] 2825 2831 2832 2834 2838 2839 2844 2846 2847 2849 2850 2851 2852 2855
-[1443] 2856 2857 2862 2863 2868 2869 2870 2871 2872 2873
+  [15]   22   23   25   26   39   40   42   43   46   48   50   55   56   57
+  [29]   58   60   61   65   67   70   76   79   80   81   86   87   88   93
+  [43]   95   97   98   99  101  102  104  106  107  108  112  116  117  119
+  [57]  120  121  122  123  124  129  130  132  133  134  138  140  141  142
+  [71]  143  145  149  150  153  155  157  161  165  166  168  169  170  176
+  [85]  177  178  179  182  183  184  185  187  188  190  191  192  193  194
+  [99]  195  196  197  198  200  201  202  205  206  207  209  212  213  214
+ [113]  217  227  228  232  234  235  237  238  239  241  242  243  244  245
+ [127]  246  247  249  251  253  255  256  257  261  262  265  268  269  272
+ [141]  275  281  282  284  289  290  293  294  296  297  298  299  300  301
+ [155]  304  307  310  313  315  320  326  329  330  331  332  333  334  335
+ [169]  341  342  343  345  346  350  355  356  357  364  367  370  371  375
+ [183]  376  379  380  381  382  386  387  388  389  390  391  397  403  404
+ [197]  405  407  408  409  410  416  419  421  422  423  425  426  430  431
+ [211]  432  433  436  440  441  442  443  445  448  449  450  451  453  455
+ [225]  459  461  462  463  464  466  468  469  471  473  474  477  478  480
+ [239]  484  486  487  493  494  495  496  497  498  499  500  501  502  503
+ [253]  504  505  506  507  508  509  510  513  518  519  521  522  523  524
+ [267]  525  526  527  528  529  531  532  533  535  536  537  538  539  541
+ [281]  543  545  546  550  551  553  554  557  564  566  568  572  575  579
+ [295]  582  583  585  599  600  601  604  608  609  610  615  616  617  618
+ [309]  619  620  621  623  625  626  627  631  633  634  635  636  637  639
+ [323]  641  642  647  648  649  650  657  660  662  671  672  673  674  675
+ [337]  676  679  680  681  682  683  685  687  691  693  694  696  701  704
+ [351]  705  706  710  713  714  715  716  717  718  719  720  721  722  723
+ [365]  728  730  732  733  734  736  737  740  741  742  743  744  745  746
+ [379]  747  751  752  756  758  762  763  764  765  773  774  780  782  783
+ [393]  784  786  789  791  795  798  799  801  802  803  805  806  808  809
+ [407]  810  811  812  813  814  815  817  818  819  822  824  826  827  828
+ [421]  830  832  834  836  837  840  842  843  847  848  849  855  856  857
+ [435]  858  859  860  862  865  866  867  868  869  871  872  873  874  877
+ [449]  880  881  888  892  893  895  897  898  899  900  901  902  903  905
+ [463]  906  907  909  912  913  918  920  921  923  925  927  928  930  931
+ [477]  932  933  934  935  936  937  939  940  941  943  944  945  946  949
+ [491]  950  951  954  955  956  957  959  960  962  965  967  968  969  972
+ [505]  974  975  976  977  980  983  985  987  988  989  992  995  998 1000
+ [519] 1001 1003 1004 1006 1007 1008 1010 1013 1014 1015 1016 1017 1019 1020
+ [533] 1021 1022 1023 1024 1025 1026 1027 1029 1032 1033 1034 1037 1043 1044
+ [547] 1047 1050 1051 1053 1054 1055 1057 1058 1059 1061 1064 1066 1067 1070
+ [561] 1071 1072 1074 1075 1076 1079 1086 1087 1091 1094 1095 1097 1101 1105
+ [575] 1106 1109 1111 1112 1113 1114 1115 1119 1123 1124 1125 1128 1129 1130
+ [589] 1132 1136 1138 1139 1144 1145 1146 1147 1148 1149 1150 1152 1154 1158
+ [603] 1160 1162 1163 1164 1165 1170 1175 1176 1177 1178 1179 1180 1181 1184
+ [617] 1185 1186 1187 1188 1189 1197 1198 1200 1201 1203 1205 1206 1207 1214
+ [631] 1215 1216 1217 1218 1219 1220 1223 1224 1229 1230 1232 1233 1234 1235
+ [645] 1242 1243 1244 1246 1247 1248 1249 1250 1251 1254 1255 1259 1261 1262
+ [659] 1263 1265 1266 1267 1269 1271 1272 1273 1274 1275 1276 1277 1280 1281
+ [673] 1282 1283 1284 1285 1286 1287 1288 1289 1290 1291 1292 1293 1294 1296
+ [687] 1299 1301 1302 1303 1304 1306 1311 1312 1315 1316 1318 1319 1320 1322
+ [701] 1323 1325 1326 1333 1334 1336 1337 1338 1339 1341 1343 1344 1347 1348
+ [715] 1349 1350 1352 1353 1354 1355 1357 1358 1360 1361 1363 1364 1365 1366
+ [729] 1368 1369 1370 1371 1372 1373 1374 1375 1376 1377 1380 1381 1382 1383
+ [743] 1386 1387 1389 1390 1391 1395 1396 1397 1398 1399 1401 1402 1403 1404
+ [757] 1408 1409 1412 1414 1415 1416 1417 1421 1422 1423 1424 1428 1430 1432
+ [771] 1433 1434 1438 1439 1440 1444 1445 1447 1448 1449 1456 1458 1459 1460
+ [785] 1464 1467 1468 1469 1470 1471 1483 1486 1489 1493 1495 1500 1502 1503
+ [799] 1504 1505 1506 1508 1513 1514 1515 1516 1517 1519 1521 1522 1524 1531
+ [813] 1532 1533 1534 1535 1536 1537 1539 1541 1543 1544 1545 1546 1547 1548
+ [827] 1549 1551 1554 1560 1562 1563 1565 1566 1569 1571 1572 1575 1576 1577
+ [841] 1579 1583 1584 1585 1586 1588 1590 1591 1592 1593 1594 1595 1596 1597
+ [855] 1598 1600 1604 1605 1606 1611 1612 1613 1614 1621 1623 1624 1625 1626
+ [869] 1627 1634 1640 1641 1644 1652 1653 1655 1656 1657 1664 1672 1674 1675
+ [883] 1687 1689 1690 1691 1692 1694 1695 1708 1709 1710 1711 1712 1714 1718
+ [897] 1722 1723 1724 1732 1738 1742 1750 1754 1757 1759 1760 1761 1763 1764
+ [911] 1765 1766 1772 1775 1778 1781 1788 1791 1795 1797 1798 1801 1803 1804
+ [925] 1806 1807 1809 1810 1812 1813 1817 1820 1821 1824 1827 1833 1834 1835
+ [939] 1836 1837 1840 1847 1848 1849 1850 1851 1852 1855 1856 1859 1860 1861
+ [953] 1863 1866 1868 1870 1879 1881 1884 1885 1888 1898 1902 1904 1910 1915
+ [967] 1920 1921 1923 1924 1925 1926 1927 1932 1933 1938 1941 1943 1945 1947
+ [981] 1950 1951 1954 1955 1956 1958 1960 1961 1962 1963 1967 1969 1970 1971
+ [995] 1972 1973 1974 1979 1981 1984 1985 1986 1988 1989 1990 1992 1993 1994
+[1009] 1995 1999 2002 2005 2006 2009 2011 2012 2017 2019 2021 2022 2024 2027
+[1023] 2029 2032 2034 2035 2036 2042 2043 2045 2049 2053 2055 2059 2061 2062
+[1037] 2063 2067 2068 2069 2071 2073 2074 2077 2078 2079 2080 2081 2082 2083
+[1051] 2084 2085 2086 2087 2088 2089 2094 2095 2096 2097 2099 2100 2101 2102
+[1065] 2104 2105 2108 2110 2113 2114 2116 2117 2118 2119 2123 2124 2125 2126
+[1079] 2127 2131 2138 2139 2140 2143 2145 2151 2157 2158 2160 2161 2165 2167
+[1093] 2168 2170 2171 2174 2175 2176 2177 2178 2179 2181 2183 2188 2189 2190
+[1107] 2191 2197 2200 2201 2202 2203 2205 2206 2207 2208 2210 2212 2219 2221
+[1121] 2222 2223 2225 2226 2227 2231 2232 2234 2236 2237 2238 2239 2248 2249
+[1135] 2253 2255 2257 2258 2259 2260 2261 2262 2264 2269 2271 2272 2273 2274
+[1149] 2275 2279 2280 2283 2290 2297 2298 2299 2301 2302 2305 2306 2307 2311
+[1163] 2314 2316 2317 2320 2321 2322 2323 2324 2325 2326 2327 2328 2329 2331
+[1177] 2332 2334 2337 2338 2340 2341 2343 2345 2348 2349 2350 2353 2354 2356
+[1191] 2359 2362 2364 2367 2368 2369 2371 2373 2376 2377 2378 2383 2384 2385
+[1205] 2386 2388 2390 2400 2402 2411 2414 2415 2416 2418 2420 2421 2424 2425
+[1219] 2428 2429 2431 2433 2434 2437 2442 2444 2445 2447 2448 2449 2450 2451
+[1233] 2452 2453 2454 2455 2458 2462 2463 2464 2465 2466 2469 2470 2472 2473
+[1247] 2477 2479 2481 2483 2485 2489 2490 2491 2495 2496 2497 2498 2499 2500
+[1261] 2503 2506 2507 2508 2510 2511 2520 2522 2523 2526 2527 2528 2529 2530
+[1275] 2531 2532 2533 2535 2536 2539 2542 2543 2546 2547 2554 2561 2562 2563
+[1289] 2565 2566 2571 2573 2575 2576 2577 2581 2582 2583 2584 2585 2588 2591
+[1303] 2597 2598 2599 2613 2614 2615 2618 2619 2620 2621 2627 2630 2634 2635
+[1317] 2636 2638 2639 2640 2641 2642 2644 2645 2646 2650 2653 2655 2656 2657
+[1331] 2658 2659 2663 2664 2667 2668 2669 2670 2673 2676 2678 2679 2680 2682
+[1345] 2685 2686 2687 2688 2689 2692 2693 2694 2695 2698 2700 2701 2703 2704
+[1359] 2705 2707 2709 2711 2713 2716 2717 2722 2723 2724 2727 2728 2729 2731
+[1373] 2733 2736 2738 2739 2740 2742 2746 2748 2753 2757 2759 2760 2763 2764
+[1387] 2765 2766 2769 2771 2773 2777 2778 2779 2781 2782 2783 2784 2786 2789
+[1401] 2790 2797 2799 2800 2803 2804 2806 2807 2809 2810 2813 2817 2819 2821
+[1415] 2825 2826 2831 2832 2834 2838 2839 2844 2846 2847 2848 2849 2850 2851
+[1429] 2852 2855 2856 2857 2862 2863 2864 2867 2868 2869 2870 2871 2873
 
 $cor
                     bpi_antisocialT1Sum bpi_antisocialT2Sum
-bpi_antisocialT1Sum           1.0000000           0.5321314
-bpi_antisocialT2Sum           0.5321314           1.0000000
+bpi_antisocialT1Sum           1.0000000           0.5598386
+bpi_antisocialT2Sum           0.5598386           1.0000000
 
 $n.obs
 [1] 2875</code></pre>
 </div>
-<div id="minimum-covariance-determinant" class="section level7" number="13.1.6.2.3.1.3">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.3</span> Minimum covariance determinant</p>
+<div id="minimum-covariance-determinant" class="section level7"
+number="13.1.6.2.3.1.3">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.3</span> Minimum covariance
+determinant</p>
 <pre class="r fold-show"><code>cov.mcd(na.omit(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)]), cor = TRUE)</code></pre>
 <pre><code>$center
 bpi_antisocialT1Sum bpi_antisocialT2Sum 
@@ -2563,7 +2878,7 @@ bpi_antisocialT1Sum            2.379036            1.096437
 bpi_antisocialT2Sum            1.096437            2.482409
 
 $msg
-[1] &quot;162 singular samples of size 3 out of 1500&quot;
+[1] &quot;136 singular samples of size 3 out of 1500&quot;
 
 $crit
 [1] -0.3839279
@@ -2689,8 +3004,11 @@ bpi_antisocialT2Sum           0.4511764           1.0000000
 $n.obs
 [1] 2875</code></pre>
 </div>
-<div id="winsorized-correlation" class="section level7" number="13.1.6.2.3.1.4">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.4</span> Winsorized correlation</p>
+<div id="winsorized-correlation" class="section level7"
+number="13.1.6.2.3.1.4">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.4</span> Winsorized
+correlation</p>
 <pre class="r fold-show"><code>correlation(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)], winsorize = 0.2, p_adjust = &quot;none&quot;)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2698,8 +3016,11 @@ $n.obs
   </script>
 </div>
 </div>
-<div id="percentage-bend-correlation" class="section level7" number="13.1.6.2.3.1.5">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.5</span> Percentage bend correlation</p>
+<div id="percentage-bend-correlation" class="section level7"
+number="13.1.6.2.3.1.5">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.5</span> Percentage bend
+correlation</p>
 <pre class="r fold-show"><code>correlation(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)], method = &quot;percentage&quot;, p_adjust = &quot;none&quot;)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2707,8 +3028,11 @@ $n.obs
   </script>
 </div>
 </div>
-<div id="biweight-midcorrelation" class="section level7" number="13.1.6.2.3.1.6">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.1.6</span> Biweight midcorrelation</p>
+<div id="biweight-midcorrelation" class="section level7"
+number="13.1.6.2.3.1.6">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.1.6</span> Biweight
+midcorrelation</p>
 <pre class="r fold-show"><code>correlation(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)], method = &quot;biweight&quot;, p_adjust = &quot;none&quot;)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2717,11 +3041,17 @@ $n.obs
 </div>
 </div>
 </div>
-<div id="robust-regression-with-a-single-predictor" class="section level6" number="13.1.6.2.3.2">
-<h6><span class="header-section-number">13.1.6.2.3.2</span> Robust regression with a single predictor</h6>
-<div id="theil-sen-estimator" class="section level7" number="13.1.6.2.3.2.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.2.1</span> Theil-Sen estimator</p>
-<p>The Theil-Sen single median estimator is robust to outliers; have to remove missing values first</p>
+<div id="robust-regression-with-a-single-predictor"
+class="section level6" number="13.1.6.2.3.2">
+<h6><span class="header-section-number">13.1.6.2.3.2</span> Robust
+regression with a single predictor</h6>
+<div id="theil-sen-estimator" class="section level7"
+number="13.1.6.2.3.2.1">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.2.1</span> Theil-Sen
+estimator</p>
+<p>The Theil-Sen single median estimator is robust to outliers; have to
+remove missing values first</p>
 <pre class="r fold-show"><code>mydata_subset &lt;- na.omit(mydata[,c(&quot;bpi_antisocialT1Sum&quot;,&quot;bpi_antisocialT2Sum&quot;)])[1:400,]
 mblm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum, dataframe = mydata_subset, repeated = FALSE)</code></pre>
 <pre><code>
@@ -2734,11 +3064,16 @@ Coefficients:
                 1.0                  0.6  </code></pre>
 </div>
 </div>
-<div id="robust-multiple-regression" class="section level6" number="13.1.6.2.3.3">
-<h6><span class="header-section-number">13.1.6.2.3.3</span> Robust multiple regression</h6>
+<div id="robust-multiple-regression" class="section level6"
+number="13.1.6.2.3.3">
+<h6><span class="header-section-number">13.1.6.2.3.3</span> Robust
+multiple regression</h6>
 <p>Best when no outliers: MM-type regression estimator</p>
-<div id="robust-linear-regression" class="section level7" number="13.1.6.2.3.3.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.3.1</span> Robust linear regression</p>
+<div id="robust-linear-regression" class="section level7"
+number="13.1.6.2.3.3.1">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.3.1</span> Robust linear
+regression</p>
 <p>MM-type regression estimator (best):</p>
 <pre class="r fold-show"><code>lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
    data = mydata,
@@ -2750,7 +3085,9 @@ lmrob(formula = bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressed
 Coefficients:
             (Intercept)      bpi_antisocialT1Sum  bpi_anxiousDepressedSum  
                  0.9440                   0.4914                   0.1577  </code></pre>
-<p>Iteratively reweighted least squares (IRLS): <a href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm" class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></p>
+<p>Iteratively reweighted least squares (IRLS): <a
+href="http://www.ats.ucla.edu/stat/r/dae/rreg.htm"
+class="uri">http://www.ats.ucla.edu/stat/r/dae/rreg.htm</a></p>
 <pre class="r fold-show"><code>rlm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
     data = mydata,
     na.action = na.exclude)</code></pre>
@@ -2767,8 +3104,11 @@ Degrees of freedom: 2874 total; 2871 residual
   (8656 observations deleted due to missingness)
 Scale estimate: 1.62 </code></pre>
 </div>
-<div id="robust-generalized-regression-1" class="section level7" number="13.1.6.2.3.3.2">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.3.2</span> Robust generalized regression</p>
+<div id="robust-generalized-regression-1" class="section level7"
+number="13.1.6.2.3.3.2">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.3.2</span> Robust generalized
+regression</p>
 <pre class="r fold-show"><code>glmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
     data = mydata,
     family = &quot;poisson&quot;,
@@ -2782,7 +3122,8 @@ Coefficients:
 
 Number of observations: 2874 
 Fitted by method  &#39;Mqle&#39; </code></pre>
-<p>Most resistant to outliers: Least trimmed squares (LTS)—but not good as a standalone estimator, better for identifying outliers</p>
+<p>Most resistant to outliers: Least trimmed squares (LTS)—but not good
+as a standalone estimator, better for identifying outliers</p>
 <pre class="r fold-show"><code>ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
        data = mydata,
        na.action = na.exclude)</code></pre>
@@ -2792,12 +3133,16 @@ ltsReg.formula(formula = bpi_antisocialT2Sum ~ bpi_antisocialT1Sum +     bpi_anx
 
 Coefficients:
               Intercept      bpi_antisocialT1Sum  bpi_anxiousDepressedSum  
-                 0.7440                   0.5433                   0.1525  
+                 0.7609                   0.5505                   0.1104  
 
 Scale estimate 1.758 </code></pre>
-<div id="not-great-options" class="section level8" number="13.1.6.2.3.3.2.1">
-<p class="heading"><span class="header-section-number">13.1.6.2.3.3.2.1</span> Not great options:</p>
-<p>Quantile (L1) regression: <code>rq()</code> function of quantreg package</p>
+<div id="not-great-options" class="section level8"
+number="13.1.6.2.3.3.2.1">
+<p class="heading"><span
+class="header-section-number">13.1.6.2.3.3.2.1</span> Not great
+options:</p>
+<p>Quantile (L1) regression: <code>rq()</code> function of quantreg
+package</p>
 <pre class="r fold-show"><code>rq(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
    data = mydata,
    na.action = na.exclude)</code></pre>
@@ -2817,13 +3162,19 @@ Degrees of freedom: 11530 total; 11527 residual</code></pre>
 </div>
 </div>
 </div>
-<div id="examining-model-assumptions" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Examining Model Assumptions</h2>
-<div id="distribution-of-residuals" class="section level3" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> Distribution of Residuals</h3>
+<div id="examining-model-assumptions" class="section level2"
+number="13.2">
+<h2><span class="header-section-number">13.2</span> Examining Model
+Assumptions</h2>
+<div id="distribution-of-residuals" class="section level3"
+number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Distribution of
+Residuals</h3>
 <div id="qqPlot" class="section level4" number="13.2.1.1">
 <h4><span class="header-section-number">13.2.1.1</span> QQ plots</h4>
-<p><a href="http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html" class="uri">http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html</a></p>
+<p><a
+href="http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html"
+class="uri">http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html</a></p>
 <pre class="r fold-show"><code>qqPlot(multipleRegressionModel, main = &quot;QQ Plot&quot;, id = TRUE)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <pre><code>[1] 8955 8956</code></pre>
@@ -2858,7 +3209,8 @@ ppPlot(rmsGeneralizedRegressionModel)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-87-5.png" width="672" /></p>
 </div>
 <div id="densityPlotResiduals" class="section level4" number="13.2.1.3">
-<h4><span class="header-section-number">13.2.1.3</span> Density Plot of Residuals</h4>
+<h4><span class="header-section-number">13.2.1.3</span> Density Plot of
+Residuals</h4>
 <pre class="r fold-show"><code>studentizedResiduals &lt;- na.omit(rstudent(multipleRegressionModel))
 plot(density(studentizedResiduals), col=&quot;red&quot;)
 xfit &lt;- seq(min(studentizedResiduals, na.rm=TRUE), max(studentizedResiduals, na.rm=TRUE), length=40)
@@ -2867,14 +3219,20 @@ lines(xfit, dnorm(xfit), col=&quot;gray&quot;) #compare to normal distribution</
 </div>
 </div>
 <div id="residualPlots" class="section level3" number="13.2.2">
-<h3><span class="header-section-number">13.2.2</span> Residual Plots</h3>
-<p>Residual plots are plots of the residuals versus observed/fitted values.</p>
-<p>Includes plots of a) model residuals versus observed values on predictors and b) model residuals versus model fitted values.</p>
+<h3><span class="header-section-number">13.2.2</span> Residual
+Plots</h3>
+<p>Residual plots are plots of the residuals versus observed/fitted
+values.</p>
+<p>Includes plots of a) model residuals versus observed values on
+predictors and b) model residuals versus model fitted values.</p>
 <p>Note: have to remove <code>na.action = na.exclude</code></p>
 <p>Tests include:</p>
 <ul>
-<li>lack-of-fit test for every numeric predictor, t-test for the regressor, added to the model, indicating no lack-of-fit for this type</li>
-<li>Tukey’s test for nonadditivity: adding the squares of the fitted values to the model and refitting (evaluates adequacy of model fit)</li>
+<li>lack-of-fit test for every numeric predictor, t-test for the
+regressor, added to the model, indicating no lack-of-fit for this
+type</li>
+<li>Tukey’s test for nonadditivity: adding the squares of the fitted
+values to the model and refitting (evaluates adequacy of model fit)</li>
 </ul>
 <pre class="r fold-show"><code>residualPlots(multipleRegressionModelNoMissing, id = TRUE)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
@@ -2886,22 +3244,33 @@ Tukey test                -2.3351          0.01954 *
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="marginalModelPlots" class="section level3" number="13.2.3">
-<h3><span class="header-section-number">13.2.3</span> Marginal Model Plots</h3>
-<p>Marginal model plots are plots of the outcome versus predictors/fitted values.</p>
-<p>Includes plots of a) observed outcome values versus values on predictors (ignoring the other predictors) and b) observed outcome values versus model fitted values.</p>
+<h3><span class="header-section-number">13.2.3</span> Marginal Model
+Plots</h3>
+<p>Marginal model plots are plots of the outcome versus
+predictors/fitted values.</p>
+<p>Includes plots of a) observed outcome values versus values on
+predictors (ignoring the other predictors) and b) observed outcome
+values versus model fitted values.</p>
 <pre class="r fold-show"><code>marginalModelPlots(multipleRegressionModel, sd = TRUE, id = TRUE)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 </div>
 <div id="addedVariablePlots" class="section level3" number="13.2.4">
-<h3><span class="header-section-number">13.2.4</span> Added-Variable Plots</h3>
-<p>Added-variable plots are plots of the partial association between the outcome and each predictor, controlling for all other predictors.</p>
-<p>Useful for identifying jointly influential observations and studying the impact of observations on the regression coefficients.</p>
-<p>y-axis: residuals from model with all predictors excluding the predictor of interest</p>
-<p>x-axis: residuals from model regressing predictor of interest on all other predictors</p>
+<h3><span class="header-section-number">13.2.4</span> Added-Variable
+Plots</h3>
+<p>Added-variable plots are plots of the partial association between the
+outcome and each predictor, controlling for all other predictors.</p>
+<p>Useful for identifying jointly influential observations and studying
+the impact of observations on the regression coefficients.</p>
+<p>y-axis: residuals from model with all predictors excluding the
+predictor of interest</p>
+<p>x-axis: residuals from model regressing predictor of interest on all
+other predictors</p>
 <pre class="r fold-show"><code>avPlots(multipleRegressionModel, id = TRUE)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
-<div id="refit-model-removing-jointly-influential-observations" class="section level4" number="13.2.4.1">
-<h4><span class="header-section-number">13.2.4.1</span> Refit model removing jointly influential observations</h4>
+<div id="refit-model-removing-jointly-influential-observations"
+class="section level4" number="13.2.4.1">
+<h4><span class="header-section-number">13.2.4.1</span> Refit model
+removing jointly influential observations</h4>
 <pre class="r fold-show"><code>multipleRegressionModel_removeJointlyInfluentialObs &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                                           data = mydata,
                                                           na.action = na.exclude,
@@ -2931,9 +3300,13 @@ SE                       0.0292  0.0295
 </div>
 <div id="outlier-test" class="section level3" number="13.2.5">
 <h3><span class="header-section-number">13.2.5</span> Outlier test</h3>
-<p>Locates the largest Studentized residuals in absolute value and computes the Bonferroni-corrected p-values based on a t-test for linear models.</p>
-<p>Test of outlyingness, i.e., how likely one would have a residual of a given magnitude in a normal distribution with the same sample size</p>
-<p>Note: it does not test how extreme an observation is relative to its distribution (i.e., leverage)</p>
+<p>Locates the largest Studentized residuals in absolute value and
+computes the Bonferroni-corrected p-values based on a t-test for linear
+models.</p>
+<p>Test of outlyingness, i.e., how likely one would have a residual of a
+given magnitude in a normal distribution with the same sample size</p>
+<p>Note: it does not test how extreme an observation is relative to its
+distribution (i.e., leverage)</p>
 <pre class="r fold-show"><code>outlierTest(multipleRegressionModel)</code></pre>
 <pre><code>     rstudent unadjusted p-value Bonferroni p
 8955 6.519574         8.2999e-11   2.3854e-07
@@ -2942,10 +3315,15 @@ SE                       0.0292  0.0295
 2560 4.914941         9.3800e-07   2.6958e-03
 1385 4.573975         4.9884e-06   1.4337e-02</code></pre>
 </div>
-<div id="observations-with-high-leverage" class="section level3" number="13.2.6">
-<h3><span class="header-section-number">13.2.6</span> Observations with high leverage</h3>
-<p>Identifies observations with high leverage (i.e., high hat values)</p>
-<p>hat values are an index of leverage (observations that are far from the center of the regressor space and have greater influence on OLS regression coefficients)</p>
+<div id="observations-with-high-leverage" class="section level3"
+number="13.2.6">
+<h3><span class="header-section-number">13.2.6</span> Observations with
+high leverage</h3>
+<p>Identifies observations with high leverage (i.e., high hat
+values)</p>
+<p>hat values are an index of leverage (observations that are far from
+the center of the regressor space and have greater influence on OLS
+regression coefficients)</p>
 <pre class="r fold-show"><code>hist(hatvalues(multipleRegressionModel))</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <pre class="r fold-show"><code>plot(hatvalues(multipleRegressionModel))</code></pre>
@@ -2962,9 +3340,14 @@ SE                       0.0292  0.0295
 <pre class="r fold-show"><code>leveragePlots(multipleRegressionModel, id = TRUE)</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-94-5.png" width="672" /></p>
 </div>
-<div id="observations-with-high-influence-on-ols-regression-coefficients" class="section level3" number="13.2.7">
-<h3><span class="header-section-number">13.2.7</span> Observations with high influence (on OLS regression coefficients)</h3>
-<p><a href="https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html" class="uri">https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html</a></p>
+<div
+id="observations-with-high-influence-on-ols-regression-coefficients"
+class="section level3" number="13.2.7">
+<h3><span class="header-section-number">13.2.7</span> Observations with
+high influence (on OLS regression coefficients)</h3>
+<p><a
+href="https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html"
+class="uri">https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html</a></p>
 <pre class="r fold-show"><code>head(influence.measures(multipleRegressionModel)$infmat)</code></pre>
 <pre><code>        dfb.1_     dfb.b_T1     dfb.b_DS       dffit     cov.r       cook.d
 1  0.000000000  0.000000000  0.000000000          NA 1.0000000           NA
@@ -3009,8 +3392,15 @@ SE                       0.0292  0.0295
 <p><img src="regression_files/figure-html/unnamed-chunk-97-3.png" width="672" /></p>
 </div>
 <div id="cooksDistance" class="section level3" number="13.2.10">
-<h3><span class="header-section-number">13.2.10</span> Cook’s Distance</h3>
-<p>Observations that are both outlying (have a high residual from the regression line) and have high leverage (are far from the center of the regressor space) have high influence on the OLS regression coefficients. An observation will have less influence if it lies on the regression line (not an outlier, i.e., has a low residual) or if it has low leverage (i.e., has a value near the center of a predictor’s distribution).</p>
+<h3><span class="header-section-number">13.2.10</span> Cook’s
+Distance</h3>
+<p>Observations that are both outlying (have a high residual from the
+regression line) and have high leverage (are far from the center of the
+regressor space) have high influence on the OLS regression coefficients.
+An observation will have less influence if it lies on the regression
+line (not an outlier, i.e., has a low residual) or if it has low
+leverage (i.e., has a value near the center of a predictor’s
+distribution).</p>
 <pre class="r fold-show"><code>head(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegressionModel), decreasing = TRUE)])</code></pre>
 <pre><code>      2765       1371       2767       8472       6170       6023 
 0.05488391 0.03624388 0.03624388 0.02358305 0.02323282 0.02315496 </code></pre>
@@ -3020,8 +3410,10 @@ SE                       0.0292  0.0295
 <p><img src="regression_files/figure-html/unnamed-chunk-98-2.png" width="672" /></p>
 <pre class="r fold-show"><code>plot(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegressionModel), decreasing = TRUE)])</code></pre>
 <p><img src="regression_files/figure-html/unnamed-chunk-98-3.png" width="672" /></p>
-<div id="refit-model-removing-values-with-high-cooks-distance" class="section level4" number="13.2.10.1">
-<h4><span class="header-section-number">13.2.10.1</span> Refit model removing values with high cook’s distance</h4>
+<div id="refit-model-removing-values-with-high-cooks-distance"
+class="section level4" number="13.2.10.1">
+<h4><span class="header-section-number">13.2.10.1</span> Refit model
+removing values with high cook’s distance</h4>
 <pre class="r fold-show"><code>multipleRegressionModel_2 &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
                                 data = mydata,
                                 na.action = na.exclude,
@@ -3051,8 +3443,12 @@ multipleRegressionModel_7 &lt;- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + b
                                 data = mydata,
                                 na.action = na.exclude,
                                 subset = -c(2765,1371,2767,8472,6170,6023,2766))</code></pre>
-<div id="examine-how-much-regression-coefficients-change-when-excluding-influential-observations" class="section level5" number="13.2.10.1.1">
-<h5><span class="header-section-number">13.2.10.1.1</span> Examine how much regression coefficients change when excluding influential observations</h5>
+<div
+id="examine-how-much-regression-coefficients-change-when-excluding-influential-observations"
+class="section level5" number="13.2.10.1.1">
+<h5><span class="header-section-number">13.2.10.1.1</span> Examine how
+much regression coefficients change when excluding influential
+observations</h5>
 <pre class="r fold-show"><code>compareCoefs(multipleRegressionModel, multipleRegressionModel_2, multipleRegressionModel_3, multipleRegressionModel_4, multipleRegressionModel_5, multipleRegressionModel_6, multipleRegressionModel_7)</code></pre>
 <pre><code>Calls:
 1: lm(formula = bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + 
@@ -3088,8 +3484,12 @@ SE                       0.0292  0.0290  0.0290  0.0289  0.0290  0.0290  0.0289
                                                                                </code></pre>
 </div>
 </div>
-<div id="examine-how-much-regression-coefficients-change-when-using-least-trimmed-squares-lts-that-is-resistant-to-outliers" class="section level4" number="13.2.10.2">
-<h4><span class="header-section-number">13.2.10.2</span> Examine how much regression coefficients change when using least trimmed squares (LTS) that is resistant to outliers</h4>
+<div
+id="examine-how-much-regression-coefficients-change-when-using-least-trimmed-squares-lts-that-is-resistant-to-outliers"
+class="section level4" number="13.2.10.2">
+<h4><span class="header-section-number">13.2.10.2</span> Examine how
+much regression coefficients change when using least trimmed squares
+(LTS) that is resistant to outliers</h4>
 <pre class="r fold-show"><code>coef(lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
         data = mydata,
         na.action=&quot;na.exclude&quot;))</code></pre>
@@ -3099,16 +3499,22 @@ SE                       0.0292  0.0290  0.0290  0.0289  0.0290  0.0290  0.0289
             data = mydata,
             na.action = &quot;na.exclude&quot;))</code></pre>
 <pre><code>              Intercept     bpi_antisocialT1Sum bpi_anxiousDepressedSum 
-              0.7439567               0.5432644               0.1524929 </code></pre>
+              0.7609294               0.5505406               0.1104467 </code></pre>
 </div>
 </div>
 <div id="resources" class="section level3" number="13.2.11">
 <h3><span class="header-section-number">13.2.11</span> Resources</h3>
 <p>Book: An R Companion to Applied Regression</p>
-<p><a href="http://people.duke.edu/~rnau/testing.htm" class="uri">http://people.duke.edu/~rnau/testing.htm</a></p>
-<p><a href="http://www.statmethods.net/stats/rdiagnostics.html" class="uri">http://www.statmethods.net/stats/rdiagnostics.html</a></p>
-<p><a href="http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html" class="uri">http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions" class="uri">https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions</a></p>
+<p><a href="http://people.duke.edu/~rnau/testing.htm"
+class="uri">http://people.duke.edu/~rnau/testing.htm</a></p>
+<p><a href="http://www.statmethods.net/stats/rdiagnostics.html"
+class="uri">http://www.statmethods.net/stats/rdiagnostics.html</a></p>
+<p><a
+href="http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html"
+class="uri">http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html</a></p>
+<p><a
+href="https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions"
+class="uri">https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions</a></p>
 </div>
 </div>
 </div>
@@ -3156,14 +3562,14 @@ loaded via a namespace (and not attached):
  [13] Brobdingnag_1.2-9      colorspace_2.0-3       highr_0.9             
  [16] knitr_1.40             rstudioapi_0.14        stats4_4.2.1          
  [19] bayesplot_1.9.0        labeling_0.4.2         rstan_2.26.13         
- [22] lgr_0.4.4              mnormt_2.1.1           datawizard_0.6.2      
+ [22] lgr_0.4.4              mnormt_2.1.1           datawizard_0.6.3      
  [25] farver_2.1.1           bridgesampling_1.1-2   coda_0.19-4           
- [28] vctrs_0.4.2            generics_0.1.3         TH.data_1.1-1         
+ [28] vctrs_0.5.0            generics_0.1.3         TH.data_1.1-1         
  [31] float_0.3-0            xfun_0.34              R6_2.5.1              
  [34] markdown_1.2           cachem_1.0.6           assertthat_0.2.1      
  [37] promises_1.2.0.1       scales_1.2.1           multcomp_1.4-20       
  [40] nnet_7.3-17            googlesheets4_1.0.1    gtable_0.3.1          
- [43] processx_3.7.0         goftest_1.2-3          rlang_1.0.6           
+ [43] processx_3.8.0         goftest_1.2-3          rlang_1.0.6           
  [46] MatrixModels_0.5-1     text2vec_0.6.2         splines_4.2.1         
  [49] gargle_1.2.1           broom_1.0.1            checkmate_2.1.0       
  [52] inline_0.3.19          yaml_2.3.6             reshape2_1.4.4        
@@ -3172,7 +3578,7 @@ loaded via a namespace (and not attached):
  [61] tensorA_0.36.2         tools_4.2.1            ellipsis_0.3.2        
  [64] jquerylib_0.1.4        posterior_1.3.1        RColorBrewer_1.1-3    
  [67] ggridges_0.5.4         plyr_1.8.7             base64enc_0.1-3       
- [70] ps_1.7.1               prettyunits_1.1.1      rpart_4.1.16          
+ [70] ps_1.7.2               prettyunits_1.1.1      rpart_4.1.16          
  [73] deldir_1.0-6           haven_2.5.1            cluster_2.1.3         
  [76] survey_4.1-1           fs_1.5.2               magrittr_2.0.3        
  [79] data.table_1.14.4      colourpicker_1.1.1     reprex_2.0.2          
@@ -3187,14 +3593,14 @@ loaded via a namespace (and not attached):
 [106] tzdb_0.3.0             RcppParallel_5.1.5     lubridate_1.8.0       
 [109] DBI_1.1.3              dbplyr_2.2.1           boot_1.3-28           
 [112] Matrix_1.5-1           cli_3.4.1              mitools_2.4           
-[115] insight_0.18.5         parallel_4.2.1         igraph_1.3.5          
+[115] insight_0.18.6         parallel_4.2.1         igraph_1.3.5          
 [118] pkgconfig_2.0.3        rsparse_0.5.1          foreach_1.5.2         
 [121] xml2_1.3.3             dygraphs_1.1.1.6       pbivnorm_0.6.0        
 [124] bslib_0.4.0            estimability_1.4.1     rvest_1.0.3           
 [127] distributional_0.3.1   callr_3.7.2            digest_0.6.30         
 [130] rmarkdown_2.17         cellranger_1.1.0       htmlTable_2.4.1       
-[133] nortest_1.0-4          curl_4.3.3             shiny_1.7.2           
-[136] nloptr_2.0.3           lifecycle_1.0.3        jsonlite_1.8.2        
+[133] nortest_1.0-4          curl_4.3.3             shiny_1.7.3           
+[136] nloptr_2.0.3           lifecycle_1.0.3        jsonlite_1.8.3        
 [139] viridisLite_0.4.1      fansi_1.0.3            pillar_1.8.1          
 [142] loo_2.5.1              fastmap_1.1.0          httr_1.4.4            
 [145] DEoptimR_1.0-11        pkgbuild_1.3.1         glue_1.6.2            

@@ -437,29 +437,43 @@ div.tocify {
 
 
 <div id="picking-a-chart-type" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Picking a Chart Type</h1>
-<p><a href="https://www.data-to-viz.com" class="uri">https://www.data-to-viz.com</a></p>
+<h1><span class="header-section-number">1</span> Picking a Chart
+Type</h1>
+<p><a href="https://www.data-to-viz.com"
+class="uri">https://www.data-to-viz.com</a></p>
 </div>
 <div id="gallery" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Gallery</h1>
-<p><a href="https://www.r-graph-gallery.com" class="uri">https://www.r-graph-gallery.com</a></p>
+<p><a href="https://www.r-graph-gallery.com"
+class="uri">https://www.r-graph-gallery.com</a></p>
 </div>
-<div id="resources-for-learning-r-syntax-for-figures" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Resources for Learning R Syntax for Figures</h1>
-<p><a href="https://www.statmethods.net/graphs/index.html" class="uri">https://www.statmethods.net/graphs/index.html</a></p>
-<p><a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a></p>
+<div id="resources-for-learning-r-syntax-for-figures"
+class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Resources for Learning
+R Syntax for Figures</h1>
+<p><a href="https://www.statmethods.net/graphs/index.html"
+class="uri">https://www.statmethods.net/graphs/index.html</a></p>
+<p><a href="http://www.cookbook-r.com/Graphs/"
+class="uri">http://www.cookbook-r.com/Graphs/</a></p>
 </div>
 <div id="petersen-lab-examples" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Petersen Lab Examples</h1>
-<p><a href="https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses" class="uri">https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses</a></p>
+<h1><span class="header-section-number">4</span> Petersen Lab
+Examples</h1>
+<p><a
+href="https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses"
+class="uri">https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses</a></p>
 </div>
 <div id="font" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Font</h1>
-<p>You can download the lab fonts for figures here<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>: <a href="https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3" class="uri">https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3</a></p>
+<p>You can download the lab fonts for figures here<a href="#fn1"
+class="footnote-ref" id="fnref1"><sup>1</sup></a>: <a
+href="https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3"
+class="uri">https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3</a></p>
 <div id="preamble" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Preamble</h2>
 <div id="install-libraries" class="section level3" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> Install Libraries</h3>
+<h3><span class="header-section-number">5.1.1</span> Install
+Libraries</h3>
 <pre class="r"><code>#install.packages(&quot;remotes&quot;)
 #remotes::install_git(&quot;https://research-git.uiowa.edu/PetersenLab/petersenlab.git&quot;)</code></pre>
 </div>
@@ -502,7 +516,8 @@ df[sample(1:n, size = 10), &quot;predictorOverplot&quot;] &lt;- NA
 df[sample(1:n, size = 10), &quot;outcomeOverplot&quot;] &lt;- NA</code></pre>
 </div>
 <div id="basic-scatterplot" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Basic Scatterplot</h2>
+<h2><span class="header-section-number">5.3</span> Basic
+Scatterplot</h2>
 <div id="base-r" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Base R</h3>
 <pre class="r"><code>plot(outcome ~ predictor, data = df)</code></pre>
@@ -510,7 +525,8 @@ df[sample(1:n, size = 10), &quot;outcomeOverplot&quot;] &lt;- NA</code></pre>
 <pre class="r"><code>plot(df$predictor, df$outcome)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <div id="best-fit-line" class="section level4" number="5.3.1.1">
-<h4><span class="header-section-number">5.3.1.1</span> Best-fit line</h4>
+<h4><span class="header-section-number">5.3.1.1</span> Best-fit
+line</h4>
 <pre class="r"><code>plot(outcome ~ predictor, data = df)
 abline(lm(outcome ~ predictor, data = df), col = &quot;red&quot;) #regression line (y~x)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
@@ -523,13 +539,15 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 </div>
 </div>
 <div id="ggplot2" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> <code>ggplot2</code></h3>
+<h3><span class="header-section-number">5.3.2</span>
+<code>ggplot2</code></h3>
 <pre class="r"><code>ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point() +
   theme_classic()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <div id="best-fit-line-1" class="section level4" number="5.3.2.1">
-<h4><span class="header-section-number">5.3.2.1</span> Best-fit line</h4>
+<h4><span class="header-section-number">5.3.2.1</span> Best-fit
+line</h4>
 <pre class="r"><code>ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point() +
   stat_smooth(method = &quot;lm&quot;, formula = y ~ x) +
@@ -547,96 +565,126 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 </div>
 </div>
 <div id="change-plot-style" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Change Plot Style</h2>
+<h2><span class="header-section-number">5.4</span> Change Plot
+Style</h2>
 <div id="change-theme" class="section level3" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Change Theme</h3>
 <pre class="r"><code>basePlot &lt;- ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point()</code></pre>
 <div id="default-theme" class="section level4" number="5.4.1.1">
-<h4><span class="header-section-number">5.4.1.1</span> Default Theme</h4>
+<h4><span class="header-section-number">5.4.1.1</span> Default
+Theme</h4>
 <pre class="r"><code>basePlot</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="grayscale-theme_gray" class="section level4" number="5.4.1.2">
-<h4><span class="header-section-number">5.4.1.2</span> Grayscale: <code>theme_gray()</code></h4>
+<h4><span class="header-section-number">5.4.1.2</span> Grayscale:
+<code>theme_gray()</code></h4>
 <pre class="r"><code>basePlot + theme_gray() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
-<div id="black-and-white-theme_bw" class="section level4" number="5.4.1.3">
-<h4><span class="header-section-number">5.4.1.3</span> Black-and-White: <code>theme_bw()</code></h4>
+<div id="black-and-white-theme_bw" class="section level4"
+number="5.4.1.3">
+<h4><span class="header-section-number">5.4.1.3</span> Black-and-White:
+<code>theme_bw()</code></h4>
 <pre class="r"><code>basePlot + theme_bw() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
-<div id="line-drawing-theme_linedraw" class="section level4" number="5.4.1.4">
-<h4><span class="header-section-number">5.4.1.4</span> Line Drawing: <code>theme_linedraw()</code></h4>
-<p>A theme with only black lines of various widths on white backgrounds, reminiscent of a line drawing. Note that this theme has some very thin lines (&lt;&lt; 1 pt) which some journals may refuse.</p>
+<div id="line-drawing-theme_linedraw" class="section level4"
+number="5.4.1.4">
+<h4><span class="header-section-number">5.4.1.4</span> Line Drawing:
+<code>theme_linedraw()</code></h4>
+<p>A theme with only black lines of various widths on white backgrounds,
+reminiscent of a line drawing. Note that this theme has some very thin
+lines (&lt;&lt; 1 pt) which some journals may refuse.</p>
 <pre class="r"><code>basePlot + theme_linedraw() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 <div id="light-theme_light" class="section level4" number="5.4.1.5">
-<h4><span class="header-section-number">5.4.1.5</span> Light: <code>theme_light()</code></h4>
+<h4><span class="header-section-number">5.4.1.5</span> Light:
+<code>theme_light()</code></h4>
 <pre class="r"><code>basePlot + theme_light() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 <div id="dark-theme_dark" class="section level4" number="5.4.1.6">
-<h4><span class="header-section-number">5.4.1.6</span> Dark: <code>theme_dark()</code></h4>
+<h4><span class="header-section-number">5.4.1.6</span> Dark:
+<code>theme_dark()</code></h4>
 <pre class="r"><code>basePlot + theme_dark() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="minimal-theme_minimal" class="section level4" number="5.4.1.7">
-<h4><span class="header-section-number">5.4.1.7</span> Minimal: <code>theme_minimal()</code></h4>
+<h4><span class="header-section-number">5.4.1.7</span> Minimal:
+<code>theme_minimal()</code></h4>
 <pre class="r"><code>basePlot + theme_minimal() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 <div id="classic-theme_classic" class="section level4" number="5.4.1.8">
-<h4><span class="header-section-number">5.4.1.8</span> Classic: <code>theme_classic()</code></h4>
+<h4><span class="header-section-number">5.4.1.8</span> Classic:
+<code>theme_classic()</code></h4>
 <pre class="r"><code>basePlot + theme_classic() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
-<div id="a-completely-empty-theme-theme_void" class="section level4" number="5.4.1.9">
-<h4><span class="header-section-number">5.4.1.9</span> A Completely Empty Theme: <code>theme_void()</code></h4>
+<div id="a-completely-empty-theme-theme_void" class="section level4"
+number="5.4.1.9">
+<h4><span class="header-section-number">5.4.1.9</span> A Completely
+Empty Theme: <code>theme_void()</code></h4>
 <pre class="r"><code>basePlot + theme_void() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
-<div id="visual-unit-tests-theme_test" class="section level4" number="5.4.1.10">
-<h4><span class="header-section-number">5.4.1.10</span> Visual Unit Tests: <code>theme_test()</code></h4>
+<div id="visual-unit-tests-theme_test" class="section level4"
+number="5.4.1.10">
+<h4><span class="header-section-number">5.4.1.10</span> Visual Unit
+Tests: <code>theme_test()</code></h4>
 <pre class="r"><code>basePlot + theme_test() + theme(text = element_text(family = &quot;Gotham&quot;))</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
-<div id="edward-tufte-theme_tufte" class="section level4" number="5.4.1.11">
-<h4><span class="header-section-number">5.4.1.11</span> Edward Tufte: <code>theme_tufte()</code></h4>
+<div id="edward-tufte-theme_tufte" class="section level4"
+number="5.4.1.11">
+<h4><span class="header-section-number">5.4.1.11</span> Edward Tufte:
+<code>theme_tufte()</code></h4>
 <p>Theme based on Edward Tufte.</p>
 <pre class="r"><code>basePlot + theme_tufte()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
-<div id="wall-street-journal-theme_wsj" class="section level4" number="5.4.1.12">
-<h4><span class="header-section-number">5.4.1.12</span> Wall Street Journal: <code>theme_wsj()</code></h4>
+<div id="wall-street-journal-theme_wsj" class="section level4"
+number="5.4.1.12">
+<h4><span class="header-section-number">5.4.1.12</span> Wall Street
+Journal: <code>theme_wsj()</code></h4>
 <p>Theme based on the publication, the Wall Street Journal.</p>
 <pre class="r"><code>basePlot + theme_wsj()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
-<div id="fivethirtyeight-theme_fivethirtyeight" class="section level4" number="5.4.1.13">
-<h4><span class="header-section-number">5.4.1.13</span> FiveThirtyEight: <code>theme_fivethirtyeight()</code></h4>
+<div id="fivethirtyeight-theme_fivethirtyeight" class="section level4"
+number="5.4.1.13">
+<h4><span class="header-section-number">5.4.1.13</span> FiveThirtyEight:
+<code>theme_fivethirtyeight()</code></h4>
 <p>Theme based on the publication, FiveThirtyEight.</p>
 <pre class="r"><code>basePlot + theme_fivethirtyeight()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
-<div id="the-economist-theme_economist" class="section level4" number="5.4.1.14">
-<h4><span class="header-section-number">5.4.1.14</span> The Economist: <code>theme_economist()</code></h4>
+<div id="the-economist-theme_economist" class="section level4"
+number="5.4.1.14">
+<h4><span class="header-section-number">5.4.1.14</span> The Economist:
+<code>theme_economist()</code></h4>
 <p>Theme based on the publication, The Economist.</p>
 <pre class="r"><code>basePlot + theme_economist()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
-<div id="stephen-few-theme_few" class="section level4" number="5.4.1.15">
-<h4><span class="header-section-number">5.4.1.15</span> Stephen Few: <code>theme_few()</code></h4>
-<p>Theme based on the rules and examples from Stephen Few’s <em>Show Me the Numbers</em> and “Practical Rules for Using Color in Charts”.</p>
+<div id="stephen-few-theme_few" class="section level4"
+number="5.4.1.15">
+<h4><span class="header-section-number">5.4.1.15</span> Stephen Few:
+<code>theme_few()</code></h4>
+<p>Theme based on the rules and examples from Stephen Few’s <em>Show Me
+the Numbers</em> and “Practical Rules for Using Color in Charts”.</p>
 <pre class="r"><code>basePlot + theme_few()</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 </div>
 </div>
-<div id="add-marginal-distributions" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Add Marginal Distributions</h2>
+<div id="add-marginal-distributions" class="section level2"
+number="5.5">
+<h2><span class="header-section-number">5.5</span> Add Marginal
+Distributions</h2>
 <pre class="r"><code>scatterplot &lt;- ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point() +
   theme_classic() +
@@ -665,8 +713,10 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 <pre class="r"><code>print(violinMarginal, newpage = TRUE)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
-<div id="density-plot-and-histogram" class="section level3" number="5.5.5">
-<h3><span class="header-section-number">5.5.5</span> Density Plot and Histogram</h3>
+<div id="density-plot-and-histogram" class="section level3"
+number="5.5.5">
+<h3><span class="header-section-number">5.5.5</span> Density Plot and
+Histogram</h3>
 <pre class="r"><code>densigramMarginal &lt;- ggMarginal(scatterplot, type = &quot;densigram&quot;, xparams = list(fill = &quot;gray&quot;), yparams = list(fill = &quot;gray&quot;))</code></pre>
 <pre class="r"><code>print(densigramMarginal, newpage = TRUE)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
@@ -684,7 +734,8 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 </div>
 <div id="align-coordinates" class="section level3" number="5.6.2">
-<h3><span class="header-section-number">5.6.2</span> Align Coordinates</h3>
+<h3><span class="header-section-number">5.6.2</span> Align
+Coordinates</h3>
 <pre class="r"><code>ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point() +
   stat_ellipse(alpha = 0.4, level = 0.95, geom = &quot;polygon&quot;, fill = &quot;red&quot;, color = &quot;red&quot;) +
@@ -698,7 +749,8 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 </div>
 <div id="reduce-dot-size" class="section level3" number="5.6.3">
-<h3><span class="header-section-number">5.6.3</span> Reduce Dot Size</h3>
+<h3><span class="header-section-number">5.6.3</span> Reduce Dot
+Size</h3>
 <pre class="r"><code>ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point(size = 0.5) +
   stat_ellipse(alpha = 0.4, level = 0.95, geom = &quot;polygon&quot;, fill = &quot;red&quot;, color = &quot;red&quot;) +
@@ -729,7 +781,8 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 <div id="bubble-chart" class="section level2" number="5.7">
 <h2><span class="header-section-number">5.7</span> Bubble Chart</h2>
 <div id="basic-bubble-chart" class="section level3" number="5.7.1">
-<h3><span class="header-section-number">5.7.1</span> Basic Bubble Chart</h3>
+<h3><span class="header-section-number">5.7.1</span> Basic Bubble
+Chart</h3>
 <pre class="r"><code>ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
   geom_count(aes(size = ..n..)) +
   scale_size_area() +
@@ -748,7 +801,8 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 </div>
 </div>
 <div id="dimensional-density" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> 2-Dimensional Density</h2>
+<h2><span class="header-section-number">5.8</span> 2-Dimensional
+Density</h2>
 <pre class="r"><code>ggplot(df, aes(x = predictor, y = outcome)) +
   stat_density_2d(aes(fill = ..density..), geom = &quot;raster&quot;, contour = FALSE) +
   scale_x_continuous(expand = c(0, 0)) +
@@ -760,10 +814,13 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
   )</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
-<div id="combined-ellipse-and-bubble-chart" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Combined Ellipse and Bubble Chart</h2>
+<div id="combined-ellipse-and-bubble-chart" class="section level2"
+number="5.9">
+<h2><span class="header-section-number">5.9</span> Combined Ellipse and
+Bubble Chart</h2>
 <div id="ggplot2-1" class="section level3" number="5.9.1">
-<h3><span class="header-section-number">5.9.1</span> <code>ggplot2</code></h3>
+<h3><span class="header-section-number">5.9.1</span>
+<code>ggplot2</code></h3>
 <pre class="r"><code>ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
   geom_count(alpha = .6, color = rgb(0,0,.7,.5)) +
   scale_size_continuous(breaks = c(1, 2, 3, 4), range = c(1, 7)) +
@@ -798,10 +855,14 @@ lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)</code></pre>
 <p><img src="figures_files/figure-html/unnamed-chunk-44-2.png" width="672" /></p>
 </div>
 <div id="other-implementation" class="section level3" number="5.9.2">
-<h3><span class="header-section-number">5.9.2</span> Other implementation</h3>
-<p>From: <a href="https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r" class="uri">https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r</a></p>
+<h3><span class="header-section-number">5.9.2</span> Other
+implementation</h3>
+<p>From: <a
+href="https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r"
+class="uri">https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r</a></p>
 <div id="ggplot2-2" class="section level4" number="5.9.2.1">
-<h4><span class="header-section-number">5.9.2.1</span> <code>ggplot2</code></h4>
+<h4><span class="header-section-number">5.9.2.1</span>
+<code>ggplot2</code></h4>
 <pre class="r"><code>df$x &lt;- df$predictorOverplot
 df$y &lt;- df$outcomeOverplot
 
@@ -824,7 +885,8 @@ ggplot(data = na.omit(df2), aes(x = x, y = y)) +
 <p><img src="figures_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 </div>
 <div id="base-r-1" class="section level4" number="5.9.2.2">
-<h4><span class="header-section-number">5.9.2.2</span> Base <code>R</code></h4>
+<h4><span class="header-section-number">5.9.2.2</span> Base
+<code>R</code></h4>
 <pre class="r"><code>do.it &lt;- function(df, type=&quot;confidence&quot;, ...) {
   require(ellipse)
   lm0 &lt;- lm(y ~ x, data=df)
@@ -851,8 +913,10 @@ do.it(df3, pch = 19, col = rgb(0,0,.7,.5))</code></pre>
 </div>
 </div>
 </div>
-<div id="visually-weighted-regression" class="section level2" number="5.10">
-<h2><span class="header-section-number">5.10</span> Visually-Weighted Regression</h2>
+<div id="visually-weighted-regression" class="section level2"
+number="5.10">
+<h2><span class="header-section-number">5.10</span> Visually-Weighted
+Regression</h2>
 <div id="default" class="section level3" number="5.10.1">
 <h3><span class="header-section-number">5.10.1</span> Default</h3>
 <pre class="r"><code>vwReg(outcome ~ predictor, data = df)</code></pre>
@@ -883,140 +947,216 @@ do.it(df3, pch = 19, col = rgb(0,0,.7,.5))</code></pre>
 </div>
 </div>
 </div>
-<div id="graphic-design-principles-for-data-visualization" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Graphic Design Principles for Data Visualization</h1>
-<p><a href="https://www.data-to-viz.com/caveats.html" class="uri">https://www.data-to-viz.com/caveats.html</a></p>
+<div id="graphic-design-principles-for-data-visualization"
+class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Graphic Design
+Principles for Data Visualization</h1>
+<p><a href="https://www.data-to-viz.com/caveats.html"
+class="uri">https://www.data-to-viz.com/caveats.html</a></p>
 </div>
 <div id="types-of-plots" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Types of Plots</h1>
 <div id="univariate-distribution" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Univariate Distribution</h2>
+<h2><span class="header-section-number">7.1</span> Univariate
+Distribution</h2>
 <p>Used for: distribution of one numeric variable</p>
 <div id="gallery-1" class="section level3" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Gallery</h3>
 <ul>
-<li>Violin chart: <a href="https://r-graph-gallery.com/violin.html" class="uri">https://r-graph-gallery.com/violin.html</a></li>
-<li>Density chart: <a href="https://r-graph-gallery.com/density-plot.html" class="uri">https://r-graph-gallery.com/density-plot.html</a></li>
-<li>Histogram: <a href="https://r-graph-gallery.com/histogram.html" class="uri">https://r-graph-gallery.com/histogram.html</a></li>
-<li>Boxplot: <a href="https://r-graph-gallery.com/boxplot.html" class="uri">https://r-graph-gallery.com/boxplot.html</a></li>
-<li>Ridgeline chart: <a href="https://r-graph-gallery.com/ridgeline-plot.html" class="uri">https://r-graph-gallery.com/ridgeline-plot.html</a></li>
+<li>Violin chart: <a href="https://r-graph-gallery.com/violin.html"
+class="uri">https://r-graph-gallery.com/violin.html</a></li>
+<li>Density chart: <a
+href="https://r-graph-gallery.com/density-plot.html"
+class="uri">https://r-graph-gallery.com/density-plot.html</a></li>
+<li>Histogram: <a href="https://r-graph-gallery.com/histogram.html"
+class="uri">https://r-graph-gallery.com/histogram.html</a></li>
+<li>Boxplot: <a href="https://r-graph-gallery.com/boxplot.html"
+class="uri">https://r-graph-gallery.com/boxplot.html</a></li>
+<li>Ridgeline chart: <a
+href="https://r-graph-gallery.com/ridgeline-plot.html"
+class="uri">https://r-graph-gallery.com/ridgeline-plot.html</a></li>
 </ul>
 </div>
 </div>
 <div id="bivariate-scatterplots" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Bivariate Scatterplots</h2>
+<h2><span class="header-section-number">7.2</span> Bivariate
+Scatterplots</h2>
 <p>Used for: association between two numeric variables</p>
 <div id="base-r-2" class="section level3" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> Base <code>R</code></h3>
+<h3><span class="header-section-number">7.2.1</span> Base
+<code>R</code></h3>
 <pre><code>plot(x, y)</code></pre>
 </div>
 <div id="ggplot2-package" class="section level3" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> ggplot2 package</h3>
-<p><a href="http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/" class="uri">http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/</a></p>
+<h3><span class="header-section-number">7.2.2</span> ggplot2
+package</h3>
+<p><a href="http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/"
+class="uri">http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/</a></p>
 <pre><code>ggplot(data, aes(x, y)) +
     geom_point()</code></pre>
 </div>
 <div id="gallery-2" class="section level3" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Gallery</h3>
 <ul>
-<li>Scatterplot: <a href="https://r-graph-gallery.com/scatterplot.html" class="uri">https://r-graph-gallery.com/scatterplot.html</a></li>
-<li>Bubble plot: <a href="https://r-graph-gallery.com/bubble-chart.html" class="uri">https://r-graph-gallery.com/bubble-chart.html</a></li>
-<li>2D density chart: <a href="https://r-graph-gallery.com/2d-density-chart.html" class="uri">https://r-graph-gallery.com/2d-density-chart.html</a></li>
-<li>Heatmap: <a href="https://r-graph-gallery.com/heatmap.html" class="uri">https://r-graph-gallery.com/heatmap.html</a></li>
+<li>Scatterplot: <a href="https://r-graph-gallery.com/scatterplot.html"
+class="uri">https://r-graph-gallery.com/scatterplot.html</a></li>
+<li>Bubble plot: <a href="https://r-graph-gallery.com/bubble-chart.html"
+class="uri">https://r-graph-gallery.com/bubble-chart.html</a></li>
+<li>2D density chart: <a
+href="https://r-graph-gallery.com/2d-density-chart.html"
+class="uri">https://r-graph-gallery.com/2d-density-chart.html</a></li>
+<li>Heatmap: <a href="https://r-graph-gallery.com/heatmap.html"
+class="uri">https://r-graph-gallery.com/heatmap.html</a></li>
 </ul>
 </div>
 <div id="add-lines" class="section level3" number="7.2.4">
 <h3><span class="header-section-number">7.2.4</span> Add lines</h3>
 <ul>
-<li>Line chart: <a href="https://r-graph-gallery.com/line-plot.html" class="uri">https://r-graph-gallery.com/line-plot.html</a></li>
-<li>Connected scatterplot: <a href="https://r-graph-gallery.com/connected-scatterplot.html" class="uri">https://r-graph-gallery.com/connected-scatterplot.html</a></li>
-<li>Visually-weighted regression: <a href="http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote" class="uri">http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote</a></li>
-<li>Use the <code>vwReg()</code> function from the <code>petersenlab</code> package: <a href="https://research-git.uiowa.edu/PetersenLab/petersenlab/-/blob/master/R/vwReg.R" class="uri">https://research-git.uiowa.edu/PetersenLab/petersenlab/-/blob/master/R/vwReg.R</a></li>
+<li>Line chart: <a href="https://r-graph-gallery.com/line-plot.html"
+class="uri">https://r-graph-gallery.com/line-plot.html</a></li>
+<li>Connected scatterplot: <a
+href="https://r-graph-gallery.com/connected-scatterplot.html"
+class="uri">https://r-graph-gallery.com/connected-scatterplot.html</a></li>
+<li>Visually-weighted regression: <a
+href="http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote"
+class="uri">http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote</a></li>
+<li>Use the <code>vwReg()</code> function from the
+<code>petersenlab</code> package: <a
+href="https://research-git.uiowa.edu/PetersenLab/petersenlab/-/blob/master/R/vwReg.R"
+class="uri">https://research-git.uiowa.edu/PetersenLab/petersenlab/-/blob/master/R/vwReg.R</a></li>
 </ul>
 </div>
 <div id="area" class="section level3" number="7.2.5">
 <h3><span class="header-section-number">7.2.5</span> Area</h3>
 <ul>
-<li>Area chart: <a href="https://r-graph-gallery.com/area-chart.html" class="uri">https://r-graph-gallery.com/area-chart.html</a></li>
-<li>Stacked area chart: <a href="https://r-graph-gallery.com/stacked-area-graph.html" class="uri">https://r-graph-gallery.com/stacked-area-graph.html</a></li>
-<li>Streamgraph: <a href="https://r-graph-gallery.com/streamgraph.html" class="uri">https://r-graph-gallery.com/streamgraph.html</a></li>
+<li>Area chart: <a href="https://r-graph-gallery.com/area-chart.html"
+class="uri">https://r-graph-gallery.com/area-chart.html</a></li>
+<li>Stacked area chart: <a
+href="https://r-graph-gallery.com/stacked-area-graph.html"
+class="uri">https://r-graph-gallery.com/stacked-area-graph.html</a></li>
+<li>Streamgraph: <a href="https://r-graph-gallery.com/streamgraph.html"
+class="uri">https://r-graph-gallery.com/streamgraph.html</a></li>
 </ul>
 </div>
 </div>
 <div id="bivariate-barplots" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Bivariate Barplots</h2>
-<p>Used for: association between one categorical variable and one numeric variable (or for depicting the frequency of categories of a categorical variable)</p>
+<h2><span class="header-section-number">7.3</span> Bivariate
+Barplots</h2>
+<p>Used for: association between one categorical variable and one
+numeric variable (or for depicting the frequency of categories of a
+categorical variable)</p>
 <div id="gallery-3" class="section level3" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Gallery</h3>
 <ul>
-<li>Barplot: <a href="https://r-graph-gallery.com/barplot.html" class="uri">https://r-graph-gallery.com/barplot.html</a></li>
-<li>Lollipop plot: <a href="https://r-graph-gallery.com/lollipop-plot.html" class="uri">https://r-graph-gallery.com/lollipop-plot.html</a></li>
+<li>Barplot: <a href="https://r-graph-gallery.com/barplot.html"
+class="uri">https://r-graph-gallery.com/barplot.html</a></li>
+<li>Lollipop plot: <a
+href="https://r-graph-gallery.com/lollipop-plot.html"
+class="uri">https://r-graph-gallery.com/lollipop-plot.html</a></li>
 </ul>
 </div>
 </div>
-<div id="multivariate-correlation-matrices" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Multivariate Correlation Matrices</h2>
+<div id="multivariate-correlation-matrices" class="section level2"
+number="7.4">
+<h2><span class="header-section-number">7.4</span> Multivariate
+Correlation Matrices</h2>
 <p>Used for: association between multiple numeric variables</p>
 <p>For correlation matrices, I do the following:</p>
 <ol style="list-style-type: decimal">
-<li>I use the lab’s <code>cor.table()</code> function (with <code>type = "manuscript"</code>) from the <code>petersenlab</code> package to create a correlation matrix.</li>
+<li>I use the lab’s <code>cor.table()</code> function (with
+<code>type = "manuscript"</code>) from the <code>petersenlab</code>
+package to create a correlation matrix.</li>
 <li>I save the correlation matrix to a <code>.csv</code> file.
 <ol style="list-style-type: lower-alpha">
-<li>For example: <a href="https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures" class="uri">https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures</a></li>
+<li>For example: <a
+href="https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures"
+class="uri">https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures</a></li>
 </ol></li>
-<li>I open the .csv file in Excel and create the table in Excel that can be copied and pasted to Word/Powerpoint/etc.</li>
+<li>I open the .csv file in Excel and create the table in Excel that can
+be copied and pasted to Word/Powerpoint/etc.</li>
 </ol>
 <div id="correlograms" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Correlograms</h3>
 <ul>
-<li><code>corrplot</code> package: <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html" class="uri">https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html</a></li>
-<li><code>corrgram</code> package: <a href="https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html" class="uri">https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html</a></li>
+<li><code>corrplot</code> package: <a
+href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html"
+class="uri">https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html</a></li>
+<li><code>corrgram</code> package: <a
+href="https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html"
+class="uri">https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html</a></li>
 </ul>
 <div id="gallery-4" class="section level4" number="7.4.1.1">
 <h4><span class="header-section-number">7.4.1.1</span> Gallery</h4>
-<p><a href="https://r-graph-gallery.com/correlogram.html" class="uri">https://r-graph-gallery.com/correlogram.html</a></p>
+<p><a href="https://r-graph-gallery.com/correlogram.html"
+class="uri">https://r-graph-gallery.com/correlogram.html</a></p>
 </div>
 </div>
 <div id="pairs-panels" class="section level3" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> Pairs panels</h3>
-<p><code>psych</code> package: <a href="https://personality-project.org/r/psych/help/pairs.panels.html" class="uri">https://personality-project.org/r/psych/help/pairs.panels.html</a></p>
-<p>I depict examples of correlograms and pairs panels here: <a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations</a></p>
+<p><code>psych</code> package: <a
+href="https://personality-project.org/r/psych/help/pairs.panels.html"
+class="uri">https://personality-project.org/r/psych/help/pairs.panels.html</a></p>
+<p>I depict examples of correlograms and pairs panels here: <a
+href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations"
+class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations</a></p>
 </div>
 </div>
 <div id="path-diagrams" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Path Diagrams</h2>
 <p>Used for: SEM/CFA/path analysis</p>
-<p>If you are just trying to visualize the results of a SEM model fitted using the lavaan package, I recommend the <code>semPlot</code> package (<a href="http://sachaepskamp.com/semPlot/examples" class="uri">http://sachaepskamp.com/semPlot/examples</a>) in <code>R</code>. You can see examples of my implementation here: <a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#path-diagram-1" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#path-diagram-1</a></p>
-<p>If you are trying to create a figure for a paper or poster, you might want something that you can draw and customize yourself. I use Adobe Illustrator for hand-drawn figures.</p>
+<p>If you are just trying to visualize the results of a SEM model fitted
+using the lavaan package, I recommend the <code>semPlot</code> package
+(<a href="http://sachaepskamp.com/semPlot/examples"
+class="uri">http://sachaepskamp.com/semPlot/examples</a>) in
+<code>R</code>. You can see examples of my implementation here: <a
+href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#path-diagram-1"
+class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#path-diagram-1</a></p>
+<p>If you are trying to create a figure for a paper or poster, you might
+want something that you can draw and customize yourself. I use Adobe
+Illustrator for hand-drawn figures.</p>
 <p>You can look at various options below:</p>
 <ul>
 <li><code>semPlot</code> package</li>
 <li><code>Adobe Illustrator</code></li>
-<li><code>Onyx</code>: <a href="https://onyx-sem.com" class="uri">https://onyx-sem.com</a></li>
-<li><code>yworks</code>: <a href="https://www.yworks.com" class="uri">https://www.yworks.com</a></li>
-<li><code>Microsoft Visio</code>: <a href="https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software" class="uri">https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software</a></li>
+<li><code>Onyx</code>: <a href="https://onyx-sem.com"
+class="uri">https://onyx-sem.com</a></li>
+<li><code>yworks</code>: <a href="https://www.yworks.com"
+class="uri">https://www.yworks.com</a></li>
+<li><code>Microsoft Visio</code>: <a
+href="https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software"
+class="uri">https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software</a></li>
 <li><code>Microsoft Powerpoint</code></li>
 <li><code>AMOS</code></li>
 <li><code>Warppls</code></li>
-<li><code>Graphviz</code>: <a href="https://graphviz.org" class="uri">https://graphviz.org</a>
+<li><code>Graphviz</code>: <a href="https://graphviz.org"
+class="uri">https://graphviz.org</a>
 <ul>
-<li>has an R port—this is what we use for our study flowchart via the <code>DiagrammeR</code> package: <a href="https://rich-iannone.github.io/DiagrammeR/index.html" class="uri">https://rich-iannone.github.io/DiagrammeR/index.html</a></li>
+<li>has an R port—this is what we use for our study flowchart via the
+<code>DiagrammeR</code> package: <a
+href="https://rich-iannone.github.io/DiagrammeR/index.html"
+class="uri">https://rich-iannone.github.io/DiagrammeR/index.html</a></li>
 </ul></li>
-<li><a href="https://app.diagrams.net" class="uri">https://app.diagrams.net</a></li>
-<li><a href="https://github.com/jgraph/drawio-desktop/releases" class="uri">https://github.com/jgraph/drawio-desktop/releases</a></li>
+<li><a href="https://app.diagrams.net"
+class="uri">https://app.diagrams.net</a></li>
+<li><a href="https://github.com/jgraph/drawio-desktop/releases"
+class="uri">https://github.com/jgraph/drawio-desktop/releases</a></li>
 </ul>
 </div>
 <div id="interactive" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Interactive</h2>
-<p>Gallery: <a href="https://r-graph-gallery.com/interactive-charts.html" class="uri">https://r-graph-gallery.com/interactive-charts.html</a></p>
+<p>Gallery: <a
+href="https://r-graph-gallery.com/interactive-charts.html"
+class="uri">https://r-graph-gallery.com/interactive-charts.html</a></p>
 </div>
 <div id="animation" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Animation</h2>
-<p>Gallery: <a href="https://r-graph-gallery.com/animation.html" class="uri">https://r-graph-gallery.com/animation.html</a></p>
+<p>Gallery: <a href="https://r-graph-gallery.com/animation.html"
+class="uri">https://r-graph-gallery.com/animation.html</a></p>
 </div>
 <div id="d" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> 3D</h2>
-<p>Gallery: <a href="https://r-graph-gallery.com/3d.html" class="uri">https://r-graph-gallery.com/3d.html</a></p>
+<p>Gallery: <a href="https://r-graph-gallery.com/3d.html"
+class="uri">https://r-graph-gallery.com/3d.html</a></p>
 </div>
 </div>
 <div id="session-info" class="section level1" number="8">
@@ -1060,8 +1200,8 @@ loaded via a namespace (and not attached):
 [31] rmarkdown_2.17      base64enc_0.1-3     jpeg_0.1-9         
 [34] pkgconfig_2.0.3     htmltools_0.5.3     highr_0.9          
 [37] fastmap_1.1.0       htmlwidgets_1.5.4   rlang_1.0.6        
-[40] rstudioapi_0.14     shiny_1.7.2         farver_2.1.1       
-[43] jquerylib_0.1.4     generics_0.1.3      jsonlite_1.8.2     
+[40] rstudioapi_0.14     shiny_1.7.3         farver_2.1.1       
+[43] jquerylib_0.1.4     generics_0.1.3      jsonlite_1.8.3     
 [46] dplyr_1.0.10        magrittr_2.0.3      Formula_1.2-4      
 [49] interp_1.1-3        Matrix_1.5-1        Rcpp_1.0.9         
 [52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.3    
@@ -1071,16 +1211,17 @@ loaded via a namespace (and not attached):
 [64] splines_4.2.1       knitr_1.40          pillar_1.8.1       
 [67] stats4_4.2.1        glue_1.6.2          evaluate_0.17      
 [70] mitools_2.4         latticeExtra_0.6-30 data.table_1.14.4  
-[73] png_0.1-7           vctrs_0.4.2         httpuv_1.6.6       
+[73] png_0.1-7           vctrs_0.5.0         httpuv_1.6.6       
 [76] gtable_0.3.1        purrr_0.3.5         assertthat_0.2.1   
 [79] cachem_1.0.6        xfun_0.34           mime_0.12          
 [82] xtable_1.8-4        later_1.3.0         survival_3.3-1     
 [85] tibble_3.1.8        cluster_2.1.3       ellipsis_0.3.2     </code></pre>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>Ask me to give you access.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Ask me to give you access.<a href="#fnref1"
+class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
