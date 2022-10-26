@@ -383,6 +383,21 @@ eeglab redraw;
 
 # Automatic script that loops files
 
+## Warning messages with script
+
+Warning messages appeared when using the automatic cleaning of data.
+We may have to send a dataset to someone so they can check on it.
+Some documentation is found here:
+
+* https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html
+* https://sccn.ucsd.edu/wiki/EEGLAB_bug1971
+
+
+## Filterning, average referencing, and automatically cleaning the data.
+
+This script batch reads in files, filters them, average references, and automatically cleans them.
+After that, this script reads in the cleaned files for manually processing to remove bad time periods and bad channels
+
 ```matlab
 %10/20/22 Working script that reads everything into matlab
 
@@ -482,3 +497,89 @@ for i=1:numberOfSubjectClean
 end
 eeglab redraw;
 ```
+
+## Removing bad time periods and channels
+
+1. In the now open EEGLAB interface, select a dataset.
+Go to `Tools` > `Inspect/reject data by eye` 
+
+![visually reject artifacts](images/visual_reject_artifacts.png)
+
+1. Go through the raw signal and manually reject bad time periods
+
+![visually reject artifacts](images/reject_time_periods.png)
+
+1. Select `REJECT` and overwrite the file in memory
+   * select `Overwrite it in memory (set=yes; unset=create a new dataset)`
+1. Visually inspect the data and select any bad channels, and write them down
+1. Next, manually reject the channels by selecting `Edit` then `Select Data`
+
+![visually reject artifacts](images/drop_channels.png)
+
+1. Manually enter the channels to be removed in the `Channel range` field and select the checkbox under `on->remove these` and select `Ok`
+1. Save the file as `tcid_wave_manualClean.set` in the following drive path 
+    * `\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned`
+    * This screenshot represents removing channels `23 56 57 97`
+![visually reject artifacts](images/remove_channels_specific.png)
+1. Repeat step for each cleaned dataset
+
+## Running the ICA
+
+This script runs the ICA.
+We'll want to think about how to automatically reject the components here.
+Once this runs, see the [ICA section](#ica) to reject components.
+Tools → Inspect/label components by map is how to reject components.
+
+```matlab
+% Running the ICA
+
+%% Reading in the manually cleaned datasets
+
+%%%%%%%%%%%%%%
+% Clear Data becasue to overwrite anything in memory
+%%%%%%%%%%%%%%
+ALLEEG = [];
+EEG = [];
+
+% Adding the path for cleaned files
+manualCleanPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned\';
+
+%Starting EEGLAB
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
+
+
+%Location of cleaned oddball data
+filesInDirectoryManualClean = dir(fullfile(manualCleanPath, '*.set')); %Reading the files in the directory
+
+
+%Listing the number of subjects for the number of times to loop
+numberOfSubjectManualClean = height(filesInDirectoryManualClean);
+
+%Names of all the files in the directory
+listOfSubjectsManualClean = {filesInDirectoryManualClean.name}; 
+
+%splitting the filename up
+filenameSplitManualClean = regexp(listOfSubjectsManualClean, '_', 'split');  
+id = cellfun(@(x) x{1},filenameSplitManualClean,'un',0);  %getting the id's
+wave = cellfun(@(x) x{2},filenameSplitManualClean,'un',0); %getting the waves
+
+
+for i=1:numberOfSubjectManualClean
+
+    %%%% Importing Data
+    tcidClean = char(strcat(id(i),'_', wave(i), '_manualClean.set')); %combining the TCID and wave to name the file
+    EEG = pop_loadset('filename', tcidClean, 'filepath', manualCleanPath); 
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, i,'setname', tcidClean,'gui','off');
+
+    %%% Running the ICA
+    EEG = eeg_checkset( EEG );
+    EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','on');
+    [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+    eeglab redraw;
+
+end
+eeglab redraw;
+```
+
+
+
