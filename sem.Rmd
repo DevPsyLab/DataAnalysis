@@ -24,6 +24,13 @@ knitr::opts_chunk$set(echo = TRUE,
 library("lavaan")
 library("semTools")
 library("semPlot")
+library("lcsm")
+```
+
+## Import Data
+
+```{r, class.source = "fold-hide"}
+mydata_wide <- read.csv("https://osf.io/s2kj3/download")
 ```
 
 # Simulate Data
@@ -47,6 +54,376 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html
 # Analysis examples
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem
+
+# Latent Growth Curve Model {#lgcm}
+
+## Model Syntax
+
+### Abbreviated
+
+```{r}
+lgcm1_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+'
+```
+
+### Full
+
+```{r}
+lgcm2_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Constrain observed intercepts to zero
+  t1 ~ 0
+  t2 ~ 0
+  t3 ~ 0
+  t4 ~ 0
+  
+  # Estimate mean of intercept and slope
+  intercept ~ 1
+  slope ~ 1
+'
+```
+
+## Fit the Model
+
+### Abbreviated
+
+```{r}
+lgcm1_fit <- growth(
+  lgcm1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = FALSE,
+  int.lv.free = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+### Full
+
+```{r}
+lgcm2_fit <- sem(
+  lgcm2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+## Summary Output
+
+### Abbreviated
+
+```{r}
+summary(
+  lgcm1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Full
+
+```{r}
+summary(
+  lgcm2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  lgcm_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals
+
+```{r}
+residuals(
+  lgcm_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  lgcm_fit,
+  sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(lgcm_fit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  lgcm_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
+
+# Latent Change Score Model {#lcsm}
+
+## Model Syntax
+
+```{r}
+bivariateLCSM_syntax <- specify_bi_lcsm(
+  timepoints = 10,
+  var_x = "x",
+  model_x = list(
+    alpha_constant = TRUE,
+    beta = TRUE,
+    phi = TRUE),
+  var_y = "y",
+  model_y = list(
+    alpha_constant = TRUE,
+    beta = TRUE,
+    phi = TRUE),
+  coupling = list(
+    delta_lag_xy = TRUE,
+    delta_lag_yx = TRUE),
+  change_letter_x = "g",
+  change_letter_y = "j")
+
+cat(bivariateLCSM_syntax)
+```
+
+## Fit the Model
+
+```{r}
+bivariateLCSM_fit <- fit_bi_lcsm(
+  data = data_bi_lcsm,
+  var_x = names(data_bi_lcsm)[2:4],
+  var_y = names(data_bi_lcsm)[12:14],
+  model_x = list(
+    alpha_constant = TRUE,
+    beta = TRUE,
+    phi = FALSE),
+  model_y = list(
+    alpha_constant = TRUE,
+    beta = TRUE,
+    phi = TRUE),
+  coupling = list(
+    delta_lag_xy = TRUE,
+    xi_lag_yx = TRUE)
+  )
+```
+
+## Summary Output
+
+```{r}
+summary(
+  bivariateLCSM_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  bivariateLCSM_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals
+
+```{r}
+residuals(
+  bivariateLCSM_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  bivariateLCSM_fit,
+  sort. = TRUE)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  bivariateLCSM_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+
+plot_lcsm(bivariateLCSM_fit)
+```
+
+## Plot Trajectories
+
+```{r}
+plot_trajectories(
+  data_bi_lcsm,
+  id_var = "id",
+  var_list = c("y1", "y2", "y3", "y4", "y5",
+               "y6", "y7", "y8", "y9", "y10"),
+  xlab = "Time",
+  ylab = "Y Score",
+  connect_missing = FALSE)
+```
+
+# Cross-Lagged Panel Model {#clpm}
+
+## Model Syntax
+
+```{r}
+clpm_syntax <- '
+  # Autoregressive Paths
+  t4 ~ t3
+  t3 ~ t2
+  t2 ~ t1
+  
+  c4 ~ c3
+  c3 ~ c2
+  c2 ~ c1
+  
+  # Concurrent Covariances
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Random Intercepts
+  t =~ NA*t1 + t2 + t3 + t4
+  c =~ NA*c1 + c2 + c3 + c4
+  
+  # Cross-Lagged Paths
+  t4 ~ c3
+  t3 ~ c2
+  t2 ~ c1
+  
+  c4 ~ t3
+  c3 ~ t2
+  c2 ~ t1
+'
+```
+
+## Fit the Model
+
+```{r}
+clpm_fit <- sem(
+  clpm_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  std.lv = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+## Summary Output
+
+```{r}
+summary(
+  clpm_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  clpm_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals
+
+```{r}
+residuals(
+  clpm_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  clpm_fit,
+  sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(clpm_fit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  clpm_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
 
 # Mediation {#mediation}
 
