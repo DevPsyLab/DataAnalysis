@@ -334,10 +334,6 @@ clpm_syntax <- '
   t3 ~ c3
   t4 ~ c4
   
-  # Random Intercepts
-  t =~ NA*t1 + t2 + t3 + t4
-  c =~ NA*c1 + c2 + c3 + c4
-  
   # Cross-Lagged Paths
   t4 ~ c3
   t3 ~ c2
@@ -403,17 +399,278 @@ modificationindices(
   sort. = TRUE)
 ```
 
+## Path Diagram
+
+```{r}
+semPaths(
+  clpm_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
+
+# Random Intercept Cross-Lagged Panel Model {#riclpm}
+
+## Model Syntax
+
+### Abbreviated
+
+Adapted from Mulder & Hamaker (2021): https://doi.org/10.1080/10705511.2020.1784738
+
+```{r}
+riclpm1_syntax <- '
+  # Random Intercepts
+  t =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  c =~ 1*c1 + 1*c2 + 1*c3 + 1*c4
+  
+  # Create Within-Person Centered Variables
+  wt1 =~ 1*t1
+  wt2 =~ 1*t2
+  wt3 =~ 1*t3
+  wt4 =~ 1*t4
+  
+  wc1 =~ 1*c1
+  wc2 =~ 1*c2
+  wc3 =~ 1*c3
+  wc4 =~ 1*c4
+  
+  # Autoregressive Paths
+  wt4 ~ wt3
+  wt3 ~ wt2
+  wt2 ~ wt1
+  
+  wc4 ~ wc3
+  wc3 ~ wc2
+  wc2 ~ wc1
+  
+  # Concurrent Covariances
+  wt1 ~~ wc1
+  wt2 ~~ wc2
+  wt3 ~~ wc3
+  wt4 ~~ wc4
+  
+  # Cross-Lagged Paths
+  wt4 ~ wc3
+  wt3 ~ wc2
+  wt2 ~ wc1
+  
+  wc4 ~ wt3
+  wc3 ~ wt2
+  wc2 ~ wt1
+  
+  # Variance and Covariance of Random Intercepts
+  t ~~ t
+  c ~~ c
+  t ~~ c
+  
+  # Variances of Within-Person Centered Variables
+  wt1 ~~ wt1
+  wt2 ~~ wt2
+  wt3 ~~ wt3
+  wt4 ~~ wt4
+  
+  wc1 ~~ wc1
+  wc2 ~~ wc2
+  wc3 ~~ wc3
+  wc4 ~~ wc4
+'
+```
+
+### Full
+
+Adapted from Mund & Nestler (2017): https://osf.io/a4dhk
+
+```{r}
+riclpm2_syntax <- '
+  # Random Intercepts
+  t =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  c =~ 1*c1 + 1*c2 + 1*c3 + 1*c4
+  
+  # Create Within-Person Centered Variables
+  wt1 =~ 1*t1
+  wt2 =~ 1*t2
+  wt3 =~ 1*t3
+  wt4 =~ 1*t4
+  
+  wc1 =~ 1*c1
+  wc2 =~ 1*c2
+  wc3 =~ 1*c3
+  wc4 =~ 1*c4
+  
+  # Autoregressive Paths
+  wt4 ~ wt3
+  wt3 ~ wt2
+  wt2 ~ wt1
+  
+  wc4 ~ wc3
+  wc3 ~ wc2
+  wc2 ~ wc1
+  
+  # Concurrent Covariances
+  wt1 ~~ wc1
+  wt2 ~~ wc2
+  wt3 ~~ wc3
+  wt4 ~~ wc4
+  
+  # Cross-Lagged Paths
+  wt4 ~ wc3
+  wt3 ~ wc2
+  wt2 ~ wc1
+  
+  wc4 ~ wt3
+  wc3 ~ wt2
+  wc2 ~ wt1
+  
+  # Variance and Covariance of Random Intercepts
+  t ~~ t
+  c ~~ c
+  t ~~ c
+  
+  # Variances of Within-Person Centered Variables
+  wt1 ~~ wt1
+  wt2 ~~ wt2
+  wt3 ~~ wt3
+  wt4 ~~ wt4
+  
+  wc1 ~~ wc1
+  wc2 ~~ wc2
+  wc3 ~~ wc3
+  wc4 ~~ wc4
+  
+  # Fix Error Variances of Observed Variables to Zero
+  t1 ~~ 0*t1
+  t2 ~~ 0*t2
+  t3 ~~ 0*t3
+  t4 ~~ 0*t4
+  
+  c1 ~~ 0*c1
+  c2 ~~ 0*c2
+  c3 ~~ 0*c3
+  c4 ~~ 0*c4
+  
+  # Fix the Covariances Between the Random Intercepts and the Latents at T1 to Zero
+  wt1 ~~ 0*t
+  wt1 ~~ 0*c
+  
+  wc1 ~~ 0*t
+  wc1 ~~ 0*c
+  
+  # Estimate Observed Intercepts
+  t1 ~ 1
+  t2 ~ 1
+  t3 ~ 1
+  t4 ~ 1
+  
+  c1 ~ 1
+  c2 ~ 1
+  c3 ~ 1
+  c4 ~ 1
+  
+  # Fix the Means of the Latents to Zero
+  wt1 ~ 0*1
+  wt2 ~ 0*1
+  wt3 ~ 0*1
+  wt4 ~ 0*1
+  
+  wc1 ~ 0*1
+  wc2 ~ 0*1
+  wc3 ~ 0*1
+  wc4 ~ 0*1
+  
+  t ~ 0*1
+  c ~ 0*1
+'
+```
+
+## Fit the Model
+
+### Abbreviated
+
+```{r}
+riclpm1_fit <- lavaan(
+  riclpm1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = TRUE,
+  em.h1.iter.max = 100000)
+```
+
+### Full
+
+```{r}
+riclpm2_fit <- sem(
+  riclpm2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  em.h1.iter.max = 100000)
+```
+
+## Summary Output
+
+### Abbreviated
+
+```{r}
+summary(
+  riclpm1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Full
+
+```{r}
+summary(
+  riclpm2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  riclpm1_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals
+
+```{r}
+residuals(
+  riclpm1_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  riclpm1_fit,
+  sort. = TRUE)
+```
+
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(clpm_fit)
+compRelSEM(riclpm1_fit)
 ```
 
 ## Path Diagram
 
 ```{r}
 semPaths(
-  clpm_fit,
+  riclpm1_fit,
   what = "Std.all",
   layout = "tree2",
   edge.label.cex = 1.5)
