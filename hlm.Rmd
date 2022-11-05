@@ -25,8 +25,26 @@ To do:
 ## Load Libraries
 
 ```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+library("petersenlab")
 library("lme4")
 library("nlme")
+library("lmerTest")
+library("MASS")
+library("MCMCglmm")
+```
+
+## Import Data
+
+```{r, class.source = "fold-hide"}
+mydata <- read.csv("https://osf.io/cqn3d/download")
+```
+
+## Simulate Data
+
+```{r, class.source = "fold-hide"}
+set.seed(52242)
+
+mydata$outcome <- rpois(nrow(mydata), 4)
 ```
 
 # Terms
@@ -42,6 +60,18 @@ These models go by a variety of different terms:
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels
 
+# Pre-Model Computation
+
+It can be helpful to center the age/time variable so that the intercept in a growth curve model has meaning.
+For instance, we can subtract the youngest participant age to set the intercepts to be the earliest age in the sample.
+
+```{r}
+mydata$ageYears <- mydata$age / 12
+mydata$ageMonthsCentered <- mydata$age - min(mydata$age, na.rm = TRUE)
+
+mydata$ageYearsCentered <- mydata$ageMonthsCentered / 12
+```
+
 # Estimator: ML or REML
 
 For small sample sizes, restricted maximum likelihood (REML) is preferred over maximum likelihood (ML).
@@ -55,23 +85,32 @@ To simultaneously compare fixed and random effects, use ML.
 
 # Linear Mixed Models {#linear}
 
+The following models are growth curve models that are fit in a linear mixed modeling framework.
+
 ## `lme4`
 
 ```{r}
-lmer(t_ext ~ m_ext + age + (age | tcid),
-     data = mydata,
-     REML = FALSE, #for ML
-     na.action = na.exclude)
+linearMixedModel <- lmer(
+  math ~ female + ageYearsCentered + (ageYearsCentered | id),
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(linearMixedModel)
 ```
 
 ## `nlme`
 
 ```{r}
-lme(t_ext ~ m_ext + age,
-    random= ~1 + age|tcid,
-    data = mydata,
-    method = "ML",
-    na.action = na.exclude)
+linearMixedModel_nlme <- lme(
+  math ~ female + ageYearsCentered,
+  random = ~ 1 + ageYearsCentered|id,
+  data = mydata,
+  method = "ML",
+  na.action = na.exclude)
+
+summary(linearMixedModel_nlme)
 ```
 
 # Generalized Linear Mixed Models {#generalized}
@@ -81,38 +120,49 @@ http://glmm.wikidot.com/faq
 ## `lmer`
 
 ```{r}
-glmer(t_ext ~ m_ext + age + (age | tcid),
-      family = poisson(link = "log"),
-      data = mydata,
-      na.action = na.exclude)
+generalizedLinearMixedModel <- glmer(
+  outcome ~ female + ageYearsCentered + (ageYearsCentered | id),
+  family = poisson(link = "log"),
+  data = mydata,
+  na.action = na.exclude)
+
+summary(generalizedLinearMixedModel)
 ```
 
 ## `MASS`
 
 ```{r}
-glmmPQL(t_ext ~ m_ext + age,
-        random = ~1 + age|tcid,
-        family = poisson(link = "log"),
-        data = mydata)
+glmmPQLmodel <- glmmPQL(
+  outcome ~ female + ageYearsCentered,
+  random = ~ 1 + ageYearsCentered|id,
+  family = poisson(link = "log"),
+  data = mydata)
+
+summary(glmmPQLmodel)
 ```
 
 ## `MCMCglmm`
 
 ```{r}
-MCMCglmm(t_ext ~ m_ext + age,
-         random = ~ us(age):tcid,
-         family = "poisson",
-         data = na.omit(mydata[,c("tcid","t_ext","m_ext","age")]))
+MCMCglmmModel <- MCMCglmm(
+  outcome ~ female + ageYearsCentered,
+  random = ~ us(ageYearsCentered):id,
+  family = "poisson",
+  data = na.omit(mydata[,c("id","outcome","female","ageYearsCentered")]))
+
+summary(MCMCglmmModel)
 ```
 
 # Nonlinear Mixed Models {#nonlinear}
 
 ```{r}
-nlme(height ~ SSasymp(age, Asym, R0, lrc),
-     data = Loblolly,
-     fixed = Asym + R0 + lrc ~ 1,
-     random = Asym ~ 1,
-     start = c(Asym = 103, R0 = -8.5, lrc = -3.3))
+nonlinearModel <- nlme(
+  height ~ SSasymp(age, Asym, R0, lrc),
+  data = Loblolly,
+  fixed = Asym + R0 + lrc ~ 1,
+  random = Asym ~ 1)
+
+summary(nonlinearModel)
 ```
 
 # Robust Mixed Models
@@ -148,83 +198,105 @@ https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mi
 
 ## QQ Plots
 
+Make QQ plots for each level of the random effects.
+Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals.
+
 ```{r}
-qqnorm(multilevelRegressionModel, ~ranef(., level = 1)) #Multilevel model: make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
+qqnorm(linearMixedModel_nlme,
+       ~ ranef(., level = 1))
 ```
 
 ## PP Plots
 
 ```{r}
-ppPlot(multilevelRegressionModel)
+ppPlot(linearMixedModel)
 ```
 
 ## QQ Plot of residuals
 
 ```{r}
-qqnorm(resid(multilevelRegressionModel))
+qqnorm(resid(linearMixedModel))
+qqline(resid(linearMixedModel))
 ```
 
 ## Plot residuals
 
 ```{r}
-plot(multilevelRegressionModel)
+plot(linearMixedModel)
 ```
 
 ## Plot residuals by group (in the example below, level 2 represents the individual)
 
 ```{r}
-plot(multilevelRegressionModel, as.factor(tcid) ~ resid(.), abline = 0)
+plot(linearMixedModel,
+     as.factor(id) ~ resid(.),
+     abline = 0,
+     xlab = "Residuals")
 ```
 
 ## Plot residuals by levels of a predictor
 
 ```{r}
-plot(multilevelRegressionModel, resid(., type = "p") ~ fitted(.) | female) #type="p" specifies standardized residuals
+plot(linearMixedModel_nlme,
+     resid(., type = "p") ~ fitted(.) | female) #type = "p" specifies standardized residuals
 ```
 
 ## Can model heteroscedasticity of the within-group error with the weights argument
 
 ```{r}
-multilevelRegressionModelVarStructure <- lme(t_ext ~ m_ext + age + female,
-                                             random = ~1 + age|tcid,
-                                             weights = varIdent(form = ~ 1 | female),
-                                             method = "ML",
-                                             data = mydata,
-                                             na.action = na.exclude)
+linearMixedModel_nlmeVarStructure <- lme(
+  math ~ female + ageYearsCentered,
+  random = ~ 1 + ageYearsCentered|id,
+  weights = varIdent(form = ~ 1 | female),
+  method = "ML",
+  data = mydata,
+  na.action = na.exclude)
+
+summary(linearMixedModel_nlmeVarStructure)
 ```
 
 ## Plot observed and fitted values
 
 ```{r}
-plot(multilevelRegressionModelVarStructure, t_ext ~ fitted(.))
+plot(linearMixedModel,
+     math ~ fitted(.))
 ```
 
 ## Plot QQ plot of residuals by levels of a predictor
 
 ```{r}
-qqnorm(multilevelRegressionModelVarStructure, ~ resid(.) | female)
-qqnorm(multilevelRegressionModelVarStructure, ~ resid(.))
+qqnorm(linearMixedModel_nlme, ~ resid(.) | female)
+qqnorm(linearMixedModel_nlme, ~ resid(.))
 ```
 
 ## QQ plot of random effects
 
+Make QQ plots for each level of the random effects.
+Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals.
+
+
 ```{r}
-qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1)) #make QQ plots for each level of the random effects. Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals
-qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 0))
-qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 2))
+qqnorm(linearMixedModel_nlme,
+       ~ ranef(., level = 0))
+qqnorm(linearMixedModel_nlme,
+       ~ ranef(., level = 1))
+qqnorm(linearMixedModel_nlme,
+       ~ ranef(., level = 2))
 ```
 
 ## QQ plot of random effects by levels of a predictor
 
 ```{r}
-qqnorm(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
+qqnorm(linearMixedModel_nlme, 
+       ~ ranef(., level = 1) | female)
 ```
 
 ## Pairs plot
 
 ```{r}
-pairs(multilevelRegressionModelVarStructure)
-pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
+pairs(linearMixedModel_nlme)
+pairs(linearMixedModel_nlme,
+      ~ ranef(., level = 1) | female)
 ```
 
 ## Variance functions for modeling heteroscedasticity
@@ -254,4 +326,3 @@ pairs(multilevelRegressionModelVarStructure, ~ranef(., level = 1) | female)
 ```{r, class.source = "fold-hide"}
 sessionInfo()
 ```
-
