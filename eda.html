@@ -735,7 +735,7 @@ figures in R.</p>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_histogram(color = 1)</code></pre>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_bin()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>
@@ -757,9 +757,11 @@ rug(mydata$outcome)</code></pre>
   geom_histogram(aes(y = ..density..), color = 1) +
   geom_density() +
   geom_rug()</code></pre>
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_bin).</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_density()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 </div>
@@ -775,7 +777,7 @@ rug(mydata$outcome)</code></pre>
 <code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_density()</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_density()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 </div>
@@ -793,7 +795,7 @@ plot (boxplot)</h3>
 <code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = outcome)) +
   geom_boxplot()</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 </div>
@@ -809,7 +811,7 @@ plot (boxplot)</h3>
 <code>ggplot2</code></h4>
 <pre class="r"><code>ggplot(mydata, aes(x = &quot;&quot;, y = outcome)) +
   geom_violin()</code></pre>
-<pre><code>Warning: Removed 10 rows containing non-finite values (stat_ydensity).</code></pre>
+<pre><code>Warning: Removed 10 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 </div>
@@ -824,8 +826,8 @@ Scatterplot</h2>
 <pre class="r"><code>ggplot(mydata, aes(x = predictorOverplot, y = outcomeOverplot)) + 
   geom_point(position = &quot;jitter&quot;, alpha = 0.3) + 
   geom_density2d()</code></pre>
-<pre><code>Warning: Removed 20 rows containing non-finite values (stat_density2d).</code></pre>
-<pre><code>Warning: Removed 20 rows containing missing values (geom_point).</code></pre>
+<pre><code>Warning: Removed 20 rows containing non-finite values (`stat_density2d()`).</code></pre>
+<pre><code>Warning: Removed 20 rows containing missing values (`geom_point()`).</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <pre class="r"><code>smoothScatter(mydata$predictorOverplot, mydata$outcomeOverplot)</code></pre>
 <p><img src="eda_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
@@ -1115,7 +1117,7 @@ other attached packages:
  [1] mvnormtest_0.1-9       naniar_0.6.1.9000      forcats_0.5.2         
  [4] stringr_1.4.1          dplyr_1.0.10           purrr_0.3.5           
  [7] readr_2.1.3            tidyr_1.2.1            tibble_3.1.8          
-[10] tidyverse_1.3.2        psych_2.2.9            ggplot2_3.3.6         
+[10] tidyverse_1.3.2        psych_2.2.9            ggplot2_3.4.0         
 [13] corrplot_0.92          effects_4.2-2          nlme_3.1-160          
 [16] ellipse_0.4.3          vioplot_0.3.7          zoo_1.8-11            
 [19] sm_2.2-5.7.1           car_3.1-1              carData_3.0-5         
