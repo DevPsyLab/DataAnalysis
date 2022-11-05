@@ -31,6 +31,7 @@ library("nlme")
 library("lmerTest")
 library("MASS")
 library("MCMCglmm")
+library("ggplot2")
 ```
 
 ## Import Data
@@ -98,6 +99,53 @@ linearMixedModel <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(linearMixedModel)
+```
+
+### Protoypical Growth Curve
+
+```{r}
+newData <- expand.grid(
+  female = c(0, 1),
+  ageYears = c(
+    min(mydata$ageYears, na.rm = TRUE),
+    max(mydata$ageYears, na.rm = TRUE))
+)
+
+newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+
+newData$predictedValue <- predict(
+  linearMixedModel,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(x = ageYears, y = predictedValue, color = sex)) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  linearMixedModel,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(x = ageYears, y = predictedValue, group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
 ```
 
 ## `nlme`

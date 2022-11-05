@@ -25,6 +25,7 @@ library("lavaan")
 library("semTools")
 library("semPlot")
 library("lcsm")
+library("tidyverse")
 ```
 
 # Simulate Data
@@ -36,7 +37,10 @@ X <- rnorm(100)
 M <- 0.5*X + rnorm(100)
 Y <- 0.7*M + rnorm(100)
 
-mydata <- data.frame(X = X, Y = Y, M = M)
+mydata <- data.frame(
+  X = X,
+  Y = Y,
+  M = M)
 ```
 
 # Import data
@@ -159,7 +163,7 @@ summary(
 
 ```{r}
 fitMeasures(
-  lgcm_fit,
+  lgcm1_fit,
   fit.measures = c(
     "chisq", "df", "pvalue",
     "chisq.scaled", "df.scaled", "pvalue.scaled",
@@ -173,7 +177,7 @@ fitMeasures(
 
 ```{r}
 residuals(
-  lgcm_fit,
+  lgcm1_fit,
   type = "cor")
 ```
 
@@ -181,24 +185,75 @@ residuals(
 
 ```{r}
 modificationindices(
-  lgcm_fit,
+  lgcm1_fit,
   sort. = TRUE)
 ```
 
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(lgcm_fit)
+compRelSEM(lgcm1_fit)
 ```
 
 ## Path Diagram
 
 ```{r}
 semPaths(
-  lgcm_fit,
+  lgcm1_fit,
   what = "Std.all",
   layout = "tree2",
   edge.label.cex = 1.5)
+```
+
+## Plot Trajectories
+
+### Protoypical Growth Curve
+
+```{r}
+timepoints <- 4
+
+coef(lgcm1_fit)["intercept~1"]
+coef(lgcm1_fit)["slope~1"]
+
+newData <- expand.grid(
+  time = c(1, 4)
+)
+
+newData$predictedValue <- NA
+newData$predictedValue[which(newData$time == 1)] <- coef(lgcm1_fit)["intercept~1"]
+newData$predictedValue[which(newData$time == 4)] <- coef(lgcm1_fit)["intercept~1"] + timepoints*coef(lgcm1_fit)["slope~1"]
+
+ggplot(
+  data = newData,
+  mapping = aes(x = time, y = predictedValue)) +
+  xlab("Time") +
+  ylab("Score") +
+  geom_line()
+```
+
+### Individuals' Growth Curves
+
+```{r}
+newData <- as.data.frame(predict(lgcm1_fit))
+newData$id <- row.names(newData)
+newData$t1 <- newData$intercept
+newData$t4 <- newData$intercept + timepoints*newData$slope
+
+newData2 <- pivot_longer(
+  newData,
+  cols = c(t1, t4)) %>% 
+  select(-intercept, -slope)
+
+newData2$time <- NA
+newData2$time[which(newData2$name == "t1")] <- 1
+newData2$time[which(newData2$name == "t4")] <- 4
+
+ggplot(
+  data = newData2,
+  mapping = aes(x = time, y = value, group = factor(id))) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  geom_line()
 ```
 
 # Latent Change Score Model {#lcsm}
