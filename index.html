@@ -376,6 +376,9 @@ div.tocify {
       <a href="irt.html">Item Response Theory</a>
     </li>
     <li>
+      <a href="lda.html">Longitudinal Data Analysis</a>
+    </li>
+    <li>
       <a href="markdown.html">Markdown</a>
     </li>
     <li>
@@ -448,6 +451,7 @@ Potentials</a></li>
 <li><a href="git.html">Git, GitLab, and GitHub</a></li>
 <li><a href="hlm.html">Hierarchical Linear Modeling</a></li>
 <li><a href="irt.html">Item Response Theory</a></li>
+<li><a href="lda.html">Longitudinal Data Analysis</a></li>
 <li><a href="markdown.html">Markdown</a></li>
 <li><a href="sem.html#mediation">Mediation</a></li>
 <li><a href="regression.html#moderation">Moderation/Interaction</a></li>
@@ -458,7 +462,7 @@ Potentials</a></li>
 <li><a href="sem.html">Structural Equation Modeling</a></li>
 </ul>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBBbmFseXNpcyBHdWlkZXMgZm9yIHRoZSBEZXZlbG9wbWVudGFsIFBzeWNob3BhdGhvbG9neSBMYWIiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiKQpgYGAKCi0gW0RhdGEgTWFuYWdlbWVudF0oZGF0YU1hbmFnZW1lbnQuaHRtbCkKLSBbRGV2ZWxvcG1lbnRhbCBTY2FsaW5nXShkZXZlbG9wbWVudGFsU2NhbGluZy5odG1sKQotIFtFbGVjdHJvZW5jYXBoYWxvZ3JhcGh5L0V2ZW50LVJlbGF0ZWQgUG90ZW50aWFsc10oZWVnRVJQLmh0bWwpCi0gW0V4cGxvcmF0b3J5IERhdGEgQW5hbHlzaXNdKGVkYS5odG1sKQotIFtGYWN0b3IgQW5hbHlzaXNdKGZhY3RvckFuYWx5c2lzLmh0bWwpCi0gW0ZpZ3VyZXNdKGZpZ3VyZXMuaHRtbCkKLSBbR2l0LCBHaXRMYWIsIGFuZCBHaXRIdWJdKGdpdC5odG1sKQotIFtIaWVyYXJjaGljYWwgTGluZWFyIE1vZGVsaW5nXShobG0uaHRtbCkKLSBbSXRlbSBSZXNwb25zZSBUaGVvcnldKGlydC5odG1sKQotIFtNYXJrZG93bl0obWFya2Rvd24uaHRtbCkKLSBbTWVkaWF0aW9uXShzZW0uaHRtbCNtZWRpYXRpb24pCi0gW01vZGVyYXRpb24vSW50ZXJhY3Rpb25dKHJlZ3Jlc3Npb24uaHRtbCNtb2RlcmF0aW9uKQotIFtQcmluY2lwYWwgQ29tcG9uZW50IEFuYWx5c2lzXShwY2EuaHRtbCkKLSBbUl0oUi5odG1sKQotIFtSZWdyZXNzaW9uXShyZWdyZXNzaW9uLmh0bWwpCi0gW1NQU1NdKFNQU1MuaHRtbCkKLSBbU3RydWN0dXJhbCBFcXVhdGlvbiBNb2RlbGluZ10oc2VtLmh0bWwpCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBBbmFseXNpcyBHdWlkZXMgZm9yIHRoZSBEZXZlbG9wbWVudGFsIFBzeWNob3BhdGhvbG9neSBMYWIiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgZXJyb3IgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiKQpgYGAKCi0gW0RhdGEgTWFuYWdlbWVudF0oZGF0YU1hbmFnZW1lbnQuaHRtbCkKLSBbRGV2ZWxvcG1lbnRhbCBTY2FsaW5nXShkZXZlbG9wbWVudGFsU2NhbGluZy5odG1sKQotIFtFbGVjdHJvZW5jYXBoYWxvZ3JhcGh5L0V2ZW50LVJlbGF0ZWQgUG90ZW50aWFsc10oZWVnRVJQLmh0bWwpCi0gW0V4cGxvcmF0b3J5IERhdGEgQW5hbHlzaXNdKGVkYS5odG1sKQotIFtGYWN0b3IgQW5hbHlzaXNdKGZhY3RvckFuYWx5c2lzLmh0bWwpCi0gW0ZpZ3VyZXNdKGZpZ3VyZXMuaHRtbCkKLSBbR2l0LCBHaXRMYWIsIGFuZCBHaXRIdWJdKGdpdC5odG1sKQotIFtIaWVyYXJjaGljYWwgTGluZWFyIE1vZGVsaW5nXShobG0uaHRtbCkKLSBbSXRlbSBSZXNwb25zZSBUaGVvcnldKGlydC5odG1sKQotIFtMb25naXR1ZGluYWwgRGF0YSBBbmFseXNpc10obGRhLmh0bWwpCi0gW01hcmtkb3duXShtYXJrZG93bi5odG1sKQotIFtNZWRpYXRpb25dKHNlbS5odG1sI21lZGlhdGlvbikKLSBbTW9kZXJhdGlvbi9JbnRlcmFjdGlvbl0ocmVncmVzc2lvbi5odG1sI21vZGVyYXRpb24pCi0gW1ByaW5jaXBhbCBDb21wb25lbnQgQW5hbHlzaXNdKHBjYS5odG1sKQotIFtSXShSLmh0bWwpCi0gW1JlZ3Jlc3Npb25dKHJlZ3Jlc3Npb24uaHRtbCkKLSBbU1BTU10oU1BTUy5odG1sKQotIFtTdHJ1Y3R1cmFsIEVxdWF0aW9uIE1vZGVsaW5nXShzZW0uaHRtbCkK</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
