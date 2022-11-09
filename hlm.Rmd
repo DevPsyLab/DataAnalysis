@@ -9,10 +9,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       class.source = "fold-show")
 ```
 
-To do:
-
-- Add data file and examples
-
 # Preamble
 
 ## Install Libraries
@@ -86,9 +82,11 @@ To simultaneously compare fixed and random effects, use ML.
 
 # Linear Mixed Models {#linear}
 
-The following models are growth curve models that are fit in a linear mixed modeling framework.
+The following models are models that are fit in a linear mixed modeling framework.
 
-## `lme4`
+## Growth Curve Models {#gcm}
+
+### `lme4`
 
 ```{r}
 linearMixedModel <- lmer(
@@ -101,7 +99,7 @@ linearMixedModel <- lmer(
 summary(linearMixedModel)
 ```
 
-### Protoypical Growth Curve
+#### Protoypical Growth Curve
 
 ```{r}
 newData <- expand.grid(
@@ -131,7 +129,7 @@ ggplot(
   geom_line()
 ```
 
-### Individuals' Growth Curves
+#### Individuals' Growth Curves
 
 ```{r}
 mydata$predictedValue <- predict(
@@ -148,7 +146,7 @@ ggplot(
   geom_line()
 ```
 
-## `nlme`
+### `nlme`
 
 ```{r}
 linearMixedModel_nlme <- lme(
