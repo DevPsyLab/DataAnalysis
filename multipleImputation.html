@@ -13,7 +13,7 @@
 
 <title>Multiple Imputation</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -442,13 +442,44 @@ div.tocify {
 </div>
 
 
-<div id="methods-for-multiple-imputation" class="section level1"
+<div id="multilevel-multiple-imputation" class="section level1"
 number="1">
-<h1><span class="header-section-number">1</span> Methods for Multiple
+<h1><span class="header-section-number">1</span> Multilevel Multiple
 Imputation</h1>
+<div id="methods" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Methods</h2>
+<div id="continuous-outcomes" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Continuous
+Outcomes</h3>
 <p><a
 href="https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods"
 class="uri">https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods</a></p>
+<pre class="r"><code>?miceadds::mice.impute.2l.pmm
+?mice::mice.impute.2l.pan</code></pre>
+</div>
+<div id="discrete-outcomes" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Discrete
+Outcomes</h3>
+<p><a
+href="https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1"
+class="uri">https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1</a></p>
+<pre class="r"><code>?miceadds::mice.impute.2l.binary</code></pre>
+</div>
+</div>
+<div id="specifying-the-predictor-matrix" class="section level2"
+number="1.2">
+<h2><span class="header-section-number">1.2</span> Specifying the
+Predictor Matrix</h2>
+<ul>
+<li>cluster variable: <code>-2</code></li>
+<li>fixed effect of predictor: <code>1</code></li>
+<li>fixed effect and random effect of predictor: <code>2</code></li>
+<li>include cluster mean of predictor in addition to fixed effect of
+predictor: <code>3</code></li>
+<li>include cluster mean of predictor in addition to fixed effect and
+random effect of predictor: <code>4</code></li>
+</ul>
+</div>
 </div>
 <div id="imputation-diagnostics" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Imputation
@@ -485,7 +516,7 @@ href="https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html"
 class="uri">https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html</a></p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXVsdGlwbGUgSW1wdXRhdGlvbiIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBNZXRob2RzIGZvciBNdWx0aXBsZSBJbXB1dGF0aW9uCgpodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1tdWx0aW91dGNvbWUuaHRtbCNtZXRob2RzCgojIEltcHV0YXRpb24gRGlhZ25vc3RpY3MKCiMjIFRyYWNlIFBsb3RzCgpPbiBjb252ZXJnZW5jZSwgdGhlIHN0cmVhbXMgb2YgdGhlIHRyYWNlIHBsb3RzIHNob3VsZCBpbnRlcm1pbmdsZSBhbmQgYmUgZnJlZSBvZiBhbnkgdHJlbmQgKGF0IHRoZSBsYXRlciBpdGVyYXRpb25zKS4KQ29udmVyZ2VuY2UgaXMgZGlhZ25vc2VkIHdoZW4gdGhlIHZhcmlhbmNlIGJldHdlZW4gZGlmZmVyZW50IHNlcXVlbmNlcyBpcyBubyBsYXJnZXIgdGhhbiB0aGUgdmFyaWFuY2Ugd2l0aGluIGVhY2ggaW5kaXZpZHVhbCBzZXF1ZW5jZS4KCi0gaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtYWxnb3B0aW9ucy5odG1sCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQpwbG90KG1pY2Vfb2JqZWN0LCBjKCJ2YXJpYWJsZSIpKQpgYGAKCiMjIERlbnNpdHkgUGxvdHMKCmBgYHtyLCBldmFsID0gRkFMU0V9CmRlbnNpdHlwbG90KG1pY2Vfb2JqZWN0KQpkZW5zaXR5cGxvdChtaWNlX29iamVjdCwgfiB2YXJpYWJsZSkKYGBgCgojIyBTdHJpcCBQbG90cwoKYGBge3IsIGV2YWwgPSBGQUxTRX0Kc3RyaXBwbG90KG1pY2Vfb2JqZWN0KQpzdHJpcHBsb3QobWljZV9vYmplY3QsIHZhcmlhYmxlIH4gLmltcCkKYGBgCgojIFJlc291cmNlcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZAoKaHR0cHM6Ly93d3cuZ2Vya292aW5rLmNvbS9taWNlVmlnbmV0dGVzL011bHRpX2xldmVsL011bHRpX2xldmVsX2RhdGEuaHRtbAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXVsdGlwbGUgSW1wdXRhdGlvbiIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIpCmBgYAoKIyBNdWx0aWxldmVsIE11bHRpcGxlIEltcHV0YXRpb24KCiMjIE1ldGhvZHMKCiMjIyBDb250aW51b3VzIE91dGNvbWVzCgpodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1tdWx0aW91dGNvbWUuaHRtbCNtZXRob2RzCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLnBtbQo/bWljZTo6bWljZS5pbXB1dGUuMmwucGFuCmBgYAoKIyMjIERpc2NyZXRlIE91dGNvbWVzCgpodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1jYXRvdXRjb21lLmh0bWwjbWV0aG9kcy0xCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLmJpbmFyeQpgYGAKCiMjIFNwZWNpZnlpbmcgdGhlIFByZWRpY3RvciBNYXRyaXgKCi0gY2x1c3RlciB2YXJpYWJsZTogYC0yYAotIGZpeGVkIGVmZmVjdCBvZiBwcmVkaWN0b3I6IGAxYAotIGZpeGVkIGVmZmVjdCBhbmQgcmFuZG9tIGVmZmVjdCBvZiBwcmVkaWN0b3I6IGAyYAotIGluY2x1ZGUgY2x1c3RlciBtZWFuIG9mIHByZWRpY3RvciBpbiBhZGRpdGlvbiB0byBmaXhlZCBlZmZlY3Qgb2YgcHJlZGljdG9yOiBgM2AKLSBpbmNsdWRlIGNsdXN0ZXIgbWVhbiBvZiBwcmVkaWN0b3IgaW4gYWRkaXRpb24gdG8gZml4ZWQgZWZmZWN0IGFuZCByYW5kb20gZWZmZWN0IG9mIHByZWRpY3RvcjogYDRgCgojIEltcHV0YXRpb24gRGlhZ25vc3RpY3MKCiMjIFRyYWNlIFBsb3RzCgpPbiBjb252ZXJnZW5jZSwgdGhlIHN0cmVhbXMgb2YgdGhlIHRyYWNlIHBsb3RzIHNob3VsZCBpbnRlcm1pbmdsZSBhbmQgYmUgZnJlZSBvZiBhbnkgdHJlbmQgKGF0IHRoZSBsYXRlciBpdGVyYXRpb25zKS4KQ29udmVyZ2VuY2UgaXMgZGlhZ25vc2VkIHdoZW4gdGhlIHZhcmlhbmNlIGJldHdlZW4gZGlmZmVyZW50IHNlcXVlbmNlcyBpcyBubyBsYXJnZXIgdGhhbiB0aGUgdmFyaWFuY2Ugd2l0aGluIGVhY2ggaW5kaXZpZHVhbCBzZXF1ZW5jZS4KCi0gaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtYWxnb3B0aW9ucy5odG1sCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQpwbG90KG1pY2Vfb2JqZWN0LCBjKCJ2YXJpYWJsZSIpKQpgYGAKCiMjIERlbnNpdHkgUGxvdHMKCmBgYHtyLCBldmFsID0gRkFMU0V9CmRlbnNpdHlwbG90KG1pY2Vfb2JqZWN0KQpkZW5zaXR5cGxvdChtaWNlX29iamVjdCwgfiB2YXJpYWJsZSkKYGBgCgojIyBTdHJpcCBQbG90cwoKYGBge3IsIGV2YWwgPSBGQUxTRX0Kc3RyaXBwbG90KG1pY2Vfb2JqZWN0KQpzdHJpcHBsb3QobWljZV9vYmplY3QsIHZhcmlhYmxlIH4gLmltcCkKYGBgCgojIFJlc291cmNlcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZAoKaHR0cHM6Ly93d3cuZ2Vya292aW5rLmNvbS9taWNlVmlnbmV0dGVzL011bHRpX2xldmVsL011bHRpX2xldmVsX2RhdGEuaHRtbAo=</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
