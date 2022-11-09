@@ -8,9 +8,34 @@ knitr::opts_chunk$set(echo = TRUE,
                       comment = "")
 ```
 
-# Methods for Multiple Imputation
+# Multilevel Multiple Imputation
+
+## Methods
+
+### Continuous Outcomes
 
 https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
+
+```{r, eval = FALSE}
+?miceadds::mice.impute.2l.pmm
+?mice::mice.impute.2l.pan
+```
+
+### Discrete Outcomes
+
+https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
+
+```{r, eval = FALSE}
+?miceadds::mice.impute.2l.binary
+```
+
+## Specifying the Predictor Matrix
+
+- cluster variable: `-2`
+- fixed effect of predictor: `1`
+- fixed effect and random effect of predictor: `2`
+- include cluster mean of predictor in addition to fixed effect of predictor: `3`
+- include cluster mean of predictor in addition to fixed effect and random effect of predictor: `4`
 
 # Imputation Diagnostics
 
