@@ -12,6 +12,33 @@ knitr::opts_chunk$set(echo = TRUE,
 
 https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
 
+# Imputation Diagnostics
+
+## Trace Plots
+
+On convergence, the streams of the trace plots should intermingle and be free of any trend (at the later iterations).
+Convergence is diagnosed when the variance between different sequences is no larger than the variance within each individual sequence.
+
+- https://stefvanbuuren.name/fimd/sec-algoptions.html
+
+```{r, eval = FALSE}
+plot(mice_object, c("variable"))
+```
+
+## Density Plots
+
+```{r, eval = FALSE}
+densityplot(mice_object)
+densityplot(mice_object, ~ variable)
+```
+
+## Strip Plots
+
+```{r, eval = FALSE}
+stripplot(mice_object)
+stripplot(mice_object, variable ~ .imp)
+```
+
 # Resources
 
 https://stefvanbuuren.name/fimd
