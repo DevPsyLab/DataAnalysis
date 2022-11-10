@@ -1,0 +1,249 @@
+---
+title: "Bayesian Analysis"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "",
+                      class.source = "fold-show")
+```
+
+Adapted from `brms` workshop by Paul-Christian Bürkner
+
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+## Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("lme4")
+library("rstan")
+library("brms")
+```
+
+## Load Data
+
+```{r}
+data("sleepstudy", package = "lme4")
+```
+
+## Prepare Data
+
+```{r}
+conditions <- make_conditions(sleepstudy, "Subject")
+```
+
+# brms
+
+## Post-Processing Methods
+
+```{r, class.source = "fold-hide"}
+methods(class = "brmsfit")
+```
+
+# Multilevel Models
+
+## Fit the Models
+
+### Complete Pooling
+
+```{r, results = "hide"}
+fit_sleep1 <- brm(Reaction ~ 1 + Days, data = sleepstudy)
+```
+
+### Random Intercepts
+
+```{r, results = "hide"}
+fit_sleep2 <- brm(Reaction ~ 1 + Days + (1 | Subject), 
+                  data = sleepstudy)
+```
+
+### Random Intercepts and Slopes
+
+```{r, results = "hide"}
+fit_sleep3 <- brm(
+  Reaction ~ 1 + Days + (1 + Days | Subject), 
+  data = sleepstudy
+)
+```
+
+## Summarize Results
+
+For convergence, `Rhat` values should not be above 1.00.
+
+```{r}
+summary(fit_sleep3)
+```
+
+## Model Priors
+
+```{r}
+prior_summary(fit_sleep3)
+```
+
+## Model Coefficients
+
+```{r}
+coef(fit_sleep3)
+```
+
+## Plots
+
+### Trace Plots
+
+```{r}
+plot(fit_sleep3, ask = FALSE)
+```
+
+### Visualize Predictions
+
+#### Sample-Level
+
+```{r}
+plot(conditional_effects(fit_sleep1), points = TRUE)
+```
+
+#### Person-Level
+
+```{r}
+# re_formula = NULL ensures that group-level effects are included
+ce2 <- conditional_effects(fit_sleep3, conditions = conditions, 
+                        re_formula = NULL)
+plot(ce2, ncol = 6, points = TRUE)
+```
+
+### Check Model Fit
+
+#### Posterior Predictive Check
+
+Evaluate how closely the posterior predictions match the observed values.
+If they do not match the general pattern of the observed values, a different response distribution may be necessary.
+
+```{r}
+pp_check(fit_sleep3)
+pp_check(fit_sleep3, type = "dens_overlay")
+pp_check(fit_sleep3, "error_scatter_avg")
+```
+
+## Fitted Values
+
+```{r}
+fitted(fit_sleep3)
+```
+
+## Residuals
+
+```{r}
+residuals(fit_sleep3)
+```
+
+## Compare Models
+
+`elpd` values: higher is better
+`looic` values: lower is better
+
+`elpd_diff` values that are greater than ~2 standard errors of the `elpd_diff` values indicate a significantly better model (i.e., if `elpd_diff` value is greater than 2 times the `se_diff` value).
+
+```{r}
+loo(fit_sleep1, fit_sleep2, fit_sleep3)
+print(loo(fit_sleep1, fit_sleep2, fit_sleep3), simplify = FALSE)
+```
+
+### Compute Model Weights
+
+```{r}
+model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo")
+
+round(model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo"))
+```
+
+# Setting Priors
+
+## Parameters for Which to Set Priors
+
+```{r}
+get_prior(Reaction ~ 1 + Days + (1 + Days | Subject), 
+          data = sleepstudy)
+```
+
+## Define Priors
+
+```{r}
+bprior <- c(set_prior("normal(5, 5)", coef = "Days"),
+            set_prior("cauchy(0, 10)", class = "sd"),
+            set_prior("lkj(2)", class = "cor"))
+bprior
+```
+
+## Fit the Model
+
+Fit the model with these priors, and sample from these priors:
+
+```{r, results = "hide"}
+fit_sleep4 <- brm(
+  Reaction ~ 1 + Days + (1 + Days | Subject), 
+  data = sleepstudy,
+  prior = bprior, 
+  sample_prior = TRUE
+)
+```
+
+# Evaluate a Hypothesis
+
+```{r}
+# Evid.Ratio is the ratio of P(Days > 7) / P(Days <= 7)
+(hyp1 <- hypothesis(fit_sleep4, "Days < 7"))
+plot(hyp1)
+```
+
+```{r}
+# Evid.Ratio is the Bayes Factor of the posterior
+# vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)
+(hyp2 <- hypothesis(fit_sleep4, "Days = 10"))
+plot(hyp2)
+```
+
+# Parallel Processing
+
+## Between-Chain Parallelization
+
+```{r, results = "hide"}
+fit_sleep4 <- brm(
+  Reaction ~ 1 + Days + (1 + Days | Subject), 
+  data = sleepstudy,
+  prior = bprior, 
+  sample_prior = TRUE,
+  cores = 4
+)
+```
+
+## Within-Chain Parallelization
+
+https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html
+
+# Missing Data Handling
+
+## Multiply Imputed Datasets from `mice`
+
+```{r}
+?brm_multiple
+```
+
+## Multiple Imputation on the Fly
+
+```{r}
+?mi
+```
+
+# Session Info
+
+```{r, class.source = "fold-hide"}
+sessionInfo()
+```
