@@ -9,6 +9,22 @@ knitr::opts_chunk$set(echo = TRUE,
                       class.source = "fold-show")
 ```
 
+# Approaches to Multiple Imputation
+
+- multiple imputation by joint modeling
+    - assumes that the variables in follow a joint distribution, e.g.:
+        - multivariate normal (i.e., multivariate normal imputation)
+    - R packages:
+        - `jomo`
+        - `pan`
+        - `Amelia`
+- multiple imputation by chained equations
+    - aka:
+        - fully conditional specification multiple imputation
+        - sequential regression multiple imputation
+    - R packages:
+        - `mice`
+
 # Multilevel Multiple Imputation
 
 ## Three-Level and Cross-Classified Data
@@ -17,7 +33,9 @@ https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cros
 
 ## Methods
 
-### Continuous Outcomes
+### `mice`
+
+#### Continuous Outcomes
 
 https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
 
@@ -34,7 +52,7 @@ https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
 ?micemd::mice.impute.2l.jomo
 ```
 
-### Discrete Outcomes
+#### Discrete Outcomes
 
 https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
 
@@ -45,7 +63,7 @@ https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
 ?micemd::mice.impute.2l.glm.bin
 ```
 
-## Specifying the Predictor Matrix
+#### Specifying the Predictor Matrix
 
 - cluster variable: `-2`
 - fixed effect of predictor: `1`
@@ -53,9 +71,60 @@ https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
 - include cluster mean of predictor in addition to fixed effect of predictor: `3`
 - include cluster mean of predictor in addition to fixed effect and random effect of predictor: `4`
 
+### `jomo`
+
+```{r, eval = FALSE}
+level1Vars <- c("v1","v2")
+level2Vars <- c("v3","v4")
+clusterVars <- c("id")
+fullyObservedCovariates <- c("age","sex")
+
+set.seed(52242)
+
+mi_jomo <- jomo(
+  Y = data.frame(dataToImpute[,level1Vars]),
+  Y2 = data.frame(dataToImpute[,level2Vars]),
+  X = data.frame(dataToImpute[,fullyObservedCovariates]),
+  clus = data.frame(dataToImpute[,clusterVars]),
+  nimp = 100,
+  meth = "random"
+)
+```
+
+### `Amelia`
+
+```{r, eval = FALSE}
+set.seed(52242)
+
+mi_amelia <- amelia(
+  dataToImpute,
+  m = 100,
+  ts = "age",
+  cs = "id",
+  polytime = 1,
+  intercs = TRUE,
+  ords = ordinalVars,
+  bounds = varBounds,
+  parallel = "snow",
+  ncpus = numCores)
+```
+
 # Parellel Processing
 
 https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html
+
+```{r, eval = FALSE}
+numCores <- parallelly::availableCores(logical = TRUE) - 1
+
+mi_parallel_mice <- futuremice(
+  dataToImpute,
+  method = meth,
+  predictorMatrix = pred,
+  m = 100,
+  maxit = 100,
+  parallelseed = 52242,
+  n.core = numCores)
+```
 
 # Imputation Diagnostics
 
