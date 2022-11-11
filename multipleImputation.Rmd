@@ -106,7 +106,8 @@ mi_amelia <- amelia(
   ords = ordinalVars,
   bounds = varBounds,
   parallel = "snow",
-  ncpus = numCores)
+  ncpus = numCores,
+  empri = .01*nrow(dataToImpute)) # ridge prior for numerical stability
 ```
 
 # Parellel Processing
