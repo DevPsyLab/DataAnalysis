@@ -183,7 +183,7 @@ mi_mice <- mice(
 
 ### `jomo`
 
-```{r, eval = FALSE}
+```{r}
 level1Vars <- c("height")
 level2Vars <- c("v3","v4")
 clusterVars <- c("id")
@@ -206,7 +206,7 @@ mi_jomo <- jomo(
 - `!` in the console output indicates that the current estimated complete data covariance matrix is not invertible
 - `*` in the console output indicates that the likelihood has not monotonically increased in that step
 
-```{r, eval = FALSE}
+```{r}
 boundVars <- c("height")
 boundCols <- which(names(dataToImpute) %in% boundVars)
 boundLower <- 100
@@ -260,14 +260,14 @@ plot(mi_mice, c("height"))
 
 ## Density Plots
 
-```{r, eval = FALSE}
+```{r}
 densityplot(mi_mice)
 densityplot(mi_mice, ~ height)
 ```
 
 ## Strip Plots
 
-```{r, eval = FALSE}
+```{r}
 stripplot(mi_mice)
 stripplot(mi_mice, height ~ .imp)
 ```
@@ -278,7 +278,7 @@ stripplot(mi_mice, height ~ .imp)
 
 ### `mice`
 
-```{r, eval = FALSE}
+```{r}
 mi_mice_long <- complete(
   mi_mice,
   action = "long",
