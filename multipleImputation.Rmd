@@ -9,6 +9,52 @@ knitr::opts_chunk$set(echo = TRUE,
                       class.source = "fold-show")
 ```
 
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_git("https://research-git.uiowa.edu/PetersenLab/petersenlab.git")
+```
+
+## Load Libraries
+
+```{r, message = FALSE, warning = FALSE}
+library("tidyverse")
+library("psych")
+library("mice")
+library("micemd")
+library("miceadds")
+library("mitml")
+library("Amelia")
+library("jomo")
+library("parallel")
+library("future")
+library("furrr")
+library("nlme")
+```
+
+## Data
+
+```{r}
+data(Oxboys, package = "nlme")
+
+Oxboys_addNA <- data.frame(Oxboys)
+Oxboys_addNA <- Oxboys_addNA %>% 
+  rename(id = Subject)
+
+Oxboys_addNA$id <- as.integer(Oxboys_addNA$id)
+Oxboys_addNA$Occasion <- as.integer(Oxboys_addNA$Occasion)
+
+set.seed(52242)
+Oxboys_addNA[sample(1:nrow(Oxboys_addNA), 25), "height"] <- NA
+
+dataToImpute <- Oxboys_addNA
+varsToImpute <- c("height")
+Y <- varsToImpute
+```
+
 # Approaches to Multiple Imputation
 
 - multiple imputation by joint modeling
@@ -26,6 +72,27 @@ knitr::opts_chunk$set(echo = TRUE,
         - `mice`
             - predictive mean matching (`?mice::mice.impute.pmm`) can be useful to obtain bounded imputations for non-normally distributed variables
 
+# Describe Missing Data
+
+```{r}
+describe(dataToImpute)
+md.pattern(dataToImpute, rotate.names = TRUE)
+```
+
+# Pre-Imputation Setup
+
+## Specify Number of Imputations
+
+```{r}
+numImputations <- 5 # generally use 100 imputations; this example uses 5 for speed
+```
+
+## Detect Cores
+
+```{r}
+numCores <- parallel::detectCores() - 1
+```
+
 # Multilevel Multiple Imputation
 
 ## Three-Level and Cross-Classified Data
@@ -36,7 +103,9 @@ https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cros
 
 ### `mice`
 
-#### Continuous Outcomes
+#### Types
+
+##### Continuous Outcomes
 
 https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
 
@@ -53,7 +122,7 @@ https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods
 ?micemd::mice.impute.2l.jomo
 ```
 
-#### Discrete Outcomes
+##### Discrete Outcomes
 
 https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
 
@@ -64,30 +133,70 @@ https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1
 ?micemd::mice.impute.2l.glm.bin
 ```
 
+#### Specifying the Imputation Method
+
+```{r}
+meth <- make.method(dataToImpute)
+meth[1:length(meth)] <- ""
+meth[Y] <- "2l.pmm" # specify the imputation method here; this can differ by outcome variable
+```
+
 #### Specifying the Predictor Matrix
 
+A predictor matrix is a matrix of values, where:
+
+- columns with non-zero values are predictors of the variable specified in the given row
+- the diagonal of the predictor matrix should be zero because a variable cannot predict itself
+
+The values are:
+
+- NOT a predictor of the outcome: `0`
 - cluster variable: `-2`
 - fixed effect of predictor: `1`
 - fixed effect and random effect of predictor: `2`
 - include cluster mean of predictor in addition to fixed effect of predictor: `3`
 - include cluster mean of predictor in addition to fixed effect and random effect of predictor: `4`
 
+```{r}
+pred <- make.predictorMatrix(dataToImpute)
+pred[1:nrow(pred), 1:ncol(pred)] <- 0
+pred[Y, "id"] <- (-2) # cluster variable
+pred[Y, "Occasion"] <- 1 # fixed effect predictor
+pred[Y, "age"] <- 2 # random effect predictor
+pred[Y, Y] <- 1 # fixed effect predictor
+
+diag(pred) <- 0
+pred
+```
+
+#### Syntax
+
+```{r}
+mi_mice <- mice(
+  as.data.frame(dataToImpute),
+  method = meth,
+  predictorMatrix = pred,
+  m = numImputations,
+  maxit = 5, # generally use 100 maximum iterations; this example uses 5 for speed
+  seed = 52242)
+```
+
 ### `jomo`
 
 ```{r, eval = FALSE}
-level1Vars <- c("v1","v2")
+level1Vars <- c("height")
 level2Vars <- c("v3","v4")
 clusterVars <- c("id")
-fullyObservedCovariates <- c("age","sex")
+fullyObservedCovariates <- c("age","Occasion")
 
 set.seed(52242)
 
 mi_jomo <- jomo(
-  Y = data.frame(dataToImpute[,level1Vars]),
-  Y2 = data.frame(dataToImpute[,level2Vars]),
-  X = data.frame(dataToImpute[,fullyObservedCovariates]),
-  clus = data.frame(dataToImpute[,clusterVars]),
-  nimp = 100,
+  Y = data.frame(dataToImpute[, level1Vars]),
+  #Y2 = data.frame(dataToImpute[, level2Vars]),
+  X = data.frame(dataToImpute[, fullyObservedCovariates]),
+  clus = data.frame(dataToImpute[, clusterVars]),
+  nimp = numImputations,
   meth = "random"
 )
 ```
@@ -98,19 +207,26 @@ mi_jomo <- jomo(
 - `*` in the console output indicates that the likelihood has not monotonically increased in that step
 
 ```{r, eval = FALSE}
+boundVars <- c("height")
+boundCols <- which(names(dataToImpute) %in% boundVars)
+boundLower <- 100
+boundUpper <- 200
+
+varBounds <- cbind(boundCols, boundLower, boundUpper)
+
 set.seed(52242)
 
 mi_amelia <- amelia(
   dataToImpute,
-  m = 100,
+  m = numImputations,
   ts = "age",
   cs = "id",
   polytime = 1,
   intercs = TRUE,
-  ords = ordinalVars,
-  bounds = varBounds,
+  #ords = ordinalVars,
+  #bounds = varBounds,
   parallel = "snow",
-  ncpus = numCores,
+  #ncpus = numCores,
   empri = .01*nrow(dataToImpute)) # ridge prior for numerical stability
 ```
 
@@ -118,15 +234,13 @@ mi_amelia <- amelia(
 
 https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html
 
-```{r, eval = FALSE}
-numCores <- parallelly::availableCores(logical = TRUE) - 1
-
+```{r}
 mi_parallel_mice <- futuremice(
   dataToImpute,
   method = meth,
   predictorMatrix = pred,
-  m = 100,
-  maxit = 100,
+  m = numImputations,
+  maxit = 5, # generally use 100 maximum iterations; this example uses 5 for speed
   parallelseed = 52242,
   n.core = numCores)
 ```
@@ -140,22 +254,75 @@ Convergence is diagnosed when the variance between different sequences is no lar
 
 - https://stefvanbuuren.name/fimd/sec-algoptions.html
 
-```{r, eval = FALSE}
-plot(mice_object, c("variable"))
+```{r}
+plot(mi_mice, c("height"))
 ```
 
 ## Density Plots
 
 ```{r, eval = FALSE}
-densityplot(mice_object)
-densityplot(mice_object, ~ variable)
+densityplot(mi_mice)
+densityplot(mi_mice, ~ height)
 ```
 
 ## Strip Plots
 
 ```{r, eval = FALSE}
-stripplot(mice_object)
-stripplot(mice_object, variable ~ .imp)
+stripplot(mi_mice)
+stripplot(mi_mice, height ~ .imp)
+```
+
+# Post-Processing
+
+## Modify/Create New Variables
+
+### `mice`
+
+```{r, eval = FALSE}
+mi_mice_long <- complete(
+  mi_mice,
+  action = "long",
+  include = TRUE)
+
+mi_mice_long$newVar <- mi_mice_long$age * mi_mice_long$height
+```
+
+### `jomo`
+
+```{r}
+mi_jomo <- mi_jomo %>% 
+  rename(height = dataToImpute...level1Vars.)
+
+mi_jomo$newVar <- mi_jomo$age * mi_jomo$height
+```
+
+### `Amelia`
+
+```{r}
+for(i in 1:length(mi_amelia$imputations)){
+  mi_amelia$imputations[[i]]$newVar <- mi_amelia$imputations[[i]]$age * mi_amelia$imputations[[i]]$height
+}
+```
+
+## Convert to `mids` object
+
+### `mice`
+
+```{r}
+mi_mice_mids <- as.mids(mi_mice_long)
+```
+
+### `Amelia`
+
+```{r}
+mi_amelia_mids <- miceadds::datlist2mids(mi_amelia$imputations)
+```
+
+## Export for `Mplus`
+
+```{r, eval = FALSE}
+mids2mplus(mi_mice_mids, path = file.path("InsertFilePathHere", fsep = ""))
+mids2mplus(mi_amelia_mids, path = file.path("InsertFilePathHere", fsep = ""))
 ```
 
 # Resources
