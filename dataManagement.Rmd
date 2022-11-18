@@ -140,6 +140,12 @@ names(mydata)
 
 # Subset
 
+To subset a data frame, use brackets to specify the subset of rows and columns to keep, where the value/vector before the comma specifies the rows to keep, and the value/vector after the comma specifies the columns to keep:
+
+```{r, eval = FALSE}
+dataframe[rowsToKeep, columnsToKeep]
+```
+
 ## One Variable
 
 To subset one variable, use the following syntax:
@@ -148,12 +154,21 @@ To subset one variable, use the following syntax:
 mydata$age
 ```
 
-## Multiple Variables
-
-To subset multiple variables, use the following syntax:
+or:
 
 ```{r}
+mydata[,"age"]
+```
+
+## Particular Columns (Variables)
+
+To subset particular columns/variables, use the following syntax:
+
+```{r}
+subsetVars <- c("survived","age","prediction")
+
 mydata[,c("survived","age","prediction")]
+mydata[,subsetVars]
 ```
 
 ## Particular Rows
@@ -161,8 +176,29 @@ mydata[,c("survived","age","prediction")]
 To subset particular rows, use the following syntax:
 
 ```{r}
+subsetRows <- c(1,3,5)
+
 mydata[c(1,3,5),]
+mydata[subsetRows,]
 mydata[which(mydata$survived == 1),]
+mydata[which(mydata$parch >= 1),]
+mydata[which(mydata$parch %in% c(0,1)),]
+mydata[which(mydata$parch %ni% c(0,1)),]
+mydata[which(is.na(mydata$prediction)),]
+mydata[which(!is.na(mydata$prediction)),]
+```
+
+## Particular Rows and Columns
+
+```{r}
+mydata[c(1,3,5), c("survived","age","prediction")]
+mydata[subsetRows, subsetVars]
+mydata[which(mydata$survived == 1), subsetVars]
+mydata[which(mydata$parch >= 1), subsetVars]
+mydata[which(mydata$parch %in% c(0,1)), subsetVars]
+mydata[which(mydata$parch %ni% c(0,1)), subsetVars]
+mydata[which(is.na(mydata$prediction)), subsetVars]
+mydata[which(!is.na(mydata$prediction)), subsetVars]
 ```
 
 # View Data
