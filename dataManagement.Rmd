@@ -138,6 +138,84 @@ To look at the names of variables in a data frame, use the following syntax:
 names(mydata)
 ```
 
+# Logical Operators
+
+Logical operators evaluate a condition for each value and yield values of `TRUE` and `FALSE`, corresponding to whether the evaluation for a given value met the condition.
+
+## Is Equal To: `==`
+
+```{r}
+mydata$survived == 1
+```
+
+## Is Not Equal To: `!=`
+
+```{r}
+mydata$survived != 1
+```
+
+### Greater Than: `>`
+
+```{r}
+mydata$parch > 1
+```
+
+## Less Than: `<`
+
+```{r}
+mydata$parch < 1
+```
+
+## Greater Than or Equal To: `>=`
+
+```{r}
+mydata$parch >= 1
+```
+
+## Less Than or Equal To: `<=`
+
+```{r}
+mydata$parch <= 1
+```
+## Is in a Value of Another Vector: `%in%`
+
+```{r}
+anotherVector <- c(0,1)
+mydata$parch %in% anotherVector
+```
+
+## Is Not in a Value of Another Vector: `%ni%`
+
+Note: this function is part of the [`petersenlab`](https://research-git.uiowa.edu/PetersenLab/petersenlab) package and is not available in base `R`.
+
+```{r}
+mydata$parch %ni% anotherVector
+```
+
+## Is Missing: `is.na()`
+
+```{r}
+is.na(mydata$prediction)
+```
+
+## Is Not Missing: `!is.na()`
+
+```{r}
+!is.na(mydata$prediction)
+```
+
+## And: `&`
+
+```{r}
+!is.na(mydata$prediction) & mydata$parch >= 1
+```
+
+## Or: `|`
+
+```{r}
+is.na(mydata$prediction) | mydata$parch >= 1
+```
+
 # Subset
 
 To subset a data frame, use brackets to specify the subset of rows and columns to keep, where the value/vector before the comma specifies the rows to keep, and the value/vector after the comma specifies the columns to keep:
@@ -145,6 +223,12 @@ To subset a data frame, use brackets to specify the subset of rows and columns t
 ```{r, eval = FALSE}
 dataframe[rowsToKeep, columnsToKeep]
 ```
+
+You can subset by using any of the following:
+
+- numeric indices of the rows/columns to keep (or drop)
+- names of the rows/columns to keep (or drop)
+- values of `TRUE` and `FALSE` corresponding to which rows/columns to keep
 
 ## One Variable
 
@@ -164,16 +248,34 @@ mydata[,"age"]
 
 To subset particular columns/variables, use the following syntax:
 
+### Base `R`
+
 ```{r}
 subsetVars <- c("survived","age","prediction")
 
+mydata[,c(1,2,3)]
 mydata[,c("survived","age","prediction")]
 mydata[,subsetVars]
+```
+
+### Tidyverse
+
+```{r}
+mydata %>%
+  select(survived, age, prediction)
+
+mydata %>%
+  select(survived:prediction)
+
+mydata %>%
+  select(all_of(subsetVars))
 ```
 
 ## Particular Rows
 
 To subset particular rows, use the following syntax:
+
+### Base `R`
 
 ```{r}
 subsetRows <- c(1,3,5)
@@ -181,24 +283,39 @@ subsetRows <- c(1,3,5)
 mydata[c(1,3,5),]
 mydata[subsetRows,]
 mydata[which(mydata$survived == 1),]
-mydata[which(mydata$parch >= 1),]
-mydata[which(mydata$parch %in% c(0,1)),]
-mydata[which(mydata$parch %ni% c(0,1)),]
-mydata[which(is.na(mydata$prediction)),]
-mydata[which(!is.na(mydata$prediction)),]
+```
+
+### Tidyverse
+
+```{r}
+mydata %>%
+  filter(survived == 1)
+
+mydata %>%
+  filter(survived == 1, parch <= 1)
+
+mydata %>%
+  filter(survived == 1 | parch <= 1)
 ```
 
 ## Particular Rows and Columns
 
+To subset particular rows and columns, use the following syntax:
+
+### Base `R`
+
 ```{r}
-mydata[c(1,3,5), c("survived","age","prediction")]
+mydata[c(1,3,5), c(1,2,3)]
 mydata[subsetRows, subsetVars]
 mydata[which(mydata$survived == 1), subsetVars]
-mydata[which(mydata$parch >= 1), subsetVars]
-mydata[which(mydata$parch %in% c(0,1)), subsetVars]
-mydata[which(mydata$parch %ni% c(0,1)), subsetVars]
-mydata[which(is.na(mydata$prediction)), subsetVars]
-mydata[which(!is.na(mydata$prediction)), subsetVars]
+```
+
+### Tidyverse
+
+```{r}
+mydata %>%
+  filter(survived == 1) %>%
+  select(all_of(subsetVars))
 ```
 
 # View Data
