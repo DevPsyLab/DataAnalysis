@@ -33,6 +33,7 @@ library("parallel")
 library("future")
 library("furrr")
 library("nlme")
+library("MplusAutomation")
 ```
 
 ## Data
@@ -64,6 +65,7 @@ Y <- varsToImpute
         - `jomo`
         - `pan`
         - `Amelia`
+        - `Mplus`
 - multiple imputation by chained equations
     - aka:
         - fully conditional specification multiple imputation
@@ -228,6 +230,49 @@ mi_amelia <- amelia(
   parallel = "snow",
   #ncpus = numCores,
   empri = .01*nrow(dataToImpute)) # ridge prior for numerical stability
+```
+
+### `Mplus`
+
+#### Save `Mplus` Data File
+
+Save R object as `Mplus` data file:
+
+```{r}
+prepareMplusData(dataToImpute_mplus, file.path(path, "dataToImpute_mplus.dat"))
+```
+
+#### `Mplus` Syntax for Multilevel Imputation
+
+`Mplus` syntax for multilevel imputation:
+
+```Mplus
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!  MPLUS SYNTAX LINES CANNOT EXCEED 90 CHARACTERS;
+!!!!!  VARIABLE NAMES AND PARAMETER LABELS CANNOT EXCEED 8 CHARACTERS EACH;
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+TITLE: Model Title
+
+DATA: FILE = "datafile.dat";
+
+VARIABLE:
+  NAMES = id age height Occasion;
+  MISSING = .;
+  USEVARIABLES ARE age height Occasion;
+  !CATEGORICAL ARE INSERT_NAMES_OF_CATEGORICAL_VARIABLES_HERE;
+  CLUSTER = id;
+
+ANALYSIS:
+  TYPE = twolevel basic;
+  ESTIMATOR = bayes;
+  bseed = 52242;
+  PROCESSORS = 2;
+    
+DATA IMPUTATION:
+  IMPUTE = age height Occasion; !put ' (c)' after categorical vars
+  NDATASETS = 100;
+  SAVE = imp*.dat
 ```
 
 # Parallel Processing
