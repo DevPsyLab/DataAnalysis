@@ -56,6 +56,42 @@ varsToImpute <- c("height")
 Y <- varsToImpute
 ```
 
+# Types of Missingness
+
+1. Missing Completely at Random (MCAR)
+    - the probability of being missing is the same for all cases
+    - missingness is not related to variables in the model
+1. (Conditionally) Missing at Random (MAR)
+    - missingness is related to variables in the model, but once we condition on the variables in the model, the missingness is haphazard
+    - the unobserved values do not play a role
+1. Missing Not at Random (MNAR)
+    - missingness is related to variables that are not in the model (i.e., for reasons that are unknown)
+    - unobserved variables carry information about whether a case will have missing data
+
+# Approaches to Handle Missing Data
+
+## For MCAR/MAR Missingness
+
+1. Full Information Maximum Likelihood (FIML)
+1. Multiple Imputation
+
+## For MNAR Missingness
+
+1. find more data about the causes for the missingness
+1. what-if analyses to see how sensitive the results are under various scenarios
+    - https://stefvanbuuren.name/fimd/sec-MCAR.html
+1. selection modeling
+    - simultaneously estimate the focal model and a missingness model, where the missingness model has the missing data indicator as a dependent variable, as predicted by the original dependent variable, the original predictors, and any additional covariates etc.
+    - if the missingness model is approximately correct, the focal model adjusts in way that removes nonresponse bias
+    - similar to a mediation process
+        - X → Y
+        - Y → missingness
+        - X → missingness
+    - https://quantitudepod.org/s4e08-craig-enders/
+1. pattern mixture models
+    - missing data indicator is a predictor variable
+    - similar to a moderation process; subgroups of cases have different parameter estimates
+
 # Approaches to Multiple Imputation
 
 - multiple imputation by joint modeling
@@ -239,7 +275,7 @@ mi_amelia <- amelia(
 Save R object as `Mplus` data file:
 
 ```{r}
-prepareMplusData(dataToImpute_mplus, file.path("dataToImpute_mplus.dat"))
+prepareMplusData(dataToImpute, file.path("dataToImpute.dat"))
 ```
 
 #### `Mplus` Syntax for Multilevel Imputation
