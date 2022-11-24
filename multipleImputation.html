@@ -488,9 +488,83 @@ varsToImpute &lt;- c(&quot;height&quot;)
 Y &lt;- varsToImpute</code></pre>
 </div>
 </div>
+<div id="types-of-missingness" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Types of
+Missingness</h1>
+<ol style="list-style-type: decimal">
+<li>Missing Completely at Random (MCAR)
+<ul>
+<li>the probability of being missing is the same for all cases</li>
+<li>missingness is not related to variables in the model</li>
+</ul></li>
+<li>(Conditionally) Missing at Random (MAR)
+<ul>
+<li>missingness is related to variables in the model, but once we
+condition on the variables in the model, the missingness is
+haphazard</li>
+<li>the unobserved values do not play a role</li>
+</ul></li>
+<li>Missing Not at Random (MNAR)
+<ul>
+<li>missingness is related to variables that are not in the model (i.e.,
+for reasons that are unknown)</li>
+<li>unobserved variables carry information about whether a case will
+have missing data</li>
+</ul></li>
+</ol>
+</div>
+<div id="approaches-to-handle-missing-data" class="section level1"
+number="3">
+<h1><span class="header-section-number">3</span> Approaches to Handle
+Missing Data</h1>
+<div id="for-mcarmar-missingness" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> For MCAR/MAR
+Missingness</h2>
+<ol style="list-style-type: decimal">
+<li>Full Information Maximum Likelihood (FIML)</li>
+<li>Multiple Imputation</li>
+</ol>
+</div>
+<div id="for-mnar-missingness" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> For MNAR
+Missingness</h2>
+<ol style="list-style-type: decimal">
+<li>find more data about the causes for the missingness</li>
+<li>what-if analyses to see how sensitive the results are under various
+scenarios
+<ul>
+<li><a href="https://stefvanbuuren.name/fimd/sec-MCAR.html"
+class="uri">https://stefvanbuuren.name/fimd/sec-MCAR.html</a></li>
+</ul></li>
+<li>selection modeling
+<ul>
+<li>simultaneously estimate the focal model and a missingness model,
+where the missingness model has the missing data indicator as a
+dependent variable, as predicted by the original dependent variable, the
+original predictors, and any additional covariates etc.</li>
+<li>if the missingness model is approximately correct, the focal model
+adjusts in way that removes nonresponse bias</li>
+<li>similar to a mediation process
+<ul>
+<li>X → Y</li>
+<li>Y → missingness</li>
+<li>X → missingness</li>
+</ul></li>
+<li><a href="https://quantitudepod.org/s4e08-craig-enders/"
+class="uri">https://quantitudepod.org/s4e08-craig-enders/</a></li>
+</ul></li>
+<li>pattern mixture models
+<ul>
+<li>missing data indicator is a predictor variable</li>
+<li>similar to a moderation process; subgroups of cases have different
+parameter estimates</li>
+</ul></li>
+</ol>
+</div>
+</div>
 <div id="approaches-to-multiple-imputation" class="section level1"
-number="2">
-<h1><span class="header-section-number">2</span> Approaches to Multiple
+number="4">
+<h1><span class="header-section-number">4</span> Approaches to Multiple
 Imputation</h1>
 <ul>
 <li>multiple imputation by joint modeling
@@ -526,8 +600,8 @@ variables</li>
 </ul></li>
 </ul>
 </div>
-<div id="describe-missing-data" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Describe Missing
+<div id="describe-missing-data" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Describe Missing
 Data</h1>
 <pre class="r fold-show"><code>describe(dataToImpute)</code></pre>
 <div data-pagedtable="false">
@@ -542,41 +616,41 @@ Data</h1>
 25   1   1        1      0  1
      0   0        0     25 25</code></pre>
 </div>
-<div id="pre-imputation-setup" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Pre-Imputation
+<div id="pre-imputation-setup" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Pre-Imputation
 Setup</h1>
 <div id="specify-number-of-imputations" class="section level2"
-number="4.1">
-<h2><span class="header-section-number">4.1</span> Specify Number of
+number="6.1">
+<h2><span class="header-section-number">6.1</span> Specify Number of
 Imputations</h2>
 <pre class="r fold-show"><code>numImputations &lt;- 5 # generally use 100 imputations; this example uses 5 for speed</code></pre>
 </div>
-<div id="detect-cores" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Detect Cores</h2>
+<div id="detect-cores" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Detect Cores</h2>
 <pre class="r fold-show"><code>numCores &lt;- parallel::detectCores() - 1</code></pre>
 </div>
 </div>
 <div id="multilevel-multiple-imputation" class="section level1"
-number="5">
-<h1><span class="header-section-number">5</span> Multilevel Multiple
+number="7">
+<h1><span class="header-section-number">7</span> Multilevel Multiple
 Imputation</h1>
 <div id="three-level-and-cross-classified-data" class="section level2"
-number="5.1">
-<h2><span class="header-section-number">5.1</span> Three-Level and
+number="7.1">
+<h2><span class="header-section-number">7.1</span> Three-Level and
 Cross-Classified Data</h2>
 <p><a
 href="https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cross-classified-data/"
 class="uri">https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cross-classified-data/</a></p>
 </div>
-<div id="methods" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Methods</h2>
-<div id="mice" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span>
+<div id="methods" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Methods</h2>
+<div id="mice" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span>
 <code>mice</code></h3>
-<div id="types" class="section level4" number="5.2.1.1">
-<h4><span class="header-section-number">5.2.1.1</span> Types</h4>
-<div id="continuous-outcomes" class="section level5" number="5.2.1.1.1">
-<h5><span class="header-section-number">5.2.1.1.1</span> Continuous
+<div id="types" class="section level4" number="7.2.1.1">
+<h4><span class="header-section-number">7.2.1.1</span> Types</h4>
+<div id="continuous-outcomes" class="section level5" number="7.2.1.1.1">
+<h5><span class="header-section-number">7.2.1.1.1</span> Continuous
 Outcomes</h5>
 <p><a
 href="https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods"
@@ -592,8 +666,8 @@ class="uri">https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods</a></p
 ?micemd::mice.impute.2l.glm.norm
 ?micemd::mice.impute.2l.jomo</code></pre>
 </div>
-<div id="discrete-outcomes" class="section level5" number="5.2.1.1.2">
-<h5><span class="header-section-number">5.2.1.1.2</span> Discrete
+<div id="discrete-outcomes" class="section level5" number="7.2.1.1.2">
+<h5><span class="header-section-number">7.2.1.1.2</span> Discrete
 Outcomes</h5>
 <p><a
 href="https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1"
@@ -605,16 +679,16 @@ class="uri">https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1</a></p
 </div>
 </div>
 <div id="specifying-the-imputation-method" class="section level4"
-number="5.2.1.2">
-<h4><span class="header-section-number">5.2.1.2</span> Specifying the
+number="7.2.1.2">
+<h4><span class="header-section-number">7.2.1.2</span> Specifying the
 Imputation Method</h4>
 <pre class="r fold-show"><code>meth &lt;- make.method(dataToImpute)
 meth[1:length(meth)] &lt;- &quot;&quot;
 meth[Y] &lt;- &quot;2l.pmm&quot; # specify the imputation method here; this can differ by outcome variable</code></pre>
 </div>
 <div id="specifying-the-predictor-matrix" class="section level4"
-number="5.2.1.3">
-<h4><span class="header-section-number">5.2.1.3</span> Specifying the
+number="7.2.1.3">
+<h4><span class="header-section-number">7.2.1.3</span> Specifying the
 Predictor Matrix</h4>
 <p>A predictor matrix is a matrix of values, where:</p>
 <ul>
@@ -649,8 +723,8 @@ age       0   0      0        0
 height   -2   2      0        1
 Occasion  0   0      0        0</code></pre>
 </div>
-<div id="syntax" class="section level4" number="5.2.1.4">
-<h4><span class="header-section-number">5.2.1.4</span> Syntax</h4>
+<div id="syntax" class="section level4" number="7.2.1.4">
+<h4><span class="header-section-number">7.2.1.4</span> Syntax</h4>
 <pre class="r fold-show"><code>mi_mice &lt;- mice(
   as.data.frame(dataToImpute),
   method = meth,
@@ -687,8 +761,8 @@ Occasion  0   0      0        0</code></pre>
   5   5  height</code></pre>
 </div>
 </div>
-<div id="jomo" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span>
+<div id="jomo" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span>
 <code>jomo</code></h3>
 <pre class="r fold-show"><code>level1Vars &lt;- c(&quot;height&quot;)
 level2Vars &lt;- c(&quot;v3&quot;,&quot;v4&quot;)
@@ -788,8 +862,8 @@ The posterior mean of the level 2 covariance matrix is:
                               dataToImpute...level1Vars..Z1
 dataToImpute...level1Vars.*Z1                      66.59035</code></pre>
 </div>
-<div id="amelia" class="section level3" number="5.2.3">
-<h3><span class="header-section-number">5.2.3</span>
+<div id="amelia" class="section level3" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span>
 <code>Amelia</code></h3>
 <ul>
 <li><code>!</code> in the console output indicates that the current
@@ -845,19 +919,23 @@ mi_amelia &lt;- amelia(
 
   1  2  3  4  5  6  7  8  9 10 11 12</code></pre>
 </div>
-<div id="mplus" class="section level3" number="5.2.4">
-<h3><span class="header-section-number">5.2.4</span>
+<div id="mplus" class="section level3" number="7.2.4">
+<h3><span class="header-section-number">7.2.4</span>
 <code>Mplus</code></h3>
-<div id="save-mplus-data-file" class="section level4" number="5.2.4.1">
-<h4><span class="header-section-number">5.2.4.1</span> Save
+<div id="save-mplus-data-file" class="section level4" number="7.2.4.1">
+<h4><span class="header-section-number">7.2.4.1</span> Save
 <code>Mplus</code> Data File</h4>
 <p>Save R object as <code>Mplus</code> data file:</p>
-<pre class="r fold-show"><code>prepareMplusData(dataToImpute_mplus, file.path(&quot;dataToImpute_mplus.dat&quot;))</code></pre>
-<pre><code>Error in isTRUE(lhs): object &#39;dataToImpute_mplus&#39; not found</code></pre>
+<pre class="r fold-show"><code>prepareMplusData(dataToImpute, file.path(&quot;dataToImpute.dat&quot;))</code></pre>
+<pre><code>TITLE: Your title goes here
+DATA: FILE = &quot;dataToImpute.dat&quot;;
+VARIABLE: 
+NAMES = id age height Occasion; 
+MISSING=.;</code></pre>
 </div>
 <div id="mplus-syntax-for-multilevel-imputation" class="section level4"
-number="5.2.4.2">
-<h4><span class="header-section-number">5.2.4.2</span>
+number="7.2.4.2">
+<h4><span class="header-section-number">7.2.4.2</span>
 <code>Mplus</code> Syntax for Multilevel Imputation</h4>
 <p><code>Mplus</code> syntax for multilevel imputation:</p>
 <pre class="mplus"><code>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -890,8 +968,8 @@ DATA IMPUTATION:
 </div>
 </div>
 </div>
-<div id="parallel-processing" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Parallel
+<div id="parallel-processing" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Parallel
 Processing</h1>
 <p><a
 href="https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html"
@@ -905,11 +983,11 @@ class="uri">https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremi
   parallelseed = 52242,
   n.core = numCores)</code></pre>
 </div>
-<div id="imputation-diagnostics" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Imputation
+<div id="imputation-diagnostics" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Imputation
 Diagnostics</h1>
-<div id="trace-plots" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Trace Plots</h2>
+<div id="trace-plots" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Trace Plots</h2>
 <p>On convergence, the streams of the trace plots should intermingle and
 be free of any trend (at the later iterations). Convergence is diagnosed
 when the variance between different sequences is no larger than the
@@ -921,29 +999,29 @@ class="uri">https://stefvanbuuren.name/fimd/sec-algoptions.html</a></li>
 <pre class="r fold-show"><code>plot(mi_mice, c(&quot;height&quot;))</code></pre>
 <p><img src="multipleImputation_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
-<div id="density-plots" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Density Plots</h2>
+<div id="density-plots" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Density Plots</h2>
 <pre class="r fold-show"><code>densityplot(mi_mice)</code></pre>
 <p><img src="multipleImputation_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <pre class="r fold-show"><code>densityplot(mi_mice, ~ height)</code></pre>
 <p><img src="multipleImputation_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
 </div>
-<div id="strip-plots" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Strip Plots</h2>
+<div id="strip-plots" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Strip Plots</h2>
 <pre class="r fold-show"><code>stripplot(mi_mice)</code></pre>
 <p><img src="multipleImputation_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <pre class="r fold-show"><code>stripplot(mi_mice, height ~ .imp)</code></pre>
 <p><img src="multipleImputation_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
 </div>
 </div>
-<div id="post-processing" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Post-Processing</h1>
+<div id="post-processing" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Post-Processing</h1>
 <div id="modifycreate-new-variables" class="section level2"
-number="8.1">
-<h2><span class="header-section-number">8.1</span> Modify/Create New
+number="10.1">
+<h2><span class="header-section-number">10.1</span> Modify/Create New
 Variables</h2>
-<div id="mice-1" class="section level3" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span>
+<div id="mice-1" class="section level3" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span>
 <code>mice</code></h3>
 <pre class="r fold-show"><code>mi_mice_long &lt;- complete(
   mi_mice,
@@ -952,52 +1030,52 @@ Variables</h2>
 
 mi_mice_long$newVar &lt;- mi_mice_long$age * mi_mice_long$height</code></pre>
 </div>
-<div id="jomo-1" class="section level3" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span>
+<div id="jomo-1" class="section level3" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span>
 <code>jomo</code></h3>
 <pre class="r fold-show"><code>mi_jomo &lt;- mi_jomo %&gt;% 
   rename(height = dataToImpute...level1Vars.)
 
 mi_jomo$newVar &lt;- mi_jomo$age * mi_jomo$height</code></pre>
 </div>
-<div id="amelia-1" class="section level3" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span>
+<div id="amelia-1" class="section level3" number="10.1.3">
+<h3><span class="header-section-number">10.1.3</span>
 <code>Amelia</code></h3>
 <pre class="r fold-show"><code>for(i in 1:length(mi_amelia$imputations)){
   mi_amelia$imputations[[i]]$newVar &lt;- mi_amelia$imputations[[i]]$age * mi_amelia$imputations[[i]]$height
 }</code></pre>
 </div>
 </div>
-<div id="convert-to-mids-object" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Convert to
+<div id="convert-to-mids-object" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Convert to
 <code>mids</code> object</h2>
-<div id="mice-2" class="section level3" number="8.2.1">
-<h3><span class="header-section-number">8.2.1</span>
+<div id="mice-2" class="section level3" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span>
 <code>mice</code></h3>
 <pre class="r fold-show"><code>mi_mice_mids &lt;- as.mids(mi_mice_long)</code></pre>
 </div>
-<div id="jomo-2" class="section level3" number="8.2.2">
-<h3><span class="header-section-number">8.2.2</span>
+<div id="jomo-2" class="section level3" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span>
 <code>jomo</code></h3>
 <pre class="r fold-show"><code>mi_jomo_mids &lt;- miceadds::jomo2mids(mi_jomo)</code></pre>
 <pre><code>Warning: Number of logged events: 1</code></pre>
 </div>
-<div id="amelia-2" class="section level3" number="8.2.3">
-<h3><span class="header-section-number">8.2.3</span>
+<div id="amelia-2" class="section level3" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span>
 <code>Amelia</code></h3>
 <pre class="r fold-show"><code>mi_amelia_mids &lt;- miceadds::datlist2mids(mi_amelia$imputations)</code></pre>
 </div>
 </div>
-<div id="export-for-mplus" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Export for
+<div id="export-for-mplus" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Export for
 <code>Mplus</code></h2>
 <pre class="r fold-show"><code>mids2mplus(mi_mice_mids, path = file.path(&quot;InsertFilePathHere&quot;, fsep = &quot;&quot;))
 mids2mplus(mi_jomo_mids, path = file.path(&quot;InsertFilePathHere&quot;, fsep = &quot;&quot;))
 mids2mplus(mi_amelia_mids, path = file.path(&quot;InsertFilePathHere&quot;, fsep = &quot;&quot;))</code></pre>
 </div>
 </div>
-<div id="resources" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Resources</h1>
+<div id="resources" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Resources</h1>
 <p><a href="https://stefvanbuuren.name/fimd"
 class="uri">https://stefvanbuuren.name/fimd</a></p>
 <p><a
@@ -1005,7 +1083,7 @@ href="https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html"
 class="uri">https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html</a></p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXVsdGlwbGUgSW1wdXRhdGlvbiIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93IikKYGBgCgojIFByZWFtYmxlCgojIyBJbnN0YWxsIExpYnJhcmllcwoKYGBge3J9CiNpbnN0YWxsLnBhY2thZ2VzKCJyZW1vdGVzIikKI3JlbW90ZXM6Omluc3RhbGxfZ2l0KCJodHRwczovL3Jlc2VhcmNoLWdpdC51aW93YS5lZHUvUGV0ZXJzZW5MYWIvcGV0ZXJzZW5sYWIuZ2l0IikKYGBgCgojIyBMb2FkIExpYnJhcmllcwoKYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFfQpsaWJyYXJ5KCJ0aWR5dmVyc2UiKQpsaWJyYXJ5KCJwc3ljaCIpCmxpYnJhcnkoIm1pY2UiKQpsaWJyYXJ5KCJtaWNlbWQiKQpsaWJyYXJ5KCJtaWNlYWRkcyIpCmxpYnJhcnkoIm1pdG1sIikKbGlicmFyeSgiQW1lbGlhIikKbGlicmFyeSgiam9tbyIpCmxpYnJhcnkoInBhcmFsbGVsIikKbGlicmFyeSgiZnV0dXJlIikKbGlicmFyeSgiZnVycnIiKQpsaWJyYXJ5KCJubG1lIikKbGlicmFyeSgiTXBsdXNBdXRvbWF0aW9uIikKYGBgCgojIyBEYXRhCgpgYGB7cn0KZGF0YShPeGJveXMsIHBhY2thZ2UgPSAibmxtZSIpCgpPeGJveXNfYWRkTkEgPC0gZGF0YS5mcmFtZShPeGJveXMpCk94Ym95c19hZGROQSA8LSBPeGJveXNfYWRkTkEgJT4lIAogIHJlbmFtZShpZCA9IFN1YmplY3QpCgpPeGJveXNfYWRkTkEkaWQgPC0gYXMuaW50ZWdlcihPeGJveXNfYWRkTkEkaWQpCk94Ym95c19hZGROQSRPY2Nhc2lvbiA8LSBhcy5pbnRlZ2VyKE94Ym95c19hZGROQSRPY2Nhc2lvbikKCnNldC5zZWVkKDUyMjQyKQpPeGJveXNfYWRkTkFbc2FtcGxlKDE6bnJvdyhPeGJveXNfYWRkTkEpLCAyNSksICJoZWlnaHQiXSA8LSBOQQoKZGF0YVRvSW1wdXRlIDwtIE94Ym95c19hZGROQQp2YXJzVG9JbXB1dGUgPC0gYygiaGVpZ2h0IikKWSA8LSB2YXJzVG9JbXB1dGUKYGBgCgojIEFwcHJvYWNoZXMgdG8gTXVsdGlwbGUgSW1wdXRhdGlvbgoKLSBtdWx0aXBsZSBpbXB1dGF0aW9uIGJ5IGpvaW50IG1vZGVsaW5nCiAgICAtIGFzc3VtZXMgdGhhdCB0aGUgdmFyaWFibGVzIGluIGZvbGxvdyBhIGpvaW50IGRpc3RyaWJ1dGlvbiwgZS5nLjoKICAgICAgICAtIG11bHRpdmFyaWF0ZSBub3JtYWwgKGkuZS4sIG11bHRpdmFyaWF0ZSBub3JtYWwgaW1wdXRhdGlvbikKICAgIC0gUiBwYWNrYWdlczoKICAgICAgICAtIGBqb21vYAogICAgICAgIC0gYHBhbmAKICAgICAgICAtIGBBbWVsaWFgCiAgICAgICAgLSBgTXBsdXNgCi0gbXVsdGlwbGUgaW1wdXRhdGlvbiBieSBjaGFpbmVkIGVxdWF0aW9ucwogICAgLSBha2E6CiAgICAgICAgLSBmdWxseSBjb25kaXRpb25hbCBzcGVjaWZpY2F0aW9uIG11bHRpcGxlIGltcHV0YXRpb24KICAgICAgICAtIHNlcXVlbnRpYWwgcmVncmVzc2lvbiBtdWx0aXBsZSBpbXB1dGF0aW9uCiAgICAtIFIgcGFja2FnZXM6CiAgICAgICAgLSBgbWljZWAKICAgICAgICAgICAgLSBwcmVkaWN0aXZlIG1lYW4gbWF0Y2hpbmcgKGA/bWljZTo6bWljZS5pbXB1dGUucG1tYCkgY2FuIGJlIHVzZWZ1bCB0byBvYnRhaW4gYm91bmRlZCBpbXB1dGF0aW9ucyBmb3Igbm9uLW5vcm1hbGx5IGRpc3RyaWJ1dGVkIHZhcmlhYmxlcwoKIyBEZXNjcmliZSBNaXNzaW5nIERhdGEKCmBgYHtyfQpkZXNjcmliZShkYXRhVG9JbXB1dGUpCm1kLnBhdHRlcm4oZGF0YVRvSW1wdXRlLCByb3RhdGUubmFtZXMgPSBUUlVFKQpgYGAKCiMgUHJlLUltcHV0YXRpb24gU2V0dXAKCiMjIFNwZWNpZnkgTnVtYmVyIG9mIEltcHV0YXRpb25zCgpgYGB7cn0KbnVtSW1wdXRhdGlvbnMgPC0gNSAjIGdlbmVyYWxseSB1c2UgMTAwIGltcHV0YXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZApgYGAKCiMjIERldGVjdCBDb3JlcwoKYGBge3J9Cm51bUNvcmVzIDwtIHBhcmFsbGVsOjpkZXRlY3RDb3JlcygpIC0gMQpgYGAKCiMgTXVsdGlsZXZlbCBNdWx0aXBsZSBJbXB1dGF0aW9uCgojIyBUaHJlZS1MZXZlbCBhbmQgQ3Jvc3MtQ2xhc3NpZmllZCBEYXRhCgpodHRwczovL3NpbW9uZ3J1bmQxLmdpdGh1Yi5pby9wb3N0cy9tdWx0aXBsZS1pbXB1dGF0aW9uLWZvci10aHJlZS1sZXZlbC1hbmQtY3Jvc3MtY2xhc3NpZmllZC1kYXRhLwoKIyMgTWV0aG9kcwoKIyMjIGBtaWNlYAoKIyMjIyBUeXBlcwoKIyMjIyMgQ29udGludW91cyBPdXRjb21lcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtbXVsdGlvdXRjb21lLmh0bWwjbWV0aG9kcwoKYGBge3IsIGV2YWwgPSBGQUxTRX0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLm5vcm0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLnBhbgo/bWljZTo6bWljZS5pbXB1dGUuMmwubG1lcgo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLnBtbQo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLmNvbnRleHR1YWwucG1tCj9taWNlYWRkczo6bWljZS5pbXB1dGUuMmwuY29udGludW91cwo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2Uubm9ybQo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2UucG1tCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmdsbS5ub3JtCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmpvbW8KYGBgCgojIyMjIyBEaXNjcmV0ZSBPdXRjb21lcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtY2F0b3V0Y29tZS5odG1sI21ldGhvZHMtMQoKYGBge3IsIGV2YWwgPSBGQUxTRX0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLmJpbgo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLmJpbmFyeQo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2UuYmluCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmdsbS5iaW4KYGBgCgojIyMjIFNwZWNpZnlpbmcgdGhlIEltcHV0YXRpb24gTWV0aG9kCgpgYGB7cn0KbWV0aCA8LSBtYWtlLm1ldGhvZChkYXRhVG9JbXB1dGUpCm1ldGhbMTpsZW5ndGgobWV0aCldIDwtICIiCm1ldGhbWV0gPC0gIjJsLnBtbSIgIyBzcGVjaWZ5IHRoZSBpbXB1dGF0aW9uIG1ldGhvZCBoZXJlOyB0aGlzIGNhbiBkaWZmZXIgYnkgb3V0Y29tZSB2YXJpYWJsZQpgYGAKCiMjIyMgU3BlY2lmeWluZyB0aGUgUHJlZGljdG9yIE1hdHJpeAoKQSBwcmVkaWN0b3IgbWF0cml4IGlzIGEgbWF0cml4IG9mIHZhbHVlcywgd2hlcmU6CgotIGNvbHVtbnMgd2l0aCBub24temVybyB2YWx1ZXMgYXJlIHByZWRpY3RvcnMgb2YgdGhlIHZhcmlhYmxlIHNwZWNpZmllZCBpbiB0aGUgZ2l2ZW4gcm93Ci0gdGhlIGRpYWdvbmFsIG9mIHRoZSBwcmVkaWN0b3IgbWF0cml4IHNob3VsZCBiZSB6ZXJvIGJlY2F1c2UgYSB2YXJpYWJsZSBjYW5ub3QgcHJlZGljdCBpdHNlbGYKClRoZSB2YWx1ZXMgYXJlOgoKLSBOT1QgYSBwcmVkaWN0b3Igb2YgdGhlIG91dGNvbWU6IGAwYAotIGNsdXN0ZXIgdmFyaWFibGU6IGAtMmAKLSBmaXhlZCBlZmZlY3Qgb2YgcHJlZGljdG9yOiBgMWAKLSBmaXhlZCBlZmZlY3QgYW5kIHJhbmRvbSBlZmZlY3Qgb2YgcHJlZGljdG9yOiBgMmAKLSBpbmNsdWRlIGNsdXN0ZXIgbWVhbiBvZiBwcmVkaWN0b3IgaW4gYWRkaXRpb24gdG8gZml4ZWQgZWZmZWN0IG9mIHByZWRpY3RvcjogYDNgCi0gaW5jbHVkZSBjbHVzdGVyIG1lYW4gb2YgcHJlZGljdG9yIGluIGFkZGl0aW9uIHRvIGZpeGVkIGVmZmVjdCBhbmQgcmFuZG9tIGVmZmVjdCBvZiBwcmVkaWN0b3I6IGA0YAoKYGBge3J9CnByZWQgPC0gbWFrZS5wcmVkaWN0b3JNYXRyaXgoZGF0YVRvSW1wdXRlKQpwcmVkWzE6bnJvdyhwcmVkKSwgMTpuY29sKHByZWQpXSA8LSAwCnByZWRbWSwgImlkIl0gPC0gKC0yKSAjIGNsdXN0ZXIgdmFyaWFibGUKcHJlZFtZLCAiT2NjYXNpb24iXSA8LSAxICMgZml4ZWQgZWZmZWN0IHByZWRpY3RvcgpwcmVkW1ksICJhZ2UiXSA8LSAyICMgcmFuZG9tIGVmZmVjdCBwcmVkaWN0b3IKcHJlZFtZLCBZXSA8LSAxICMgZml4ZWQgZWZmZWN0IHByZWRpY3RvcgoKZGlhZyhwcmVkKSA8LSAwCnByZWQKYGBgCgojIyMjIFN5bnRheAoKYGBge3J9Cm1pX21pY2UgPC0gbWljZSgKICBhcy5kYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZSksCiAgbWV0aG9kID0gbWV0aCwKICBwcmVkaWN0b3JNYXRyaXggPSBwcmVkLAogIG0gPSBudW1JbXB1dGF0aW9ucywKICBtYXhpdCA9IDUsICMgZ2VuZXJhbGx5IHVzZSAxMDAgbWF4aW11bSBpdGVyYXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZAogIHNlZWQgPSA1MjI0MikKYGBgCgojIyMgYGpvbW9gCgpgYGB7cn0KbGV2ZWwxVmFycyA8LSBjKCJoZWlnaHQiKQpsZXZlbDJWYXJzIDwtIGMoInYzIiwidjQiKQpjbHVzdGVyVmFycyA8LSBjKCJpZCIpCmZ1bGx5T2JzZXJ2ZWRDb3ZhcmlhdGVzIDwtIGMoImFnZSIsIk9jY2FzaW9uIikKCnNldC5zZWVkKDUyMjQyKQoKbWlfam9tbyA8LSBqb21vKAogIFkgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGxldmVsMVZhcnNdKSwKICAjWTIgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGxldmVsMlZhcnNdKSwKICBYID0gZGF0YS5mcmFtZShkYXRhVG9JbXB1dGVbLCBmdWxseU9ic2VydmVkQ292YXJpYXRlc10pLAogIGNsdXMgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGNsdXN0ZXJWYXJzXSksCiAgbmltcCA9IG51bUltcHV0YXRpb25zLAogIG1ldGggPSAicmFuZG9tIgopCmBgYAoKIyMjIGBBbWVsaWFgCgotIGAhYCBpbiB0aGUgY29uc29sZSBvdXRwdXQgaW5kaWNhdGVzIHRoYXQgdGhlIGN1cnJlbnQgZXN0aW1hdGVkIGNvbXBsZXRlIGRhdGEgY292YXJpYW5jZSBtYXRyaXggaXMgbm90IGludmVydGlibGUKLSBgKmAgaW4gdGhlIGNvbnNvbGUgb3V0cHV0IGluZGljYXRlcyB0aGF0IHRoZSBsaWtlbGlob29kIGhhcyBub3QgbW9ub3RvbmljYWxseSBpbmNyZWFzZWQgaW4gdGhhdCBzdGVwCgpgYGB7cn0KYm91bmRWYXJzIDwtIGMoImhlaWdodCIpCmJvdW5kQ29scyA8LSB3aGljaChuYW1lcyhkYXRhVG9JbXB1dGUpICVpbiUgYm91bmRWYXJzKQpib3VuZExvd2VyIDwtIDEwMApib3VuZFVwcGVyIDwtIDIwMAoKdmFyQm91bmRzIDwtIGNiaW5kKGJvdW5kQ29scywgYm91bmRMb3dlciwgYm91bmRVcHBlcikKCnNldC5zZWVkKDUyMjQyKQoKbWlfYW1lbGlhIDwtIGFtZWxpYSgKICBkYXRhVG9JbXB1dGUsCiAgbSA9IG51bUltcHV0YXRpb25zLAogIHRzID0gImFnZSIsCiAgY3MgPSAiaWQiLAogIHBvbHl0aW1lID0gMSwKICBpbnRlcmNzID0gVFJVRSwKICAjb3JkcyA9IG9yZGluYWxWYXJzLAogICNib3VuZHMgPSB2YXJCb3VuZHMsCiAgcGFyYWxsZWwgPSAic25vdyIsCiAgI25jcHVzID0gbnVtQ29yZXMsCiAgZW1wcmkgPSAuMDEqbnJvdyhkYXRhVG9JbXB1dGUpKSAjIHJpZGdlIHByaW9yIGZvciBudW1lcmljYWwgc3RhYmlsaXR5CmBgYAoKIyMjIGBNcGx1c2AKCiMjIyMgU2F2ZSBgTXBsdXNgIERhdGEgRmlsZQoKU2F2ZSBSIG9iamVjdCBhcyBgTXBsdXNgIGRhdGEgZmlsZToKCmBgYHtyfQpwcmVwYXJlTXBsdXNEYXRhKGRhdGFUb0ltcHV0ZV9tcGx1cywgZmlsZS5wYXRoKCJkYXRhVG9JbXB1dGVfbXBsdXMuZGF0IikpCmBgYAoKIyMjIyBgTXBsdXNgIFN5bnRheCBmb3IgTXVsdGlsZXZlbCBJbXB1dGF0aW9uCgpgTXBsdXNgIHN5bnRheCBmb3IgbXVsdGlsZXZlbCBpbXB1dGF0aW9uOgoKYGBgTXBsdXMKISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIQohISEhISAgTVBMVVMgU1lOVEFYIExJTkVTIENBTk5PVCBFWENFRUQgOTAgQ0hBUkFDVEVSUzsKISEhISEgIFZBUklBQkxFIE5BTUVTIEFORCBQQVJBTUVURVIgTEFCRUxTIENBTk5PVCBFWENFRUQgOCBDSEFSQUNURVJTIEVBQ0g7CiEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEKClRJVExFOiBNb2RlbCBUaXRsZQoKREFUQTogRklMRSA9ICJkYXRhZmlsZS5kYXQiOwoKVkFSSUFCTEU6CiAgTkFNRVMgPSBpZCBhZ2UgaGVpZ2h0IE9jY2FzaW9uOwogIE1JU1NJTkcgPSAuOwogIFVTRVZBUklBQkxFUyBBUkUgYWdlIGhlaWdodCBPY2Nhc2lvbjsKICAhQ0FURUdPUklDQUwgQVJFIElOU0VSVF9OQU1FU19PRl9DQVRFR09SSUNBTF9WQVJJQUJMRVNfSEVSRTsKICBDTFVTVEVSID0gaWQ7CgpBTkFMWVNJUzoKICBUWVBFID0gdHdvbGV2ZWwgYmFzaWM7CiAgRVNUSU1BVE9SID0gYmF5ZXM7CiAgYnNlZWQgPSA1MjI0MjsKICBQUk9DRVNTT1JTID0gMjsKICAgIApEQVRBIElNUFVUQVRJT046CiAgSU1QVVRFID0gYWdlIGhlaWdodCBPY2Nhc2lvbjsgIXB1dCAnIChjKScgYWZ0ZXIgY2F0ZWdvcmljYWwgdmFycwogIE5EQVRBU0VUUyA9IDEwMDsKICBTQVZFID0gaW1wKi5kYXQKYGBgCgojIFBhcmFsbGVsIFByb2Nlc3NpbmcKCmh0dHBzOi8vd3d3Lmdlcmtvdmluay5jb20vbWljZVZpZ25ldHRlcy9mdXR1cmVtaWNlL1ZpZ25ldHRlX2Z1dHVyZW1pY2UuaHRtbAoKYGBge3J9Cm1pX3BhcmFsbGVsX21pY2UgPC0gZnV0dXJlbWljZSgKICBkYXRhVG9JbXB1dGUsCiAgbWV0aG9kID0gbWV0aCwKICBwcmVkaWN0b3JNYXRyaXggPSBwcmVkLAogIG0gPSBudW1JbXB1dGF0aW9ucywKICBtYXhpdCA9IDUsICMgZ2VuZXJhbGx5IHVzZSAxMDAgbWF4aW11bSBpdGVyYXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZAogIHBhcmFsbGVsc2VlZCA9IDUyMjQyLAogIG4uY29yZSA9IG51bUNvcmVzKQpgYGAKCiMgSW1wdXRhdGlvbiBEaWFnbm9zdGljcwoKIyMgVHJhY2UgUGxvdHMKCk9uIGNvbnZlcmdlbmNlLCB0aGUgc3RyZWFtcyBvZiB0aGUgdHJhY2UgcGxvdHMgc2hvdWxkIGludGVybWluZ2xlIGFuZCBiZSBmcmVlIG9mIGFueSB0cmVuZCAoYXQgdGhlIGxhdGVyIGl0ZXJhdGlvbnMpLgpDb252ZXJnZW5jZSBpcyBkaWFnbm9zZWQgd2hlbiB0aGUgdmFyaWFuY2UgYmV0d2VlbiBkaWZmZXJlbnQgc2VxdWVuY2VzIGlzIG5vIGxhcmdlciB0aGFuIHRoZSB2YXJpYW5jZSB3aXRoaW4gZWFjaCBpbmRpdmlkdWFsIHNlcXVlbmNlLgoKLSBodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1hbGdvcHRpb25zLmh0bWwKCmBgYHtyfQpwbG90KG1pX21pY2UsIGMoImhlaWdodCIpKQpgYGAKCiMjIERlbnNpdHkgUGxvdHMKCmBgYHtyfQpkZW5zaXR5cGxvdChtaV9taWNlKQpkZW5zaXR5cGxvdChtaV9taWNlLCB+IGhlaWdodCkKYGBgCgojIyBTdHJpcCBQbG90cwoKYGBge3J9CnN0cmlwcGxvdChtaV9taWNlKQpzdHJpcHBsb3QobWlfbWljZSwgaGVpZ2h0IH4gLmltcCkKYGBgCgojIFBvc3QtUHJvY2Vzc2luZwoKIyMgTW9kaWZ5L0NyZWF0ZSBOZXcgVmFyaWFibGVzCgojIyMgYG1pY2VgCgpgYGB7cn0KbWlfbWljZV9sb25nIDwtIGNvbXBsZXRlKAogIG1pX21pY2UsCiAgYWN0aW9uID0gImxvbmciLAogIGluY2x1ZGUgPSBUUlVFKQoKbWlfbWljZV9sb25nJG5ld1ZhciA8LSBtaV9taWNlX2xvbmckYWdlICogbWlfbWljZV9sb25nJGhlaWdodApgYGAKCiMjIyBgam9tb2AKCmBgYHtyfQptaV9qb21vIDwtIG1pX2pvbW8gJT4lIAogIHJlbmFtZShoZWlnaHQgPSBkYXRhVG9JbXB1dGUuLi5sZXZlbDFWYXJzLikKCm1pX2pvbW8kbmV3VmFyIDwtIG1pX2pvbW8kYWdlICogbWlfam9tbyRoZWlnaHQKYGBgCgojIyMgYEFtZWxpYWAKCmBgYHtyfQpmb3IoaSBpbiAxOmxlbmd0aChtaV9hbWVsaWEkaW1wdXRhdGlvbnMpKXsKICBtaV9hbWVsaWEkaW1wdXRhdGlvbnNbW2ldXSRuZXdWYXIgPC0gbWlfYW1lbGlhJGltcHV0YXRpb25zW1tpXV0kYWdlICogbWlfYW1lbGlhJGltcHV0YXRpb25zW1tpXV0kaGVpZ2h0Cn0KYGBgCgojIyBDb252ZXJ0IHRvIGBtaWRzYCBvYmplY3QKCiMjIyBgbWljZWAKCmBgYHtyfQptaV9taWNlX21pZHMgPC0gYXMubWlkcyhtaV9taWNlX2xvbmcpCmBgYAoKIyMjIGBqb21vYAoKYGBge3J9Cm1pX2pvbW9fbWlkcyA8LSBtaWNlYWRkczo6am9tbzJtaWRzKG1pX2pvbW8pCmBgYAoKIyMjIGBBbWVsaWFgCgpgYGB7cn0KbWlfYW1lbGlhX21pZHMgPC0gbWljZWFkZHM6OmRhdGxpc3QybWlkcyhtaV9hbWVsaWEkaW1wdXRhdGlvbnMpCmBgYAoKIyMgRXhwb3J0IGZvciBgTXBsdXNgCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQptaWRzMm1wbHVzKG1pX21pY2VfbWlkcywgcGF0aCA9IGZpbGUucGF0aCgiSW5zZXJ0RmlsZVBhdGhIZXJlIiwgZnNlcCA9ICIiKSkKbWlkczJtcGx1cyhtaV9qb21vX21pZHMsIHBhdGggPSBmaWxlLnBhdGgoIkluc2VydEZpbGVQYXRoSGVyZSIsIGZzZXAgPSAiIikpCm1pZHMybXBsdXMobWlfYW1lbGlhX21pZHMsIHBhdGggPSBmaWxlLnBhdGgoIkluc2VydEZpbGVQYXRoSGVyZSIsIGZzZXAgPSAiIikpCmBgYAoKIyBSZXNvdXJjZXMKCmh0dHBzOi8vc3RlZnZhbmJ1dXJlbi5uYW1lL2ZpbWQKCmh0dHBzOi8vd3d3Lmdlcmtvdmluay5jb20vbWljZVZpZ25ldHRlcy9NdWx0aV9sZXZlbC9NdWx0aV9sZXZlbF9kYXRhLmh0bWwK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXVsdGlwbGUgSW1wdXRhdGlvbiIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBlcnJvciA9IFRSVUUsCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93IikKYGBgCgojIFByZWFtYmxlCgojIyBJbnN0YWxsIExpYnJhcmllcwoKYGBge3J9CiNpbnN0YWxsLnBhY2thZ2VzKCJyZW1vdGVzIikKI3JlbW90ZXM6Omluc3RhbGxfZ2l0KCJodHRwczovL3Jlc2VhcmNoLWdpdC51aW93YS5lZHUvUGV0ZXJzZW5MYWIvcGV0ZXJzZW5sYWIuZ2l0IikKYGBgCgojIyBMb2FkIExpYnJhcmllcwoKYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFfQpsaWJyYXJ5KCJ0aWR5dmVyc2UiKQpsaWJyYXJ5KCJwc3ljaCIpCmxpYnJhcnkoIm1pY2UiKQpsaWJyYXJ5KCJtaWNlbWQiKQpsaWJyYXJ5KCJtaWNlYWRkcyIpCmxpYnJhcnkoIm1pdG1sIikKbGlicmFyeSgiQW1lbGlhIikKbGlicmFyeSgiam9tbyIpCmxpYnJhcnkoInBhcmFsbGVsIikKbGlicmFyeSgiZnV0dXJlIikKbGlicmFyeSgiZnVycnIiKQpsaWJyYXJ5KCJubG1lIikKbGlicmFyeSgiTXBsdXNBdXRvbWF0aW9uIikKYGBgCgojIyBEYXRhCgpgYGB7cn0KZGF0YShPeGJveXMsIHBhY2thZ2UgPSAibmxtZSIpCgpPeGJveXNfYWRkTkEgPC0gZGF0YS5mcmFtZShPeGJveXMpCk94Ym95c19hZGROQSA8LSBPeGJveXNfYWRkTkEgJT4lIAogIHJlbmFtZShpZCA9IFN1YmplY3QpCgpPeGJveXNfYWRkTkEkaWQgPC0gYXMuaW50ZWdlcihPeGJveXNfYWRkTkEkaWQpCk94Ym95c19hZGROQSRPY2Nhc2lvbiA8LSBhcy5pbnRlZ2VyKE94Ym95c19hZGROQSRPY2Nhc2lvbikKCnNldC5zZWVkKDUyMjQyKQpPeGJveXNfYWRkTkFbc2FtcGxlKDE6bnJvdyhPeGJveXNfYWRkTkEpLCAyNSksICJoZWlnaHQiXSA8LSBOQQoKZGF0YVRvSW1wdXRlIDwtIE94Ym95c19hZGROQQp2YXJzVG9JbXB1dGUgPC0gYygiaGVpZ2h0IikKWSA8LSB2YXJzVG9JbXB1dGUKYGBgCgojIFR5cGVzIG9mIE1pc3NpbmduZXNzCgoxLiBNaXNzaW5nIENvbXBsZXRlbHkgYXQgUmFuZG9tIChNQ0FSKQogICAgLSB0aGUgcHJvYmFiaWxpdHkgb2YgYmVpbmcgbWlzc2luZyBpcyB0aGUgc2FtZSBmb3IgYWxsIGNhc2VzCiAgICAtIG1pc3NpbmduZXNzIGlzIG5vdCByZWxhdGVkIHRvIHZhcmlhYmxlcyBpbiB0aGUgbW9kZWwKMS4gKENvbmRpdGlvbmFsbHkpIE1pc3NpbmcgYXQgUmFuZG9tIChNQVIpCiAgICAtIG1pc3NpbmduZXNzIGlzIHJlbGF0ZWQgdG8gdmFyaWFibGVzIGluIHRoZSBtb2RlbCwgYnV0IG9uY2Ugd2UgY29uZGl0aW9uIG9uIHRoZSB2YXJpYWJsZXMgaW4gdGhlIG1vZGVsLCB0aGUgbWlzc2luZ25lc3MgaXMgaGFwaGF6YXJkCiAgICAtIHRoZSB1bm9ic2VydmVkIHZhbHVlcyBkbyBub3QgcGxheSBhIHJvbGUKMS4gTWlzc2luZyBOb3QgYXQgUmFuZG9tIChNTkFSKQogICAgLSBtaXNzaW5nbmVzcyBpcyByZWxhdGVkIHRvIHZhcmlhYmxlcyB0aGF0IGFyZSBub3QgaW4gdGhlIG1vZGVsIChpLmUuLCBmb3IgcmVhc29ucyB0aGF0IGFyZSB1bmtub3duKQogICAgLSB1bm9ic2VydmVkIHZhcmlhYmxlcyBjYXJyeSBpbmZvcm1hdGlvbiBhYm91dCB3aGV0aGVyIGEgY2FzZSB3aWxsIGhhdmUgbWlzc2luZyBkYXRhCgojIEFwcHJvYWNoZXMgdG8gSGFuZGxlIE1pc3NpbmcgRGF0YQoKIyMgRm9yIE1DQVIvTUFSIE1pc3NpbmduZXNzCgoxLiBGdWxsIEluZm9ybWF0aW9uIE1heGltdW0gTGlrZWxpaG9vZCAoRklNTCkKMS4gTXVsdGlwbGUgSW1wdXRhdGlvbgoKIyMgRm9yIE1OQVIgTWlzc2luZ25lc3MKCjEuIGZpbmQgbW9yZSBkYXRhIGFib3V0IHRoZSBjYXVzZXMgZm9yIHRoZSBtaXNzaW5nbmVzcwoxLiB3aGF0LWlmIGFuYWx5c2VzIHRvIHNlZSBob3cgc2Vuc2l0aXZlIHRoZSByZXN1bHRzIGFyZSB1bmRlciB2YXJpb3VzIHNjZW5hcmlvcwogICAgLSBodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1NQ0FSLmh0bWwKMS4gc2VsZWN0aW9uIG1vZGVsaW5nCiAgICAtIHNpbXVsdGFuZW91c2x5IGVzdGltYXRlIHRoZSBmb2NhbCBtb2RlbCBhbmQgYSBtaXNzaW5nbmVzcyBtb2RlbCwgd2hlcmUgdGhlIG1pc3NpbmduZXNzIG1vZGVsIGhhcyB0aGUgbWlzc2luZyBkYXRhIGluZGljYXRvciBhcyBhIGRlcGVuZGVudCB2YXJpYWJsZSwgYXMgcHJlZGljdGVkIGJ5IHRoZSBvcmlnaW5hbCBkZXBlbmRlbnQgdmFyaWFibGUsIHRoZSBvcmlnaW5hbCBwcmVkaWN0b3JzLCBhbmQgYW55IGFkZGl0aW9uYWwgY292YXJpYXRlcyBldGMuCiAgICAtIGlmIHRoZSBtaXNzaW5nbmVzcyBtb2RlbCBpcyBhcHByb3hpbWF0ZWx5IGNvcnJlY3QsIHRoZSBmb2NhbCBtb2RlbCBhZGp1c3RzIGluIHdheSB0aGF0IHJlbW92ZXMgbm9ucmVzcG9uc2UgYmlhcwogICAgLSBzaW1pbGFyIHRvIGEgbWVkaWF0aW9uIHByb2Nlc3MKICAgICAgICAtIFgg4oaSIFkKICAgICAgICAtIFkg4oaSIG1pc3NpbmduZXNzCiAgICAgICAgLSBYIOKGkiBtaXNzaW5nbmVzcwogICAgLSBodHRwczovL3F1YW50aXR1ZGVwb2Qub3JnL3M0ZTA4LWNyYWlnLWVuZGVycy8KMS4gcGF0dGVybiBtaXh0dXJlIG1vZGVscwogICAgLSBtaXNzaW5nIGRhdGEgaW5kaWNhdG9yIGlzIGEgcHJlZGljdG9yIHZhcmlhYmxlCiAgICAtIHNpbWlsYXIgdG8gYSBtb2RlcmF0aW9uIHByb2Nlc3M7IHN1Ymdyb3VwcyBvZiBjYXNlcyBoYXZlIGRpZmZlcmVudCBwYXJhbWV0ZXIgZXN0aW1hdGVzCgojIEFwcHJvYWNoZXMgdG8gTXVsdGlwbGUgSW1wdXRhdGlvbgoKLSBtdWx0aXBsZSBpbXB1dGF0aW9uIGJ5IGpvaW50IG1vZGVsaW5nCiAgICAtIGFzc3VtZXMgdGhhdCB0aGUgdmFyaWFibGVzIGluIGZvbGxvdyBhIGpvaW50IGRpc3RyaWJ1dGlvbiwgZS5nLjoKICAgICAgICAtIG11bHRpdmFyaWF0ZSBub3JtYWwgKGkuZS4sIG11bHRpdmFyaWF0ZSBub3JtYWwgaW1wdXRhdGlvbikKICAgIC0gUiBwYWNrYWdlczoKICAgICAgICAtIGBqb21vYAogICAgICAgIC0gYHBhbmAKICAgICAgICAtIGBBbWVsaWFgCiAgICAgICAgLSBgTXBsdXNgCi0gbXVsdGlwbGUgaW1wdXRhdGlvbiBieSBjaGFpbmVkIGVxdWF0aW9ucwogICAgLSBha2E6CiAgICAgICAgLSBmdWxseSBjb25kaXRpb25hbCBzcGVjaWZpY2F0aW9uIG11bHRpcGxlIGltcHV0YXRpb24KICAgICAgICAtIHNlcXVlbnRpYWwgcmVncmVzc2lvbiBtdWx0aXBsZSBpbXB1dGF0aW9uCiAgICAtIFIgcGFja2FnZXM6CiAgICAgICAgLSBgbWljZWAKICAgICAgICAgICAgLSBwcmVkaWN0aXZlIG1lYW4gbWF0Y2hpbmcgKGA/bWljZTo6bWljZS5pbXB1dGUucG1tYCkgY2FuIGJlIHVzZWZ1bCB0byBvYnRhaW4gYm91bmRlZCBpbXB1dGF0aW9ucyBmb3Igbm9uLW5vcm1hbGx5IGRpc3RyaWJ1dGVkIHZhcmlhYmxlcwoKIyBEZXNjcmliZSBNaXNzaW5nIERhdGEKCmBgYHtyfQpkZXNjcmliZShkYXRhVG9JbXB1dGUpCm1kLnBhdHRlcm4oZGF0YVRvSW1wdXRlLCByb3RhdGUubmFtZXMgPSBUUlVFKQpgYGAKCiMgUHJlLUltcHV0YXRpb24gU2V0dXAKCiMjIFNwZWNpZnkgTnVtYmVyIG9mIEltcHV0YXRpb25zCgpgYGB7cn0KbnVtSW1wdXRhdGlvbnMgPC0gNSAjIGdlbmVyYWxseSB1c2UgMTAwIGltcHV0YXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZApgYGAKCiMjIERldGVjdCBDb3JlcwoKYGBge3J9Cm51bUNvcmVzIDwtIHBhcmFsbGVsOjpkZXRlY3RDb3JlcygpIC0gMQpgYGAKCiMgTXVsdGlsZXZlbCBNdWx0aXBsZSBJbXB1dGF0aW9uCgojIyBUaHJlZS1MZXZlbCBhbmQgQ3Jvc3MtQ2xhc3NpZmllZCBEYXRhCgpodHRwczovL3NpbW9uZ3J1bmQxLmdpdGh1Yi5pby9wb3N0cy9tdWx0aXBsZS1pbXB1dGF0aW9uLWZvci10aHJlZS1sZXZlbC1hbmQtY3Jvc3MtY2xhc3NpZmllZC1kYXRhLwoKIyMgTWV0aG9kcwoKIyMjIGBtaWNlYAoKIyMjIyBUeXBlcwoKIyMjIyMgQ29udGludW91cyBPdXRjb21lcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtbXVsdGlvdXRjb21lLmh0bWwjbWV0aG9kcwoKYGBge3IsIGV2YWwgPSBGQUxTRX0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLm5vcm0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLnBhbgo/bWljZTo6bWljZS5pbXB1dGUuMmwubG1lcgo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLnBtbQo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLmNvbnRleHR1YWwucG1tCj9taWNlYWRkczo6bWljZS5pbXB1dGUuMmwuY29udGludW91cwo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2Uubm9ybQo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2UucG1tCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmdsbS5ub3JtCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmpvbW8KYGBgCgojIyMjIyBEaXNjcmV0ZSBPdXRjb21lcwoKaHR0cHM6Ly9zdGVmdmFuYnV1cmVuLm5hbWUvZmltZC9zZWMtY2F0b3V0Y29tZS5odG1sI21ldGhvZHMtMQoKYGBge3IsIGV2YWwgPSBGQUxTRX0KP21pY2U6Om1pY2UuaW1wdXRlLjJsLmJpbgo/bWljZWFkZHM6Om1pY2UuaW1wdXRlLjJsLmJpbmFyeQo/bWljZW1kOjptaWNlLmltcHV0ZS4ybC4yc3RhZ2UuYmluCj9taWNlbWQ6Om1pY2UuaW1wdXRlLjJsLmdsbS5iaW4KYGBgCgojIyMjIFNwZWNpZnlpbmcgdGhlIEltcHV0YXRpb24gTWV0aG9kCgpgYGB7cn0KbWV0aCA8LSBtYWtlLm1ldGhvZChkYXRhVG9JbXB1dGUpCm1ldGhbMTpsZW5ndGgobWV0aCldIDwtICIiCm1ldGhbWV0gPC0gIjJsLnBtbSIgIyBzcGVjaWZ5IHRoZSBpbXB1dGF0aW9uIG1ldGhvZCBoZXJlOyB0aGlzIGNhbiBkaWZmZXIgYnkgb3V0Y29tZSB2YXJpYWJsZQpgYGAKCiMjIyMgU3BlY2lmeWluZyB0aGUgUHJlZGljdG9yIE1hdHJpeAoKQSBwcmVkaWN0b3IgbWF0cml4IGlzIGEgbWF0cml4IG9mIHZhbHVlcywgd2hlcmU6CgotIGNvbHVtbnMgd2l0aCBub24temVybyB2YWx1ZXMgYXJlIHByZWRpY3RvcnMgb2YgdGhlIHZhcmlhYmxlIHNwZWNpZmllZCBpbiB0aGUgZ2l2ZW4gcm93Ci0gdGhlIGRpYWdvbmFsIG9mIHRoZSBwcmVkaWN0b3IgbWF0cml4IHNob3VsZCBiZSB6ZXJvIGJlY2F1c2UgYSB2YXJpYWJsZSBjYW5ub3QgcHJlZGljdCBpdHNlbGYKClRoZSB2YWx1ZXMgYXJlOgoKLSBOT1QgYSBwcmVkaWN0b3Igb2YgdGhlIG91dGNvbWU6IGAwYAotIGNsdXN0ZXIgdmFyaWFibGU6IGAtMmAKLSBmaXhlZCBlZmZlY3Qgb2YgcHJlZGljdG9yOiBgMWAKLSBmaXhlZCBlZmZlY3QgYW5kIHJhbmRvbSBlZmZlY3Qgb2YgcHJlZGljdG9yOiBgMmAKLSBpbmNsdWRlIGNsdXN0ZXIgbWVhbiBvZiBwcmVkaWN0b3IgaW4gYWRkaXRpb24gdG8gZml4ZWQgZWZmZWN0IG9mIHByZWRpY3RvcjogYDNgCi0gaW5jbHVkZSBjbHVzdGVyIG1lYW4gb2YgcHJlZGljdG9yIGluIGFkZGl0aW9uIHRvIGZpeGVkIGVmZmVjdCBhbmQgcmFuZG9tIGVmZmVjdCBvZiBwcmVkaWN0b3I6IGA0YAoKYGBge3J9CnByZWQgPC0gbWFrZS5wcmVkaWN0b3JNYXRyaXgoZGF0YVRvSW1wdXRlKQpwcmVkWzE6bnJvdyhwcmVkKSwgMTpuY29sKHByZWQpXSA8LSAwCnByZWRbWSwgImlkIl0gPC0gKC0yKSAjIGNsdXN0ZXIgdmFyaWFibGUKcHJlZFtZLCAiT2NjYXNpb24iXSA8LSAxICMgZml4ZWQgZWZmZWN0IHByZWRpY3RvcgpwcmVkW1ksICJhZ2UiXSA8LSAyICMgcmFuZG9tIGVmZmVjdCBwcmVkaWN0b3IKcHJlZFtZLCBZXSA8LSAxICMgZml4ZWQgZWZmZWN0IHByZWRpY3RvcgoKZGlhZyhwcmVkKSA8LSAwCnByZWQKYGBgCgojIyMjIFN5bnRheAoKYGBge3J9Cm1pX21pY2UgPC0gbWljZSgKICBhcy5kYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZSksCiAgbWV0aG9kID0gbWV0aCwKICBwcmVkaWN0b3JNYXRyaXggPSBwcmVkLAogIG0gPSBudW1JbXB1dGF0aW9ucywKICBtYXhpdCA9IDUsICMgZ2VuZXJhbGx5IHVzZSAxMDAgbWF4aW11bSBpdGVyYXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZAogIHNlZWQgPSA1MjI0MikKYGBgCgojIyMgYGpvbW9gCgpgYGB7cn0KbGV2ZWwxVmFycyA8LSBjKCJoZWlnaHQiKQpsZXZlbDJWYXJzIDwtIGMoInYzIiwidjQiKQpjbHVzdGVyVmFycyA8LSBjKCJpZCIpCmZ1bGx5T2JzZXJ2ZWRDb3ZhcmlhdGVzIDwtIGMoImFnZSIsIk9jY2FzaW9uIikKCnNldC5zZWVkKDUyMjQyKQoKbWlfam9tbyA8LSBqb21vKAogIFkgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGxldmVsMVZhcnNdKSwKICAjWTIgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGxldmVsMlZhcnNdKSwKICBYID0gZGF0YS5mcmFtZShkYXRhVG9JbXB1dGVbLCBmdWxseU9ic2VydmVkQ292YXJpYXRlc10pLAogIGNsdXMgPSBkYXRhLmZyYW1lKGRhdGFUb0ltcHV0ZVssIGNsdXN0ZXJWYXJzXSksCiAgbmltcCA9IG51bUltcHV0YXRpb25zLAogIG1ldGggPSAicmFuZG9tIgopCmBgYAoKIyMjIGBBbWVsaWFgCgotIGAhYCBpbiB0aGUgY29uc29sZSBvdXRwdXQgaW5kaWNhdGVzIHRoYXQgdGhlIGN1cnJlbnQgZXN0aW1hdGVkIGNvbXBsZXRlIGRhdGEgY292YXJpYW5jZSBtYXRyaXggaXMgbm90IGludmVydGlibGUKLSBgKmAgaW4gdGhlIGNvbnNvbGUgb3V0cHV0IGluZGljYXRlcyB0aGF0IHRoZSBsaWtlbGlob29kIGhhcyBub3QgbW9ub3RvbmljYWxseSBpbmNyZWFzZWQgaW4gdGhhdCBzdGVwCgpgYGB7cn0KYm91bmRWYXJzIDwtIGMoImhlaWdodCIpCmJvdW5kQ29scyA8LSB3aGljaChuYW1lcyhkYXRhVG9JbXB1dGUpICVpbiUgYm91bmRWYXJzKQpib3VuZExvd2VyIDwtIDEwMApib3VuZFVwcGVyIDwtIDIwMAoKdmFyQm91bmRzIDwtIGNiaW5kKGJvdW5kQ29scywgYm91bmRMb3dlciwgYm91bmRVcHBlcikKCnNldC5zZWVkKDUyMjQyKQoKbWlfYW1lbGlhIDwtIGFtZWxpYSgKICBkYXRhVG9JbXB1dGUsCiAgbSA9IG51bUltcHV0YXRpb25zLAogIHRzID0gImFnZSIsCiAgY3MgPSAiaWQiLAogIHBvbHl0aW1lID0gMSwKICBpbnRlcmNzID0gVFJVRSwKICAjb3JkcyA9IG9yZGluYWxWYXJzLAogICNib3VuZHMgPSB2YXJCb3VuZHMsCiAgcGFyYWxsZWwgPSAic25vdyIsCiAgI25jcHVzID0gbnVtQ29yZXMsCiAgZW1wcmkgPSAuMDEqbnJvdyhkYXRhVG9JbXB1dGUpKSAjIHJpZGdlIHByaW9yIGZvciBudW1lcmljYWwgc3RhYmlsaXR5CmBgYAoKIyMjIGBNcGx1c2AKCiMjIyMgU2F2ZSBgTXBsdXNgIERhdGEgRmlsZQoKU2F2ZSBSIG9iamVjdCBhcyBgTXBsdXNgIGRhdGEgZmlsZToKCmBgYHtyfQpwcmVwYXJlTXBsdXNEYXRhKGRhdGFUb0ltcHV0ZSwgZmlsZS5wYXRoKCJkYXRhVG9JbXB1dGUuZGF0IikpCmBgYAoKIyMjIyBgTXBsdXNgIFN5bnRheCBmb3IgTXVsdGlsZXZlbCBJbXB1dGF0aW9uCgpgTXBsdXNgIHN5bnRheCBmb3IgbXVsdGlsZXZlbCBpbXB1dGF0aW9uOgoKYGBgTXBsdXMKISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIQohISEhISAgTVBMVVMgU1lOVEFYIExJTkVTIENBTk5PVCBFWENFRUQgOTAgQ0hBUkFDVEVSUzsKISEhISEgIFZBUklBQkxFIE5BTUVTIEFORCBQQVJBTUVURVIgTEFCRUxTIENBTk5PVCBFWENFRUQgOCBDSEFSQUNURVJTIEVBQ0g7CiEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEKClRJVExFOiBNb2RlbCBUaXRsZQoKREFUQTogRklMRSA9ICJkYXRhZmlsZS5kYXQiOwoKVkFSSUFCTEU6CiAgTkFNRVMgPSBpZCBhZ2UgaGVpZ2h0IE9jY2FzaW9uOwogIE1JU1NJTkcgPSAuOwogIFVTRVZBUklBQkxFUyBBUkUgYWdlIGhlaWdodCBPY2Nhc2lvbjsKICAhQ0FURUdPUklDQUwgQVJFIElOU0VSVF9OQU1FU19PRl9DQVRFR09SSUNBTF9WQVJJQUJMRVNfSEVSRTsKICBDTFVTVEVSID0gaWQ7CgpBTkFMWVNJUzoKICBUWVBFID0gdHdvbGV2ZWwgYmFzaWM7CiAgRVNUSU1BVE9SID0gYmF5ZXM7CiAgYnNlZWQgPSA1MjI0MjsKICBQUk9DRVNTT1JTID0gMjsKICAgIApEQVRBIElNUFVUQVRJT046CiAgSU1QVVRFID0gYWdlIGhlaWdodCBPY2Nhc2lvbjsgIXB1dCAnIChjKScgYWZ0ZXIgY2F0ZWdvcmljYWwgdmFycwogIE5EQVRBU0VUUyA9IDEwMDsKICBTQVZFID0gaW1wKi5kYXQKYGBgCgojIFBhcmFsbGVsIFByb2Nlc3NpbmcKCmh0dHBzOi8vd3d3Lmdlcmtvdmluay5jb20vbWljZVZpZ25ldHRlcy9mdXR1cmVtaWNlL1ZpZ25ldHRlX2Z1dHVyZW1pY2UuaHRtbAoKYGBge3J9Cm1pX3BhcmFsbGVsX21pY2UgPC0gZnV0dXJlbWljZSgKICBkYXRhVG9JbXB1dGUsCiAgbWV0aG9kID0gbWV0aCwKICBwcmVkaWN0b3JNYXRyaXggPSBwcmVkLAogIG0gPSBudW1JbXB1dGF0aW9ucywKICBtYXhpdCA9IDUsICMgZ2VuZXJhbGx5IHVzZSAxMDAgbWF4aW11bSBpdGVyYXRpb25zOyB0aGlzIGV4YW1wbGUgdXNlcyA1IGZvciBzcGVlZAogIHBhcmFsbGVsc2VlZCA9IDUyMjQyLAogIG4uY29yZSA9IG51bUNvcmVzKQpgYGAKCiMgSW1wdXRhdGlvbiBEaWFnbm9zdGljcwoKIyMgVHJhY2UgUGxvdHMKCk9uIGNvbnZlcmdlbmNlLCB0aGUgc3RyZWFtcyBvZiB0aGUgdHJhY2UgcGxvdHMgc2hvdWxkIGludGVybWluZ2xlIGFuZCBiZSBmcmVlIG9mIGFueSB0cmVuZCAoYXQgdGhlIGxhdGVyIGl0ZXJhdGlvbnMpLgpDb252ZXJnZW5jZSBpcyBkaWFnbm9zZWQgd2hlbiB0aGUgdmFyaWFuY2UgYmV0d2VlbiBkaWZmZXJlbnQgc2VxdWVuY2VzIGlzIG5vIGxhcmdlciB0aGFuIHRoZSB2YXJpYW5jZSB3aXRoaW4gZWFjaCBpbmRpdmlkdWFsIHNlcXVlbmNlLgoKLSBodHRwczovL3N0ZWZ2YW5idXVyZW4ubmFtZS9maW1kL3NlYy1hbGdvcHRpb25zLmh0bWwKCmBgYHtyfQpwbG90KG1pX21pY2UsIGMoImhlaWdodCIpKQpgYGAKCiMjIERlbnNpdHkgUGxvdHMKCmBgYHtyfQpkZW5zaXR5cGxvdChtaV9taWNlKQpkZW5zaXR5cGxvdChtaV9taWNlLCB+IGhlaWdodCkKYGBgCgojIyBTdHJpcCBQbG90cwoKYGBge3J9CnN0cmlwcGxvdChtaV9taWNlKQpzdHJpcHBsb3QobWlfbWljZSwgaGVpZ2h0IH4gLmltcCkKYGBgCgojIFBvc3QtUHJvY2Vzc2luZwoKIyMgTW9kaWZ5L0NyZWF0ZSBOZXcgVmFyaWFibGVzCgojIyMgYG1pY2VgCgpgYGB7cn0KbWlfbWljZV9sb25nIDwtIGNvbXBsZXRlKAogIG1pX21pY2UsCiAgYWN0aW9uID0gImxvbmciLAogIGluY2x1ZGUgPSBUUlVFKQoKbWlfbWljZV9sb25nJG5ld1ZhciA8LSBtaV9taWNlX2xvbmckYWdlICogbWlfbWljZV9sb25nJGhlaWdodApgYGAKCiMjIyBgam9tb2AKCmBgYHtyfQptaV9qb21vIDwtIG1pX2pvbW8gJT4lIAogIHJlbmFtZShoZWlnaHQgPSBkYXRhVG9JbXB1dGUuLi5sZXZlbDFWYXJzLikKCm1pX2pvbW8kbmV3VmFyIDwtIG1pX2pvbW8kYWdlICogbWlfam9tbyRoZWlnaHQKYGBgCgojIyMgYEFtZWxpYWAKCmBgYHtyfQpmb3IoaSBpbiAxOmxlbmd0aChtaV9hbWVsaWEkaW1wdXRhdGlvbnMpKXsKICBtaV9hbWVsaWEkaW1wdXRhdGlvbnNbW2ldXSRuZXdWYXIgPC0gbWlfYW1lbGlhJGltcHV0YXRpb25zW1tpXV0kYWdlICogbWlfYW1lbGlhJGltcHV0YXRpb25zW1tpXV0kaGVpZ2h0Cn0KYGBgCgojIyBDb252ZXJ0IHRvIGBtaWRzYCBvYmplY3QKCiMjIyBgbWljZWAKCmBgYHtyfQptaV9taWNlX21pZHMgPC0gYXMubWlkcyhtaV9taWNlX2xvbmcpCmBgYAoKIyMjIGBqb21vYAoKYGBge3J9Cm1pX2pvbW9fbWlkcyA8LSBtaWNlYWRkczo6am9tbzJtaWRzKG1pX2pvbW8pCmBgYAoKIyMjIGBBbWVsaWFgCgpgYGB7cn0KbWlfYW1lbGlhX21pZHMgPC0gbWljZWFkZHM6OmRhdGxpc3QybWlkcyhtaV9hbWVsaWEkaW1wdXRhdGlvbnMpCmBgYAoKIyMgRXhwb3J0IGZvciBgTXBsdXNgCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQptaWRzMm1wbHVzKG1pX21pY2VfbWlkcywgcGF0aCA9IGZpbGUucGF0aCgiSW5zZXJ0RmlsZVBhdGhIZXJlIiwgZnNlcCA9ICIiKSkKbWlkczJtcGx1cyhtaV9qb21vX21pZHMsIHBhdGggPSBmaWxlLnBhdGgoIkluc2VydEZpbGVQYXRoSGVyZSIsIGZzZXAgPSAiIikpCm1pZHMybXBsdXMobWlfYW1lbGlhX21pZHMsIHBhdGggPSBmaWxlLnBhdGgoIkluc2VydEZpbGVQYXRoSGVyZSIsIGZzZXAgPSAiIikpCmBgYAoKIyBSZXNvdXJjZXMKCmh0dHBzOi8vc3RlZnZhbmJ1dXJlbi5uYW1lL2ZpbWQKCmh0dHBzOi8vd3d3Lmdlcmtvdmluay5jb20vbWljZVZpZ25ldHRlcy9NdWx0aV9sZXZlbC9NdWx0aV9sZXZlbF9kYXRhLmh0bWwK</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
