@@ -1143,10 +1143,45 @@ ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
 
 Quantile (L1) regression: `rq()` function of quantreg package
 
+https://data.library.virginia.edu/getting-started-with-quantile-regression/
+
 ```{r}
-rq(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-   data = mydata,
-   na.action = na.exclude)
+quantiles <- 1:9/10
+
+quantileRegressionModel <- rq(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  tau = quantiles,
+  na.action = na.exclude)
+
+quantileRegressionModel
+summary(quantileRegressionModel)
+```
+
+Plot to examine the association between the predictor and the outcome at different levels (i.e., quantiles) of the predictor:
+
+```{r}
+ggplot(
+  mydata,
+  aes(bpi_antisocialT1Sum, bpi_antisocialT2Sum)) + 
+  geom_point() + 
+  geom_quantile(
+    quantiles = quantiles,
+    aes(color = factor(..quantile..)))
+```
+
+Below is a plot that examines the difference in quantile coefficients (and associated confidence intervals) at different levels (i.e., quantiles) of the predictor.
+The x-axis is the quantile of the predictor.
+The y-axis is the slope coefficient.
+Each black dot is the slope coefficient for the given quantile of the predictor.
+The red lines are the least squares estimate of the slope coefficient and its confidence interval.
+
+```{r}
+plot(summary(quantileRegressionModel))
+
+plot(
+  summary(quantileRegressionModel),
+  parm = "bpi_antisocialT1Sum")
 ```
 
 ## Examining Model Assumptions
