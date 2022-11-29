@@ -39,6 +39,7 @@ library("tidyverse")
 library("purrr")
 library("naniar")
 library("mvnormtest")
+library("ggExtra")
 ```
 
 # Simulate Data
@@ -310,6 +311,51 @@ ggplot(mydata, aes(x = "", y = outcome)) +
 ```
 
 # Bivariate Associations
+
+For more advanced scatterplots, see [here](figures.html#marginalDistributions).
+
+## Scatterplot
+
+### Base R
+
+```{r}
+plot(
+  mydata$predictor,
+  mydata$outcome)
+abline(lm(
+  outcomeOverplot ~ predictorOverplot,
+  data = mydata,
+  na.action = "na.exclude"))
+```
+
+### `ggplot2`
+
+```{r}
+ggplot(mydata, aes(x = predictor, y = outcome)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE)
+```
+
+## Scatterplot with Marginal Density Plot
+
+```{r}
+scatterplot <- 
+  ggplot(mydata, aes(x = predictor, y = outcome)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE)
+```
+
+```{r}
+densityMarginal <- ggMarginal(
+  scatterplot,
+  type = "density",
+  xparams = list(fill = "gray"),
+  yparams = list(fill = "gray"))
+```
+
+```{r}
+print(densityMarginal, newpage = TRUE)
+```
 
 ## High Density Scatterplot
 
