@@ -299,32 +299,44 @@ summary(model2)$adj.r.squared - summary(model1)$adj.r.squared
 
 https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html
 
+```{r}
+states <- as.data.frame(state.x77)
+```
+
+## Mean Center Predictors
+
 Make sure to mean-center or orthogonalize predictors before computing the interaction term.
+
+```{r}
+states$Illiteracy_centered <- scale(states$Illiteracy, scale = FALSE)
+states$Murder_centered <- scale(states$Murder, scale = FALSE)
+```
 
 ## Model
 
 ```{r}
-states <- as.data.frame(state.x77)
-interactionModel <- lm(Income ~ Illiteracy * Murder + `HS Grad`, data = states)
+interactionModel <- lm(
+  Income ~ Illiteracy_centered + Murder_centered + Illiteracy_centered:Murder_centered + `HS Grad`,
+  data = states)
 ```
 
 ## Plots
 
 ```{r}
-interact_plot(interactionModel, pred = Illiteracy, modx = Murder)
-interact_plot(interactionModel, pred = Illiteracy, modx = Murder, plot.points = TRUE)
-interact_plot(interactionModel, pred = Illiteracy, modx = Murder, interval = TRUE)
+interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered)
+interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, plot.points = TRUE)
+interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, interval = TRUE)
 
-johnson_neyman(interactionModel, pred = Illiteracy, modx = Murder, alpha = .05)
+johnson_neyman(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, alpha = .05)
 ```
 
 ## Simple Slopes Analysis
 
 ```{r}
-sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = FALSE)
+sim_slopes(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, johnson_neyman = FALSE)
 sim_slopes(interactionModel,
-           pred = Illiteracy,
-           modx = Murder,
+           pred = Illiteracy_centered,
+           modx = Murder_centered,
            modx.values = c(0, 5, 10),
            johnson_neyman = FALSE)
 ```
@@ -334,11 +346,11 @@ sim_slopes(interactionModel,
 Indicates all the values of the moderator for which the slope of the predictor is statistically significant.
 
 ```{r}
-sim_slopes(interactionModel, pred = Illiteracy, modx = Murder, johnson_neyman = TRUE)
+sim_slopes(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, johnson_neyman = TRUE)
 
 probe_interaction(interactionModel,
-                  pred = Illiteracy,
-                  modx = Murder,
+                  pred = Illiteracy_centered,
+                  modx = Murder_centered,
                   cond.int = TRUE,
                   interval = TRUE,
                   jnplot = TRUE)
