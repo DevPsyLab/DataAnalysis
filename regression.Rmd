@@ -209,16 +209,32 @@ summary(robustGeneralizedRegression)
 confint(robustGeneralizedRegression)
 ```
 
-## Ordinal regression model (rms)
+## Ordinal regression model
 
 ```{r}
-ordinalRegressionModel <- robcov(orm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                     data = mydata,
-                                     x = TRUE,
-                                     y = TRUE))
+ordinalRegressionModel1 <- polr(
+  orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata)
 
-ordinalRegressionModel
-confint(ordinalRegressionModel)
+ordinalRegressionModel2 <- lrm(
+  orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE)
+
+ordinalRegressionModel3 <- orm(
+  orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE)
+
+summary(ordinalRegressionModel1)
+confint(ordinalRegressionModel1)
+
+ordinalRegressionModel2
+
+ordinalRegressionModel3
+confint(ordinalRegressionModel3)
 ```
 
 ## Bayesian ordinal regression model
