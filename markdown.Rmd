@@ -189,14 +189,7 @@ Then, include whatever text and/or code chunks.
     - this file says what file types to ignore and not add to the repo
 1. Create a new branch called `gh-pages`
 1. Delete all files in the `gh-pages` branch
-1. In your [GitHub account settings](https://github.com/settings/tokens), Create a "Personal Access Token" called `EMAIL` (if it doesn't already exist)
-    - Settings > Developer Settings > Personal access tokens
-    - make sure to save the contents of the personal access token somewhere safe (you will need it later)
-1. In the repo settings, add a secret called `EMAIL`, and add the Personal Access Token (that you created in the previous step)
-    - Settings > Secrets > Actions > New repository secret
-    - Name: `EMAIL`
-    - Value: [INSERT PERSONAL ACCESS TOKEN]
-1. To the repo, add the following contents:
+1. Switch back the main branch of the repo, and add the following contents (to the main branch, **not** to the `gh-pages` branch):
     - `/.github/workflows/deploy_markdown.yml` file
         - this file tells GitHub Actions was steps to run
         - add the following contents to the file:
