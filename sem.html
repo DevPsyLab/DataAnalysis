@@ -580,7 +580,12 @@ Model</h1>
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 32 iterations
+<pre><code>Warning in lav_partable_check(lavpartable, categorical = lavoptions$.categorical, : lavaan WARNING: automatically added intercepts are set to zero:
+    [x1 x2 c1 c2 c3 c4]
+
+Warning in lav_partable_check(lavpartable, categorical = lavoptions$.categorical, : lavaan WARNING: automatically added intercepts are set to zero:
+    [x1 x2 c1 c2 c3 c4]</code></pre>
+<pre><code>lavaan 0.6.13 ended normally after 32 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -590,7 +595,7 @@ Model</h1>
   Number of missing patterns                         1
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                40.774      40.982
   Degrees of freedom                                27          27
   P-value (Chi-square)                           0.043       0.041
@@ -609,8 +614,8 @@ User Model versus Baseline Model:
   Comparative Fit Index (CFI)                    0.994       0.994
   Tucker-Lewis Index (TLI)                       0.993       0.993
                                                                   
-  Robust Comparative Fit Index (CFI)                         0.994
-  Robust Tucker-Lewis Index (TLI)                            0.993
+  Robust Comparative Fit Index (CFI)                         0.992
+  Robust Tucker-Lewis Index (TLI)                            0.992
 
 Loglikelihood and Information Criteria:
 
@@ -623,18 +628,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                               11641.014   11641.014
   Bayesian (BIC)                             11792.690   11792.690
-  Sample-size adjusted Bayesian (BIC)        11672.114   11672.114
+  Sample-size adjusted Bayesian (SABIC)      11672.114   11672.114
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.036       0.036
   90 Percent confidence interval - lower         0.006       0.007
   90 Percent confidence interval - upper         0.057       0.057
-  P-value RMSEA &lt;= 0.05                          0.854       0.849
+  P-value H_0: RMSEA &lt;= 0.050                    0.854       0.849
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
                                                                   
-  Robust RMSEA                                               0.036
-  90 Percent confidence interval - lower                     0.007
-  90 Percent confidence interval - upper                     0.057
+  Robust RMSEA                                               0.040
+  90 Percent confidence interval - lower                     0.019
+  90 Percent confidence interval - upper                     0.059
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.793
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
 
 Standardized Root Mean Square Residual:
 
@@ -747,7 +755,7 @@ R-Square:
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 31 iterations
+<pre><code>lavaan 0.6.13 ended normally after 31 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -757,7 +765,7 @@ R-Square:
   Number of missing patterns                         1
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                26.059      26.344
   Degrees of freedom                                21          21
   P-value (Chi-square)                           0.204       0.194
@@ -790,18 +798,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                               11638.299   11638.299
   Bayesian (BIC)                             11813.923   11813.923
-  Sample-size adjusted Bayesian (BIC)        11674.308   11674.308
+  Sample-size adjusted Bayesian (SABIC)      11674.308   11674.308
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.025       0.025
   90 Percent confidence interval - lower         0.000       0.000
   90 Percent confidence interval - upper         0.051       0.052
-  P-value RMSEA &lt;= 0.05                          0.938       0.933
+  P-value H_0: RMSEA &lt;= 0.050                    0.938       0.933
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
                                                                   
-  Robust RMSEA                                               0.025
+  Robust RMSEA                                               0.024
   90 Percent confidence interval - lower                     0.000
-  90 Percent confidence interval - upper                     0.052
+  90 Percent confidence interval - upper                     0.051
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.940
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
 
 Standardized Root Mean Square Residual:
 
@@ -920,6 +931,11 @@ Fit</h2>
     &quot;baseline.chisq&quot;,&quot;baseline.df&quot;,&quot;baseline.pvalue&quot;,
     &quot;rmsea&quot;, &quot;cfi&quot;, &quot;tli&quot;, &quot;srmr&quot;,
     &quot;rmsea.robust&quot;, &quot;cfi.robust&quot;, &quot;tli.robust&quot;))</code></pre>
+<pre><code>Warning in lav_partable_check(lavpartable, categorical = lavoptions$.categorical, : lavaan WARNING: automatically added intercepts are set to zero:
+    [x1 x2 c1 c2 c3 c4]
+
+Warning in lav_partable_check(lavpartable, categorical = lavoptions$.categorical, : lavaan WARNING: automatically added intercepts are set to zero:
+    [x1 x2 c1 c2 c3 c4]</code></pre>
 <pre><code>               chisq                   df               pvalue 
               40.774               27.000                0.043 
         chisq.scaled            df.scaled        pvalue.scaled 
@@ -929,9 +945,9 @@ chisq.scaling.factor       baseline.chisq          baseline.df
      baseline.pvalue                rmsea                  cfi 
                0.000                0.036                0.994 
                  tli                 srmr         rmsea.robust 
-               0.993                0.030                0.036 
+               0.993                0.030                0.040 
           cfi.robust           tli.robust 
-               0.994                0.993 </code></pre>
+               0.992                0.992 </code></pre>
 </div>
 <div id="residuals" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Residuals</h2>
@@ -942,7 +958,7 @@ chisq.scaling.factor       baseline.chisq          baseline.df
 [1] &quot;cor.bollen&quot;
 
 $cov
-   t1     t2     t3     t4     x1     x2     c1     c2     c3     c4    
+       t1     t2     t3     t4     x1     x2     c1     c2     c3     c4
 t1  0.000                                                               
 t2  0.010  0.000                                                        
 t3 -0.013 -0.001  0.000                                                 
@@ -1396,7 +1412,7 @@ dy10 ~ delta_lag_yx * lx9 </code></pre>
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 137 iterations
+<pre><code>lavaan 0.6.13 ended normally after 137 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -1407,7 +1423,7 @@ dy10 ~ delta_lag_yx * lx9 </code></pre>
   Number of missing patterns                        23
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                 6.870       5.971
   Degrees of freedom                                 5           5
   P-value (Chi-square)                           0.230       0.309
@@ -1440,18 +1456,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                                5991.634    5991.634
   Bayesian (BIC)                              6084.355    6084.355
-  Sample-size adjusted Bayesian (BIC)         6014.526    6014.526
+  Sample-size adjusted Bayesian (SABIC)       6014.526    6014.526
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.027       0.020
   90 Percent confidence interval - lower         0.000       0.000
   90 Percent confidence interval - upper         0.072       0.065
-  P-value RMSEA &lt;= 0.05                          0.751       0.835
+  P-value H_0: RMSEA &lt;= 0.050                    0.751       0.835
+  P-value H_0: RMSEA &gt;= 0.080                    0.023       0.009
                                                                   
-  Robust RMSEA                                               0.021
+  Robust RMSEA                                               0.022
   90 Percent confidence interval - lower                     0.000
-  90 Percent confidence interval - upper                     0.073
+  90 Percent confidence interval - upper                     0.078
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.731
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.044
 
 Standardized Root Mean Square Residual:
 
@@ -1619,7 +1638,7 @@ chisq.scaling.factor       baseline.chisq          baseline.df
      baseline.pvalue                rmsea                  cfi 
                0.000                0.027                0.999 
                  tli                 srmr         rmsea.robust 
-               0.996                0.031                0.021 
+               0.996                0.031                0.022 
           cfi.robust           tli.robust 
                0.999                0.998 </code></pre>
 </div>
@@ -1632,7 +1651,7 @@ chisq.scaling.factor       baseline.chisq          baseline.df
 [1] &quot;cor.bollen&quot;
 
 $cov
-   x1     x2     x3     y1     y2     y3    
+       x1     x2     x3     y1     y2     y3
 x1  0.000                                   
 x2 -0.002  0.000                            
 x3 -0.002  0.001  0.000                     
@@ -1733,7 +1752,7 @@ Model</h1>
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 26 iterations
+<pre><code>lavaan 0.6.13 ended normally after 26 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -1743,7 +1762,7 @@ Model</h1>
   Number of missing patterns                         1
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                55.624      54.099
   Degrees of freedom                                12          12
   P-value (Chi-square)                           0.000       0.000
@@ -1776,18 +1795,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                                9835.601    9835.601
   Bayesian (BIC)                              9963.328    9963.328
-  Sample-size adjusted Bayesian (BIC)         9861.790    9861.790
+  Sample-size adjusted Bayesian (SABIC)       9861.790    9861.790
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.095       0.094
   90 Percent confidence interval - lower         0.071       0.069
   90 Percent confidence interval - upper         0.121       0.119
-  P-value RMSEA &lt;= 0.05                          0.002       0.002
+  P-value H_0: RMSEA &lt;= 0.050                    0.002       0.002
+  P-value H_0: RMSEA &gt;= 0.080                    0.856       0.832
                                                                   
   Robust RMSEA                                               0.095
   90 Percent confidence interval - lower                     0.070
   90 Percent confidence interval - upper                     0.121
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.002
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.847
 
 Standardized Root Mean Square Residual:
 
@@ -1899,7 +1921,7 @@ chisq.scaling.factor       baseline.chisq          baseline.df
 [1] &quot;cor.bollen&quot;
 
 $cov
-   t4     t3     t2     c4     c3     c2     t1     c1    
+       t4     t3     t2     c4     c3     c2     t1     c1
 t4  0.000                                                 
 t3  0.000  0.000                                          
 t2  0.044  0.000  0.000                                   
@@ -2145,7 +2167,7 @@ variances are negative</code></pre>
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 63 iterations
+<pre><code>lavaan 0.6.13 ended normally after 63 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -2155,7 +2177,7 @@ variances are negative</code></pre>
   Number of missing patterns                         1
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                39.156      38.001
   Degrees of freedom                                 9           9
   P-value (Chi-square)                           0.000       0.000
@@ -2188,18 +2210,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                                9825.132    9825.132
   Bayesian (BIC)                              9964.833    9964.833
-  Sample-size adjusted Bayesian (BIC)         9853.776    9853.776
+  Sample-size adjusted Bayesian (SABIC)       9853.776    9853.776
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.092       0.090
   90 Percent confidence interval - lower         0.063       0.062
   90 Percent confidence interval - upper         0.122       0.120
-  P-value RMSEA &lt;= 0.05                          0.009       0.011
+  P-value H_0: RMSEA &lt;= 0.050                    0.009       0.011
+  P-value H_0: RMSEA &gt;= 0.080                    0.766       0.737
                                                                   
   Robust RMSEA                                               0.091
   90 Percent confidence interval - lower                     0.062
   90 Percent confidence interval - upper                     0.122
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.011
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.756
 
 Standardized Root Mean Square Residual:
 
@@ -2346,7 +2371,7 @@ R-Square:
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 63 iterations
+<pre><code>lavaan 0.6.13 ended normally after 63 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -2356,7 +2381,7 @@ R-Square:
   Number of missing patterns                         1
 
 Model Test User Model:
-                                              Standard      Robust
+                                              Standard      Scaled
   Test Statistic                                39.156      38.001
   Degrees of freedom                                 9           9
   P-value (Chi-square)                           0.000       0.000
@@ -2389,18 +2414,21 @@ Loglikelihood and Information Criteria:
                                                                   
   Akaike (AIC)                                9825.132    9825.132
   Bayesian (BIC)                              9964.833    9964.833
-  Sample-size adjusted Bayesian (BIC)         9853.776    9853.776
+  Sample-size adjusted Bayesian (SABIC)       9853.776    9853.776
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.092       0.090
   90 Percent confidence interval - lower         0.063       0.062
   90 Percent confidence interval - upper         0.122       0.120
-  P-value RMSEA &lt;= 0.05                          0.009       0.011
+  P-value H_0: RMSEA &lt;= 0.050                    0.009       0.011
+  P-value H_0: RMSEA &gt;= 0.080                    0.766       0.737
                                                                   
   Robust RMSEA                                               0.091
   90 Percent confidence interval - lower                     0.062
   90 Percent confidence interval - upper                     0.122
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.011
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.756
 
 Standardized Root Mean Square Residual:
 
@@ -2582,7 +2610,7 @@ chisq.scaling.factor       baseline.chisq          baseline.df
 [1] &quot;cor.bollen&quot;
 
 $cov
-   t1     t2     t3     t4     c1     c2     c3     c4    
+       t1     t2     t3     t4     c1     c2     c3     c4
 t1  0.000                                                 
 t2  0.007  0.000                                          
 t3  0.012 -0.004  0.000                                   
@@ -2672,85 +2700,7 @@ example uses only 1,000 bootstrap draws for a shorter runtime.</p>
   fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE)</code></pre>
-<pre><code>lavaan 0.6-12 ended normally after 11 iterations
-
-  Estimator                                         ML
-  Optimization method                           NLMINB
-  Number of model parameters                         7
-
-  Number of observations                           100
-  Number of missing patterns                         1
-
-Model Test User Model:
-                                                      
-  Test statistic                                 0.000
-  Degrees of freedom                                 0
-
-Model Test Baseline Model:
-
-  Test statistic                                79.768
-  Degrees of freedom                                 3
-  P-value                                        0.000
-
-User Model versus Baseline Model:
-
-  Comparative Fit Index (CFI)                    1.000
-  Tucker-Lewis Index (TLI)                       1.000
-
-Loglikelihood and Information Criteria:
-
-  Loglikelihood user model (H0)               -256.804
-  Loglikelihood unrestricted model (H1)       -256.804
-                                                      
-  Akaike (AIC)                                 527.609
-  Bayesian (BIC)                               545.845
-  Sample-size adjusted Bayesian (BIC)          523.737
-
-Root Mean Square Error of Approximation:
-
-  RMSEA                                          0.000
-  90 Percent confidence interval - lower         0.000
-  90 Percent confidence interval - upper         0.000
-  P-value RMSEA &lt;= 0.05                             NA
-
-Standardized Root Mean Square Residual:
-
-  SRMR                                           0.000
-
-Parameter Estimates:
-
-  Standard errors                            Bootstrap
-  Number of requested bootstrap draws             1000
-  Number of successful bootstrap draws            1000
-
-Regressions:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-  Y ~                                                                   
-    X       (drct)   -0.045    0.102   -0.443    0.658   -0.045   -0.038
-  M ~                                                                   
-    X          (a)    0.568    0.090    6.304    0.000    0.568    0.549
-  Y ~                                                                   
-    M          (b)    0.714    0.117    6.090    0.000    0.714    0.616
-
-Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .Y                 0.028    0.098    0.286    0.775    0.028    0.024
-   .M                -0.072    0.082   -0.881    0.378   -0.072   -0.073
-
-Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .Y                 0.850    0.127    6.686    0.000    0.850    0.644
-   .M                 0.686    0.082    8.343    0.000    0.686    0.699
-
-R-Square:
-                   Estimate
-    Y                 0.356
-    M                 0.301
-
-Defined Parameters:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-    indirect          0.406    0.096    4.221    0.000    0.406    0.338
-    total             0.361    0.102    3.546    0.000    0.361    0.300</code></pre>
+<pre><code>Error in solve.default(X[[i]], ...): Lapack routine dgesv: system is exactly singular: U[3,3] = 0</code></pre>
 </div>
 <div id="indirect-effect" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> Indirect Effect</h2>
@@ -2760,7 +2710,7 @@ Defined Parameters:
   standardized = TRUE)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["lhs"],"name":[1],"type":["chr"],"align":["left"]},{"label":["op"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rhs"],"name":[3],"type":["chr"],"align":["left"]},{"label":["label"],"name":[4],"type":["chr"],"align":["left"]},{"label":["est"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pvalue"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ci.lower"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ci.upper"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["std.lv"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["std.all"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["std.nox"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"Y","2":"~","3":"X","4":"direct","5":"-0.04514371","6":"0.10199915","7":"-0.4425891","8":"6.580630e-01","9":"-0.2641352","10":"0.15475577","11":"-0.04514371","12":"-0.03761782","13":"-0.03931082"},{"1":"M","2":"~","3":"X","4":"a","5":"0.56815371","6":"0.09012219","7":"6.3042602","8":"2.895737e-10","9":"0.4065509","10":"0.75273015","11":"0.56815371","12":"0.54878799","13":"0.57348639"},{"1":"Y","2":"~","3":"M","4":"b","5":"0.71413854","6":"0.11726024","7":"6.0902018","8":"1.127685e-09","9":"0.4910573","10":"0.93551048","11":"0.71413854","12":"0.61608416","13":"0.61608416"},{"1":"Y","2":"~~","3":"Y","4":"","5":"0.84990004","6":"0.12711232","7":"6.6862131","8":"2.290190e-11","9":"0.6435055","10":"1.15420799","11":"0.84990004","12":"0.64446234","13":"0.64446234"},{"1":"M","2":"~~","3":"M","4":"","5":"0.68589570","6":"0.08221357","7":"8.3428524","8":"0.000000e+00","9":"0.5422994","10":"0.87626556","11":"0.68589570","12":"0.69883174","13":"0.69883174"},{"1":"X","2":"~~","3":"X","4":"","5":"0.91572057","6":"0.00000000","7":"NA","8":"NA","9":"0.9157206","10":"0.91572057","11":"0.91572057","12":"1.00000000","13":"0.91572057"},{"1":"Y","2":"~1","3":"","4":"","5":"0.02804007","6":"0.09792366","7":"0.2863462","8":"7.746129e-01","9":"-0.1622965","10":"0.21895673","11":"0.02804007","12":"0.02441709","13":"0.02441709"},{"1":"M","2":"~1","3":"","4":"","5":"-0.07206804","6":"0.08177098","7":"-0.8813401","8":"3.781338e-01","9":"-0.2290708","10":"0.08299918","11":"-0.07206804","12":"-0.07274447","13":"-0.07274447"},{"1":"X","2":"~1","3":"","4":"","5":"-0.17309875","6":"0.00000000","7":"NA","8":"NA","9":"-0.1730987","10":"-0.17309875","11":"-0.17309875","12":"-0.18088912","13":"-0.17309875"},{"1":"indirect","2":":=","3":"a*b","4":"indirect","5":"0.40574046","6":"0.09612421","7":"4.2210018","8":"2.432190e-05","9":"0.2630111","10":"0.64261873","11":"0.40574046","12":"0.33809959","13":"0.35331588"},{"1":"total","2":":=","3":"direct+indirect","4":"total","5":"0.36059674","6":"0.10167760","7":"3.5464717","8":"3.904266e-04","9":"0.1820738","10":"0.58568561","11":"0.36059674","12":"0.30048177","13":"0.31400506"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["lhs"],"name":[1],"type":["chr"],"align":["left"]},{"label":["op"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rhs"],"name":[3],"type":["chr"],"align":["left"]},{"label":["label"],"name":[4],"type":["chr"],"align":["left"]},{"label":["est"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pvalue"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ci.lower"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ci.upper"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["std.lv"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["std.all"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["std.nox"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"Y","2":"~","3":"X","4":"direct","5":"-0.04514371","6":"0.10991185","7":"-0.4107265","8":"6.812731e-01","9":"-0.2427608","10":"0.17925273","11":"-0.04514371","12":"-0.03761782","13":"-0.03931082"},{"1":"M","2":"~","3":"X","4":"a","5":"0.56815371","6":"0.08838736","7":"6.4279976","8":"1.292957e-10","9":"0.3990735","10":"0.74914464","11":"0.56815371","12":"0.54878799","13":"0.57348639"},{"1":"Y","2":"~","3":"M","4":"b","5":"0.71413854","6":"0.12182310","7":"5.8620947","8":"4.570642e-09","9":"0.4660494","10":"0.95133282","11":"0.71413854","12":"0.61608416","13":"0.61608416"},{"1":"Y","2":"~~","3":"Y","4":"","5":"0.84990004","6":"0.12666748","7":"6.7096942","8":"1.950329e-11","9":"0.6399135","10":"1.15965074","11":"0.84990004","12":"0.64446234","13":"0.64446234"},{"1":"M","2":"~~","3":"M","4":"","5":"0.68589570","6":"0.08259255","7":"8.3045714","8":"0.000000e+00","9":"0.5510882","10":"0.87644512","11":"0.68589570","12":"0.69883174","13":"0.69883174"},{"1":"X","2":"~~","3":"X","4":"","5":"0.91572057","6":"0.00000000","7":"NA","8":"NA","9":"0.9157206","10":"0.91572057","11":"0.91572057","12":"1.00000000","13":"0.91572057"},{"1":"Y","2":"~1","3":"","4":"","5":"0.02804007","6":"0.09413105","7":"0.2978833","8":"7.657922e-01","9":"-0.1585943","10":"0.22457836","11":"0.02804007","12":"0.02441709","13":"0.02441709"},{"1":"M","2":"~1","3":"","4":"","5":"-0.07206804","6":"0.07894811","7":"-0.9128533","8":"3.613197e-01","9":"-0.2214179","10":"0.08875786","11":"-0.07206804","12":"-0.07274447","13":"-0.07274447"},{"1":"X","2":"~1","3":"","4":"","5":"-0.17309875","6":"0.00000000","7":"NA","8":"NA","9":"-0.1730987","10":"-0.17309875","11":"-0.17309875","12":"-0.18088912","13":"-0.17309875"},{"1":"indirect","2":":=","3":"a*b","4":"indirect","5":"0.40574046","6":"0.09670891","7":"4.1954816","8":"2.722923e-05","9":"0.2421788","10":"0.61841791","11":"0.40574046","12":"0.33809959","13":"0.35331588"},{"1":"total","2":":=","3":"direct+indirect","4":"total","5":"0.36059674","6":"0.11261324","7":"3.2020813","8":"1.364385e-03","9":"0.1600553","10":"0.59387753","11":"0.36059674","12":"0.30048177","13":"0.31400506"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -2777,10 +2727,7 @@ saturated, it has “perfect” fit.</p>
     &quot;chisq&quot;, &quot;df&quot;, &quot;pvalue&quot;,
     &quot;baseline.chisq&quot;,&quot;baseline.df&quot;,&quot;baseline.pvalue&quot;,
     &quot;rmsea&quot;, &quot;cfi&quot;, &quot;tli&quot;, &quot;srmr&quot;))</code></pre>
-<pre><code>          chisq              df          pvalue  baseline.chisq     baseline.df 
-          0.000           0.000              NA          79.768           3.000 
-baseline.pvalue           rmsea             cfi             tli            srmr 
-          0.000           0.000           1.000           1.000           0.000 </code></pre>
+<pre><code>Error in solve.default(X[[i]], ...): Lapack routine dgesv: system is exactly singular: U[3,3] = 0</code></pre>
 </div>
 <div id="residuals-4" class="section level2" number="10.6">
 <h2><span class="header-section-number">10.6</span> Residuals</h2>
@@ -2855,7 +2802,7 @@ other attached packages:
  [1] forcats_0.5.2   stringr_1.5.0   dplyr_1.0.10    purrr_1.0.0    
  [5] readr_2.1.3     tidyr_1.2.1     tibble_3.1.8    ggplot2_3.4.0  
  [9] tidyverse_1.3.2 lcsm_0.1.2      semPlot_1.1.6   semTools_0.5-6 
-[13] lavaan_0.6-12  
+[13] lavaan_0.6-13  
 
 loaded via a namespace (and not attached):
   [1] googledrive_2.0.0   minqa_1.2.5         colorspace_2.0-3   
@@ -2869,7 +2816,7 @@ loaded via a namespace (and not attached):
  [25] dbplyr_2.2.1        png_0.1-8           httr_1.4.4         
  [28] compiler_4.2.2      backports_1.4.1     assertthat_0.2.1   
  [31] Matrix_1.5-1        fastmap_1.1.0       gargle_1.2.1       
- [34] cli_3.5.0           htmltools_0.5.4     tools_4.2.2        
+ [34] cli_3.6.0           htmltools_0.5.4     tools_4.2.2        
  [37] igraph_1.3.5        OpenMx_2.20.7       coda_0.19-4        
  [40] gtable_0.3.1        glue_1.6.2          reshape2_1.4.4     
  [43] Rcpp_1.0.9          carData_3.0-5       cellranger_1.1.0   
@@ -2885,7 +2832,7 @@ loaded via a namespace (and not attached):
  [73] highr_0.10          sem_3.1-15          checkmate_2.1.0    
  [76] boot_1.3-28         zip_2.2.2           rlang_1.0.6        
  [79] pkgconfig_2.0.3     arm_1.13-1          evaluate_0.19      
- [82] lattice_0.20-45     labeling_0.4.2      htmlwidgets_1.6.0  
+ [82] lattice_0.20-45     labeling_0.4.2      htmlwidgets_1.6.1  
  [85] tidyselect_1.2.0    plyr_1.8.8          magrittr_2.0.3     
  [88] R6_2.5.1            generics_0.1.3      Hmisc_4.7-2        
  [91] DBI_1.1.3           withr_2.5.0         haven_2.5.1        
