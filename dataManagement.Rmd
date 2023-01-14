@@ -68,7 +68,7 @@ library("petersenlab")
 
 To run scripts on the lab drive, set the path to the lab drive (`//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/`) using the following code:
 
-```{r}
+```{r, eval = FALSE}
 petersenLabPath <- setLabPath()
 ```
 
@@ -394,6 +394,10 @@ To create a new variable, use the following syntax:
 mydata$newVar <- NA
 ```
 
+```{r, include = FALSE}
+mydata$newVar <- NULL
+```
+
 Here is an example of creating a new variable:
 
 ```{r}
@@ -427,6 +431,31 @@ mydata$oldVar[which(mydata$sex == "female")] <- 1
 ```{r}
 mydata <- mydata %>% 
   rename(newVar = oldVar)
+```
+
+# Convert the Types of Variables
+
+One variable:
+
+```{r}
+mydata$factorVar <- factor(mydata$sex)
+mydata$numericVar <- as.numeric(mydata$prediction)
+mydata$integerVar <- as.integer(mydata$parch)
+mydata$characterVar <- as.character(mydata$sex)
+```
+
+Multiple variables:
+
+```{r}
+mydata %>%
+  mutate(across(c(
+    age,
+    parch,
+    prediction),
+    as.numeric))
+
+mydata %>%
+  mutate(across(where(is.factor), as.character))
 ```
 
 # Merging/Joins {#merging}
