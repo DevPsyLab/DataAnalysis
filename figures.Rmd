@@ -3,10 +3,11 @@ title: "Figures in R"
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      error = TRUE,
-                      warning = FALSE,
-                      comment = "")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  error = TRUE,
+  warning = FALSE,
+  comment = "")
 ```
 
 # Picking a Chart Type
@@ -54,6 +55,7 @@ library("reshape2")
 library("ggExtra")
 library("viridis")
 library("ggthemes")
+library("ggpubr")
 ```
 
 ## Simulate Data
@@ -117,6 +119,19 @@ ggplot(df, aes(x = predictor, y = outcome)) +
 ggplot(df, aes(x = predictor, y = outcome)) +
   geom_point() +
   stat_smooth(method = "lm", formula = y ~ x) +
+  theme_classic()
+```
+
+#### Best-fit line with correlation coefficient
+
+```{r}
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  stat_smooth(method = "lm", formula = y ~ x) +
+  stat_cor(
+    cor.coef.name = "r",
+    p.accuracy = 0.001,
+    r.accuracy = 0.01) +
   theme_classic()
 ```
 
