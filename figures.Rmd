@@ -99,7 +99,16 @@ plot(outcome ~ predictor, data = df)
 abline(lm(outcome ~ predictor, data = df), col = "red") #regression line (y~x)
 ```
 
+#### Best-fit line with correlation coefficient
+
+```{r}
+plot(outcome ~ predictor, data = df)
+abline(lm(outcome ~ predictor, data = df), col = "red") #regression line (y~x)
+addText(x = df$predictor, y = df$outcome)
+```
+
 #### Loess line
+
 ```{r}
 plot(outcome ~ predictor, data = df)
 lines(loess.smooth(df$predictor, df$outcome)) #loess line (x,y)
