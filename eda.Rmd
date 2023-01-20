@@ -260,7 +260,7 @@ rug(mydata$outcome)
 
 ```{r}
 ggplot(mydata, aes(x = outcome)) +
-  geom_histogram(aes(y = ..density..), color = 1) +
+  geom_histogram(aes(y = after_stat(density)), color = 1) +
   geom_density() +
   geom_rug()
 ```
