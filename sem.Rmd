@@ -786,10 +786,29 @@ summary(
 ## Indirect Effect
 
 ```{r}
-parameterEstimates(
+mediationFit_estimates <- parameterEstimates(
   mediationFit,
   boot.ci.type = "bca.simple",
   standardized = TRUE)
+
+mediationFit_estimates
+```
+
+Effect size: Proportion mediated (P~M); i.e., the magnitude of the indirect effect divided by the magnitude of the total effect:
+
+```
+mediationFit_indirect <- mediationFit_estimates %>% 
+  filter(lhs == "indirect") %>% 
+  select(std.all) %>% 
+  as.numeric
+
+mediationFit_total <- mediationFit_estimates %>% 
+  filter(lhs == "total") %>% 
+  select(std.all) %>% 
+  as.numeric
+
+mediationFit_pm <- mediationFit_indirect / mediationFit_total
+mediationFit_pm
 ```
 
 ## Estimates of Model Fit
