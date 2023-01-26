@@ -3,10 +3,11 @@ title: "Hierarchical Linear Modeling"
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      error = TRUE,
-                      comment = "",
-                      class.source = "fold-show")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  error = TRUE,
+  comment = "",
+  class.source = "fold-show")
 ```
 
 # Preamble
@@ -85,6 +86,23 @@ To simultaneously compare fixed and random effects, use ML.
 The following models are models that are fit in a linear mixed modeling framework.
 
 ## Growth Curve Models {#gcm}
+
+### Plot Observed Growth Curves
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = math,
+    group = id)) +
+  geom_line() +
+  scale_x_continuous(
+    breaks = 1:4,
+    name = "Age (Years)") +
+  scale_y_continuous(
+    name = "Math Score")
+```
 
 ### `lme4`
 

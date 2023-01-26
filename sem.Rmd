@@ -3,10 +3,11 @@ title: "Structural Equation Modeling"
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      error = TRUE,
-                      comment = "",
-                      class.source = "fold-show")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  error = TRUE,
+  comment = "",
+  class.source = "fold-show")
 ```
 
 # Preamble
@@ -52,6 +53,44 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html
 # Analysis examples
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem
+
+# Plot Observed Growth Curve
+
+Transform data from wide to long format:
+
+```{r}
+Demo.growth$id <- 1:nrow(Demo.growth)
+
+Demo.growth_long <- Demo.growth %>% 
+  pivot_longer(
+    cols = c(t1,t2,t3,t4),
+    names_to = "variable",
+    values_to = "value",
+    names_pattern = "t(.)") %>% 
+  rename(
+    timepoint = variable,
+    score = value
+  )
+
+Demo.growth_long$timepoint <- as.numeric(Demo.growth_long$timepoint)
+```
+
+Plot the observed trajectory for each participant:
+
+```{r}
+ggplot(
+  data = Demo.growth_long,
+  mapping = aes(
+    x = timepoint,
+    y = score,
+    group = id)) +
+  geom_line() +
+  scale_x_continuous(
+    breaks = 1:4,
+    name = "Timepoint") +
+  scale_y_continuous(
+    name = "Score")
+```
 
 # Latent Growth Curve Model {#lgcm}
 
@@ -233,9 +272,29 @@ ggplot(
 
 ### Individuals' Growth Curves
 
+Calculated from intercept and slope parameters:
+
 ```{r}
 newData <- as.data.frame(predict(lgcm1_fit))
 newData$id <- row.names(newData)
+
+ggplot(
+  data = newData) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_x_continuous(
+    limits = c(1,4)) +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
+  geom_abline(
+    mapping = aes(
+      slope = slope,
+      intercept = intercept))
+```
+
+Calculated manually:
+
+```{r}
 newData$t1 <- newData$intercept
 newData$t4 <- newData$intercept + timepoints*newData$slope
 
@@ -253,6 +312,8 @@ ggplot(
   mapping = aes(x = time, y = value, group = factor(id))) +
   xlab("Timepoint") +
   ylab("Score") +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
   geom_line()
 ```
 
