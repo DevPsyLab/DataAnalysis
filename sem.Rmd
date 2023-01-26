@@ -248,25 +248,46 @@ semPaths(
 
 ### Protoypical Growth Curve
 
+Calculated from intercept and slope parameters:
+
+```{r}
+lgcm1_intercept <- coef(lgcm1_fit)["intercept~1"]
+lgcm1_slope <- coef(lgcm1_fit)["slope~1"]
+
+ggplot() +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_x_continuous(
+    limits = c(0, 3),
+    labels = 1:4) +
+  scale_y_continuous(
+    limits = c(0, 5)) +
+  geom_abline(
+    mapping = aes(
+      slope = lgcm1_slope,
+      intercept = lgcm1_intercept))
+```
+
+Calculated manually:
+
 ```{r}
 timepoints <- 4
-
-coef(lgcm1_fit)["intercept~1"]
-coef(lgcm1_fit)["slope~1"]
 
 newData <- expand.grid(
   time = c(1, 4)
 )
 
 newData$predictedValue <- NA
-newData$predictedValue[which(newData$time == 1)] <- coef(lgcm1_fit)["intercept~1"]
-newData$predictedValue[which(newData$time == 4)] <- coef(lgcm1_fit)["intercept~1"] + timepoints*coef(lgcm1_fit)["slope~1"]
+newData$predictedValue[which(newData$time == 1)] <- lgcm1_intercept
+newData$predictedValue[which(newData$time == 4)] <- lgcm1_intercept + (timepoints - 1)*lgcm1_slope
 
 ggplot(
   data = newData,
   mapping = aes(x = time, y = predictedValue)) +
-  xlab("Time") +
+  xlab("Timepoint") +
   ylab("Score") +
+  scale_y_continuous(
+    limits = c(0, 5)) +
   geom_line()
 ```
 
@@ -283,7 +304,8 @@ ggplot(
   xlab("Timepoint") +
   ylab("Score") +
   scale_x_continuous(
-    limits = c(1,4)) +
+    limits = c(0, 3),
+    labels = 1:4) +
   scale_y_continuous(
     limits = c(-10, 20)) +
   geom_abline(
@@ -296,7 +318,7 @@ Calculated manually:
 
 ```{r}
 newData$t1 <- newData$intercept
-newData$t4 <- newData$intercept + timepoints*newData$slope
+newData$t4 <- newData$intercept + (timepoints - 1)*newData$slope
 
 newData2 <- pivot_longer(
   newData,
