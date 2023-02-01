@@ -1,0 +1,31 @@
+---
+title: "Jamovi"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "")
+```
+
+# Overview of Jamovi {#jamovi}
+
+Jamovi is similar to [SPSS](spss.html) in that it has a graphical user interface that allows point-and-click for analysis.
+Unlike [SPSS](spss.html), however, Jamovi is free.
+
+# Best Practices {#bestPractices}
+
+ - Create a syntax file for performing all commands, including [importing data](#import), computing variables, recoding variables, running analyses, etc.
+ The benefit of using syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file.
+ This is important so you do not have to remember all of the steps you followed to generate the analysis.
+ This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data.
+ To generate the syntax for a particular step, change to "syntax mode" to see the R syntax that is used to perform the analysis step.
+ If you are unsure what SPSS command is needed, run the command via "point and click" in the interface; however, instead of clicking "OK", click "Paste".
+ 
+    - Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., `import.R`).
+    - Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., `descriptives.R`).
+    - Have a separate syntax file for running analyses (e.g., `analyses.R`).
+    - Comment your syntax frequently
+       - to comment use the following convention:
+          - `#type comment`
+    - Save your syntax frequently
