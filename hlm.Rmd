@@ -98,7 +98,6 @@ ggplot(
     group = id)) +
   geom_line() +
   scale_x_continuous(
-    breaks = 1:4,
     name = "Age (Years)") +
   scale_y_continuous(
     name = "Math Score")
@@ -132,6 +131,7 @@ newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
 newData$sex <- NA
 newData$sex[which(newData$female == 0)] <- "male"
 newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
 
 newData$predictedValue <- predict(
   linearMixedModel,
@@ -162,6 +162,20 @@ ggplot(
   xlab("Age (Years)") +
   ylab("Math Score") +
   geom_line()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(x = ageYears, y = predictedValue, group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line() +
+  geom_line(
+    data = newData,
+    mapping = aes(x = ageYears, y = predictedValue, color = sex))
 ```
 
 ### `nlme`
