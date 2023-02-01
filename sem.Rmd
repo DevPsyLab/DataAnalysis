@@ -339,6 +339,33 @@ ggplot(
   geom_line()
 ```
 
+### Individuals' Trajectories Overlaid with Prototypical Trajrctory
+
+```{r}
+newData <- as.data.frame(predict(lgcm1_fit))
+newData$id <- row.names(newData)
+
+ggplot(
+  data = newData) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_x_continuous(
+    limits = c(0, 3),
+    labels = 1:4) +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
+  geom_abline(
+    mapping = aes(
+      slope = slope,
+      intercept = intercept)) +
+  geom_abline(
+    mapping = aes(
+      slope = lgcm1_slope,
+      intercept = lgcm1_intercept),
+    color = "blue",
+    linewidth = 2)
+```
+
 # Latent Change Score Model {#lcsm}
 
 ## Model Syntax
