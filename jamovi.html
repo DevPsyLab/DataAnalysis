@@ -11,7 +11,7 @@
 
 
 
-<title>Developmental Scaling</title>
+<title>Jamovi</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -443,14 +443,53 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Developmental Scaling</h1>
+<h1 class="title toc-ignore">Jamovi</h1>
 
 </div>
 
 
-<p>To be added…</p>
+<div id="jamovi" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Overview of Jamovi</h1>
+<p>Jamovi is similar to <a href="spss.html">SPSS</a> in that it has a
+graphical user interface that allows point-and-click for analysis.
+Unlike <a href="spss.html">SPSS</a>, however, Jamovi is free.</p>
+</div>
+<div id="bestPractices" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Best Practices</h1>
+<ul>
+<li><p>Create a syntax file for performing all commands, including <a
+href="#import">importing data</a>, computing variables, recoding
+variables, running analyses, etc. The benefit of using syntax files (and
+code-based files, more generally) is that they allow you to reproduce
+your findings again with the same data file. This is important so you do
+not have to remember all of the steps you followed to generate the
+analysis. This also allows you to quickly re-run the analysis if the
+data file is updated due to the collection of more data. To generate the
+syntax for a particular step, change to “syntax mode” to see the R
+syntax that is used to perform the analysis step. If you are unsure what
+SPSS command is needed, run the command via “point and click” in the
+interface; however, instead of clicking “OK”, click “Paste”.</p>
+<ul>
+<li>Have one syntax file for importing data, computing composites,
+recoding variables, and saving data (e.g., <code>import.R</code>).</li>
+<li>Have a separate syntax file for generating frequencies, descriptive
+statistics, and correlation matrices (e.g.,
+<code>descriptives.R</code>).</li>
+<li>Have a separate syntax file for running analyses (e.g.,
+<code>analyses.R</code>).</li>
+<li>Comment your syntax frequently
+<ul>
+<li>to comment use the following convention:
+<ul>
+<li><code>#type comment</code></li>
+</ul></li>
+</ul></li>
+<li>Save your syntax frequently</li>
+</ul></li>
+</ul>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGV2ZWxvcG1lbnRhbCBTY2FsaW5nIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIikKYGBgCgpUbyBiZSBhZGRlZC4uLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSmFtb3ZpIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIikKYGBgCgojIE92ZXJ2aWV3IG9mIEphbW92aSB7I2phbW92aX0KCkphbW92aSBpcyBzaW1pbGFyIHRvIFtTUFNTXShzcHNzLmh0bWwpIGluIHRoYXQgaXQgaGFzIGEgZ3JhcGhpY2FsIHVzZXIgaW50ZXJmYWNlIHRoYXQgYWxsb3dzIHBvaW50LWFuZC1jbGljayBmb3IgYW5hbHlzaXMuClVubGlrZSBbU1BTU10oc3Bzcy5odG1sKSwgaG93ZXZlciwgSmFtb3ZpIGlzIGZyZWUuCgojIEJlc3QgUHJhY3RpY2VzIHsjYmVzdFByYWN0aWNlc30KCiAtIENyZWF0ZSBhIHN5bnRheCBmaWxlIGZvciBwZXJmb3JtaW5nIGFsbCBjb21tYW5kcywgaW5jbHVkaW5nIFtpbXBvcnRpbmcgZGF0YV0oI2ltcG9ydCksIGNvbXB1dGluZyB2YXJpYWJsZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgcnVubmluZyBhbmFseXNlcywgZXRjLgogVGhlIGJlbmVmaXQgb2YgdXNpbmcgc3ludGF4IGZpbGVzIChhbmQgY29kZS1iYXNlZCBmaWxlcywgbW9yZSBnZW5lcmFsbHkpIGlzIHRoYXQgdGhleSBhbGxvdyB5b3UgdG8gcmVwcm9kdWNlIHlvdXIgZmluZGluZ3MgYWdhaW4gd2l0aCB0aGUgc2FtZSBkYXRhIGZpbGUuCiBUaGlzIGlzIGltcG9ydGFudCBzbyB5b3UgZG8gbm90IGhhdmUgdG8gcmVtZW1iZXIgYWxsIG9mIHRoZSBzdGVwcyB5b3UgZm9sbG93ZWQgdG8gZ2VuZXJhdGUgdGhlIGFuYWx5c2lzLgogVGhpcyBhbHNvIGFsbG93cyB5b3UgdG8gcXVpY2tseSByZS1ydW4gdGhlIGFuYWx5c2lzIGlmIHRoZSBkYXRhIGZpbGUgaXMgdXBkYXRlZCBkdWUgdG8gdGhlIGNvbGxlY3Rpb24gb2YgbW9yZSBkYXRhLgogVG8gZ2VuZXJhdGUgdGhlIHN5bnRheCBmb3IgYSBwYXJ0aWN1bGFyIHN0ZXAsIGNoYW5nZSB0byAic3ludGF4IG1vZGUiIHRvIHNlZSB0aGUgUiBzeW50YXggdGhhdCBpcyB1c2VkIHRvIHBlcmZvcm0gdGhlIGFuYWx5c2lzIHN0ZXAuCiBJZiB5b3UgYXJlIHVuc3VyZSB3aGF0IFNQU1MgY29tbWFuZCBpcyBuZWVkZWQsIHJ1biB0aGUgY29tbWFuZCB2aWEgInBvaW50IGFuZCBjbGljayIgaW4gdGhlIGludGVyZmFjZTsgaG93ZXZlciwgaW5zdGVhZCBvZiBjbGlja2luZyAiT0siLCBjbGljayAiUGFzdGUiLgogCiAgICAtIEhhdmUgb25lIHN5bnRheCBmaWxlIGZvciBpbXBvcnRpbmcgZGF0YSwgY29tcHV0aW5nIGNvbXBvc2l0ZXMsIHJlY29kaW5nIHZhcmlhYmxlcywgYW5kIHNhdmluZyBkYXRhIChlLmcuLCBgaW1wb3J0LlJgKS4KICAgIC0gSGF2ZSBhIHNlcGFyYXRlIHN5bnRheCBmaWxlIGZvciBnZW5lcmF0aW5nIGZyZXF1ZW5jaWVzLCBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzLCBhbmQgY29ycmVsYXRpb24gbWF0cmljZXMgKGUuZy4sIGBkZXNjcmlwdGl2ZXMuUmApLgogICAgLSBIYXZlIGEgc2VwYXJhdGUgc3ludGF4IGZpbGUgZm9yIHJ1bm5pbmcgYW5hbHlzZXMgKGUuZy4sIGBhbmFseXNlcy5SYCkuCiAgICAtIENvbW1lbnQgeW91ciBzeW50YXggZnJlcXVlbnRseQogICAgICAgLSB0byBjb21tZW50IHVzZSB0aGUgZm9sbG93aW5nIGNvbnZlbnRpb246CiAgICAgICAgICAtIGAjdHlwZSBjb21tZW50YAogICAgLSBTYXZlIHlvdXIgc3ludGF4IGZyZXF1ZW50bHkK</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
@@ -515,7 +554,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("developmentalScaling.Rmd");
+  window.initializeSourceEmbed("jamovi.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
