@@ -893,7 +893,7 @@ summary(
   rsquare = TRUE)
 ```
 
-## Indirect Effect
+## Parameter Estimates
 
 ```{r}
 mediationFit_estimates <- parameterEstimates(
@@ -902,6 +902,15 @@ mediationFit_estimates <- parameterEstimates(
   standardized = TRUE)
 
 mediationFit_estimates
+```
+
+## Indirect Effect
+
+### Parameter Estimate
+
+```{r}
+mediationFit_estimates %>% 
+  filter(label == "indirect")
 ```
 
 ### Effect Size
@@ -942,29 +951,83 @@ mediationFit_pm
 In this case, the direct effect and indirect effect have opposite signs (negative and positive, respectively).
 This is called *inconsistent mediation*, and renders the estimate of proportion mediated not a meaningful estimate of effect size (which explains why it the estimate exceeds 1.0; Fairchild & McDaniel, 2017).
 
-#### Proportion of Variance in Y Explained by the Indirect Effect (*R*<sup>2</sup><sub>mediated</sub>)
+#### Proportion of Variance in Y That is Explained by the Indirect Effect (*R*<sup>2</sup><sub>mediated</sub>)
+
+Formulas from Lachowicz et al. (2018):
 
 $$
-R^2_\text{mediated} = r^2_{\text{MY}} - (R^2_{\text{Y} \cdot \text{MX}} - r^2_{\text{XY}})
+\begin{aligned}
+  R^2_\text{mediated} &= r^2_{\text{MY}} - (R^2_{\text{Y} \cdot \text{MX}} - r^2_{\text{XY}}) \\
+  &= (\beta^2_{\text{YM} \cdot \text{X}} + \beta_{\text{YX} \cdot \text{M}} \cdot \beta_{\text{MX}}) ^2 - [\beta^2_{\text{YX}} + \beta^2_{\text{YM} \cdot \text{X}}(1 - \beta^2_{\text{MX}}) - \beta^2_{\text{YX}}]
+\end{aligned}
 $$
 
 ```{r}
-rSquaredXY <- as.numeric(cor.test(
+rXY <- as.numeric(cor.test(
   ~ X + Y,
   data = mydata
-)$estimate) ^ 2
+)$estimate)
 
-rSquaredMY <- as.numeric(cor.test(
+rMY <- as.numeric(cor.test(
   ~ M + Y,
   data = mydata
-)$estimate) ^ 2
+)$estimate)
 
 RsquaredYmx <- summary(lm(
   Y ~ M + X,
   data = mydata))$r.squared
 
-RsquaredMed <- rSquaredMY - (RsquaredYmx - rSquaredXY)
-RsquaredMed
+RsquaredMed1 <- (rMY^2) - (RsquaredYmx - (rXY^2))
+RsquaredMed1
+
+betaYMgivenX <- mediationFit_estimates %>% 
+  filter(label == "b") %>% 
+  select(std.all) %>% 
+  as.numeric
+
+betaYXgivenM <- mediationFit_estimates %>% 
+  filter(label == "direct") %>% 
+  select(std.all) %>% 
+  as.numeric
+
+betaMX <- mediationFit_estimates %>% 
+  filter(label == "a") %>% 
+  select(std.all) %>% 
+  as.numeric
+
+betaYX <- as.numeric(cor.test(
+  ~ X + Y,
+  data = mydata
+)$estimate)
+
+RsquaredMed2 <- ((betaYMgivenX + (betaYXgivenM * betaMX))^2) - ((betaYX^2) + (betaYMgivenX^2)*(1 - (betaMX^2)) - (betaYX^2))
+RsquaredMed2
+```
+
+#### The Proportion of Variance in Y That is Accounted for Jointly by M and X (upsilon; $v$)
+
+Formulas from Lachowicz et al. (2018):
+
+$$
+\begin{aligned}
+  v &= (r_{\text{YM}} - \beta_{\text{MX}} \cdot \beta^2_{\text{YX} \cdot \text{M}}) ^ 2 - (R^2_{\text{Y} \cdot \text{MX}} - r^2_{\text{YX}})\\
+  &= \beta^2_a \cdot \beta^2_b
+\end{aligned}
+$$
+
+where $a$ is the $a$ path ($\beta^2_{\text{MX}}$), and $b$ is the $b$ path ($\beta^2_{\text{YM} \cdot \text{X}}$).
+
+The estimate corrects for spurious correlation induced by the ordering of variables.
+
+```{r}
+upsilon1 <- ((rMY - (betaMX * (betaYXgivenM^2)))^2) - (RsquaredYmx - (rXY^2))
+upsilon1
+
+upsilon2 <- (betaYMgivenX^2) - (RsquaredYmx - (rXY^2))
+upsilon2
+
+upsilon3 <- mediationFit_indirect ^ 2
+upsilon3
 ```
 
 #### Ratio of the Indirect Effect Relative to Its Maximum Possible Value in the Data ($\kappa^2$)
@@ -975,33 +1038,6 @@ $$
 
 Kappa-squared ($\kappa^2$) is the ratio of the indirect effect relative to its maximum possible value in the data given the observed variability of X, Y, and M and their intercorrelations in the data.
 This estimate is no longer recommended (Wen & Fan, 2015).
-
-#### The Variance in Y Accounted for Jointly by M and X (upsilon; $v$)
-
-$$
-v = \beta^2_a \cdot \beta^2_b
-$$
-where $a$ is the $a$ path ($\beta^2_{\text{MX}}$), and $b$ is the $b$ path ($\beta^2_{\text{YM} \cdot \text{X}}$).
-
-The estimate corrects for spurious correlation induced by the ordering of variables.
-
-```{r}
-aPath <- mediationFit_estimates %>% 
-  filter(label == "a") %>% 
-  select(std.all) %>% 
-  as.numeric
-
-bPath <- mediationFit_estimates %>% 
-  filter(label == "b") %>% 
-  select(std.all) %>% 
-  as.numeric
-
-aPathSquared <- aPath ^ 2
-bPathSquared <- bPath ^ 2
-
-upsilon <- aPathSquared * bPathSquared
-upsilon
-```
 
 ## Estimates of Model Fit
 
