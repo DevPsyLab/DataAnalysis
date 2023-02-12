@@ -26,6 +26,7 @@ library("lavaan")
 library("semTools")
 library("semPlot")
 library("lcsm")
+library("MBESS")
 library("tidyverse")
 ```
 
@@ -1028,6 +1029,13 @@ upsilon2
 
 upsilon3 <- mediationFit_indirect ^ 2
 upsilon3
+
+upsilon(
+  x = mydata$X,
+  mediator = mydata$M,
+  dv = mydata$Y,
+  bootstrap = FALSE
+)
 ```
 
 #### Ratio of the Indirect Effect Relative to Its Maximum Possible Value in the Data ($\kappa^2$) {#kappaSquared}
