@@ -1,0 +1,79 @@
+---
+title: "Adobe Best Practice Guide"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error = TRUE,
+                      comment = "",
+                      class.source = "fold-show")
+```
+
+# Adobe best practices
+
+* naming variables all lowercase, no spaces, underscores if separating words
+* Use radio buttons whenever possible
+* Use the `align` feature and `match size` to when creating variables
+* When creating forms in word, give space for the adobe buttons that will eventually be created
+* Make sure you are using same naming conventions
+    * tcid
+    * wave
+    * coder_name
+    * date_coded
+    * coder (for 1, 2, 3 variable)
+    * given_opp_to_play
+    * play_task
+    * pc_present
+    * task_start_time
+    * task_stop_time
+    * task_length
+* keep it clean
+* keep consistent naming conventions within the
+* For fonts in the fields, in general, use auto.
+However, this can be changed if problematic. 
+* To reset forms, copy and paste the variables, then delete what you pasted, and it will be cleared. 
+
+# Calculating fields
+
+How to define values
+
+```
+# get field pulls the choice value from each group. 
+# This number comes from the choice number it is in the group.
+var v1 = getField("practice_trials1_1").value
+var v2 =
+getField("practice_trials1_2").value
+var v3 = getField("practice_trials1_3").value
+var v4 = getField("practice_trials1_4").value
+
+
+# if else statements use the choice number from the field value. 
+# The purpose of these is to create the total values fields
+if (v1 == 3) { 
+  total = 1;
+} else {
+  total = 0;
+}
+
+if (v2 == 3) {
+  total2 = 1;
+} else {
+  total2 = 0;
+}
+
+if (v3 == 3) {
+  total3 = 1;
+} else {
+  total3 = 0;
+}
+
+if (v4 == 3) {
+  total4 = 1;
+} else {
+  total4 = 0;
+}
+
+
+
+event.value = total + total2 + total3 + total4
+```
