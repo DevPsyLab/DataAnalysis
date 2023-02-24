@@ -50,7 +50,6 @@ knitr::opts_chunk$set(echo = TRUE,
 https://eeglab.org/tutorials/
 
 1. Filtering
-1. Average Referencing
 1. Artifact Rejection
     1. Automated artifact rejection (save intermediate file)
     1. Manual selection of bad channels
@@ -64,6 +63,7 @@ https://eeglab.org/tutorials/
         1. Manual selection of bad ICA components (save intermediate file)
         1. Removal of manually selected bad ICA components
 1. Interpolation of Bad Channels
+1. Average Referencing
 1. Segmentation
 1. Baseline Correction (save final file)
 
@@ -97,17 +97,6 @@ save as new name
 
 ```matlab
 EEG = pop_eegfiltnew(EEG, 'locutoff',0.1,'hicutoff',30,'plotfreqz',1);
-```
-
-## Average Referencing
-
-Tools → Re-reference the data → Compute average reference
-
-```matlab
-EEG = eeg_checkset( EEG );
-EEG = pop_reref( EEG, []);
-[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','1613_90_oddball_fil_ref','overwrite','on','gui','off'); 
-eeglab redraw;
 ```
 
 ## Artifact Rejection
@@ -306,6 +295,17 @@ Data channels:
 EEG = eeg_checkset( EEG );
 EEG = pop_interp(EEG, [44  56  57  113], 'spherical');
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'gui','off'); 
+eeglab redraw;
+```
+
+## Average Referencing
+
+Tools → Re-reference the data → Compute average reference
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_reref( EEG, []);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','1613_90_oddball_fil_ref','overwrite','on','gui','off'); 
 eeglab redraw;
 ```
 
