@@ -50,6 +50,7 @@ knitr::opts_chunk$set(echo = TRUE,
 https://eeglab.org/tutorials/
 
 1. Filtering
+1. Average Referencing
 1. Artifact Rejection
     1. Automated artifact rejection (save intermediate file)
     1. Manual selection of bad channels
@@ -97,6 +98,17 @@ save as new name
 
 ```matlab
 EEG = pop_eegfiltnew(EEG, 'locutoff',0.1,'hicutoff',30,'plotfreqz',1);
+```
+
+## Average Referencing
+
+Tools → Re-reference the data → Compute average reference
+
+```matlab
+EEG = eeg_checkset( EEG );
+EEG = pop_reref( EEG, []);
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','1613_90_oddball_fil_ref','overwrite','on','gui','off'); 
+eeglab redraw;
 ```
 
 ## Artifact Rejection
