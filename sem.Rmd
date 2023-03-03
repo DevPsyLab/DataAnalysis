@@ -376,14 +376,14 @@ bivariateLCSM_syntax <- specify_bi_lcsm(
   timepoints = 10,
   var_x = "x",
   model_x = list(
-    alpha_constant = TRUE,
-    beta = TRUE,
-    phi = TRUE),
+    alpha_constant = TRUE, # alpha = intercept (constant change factor)
+    beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
+    phi = TRUE), # phi = autoregression of change scores
   var_y = "y",
   model_y = list(
-    alpha_constant = TRUE,
-    beta = TRUE,
-    phi = TRUE),
+    alpha_constant = TRUE, # alpha = intercept (constant change factor)
+    beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
+    phi = TRUE), # phi = autoregression of change scores
   coupling = list(
     delta_lag_xy = TRUE,
     delta_lag_yx = TRUE),
@@ -401,13 +401,13 @@ bivariateLCSM_fit <- fit_bi_lcsm(
   var_x = names(data_bi_lcsm)[2:4],
   var_y = names(data_bi_lcsm)[12:14],
   model_x = list(
-    alpha_constant = TRUE,
-    beta = TRUE,
-    phi = FALSE),
+    alpha_constant = TRUE, # alpha = intercept (constant change factor)
+    beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
+    phi = FALSE), # phi = autoregression of change scores
   model_y = list(
-    alpha_constant = TRUE,
-    beta = TRUE,
-    phi = TRUE),
+    alpha_constant = TRUE, # alpha = intercept (constant change factor)
+    beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
+    phi = TRUE), # phi = autoregression of change scores
   coupling = list(
     delta_lag_xy = TRUE,
     xi_lag_yx = TRUE)
