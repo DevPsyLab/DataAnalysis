@@ -273,3 +273,36 @@ passwordProtectedBook <- xl.read.file(file.path("full path to workbook"), #Full 
 password = "pass", #password
 write.res.password="pass") #writing the reset password
 ```
+
+# Sending slacks with R
+
+Occasionally, it can be helpful to send a slack using R.
+For example, if a script does not run, a slack can be sent to inform the appropriate team members.[These instructions](https://www.infoworld.com/article/3402657/how-to-slack-from-r.html) can largely be followed to set up R. However, there are some differences:
+
+1. When setting up the configuration file, use the below template.
+The slack API token should be placed in the `token` category.
+
+```
+token: YOUR_FULL_API_TOKEN
+channel: #general
+username: slackr
+incoming_webhook_url: https://hooks.slack.com/services/XXXXX/XXXXX/XXXXX
+```
+
+Once the configuration is complete, it is possible to send messages. 
+For now, we have found it helpful to embed the slacks in the `tryCatch` function. 
+
+```
+tryCatch(
+CODE YOU WANT TO RUN,
+error = function(e)
+{
+    #message to send if the code doesn't run
+  my_message <- paste( "example message")
+  slackr_msg(my_message, channel = "#recruitment")
+})
+```
+
+## Slacking Specific Users
+
+It is also possible to slack specific users with instructions found [at this link](https://stackoverflow.com/questions/32419756/how-do-you-tag-people-with-a-slack-bot) 
