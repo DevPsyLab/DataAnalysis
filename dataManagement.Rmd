@@ -422,15 +422,30 @@ mydata2
 Here is an example of recoding a variable:
 
 ```{r}
-mydata$oldVar[which(mydata$sex == "male")] <- 0
-mydata$oldVar[which(mydata$sex == "female")] <- 1
+mydata$oldVar1[which(mydata$sex == "male")] <- 0
+mydata$oldVar1[which(mydata$sex == "female")] <- 1
+
+mydata$oldVar2[which(mydata$sex == "male")] <- 1
+mydata$oldVar2[which(mydata$sex == "female")] <- 0
 ```
 
 # Rename Variables
 
 ```{r}
 mydata <- mydata %>% 
-  rename(newVar = oldVar)
+  rename(
+    newVar1 = oldVar1,
+    newVar2 = oldVar2)
+```
+
+Using a vector of variable names:
+
+```{r, eval = FALSE}
+varNamesFrom <- c("oldVar1","oldVar2")
+varNamesTo <- c("newVar1","newVar2")
+
+mydata <- mydata %>% 
+  rename_with(~ varNamesTo, all_of(varNamesFrom))
 ```
 
 # Convert the Types of Variables
