@@ -308,4 +308,13 @@ error = function(e)
 
 ## Slacking Specific Users
 
-It is also possible to slack specific users with instructions found [at this link](https://stackoverflow.com/questions/32419756/how-do-you-tag-people-with-a-slack-bot) 
+It is also possible to slack specific users with instructions found [at this link](https://stackoverflow.com/questions/32419756/how-do-you-tag-people-with-a-slack-bot)
+
+# Replacing `//n` with a space
+
+Many notes in the school readiness study that are exported from REDCap come with spaces denotes as `//n`.
+Use the below code to make these fields more readable in the future.
+
+```
+gsub('\\n', ', ', df$notesField)
+```
