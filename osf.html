@@ -11,7 +11,7 @@
 
 
 
-<title>About This Website</title>
+<title>Open Science Framework</title>
 
 <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -449,37 +449,97 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">About This Website</h1>
+<h1 class="title toc-ignore">Open Science Framework</h1>
 
 </div>
 
 
-<p>The Lab Wiki was generated with <a
-href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html"><code>rmarkdown</code></a>.
-The codebase that was used to generate the Data Analysis Guides is
-located <a
-href="https://github.com/DevPsyLab/DataAnalysis">here</a>.</p>
-<div id="contact" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Contact</h1>
-<p>If you have questions about the lab and are not sure who to contact,
-please contact <a href="mailto:devpsy-lab@uiowa.edu"
-class="email">devpsy-lab@uiowa.edu</a>.</p>
+<div id="preamble" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Preamble</h1>
+<div id="install-libraries" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Install
+Libraries</h2>
+<pre class="r fold-hide"><code>#install.packages(&quot;remotes&quot;)
+#remotes::install_github(&quot;DevPsyLab/petersenlab&quot;)
+#remotes::install_github(&quot;paulhendricks/anonymizer&quot;)</code></pre>
 </div>
-<div id="license" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> License</h1>
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img
-src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg"
-alt="CC BY 4.0" /></a></p>
-<p>This work is licensed under a <a
-href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
-Attribution 4.0 International License</a>.</p>
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img
-src="https://i.creativecommons.org/l/by/4.0/88x31.png"
-alt="CC BY 4.0" /></a></p>
+<div id="load-libraries" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Load Libraries</h2>
+<pre class="r fold-hide"><code>library(&quot;anonymizer&quot;)
+library(&quot;tidyverse&quot;)</code></pre>
+</div>
+<div id="simulate-data" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Simulate Data</h2>
+<pre class="r fold-hide"><code>set.seed(52242)
+
+sampleSize &lt;- 100
+
+ID &lt;- 1:sampleSize
+X &lt;- rnorm(sampleSize)
+Y &lt;- rnorm(sampleSize)
+
+mydata &lt;- data.frame(
+  ID = ID,
+  X = X,
+  Y = Y)</code></pre>
+</div>
+</div>
+<div id="anonymizedID" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Generate Random
+Anonymized ID</h1>
+<p>To help protect participant anonymity, it is important to anonymize
+participant IDs so their data cannot be stitched together across papers.
+To anonymize participant IDs, use the following script and change the
+seed for every paper so that a given participant gets a different
+anonymized code each time.</p>
+<pre class="r fold-show"><code>library(&quot;tidyverse&quot;)
+library(&quot;remotes&quot;)
+
+#install.packages(&quot;anonymizer&quot;)
+remotes::install_github(&quot;paulhendricks/anonymizer&quot;)
+
+library(&quot;anonymizer&quot;)
+library(&quot;tidyverse&quot;)
+
+# Generate Random Anonymized ID
+mydata$anonymizedID &lt;- anonymize(c(
+  mydata$ID),
+  .algo = &quot;crc32&quot;,
+  .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
+
+# Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
+mydata &lt;- mydata %&gt;%
+  select(anonymizedID, everything()) %&gt;%
+  arrange(anonymizedID)
+
+# Remove the Original ID Column
+mydata &lt;- mydata %&gt;%
+  select(-ID)</code></pre>
+<pre class="r fold-hide"><code># Generate Random Anonymized ID
+mydata$anonymizedID &lt;- anonymize(c(
+  mydata$ID),
+  .algo = &quot;crc32&quot;,
+  .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
+
+# Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
+mydata &lt;- mydata %&gt;%
+  select(anonymizedID, everything()) %&gt;%
+  arrange(anonymizedID)
+
+# Print the Data
+mydata</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["anonymizedID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ID"],"name":[2],"type":["int"],"align":["right"]},{"label":["X"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0008d90e","2":"17","3":"-0.1089348202","4":"0.27566131"},{"1":"02fd671a","2":"42","3":"0.1085930122","4":"-1.15227242"},{"1":"05114fc8","2":"58","3":"-0.3914182424","4":"-0.13681878"},{"1":"09edf619","2":"99","3":"-2.2185670984","4":"0.52670470"},{"1":"0beaa2e3","2":"29","3":"0.3648114037","4":"-0.57847418"},{"1":"0c068a31","2":"33","3":"-0.5449888647","4":"-0.41057131"},{"1":"0e01decb","2":"83","3":"-0.8263836343","4":"1.17826650"},{"1":"0ef33425","2":"66","3":"1.2544449759","4":"0.55721825"},{"1":"1103ba89","2":"34","3":"-0.0680579336","4":"0.36340885"},{"1":"1304ee73","2":"84","3":"-1.8062600567","4":"0.79559542"},{"1":"13f6049d","2":"61","3":"-0.9032763918","4":"-0.80864688"},{"1":"1d0de9b6","2":"10","3":"-0.6980634164","4":"-0.56442407"},{"1":"1ff857a2","2":"45","3":"-1.7393643279","4":"0.13810262"},{"1":"221e1e00","2":"51","3":"-0.8106407726","4":"-1.55887636"},{"1":"22f15686","2":"2","3":"-1.9701891036","4":"-0.50211630"},{"1":"2ce5f32b","2":"20","3":"-0.6652857406","4":"0.12023015"},{"1":"2e104d3f","2":"75","3":"0.4029807716","4":"0.27056828"},{"1":"2ee2a7d1","2":"90","3":"-1.3340024388","4":"-0.22316172"},{"1":"31e0c393","2":"27","3":"-0.1415112497","4":"0.49293819"},{"1":"33157d87","2":"72","3":"-1.1327423193","4":"0.72451585"},{"1":"33e79769","2":"97","3":"1.1745777835","4":"-0.45506467"},{"1":"34f95555","2":"68","3":"-0.5169992654","4":"1.11075830"},{"1":"3a02b87e","2":"19","3":"0.8816465346","4":"-1.02978332"},{"1":"3f1b2eb8","2":"56","3":"-0.8197055518","4":"0.18470889"},{"1":"3ff4663e","2":"5","3":"1.8774720599","4":"0.81623097"},{"1":"41ce2b3a","2":"31","3":"1.3975671763","4":"0.39891025"},{"1":"433b952e","2":"64","3":"0.5844639744","4":"-1.89590327"},{"1":"43c97fc0","2":"81","3":"0.2550228075","4":"0.08887636"},{"1":"4836a645","2":"9","3":"-0.4207276251","4":"1.06733856"},{"1":"4dc07805","2":"15","3":"0.0006546465","4":"-0.49463676"},{"1":"4f35c611","2":"40","3":"0.6344580903","4":"-0.92862114"},{"1":"50c548bd","2":"12","3":"0.0675330265","4":"-0.45201808"},{"1":"5230f6a9","2":"47","3":"-0.8124495359","4":"-1.75805513"},{"1":"59d28d44","2":"79","3":"0.7700278013","4":"0.44597774"},{"1":"5ccb1b82","2":"36","3":"-1.1981867206","4":"-0.83508355"},{"1":"5e3ea596","2":"63","3":"0.0251470600","4":"0.34210593"},{"1":"5ecc4f78","2":"86","3":"-1.6421513282","4":"1.71871199"},{"1":"612d5220","2":"22","3":"-0.0194775658","4":"1.74526562"},{"1":"632a06da","2":"92","3":"1.5407123830","4":"-0.29737500"},{"1":"63d8ec34","2":"77","3":"0.5926409205","4":"-1.15952767"},{"1":"64c62e08","2":"88","3":"0.5958130651","4":"0.43396267"},{"1":"66c17af2","2":"38","3":"-0.8550561849","4":"0.05868829"},{"1":"683a97d9","2":"49","3":"-0.5572054858","4":"-0.92205143"},{"1":"6fd6bf0b","2":"53","3":"-2.5288083558","4":"0.58018814"},{"1":"723cc735","2":"7","3":"1.3593793858","4":"1.11240522"},{"1":"72d38fb3","2":"54","3":"2.4773594183","4":"-1.03405086"},{"1":"7c286298","2":"25","3":"-0.2793716438","4":"0.65573195"},{"1":"7e2f3662","2":"95","3":"-0.2084763676","4":"-0.49611550"},{"1":"7edddc8c","2":"70","3":"1.8705319066","4":"0.10865924"},{"1":"836a75e0","2":"8","3":"-1.8856320949","4":"-1.38714869"},{"1":"846915b4","2":"41","3":"0.8686972661","4":"-0.21632976"},{"1":"869caba0","2":"14","3":"0.1208640682","4":"-1.17093533"},{"1":"8867468b","2":"65","3":"0.6031980977","4":"0.94215670"},{"1":"8895ac65","2":"80","3":"-1.0515950439","4":"-0.84011044"},{"1":"8a92f89f","2":"30","3":"1.3547209919","4":"-0.03470667"},{"1":"928e5ee1","2":"78","3":"-0.5963532314","4":"-0.85228758"},{"1":"95627633","2":"62","3":"-0.5230592504","4":"-0.62279103"},{"1":"95909cdd","2":"87","3":"-0.4025189632","4":"0.22228405"},{"1":"9797c827","2":"37","3":"-0.8975976388","4":"-0.74550082"},{"1":"996c250c","2":"46","3":"-0.3896451803","4":"-0.78707741"},{"1":"9b999b18","2":"13","3":"0.4107664146","4":"0.57637603"},{"1":"a366447c","2":"48","3":"0.5093963597","4":"-0.22123347"},{"1":"a4652428","2":"1","3":"0.7909982035","4":"-0.46095563"},{"1":"a48a6cae","2":"52","3":"-0.4635970151","4":"-0.39152290"},{"1":"a876d57f","2":"93","3":"-0.0922573240","4":"-1.01654468"},{"1":"a8843f91","2":"76","3":"0.1003170615","4":"-0.62420152"},{"1":"aa718185","2":"23","3":"1.8789819460","4":"0.05407004"},{"1":"ad9da957","2":"39","3":"-1.0977544963","4":"-1.15900377"},{"1":"af9afdad","2":"89","3":"0.6959133105","4":"-0.20743718"},{"1":"b573e5c7","2":"94","3":"-0.5620911802","4":"1.29575948"},{"1":"b5810f29","2":"71","3":"0.8504315804","4":"1.17145297"},{"1":"b774b13d","2":"24","3":"-0.3189317825","4":"-0.22657050"},{"1":"b9601490","2":"6","3":"-0.0380905203","4":"-0.49432936"},{"1":"b98f5c16","2":"55","3":"0.5261296322","4":"1.33186544"},{"1":"c0b67146","2":"28","3":"-0.2521536277","4":"-0.15390797"},{"1":"c2b125bc","2":"98","3":"0.0695813391","4":"0.67070282"},{"1":"c55d0d6e","2":"82","3":"-0.8022523721","4":"-1.18345272"},{"1":"c5afe780","2":"67","3":"-1.2100243221","4":"-1.24531687"},{"1":"c75a5994","2":"32","3":"-1.1019021808","4":"-1.69073567"},{"1":"c9a1b4bf","2":"43","3":"0.8720204298","4":"-0.80641087"},{"1":"cb540aab","2":"16","3":"-1.7699920696","4":"-1.48103304"},{"1":"ce4d9c6d","2":"59","3":"0.3845036548","4":"0.20626100"},{"1":"d4a48407","2":"44","3":"-0.1616673777","4":"1.31934593"},{"1":"d6513a13","2":"11","3":"-0.3229006362","4":"-0.54672528"},{"1":"d8583dd6","2":"85","3":"-1.1306970937","4":"-0.51498210"},{"1":"d8aad738","2":"60","3":"0.1262694066","4":"-0.27948651"},{"1":"da5f692c","2":"35","3":"-0.4437019917","4":"1.76972574"},{"1":"e54c9e9a","2":"74","3":"0.2718831637","4":"1.30056807"},{"1":"e5be7474","2":"91","3":"-0.1864000685","4":"-0.17151841"},{"1":"e7b9208e","2":"21","3":"-0.3083958476","4":"0.47852782"},{"1":"e942cda5","2":"50","3":"-0.6804566567","4":"0.10870658"},{"1":"e9ad8523","2":"3","3":"-0.3032103442","4":"0.59822557"},{"1":"ea7fd816","2":"100","3":"-1.2448132737","4":"0.21763090"},{"1":"f15e6bdb","2":"18","3":"-1.0877639006","4":"0.13316033"},{"1":"f447fd1d","2":"57","3":"-0.1709283099","4":"-0.96163912"},{"1":"f4a8b59b","2":"4","3":"-0.7262456955","4":"0.43972970"},{"1":"f849ae22","2":"73","3":"-1.1631845404","4":"0.74028732"},{"1":"f8bb44cc","2":"96","3":"1.1688116108","4":"0.50184703"},{"1":"fabc1036","2":"26","3":"0.2810915145","4":"-0.16867972"},{"1":"ffa586f0","2":"69","3":"-0.8261727346","4":"-0.42072711"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r fold-hide"><code># Remove the Original ID Column
+mydata &lt;- mydata %&gt;%
+  select(-ID)</code></pre>
 </div>
 <div id="session-info" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Session Info</h1>
-<pre class="r"><code>sessionInfo()</code></pre>
+<pre class="r fold-hide"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.3.0 (2023-04-21)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 20.04.6 LTS
@@ -500,15 +560,25 @@ tzcode source: system (glibc)
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+ [1] lubridate_1.9.2  forcats_1.0.0    stringr_1.5.0    dplyr_1.1.2     
+ [5] purrr_1.0.1      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.2    tidyverse_2.0.0  anonymizer_0.2.2
+
 loaded via a namespace (and not attached):
- [1] digest_0.6.31   R6_2.5.1        fastmap_1.1.1   xfun_0.39      
- [5] cachem_1.0.7    knitr_1.42      htmltools_0.5.5 rmarkdown_2.21 
- [9] cli_3.6.1       sass_0.4.5      jquerylib_0.1.4 compiler_4.3.0 
-[13] tools_4.3.0     evaluate_0.20   bslib_0.4.2     yaml_2.3.7     
-[17] rlang_1.1.0     jsonlite_1.8.4 </code></pre>
+ [1] gtable_0.3.3     jsonlite_1.8.4   compiler_4.3.0   tidyselect_1.2.0
+ [5] jquerylib_0.1.4  scales_1.2.1     yaml_2.3.7       fastmap_1.1.1   
+ [9] R6_2.5.1         generics_0.1.3   knitr_1.42       munsell_0.5.0   
+[13] tzdb_0.3.0       bslib_0.4.2      pillar_1.9.0     rlang_1.1.0     
+[17] utf8_1.2.3       stringi_1.7.12   cachem_1.0.7     xfun_0.39       
+[21] sass_0.4.5       timechange_0.2.0 cli_3.6.1        withr_2.5.0     
+[25] magrittr_2.0.3   digest_0.6.31    grid_4.3.0       hms_1.1.3       
+[29] lifecycle_1.0.3  vctrs_0.6.2      evaluate_0.20    glue_1.6.2      
+[33] fansi_1.0.4      colorspace_2.1-0 rmarkdown_2.21   tools_4.3.0     
+[37] pkgconfig_2.0.3  htmltools_0.5.5 </code></pre>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQWJvdXQgVGhpcyBXZWJzaXRlIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIikKYGBgCgpUaGUgTGFiIFdpa2kgd2FzIGdlbmVyYXRlZCB3aXRoIFtgcm1hcmtkb3duYF0oaHR0cHM6Ly9ib29rZG93bi5vcmcveWlodWkvcm1hcmtkb3duL3JtYXJrZG93bi1zaXRlLmh0bWwpLgpUaGUgY29kZWJhc2UgdGhhdCB3YXMgdXNlZCB0byBnZW5lcmF0ZSB0aGUgRGF0YSBBbmFseXNpcyBHdWlkZXMgaXMgbG9jYXRlZCBbaGVyZV0oaHR0cHM6Ly9naXRodWIuY29tL0RldlBzeUxhYi9EYXRhQW5hbHlzaXMpLgoKIyBDb250YWN0CgpJZiB5b3UgaGF2ZSBxdWVzdGlvbnMgYWJvdXQgdGhlIGxhYiBhbmQgYXJlIG5vdCBzdXJlIHdobyB0byBjb250YWN0LCBwbGVhc2UgY29udGFjdCBkZXZwc3ktbGFiQHVpb3dhLmVkdS4KCiMgTGljZW5zZQoKWyFbQ0MgQlkgNC4wXVtjYy1ieS1zaGllbGRdXVtjYy1ieV0KClRoaXMgd29yayBpcyBsaWNlbnNlZCB1bmRlciBhCltDcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2VdW2NjLWJ5XS4KClshW0NDIEJZIDQuMF1bY2MtYnktaW1hZ2VdXVtjYy1ieV0KCltjYy1ieV06IGh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzQuMC8KW2NjLWJ5LWltYWdlXTogaHR0cHM6Ly9pLmNyZWF0aXZlY29tbW9ucy5vcmcvbC9ieS80LjAvODh4MzEucG5nCltjYy1ieS1zaGllbGRdOiBodHRwczovL2ltZy5zaGllbGRzLmlvL2JhZGdlL0xpY2Vuc2UtQ0MlMjBCWSUyMDQuMC1saWdodGdyZXkuc3ZnCgojIFNlc3Npb24gSW5mbwoKYGBge3J9CnNlc3Npb25JbmZvKCkKYGBgCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiT3BlbiBTY2llbmNlIEZyYW1ld29yayIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoCiAgZWNobyA9IFRSVUUsCiAgZXJyb3IgPSBUUlVFLAogIGNvbW1lbnQgPSAiIiwKICBjbGFzcy5zb3VyY2UgPSAiZm9sZC1zaG93IikKYGBgCgojIFByZWFtYmxlCgojIyBJbnN0YWxsIExpYnJhcmllcwoKYGBge3IsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLWhpZGUifQojaW5zdGFsbC5wYWNrYWdlcygicmVtb3RlcyIpCiNyZW1vdGVzOjppbnN0YWxsX2dpdGh1YigiRGV2UHN5TGFiL3BldGVyc2VubGFiIikKI3JlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJwYXVsaGVuZHJpY2tzL2Fub255bWl6ZXIiKQpgYGAKCiMjIExvYWQgTGlicmFyaWVzCgpgYGB7ciwgbWVzc2FnZSA9IEZBTFNFLCB3YXJuaW5nID0gRkFMU0UsIGNsYXNzLnNvdXJjZSA9ICJmb2xkLWhpZGUifQpsaWJyYXJ5KCJhbm9ueW1pemVyIikKbGlicmFyeSgidGlkeXZlcnNlIikKYGBgCgojIyBTaW11bGF0ZSBEYXRhCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CnNldC5zZWVkKDUyMjQyKQoKc2FtcGxlU2l6ZSA8LSAxMDAKCklEIDwtIDE6c2FtcGxlU2l6ZQpYIDwtIHJub3JtKHNhbXBsZVNpemUpClkgPC0gcm5vcm0oc2FtcGxlU2l6ZSkKCm15ZGF0YSA8LSBkYXRhLmZyYW1lKAogIElEID0gSUQsCiAgWCA9IFgsCiAgWSA9IFkpCmBgYAoKIyBHZW5lcmF0ZSBSYW5kb20gQW5vbnltaXplZCBJRCB7I2Fub255bWl6ZWRJRH0KClRvIGhlbHAgcHJvdGVjdCBwYXJ0aWNpcGFudCBhbm9ueW1pdHksIGl0IGlzIGltcG9ydGFudCB0byBhbm9ueW1pemUgcGFydGljaXBhbnQgSURzIHNvIHRoZWlyIGRhdGEgY2Fubm90IGJlIHN0aXRjaGVkIHRvZ2V0aGVyIGFjcm9zcyBwYXBlcnMuClRvIGFub255bWl6ZSBwYXJ0aWNpcGFudCBJRHMsIHVzZSB0aGUgZm9sbG93aW5nIHNjcmlwdCBhbmQgY2hhbmdlIHRoZSBzZWVkIGZvciBldmVyeSBwYXBlciBzbyB0aGF0IGEgZ2l2ZW4gcGFydGljaXBhbnQgZ2V0cyBhIGRpZmZlcmVudCBhbm9ueW1pemVkIGNvZGUgZWFjaCB0aW1lLgoKYGBge3IsIGV2YWwgPSBGQUxTRX0KbGlicmFyeSgidGlkeXZlcnNlIikKbGlicmFyeSgicmVtb3RlcyIpCgojaW5zdGFsbC5wYWNrYWdlcygiYW5vbnltaXplciIpCnJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJwYXVsaGVuZHJpY2tzL2Fub255bWl6ZXIiKQoKbGlicmFyeSgiYW5vbnltaXplciIpCmxpYnJhcnkoInRpZHl2ZXJzZSIpCgojIEdlbmVyYXRlIFJhbmRvbSBBbm9ueW1pemVkIElECm15ZGF0YSRhbm9ueW1pemVkSUQgPC0gYW5vbnltaXplKGMoCiAgbXlkYXRhJElEKSwKICAuYWxnbyA9ICJjcmMzMiIsCiAgLnNlZWQgPSAyMDIzMDQyNikgIyBjaGFuZ2Ugc2VlZCBmb3IgZXZlcnkgcGFwZXIgKGJhc2VkIG9uIHRoZSBkYXRlKSBzbyB0aGF0IHBhcnRpY2lwYW50IGdldHMgYSBuZXcgY29kZSBlYWNoIHRpbWUKCiMgUmUtU29ydCBEYXRhIGJ5IFJhbmRvbSBBbm9ueW1pemVkIElEIHRvIE1peC1VcCBQYXJ0aWNpcGFudHMgKHNvIHRoZXkgYXJlIG5vdCBpbiB0aGUgc2FtZSBvcmRlciBmb3IgZXZlcnkgcGFwZXIpCm15ZGF0YSA8LSBteWRhdGEgJT4lCiAgc2VsZWN0KGFub255bWl6ZWRJRCwgZXZlcnl0aGluZygpKSAlPiUKICBhcnJhbmdlKGFub255bWl6ZWRJRCkKCiMgUmVtb3ZlIHRoZSBPcmlnaW5hbCBJRCBDb2x1bW4KbXlkYXRhIDwtIG15ZGF0YSAlPiUKICBzZWxlY3QoLUlEKQpgYGAKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0KIyBHZW5lcmF0ZSBSYW5kb20gQW5vbnltaXplZCBJRApteWRhdGEkYW5vbnltaXplZElEIDwtIGFub255bWl6ZShjKAogIG15ZGF0YSRJRCksCiAgLmFsZ28gPSAiY3JjMzIiLAogIC5zZWVkID0gMjAyMzA0MjYpICMgY2hhbmdlIHNlZWQgZm9yIGV2ZXJ5IHBhcGVyIChiYXNlZCBvbiB0aGUgZGF0ZSkgc28gdGhhdCBwYXJ0aWNpcGFudCBnZXRzIGEgbmV3IGNvZGUgZWFjaCB0aW1lCgojIFJlLVNvcnQgRGF0YSBieSBSYW5kb20gQW5vbnltaXplZCBJRCB0byBNaXgtVXAgUGFydGljaXBhbnRzIChzbyB0aGV5IGFyZSBub3QgaW4gdGhlIHNhbWUgb3JkZXIgZm9yIGV2ZXJ5IHBhcGVyKQpteWRhdGEgPC0gbXlkYXRhICU+JQogIHNlbGVjdChhbm9ueW1pemVkSUQsIGV2ZXJ5dGhpbmcoKSkgJT4lCiAgYXJyYW5nZShhbm9ueW1pemVkSUQpCgojIFByaW50IHRoZSBEYXRhCm15ZGF0YQoKIyBSZW1vdmUgdGhlIE9yaWdpbmFsIElEIENvbHVtbgpteWRhdGEgPC0gbXlkYXRhICU+JQogIHNlbGVjdCgtSUQpCmBgYAoKIyBTZXNzaW9uIEluZm8KCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0Kc2Vzc2lvbkluZm8oKQpgYGAK</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
@@ -573,7 +643,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("about.Rmd");
+  window.initializeSourceEmbed("osf.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
