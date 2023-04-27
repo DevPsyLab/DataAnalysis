@@ -429,6 +429,26 @@ mydata$oldVar2[which(mydata$sex == "male")] <- 1
 mydata$oldVar2[which(mydata$sex == "female")] <- 0
 ```
 
+Recode multiple variables:
+
+```{r}
+mydata %>%
+  mutate(across(c(
+    survived:pclass),
+    ~ case_match(
+      .,
+      0 ~ "No",
+      1 ~ "Yes")))
+
+mydata %>%
+  mutate(across(c(
+    survived:pclass),
+    ~ case_match(
+      .,
+      c(0,1) ~ 1,
+      c(2,3) ~ 2)))
+```
+
 # Rename Variables
 
 ```{r}
