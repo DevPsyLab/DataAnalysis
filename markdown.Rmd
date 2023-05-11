@@ -180,7 +180,9 @@ knitr::opts_chunk$set(
 ````
 Then, include whatever text and/or code chunks.
 
-# Steps to Create `rmarkdown` Website using GitHub Actions {#website}
+# `rmarkdown` Website using GitHub Actions {#website}
+
+## Steps to Create
 
 1. Create a new GitHub repo under the [DevPsyLab organization](https://github.com/DevPsyLab) in GitHub
 1. Create a `README.md` file
@@ -207,6 +209,18 @@ Then, include whatever text and/or code chunks.
     - `includes` contains `css` files, javascript files, footers, and Google Analytics
 1. If the `rmarkdown` website is intended to be public, create a new Google Analytics property, and replace the URL and gtag in the `google_analytics.html` file
 1. Commit the repo to GitHub
+
+## Troubleshooting
+
+If you get the following error in GitHub Actions:
+
+```
+remote: Permission to GITHUB_USERNAME/REPO_NAME.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/GITHUB_USERNAME/REPO_NAME.git/': The requested URL returned error: 403
+```
+
+Check if "Read and write permissions" are enabled in Settings -> Actions -> General -> Workflow permissions:
+https://stackoverflow.com/a/75308228/2029527
 
 # Including Plots {#plots}
 
