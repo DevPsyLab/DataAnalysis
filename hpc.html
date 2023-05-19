@@ -461,6 +461,8 @@ Supercomputer)</h1>
 </div>
 
 
+<div id="overview" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Overview</h1>
 <p>Analysis scripts for High Performance Computing (HPC) at the
 University of Iowa. Currently uses Argon.</p>
 <p>From here: <a
@@ -471,15 +473,15 @@ href="https://wiki.uiowa.edu/display/hpcdocs/Cluster+Systems+Documentation"
 class="uri">https://wiki.uiowa.edu/display/hpcdocs/Cluster+Systems+Documentation</a></p>
 <p><a href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Cluster"
 class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Cluster</a></p>
-<div id="data-storage" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Data Storage</h2>
+<div id="data-storage" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Data Storage</h2>
 <p>WARNING: Significant amounts of data storage are provided on Argon,
 but data is not backed up in any way unless special arrangements are
 made. It is the responsibility of the user to back up important
 information.</p>
 </div>
-<div id="sensitive-data" class="section level2" number="0.2">
-<h2><span class="header-section-number">0.2</span> Sensitive Data</h2>
+<div id="sensitive-data" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Sensitive Data</h2>
 <p>User agrees to refrain from storing Restricted data on HPC resources.
 Data is classified as Restricted when the unauthorized disclosure,
 alteration or destruction of that data could cause a significant level
@@ -488,8 +490,8 @@ include data protected by state or federal privacy regulations and data
 pertaining to identified human subjects that has not been
 deidentified.</p>
 </div>
-<div id="fees" class="section level2" number="0.3">
-<h2><span class="header-section-number">0.3</span> Fees</h2>
+<div id="fees" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Fees</h2>
 <p>At present there are no fees for the use of the Argon cluster for
 low-priority usage. For large users, or those who want access to
 dedicated resources, the option of purchasing or renting supplemental
@@ -497,21 +499,209 @@ system hardware may be available. If you are interested in dedicated
 hardware, contact <a href="mailto:research-computing@uiowa.edu"
 class="email">research-computing@uiowa.edu</a>.</p>
 </div>
-<div id="access-ssh" class="section level2" number="0.4">
-<h2><span class="header-section-number">0.4</span> Access (ssh):</h2>
+</div>
+<div id="accessing-argon" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Accessing Argon</h1>
+<div id="ssh" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> SSH</h2>
 <p><code>argon.hpc.uiowa.edu</code></p>
+</div>
+<div id="windows" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Windows</h2>
 <p>Windows Explorer:</p>
 <p><code>\\data.hpc.uiowa.edu\argon_home</code> (username: <a
 href="mailto:itpetersen@uiowa.edu"
 class="email">itpetersen@uiowa.edu</a>)</p>
+</div>
+<div id="mac" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Mac</h2>
 <p>Mac OS Terminal:</p>
 <p><code>ssh itpetersen@argon.hpc.uiowa.edu</code> (on campus)</p>
 <p><code>ssh -p 40 itpetersen@argon.hpc.uiowa.edu</code> (off campus
 without VPN)</p>
 </div>
+</div>
+<div id="linux" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Linux</h1>
+<div id="initial-run" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Initial run</h2>
+<div id="load-the-latest-stack" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Load the Latest
+Stack</h3>
+<p><code>module load stack</code></p>
+</div>
+<div id="stack-2022.1" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Stack 2022.1</h3>
+<pre class="bash"><code>module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+cd path</code></pre>
+</div>
+<div id="stack-2021.1" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Stack 2021.1</h3>
+<pre class="bash"><code>module load stack/2021.1
+module load r/4.0.5_gcc-9.3.0
+cd path</code></pre>
+</div>
+<div id="stack-2020.2" class="section level3" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Stack 2020.2</h3>
+<pre class="bash"><code>module load stack/2020.2
+module load r/4.0.2_gcc-8.4.0
+cd path</code></pre>
+</div>
+<div id="stack-2020.1" class="section level3" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Stack 2020.1</h3>
+<pre class="bash"><code>module load stack/2020.1
+module load r/3.6.2_gcc-9.2.0
+cd path</code></pre>
+</div>
+<div id="installing-linux-packages-to-install-r-packages"
+class="section level3" number="3.1.6">
+<h3><span class="header-section-number">3.1.6</span> Installing Linux
+Packages to Install R Packages</h3>
+<pre class="bash"><code>module load stack
+module load r/4.1.3_gcc-9.4.0
+module load geos/3.9.1_gcc-9.4.0
+module load gdal/3.4.1_gcc-9.4.0-proj8
+module load proj/8.1.0_gcc-9.4.0
+module load gsl/2.7_gcc-9.4.0
+module load nlopt/2.7.0_gcc-9.4.0
+module load r-nloptr</code></pre>
+</div>
+</div>
+<div id="load-software-stacks" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Load Software
+Stacks</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List</a></p>
+<p><code>module load stack/2021.1</code></p>
+</div>
+<div id="job-script" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Job Script</h2>
+<pre class="bash"><code>#!/bin/sh
+
+# Set working directory
+cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
+
+# Specify qsub options
+#$ -pe smp 4
+#$ -M isaac-t-petersen@uiowa.edu
+#$ -m eas
+#$ -l mf=512G
+#$ -l h_vmem=512G
+#$ -cwd
+#$ -q UI-HM
+#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+
+# Load the environment modules
+module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+
+# Run the R script
+Rscript ./Analyses/factorScores.R</code></pre>
+<div id="qsub-options" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> qsub options</h3>
+<p><code>-pe smp 4</code>: specify a parellel environment and number of
+cores to be used (<code>smp</code> = shared memory parallel environment)
+* The <code>OMP_NUM_THREADS</code> variable is set to ‘1’ by default. If
+your code can take advantage of the threading then specify
+<code>OMP_NUM_THREADS</code> to be equal to the number of job cores per
+node requested.</p>
+<p><code>-M isaac-t-petersen@uiowa.edu</code>: Set the email address to
+receive email about jobs. This must be your University of Iowa email
+address.</p>
+<p><code>-m eas</code>: Specify when to send an email message (; ; ; ; )
+* <code>b</code> = beginning of job * <code>e</code> = end of job *
+<code>a</code> = when job is aborted * <code>s</code> = when job is
+suspended * <code>n</code> = no mail is sent</p>
+<p><code>-l mf=512G</code>: request a particular quantity of memory you
+expect to use (to be available for your computation to start; the
+request is only applicable at scheduling time. It is not a limit.)</p>
+<p><code>-l h_vmem=512G</code>: request a particular quantity of virtual
+memory you expect to use (to be available for your computation to start;
+the request is only applicable at scheduling time. It is not a
+limit.)</p>
+<p><code>-cwd</code>: Determines whether the job will be executed from
+the current working directory. If not specified, the job will be run
+from your home directory.</p>
+<p><code>-q UI-HM</code>: specify queue</p>
+<p><code>-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
+Name of a file or directory for standard error.</p>
+<p><code>-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
+Name of a file or directory for standard output.</p>
+</div>
+</div>
+<div id="submit-job" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Submit Job</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission</a></p>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission</a></p>
+<p><code>cd path/to/dataSet123</code></p>
+<p>[cd /Users/itpetersen/Documents/Projects/Test/Jobs]</p>
+<p><code>qsub myscript.job</code></p>
+<p>Job dependency (run <code>Job B</code> when <code>Job A</code> is
+finished):</p>
+<p><code>qsub -hold_jid JOB_ID test_B.job</code></p>
+<div id="bayesian-irt" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Bayesian IRT</h3>
+<p><code>cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs</code></p>
+<p><code>qsub bayesianIRT.job</code></p>
+<p><code>qsub -hold_jid JOB_ID factorScores.job</code></p>
+</div>
+<div id="multiple-imputation" class="section level3" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Multiple
+Imputation</h3>
+<p><code>cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs</code></p>
+<p><code>qsub srs_selfRegulation.R</code></p>
+</div>
+</div>
+<div id="queues" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Queues</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies</a></p>
+<p><code>UI</code></p>
+<p><code>UI-HM</code></p>
+<p><code>UI-GPU-HM</code></p>
+<p><code>UI-DEVELOP</code></p>
+<p><code>all.q</code></p>
+</div>
+<div id="queue-status" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Queue Status</h2>
+<p><code>qstat -g c -q QUEUE_NAME</code></p>
+<p><code>qstat -g c -q UI</code></p>
+</div>
+<div id="job-status" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Job Status</h2>
+<p><code>qstat -u itpetersen</code></p>
+<p><code>qstat -j JOB_ID</code></p>
+</div>
+<div id="job-time-and-memory" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Job Time and
+Memory</h2>
+<ul>
+<li>Terminated jobs: <code>qacct -j JOB_ID</code></li>
+<li>Jobs in progress: <code>qstat -j JOB_ID | grep usage</code></li>
+</ul>
+</div>
+<div id="cancel-job" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Cancel Job</h2>
+<p><code>qdel JOB_ID</code></p>
+</div>
+<div id="run-r-script" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Run R Script</h2>
+<p>See <a href="#runRscript">here</a></p>
+</div>
+</div>
+<div id="r" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> R</h1>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC</a></p>
 <div id="find-which-versions-of-r-are-installed" class="section level2"
-number="0.5">
-<h2><span class="header-section-number">0.5</span> Find which versions
+number="4.1">
+<h2><span class="header-section-number">4.1</span> Find which versions
 of R are installed</h2>
 <p><code>module spider R</code></p>
 <p>But, there may be more recent version of R installed in the
@@ -519,21 +709,9 @@ of R are installed</h2>
 href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List"
 class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List</a>)</p>
 </div>
-<div id="load-software-stacks" class="section level2" number="0.6">
-<h2><span class="header-section-number">0.6</span> Load Software
-Stacks</h2>
-<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List"
-class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List</a></p>
-<p><code>module load stack/2021.1</code></p>
-</div>
-<div id="r" class="section level2" number="0.7">
-<h2><span class="header-section-number">0.7</span> R</h2>
-<p><a
-href="https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC"
-class="uri">https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC</a></p>
-<div id="install-r-packages" class="section level3" number="0.7.1">
-<h3><span class="header-section-number">0.7.1</span> Install R
-packages</h3>
+<div id="install-r-packages" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Install R
+packages</h2>
 <p><a
 href="https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library"
 class="uri">https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library</a></p>
@@ -569,16 +747,16 @@ see</li>
 your package should download and install into your personal library
 directory</li>
 </ol>
-<div id="install-r-package-locally-from-source" class="section level4"
-number="0.7.1.1">
-<h4><span class="header-section-number">0.7.1.1</span> Install R package
-locally from source</h4>
+<div id="install-r-package-locally-from-source" class="section level3"
+number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Install R package
+locally from source</h3>
 <p><code>install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)</code></p>
 </div>
 <div id="managing-packages-for-a-project-using-renv"
-class="section level4" number="0.7.1.2">
-<h4><span class="header-section-number">0.7.1.2</span> Managing packages
-for a project using <code>renv</code></h4>
+class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Managing packages
+for a project using <code>renv</code></h3>
 <ol style="list-style-type: decimal">
 <li>Create a directory where you want you want to store the
 project.</li>
@@ -615,9 +793,9 @@ created in step (1). The project will initialize automatically.</li>
 <p>To disable packrat on a project: <code>renv::deactivate()</code></p>
 </div>
 <div id="managing-packages-for-a-project-using-packrat"
-class="section level4" number="0.7.1.3">
-<h4><span class="header-section-number">0.7.1.3</span> Managing packages
-for a project using <code>packrat</code></h4>
+class="section level3" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Managing packages
+for a project using <code>packrat</code></h3>
 <p><a
 href="https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library"
 class="uri">https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library</a></p>
@@ -654,10 +832,10 @@ when fetching sources, try
 </div>
 <div
 id="to-install-a-new-package-for-a-project-after-packratrenv-has-been-initialized"
-class="section level4" number="0.7.1.4">
-<h4><span class="header-section-number">0.7.1.4</span> To install a new
+class="section level3" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> To install a new
 package for a project after <code>packrat</code>/<code>renv</code> has
-been initialized</h4>
+been initialized</h3>
 <ol style="list-style-type: decimal">
 <li>First, load the R environment module (see
 <code>Install R packages</code> section above)</li>
@@ -683,10 +861,10 @@ if that command fails due to an error when fetching sources, try
 </div>
 <div
 id="build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages"
-class="section level4" number="0.7.1.5">
-<h4><span class="header-section-number">0.7.1.5</span> Build packrat
+class="section level3" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> Build packrat
 environment on a compute node (only if necessary if package load fails
-due to issues building packages)</h4>
+due to issues building packages)</h3>
 <ol style="list-style-type: decimal">
 <li><code>qlogin</code> – for more info, see here: <a
 href="https://wiki.uiowa.edu/display/hpcdocs/Qlogin+for+Interactive+Sessions"
@@ -707,154 +885,40 @@ library and will run on any Argon node. You do not need to use the
 <code>2020.2-base_arch</code> module at run time, only build time.</p>
 </div>
 </div>
-<div id="run-r-script" class="section level3" number="0.7.2">
-<h3><span class="header-section-number">0.7.2</span> Run R Script</h3>
+<div id="runRscript" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Run R Script</h2>
 <p><code>module load r/4.0.5_gcc-9.3.0</code></p>
 <p><code>cd path/to/dataSet123</code></p>
 <p>[cd /Users/itpetersen/Documents/Projects/Test/Analyses]</p>
 <p><code>Rscript path/to/program.R</code></p>
 <p>[Rscript test.R]</p>
 </div>
-<div id="quit-r" class="section level3" number="0.7.3">
-<h3><span class="header-section-number">0.7.3</span> Quit R</h3>
+<div id="quit-r" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Quit R</h2>
 <p><code>q()</code></p>
 </div>
 </div>
-<div id="stan" class="section level2" number="0.8">
-<h2><span class="header-section-number">0.8</span> Stan</h2>
+<div id="stan" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Stan</h1>
 <p><a
 href="https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux"
 class="uri">https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux</a></p>
 <p>Makevars:</p>
 <p><code>\\data.hpc.uiowa.edu\argon_home\.R\Makevars</code></p>
 </div>
-<div id="job-script" class="section level2" number="0.9">
-<h2><span class="header-section-number">0.9</span> Job Script</h2>
-<pre class="bash"><code>#!/bin/sh
-
-# Set working directory
-cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
-
-# Specify qsub options
-#$ -pe smp 4
-#$ -M isaac-t-petersen@uiowa.edu
-#$ -m eas
-#$ -l mf=512G
-#$ -l h_vmem=512G
-#$ -cwd
-#$ -q UI-HM
-#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
-#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
-
-# Load the environment modules
-module load stack/2022.1
-module load r/4.1.3_gcc-9.4.0
-
-# Run the R script
-Rscript ./Analyses/factorScores.R</code></pre>
-</div>
-<div id="qsub-options" class="section level2" number="0.10">
-<h2><span class="header-section-number">0.10</span> qsub options</h2>
-<p><code>-pe smp 4</code>: specify a parellel environment and number of
-cores to be used (<code>smp</code> = shared memory parallel environment)
-* The <code>OMP_NUM_THREADS</code> variable is set to ‘1’ by default. If
-your code can take advantage of the threading then specify
-<code>OMP_NUM_THREADS</code> to be equal to the number of job cores per
-node requested.</p>
-<p><code>-M isaac-t-petersen@uiowa.edu</code>: Set the email address to
-receive email about jobs. This must be your University of Iowa email
-address.</p>
-<p><code>-m eas</code>: Specify when to send an email message (; ; ; ; )
-* <code>b</code> = beginning of job * <code>e</code> = end of job *
-<code>a</code> = when job is aborted * <code>s</code> = when job is
-suspended * <code>n</code> = no mail is sent</p>
-<p><code>-l mf=512G</code>: request a particular quantity of memory you
-expect to use (to be available for your computation to start; the
-request is only applicable at scheduling time. It is not a limit.)</p>
-<p><code>-l h_vmem=512G</code>: request a particular quantity of virtual
-memory you expect to use (to be available for your computation to start;
-the request is only applicable at scheduling time. It is not a
-limit.)</p>
-<p><code>-cwd</code>: Determines whether the job will be executed from
-the current working directory. If not specified, the job will be run
-from your home directory.</p>
-<p><code>-q UI-HM</code>: specify queue</p>
-<p><code>-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
-Name of a file or directory for standard error.</p>
-<p><code>-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
-Name of a file or directory for standard output.</p>
-</div>
-<div id="submit-job" class="section level2" number="0.11">
-<h2><span class="header-section-number">0.11</span> Submit Job</h2>
-<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission"
-class="uri">https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission</a></p>
-<p><a
-href="https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission"
-class="uri">https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission</a></p>
-<p><code>cd path/to/dataSet123</code></p>
-<p>[cd /Users/itpetersen/Documents/Projects/Test/Jobs]</p>
-<p><code>qsub myscript.job</code></p>
-<p>Job dependency (run <code>Job B</code> when <code>Job A</code> is
-finished):</p>
-<p><code>qsub -hold_jid JOB_ID test_B.job</code></p>
-<div id="bayesian-irt" class="section level3" number="0.11.1">
-<h3><span class="header-section-number">0.11.1</span> Bayesian IRT</h3>
-<p><code>cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs</code></p>
-<p><code>qsub bayesianIRT.job</code></p>
-<p><code>qsub -hold_jid JOB_ID factorScores.job</code></p>
-</div>
-<div id="multiple-imputation" class="section level3" number="0.11.2">
-<h3><span class="header-section-number">0.11.2</span> Multiple
-Imputation</h3>
-<p><code>cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs</code></p>
-<p><code>qsub srs_selfRegulation.R</code></p>
-</div>
-</div>
-<div id="queues" class="section level2" number="0.12">
-<h2><span class="header-section-number">0.12</span> Queues</h2>
-<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies"
-class="uri">https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies</a></p>
-<p><code>UI</code></p>
-<p><code>UI-HM</code></p>
-<p><code>UI-GPU-HM</code></p>
-<p><code>UI-DEVELOP</code></p>
-<p><code>all.q</code></p>
-</div>
-<div id="queue-status" class="section level2" number="0.13">
-<h2><span class="header-section-number">0.13</span> Queue Status</h2>
-<p><code>qstat -g c -q QUEUE_NAME</code></p>
-<p><code>qstat -g c -q UI</code></p>
-</div>
-<div id="job-status" class="section level2" number="0.14">
-<h2><span class="header-section-number">0.14</span> Job Status</h2>
-<p><code>qstat -u itpetersen</code></p>
-<p><code>qstat -j JOB_ID</code></p>
-</div>
-<div id="job-time-and-memory" class="section level2" number="0.15">
-<h2><span class="header-section-number">0.15</span> Job Time and
-Memory</h2>
-<ul>
-<li>Terminated jobs: <code>qacct -j JOB_ID</code></li>
-<li>Jobs in progress: <code>qstat -j JOB_ID | grep usage</code></li>
-</ul>
-</div>
-<div id="cancel-job" class="section level2" number="0.16">
-<h2><span class="header-section-number">0.16</span> Cancel Job</h2>
-<p><code>qdel JOB_ID</code></p>
-</div>
-<div id="troubleshooting" class="section level2" number="0.17">
-<h2><span class="header-section-number">0.17</span> Troubleshooting</h2>
+<div id="troubleshooting" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Troubleshooting</h1>
 <div id="error-when-installing-packages-from-source"
-class="section level3" number="0.17.1">
-<h3><span class="header-section-number">0.17.1</span> Error When
-Installing Packages from Source</h3>
+class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Error When Installing
+Packages from Source</h2>
 <p>You may have to set environment variables in each module file to help
 the compiler find headers and libraries. Note that if you run into any
 C++ code, you will need to set the <code>CPLUS_INCLUDE_PATH</code>
 variable.</p>
-<div id="nloptr" class="section level4" number="0.17.1.1">
-<h4><span class="header-section-number">0.17.1.1</span>
-<code>nloptr</code></h4>
+<div id="nloptr" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span>
+<code>nloptr</code></h3>
 <ol style="list-style-type: decimal">
 <li>Run the following commands</li>
 </ol>
@@ -871,9 +935,9 @@ launching R session (single line below):</li>
 </ol>
 <pre class="r"><code>install.packages(verbose = 1, &quot;nloptr&quot;)</code></pre>
 </div>
-<div id="tkrplot" class="section level4" number="0.17.1.2">
-<h4><span class="header-section-number">0.17.1.2</span>
-<code>tkrplot</code></h4>
+<div id="tkrplot" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span>
+<code>tkrplot</code></h3>
 <ol style="list-style-type: decimal">
 <li>Run the following commands</li>
 </ol>
@@ -890,10 +954,10 @@ session (single line below):</li>
 <pre class="r"><code>install.packages(verbose = 1, &quot;tkrplot&quot;)</code></pre>
 </div>
 </div>
-<div id="error-reading-from-connection" class="section level3"
-number="0.17.2">
-<h3><span class="header-section-number">0.17.2</span> Error Reading from
-Connection</h3>
+<div id="error-reading-from-connection" class="section level2"
+number="6.2">
+<h2><span class="header-section-number">6.2</span> Error Reading from
+Connection</h2>
 <pre><code>Error in unserialize(node$con) : error reading from connection
 Calls: parlmice ... FUN -&gt; recvData -&gt; recvData.SOCK0node -&gt; unserialize</code></pre>
 <p>There likely wasn’t sufficient memory for a given core. Try
@@ -910,53 +974,8 @@ href="http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load"
 class="uri">http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load</a></p>
 </div>
 </div>
-<div id="initial-run" class="section level2" number="0.18">
-<h2><span class="header-section-number">0.18</span> Initial run</h2>
-<div id="load-the-latest-stack" class="section level3" number="0.18.1">
-<h3><span class="header-section-number">0.18.1</span> Load the Latest
-Stack</h3>
-<p><code>module load stack</code></p>
-</div>
-<div id="stack-2022.1" class="section level3" number="0.18.2">
-<h3><span class="header-section-number">0.18.2</span> Stack 2022.1</h3>
-<pre class="bash"><code>module load stack/2022.1
-module load r/4.1.3_gcc-9.4.0
-cd path</code></pre>
-</div>
-<div id="stack-2021.1" class="section level3" number="0.18.3">
-<h3><span class="header-section-number">0.18.3</span> Stack 2021.1</h3>
-<pre class="bash"><code>module load stack/2021.1
-module load r/4.0.5_gcc-9.3.0
-cd path</code></pre>
-</div>
-<div id="stack-2020.2" class="section level3" number="0.18.4">
-<h3><span class="header-section-number">0.18.4</span> Stack 2020.2</h3>
-<pre class="bash"><code>module load stack/2020.2
-module load r/4.0.2_gcc-8.4.0
-cd path</code></pre>
-</div>
-<div id="stack-2020.1" class="section level3" number="0.18.5">
-<h3><span class="header-section-number">0.18.5</span> Stack 2020.1</h3>
-<pre class="bash"><code>module load stack/2020.1
-module load r/3.6.2_gcc-9.2.0
-cd path</code></pre>
-</div>
-<div id="installing-linux-packages-to-install-r-packages"
-class="section level3" number="0.18.6">
-<h3><span class="header-section-number">0.18.6</span> Installing Linux
-Packages to Install R Packages</h3>
-<pre class="bash"><code>module load stack
-module load r/4.1.3_gcc-9.4.0
-module load geos/3.9.1_gcc-9.4.0
-module load gdal/3.4.1_gcc-9.4.0-proj8
-module load proj/8.1.0_gcc-9.4.0
-module load gsl/2.7_gcc-9.4.0
-module load nlopt/2.7.0_gcc-9.4.0
-module load r-nloptr</code></pre>
-</div>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGlnaC1QZXJmb3JtYW5jZSBDb21wdXRpbmcgKEFyZ29uIFN1cGVyY29tcHV0ZXIpIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3ciKQpgYGAKCkFuYWx5c2lzIHNjcmlwdHMgZm9yIEhpZ2ggUGVyZm9ybWFuY2UgQ29tcHV0aW5nIChIUEMpIGF0IHRoZSBVbml2ZXJzaXR5IG9mIElvd2EuCkN1cnJlbnRseSB1c2VzIEFyZ29uLgoKRnJvbSBoZXJlOiBodHRwczovL3dvcmtmbG93LnVpb3dhLmVkdS9lbnRyeS9uZXcvMzI4Mi8xMTkyNzMzNgoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQ2x1c3RlcitTeXN0ZW1zK0RvY3VtZW50YXRpb24KCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FyZ29uK0NsdXN0ZXIKCiMjIERhdGEgU3RvcmFnZQoKV0FSTklORzogU2lnbmlmaWNhbnQgYW1vdW50cyBvZiBkYXRhIHN0b3JhZ2UgYXJlIHByb3ZpZGVkIG9uIEFyZ29uLCBidXQgZGF0YSBpcyBub3QgYmFja2VkIHVwIGluIGFueSB3YXkgdW5sZXNzIHNwZWNpYWwgYXJyYW5nZW1lbnRzIGFyZSBtYWRlLgpJdCBpcyB0aGUgcmVzcG9uc2liaWxpdHkgb2YgdGhlIHVzZXIgdG8gYmFjayB1cCBpbXBvcnRhbnQgaW5mb3JtYXRpb24uCgojIyBTZW5zaXRpdmUgRGF0YQoKVXNlciBhZ3JlZXMgdG8gcmVmcmFpbiBmcm9tIHN0b3JpbmcgUmVzdHJpY3RlZCBkYXRhIG9uIEhQQyByZXNvdXJjZXMuCkRhdGEgaXMgY2xhc3NpZmllZCBhcyBSZXN0cmljdGVkIHdoZW4gdGhlIHVuYXV0aG9yaXplZCBkaXNjbG9zdXJlLCBhbHRlcmF0aW9uIG9yIGRlc3RydWN0aW9uIG9mIHRoYXQgZGF0YSBjb3VsZCBjYXVzZSBhIHNpZ25pZmljYW50IGxldmVsIG9mIHJpc2sgdG8gdGhlIFVuaXZlcnNpdHkgb3IgaXRzIGFmZmlsaWF0ZXMuCkV4YW1wbGVzIG9mIFJlc3RyaWN0ZWQgZGF0YSBpbmNsdWRlIGRhdGEgcHJvdGVjdGVkIGJ5IHN0YXRlIG9yIGZlZGVyYWwgcHJpdmFjeSByZWd1bGF0aW9ucyBhbmQgZGF0YSBwZXJ0YWluaW5nIHRvIGlkZW50aWZpZWQgaHVtYW4gc3ViamVjdHMgdGhhdCBoYXMgbm90IGJlZW4gZGVpZGVudGlmaWVkLgoKIyMgRmVlcwoKQXQgcHJlc2VudCB0aGVyZSBhcmUgbm8gZmVlcyBmb3IgdGhlIHVzZSBvZiB0aGUgQXJnb24gY2x1c3RlciBmb3IgbG93LXByaW9yaXR5IHVzYWdlLgpGb3IgbGFyZ2UgdXNlcnMsIG9yIHRob3NlIHdobyB3YW50IGFjY2VzcyB0byBkZWRpY2F0ZWQgcmVzb3VyY2VzLCB0aGUgb3B0aW9uIG9mIHB1cmNoYXNpbmcgb3IgcmVudGluZyBzdXBwbGVtZW50YWwgc3lzdGVtIGhhcmR3YXJlIG1heSBiZSBhdmFpbGFibGUuCklmIHlvdSBhcmUgaW50ZXJlc3RlZCBpbiBkZWRpY2F0ZWQgaGFyZHdhcmUsIGNvbnRhY3QgcmVzZWFyY2gtY29tcHV0aW5nQHVpb3dhLmVkdS4KCiMjIEFjY2VzcyAoc3NoKToKCmBhcmdvbi5ocGMudWlvd2EuZWR1YAoKV2luZG93cyBFeHBsb3JlcjoKCmBcXGRhdGEuaHBjLnVpb3dhLmVkdVxhcmdvbl9ob21lYCAodXNlcm5hbWU6IGl0cGV0ZXJzZW5AdWlvd2EuZWR1KQoKTWFjIE9TIFRlcm1pbmFsOgoKYHNzaCBpdHBldGVyc2VuQGFyZ29uLmhwYy51aW93YS5lZHVgIChvbiBjYW1wdXMpCgpgc3NoIC1wIDQwIGl0cGV0ZXJzZW5AYXJnb24uaHBjLnVpb3dhLmVkdWAgKG9mZiBjYW1wdXMgd2l0aG91dCBWUE4pCgojIyBGaW5kIHdoaWNoIHZlcnNpb25zIG9mIFIgYXJlIGluc3RhbGxlZAoKYG1vZHVsZSBzcGlkZXIgUmAKCkJ1dCwgdGhlcmUgbWF5IGJlIG1vcmUgcmVjZW50IHZlcnNpb24gb2YgUiBpbnN0YWxsZWQgaW4gdGhlICJBZGRpdGlvbmFsIFNvZnR3YXJlIFN0YWNrcyIgKGh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FyZ29uK1NvZnR3YXJlK0xpc3QpCgojIyBMb2FkIFNvZnR3YXJlIFN0YWNrcwoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQXJnb24rU29mdHdhcmUrTGlzdAoKYG1vZHVsZSBsb2FkIHN0YWNrLzIwMjEuMWAKCiMjIFIKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1IrUHJvZ3JhbXMraW4rQmF0Y2grbW9kZStmb3IrSFBDCgojIyMgSW5zdGFsbCBSIHBhY2thZ2VzCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BZGRpbmcrUitwcm9ncmFtcyt0bythK3BlcnNvbmFsK2xpYnJhcnkKCjEuICBmaXJzdCBsb2FkIHRoZSBSIGVudmlyb25tZW50IG1vZHVsZQoqICBgbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjBgCjIuICBsYXVuY2ggUgoqICBgUmAKMy4gIHRoZW4gaW5zdGFsbCB0aGUgcGFja2FnZSwgKHRoZSBjb2RlIGJlbG93IHVzZXMgYSBnZW5lcmljIGBwYWNrYWdlX25hbWVgKToKKiAgYGluc3RhbGwucGFja2FnZXMoInBhY2thZ2VfbmFtZSIsIHJlcG9zID0gImh0dHA6Ly9jcmFuLnItcHJvamVjdC5vcmciLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCB0eXBlID0gInNvdXJjZSIsIE5jcHVzID0gNDApYAoqICBJdCBpcyBwcmVmZXJhYmxlIHRvIGluc3RhbGwgcGFja2FnZXMgYnkgc291cmNlLCBpZiBwb3NzaWJsZSBmb3IgdXNlIGluIGBwYWNrcmF0YCwgYnV0IHlvdSBjYW4gcmVtb3ZlIGB0eXBlID0gc291cmNlYCBpZiB5b3Ugd2FudCB0byBpbnN0YWxsIGJpbmFyaWVzCiogIEFzc3VtaW5nIHRoYXQgeW91IGRvIG5vdCBoYXZlIGEgcGVyc29uYWwgbGlicmFyeSBkaXJlY3RvcnkgeW91IHdpbGwgc2VlCgpgV2FybmluZyBpbiBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIikgOgonbGliID0gIi9vcHQvUi8zLjAuMi9saWI2NC9SL2xpYnJhcnkiJyBpcyBub3Qgd3JpdGFibGVgCgpgV291bGQgeW91IGxpa2UgdG8gdXNlIGEgcGVyc29uYWwgbGlicmFyeSBpbnN0ZWFkPyAgKHkvbilgCgo0LiAgU2VsZWN0IGB5YAo1LiAgU2VsZWN0IGB5YCBhZ2FpbiB3aGVuIHByb21wdGVkIHRvIGNyZWF0ZSB0aGUgZGlyZWN0b3J5CnlvdXIgcGFja2FnZSBzaG91bGQgZG93bmxvYWQgYW5kIGluc3RhbGwgaW50byB5b3VyIHBlcnNvbmFsIGxpYnJhcnkgZGlyZWN0b3J5CgojIyMjIEluc3RhbGwgUiBwYWNrYWdlIGxvY2FsbHkgZnJvbSBzb3VyY2UKCmBpbnN0YWxsLnBhY2thZ2VzKHBhdGhfdG9fZmlsZSwgcmVwb3MgPSBOVUxMLCB0eXBlID0gInNvdXJjZSIsIE5jcHVzID0gNDApYAoKIyMjIyBNYW5hZ2luZyBwYWNrYWdlcyBmb3IgYSBwcm9qZWN0IHVzaW5nIGByZW52YAoKMS4gIENyZWF0ZSBhIGRpcmVjdG9yeSB3aGVyZSB5b3Ugd2FudCB5b3Ugd2FudCB0byBzdG9yZSB0aGUgcHJvamVjdC4KMi4gIGBjZGAgdG8gdGhlIGFib3ZlIGRpcmVjdG9yeQozLiAgU3RhcnQgUgo0LiAgTG9hZCB0aGUgYHJlbnZgIHBhY2thZ2U6IGBsaWJyYXJ5KCJyZW52IilgCjQuICBBdCB0aGUgUiBwcm9tcHQsIGluaXRpYWxpemUgdGhlIGByZW52YCBwcm9qZWN0IG9uIHRoZSBsb2NhbCByZXBvc2l0b3J5IG9mIFIgcGFja2FnZXMgd2l0aDogYHJlbnY6OmluaXQocHJvamVjdCA9ICIvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvU2VsZlJlZ3VsYXRpb25fSVJULyIpYAo2LiAgWW91IG11c3QgcmVzdGFydCB5b3VyIFIgc2Vzc2lvbiBpbiB0aGUgZ2l2ZW4gcHJvamVjdCBkaXJlY3RvcnkgYWZ0ZXIgcnVubmluZyBpbml0IGluIG9yZGVyIGZvciB0aGUgY2hhbmdlcyB0byB0YWtlIGVmZmVjdCEKNy4gIEZyb20gdGhpcyBwb2ludCBvbiB5b3UgYXJlIHdvcmtpbmcgaW4gYSBgcmVudmAgcHJvamVjdC4gSW5zdGFsbGVkIHBhY2thZ2VzIHdpbGwgZ28gaW50byBhIGxpYnJhcnkgd2l0aGluIHRoaXMgcHJvamVjdC4gQWZ0ZXIgaW5pdGlhbGl6aW5nIHRoZSBgcmVudmAgcHJvamVjdCBvbiB0aGUgbG9jYWwgcmVwb3NpdG9yeSBvZiBSIHBhY2thZ2VzLCBwYWNrYWdlcyBmcm9tIHRoZSBsb2NhbCByZXBvc2l0b3J5IGNhbiBiZSBpbnN0YWxsZWQgd2l0aCBgcmVudjo6aW5zdGFsbCgpYDoKKiAgYHJlbnY6Omluc3RhbGwoInBhY2thZ2VfbmFtZSIpYAo3LiAgVG8gcmVzdGFydCBhIHBhY2tyYXQgcHJvamVjdCBzaW1wbHkgc3RhcnQgUiBmcm9tIHRoZSBkaXJlY3RvcnkgY3JlYXRlZCBpbiBzdGVwICgxKS4gVGhlIHByb2plY3Qgd2lsbCBpbml0aWFsaXplIGF1dG9tYXRpY2FsbHkuCgpUbyB1cGRhdGUgdmVyc2lvbiBvZiBgcmVudmA6IGByZW52Ojp1cGdyYWRlKClgCgpUbyBpbnN0YWxsIHBhY2thZ2VzOiBgcmVudjo6aW5zdGFsbCgicGFja2FnZV9uYW1lIilgCgpUbyB1cGRhdGUgcGFja2FnZXM6IGByZW52Ojp1cGRhdGUoKWAKClRvIHNhdmUgdGhlIGN1cnJlbnQgc3RhdGUgb2YgeW91ciBsaWJyYXJ5OiBgcmVudjo6c25hcHNob3QoKWAKClRvIHJlc3RvcmUgdGhlIHN0YXRlIG9mIHlvdXIgbGlicmFyeSBmcm9tIHRoZSBsb2NrIGZpbGU6IGByZW52OjpyZXN0b3JlKClgCgpUbyBkaXNhYmxlIHBhY2tyYXQgb24gYSBwcm9qZWN0OiBgcmVudjo6ZGVhY3RpdmF0ZSgpYAoKIyMjIyBNYW5hZ2luZyBwYWNrYWdlcyBmb3IgYSBwcm9qZWN0IHVzaW5nIGBwYWNrcmF0YAoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQWRkaW5nK1IrcHJvZ3JhbXMrdG8rYStwZXJzb25hbCtsaWJyYXJ5CgoxLiAgQ3JlYXRlIGEgZGlyZWN0b3J5IHdoZXJlIHlvdSB3YW50IHlvdSB3YW50IHRvIHN0b3JlIHRoZSBwcm9qZWN0LgoyLiAgYGNkYCB0byB0aGUgYWJvdmUgZGlyZWN0b3J5CjMuICBTdGFydCBSCjQuICBMb2FkIHRoZSBwYWNrcmF0IHBhY2thZ2U6IGBsaWJyYXJ5KCJwYWNrcmF0IilgCjQuICBBdCB0aGUgUiBwcm9tcHQsIGluaXRpYWxpemUgdGhlIHBhY2tyYXQgcHJvamVjdCBvbiB0aGUgbG9jYWwgcmVwb3NpdG9yeSBvZiBSIHBhY2thZ2VzIHdpdGg6IGBwYWNrcmF0Ojppbml0KHByb2plY3QgPSAiL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0lOU0VSVF9QUk9KRUNUX05BTUUvIiwgb3B0aW9ucyA9IGxpc3QobG9jYWwucmVwb3MgPSAiL1VzZXJzL2l0cGV0ZXJzZW4vUi94ODZfNjQtcGMtbGludXgtZ251LWxpYnJhcnkvNC4wIikpYAo2LiAgWW91IG11c3QgcmVzdGFydCB5b3VyIFIgc2Vzc2lvbiBpbiB0aGUgZ2l2ZW4gcHJvamVjdCBkaXJlY3RvcnkgYWZ0ZXIgcnVubmluZyBpbml0IGluIG9yZGVyIGZvciB0aGUgY2hhbmdlcyB0byB0YWtlIGVmZmVjdCEKNy4gIEZyb20gdGhpcyBwb2ludCBvbiB5b3UgYXJlIHdvcmtpbmcgaW4gYSBwYWNrcmF0IHByb2plY3QuIEluc3RhbGxlZCBwYWNrYWdlcyB3aWxsIGdvIGludG8gYSBsaWJyYXJ5IHdpdGhpbiB0aGlzIHByb2plY3QuIEFmdGVyIGluaXRpYWxpemluZyB0aGUgcGFja3JhdCBwcm9qZWN0IG9uIHRoZSBsb2NhbCByZXBvc2l0b3J5IG9mIFIgcGFja2FnZXMsIHBhY2thZ2VzIGZyb20gdGhlIGxvY2FsIHJlcG9zaXRvcnkgY2FuIGJlIGluc3RhbGxlZCB3aXRoIGBwYWNrcmF0OjppbnN0YWxsX2xvY2FsKClgOgoqICBgcGFja3JhdDo6aW5zdGFsbF9sb2NhbCgicGFja2FnZV9uYW1lIilgCjcuICBUbyByZXN0YXJ0IGEgcGFja3JhdCBwcm9qZWN0IHNpbXBseSBzdGFydCBSIGZyb20gdGhlIGRpcmVjdG9yeSBjcmVhdGVkIGluIHN0ZXAgKDEpLiBUaGUgcHJvamVjdCB3aWxsIGluaXRpYWxpemUgYXV0b21hdGljYWxseS4KClRvIHNhdmUgdGhlIGN1cnJlbnQgc3RhdGUgb2YgeW91ciBsaWJyYXJ5OiBgcGFja3JhdDo6c25hcHNob3QoKWA7IGlmIHRoYXQgY29tbWFuZCBmYWlscyBkdWUgdG8gYW4gZXJyb3Igd2hlbiBmZXRjaGluZyBzb3VyY2VzLCB0cnkgYHBhY2tyYXQ6OnNuYXBzaG90KHNuYXBzaG90LnNvdXJjZXMgPSBGQUxTRSlgIAoKVG8gZGlzYWJsZSBwYWNrcmF0IG9uIGEgcHJvamVjdDogYGRpc2FibGUocmVzdGFydCA9IEZBTFNFKWAKCiMjIyMgVG8gaW5zdGFsbCBhIG5ldyBwYWNrYWdlIGZvciBhIHByb2plY3QgYWZ0ZXIgYHBhY2tyYXRgL2ByZW52YCBoYXMgYmVlbiBpbml0aWFsaXplZAoKMS4gRmlyc3QsIGxvYWQgdGhlIFIgZW52aXJvbm1lbnQgbW9kdWxlIChzZWUgYEluc3RhbGwgUiBwYWNrYWdlc2Agc2VjdGlvbiBhYm92ZSkKMi4gY2QgdG8gdGhlIGRpcmVjdG9yeSBvZiB0aGUgUiBwcm9qZWN0CjMuIGxhdW5jaCBSCiogIGBSYAo0LiB0aGVuIGluc3RhbGwgdGhlIHBhY2thZ2UsICh0aGUgY29kZSBiZWxvdyB1c2VzIGEgZ2VuZXJpYyBgcGFja2FnZV9uYW1lYCk6CiogIGBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIiwgdHlwZSA9ICJzb3VyY2UiLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCBOY3B1cyA9IDQwKWAKKiAgYGluc3RhbGwucGFja2FnZXMoYygicGFja3JhdCIsInBzeWNoIiwidGlkeXZlcnNlIiwiZGF0YS50YWJsZSIsIm5sbWUiLCJsbWU0IiwibWlydCIsIlRlYWNoaW5nRGVtb3MiLCJBbWVsaWEiLCJtaWNlIiwibWljZWFkZHMiLCJhYmluZCIsImZ1dHVyZSIsImxhdmFhbiIsImJsYXZhYW4iLCJSY3BwIiwiaWdyYXBoIiwic2hpbnlzdGFuIiwiU3RhbkhlYWRlcnMiLCJicm1zIiwicnN0YW4iLCJyamFncyIsInJlbnYiKSwgcmVwb3MgPSAiaHR0cDovL2NyYW4uci1wcm9qZWN0Lm9yZyIsIHR5cGUgPSAic291cmNlIiwgZGVwZW5kZW5jaWVzID0gVFJVRSwgTmNwdXMgPSA0MClgCjUuIGByZW52OjpzbmFwc2hvdCgpYCBvciBgcGFja3JhdDo6c25hcHNob3QoKWA7IGlmIHRoYXQgY29tbWFuZCBmYWlscyBkdWUgdG8gYW4gZXJyb3Igd2hlbiBmZXRjaGluZyBzb3VyY2VzLCB0cnkgYHBhY2tyYXQ6OnNuYXBzaG90KHNuYXBzaG90LnNvdXJjZXMgPSBGQUxTRSlgCgojIyMjIEJ1aWxkIHBhY2tyYXQgZW52aXJvbm1lbnQgb24gYSBjb21wdXRlIG5vZGUgKG9ubHkgaWYgbmVjZXNzYXJ5IGlmIHBhY2thZ2UgbG9hZCBmYWlscyBkdWUgdG8gaXNzdWVzIGJ1aWxkaW5nIHBhY2thZ2VzKQoKMS4gYHFsb2dpbmAgLS0gZm9yIG1vcmUgaW5mbywgc2VlIGhlcmU6IGh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1Fsb2dpbitmb3IrSW50ZXJhY3RpdmUrU2Vzc2lvbnMKMi4gYG1vZHVsZSBsb2FkIHN0YWNrLzIwMjAuMi1iYXNlX2FyY2hgIC0tIHRoaXMgd2lsbCBlbnN1cmUgdGhhdCB0aGUgbW9kdWxlcyBwb2ludCB0byB0aGUgbG93ZXN0IGNvbW1vbiBtdWx0aWFyY2hpdGVjdHVyZSBvbiBBcmdvbiBhbmQgd2lsbCBydW4gb24gYWxsIG5vZGVzCjMuIGBtb2R1bGUgbG9hZCByYAo0LiBjZCB0byB0aGUgZGlyZWN0b3J5IG9mIHRoZSBSIHByb2plY3QKNS4gYFJgCjUuIENyZWF0ZSBwYWNrcmF0IHByb2plY3QgKHNlZSBhYm92ZSkKNi4gSW5zdGFsbCBwYWNrYWdlcwo3LiBUYWtlIGEgcGFja2FnZSBzbmFwc2hvdCB1c2luZyBwYWNrcmF0CjguIGBleGl0YCAtLSB0byBleGl0IHRoZSBxbG9naW4gc2Vzc2lvbgoKTm90ZTogWW91ciBwYWNrcmF0IGVudmlyb25tZW50IHdpbGwgdGhlbiBiZSBsaW5rZWQgdG8gdGhlIHByb3BlciBnbHBrIGxpYnJhcnkgYW5kIHdpbGwgcnVuIG9uIGFueSBBcmdvbiBub2RlLiBZb3UgZG8gbm90IG5lZWQgdG8gdXNlIHRoZSBgMjAyMC4yLWJhc2VfYXJjaGAgbW9kdWxlIGF0IHJ1biB0aW1lLCBvbmx5IGJ1aWxkIHRpbWUuCgojIyMgUnVuIFIgU2NyaXB0CgpgbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjBgCgpgY2QgcGF0aC90by9kYXRhU2V0MTIzYAoKW2NkIC9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9UZXN0L0FuYWx5c2VzXQoKYFJzY3JpcHQgcGF0aC90by9wcm9ncmFtLlJgCgpbUnNjcmlwdCB0ZXN0LlJdCgojIyMgUXVpdCBSCgpgcSgpYAoKIyMgU3RhbgoKaHR0cHM6Ly9naXRodWIuY29tL3N0YW4tZGV2L3JzdGFuL3dpa2kvSW5zdGFsbGluZy1SU3Rhbi1vbi1MaW51eAoKTWFrZXZhcnM6CgpgXFxkYXRhLmhwYy51aW93YS5lZHVcYXJnb25faG9tZVwuUlxNYWtldmFyc2AKCiMjIEpvYiBTY3JpcHQKCmBgYGJhc2gKIyEvYmluL3NoCgojIFNldCB3b3JraW5nIGRpcmVjdG9yeQpjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJULwoKIyBTcGVjaWZ5IHFzdWIgb3B0aW9ucwojJCAtcGUgc21wIDQKIyQgLU0gaXNhYWMtdC1wZXRlcnNlbkB1aW93YS5lZHUKIyQgLW0gZWFzCiMkIC1sIG1mPTUxMkcKIyQgLWwgaF92bWVtPTUxMkcKIyQgLWN3ZAojJCAtcSBVSS1ITQojJCAtZSAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC8KIyQgLW8gL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9PdXRwdXQvCgojIExvYWQgdGhlIGVudmlyb25tZW50IG1vZHVsZXMKbW9kdWxlIGxvYWQgc3RhY2svMjAyMi4xCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCgojIFJ1biB0aGUgUiBzY3JpcHQKUnNjcmlwdCAuL0FuYWx5c2VzL2ZhY3RvclNjb3Jlcy5SCmBgYAoKIyMgcXN1YiBvcHRpb25zCgpgLXBlIHNtcCA0YDogc3BlY2lmeSBhIHBhcmVsbGVsIGVudmlyb25tZW50IGFuZCBudW1iZXIgb2YgY29yZXMgdG8gYmUgdXNlZCAoYHNtcGAgPSBzaGFyZWQgbWVtb3J5IHBhcmFsbGVsIGVudmlyb25tZW50KQoqICBUaGUgYE9NUF9OVU1fVEhSRUFEU2AgdmFyaWFibGUgaXMgc2V0IHRvICcxJyBieSBkZWZhdWx0LiBJZiB5b3VyIGNvZGUgY2FuIHRha2UgYWR2YW50YWdlIG9mIHRoZSB0aHJlYWRpbmcgdGhlbiBzcGVjaWZ5IGBPTVBfTlVNX1RIUkVBRFNgIHRvIGJlIGVxdWFsIHRvIHRoZSBudW1iZXIgb2Ygam9iIGNvcmVzIHBlciBub2RlIHJlcXVlc3RlZC4KCmAtTSBpc2FhYy10LXBldGVyc2VuQHVpb3dhLmVkdWA6IFNldCB0aGUgZW1haWwgYWRkcmVzcyB0byByZWNlaXZlIGVtYWlsIGFib3V0IGpvYnMuIFRoaXMgbXVzdCBiZSB5b3VyIFVuaXZlcnNpdHkgb2YgSW93YSBlbWFpbCBhZGRyZXNzLgoKYC1tIGVhc2A6IFNwZWNpZnkgd2hlbiB0byBzZW5kIGFuIGVtYWlsIG1lc3NhZ2UgKDsgOyA7IDsgKQoqICBgYmAgPSBiZWdpbm5pbmcgb2Ygam9iCiogIGBlYCA9IGVuZCBvZiBqb2IKKiAgYGFgID0gd2hlbiBqb2IgaXMgYWJvcnRlZAoqICBgc2AgPSB3aGVuIGpvYiBpcyBzdXNwZW5kZWQKKiAgYG5gID0gbm8gbWFpbCBpcyBzZW50CgpgLWwgbWY9NTEyR2A6IHJlcXVlc3QgYSBwYXJ0aWN1bGFyIHF1YW50aXR5IG9mIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLiBJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWwgaF92bWVtPTUxMkdgOiByZXF1ZXN0IGEgcGFydGljdWxhciBxdWFudGl0eSBvZiB2aXJ0dWFsIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLiBJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWN3ZGA6IERldGVybWluZXMgd2hldGhlciB0aGUgam9iIHdpbGwgYmUgZXhlY3V0ZWQgZnJvbSB0aGUgY3VycmVudCB3b3JraW5nIGRpcmVjdG9yeS4gSWYgbm90IHNwZWNpZmllZCwgdGhlIGpvYiB3aWxsIGJlIHJ1biBmcm9tIHlvdXIgaG9tZSBkaXJlY3RvcnkuCgpgLXEgVUktSE1gOiBzcGVjaWZ5IHF1ZXVlCgpgLWUgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9PdXRwdXQvYDogTmFtZSBvZiBhIGZpbGUgb3IgZGlyZWN0b3J5IGZvciBzdGFuZGFyZCBlcnJvci4KCmAtbyAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC9gOiBOYW1lIG9mIGEgZmlsZSBvciBkaXJlY3RvcnkgZm9yIHN0YW5kYXJkIG91dHB1dC4KCiMjIFN1Ym1pdCBKb2IKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0Jhc2ljK0pvYitTdWJtaXNzaW9uCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BZHZhbmNlZCtKb2IrU3VibWlzc2lvbgoKYGNkIHBhdGgvdG8vZGF0YVNldDEyM2AKCltjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvVGVzdC9Kb2JzXQoKYHFzdWIgbXlzY3JpcHQuam9iYAoKSm9iIGRlcGVuZGVuY3kgKHJ1biBgSm9iIEJgIHdoZW4gYEpvYiBBYCBpcyBmaW5pc2hlZCk6CgpgcXN1YiAtaG9sZF9qaWQgSk9CX0lEIHRlc3RfQi5qb2JgCgojIyMgQmF5ZXNpYW4gSVJUCgpgY2QgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9Kb2JzYAoKYHFzdWIgYmF5ZXNpYW5JUlQuam9iYAoKYHFzdWIgLWhvbGRfamlkIEpPQl9JRCBmYWN0b3JTY29yZXMuam9iYAoKIyMjIE11bHRpcGxlIEltcHV0YXRpb24KCmBjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvTXVsdGlwbGVfSW1wdXRhdGlvbi9Kb2JzYAoKYHFzdWIgc3JzX3NlbGZSZWd1bGF0aW9uLlJgCgojIyBRdWV1ZXMKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1F1ZXVlcythbmQrUG9saWNpZXMKCmBVSWAKCmBVSS1ITWAKCmBVSS1HUFUtSE1gCgpgVUktREVWRUxPUGAKCmBhbGwucWAKCiMjIFF1ZXVlIFN0YXR1cwoKYHFzdGF0IC1nIGMgLXEgUVVFVUVfTkFNRWAKCmBxc3RhdCAtZyBjIC1xIFVJYAoKIyMgSm9iIFN0YXR1cwoKYHFzdGF0IC11IGl0cGV0ZXJzZW5gCgpgcXN0YXQgLWogSk9CX0lEYAoKIyMgSm9iIFRpbWUgYW5kIE1lbW9yeQoKKiAgVGVybWluYXRlZCBqb2JzOiBgcWFjY3QgLWogSk9CX0lEYAoqICBKb2JzIGluIHByb2dyZXNzOiBgcXN0YXQgLWogSk9CX0lEIHwgZ3JlcCB1c2FnZWAKCiMjIENhbmNlbCBKb2IKCmBxZGVsIEpPQl9JRGAKCiMjIFRyb3VibGVzaG9vdGluZwoKIyMjIEVycm9yIFdoZW4gSW5zdGFsbGluZyBQYWNrYWdlcyBmcm9tIFNvdXJjZQoKWW91IG1heSBoYXZlIHRvIHNldCBlbnZpcm9ubWVudCB2YXJpYWJsZXMgaW4gZWFjaCBtb2R1bGUgZmlsZSB0byBoZWxwIHRoZSBjb21waWxlciBmaW5kIGhlYWRlcnMgYW5kIGxpYnJhcmllcy4KTm90ZSB0aGF0IGlmIHlvdSBydW4gaW50byBhbnkgQysrIGNvZGUsIHlvdSB3aWxsIG5lZWQgdG8gc2V0IHRoZSBgQ1BMVVNfSU5DTFVERV9QQVRIYCB2YXJpYWJsZS4KCiMjIyMgYG5sb3B0cmAKCjEuIFJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmRzCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjIuMQptb2R1bGUgbG9hZCByLzQuMS4zX2djYy05LjQuMAptb2R1bGUgbG9hZCBubG9wdApgYGAKCjIuIFNldCBgTElCUkFSWV9QQVRIYCBzbyBsaW5rZXIgY2FuIGZpbmQgbGlicmFyeSB3aGlsZSBsYXVuY2hpbmcgUiBzZXNzaW9uIChzaW5nbGUgbGluZSBiZWxvdyk6CgpgYGAKTElCUkFSWV9QQVRIPSRST09UX05MT1BUL2xpYjY0OiRMSUJSQVJZX1BBVEggUgpgYGAKCjMuIEluIFIgY29uc29sZSwgaW5zdGFsbCBgbmxvcHRyYCAodHdvIGxpbmVzIGJlbG93KQoKYGBgcgppbnN0YWxsLnBhY2thZ2VzKHZlcmJvc2UgPSAxLCAibmxvcHRyIikKYGBgCgojIyMjIGB0a3JwbG90YAoKMS4gUnVuIHRoZSBmb2xsb3dpbmcgY29tbWFuZHMKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMi4xCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCmBgYAoKMi4gU2V0IExJQlJBUllfUEFUSCBzbyBsaW5rZXIgY2FuIGZpbmQgbGlicmFyeSB3aGlsZSBsYXVuY2hpbmcgUiBzZXNzaW9uIChzaW5nbGUgbGluZSBiZWxvdyk6CgpgYGAKQ19JTkNMVURFX1BBVEg9JFJPT1RfWFBST1RPL2luY2x1ZGUgTElCUkFSWV9QQVRIPSRST09UX0xJQlhFWFQvbGliOiRST09UX0xJQlhTQ1JOU0FWRVIvbGliIFIKYGBgCgozLiBJbiBSIGNvbnNvbGUsIGluc3RhbGwgYHRrcnBsb3RgICh0d28gbGluZXMgYmVsb3cpCgpgYGByCmluc3RhbGwucGFja2FnZXModmVyYm9zZSA9IDEsICJ0a3JwbG90IikKYGBgCgojIyMgRXJyb3IgUmVhZGluZyBmcm9tIENvbm5lY3Rpb24KCmBgYApFcnJvciBpbiB1bnNlcmlhbGl6ZShub2RlJGNvbikgOiBlcnJvciByZWFkaW5nIGZyb20gY29ubmVjdGlvbgpDYWxsczogcGFybG1pY2UgLi4uIEZVTiAtPiByZWN2RGF0YSAtPiByZWN2RGF0YS5TT0NLMG5vZGUgLT4gdW5zZXJpYWxpemUKYGBgCgpUaGVyZSBsaWtlbHkgd2Fzbid0IHN1ZmZpY2llbnQgbWVtb3J5IGZvciBhIGdpdmVuIGNvcmUuClRyeSBpbmNyZWFzaW5nIHRoZSBtYXggbWVtb3J5IGF2YWlsYWJsZSBhbmQgZGVjcmVhc2luZyB0aGUgbnVtYmVyIG9mIGNvcmVzIGFuZC9vciBzbG90cywgc28gdGhlcmUgaXMgbW9yZSBtZW1vcnkgYXZhaWxhYmxlIHBlciBjb3JlOgoKaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDYxODYzNzUvci1wYXJhbGxlbC1lcnJvci1pbi11bnNlcmlhbGl6ZW5vZGVjb24taW4taHBjCgpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xNzAxNTU5OC9lcnJvci1jYWxsaW5nLXNlcmlhbGl6ZS1yLWZ1bmN0aW9uCgpodHRwOi8vZ2ZvcmdlLnNlLzIwMTUvMDIvaG93LXRvLWdvLXBhcmFsbGVsLWluLXItYmFzaWNzLXRpcHMvI01lbW9yeV9sb2FkCgojIyBJbml0aWFsIHJ1bgoKIyMjIExvYWQgdGhlIExhdGVzdCBTdGFjawoKYG1vZHVsZSBsb2FkIHN0YWNrYAoKIyMjIFN0YWNrIDIwMjIuMQoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIyLjEKbW9kdWxlIGxvYWQgci80LjEuM19nY2MtOS40LjAKY2QgcGF0aApgYGAKCiMjIyBTdGFjayAyMDIxLjEKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMS4xCm1vZHVsZSBsb2FkIHIvNC4wLjVfZ2NjLTkuMy4wCmNkIHBhdGgKYGBgCgojIyMgU3RhY2sgMjAyMC4yCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjAuMgptb2R1bGUgbG9hZCByLzQuMC4yX2djYy04LjQuMApjZCBwYXRoCmBgYAoKIyMjIFN0YWNrIDIwMjAuMQoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIwLjEKbW9kdWxlIGxvYWQgci8zLjYuMl9nY2MtOS4yLjAKY2QgcGF0aApgYGAKCiMjIyBJbnN0YWxsaW5nIExpbnV4IFBhY2thZ2VzIHRvIEluc3RhbGwgUiBQYWNrYWdlcwoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjawptb2R1bGUgbG9hZCByLzQuMS4zX2djYy05LjQuMAptb2R1bGUgbG9hZCBnZW9zLzMuOS4xX2djYy05LjQuMAptb2R1bGUgbG9hZCBnZGFsLzMuNC4xX2djYy05LjQuMC1wcm9qOAptb2R1bGUgbG9hZCBwcm9qLzguMS4wX2djYy05LjQuMAptb2R1bGUgbG9hZCBnc2wvMi43X2djYy05LjQuMAptb2R1bGUgbG9hZCBubG9wdC8yLjcuMF9nY2MtOS40LjAKbW9kdWxlIGxvYWQgci1ubG9wdHIKYGBgCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGlnaC1QZXJmb3JtYW5jZSBDb21wdXRpbmcgKEFyZ29uIFN1cGVyY29tcHV0ZXIpIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3ciKQpgYGAKCiMgT3ZlcnZpZXcKCkFuYWx5c2lzIHNjcmlwdHMgZm9yIEhpZ2ggUGVyZm9ybWFuY2UgQ29tcHV0aW5nIChIUEMpIGF0IHRoZSBVbml2ZXJzaXR5IG9mIElvd2EuCkN1cnJlbnRseSB1c2VzIEFyZ29uLgoKRnJvbSBoZXJlOiBodHRwczovL3dvcmtmbG93LnVpb3dhLmVkdS9lbnRyeS9uZXcvMzI4Mi8xMTkyNzMzNgoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQ2x1c3RlcitTeXN0ZW1zK0RvY3VtZW50YXRpb24KCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FyZ29uK0NsdXN0ZXIKCiMjIERhdGEgU3RvcmFnZQoKV0FSTklORzogU2lnbmlmaWNhbnQgYW1vdW50cyBvZiBkYXRhIHN0b3JhZ2UgYXJlIHByb3ZpZGVkIG9uIEFyZ29uLCBidXQgZGF0YSBpcyBub3QgYmFja2VkIHVwIGluIGFueSB3YXkgdW5sZXNzIHNwZWNpYWwgYXJyYW5nZW1lbnRzIGFyZSBtYWRlLgpJdCBpcyB0aGUgcmVzcG9uc2liaWxpdHkgb2YgdGhlIHVzZXIgdG8gYmFjayB1cCBpbXBvcnRhbnQgaW5mb3JtYXRpb24uCgojIyBTZW5zaXRpdmUgRGF0YQoKVXNlciBhZ3JlZXMgdG8gcmVmcmFpbiBmcm9tIHN0b3JpbmcgUmVzdHJpY3RlZCBkYXRhIG9uIEhQQyByZXNvdXJjZXMuCkRhdGEgaXMgY2xhc3NpZmllZCBhcyBSZXN0cmljdGVkIHdoZW4gdGhlIHVuYXV0aG9yaXplZCBkaXNjbG9zdXJlLCBhbHRlcmF0aW9uIG9yIGRlc3RydWN0aW9uIG9mIHRoYXQgZGF0YSBjb3VsZCBjYXVzZSBhIHNpZ25pZmljYW50IGxldmVsIG9mIHJpc2sgdG8gdGhlIFVuaXZlcnNpdHkgb3IgaXRzIGFmZmlsaWF0ZXMuCkV4YW1wbGVzIG9mIFJlc3RyaWN0ZWQgZGF0YSBpbmNsdWRlIGRhdGEgcHJvdGVjdGVkIGJ5IHN0YXRlIG9yIGZlZGVyYWwgcHJpdmFjeSByZWd1bGF0aW9ucyBhbmQgZGF0YSBwZXJ0YWluaW5nIHRvIGlkZW50aWZpZWQgaHVtYW4gc3ViamVjdHMgdGhhdCBoYXMgbm90IGJlZW4gZGVpZGVudGlmaWVkLgoKIyMgRmVlcwoKQXQgcHJlc2VudCB0aGVyZSBhcmUgbm8gZmVlcyBmb3IgdGhlIHVzZSBvZiB0aGUgQXJnb24gY2x1c3RlciBmb3IgbG93LXByaW9yaXR5IHVzYWdlLgpGb3IgbGFyZ2UgdXNlcnMsIG9yIHRob3NlIHdobyB3YW50IGFjY2VzcyB0byBkZWRpY2F0ZWQgcmVzb3VyY2VzLCB0aGUgb3B0aW9uIG9mIHB1cmNoYXNpbmcgb3IgcmVudGluZyBzdXBwbGVtZW50YWwgc3lzdGVtIGhhcmR3YXJlIG1heSBiZSBhdmFpbGFibGUuCklmIHlvdSBhcmUgaW50ZXJlc3RlZCBpbiBkZWRpY2F0ZWQgaGFyZHdhcmUsIGNvbnRhY3QgcmVzZWFyY2gtY29tcHV0aW5nQHVpb3dhLmVkdS4KCiMgQWNjZXNzaW5nIEFyZ29uCgojIyBTU0gKCmBhcmdvbi5ocGMudWlvd2EuZWR1YAoKIyMgV2luZG93cwoKV2luZG93cyBFeHBsb3JlcjoKCmBcXGRhdGEuaHBjLnVpb3dhLmVkdVxhcmdvbl9ob21lYCAodXNlcm5hbWU6IGl0cGV0ZXJzZW5AdWlvd2EuZWR1KQoKIyMgTWFjCgpNYWMgT1MgVGVybWluYWw6Cgpgc3NoIGl0cGV0ZXJzZW5AYXJnb24uaHBjLnVpb3dhLmVkdWAgKG9uIGNhbXB1cykKCmBzc2ggLXAgNDAgaXRwZXRlcnNlbkBhcmdvbi5ocGMudWlvd2EuZWR1YCAob2ZmIGNhbXB1cyB3aXRob3V0IFZQTikKCiMgTGludXgKCiMjIEluaXRpYWwgcnVuCgojIyMgTG9hZCB0aGUgTGF0ZXN0IFN0YWNrCgpgbW9kdWxlIGxvYWQgc3RhY2tgCgojIyMgU3RhY2sgMjAyMi4xCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjIuMQptb2R1bGUgbG9hZCByLzQuMS4zX2djYy05LjQuMApjZCBwYXRoCmBgYAoKIyMjIFN0YWNrIDIwMjEuMQoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIxLjEKbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjAKY2QgcGF0aApgYGAKCiMjIyBTdGFjayAyMDIwLjIKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMC4yCm1vZHVsZSBsb2FkIHIvNC4wLjJfZ2NjLTguNC4wCmNkIHBhdGgKYGBgCgojIyMgU3RhY2sgMjAyMC4xCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjAuMQptb2R1bGUgbG9hZCByLzMuNi4yX2djYy05LjIuMApjZCBwYXRoCmBgYAoKIyMjIEluc3RhbGxpbmcgTGludXggUGFja2FnZXMgdG8gSW5zdGFsbCBSIFBhY2thZ2VzCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCm1vZHVsZSBsb2FkIGdlb3MvMy45LjFfZ2NjLTkuNC4wCm1vZHVsZSBsb2FkIGdkYWwvMy40LjFfZ2NjLTkuNC4wLXByb2o4Cm1vZHVsZSBsb2FkIHByb2ovOC4xLjBfZ2NjLTkuNC4wCm1vZHVsZSBsb2FkIGdzbC8yLjdfZ2NjLTkuNC4wCm1vZHVsZSBsb2FkIG5sb3B0LzIuNy4wX2djYy05LjQuMAptb2R1bGUgbG9hZCByLW5sb3B0cgpgYGAKCiMjIExvYWQgU29mdHdhcmUgU3RhY2tzCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BcmdvbitTb2Z0d2FyZStMaXN0CgpgbW9kdWxlIGxvYWQgc3RhY2svMjAyMS4xYAoKIyMgSm9iIFNjcmlwdAoKYGBgYmFzaAojIS9iaW4vc2gKCiMgU2V0IHdvcmtpbmcgZGlyZWN0b3J5CmNkIC9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9CYXllc2lhbl9JUlQvCgojIFNwZWNpZnkgcXN1YiBvcHRpb25zCiMkIC1wZSBzbXAgNAojJCAtTSBpc2FhYy10LXBldGVyc2VuQHVpb3dhLmVkdQojJCAtbSBlYXMKIyQgLWwgbWY9NTEyRwojJCAtbCBoX3ZtZW09NTEyRwojJCAtY3dkCiMkIC1xIFVJLUhNCiMkIC1lIC9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9CYXllc2lhbl9JUlQvT3V0cHV0LwojJCAtbyAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC8KCiMgTG9hZCB0aGUgZW52aXJvbm1lbnQgbW9kdWxlcwptb2R1bGUgbG9hZCBzdGFjay8yMDIyLjEKbW9kdWxlIGxvYWQgci80LjEuM19nY2MtOS40LjAKCiMgUnVuIHRoZSBSIHNjcmlwdApSc2NyaXB0IC4vQW5hbHlzZXMvZmFjdG9yU2NvcmVzLlIKYGBgCgojIyMgcXN1YiBvcHRpb25zCgpgLXBlIHNtcCA0YDogc3BlY2lmeSBhIHBhcmVsbGVsIGVudmlyb25tZW50IGFuZCBudW1iZXIgb2YgY29yZXMgdG8gYmUgdXNlZCAoYHNtcGAgPSBzaGFyZWQgbWVtb3J5IHBhcmFsbGVsIGVudmlyb25tZW50KQoqICBUaGUgYE9NUF9OVU1fVEhSRUFEU2AgdmFyaWFibGUgaXMgc2V0IHRvICcxJyBieSBkZWZhdWx0LgpJZiB5b3VyIGNvZGUgY2FuIHRha2UgYWR2YW50YWdlIG9mIHRoZSB0aHJlYWRpbmcgdGhlbiBzcGVjaWZ5IGBPTVBfTlVNX1RIUkVBRFNgIHRvIGJlIGVxdWFsIHRvIHRoZSBudW1iZXIgb2Ygam9iIGNvcmVzIHBlciBub2RlIHJlcXVlc3RlZC4KCmAtTSBpc2FhYy10LXBldGVyc2VuQHVpb3dhLmVkdWA6IFNldCB0aGUgZW1haWwgYWRkcmVzcyB0byByZWNlaXZlIGVtYWlsIGFib3V0IGpvYnMuIFRoaXMgbXVzdCBiZSB5b3VyIFVuaXZlcnNpdHkgb2YgSW93YSBlbWFpbCBhZGRyZXNzLgoKYC1tIGVhc2A6IFNwZWNpZnkgd2hlbiB0byBzZW5kIGFuIGVtYWlsIG1lc3NhZ2UgKDsgOyA7IDsgKQoqICBgYmAgPSBiZWdpbm5pbmcgb2Ygam9iCiogIGBlYCA9IGVuZCBvZiBqb2IKKiAgYGFgID0gd2hlbiBqb2IgaXMgYWJvcnRlZAoqICBgc2AgPSB3aGVuIGpvYiBpcyBzdXNwZW5kZWQKKiAgYG5gID0gbm8gbWFpbCBpcyBzZW50CgpgLWwgbWY9NTEyR2A6IHJlcXVlc3QgYSBwYXJ0aWN1bGFyIHF1YW50aXR5IG9mIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLiBJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWwgaF92bWVtPTUxMkdgOiByZXF1ZXN0IGEgcGFydGljdWxhciBxdWFudGl0eSBvZiB2aXJ0dWFsIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLgpJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWN3ZGA6IERldGVybWluZXMgd2hldGhlciB0aGUgam9iIHdpbGwgYmUgZXhlY3V0ZWQgZnJvbSB0aGUgY3VycmVudCB3b3JraW5nIGRpcmVjdG9yeS4KSWYgbm90IHNwZWNpZmllZCwgdGhlIGpvYiB3aWxsIGJlIHJ1biBmcm9tIHlvdXIgaG9tZSBkaXJlY3RvcnkuCgpgLXEgVUktSE1gOiBzcGVjaWZ5IHF1ZXVlCgpgLWUgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9PdXRwdXQvYDogTmFtZSBvZiBhIGZpbGUgb3IgZGlyZWN0b3J5IGZvciBzdGFuZGFyZCBlcnJvci4KCmAtbyAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC9gOiBOYW1lIG9mIGEgZmlsZSBvciBkaXJlY3RvcnkgZm9yIHN0YW5kYXJkIG91dHB1dC4KCiMjIFN1Ym1pdCBKb2IKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0Jhc2ljK0pvYitTdWJtaXNzaW9uCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BZHZhbmNlZCtKb2IrU3VibWlzc2lvbgoKYGNkIHBhdGgvdG8vZGF0YVNldDEyM2AKCltjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvVGVzdC9Kb2JzXQoKYHFzdWIgbXlzY3JpcHQuam9iYAoKSm9iIGRlcGVuZGVuY3kgKHJ1biBgSm9iIEJgIHdoZW4gYEpvYiBBYCBpcyBmaW5pc2hlZCk6CgpgcXN1YiAtaG9sZF9qaWQgSk9CX0lEIHRlc3RfQi5qb2JgCgojIyMgQmF5ZXNpYW4gSVJUCgpgY2QgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9Kb2JzYAoKYHFzdWIgYmF5ZXNpYW5JUlQuam9iYAoKYHFzdWIgLWhvbGRfamlkIEpPQl9JRCBmYWN0b3JTY29yZXMuam9iYAoKIyMjIE11bHRpcGxlIEltcHV0YXRpb24KCmBjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvTXVsdGlwbGVfSW1wdXRhdGlvbi9Kb2JzYAoKYHFzdWIgc3JzX3NlbGZSZWd1bGF0aW9uLlJgCgojIyBRdWV1ZXMKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1F1ZXVlcythbmQrUG9saWNpZXMKCmBVSWAKCmBVSS1ITWAKCmBVSS1HUFUtSE1gCgpgVUktREVWRUxPUGAKCmBhbGwucWAKCiMjIFF1ZXVlIFN0YXR1cwoKYHFzdGF0IC1nIGMgLXEgUVVFVUVfTkFNRWAKCmBxc3RhdCAtZyBjIC1xIFVJYAoKIyMgSm9iIFN0YXR1cwoKYHFzdGF0IC11IGl0cGV0ZXJzZW5gCgpgcXN0YXQgLWogSk9CX0lEYAoKIyMgSm9iIFRpbWUgYW5kIE1lbW9yeQoKKiAgVGVybWluYXRlZCBqb2JzOiBgcWFjY3QgLWogSk9CX0lEYAoqICBKb2JzIGluIHByb2dyZXNzOiBgcXN0YXQgLWogSk9CX0lEIHwgZ3JlcCB1c2FnZWAKCiMjIENhbmNlbCBKb2IKCmBxZGVsIEpPQl9JRGAKCiMjIFJ1biBSIFNjcmlwdAoKU2VlIFtoZXJlXSgjcnVuUnNjcmlwdCkKCiMgUgoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvUitQcm9ncmFtcytpbitCYXRjaCttb2RlK2ZvcitIUEMKCiMjIEZpbmQgd2hpY2ggdmVyc2lvbnMgb2YgUiBhcmUgaW5zdGFsbGVkCgpgbW9kdWxlIHNwaWRlciBSYAoKQnV0LCB0aGVyZSBtYXkgYmUgbW9yZSByZWNlbnQgdmVyc2lvbiBvZiBSIGluc3RhbGxlZCBpbiB0aGUgIkFkZGl0aW9uYWwgU29mdHdhcmUgU3RhY2tzIiAoaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQXJnb24rU29mdHdhcmUrTGlzdCkKCiMjIEluc3RhbGwgUiBwYWNrYWdlcwoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQWRkaW5nK1IrcHJvZ3JhbXMrdG8rYStwZXJzb25hbCtsaWJyYXJ5CgoxLiAgZmlyc3QgbG9hZCB0aGUgUiBlbnZpcm9ubWVudCBtb2R1bGUKKiAgYG1vZHVsZSBsb2FkIHIvNC4wLjVfZ2NjLTkuMy4wYAoyLiAgbGF1bmNoIFIKKiAgYFJgCjMuICB0aGVuIGluc3RhbGwgdGhlIHBhY2thZ2UsICh0aGUgY29kZSBiZWxvdyB1c2VzIGEgZ2VuZXJpYyBgcGFja2FnZV9uYW1lYCk6CiogIGBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIiwgZGVwZW5kZW5jaWVzID0gVFJVRSwgdHlwZSA9ICJzb3VyY2UiLCBOY3B1cyA9IDQwKWAKKiAgSXQgaXMgcHJlZmVyYWJsZSB0byBpbnN0YWxsIHBhY2thZ2VzIGJ5IHNvdXJjZSwgaWYgcG9zc2libGUgZm9yIHVzZSBpbiBgcGFja3JhdGAsIGJ1dCB5b3UgY2FuIHJlbW92ZSBgdHlwZSA9IHNvdXJjZWAgaWYgeW91IHdhbnQgdG8gaW5zdGFsbCBiaW5hcmllcwoqICBBc3N1bWluZyB0aGF0IHlvdSBkbyBub3QgaGF2ZSBhIHBlcnNvbmFsIGxpYnJhcnkgZGlyZWN0b3J5IHlvdSB3aWxsIHNlZQoKYFdhcm5pbmcgaW4gaW5zdGFsbC5wYWNrYWdlcygicGFja2FnZV9uYW1lIiwgcmVwb3MgPSAiaHR0cDovL2NyYW4uci1wcm9qZWN0Lm9yZyIpIDoKJ2xpYiA9ICIvb3B0L1IvMy4wLjIvbGliNjQvUi9saWJyYXJ5IicgaXMgbm90IHdyaXRhYmxlYAoKYFdvdWxkIHlvdSBsaWtlIHRvIHVzZSBhIHBlcnNvbmFsIGxpYnJhcnkgaW5zdGVhZD8gICh5L24pYAoKNC4gIFNlbGVjdCBgeWAKNS4gIFNlbGVjdCBgeWAgYWdhaW4gd2hlbiBwcm9tcHRlZCB0byBjcmVhdGUgdGhlIGRpcmVjdG9yeQp5b3VyIHBhY2thZ2Ugc2hvdWxkIGRvd25sb2FkIGFuZCBpbnN0YWxsIGludG8geW91ciBwZXJzb25hbCBsaWJyYXJ5IGRpcmVjdG9yeQoKIyMjIEluc3RhbGwgUiBwYWNrYWdlIGxvY2FsbHkgZnJvbSBzb3VyY2UKCmBpbnN0YWxsLnBhY2thZ2VzKHBhdGhfdG9fZmlsZSwgcmVwb3MgPSBOVUxMLCB0eXBlID0gInNvdXJjZSIsIE5jcHVzID0gNDApYAoKIyMjIE1hbmFnaW5nIHBhY2thZ2VzIGZvciBhIHByb2plY3QgdXNpbmcgYHJlbnZgCgoxLiAgQ3JlYXRlIGEgZGlyZWN0b3J5IHdoZXJlIHlvdSB3YW50IHlvdSB3YW50IHRvIHN0b3JlIHRoZSBwcm9qZWN0LgoyLiAgYGNkYCB0byB0aGUgYWJvdmUgZGlyZWN0b3J5CjMuICBTdGFydCBSCjQuICBMb2FkIHRoZSBgcmVudmAgcGFja2FnZTogYGxpYnJhcnkoInJlbnYiKWAKNC4gIEF0IHRoZSBSIHByb21wdCwgaW5pdGlhbGl6ZSB0aGUgYHJlbnZgIHByb2plY3Qgb24gdGhlIGxvY2FsIHJlcG9zaXRvcnkgb2YgUiBwYWNrYWdlcyB3aXRoOiBgcmVudjo6aW5pdChwcm9qZWN0ID0gIi9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9TZWxmUmVndWxhdGlvbl9JUlQvIilgCjYuICBZb3UgbXVzdCByZXN0YXJ0IHlvdXIgUiBzZXNzaW9uIGluIHRoZSBnaXZlbiBwcm9qZWN0IGRpcmVjdG9yeSBhZnRlciBydW5uaW5nIGluaXQgaW4gb3JkZXIgZm9yIHRoZSBjaGFuZ2VzIHRvIHRha2UgZWZmZWN0IQo3LiAgRnJvbSB0aGlzIHBvaW50IG9uIHlvdSBhcmUgd29ya2luZyBpbiBhIGByZW52YCBwcm9qZWN0LgpJbnN0YWxsZWQgcGFja2FnZXMgd2lsbCBnbyBpbnRvIGEgbGlicmFyeSB3aXRoaW4gdGhpcyBwcm9qZWN0LgpBZnRlciBpbml0aWFsaXppbmcgdGhlIGByZW52YCBwcm9qZWN0IG9uIHRoZSBsb2NhbCByZXBvc2l0b3J5IG9mIFIgcGFja2FnZXMsIHBhY2thZ2VzIGZyb20gdGhlIGxvY2FsIHJlcG9zaXRvcnkgY2FuIGJlIGluc3RhbGxlZCB3aXRoIGByZW52OjppbnN0YWxsKClgOgoqICBgcmVudjo6aW5zdGFsbCgicGFja2FnZV9uYW1lIilgCjcuICBUbyByZXN0YXJ0IGEgcGFja3JhdCBwcm9qZWN0IHNpbXBseSBzdGFydCBSIGZyb20gdGhlIGRpcmVjdG9yeSBjcmVhdGVkIGluIHN0ZXAgKDEpLiBUaGUgcHJvamVjdCB3aWxsIGluaXRpYWxpemUgYXV0b21hdGljYWxseS4KClRvIHVwZGF0ZSB2ZXJzaW9uIG9mIGByZW52YDogYHJlbnY6OnVwZ3JhZGUoKWAKClRvIGluc3RhbGwgcGFja2FnZXM6IGByZW52OjppbnN0YWxsKCJwYWNrYWdlX25hbWUiKWAKClRvIHVwZGF0ZSBwYWNrYWdlczogYHJlbnY6OnVwZGF0ZSgpYAoKVG8gc2F2ZSB0aGUgY3VycmVudCBzdGF0ZSBvZiB5b3VyIGxpYnJhcnk6IGByZW52OjpzbmFwc2hvdCgpYAoKVG8gcmVzdG9yZSB0aGUgc3RhdGUgb2YgeW91ciBsaWJyYXJ5IGZyb20gdGhlIGxvY2sgZmlsZTogYHJlbnY6OnJlc3RvcmUoKWAKClRvIGRpc2FibGUgcGFja3JhdCBvbiBhIHByb2plY3Q6IGByZW52OjpkZWFjdGl2YXRlKClgCgojIyMgTWFuYWdpbmcgcGFja2FnZXMgZm9yIGEgcHJvamVjdCB1c2luZyBgcGFja3JhdGAKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FkZGluZytSK3Byb2dyYW1zK3RvK2ErcGVyc29uYWwrbGlicmFyeQoKMS4gIENyZWF0ZSBhIGRpcmVjdG9yeSB3aGVyZSB5b3Ugd2FudCB5b3Ugd2FudCB0byBzdG9yZSB0aGUgcHJvamVjdC4KMi4gIGBjZGAgdG8gdGhlIGFib3ZlIGRpcmVjdG9yeQozLiAgU3RhcnQgUgo0LiAgTG9hZCB0aGUgcGFja3JhdCBwYWNrYWdlOiBgbGlicmFyeSgicGFja3JhdCIpYAo0LiAgQXQgdGhlIFIgcHJvbXB0LCBpbml0aWFsaXplIHRoZSBwYWNrcmF0IHByb2plY3Qgb24gdGhlIGxvY2FsIHJlcG9zaXRvcnkgb2YgUiBwYWNrYWdlcyB3aXRoOiBgcGFja3JhdDo6aW5pdChwcm9qZWN0ID0gIi9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9JTlNFUlRfUFJPSkVDVF9OQU1FLyIsIG9wdGlvbnMgPSBsaXN0KGxvY2FsLnJlcG9zID0gIi9Vc2Vycy9pdHBldGVyc2VuL1IveDg2XzY0LXBjLWxpbnV4LWdudS1saWJyYXJ5LzQuMCIpKWAKNi4gIFlvdSBtdXN0IHJlc3RhcnQgeW91ciBSIHNlc3Npb24gaW4gdGhlIGdpdmVuIHByb2plY3QgZGlyZWN0b3J5IGFmdGVyIHJ1bm5pbmcgaW5pdCBpbiBvcmRlciBmb3IgdGhlIGNoYW5nZXMgdG8gdGFrZSBlZmZlY3QhCjcuICBGcm9tIHRoaXMgcG9pbnQgb24geW91IGFyZSB3b3JraW5nIGluIGEgcGFja3JhdCBwcm9qZWN0LgpJbnN0YWxsZWQgcGFja2FnZXMgd2lsbCBnbyBpbnRvIGEgbGlicmFyeSB3aXRoaW4gdGhpcyBwcm9qZWN0LgpBZnRlciBpbml0aWFsaXppbmcgdGhlIHBhY2tyYXQgcHJvamVjdCBvbiB0aGUgbG9jYWwgcmVwb3NpdG9yeSBvZiBSIHBhY2thZ2VzLCBwYWNrYWdlcyBmcm9tIHRoZSBsb2NhbCByZXBvc2l0b3J5IGNhbiBiZSBpbnN0YWxsZWQgd2l0aCBgcGFja3JhdDo6aW5zdGFsbF9sb2NhbCgpYDoKKiAgYHBhY2tyYXQ6Omluc3RhbGxfbG9jYWwoInBhY2thZ2VfbmFtZSIpYAo3LiAgVG8gcmVzdGFydCBhIHBhY2tyYXQgcHJvamVjdCBzaW1wbHkgc3RhcnQgUiBmcm9tIHRoZSBkaXJlY3RvcnkgY3JlYXRlZCBpbiBzdGVwICgxKS4gVGhlIHByb2plY3Qgd2lsbCBpbml0aWFsaXplIGF1dG9tYXRpY2FsbHkuCgpUbyBzYXZlIHRoZSBjdXJyZW50IHN0YXRlIG9mIHlvdXIgbGlicmFyeTogYHBhY2tyYXQ6OnNuYXBzaG90KClgOyBpZiB0aGF0IGNvbW1hbmQgZmFpbHMgZHVlIHRvIGFuIGVycm9yIHdoZW4gZmV0Y2hpbmcgc291cmNlcywgdHJ5IGBwYWNrcmF0OjpzbmFwc2hvdChzbmFwc2hvdC5zb3VyY2VzID0gRkFMU0UpYCAKClRvIGRpc2FibGUgcGFja3JhdCBvbiBhIHByb2plY3Q6IGBkaXNhYmxlKHJlc3RhcnQgPSBGQUxTRSlgCgojIyMgVG8gaW5zdGFsbCBhIG5ldyBwYWNrYWdlIGZvciBhIHByb2plY3QgYWZ0ZXIgYHBhY2tyYXRgL2ByZW52YCBoYXMgYmVlbiBpbml0aWFsaXplZAoKMS4gRmlyc3QsIGxvYWQgdGhlIFIgZW52aXJvbm1lbnQgbW9kdWxlIChzZWUgYEluc3RhbGwgUiBwYWNrYWdlc2Agc2VjdGlvbiBhYm92ZSkKMi4gY2QgdG8gdGhlIGRpcmVjdG9yeSBvZiB0aGUgUiBwcm9qZWN0CjMuIGxhdW5jaCBSCiogIGBSYAo0LiB0aGVuIGluc3RhbGwgdGhlIHBhY2thZ2UsICh0aGUgY29kZSBiZWxvdyB1c2VzIGEgZ2VuZXJpYyBgcGFja2FnZV9uYW1lYCk6CiogIGBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIiwgdHlwZSA9ICJzb3VyY2UiLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCBOY3B1cyA9IDQwKWAKKiAgYGluc3RhbGwucGFja2FnZXMoYygicGFja3JhdCIsInBzeWNoIiwidGlkeXZlcnNlIiwiZGF0YS50YWJsZSIsIm5sbWUiLCJsbWU0IiwibWlydCIsIlRlYWNoaW5nRGVtb3MiLCJBbWVsaWEiLCJtaWNlIiwibWljZWFkZHMiLCJhYmluZCIsImZ1dHVyZSIsImxhdmFhbiIsImJsYXZhYW4iLCJSY3BwIiwiaWdyYXBoIiwic2hpbnlzdGFuIiwiU3RhbkhlYWRlcnMiLCJicm1zIiwicnN0YW4iLCJyamFncyIsInJlbnYiKSwgcmVwb3MgPSAiaHR0cDovL2NyYW4uci1wcm9qZWN0Lm9yZyIsIHR5cGUgPSAic291cmNlIiwgZGVwZW5kZW5jaWVzID0gVFJVRSwgTmNwdXMgPSA0MClgCjUuIGByZW52OjpzbmFwc2hvdCgpYCBvciBgcGFja3JhdDo6c25hcHNob3QoKWA7IGlmIHRoYXQgY29tbWFuZCBmYWlscyBkdWUgdG8gYW4gZXJyb3Igd2hlbiBmZXRjaGluZyBzb3VyY2VzLCB0cnkgYHBhY2tyYXQ6OnNuYXBzaG90KHNuYXBzaG90LnNvdXJjZXMgPSBGQUxTRSlgCgojIyMgQnVpbGQgcGFja3JhdCBlbnZpcm9ubWVudCBvbiBhIGNvbXB1dGUgbm9kZSAob25seSBpZiBuZWNlc3NhcnkgaWYgcGFja2FnZSBsb2FkIGZhaWxzIGR1ZSB0byBpc3N1ZXMgYnVpbGRpbmcgcGFja2FnZXMpCgoxLiBgcWxvZ2luYCAtLSBmb3IgbW9yZSBpbmZvLCBzZWUgaGVyZTogaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvUWxvZ2luK2ZvcitJbnRlcmFjdGl2ZStTZXNzaW9ucwoyLiBgbW9kdWxlIGxvYWQgc3RhY2svMjAyMC4yLWJhc2VfYXJjaGAgLS0gdGhpcyB3aWxsIGVuc3VyZSB0aGF0IHRoZSBtb2R1bGVzIHBvaW50IHRvIHRoZSBsb3dlc3QgY29tbW9uIG11bHRpYXJjaGl0ZWN0dXJlIG9uIEFyZ29uIGFuZCB3aWxsIHJ1biBvbiBhbGwgbm9kZXMKMy4gYG1vZHVsZSBsb2FkIHJgCjQuIGNkIHRvIHRoZSBkaXJlY3Rvcnkgb2YgdGhlIFIgcHJvamVjdAo1LiBgUmAKNS4gQ3JlYXRlIHBhY2tyYXQgcHJvamVjdCAoc2VlIGFib3ZlKQo2LiBJbnN0YWxsIHBhY2thZ2VzCjcuIFRha2UgYSBwYWNrYWdlIHNuYXBzaG90IHVzaW5nIHBhY2tyYXQKOC4gYGV4aXRgIC0tIHRvIGV4aXQgdGhlIHFsb2dpbiBzZXNzaW9uCgpOb3RlOiBZb3VyIHBhY2tyYXQgZW52aXJvbm1lbnQgd2lsbCB0aGVuIGJlIGxpbmtlZCB0byB0aGUgcHJvcGVyIGdscGsgbGlicmFyeSBhbmQgd2lsbCBydW4gb24gYW55IEFyZ29uIG5vZGUuCllvdSBkbyBub3QgbmVlZCB0byB1c2UgdGhlIGAyMDIwLjItYmFzZV9hcmNoYCBtb2R1bGUgYXQgcnVuIHRpbWUsIG9ubHkgYnVpbGQgdGltZS4KCiMjIFJ1biBSIFNjcmlwdCB7I3J1blJzY3JpcHR9CgpgbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjBgCgpgY2QgcGF0aC90by9kYXRhU2V0MTIzYAoKW2NkIC9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9UZXN0L0FuYWx5c2VzXQoKYFJzY3JpcHQgcGF0aC90by9wcm9ncmFtLlJgCgpbUnNjcmlwdCB0ZXN0LlJdCgojIyBRdWl0IFIKCmBxKClgCgojIFN0YW4KCmh0dHBzOi8vZ2l0aHViLmNvbS9zdGFuLWRldi9yc3Rhbi93aWtpL0luc3RhbGxpbmctUlN0YW4tb24tTGludXgKCk1ha2V2YXJzOgoKYFxcZGF0YS5ocGMudWlvd2EuZWR1XGFyZ29uX2hvbWVcLlJcTWFrZXZhcnNgCgojIFRyb3VibGVzaG9vdGluZwoKIyMgRXJyb3IgV2hlbiBJbnN0YWxsaW5nIFBhY2thZ2VzIGZyb20gU291cmNlCgpZb3UgbWF5IGhhdmUgdG8gc2V0IGVudmlyb25tZW50IHZhcmlhYmxlcyBpbiBlYWNoIG1vZHVsZSBmaWxlIHRvIGhlbHAgdGhlIGNvbXBpbGVyIGZpbmQgaGVhZGVycyBhbmQgbGlicmFyaWVzLgpOb3RlIHRoYXQgaWYgeW91IHJ1biBpbnRvIGFueSBDKysgY29kZSwgeW91IHdpbGwgbmVlZCB0byBzZXQgdGhlIGBDUExVU19JTkNMVURFX1BBVEhgIHZhcmlhYmxlLgoKIyMjIGBubG9wdHJgCgoxLiBSdW4gdGhlIGZvbGxvd2luZyBjb21tYW5kcwoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIyLjEKbW9kdWxlIGxvYWQgci80LjEuM19nY2MtOS40LjAKbW9kdWxlIGxvYWQgbmxvcHQKYGBgCgoyLiBTZXQgYExJQlJBUllfUEFUSGAgc28gbGlua2VyIGNhbiBmaW5kIGxpYnJhcnkgd2hpbGUgbGF1bmNoaW5nIFIgc2Vzc2lvbiAoc2luZ2xlIGxpbmUgYmVsb3cpOgoKYGBgCkxJQlJBUllfUEFUSD0kUk9PVF9OTE9QVC9saWI2NDokTElCUkFSWV9QQVRIIFIKYGBgCgozLiBJbiBSIGNvbnNvbGUsIGluc3RhbGwgYG5sb3B0cmAgKHR3byBsaW5lcyBiZWxvdykKCmBgYHIKaW5zdGFsbC5wYWNrYWdlcyh2ZXJib3NlID0gMSwgIm5sb3B0ciIpCmBgYAoKIyMjIGB0a3JwbG90YAoKMS4gUnVuIHRoZSBmb2xsb3dpbmcgY29tbWFuZHMKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMi4xCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCmBgYAoKMi4gU2V0IExJQlJBUllfUEFUSCBzbyBsaW5rZXIgY2FuIGZpbmQgbGlicmFyeSB3aGlsZSBsYXVuY2hpbmcgUiBzZXNzaW9uIChzaW5nbGUgbGluZSBiZWxvdyk6CgpgYGAKQ19JTkNMVURFX1BBVEg9JFJPT1RfWFBST1RPL2luY2x1ZGUgTElCUkFSWV9QQVRIPSRST09UX0xJQlhFWFQvbGliOiRST09UX0xJQlhTQ1JOU0FWRVIvbGliIFIKYGBgCgozLiBJbiBSIGNvbnNvbGUsIGluc3RhbGwgYHRrcnBsb3RgICh0d28gbGluZXMgYmVsb3cpCgpgYGByCmluc3RhbGwucGFja2FnZXModmVyYm9zZSA9IDEsICJ0a3JwbG90IikKYGBgCgojIyBFcnJvciBSZWFkaW5nIGZyb20gQ29ubmVjdGlvbgoKYGBgCkVycm9yIGluIHVuc2VyaWFsaXplKG5vZGUkY29uKSA6IGVycm9yIHJlYWRpbmcgZnJvbSBjb25uZWN0aW9uCkNhbGxzOiBwYXJsbWljZSAuLi4gRlVOIC0+IHJlY3ZEYXRhIC0+IHJlY3ZEYXRhLlNPQ0swbm9kZSAtPiB1bnNlcmlhbGl6ZQpgYGAKClRoZXJlIGxpa2VseSB3YXNuJ3Qgc3VmZmljaWVudCBtZW1vcnkgZm9yIGEgZ2l2ZW4gY29yZS4KVHJ5IGluY3JlYXNpbmcgdGhlIG1heCBtZW1vcnkgYXZhaWxhYmxlIGFuZCBkZWNyZWFzaW5nIHRoZSBudW1iZXIgb2YgY29yZXMgYW5kL29yIHNsb3RzLCBzbyB0aGVyZSBpcyBtb3JlIG1lbW9yeSBhdmFpbGFibGUgcGVyIGNvcmU6CgpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy80NjE4NjM3NS9yLXBhcmFsbGVsLWVycm9yLWluLXVuc2VyaWFsaXplbm9kZWNvbi1pbi1ocGMKCmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzE3MDE1NTk4L2Vycm9yLWNhbGxpbmctc2VyaWFsaXplLXItZnVuY3Rpb24KCmh0dHA6Ly9nZm9yZ2Uuc2UvMjAxNS8wMi9ob3ctdG8tZ28tcGFyYWxsZWwtaW4tci1iYXNpY3MtdGlwcy8jTWVtb3J5X2xvYWQK</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
