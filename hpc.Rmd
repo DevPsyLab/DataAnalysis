@@ -99,7 +99,9 @@ your package should download and install into your personal library directory
 4.  Load the `renv` package: `library("renv")`
 4.  At the R prompt, initialize the `renv` project on the local repository of R packages with: `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
 6.  You must restart your R session in the given project directory after running init in order for the changes to take effect!
-7.  From this point on you are working in a `renv` project. Installed packages will go into a library within this project. After initializing the `renv` project on the local repository of R packages, packages from the local repository can be installed with `renv::install()`:
+7.  From this point on you are working in a `renv` project.
+Installed packages will go into a library within this project.
+After initializing the `renv` project on the local repository of R packages, packages from the local repository can be installed with `renv::install()`:
 *  `renv::install("package_name")`
 7.  To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
 
@@ -125,7 +127,9 @@ https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library
 4.  Load the packrat package: `library("packrat")`
 4.  At the R prompt, initialize the packrat project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
 6.  You must restart your R session in the given project directory after running init in order for the changes to take effect!
-7.  From this point on you are working in a packrat project. Installed packages will go into a library within this project. After initializing the packrat project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
+7.  From this point on you are working in a packrat project.
+Installed packages will go into a library within this project.
+After initializing the packrat project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
 *  `packrat::install_local("package_name")`
 7.  To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
 
@@ -156,7 +160,8 @@ To disable packrat on a project: `disable(restart = FALSE)`
 7. Take a package snapshot using packrat
 8. `exit` -- to exit the qlogin session
 
-Note: Your packrat environment will then be linked to the proper glpk library and will run on any Argon node. You do not need to use the `2020.2-base_arch` module at run time, only build time.
+Note: Your packrat environment will then be linked to the proper glpk library and will run on any Argon node.
+You do not need to use the `2020.2-base_arch` module at run time, only build time.
 
 ### Run R Script
 
@@ -212,7 +217,8 @@ Rscript ./Analyses/factorScores.R
 ## qsub options
 
 `-pe smp 4`: specify a parellel environment and number of cores to be used (`smp` = shared memory parallel environment)
-*  The `OMP_NUM_THREADS` variable is set to '1' by default. If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
+*  The `OMP_NUM_THREADS` variable is set to '1' by default.
+If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
 
 `-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs. This must be your University of Iowa email address.
 
@@ -225,9 +231,11 @@ Rscript ./Analyses/factorScores.R
 
 `-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)
 
-`-l h_vmem=512G`: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)
+`-l h_vmem=512G`: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.
+It is not a limit.)
 
-`-cwd`: Determines whether the job will be executed from the current working directory. If not specified, the job will be run from your home directory.
+`-cwd`: Determines whether the job will be executed from the current working directory.
+If not specified, the job will be run from your home directory.
 
 `-q UI-HM`: specify queue
 
