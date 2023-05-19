@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>High-Performance Computing (Argon Supercomputer)</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TYR0QMREEW');
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="includes/custom.css" type="text/css" />
+<link rel="stylesheet" href="font/css/roboto.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Analysis Guides for the Developmental Psychopathology Lab</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="adobe.html">Adobe</a>
+    </li>
+    <li>
+      <a href="bayesian.html">Bayesian Analysis</a>
+    </li>
+    <li>
+      <a href="dataManagement.html">Data Management</a>
+    </li>
+    <li>
+      <a href="developmentalScaling.html">Developmental Scaling</a>
+    </li>
+    <li>
+      <a href="eegERP.html">Electroencaphalography/Event-Related Potentials</a>
+    </li>
+    <li>
+      <a href="eda.html">Exploratory Data Analysis</a>
+    </li>
+    <li>
+      <a href="factorAnalysis.html">Factor Analysis</a>
+    </li>
+    <li>
+      <a href="figures.html">Figures</a>
+    </li>
+    <li>
+      <a href="git.html">Git, GitLab, and GitHub</a>
+    </li>
+    <li>
+      <a href="hlm.html">Hierarchical Linear Modeling</a>
+    </li>
+    <li>
+      <a href="hpc.html">High-Performance Computing</a>
+    </li>
+    <li>
+      <a href="irt.html">Item Response Theory</a>
+    </li>
+    <li>
+      <a href="jamovi.html">jamovi</a>
+    </li>
+    <li>
+      <a href="jsPsych.html">jsPsych</a>
+    </li>
+    <li>
+      <a href="lda.html">Longitudinal Data Analysis</a>
+    </li>
+    <li>
+      <a href="markdown.html">Markdown</a>
+    </li>
+    <li>
+      <a href="sem.html#mediation">Mediation</a>
+    </li>
+    <li>
+      <a href="regression.html#moderation">Moderation/Interaction</a>
+    </li>
+    <li>
+      <a href="multipleImputation.html">Multiple Imputation</a>
+    </li>
+    <li>
+      <a href="osf.html">Open Science Framework</a>
+    </li>
+    <li>
+      <a href="pca.html">Principal Component Analysis</a>
+    </li>
+    <li>
+      <a href="R.html">R</a>
+    </li>
+    <li>
+      <a href="regression.html">Regression</a>
+    </li>
+    <li>
+      <a href="SPSS.html">SPSS</a>
+    </li>
+    <li>
+      <a href="sem.html">Structural Equation Modeling</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://devpsylab.github.io/LabWiki">Lab Wiki</a>
+</li>
+<li>
+  <a href="https://developmental-psychopathology.lab.uiowa.edu">Lab Website</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">High-Performance Computing (Argon
+Supercomputer)</h1>
+
+</div>
+
+
+<p>Analysis scripts for High Performance Computing (HPC) at the
+University of Iowa. Currently uses Argon.</p>
+<p>From here: <a
+href="https://workflow.uiowa.edu/entry/new/3282/11927336"
+class="uri">https://workflow.uiowa.edu/entry/new/3282/11927336</a></p>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/Cluster+Systems+Documentation"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Cluster+Systems+Documentation</a></p>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Cluster"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Cluster</a></p>
+<div id="data-storage" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Data Storage</h2>
+<p>WARNING: Significant amounts of data storage are provided on Argon,
+but data is not backed up in any way unless special arrangements are
+made. It is the responsibility of the user to back up important
+information.</p>
+</div>
+<div id="sensitive-data" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Sensitive Data</h2>
+<p>User agrees to refrain from storing Restricted data on HPC resources.
+Data is classified as Restricted when the unauthorized disclosure,
+alteration or destruction of that data could cause a significant level
+of risk to the University or its affiliates. Examples of Restricted data
+include data protected by state or federal privacy regulations and data
+pertaining to identified human subjects that has not been
+deidentified.</p>
+</div>
+<div id="fees" class="section level2" number="0.3">
+<h2><span class="header-section-number">0.3</span> Fees</h2>
+<p>At present there are no fees for the use of the Argon cluster for
+low-priority usage. For large users, or those who want access to
+dedicated resources, the option of purchasing or renting supplemental
+system hardware may be available. If you are interested in dedicated
+hardware, contact <a href="mailto:research-computing@uiowa.edu"
+class="email">research-computing@uiowa.edu</a>.</p>
+</div>
+<div id="access-ssh" class="section level2" number="0.4">
+<h2><span class="header-section-number">0.4</span> Access (ssh):</h2>
+<p><code>argon.hpc.uiowa.edu</code></p>
+<p>Windows Explorer:</p>
+<p><code>\\data.hpc.uiowa.edu\argon_home</code> (username: <a
+href="mailto:itpetersen@uiowa.edu"
+class="email">itpetersen@uiowa.edu</a>)</p>
+<p>Mac OS Terminal:</p>
+<p><code>ssh itpetersen@argon.hpc.uiowa.edu</code> (on campus)</p>
+<p><code>ssh -p 40 itpetersen@argon.hpc.uiowa.edu</code> (off campus
+without VPN)</p>
+</div>
+<div id="find-which-versions-of-r-are-installed" class="section level2"
+number="0.5">
+<h2><span class="header-section-number">0.5</span> Find which versions
+of R are installed</h2>
+<p><code>module spider R</code></p>
+<p>But, there may be more recent version of R installed in the
+“Additional Software Stacks” (<a
+href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List</a>)</p>
+</div>
+<div id="load-software-stacks" class="section level2" number="0.6">
+<h2><span class="header-section-number">0.6</span> Load Software
+Stacks</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Argon+Software+List</a></p>
+<p><code>module load stack/2021.1</code></p>
+</div>
+<div id="r" class="section level2" number="0.7">
+<h2><span class="header-section-number">0.7</span> R</h2>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/R+Programs+in+Batch+mode+for+HPC</a></p>
+<div id="install-r-packages" class="section level3" number="0.7.1">
+<h3><span class="header-section-number">0.7.1</span> Install R
+packages</h3>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library</a></p>
+<ol style="list-style-type: decimal">
+<li>first load the R environment module</li>
+</ol>
+<ul>
+<li><code>module load r/4.0.5_gcc-9.3.0</code></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>launch R</li>
+</ol>
+<ul>
+<li><code>R</code></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>then install the package, (the code below uses a generic
+<code>package_name</code>):</li>
+</ol>
+<ul>
+<li><code>install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)</code></li>
+<li>It is preferable to install packages by source, if possible for use
+in <code>packrat</code>, but you can remove <code>type = source</code>
+if you want to install binaries</li>
+<li>Assuming that you do not have a personal library directory you will
+see</li>
+</ul>
+<p><code>Warning in install.packages("package_name", repos = "http://cran.r-project.org") : 'lib = "/opt/R/3.0.2/lib64/R/library"' is not writable</code></p>
+<p><code>Would you like to use a personal library instead?  (y/n)</code></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Select <code>y</code></li>
+<li>Select <code>y</code> again when prompted to create the directory
+your package should download and install into your personal library
+directory</li>
+</ol>
+<div id="install-r-package-locally-from-source" class="section level4"
+number="0.7.1.1">
+<h4><span class="header-section-number">0.7.1.1</span> Install R package
+locally from source</h4>
+<p><code>install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)</code></p>
+</div>
+<div id="managing-packages-for-a-project-using-renv"
+class="section level4" number="0.7.1.2">
+<h4><span class="header-section-number">0.7.1.2</span> Managing packages
+for a project using <code>renv</code></h4>
+<ol style="list-style-type: decimal">
+<li>Create a directory where you want you want to store the
+project.</li>
+<li><code>cd</code> to the above directory</li>
+<li>Start R</li>
+<li>Load the <code>renv</code> package:
+<code>library("renv")</code></li>
+<li>At the R prompt, initialize the <code>renv</code> project on the
+local repository of R packages with:
+<code>renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")</code></li>
+<li>You must restart your R session in the given project directory after
+running init in order for the changes to take effect!</li>
+<li>From this point on you are working in a <code>renv</code> project.
+Installed packages will go into a library within this project. After
+initializing the <code>renv</code> project on the local repository of R
+packages, packages from the local repository can be installed with
+<code>renv::install()</code>:</li>
+</ol>
+<ul>
+<li><code>renv::install("package_name")</code></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>To restart a packrat project simply start R from the directory
+created in step (1). The project will initialize automatically.</li>
+</ol>
+<p>To update version of <code>renv</code>:
+<code>renv::upgrade()</code></p>
+<p>To install packages: <code>renv::install("package_name")</code></p>
+<p>To update packages: <code>renv::update()</code></p>
+<p>To save the current state of your library:
+<code>renv::snapshot()</code></p>
+<p>To restore the state of your library from the lock file:
+<code>renv::restore()</code></p>
+<p>To disable packrat on a project: <code>renv::deactivate()</code></p>
+</div>
+<div id="managing-packages-for-a-project-using-packrat"
+class="section level4" number="0.7.1.3">
+<h4><span class="header-section-number">0.7.1.3</span> Managing packages
+for a project using <code>packrat</code></h4>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library</a></p>
+<ol style="list-style-type: decimal">
+<li>Create a directory where you want you want to store the
+project.</li>
+<li><code>cd</code> to the above directory</li>
+<li>Start R</li>
+<li>Load the packrat package: <code>library("packrat")</code></li>
+<li>At the R prompt, initialize the packrat project on the local
+repository of R packages with:
+<code>packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))</code></li>
+<li>You must restart your R session in the given project directory after
+running init in order for the changes to take effect!</li>
+<li>From this point on you are working in a packrat project. Installed
+packages will go into a library within this project. After initializing
+the packrat project on the local repository of R packages, packages from
+the local repository can be installed with
+<code>packrat::install_local()</code>:</li>
+</ol>
+<ul>
+<li><code>packrat::install_local("package_name")</code></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>To restart a packrat project simply start R from the directory
+created in step (1). The project will initialize automatically.</li>
+</ol>
+<p>To save the current state of your library:
+<code>packrat::snapshot()</code>; if that command fails due to an error
+when fetching sources, try
+<code>packrat::snapshot(snapshot.sources = FALSE)</code></p>
+<p>To disable packrat on a project:
+<code>disable(restart = FALSE)</code></p>
+</div>
+<div
+id="to-install-a-new-package-for-a-project-after-packratrenv-has-been-initialized"
+class="section level4" number="0.7.1.4">
+<h4><span class="header-section-number">0.7.1.4</span> To install a new
+package for a project after <code>packrat</code>/<code>renv</code> has
+been initialized</h4>
+<ol style="list-style-type: decimal">
+<li>First, load the R environment module (see
+<code>Install R packages</code> section above)</li>
+<li>cd to the directory of the R project</li>
+<li>launch R</li>
+</ol>
+<ul>
+<li><code>R</code></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>then install the package, (the code below uses a generic
+<code>package_name</code>):</li>
+</ol>
+<ul>
+<li><code>install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</code></li>
+<li><code>install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</code></li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li><code>renv::snapshot()</code> or <code>packrat::snapshot()</code>;
+if that command fails due to an error when fetching sources, try
+<code>packrat::snapshot(snapshot.sources = FALSE)</code></li>
+</ol>
+</div>
+<div
+id="build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages"
+class="section level4" number="0.7.1.5">
+<h4><span class="header-section-number">0.7.1.5</span> Build packrat
+environment on a compute node (only if necessary if package load fails
+due to issues building packages)</h4>
+<ol style="list-style-type: decimal">
+<li><code>qlogin</code> – for more info, see here: <a
+href="https://wiki.uiowa.edu/display/hpcdocs/Qlogin+for+Interactive+Sessions"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Qlogin+for+Interactive+Sessions</a></li>
+<li><code>module load stack/2020.2-base_arch</code> – this will ensure
+that the modules point to the lowest common multiarchitecture on Argon
+and will run on all nodes</li>
+<li><code>module load r</code></li>
+<li>cd to the directory of the R project</li>
+<li><code>R</code></li>
+<li>Create packrat project (see above)</li>
+<li>Install packages</li>
+<li>Take a package snapshot using packrat</li>
+<li><code>exit</code> – to exit the qlogin session</li>
+</ol>
+<p>Note: Your packrat environment will then be linked to the proper glpk
+library and will run on any Argon node. You do not need to use the
+<code>2020.2-base_arch</code> module at run time, only build time.</p>
+</div>
+</div>
+<div id="run-r-script" class="section level3" number="0.7.2">
+<h3><span class="header-section-number">0.7.2</span> Run R Script</h3>
+<p><code>module load r/4.0.5_gcc-9.3.0</code></p>
+<p><code>cd path/to/dataSet123</code></p>
+<p>[cd /Users/itpetersen/Documents/Projects/Test/Analyses]</p>
+<p><code>Rscript path/to/program.R</code></p>
+<p>[Rscript test.R]</p>
+</div>
+<div id="quit-r" class="section level3" number="0.7.3">
+<h3><span class="header-section-number">0.7.3</span> Quit R</h3>
+<p><code>q()</code></p>
+</div>
+</div>
+<div id="stan" class="section level2" number="0.8">
+<h2><span class="header-section-number">0.8</span> Stan</h2>
+<p><a
+href="https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux"
+class="uri">https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux</a></p>
+<p>Makevars:</p>
+<p><code>\\data.hpc.uiowa.edu\argon_home\.R\Makevars</code></p>
+</div>
+<div id="job-script" class="section level2" number="0.9">
+<h2><span class="header-section-number">0.9</span> Job Script</h2>
+<pre class="bash"><code>#!/bin/sh
+
+# Set working directory
+cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
+
+# Specify qsub options
+#$ -pe smp 4
+#$ -M isaac-t-petersen@uiowa.edu
+#$ -m eas
+#$ -l mf=512G
+#$ -l h_vmem=512G
+#$ -cwd
+#$ -q UI-HM
+#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+
+# Load the environment modules
+module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+
+# Run the R script
+Rscript ./Analyses/factorScores.R</code></pre>
+</div>
+<div id="qsub-options" class="section level2" number="0.10">
+<h2><span class="header-section-number">0.10</span> qsub options</h2>
+<p><code>-pe smp 4</code>: specify a parellel environment and number of
+cores to be used (<code>smp</code> = shared memory parallel environment)
+* The <code>OMP_NUM_THREADS</code> variable is set to ‘1’ by default. If
+your code can take advantage of the threading then specify
+<code>OMP_NUM_THREADS</code> to be equal to the number of job cores per
+node requested.</p>
+<p><code>-M isaac-t-petersen@uiowa.edu</code>: Set the email address to
+receive email about jobs. This must be your University of Iowa email
+address.</p>
+<p><code>-m eas</code>: Specify when to send an email message (; ; ; ; )
+* <code>b</code> = beginning of job * <code>e</code> = end of job *
+<code>a</code> = when job is aborted * <code>s</code> = when job is
+suspended * <code>n</code> = no mail is sent</p>
+<p><code>-l mf=512G</code>: request a particular quantity of memory you
+expect to use (to be available for your computation to start; the
+request is only applicable at scheduling time. It is not a limit.)</p>
+<p><code>-l h_vmem=512G</code>: request a particular quantity of virtual
+memory you expect to use (to be available for your computation to start;
+the request is only applicable at scheduling time. It is not a
+limit.)</p>
+<p><code>-cwd</code>: Determines whether the job will be executed from
+the current working directory. If not specified, the job will be run
+from your home directory.</p>
+<p><code>-q UI-HM</code>: specify queue</p>
+<p><code>-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
+Name of a file or directory for standard error.</p>
+<p><code>-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>:
+Name of a file or directory for standard output.</p>
+</div>
+<div id="submit-job" class="section level2" number="0.11">
+<h2><span class="header-section-number">0.11</span> Submit Job</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Basic+Job+Submission</a></p>
+<p><a
+href="https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Advanced+Job+Submission</a></p>
+<p><code>cd path/to/dataSet123</code></p>
+<p>[cd /Users/itpetersen/Documents/Projects/Test/Jobs]</p>
+<p><code>qsub myscript.job</code></p>
+<p>Job dependency (run <code>Job B</code> when <code>Job A</code> is
+finished):</p>
+<p><code>qsub -hold_jid JOB_ID test_B.job</code></p>
+<div id="bayesian-irt" class="section level3" number="0.11.1">
+<h3><span class="header-section-number">0.11.1</span> Bayesian IRT</h3>
+<p><code>cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs</code></p>
+<p><code>qsub bayesianIRT.job</code></p>
+<p><code>qsub -hold_jid JOB_ID factorScores.job</code></p>
+</div>
+<div id="multiple-imputation" class="section level3" number="0.11.2">
+<h3><span class="header-section-number">0.11.2</span> Multiple
+Imputation</h3>
+<p><code>cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs</code></p>
+<p><code>qsub srs_selfRegulation.R</code></p>
+</div>
+</div>
+<div id="queues" class="section level2" number="0.12">
+<h2><span class="header-section-number">0.12</span> Queues</h2>
+<p><a href="https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies"
+class="uri">https://wiki.uiowa.edu/display/hpcdocs/Queues+and+Policies</a></p>
+<p><code>UI</code></p>
+<p><code>UI-HM</code></p>
+<p><code>UI-GPU-HM</code></p>
+<p><code>UI-DEVELOP</code></p>
+<p><code>all.q</code></p>
+</div>
+<div id="queue-status" class="section level2" number="0.13">
+<h2><span class="header-section-number">0.13</span> Queue Status</h2>
+<p><code>qstat -g c -q QUEUE_NAME</code></p>
+<p><code>qstat -g c -q UI</code></p>
+</div>
+<div id="job-status" class="section level2" number="0.14">
+<h2><span class="header-section-number">0.14</span> Job Status</h2>
+<p><code>qstat -u itpetersen</code></p>
+<p><code>qstat -j JOB_ID</code></p>
+</div>
+<div id="job-time-and-memory" class="section level2" number="0.15">
+<h2><span class="header-section-number">0.15</span> Job Time and
+Memory</h2>
+<ul>
+<li>Terminated jobs: <code>qacct -j JOB_ID</code></li>
+<li>Jobs in progress: <code>qstat -j JOB_ID | grep usage</code></li>
+</ul>
+</div>
+<div id="cancel-job" class="section level2" number="0.16">
+<h2><span class="header-section-number">0.16</span> Cancel Job</h2>
+<p><code>qdel JOB_ID</code></p>
+</div>
+<div id="troubleshooting" class="section level2" number="0.17">
+<h2><span class="header-section-number">0.17</span> Troubleshooting</h2>
+<div id="error-when-installing-packages-from-source"
+class="section level3" number="0.17.1">
+<h3><span class="header-section-number">0.17.1</span> Error When
+Installing Packages from Source</h3>
+<p>You may have to set environment variables in each module file to help
+the compiler find headers and libraries. Note that if you run into any
+C++ code, you will need to set the <code>CPLUS_INCLUDE_PATH</code>
+variable.</p>
+<div id="nloptr" class="section level4" number="0.17.1.1">
+<h4><span class="header-section-number">0.17.1.1</span>
+<code>nloptr</code></h4>
+<ol style="list-style-type: decimal">
+<li>Run the following commands</li>
+</ol>
+<pre class="bash"><code>module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+module load nlopt</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Set <code>LIBRARY_PATH</code> so linker can find library while
+launching R session (single line below):</li>
+</ol>
+<pre><code>LIBRARY_PATH=$ROOT_NLOPT/lib64:$LIBRARY_PATH R</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>In R console, install <code>nloptr</code> (two lines below)</li>
+</ol>
+<pre class="r"><code>install.packages(verbose = 1, &quot;nloptr&quot;)</code></pre>
+</div>
+<div id="tkrplot" class="section level4" number="0.17.1.2">
+<h4><span class="header-section-number">0.17.1.2</span>
+<code>tkrplot</code></h4>
+<ol style="list-style-type: decimal">
+<li>Run the following commands</li>
+</ol>
+<pre class="bash"><code>module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Set LIBRARY_PATH so linker can find library while launching R
+session (single line below):</li>
+</ol>
+<pre><code>C_INCLUDE_PATH=$ROOT_XPROTO/include LIBRARY_PATH=$ROOT_LIBXEXT/lib:$ROOT_LIBXSCRNSAVER/lib R</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>In R console, install <code>tkrplot</code> (two lines below)</li>
+</ol>
+<pre class="r"><code>install.packages(verbose = 1, &quot;tkrplot&quot;)</code></pre>
+</div>
+</div>
+<div id="error-reading-from-connection" class="section level3"
+number="0.17.2">
+<h3><span class="header-section-number">0.17.2</span> Error Reading from
+Connection</h3>
+<pre><code>Error in unserialize(node$con) : error reading from connection
+Calls: parlmice ... FUN -&gt; recvData -&gt; recvData.SOCK0node -&gt; unserialize</code></pre>
+<p>There likely wasn’t sufficient memory for a given core. Try
+increasing the max memory available and decreasing the number of cores
+and/or slots, so there is more memory available per core:</p>
+<p><a
+href="https://stackoverflow.com/questions/46186375/r-parallel-error-in-unserializenodecon-in-hpc"
+class="uri">https://stackoverflow.com/questions/46186375/r-parallel-error-in-unserializenodecon-in-hpc</a></p>
+<p><a
+href="https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function"
+class="uri">https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function</a></p>
+<p><a
+href="http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load"
+class="uri">http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load</a></p>
+</div>
+</div>
+<div id="initial-run" class="section level2" number="0.18">
+<h2><span class="header-section-number">0.18</span> Initial run</h2>
+<div id="load-the-latest-stack" class="section level3" number="0.18.1">
+<h3><span class="header-section-number">0.18.1</span> Load the Latest
+Stack</h3>
+<p><code>module load stack</code></p>
+</div>
+<div id="stack-2022.1" class="section level3" number="0.18.2">
+<h3><span class="header-section-number">0.18.2</span> Stack 2022.1</h3>
+<pre class="bash"><code>module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+cd path</code></pre>
+</div>
+<div id="stack-2021.1" class="section level3" number="0.18.3">
+<h3><span class="header-section-number">0.18.3</span> Stack 2021.1</h3>
+<pre class="bash"><code>module load stack/2021.1
+module load r/4.0.5_gcc-9.3.0
+cd path</code></pre>
+</div>
+<div id="stack-2020.2" class="section level3" number="0.18.4">
+<h3><span class="header-section-number">0.18.4</span> Stack 2020.2</h3>
+<pre class="bash"><code>module load stack/2020.2
+module load r/4.0.2_gcc-8.4.0
+cd path</code></pre>
+</div>
+<div id="stack-2020.1" class="section level3" number="0.18.5">
+<h3><span class="header-section-number">0.18.5</span> Stack 2020.1</h3>
+<pre class="bash"><code>module load stack/2020.1
+module load r/3.6.2_gcc-9.2.0
+cd path</code></pre>
+</div>
+<div id="installing-linux-packages-to-install-r-packages"
+class="section level3" number="0.18.6">
+<h3><span class="header-section-number">0.18.6</span> Installing Linux
+Packages to Install R Packages</h3>
+<pre class="bash"><code>module load stack
+module load r/4.1.3_gcc-9.4.0
+module load geos/3.9.1_gcc-9.4.0
+module load gdal/3.4.1_gcc-9.4.0-proj8
+module load proj/8.1.0_gcc-9.4.0
+module load gsl/2.7_gcc-9.4.0
+module load nlopt/2.7.0_gcc-9.4.0
+module load r-nloptr</code></pre>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGlnaC1QZXJmb3JtYW5jZSBDb21wdXRpbmcgKEFyZ29uIFN1cGVyY29tcHV0ZXIpIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGVycm9yID0gVFJVRSwKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGNsYXNzLnNvdXJjZSA9ICJmb2xkLXNob3ciKQpgYGAKCkFuYWx5c2lzIHNjcmlwdHMgZm9yIEhpZ2ggUGVyZm9ybWFuY2UgQ29tcHV0aW5nIChIUEMpIGF0IHRoZSBVbml2ZXJzaXR5IG9mIElvd2EuCkN1cnJlbnRseSB1c2VzIEFyZ29uLgoKRnJvbSBoZXJlOiBodHRwczovL3dvcmtmbG93LnVpb3dhLmVkdS9lbnRyeS9uZXcvMzI4Mi8xMTkyNzMzNgoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQ2x1c3RlcitTeXN0ZW1zK0RvY3VtZW50YXRpb24KCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FyZ29uK0NsdXN0ZXIKCiMjIERhdGEgU3RvcmFnZQoKV0FSTklORzogU2lnbmlmaWNhbnQgYW1vdW50cyBvZiBkYXRhIHN0b3JhZ2UgYXJlIHByb3ZpZGVkIG9uIEFyZ29uLCBidXQgZGF0YSBpcyBub3QgYmFja2VkIHVwIGluIGFueSB3YXkgdW5sZXNzIHNwZWNpYWwgYXJyYW5nZW1lbnRzIGFyZSBtYWRlLgpJdCBpcyB0aGUgcmVzcG9uc2liaWxpdHkgb2YgdGhlIHVzZXIgdG8gYmFjayB1cCBpbXBvcnRhbnQgaW5mb3JtYXRpb24uCgojIyBTZW5zaXRpdmUgRGF0YQoKVXNlciBhZ3JlZXMgdG8gcmVmcmFpbiBmcm9tIHN0b3JpbmcgUmVzdHJpY3RlZCBkYXRhIG9uIEhQQyByZXNvdXJjZXMuCkRhdGEgaXMgY2xhc3NpZmllZCBhcyBSZXN0cmljdGVkIHdoZW4gdGhlIHVuYXV0aG9yaXplZCBkaXNjbG9zdXJlLCBhbHRlcmF0aW9uIG9yIGRlc3RydWN0aW9uIG9mIHRoYXQgZGF0YSBjb3VsZCBjYXVzZSBhIHNpZ25pZmljYW50IGxldmVsIG9mIHJpc2sgdG8gdGhlIFVuaXZlcnNpdHkgb3IgaXRzIGFmZmlsaWF0ZXMuCkV4YW1wbGVzIG9mIFJlc3RyaWN0ZWQgZGF0YSBpbmNsdWRlIGRhdGEgcHJvdGVjdGVkIGJ5IHN0YXRlIG9yIGZlZGVyYWwgcHJpdmFjeSByZWd1bGF0aW9ucyBhbmQgZGF0YSBwZXJ0YWluaW5nIHRvIGlkZW50aWZpZWQgaHVtYW4gc3ViamVjdHMgdGhhdCBoYXMgbm90IGJlZW4gZGVpZGVudGlmaWVkLgoKIyMgRmVlcwoKQXQgcHJlc2VudCB0aGVyZSBhcmUgbm8gZmVlcyBmb3IgdGhlIHVzZSBvZiB0aGUgQXJnb24gY2x1c3RlciBmb3IgbG93LXByaW9yaXR5IHVzYWdlLgpGb3IgbGFyZ2UgdXNlcnMsIG9yIHRob3NlIHdobyB3YW50IGFjY2VzcyB0byBkZWRpY2F0ZWQgcmVzb3VyY2VzLCB0aGUgb3B0aW9uIG9mIHB1cmNoYXNpbmcgb3IgcmVudGluZyBzdXBwbGVtZW50YWwgc3lzdGVtIGhhcmR3YXJlIG1heSBiZSBhdmFpbGFibGUuCklmIHlvdSBhcmUgaW50ZXJlc3RlZCBpbiBkZWRpY2F0ZWQgaGFyZHdhcmUsIGNvbnRhY3QgcmVzZWFyY2gtY29tcHV0aW5nQHVpb3dhLmVkdS4KCiMjIEFjY2VzcyAoc3NoKToKCmBhcmdvbi5ocGMudWlvd2EuZWR1YAoKV2luZG93cyBFeHBsb3JlcjoKCmBcXGRhdGEuaHBjLnVpb3dhLmVkdVxhcmdvbl9ob21lYCAodXNlcm5hbWU6IGl0cGV0ZXJzZW5AdWlvd2EuZWR1KQoKTWFjIE9TIFRlcm1pbmFsOgoKYHNzaCBpdHBldGVyc2VuQGFyZ29uLmhwYy51aW93YS5lZHVgIChvbiBjYW1wdXMpCgpgc3NoIC1wIDQwIGl0cGV0ZXJzZW5AYXJnb24uaHBjLnVpb3dhLmVkdWAgKG9mZiBjYW1wdXMgd2l0aG91dCBWUE4pCgojIyBGaW5kIHdoaWNoIHZlcnNpb25zIG9mIFIgYXJlIGluc3RhbGxlZAoKYG1vZHVsZSBzcGlkZXIgUmAKCkJ1dCwgdGhlcmUgbWF5IGJlIG1vcmUgcmVjZW50IHZlcnNpb24gb2YgUiBpbnN0YWxsZWQgaW4gdGhlICJBZGRpdGlvbmFsIFNvZnR3YXJlIFN0YWNrcyIgKGh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0FyZ29uK1NvZnR3YXJlK0xpc3QpCgojIyBMb2FkIFNvZnR3YXJlIFN0YWNrcwoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQXJnb24rU29mdHdhcmUrTGlzdAoKYG1vZHVsZSBsb2FkIHN0YWNrLzIwMjEuMWAKCiMjIFIKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1IrUHJvZ3JhbXMraW4rQmF0Y2grbW9kZStmb3IrSFBDCgojIyMgSW5zdGFsbCBSIHBhY2thZ2VzCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BZGRpbmcrUitwcm9ncmFtcyt0bythK3BlcnNvbmFsK2xpYnJhcnkKCjEuICBmaXJzdCBsb2FkIHRoZSBSIGVudmlyb25tZW50IG1vZHVsZQoqICBgbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjBgCjIuICBsYXVuY2ggUgoqICBgUmAKMy4gIHRoZW4gaW5zdGFsbCB0aGUgcGFja2FnZSwgKHRoZSBjb2RlIGJlbG93IHVzZXMgYSBnZW5lcmljIGBwYWNrYWdlX25hbWVgKToKKiAgYGluc3RhbGwucGFja2FnZXMoInBhY2thZ2VfbmFtZSIsIHJlcG9zID0gImh0dHA6Ly9jcmFuLnItcHJvamVjdC5vcmciLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCB0eXBlID0gInNvdXJjZSIsIE5jcHVzID0gNDApYAoqICBJdCBpcyBwcmVmZXJhYmxlIHRvIGluc3RhbGwgcGFja2FnZXMgYnkgc291cmNlLCBpZiBwb3NzaWJsZSBmb3IgdXNlIGluIGBwYWNrcmF0YCwgYnV0IHlvdSBjYW4gcmVtb3ZlIGB0eXBlID0gc291cmNlYCBpZiB5b3Ugd2FudCB0byBpbnN0YWxsIGJpbmFyaWVzCiogIEFzc3VtaW5nIHRoYXQgeW91IGRvIG5vdCBoYXZlIGEgcGVyc29uYWwgbGlicmFyeSBkaXJlY3RvcnkgeW91IHdpbGwgc2VlCgpgV2FybmluZyBpbiBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIikgOgonbGliID0gIi9vcHQvUi8zLjAuMi9saWI2NC9SL2xpYnJhcnkiJyBpcyBub3Qgd3JpdGFibGVgCgpgV291bGQgeW91IGxpa2UgdG8gdXNlIGEgcGVyc29uYWwgbGlicmFyeSBpbnN0ZWFkPyAgKHkvbilgCgo0LiAgU2VsZWN0IGB5YAo1LiAgU2VsZWN0IGB5YCBhZ2FpbiB3aGVuIHByb21wdGVkIHRvIGNyZWF0ZSB0aGUgZGlyZWN0b3J5CnlvdXIgcGFja2FnZSBzaG91bGQgZG93bmxvYWQgYW5kIGluc3RhbGwgaW50byB5b3VyIHBlcnNvbmFsIGxpYnJhcnkgZGlyZWN0b3J5CgojIyMjIEluc3RhbGwgUiBwYWNrYWdlIGxvY2FsbHkgZnJvbSBzb3VyY2UKCmBpbnN0YWxsLnBhY2thZ2VzKHBhdGhfdG9fZmlsZSwgcmVwb3MgPSBOVUxMLCB0eXBlID0gInNvdXJjZSIsIE5jcHVzID0gNDApYAoKIyMjIyBNYW5hZ2luZyBwYWNrYWdlcyBmb3IgYSBwcm9qZWN0IHVzaW5nIGByZW52YAoKMS4gIENyZWF0ZSBhIGRpcmVjdG9yeSB3aGVyZSB5b3Ugd2FudCB5b3Ugd2FudCB0byBzdG9yZSB0aGUgcHJvamVjdC4KMi4gIGBjZGAgdG8gdGhlIGFib3ZlIGRpcmVjdG9yeQozLiAgU3RhcnQgUgo0LiAgTG9hZCB0aGUgYHJlbnZgIHBhY2thZ2U6IGBsaWJyYXJ5KCJyZW52IilgCjQuICBBdCB0aGUgUiBwcm9tcHQsIGluaXRpYWxpemUgdGhlIGByZW52YCBwcm9qZWN0IG9uIHRoZSBsb2NhbCByZXBvc2l0b3J5IG9mIFIgcGFja2FnZXMgd2l0aDogYHJlbnY6OmluaXQocHJvamVjdCA9ICIvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvU2VsZlJlZ3VsYXRpb25fSVJULyIpYAo2LiAgWW91IG11c3QgcmVzdGFydCB5b3VyIFIgc2Vzc2lvbiBpbiB0aGUgZ2l2ZW4gcHJvamVjdCBkaXJlY3RvcnkgYWZ0ZXIgcnVubmluZyBpbml0IGluIG9yZGVyIGZvciB0aGUgY2hhbmdlcyB0byB0YWtlIGVmZmVjdCEKNy4gIEZyb20gdGhpcyBwb2ludCBvbiB5b3UgYXJlIHdvcmtpbmcgaW4gYSBgcmVudmAgcHJvamVjdC4KSW5zdGFsbGVkIHBhY2thZ2VzIHdpbGwgZ28gaW50byBhIGxpYnJhcnkgd2l0aGluIHRoaXMgcHJvamVjdC4KQWZ0ZXIgaW5pdGlhbGl6aW5nIHRoZSBgcmVudmAgcHJvamVjdCBvbiB0aGUgbG9jYWwgcmVwb3NpdG9yeSBvZiBSIHBhY2thZ2VzLCBwYWNrYWdlcyBmcm9tIHRoZSBsb2NhbCByZXBvc2l0b3J5IGNhbiBiZSBpbnN0YWxsZWQgd2l0aCBgcmVudjo6aW5zdGFsbCgpYDoKKiAgYHJlbnY6Omluc3RhbGwoInBhY2thZ2VfbmFtZSIpYAo3LiAgVG8gcmVzdGFydCBhIHBhY2tyYXQgcHJvamVjdCBzaW1wbHkgc3RhcnQgUiBmcm9tIHRoZSBkaXJlY3RvcnkgY3JlYXRlZCBpbiBzdGVwICgxKS4gVGhlIHByb2plY3Qgd2lsbCBpbml0aWFsaXplIGF1dG9tYXRpY2FsbHkuCgpUbyB1cGRhdGUgdmVyc2lvbiBvZiBgcmVudmA6IGByZW52Ojp1cGdyYWRlKClgCgpUbyBpbnN0YWxsIHBhY2thZ2VzOiBgcmVudjo6aW5zdGFsbCgicGFja2FnZV9uYW1lIilgCgpUbyB1cGRhdGUgcGFja2FnZXM6IGByZW52Ojp1cGRhdGUoKWAKClRvIHNhdmUgdGhlIGN1cnJlbnQgc3RhdGUgb2YgeW91ciBsaWJyYXJ5OiBgcmVudjo6c25hcHNob3QoKWAKClRvIHJlc3RvcmUgdGhlIHN0YXRlIG9mIHlvdXIgbGlicmFyeSBmcm9tIHRoZSBsb2NrIGZpbGU6IGByZW52OjpyZXN0b3JlKClgCgpUbyBkaXNhYmxlIHBhY2tyYXQgb24gYSBwcm9qZWN0OiBgcmVudjo6ZGVhY3RpdmF0ZSgpYAoKIyMjIyBNYW5hZ2luZyBwYWNrYWdlcyBmb3IgYSBwcm9qZWN0IHVzaW5nIGBwYWNrcmF0YAoKaHR0cHM6Ly93aWtpLnVpb3dhLmVkdS9kaXNwbGF5L2hwY2RvY3MvQWRkaW5nK1IrcHJvZ3JhbXMrdG8rYStwZXJzb25hbCtsaWJyYXJ5CgoxLiAgQ3JlYXRlIGEgZGlyZWN0b3J5IHdoZXJlIHlvdSB3YW50IHlvdSB3YW50IHRvIHN0b3JlIHRoZSBwcm9qZWN0LgoyLiAgYGNkYCB0byB0aGUgYWJvdmUgZGlyZWN0b3J5CjMuICBTdGFydCBSCjQuICBMb2FkIHRoZSBwYWNrcmF0IHBhY2thZ2U6IGBsaWJyYXJ5KCJwYWNrcmF0IilgCjQuICBBdCB0aGUgUiBwcm9tcHQsIGluaXRpYWxpemUgdGhlIHBhY2tyYXQgcHJvamVjdCBvbiB0aGUgbG9jYWwgcmVwb3NpdG9yeSBvZiBSIHBhY2thZ2VzIHdpdGg6IGBwYWNrcmF0Ojppbml0KHByb2plY3QgPSAiL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0lOU0VSVF9QUk9KRUNUX05BTUUvIiwgb3B0aW9ucyA9IGxpc3QobG9jYWwucmVwb3MgPSAiL1VzZXJzL2l0cGV0ZXJzZW4vUi94ODZfNjQtcGMtbGludXgtZ251LWxpYnJhcnkvNC4wIikpYAo2LiAgWW91IG11c3QgcmVzdGFydCB5b3VyIFIgc2Vzc2lvbiBpbiB0aGUgZ2l2ZW4gcHJvamVjdCBkaXJlY3RvcnkgYWZ0ZXIgcnVubmluZyBpbml0IGluIG9yZGVyIGZvciB0aGUgY2hhbmdlcyB0byB0YWtlIGVmZmVjdCEKNy4gIEZyb20gdGhpcyBwb2ludCBvbiB5b3UgYXJlIHdvcmtpbmcgaW4gYSBwYWNrcmF0IHByb2plY3QuCkluc3RhbGxlZCBwYWNrYWdlcyB3aWxsIGdvIGludG8gYSBsaWJyYXJ5IHdpdGhpbiB0aGlzIHByb2plY3QuCkFmdGVyIGluaXRpYWxpemluZyB0aGUgcGFja3JhdCBwcm9qZWN0IG9uIHRoZSBsb2NhbCByZXBvc2l0b3J5IG9mIFIgcGFja2FnZXMsIHBhY2thZ2VzIGZyb20gdGhlIGxvY2FsIHJlcG9zaXRvcnkgY2FuIGJlIGluc3RhbGxlZCB3aXRoIGBwYWNrcmF0OjppbnN0YWxsX2xvY2FsKClgOgoqICBgcGFja3JhdDo6aW5zdGFsbF9sb2NhbCgicGFja2FnZV9uYW1lIilgCjcuICBUbyByZXN0YXJ0IGEgcGFja3JhdCBwcm9qZWN0IHNpbXBseSBzdGFydCBSIGZyb20gdGhlIGRpcmVjdG9yeSBjcmVhdGVkIGluIHN0ZXAgKDEpLiBUaGUgcHJvamVjdCB3aWxsIGluaXRpYWxpemUgYXV0b21hdGljYWxseS4KClRvIHNhdmUgdGhlIGN1cnJlbnQgc3RhdGUgb2YgeW91ciBsaWJyYXJ5OiBgcGFja3JhdDo6c25hcHNob3QoKWA7IGlmIHRoYXQgY29tbWFuZCBmYWlscyBkdWUgdG8gYW4gZXJyb3Igd2hlbiBmZXRjaGluZyBzb3VyY2VzLCB0cnkgYHBhY2tyYXQ6OnNuYXBzaG90KHNuYXBzaG90LnNvdXJjZXMgPSBGQUxTRSlgIAoKVG8gZGlzYWJsZSBwYWNrcmF0IG9uIGEgcHJvamVjdDogYGRpc2FibGUocmVzdGFydCA9IEZBTFNFKWAKCiMjIyMgVG8gaW5zdGFsbCBhIG5ldyBwYWNrYWdlIGZvciBhIHByb2plY3QgYWZ0ZXIgYHBhY2tyYXRgL2ByZW52YCBoYXMgYmVlbiBpbml0aWFsaXplZAoKMS4gRmlyc3QsIGxvYWQgdGhlIFIgZW52aXJvbm1lbnQgbW9kdWxlIChzZWUgYEluc3RhbGwgUiBwYWNrYWdlc2Agc2VjdGlvbiBhYm92ZSkKMi4gY2QgdG8gdGhlIGRpcmVjdG9yeSBvZiB0aGUgUiBwcm9qZWN0CjMuIGxhdW5jaCBSCiogIGBSYAo0LiB0aGVuIGluc3RhbGwgdGhlIHBhY2thZ2UsICh0aGUgY29kZSBiZWxvdyB1c2VzIGEgZ2VuZXJpYyBgcGFja2FnZV9uYW1lYCk6CiogIGBpbnN0YWxsLnBhY2thZ2VzKCJwYWNrYWdlX25hbWUiLCByZXBvcyA9ICJodHRwOi8vY3Jhbi5yLXByb2plY3Qub3JnIiwgdHlwZSA9ICJzb3VyY2UiLCBkZXBlbmRlbmNpZXMgPSBUUlVFLCBOY3B1cyA9IDQwKWAKKiAgYGluc3RhbGwucGFja2FnZXMoYygicGFja3JhdCIsInBzeWNoIiwidGlkeXZlcnNlIiwiZGF0YS50YWJsZSIsIm5sbWUiLCJsbWU0IiwibWlydCIsIlRlYWNoaW5nRGVtb3MiLCJBbWVsaWEiLCJtaWNlIiwibWljZWFkZHMiLCJhYmluZCIsImZ1dHVyZSIsImxhdmFhbiIsImJsYXZhYW4iLCJSY3BwIiwiaWdyYXBoIiwic2hpbnlzdGFuIiwiU3RhbkhlYWRlcnMiLCJicm1zIiwicnN0YW4iLCJyamFncyIsInJlbnYiKSwgcmVwb3MgPSAiaHR0cDovL2NyYW4uci1wcm9qZWN0Lm9yZyIsIHR5cGUgPSAic291cmNlIiwgZGVwZW5kZW5jaWVzID0gVFJVRSwgTmNwdXMgPSA0MClgCjUuIGByZW52OjpzbmFwc2hvdCgpYCBvciBgcGFja3JhdDo6c25hcHNob3QoKWA7IGlmIHRoYXQgY29tbWFuZCBmYWlscyBkdWUgdG8gYW4gZXJyb3Igd2hlbiBmZXRjaGluZyBzb3VyY2VzLCB0cnkgYHBhY2tyYXQ6OnNuYXBzaG90KHNuYXBzaG90LnNvdXJjZXMgPSBGQUxTRSlgCgojIyMjIEJ1aWxkIHBhY2tyYXQgZW52aXJvbm1lbnQgb24gYSBjb21wdXRlIG5vZGUgKG9ubHkgaWYgbmVjZXNzYXJ5IGlmIHBhY2thZ2UgbG9hZCBmYWlscyBkdWUgdG8gaXNzdWVzIGJ1aWxkaW5nIHBhY2thZ2VzKQoKMS4gYHFsb2dpbmAgLS0gZm9yIG1vcmUgaW5mbywgc2VlIGhlcmU6IGh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1Fsb2dpbitmb3IrSW50ZXJhY3RpdmUrU2Vzc2lvbnMKMi4gYG1vZHVsZSBsb2FkIHN0YWNrLzIwMjAuMi1iYXNlX2FyY2hgIC0tIHRoaXMgd2lsbCBlbnN1cmUgdGhhdCB0aGUgbW9kdWxlcyBwb2ludCB0byB0aGUgbG93ZXN0IGNvbW1vbiBtdWx0aWFyY2hpdGVjdHVyZSBvbiBBcmdvbiBhbmQgd2lsbCBydW4gb24gYWxsIG5vZGVzCjMuIGBtb2R1bGUgbG9hZCByYAo0LiBjZCB0byB0aGUgZGlyZWN0b3J5IG9mIHRoZSBSIHByb2plY3QKNS4gYFJgCjUuIENyZWF0ZSBwYWNrcmF0IHByb2plY3QgKHNlZSBhYm92ZSkKNi4gSW5zdGFsbCBwYWNrYWdlcwo3LiBUYWtlIGEgcGFja2FnZSBzbmFwc2hvdCB1c2luZyBwYWNrcmF0CjguIGBleGl0YCAtLSB0byBleGl0IHRoZSBxbG9naW4gc2Vzc2lvbgoKTm90ZTogWW91ciBwYWNrcmF0IGVudmlyb25tZW50IHdpbGwgdGhlbiBiZSBsaW5rZWQgdG8gdGhlIHByb3BlciBnbHBrIGxpYnJhcnkgYW5kIHdpbGwgcnVuIG9uIGFueSBBcmdvbiBub2RlLgpZb3UgZG8gbm90IG5lZWQgdG8gdXNlIHRoZSBgMjAyMC4yLWJhc2VfYXJjaGAgbW9kdWxlIGF0IHJ1biB0aW1lLCBvbmx5IGJ1aWxkIHRpbWUuCgojIyMgUnVuIFIgU2NyaXB0CgpgbW9kdWxlIGxvYWQgci80LjAuNV9nY2MtOS4zLjBgCgpgY2QgcGF0aC90by9kYXRhU2V0MTIzYAoKW2NkIC9Vc2Vycy9pdHBldGVyc2VuL0RvY3VtZW50cy9Qcm9qZWN0cy9UZXN0L0FuYWx5c2VzXQoKYFJzY3JpcHQgcGF0aC90by9wcm9ncmFtLlJgCgpbUnNjcmlwdCB0ZXN0LlJdCgojIyMgUXVpdCBSCgpgcSgpYAoKIyMgU3RhbgoKaHR0cHM6Ly9naXRodWIuY29tL3N0YW4tZGV2L3JzdGFuL3dpa2kvSW5zdGFsbGluZy1SU3Rhbi1vbi1MaW51eAoKTWFrZXZhcnM6CgpgXFxkYXRhLmhwYy51aW93YS5lZHVcYXJnb25faG9tZVwuUlxNYWtldmFyc2AKCiMjIEpvYiBTY3JpcHQKCmBgYGJhc2gKIyEvYmluL3NoCgojIFNldCB3b3JraW5nIGRpcmVjdG9yeQpjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJULwoKIyBTcGVjaWZ5IHFzdWIgb3B0aW9ucwojJCAtcGUgc21wIDQKIyQgLU0gaXNhYWMtdC1wZXRlcnNlbkB1aW93YS5lZHUKIyQgLW0gZWFzCiMkIC1sIG1mPTUxMkcKIyQgLWwgaF92bWVtPTUxMkcKIyQgLWN3ZAojJCAtcSBVSS1ITQojJCAtZSAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC8KIyQgLW8gL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9PdXRwdXQvCgojIExvYWQgdGhlIGVudmlyb25tZW50IG1vZHVsZXMKbW9kdWxlIGxvYWQgc3RhY2svMjAyMi4xCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCgojIFJ1biB0aGUgUiBzY3JpcHQKUnNjcmlwdCAuL0FuYWx5c2VzL2ZhY3RvclNjb3Jlcy5SCmBgYAoKIyMgcXN1YiBvcHRpb25zCgpgLXBlIHNtcCA0YDogc3BlY2lmeSBhIHBhcmVsbGVsIGVudmlyb25tZW50IGFuZCBudW1iZXIgb2YgY29yZXMgdG8gYmUgdXNlZCAoYHNtcGAgPSBzaGFyZWQgbWVtb3J5IHBhcmFsbGVsIGVudmlyb25tZW50KQoqICBUaGUgYE9NUF9OVU1fVEhSRUFEU2AgdmFyaWFibGUgaXMgc2V0IHRvICcxJyBieSBkZWZhdWx0LgpJZiB5b3VyIGNvZGUgY2FuIHRha2UgYWR2YW50YWdlIG9mIHRoZSB0aHJlYWRpbmcgdGhlbiBzcGVjaWZ5IGBPTVBfTlVNX1RIUkVBRFNgIHRvIGJlIGVxdWFsIHRvIHRoZSBudW1iZXIgb2Ygam9iIGNvcmVzIHBlciBub2RlIHJlcXVlc3RlZC4KCmAtTSBpc2FhYy10LXBldGVyc2VuQHVpb3dhLmVkdWA6IFNldCB0aGUgZW1haWwgYWRkcmVzcyB0byByZWNlaXZlIGVtYWlsIGFib3V0IGpvYnMuIFRoaXMgbXVzdCBiZSB5b3VyIFVuaXZlcnNpdHkgb2YgSW93YSBlbWFpbCBhZGRyZXNzLgoKYC1tIGVhc2A6IFNwZWNpZnkgd2hlbiB0byBzZW5kIGFuIGVtYWlsIG1lc3NhZ2UgKDsgOyA7IDsgKQoqICBgYmAgPSBiZWdpbm5pbmcgb2Ygam9iCiogIGBlYCA9IGVuZCBvZiBqb2IKKiAgYGFgID0gd2hlbiBqb2IgaXMgYWJvcnRlZAoqICBgc2AgPSB3aGVuIGpvYiBpcyBzdXNwZW5kZWQKKiAgYG5gID0gbm8gbWFpbCBpcyBzZW50CgpgLWwgbWY9NTEyR2A6IHJlcXVlc3QgYSBwYXJ0aWN1bGFyIHF1YW50aXR5IG9mIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLiBJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWwgaF92bWVtPTUxMkdgOiByZXF1ZXN0IGEgcGFydGljdWxhciBxdWFudGl0eSBvZiB2aXJ0dWFsIG1lbW9yeSB5b3UgZXhwZWN0IHRvIHVzZSAodG8gYmUgYXZhaWxhYmxlIGZvciB5b3VyIGNvbXB1dGF0aW9uIHRvIHN0YXJ0OyB0aGUgcmVxdWVzdCBpcyBvbmx5IGFwcGxpY2FibGUgYXQgc2NoZWR1bGluZyB0aW1lLgpJdCBpcyBub3QgYSBsaW1pdC4pCgpgLWN3ZGA6IERldGVybWluZXMgd2hldGhlciB0aGUgam9iIHdpbGwgYmUgZXhlY3V0ZWQgZnJvbSB0aGUgY3VycmVudCB3b3JraW5nIGRpcmVjdG9yeS4KSWYgbm90IHNwZWNpZmllZCwgdGhlIGpvYiB3aWxsIGJlIHJ1biBmcm9tIHlvdXIgaG9tZSBkaXJlY3RvcnkuCgpgLXEgVUktSE1gOiBzcGVjaWZ5IHF1ZXVlCgpgLWUgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9PdXRwdXQvYDogTmFtZSBvZiBhIGZpbGUgb3IgZGlyZWN0b3J5IGZvciBzdGFuZGFyZCBlcnJvci4KCmAtbyAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvQmF5ZXNpYW5fSVJUL091dHB1dC9gOiBOYW1lIG9mIGEgZmlsZSBvciBkaXJlY3RvcnkgZm9yIHN0YW5kYXJkIG91dHB1dC4KCiMjIFN1Ym1pdCBKb2IKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL0Jhc2ljK0pvYitTdWJtaXNzaW9uCgpodHRwczovL3dpa2kudWlvd2EuZWR1L2Rpc3BsYXkvaHBjZG9jcy9BZHZhbmNlZCtKb2IrU3VibWlzc2lvbgoKYGNkIHBhdGgvdG8vZGF0YVNldDEyM2AKCltjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvVGVzdC9Kb2JzXQoKYHFzdWIgbXlzY3JpcHQuam9iYAoKSm9iIGRlcGVuZGVuY3kgKHJ1biBgSm9iIEJgIHdoZW4gYEpvYiBBYCBpcyBmaW5pc2hlZCk6CgpgcXN1YiAtaG9sZF9qaWQgSk9CX0lEIHRlc3RfQi5qb2JgCgojIyMgQmF5ZXNpYW4gSVJUCgpgY2QgL1VzZXJzL2l0cGV0ZXJzZW4vRG9jdW1lbnRzL1Byb2plY3RzL0JheWVzaWFuX0lSVC9Kb2JzYAoKYHFzdWIgYmF5ZXNpYW5JUlQuam9iYAoKYHFzdWIgLWhvbGRfamlkIEpPQl9JRCBmYWN0b3JTY29yZXMuam9iYAoKIyMjIE11bHRpcGxlIEltcHV0YXRpb24KCmBjZCAvVXNlcnMvaXRwZXRlcnNlbi9Eb2N1bWVudHMvUHJvamVjdHMvTXVsdGlwbGVfSW1wdXRhdGlvbi9Kb2JzYAoKYHFzdWIgc3JzX3NlbGZSZWd1bGF0aW9uLlJgCgojIyBRdWV1ZXMKCmh0dHBzOi8vd2lraS51aW93YS5lZHUvZGlzcGxheS9ocGNkb2NzL1F1ZXVlcythbmQrUG9saWNpZXMKCmBVSWAKCmBVSS1ITWAKCmBVSS1HUFUtSE1gCgpgVUktREVWRUxPUGAKCmBhbGwucWAKCiMjIFF1ZXVlIFN0YXR1cwoKYHFzdGF0IC1nIGMgLXEgUVVFVUVfTkFNRWAKCmBxc3RhdCAtZyBjIC1xIFVJYAoKIyMgSm9iIFN0YXR1cwoKYHFzdGF0IC11IGl0cGV0ZXJzZW5gCgpgcXN0YXQgLWogSk9CX0lEYAoKIyMgSm9iIFRpbWUgYW5kIE1lbW9yeQoKKiAgVGVybWluYXRlZCBqb2JzOiBgcWFjY3QgLWogSk9CX0lEYAoqICBKb2JzIGluIHByb2dyZXNzOiBgcXN0YXQgLWogSk9CX0lEIHwgZ3JlcCB1c2FnZWAKCiMjIENhbmNlbCBKb2IKCmBxZGVsIEpPQl9JRGAKCiMjIFRyb3VibGVzaG9vdGluZwoKIyMjIEVycm9yIFdoZW4gSW5zdGFsbGluZyBQYWNrYWdlcyBmcm9tIFNvdXJjZQoKWW91IG1heSBoYXZlIHRvIHNldCBlbnZpcm9ubWVudCB2YXJpYWJsZXMgaW4gZWFjaCBtb2R1bGUgZmlsZSB0byBoZWxwIHRoZSBjb21waWxlciBmaW5kIGhlYWRlcnMgYW5kIGxpYnJhcmllcy4KTm90ZSB0aGF0IGlmIHlvdSBydW4gaW50byBhbnkgQysrIGNvZGUsIHlvdSB3aWxsIG5lZWQgdG8gc2V0IHRoZSBgQ1BMVVNfSU5DTFVERV9QQVRIYCB2YXJpYWJsZS4KCiMjIyMgYG5sb3B0cmAKCjEuIFJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmRzCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjIuMQptb2R1bGUgbG9hZCByLzQuMS4zX2djYy05LjQuMAptb2R1bGUgbG9hZCBubG9wdApgYGAKCjIuIFNldCBgTElCUkFSWV9QQVRIYCBzbyBsaW5rZXIgY2FuIGZpbmQgbGlicmFyeSB3aGlsZSBsYXVuY2hpbmcgUiBzZXNzaW9uIChzaW5nbGUgbGluZSBiZWxvdyk6CgpgYGAKTElCUkFSWV9QQVRIPSRST09UX05MT1BUL2xpYjY0OiRMSUJSQVJZX1BBVEggUgpgYGAKCjMuIEluIFIgY29uc29sZSwgaW5zdGFsbCBgbmxvcHRyYCAodHdvIGxpbmVzIGJlbG93KQoKYGBgcgppbnN0YWxsLnBhY2thZ2VzKHZlcmJvc2UgPSAxLCAibmxvcHRyIikKYGBgCgojIyMjIGB0a3JwbG90YAoKMS4gUnVuIHRoZSBmb2xsb3dpbmcgY29tbWFuZHMKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMi4xCm1vZHVsZSBsb2FkIHIvNC4xLjNfZ2NjLTkuNC4wCmBgYAoKMi4gU2V0IExJQlJBUllfUEFUSCBzbyBsaW5rZXIgY2FuIGZpbmQgbGlicmFyeSB3aGlsZSBsYXVuY2hpbmcgUiBzZXNzaW9uIChzaW5nbGUgbGluZSBiZWxvdyk6CgpgYGAKQ19JTkNMVURFX1BBVEg9JFJPT1RfWFBST1RPL2luY2x1ZGUgTElCUkFSWV9QQVRIPSRST09UX0xJQlhFWFQvbGliOiRST09UX0xJQlhTQ1JOU0FWRVIvbGliIFIKYGBgCgozLiBJbiBSIGNvbnNvbGUsIGluc3RhbGwgYHRrcnBsb3RgICh0d28gbGluZXMgYmVsb3cpCgpgYGByCmluc3RhbGwucGFja2FnZXModmVyYm9zZSA9IDEsICJ0a3JwbG90IikKYGBgCgojIyMgRXJyb3IgUmVhZGluZyBmcm9tIENvbm5lY3Rpb24KCmBgYApFcnJvciBpbiB1bnNlcmlhbGl6ZShub2RlJGNvbikgOiBlcnJvciByZWFkaW5nIGZyb20gY29ubmVjdGlvbgpDYWxsczogcGFybG1pY2UgLi4uIEZVTiAtPiByZWN2RGF0YSAtPiByZWN2RGF0YS5TT0NLMG5vZGUgLT4gdW5zZXJpYWxpemUKYGBgCgpUaGVyZSBsaWtlbHkgd2Fzbid0IHN1ZmZpY2llbnQgbWVtb3J5IGZvciBhIGdpdmVuIGNvcmUuClRyeSBpbmNyZWFzaW5nIHRoZSBtYXggbWVtb3J5IGF2YWlsYWJsZSBhbmQgZGVjcmVhc2luZyB0aGUgbnVtYmVyIG9mIGNvcmVzIGFuZC9vciBzbG90cywgc28gdGhlcmUgaXMgbW9yZSBtZW1vcnkgYXZhaWxhYmxlIHBlciBjb3JlOgoKaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDYxODYzNzUvci1wYXJhbGxlbC1lcnJvci1pbi11bnNlcmlhbGl6ZW5vZGVjb24taW4taHBjCgpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xNzAxNTU5OC9lcnJvci1jYWxsaW5nLXNlcmlhbGl6ZS1yLWZ1bmN0aW9uCgpodHRwOi8vZ2ZvcmdlLnNlLzIwMTUvMDIvaG93LXRvLWdvLXBhcmFsbGVsLWluLXItYmFzaWNzLXRpcHMvI01lbW9yeV9sb2FkCgojIyBJbml0aWFsIHJ1bgoKIyMjIExvYWQgdGhlIExhdGVzdCBTdGFjawoKYG1vZHVsZSBsb2FkIHN0YWNrYAoKIyMjIFN0YWNrIDIwMjIuMQoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIyLjEKbW9kdWxlIGxvYWQgci80LjEuM19nY2MtOS40LjAKY2QgcGF0aApgYGAKCiMjIyBTdGFjayAyMDIxLjEKCmBgYGJhc2gKbW9kdWxlIGxvYWQgc3RhY2svMjAyMS4xCm1vZHVsZSBsb2FkIHIvNC4wLjVfZ2NjLTkuMy4wCmNkIHBhdGgKYGBgCgojIyMgU3RhY2sgMjAyMC4yCgpgYGBiYXNoCm1vZHVsZSBsb2FkIHN0YWNrLzIwMjAuMgptb2R1bGUgbG9hZCByLzQuMC4yX2djYy04LjQuMApjZCBwYXRoCmBgYAoKIyMjIFN0YWNrIDIwMjAuMQoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjay8yMDIwLjEKbW9kdWxlIGxvYWQgci8zLjYuMl9nY2MtOS4yLjAKY2QgcGF0aApgYGAKCiMjIyBJbnN0YWxsaW5nIExpbnV4IFBhY2thZ2VzIHRvIEluc3RhbGwgUiBQYWNrYWdlcwoKYGBgYmFzaAptb2R1bGUgbG9hZCBzdGFjawptb2R1bGUgbG9hZCByLzQuMS4zX2djYy05LjQuMAptb2R1bGUgbG9hZCBnZW9zLzMuOS4xX2djYy05LjQuMAptb2R1bGUgbG9hZCBnZGFsLzMuNC4xX2djYy05LjQuMC1wcm9qOAptb2R1bGUgbG9hZCBwcm9qLzguMS4wX2djYy05LjQuMAptb2R1bGUgbG9hZCBnc2wvMi43X2djYy05LjQuMAptb2R1bGUgbG9hZCBubG9wdC8yLjcuMF9nY2MtOS40LjAKbW9kdWxlIGxvYWQgci1ubG9wdHIKYGBgCg==</div>
+<script type="text/javascript" src="includes/external-links.js"></script>
+
+<br>
+<hr>
+<br>
+
+<!-- Add lab logo -->
+<p style="text-align: center;">
+    <a href="https://developmental-psychopathology.lab.uiowa.edu" target="_blank">
+        <img alt="Developmental Psychopathology Lab" src="images/formalLogo.png" width="60%">
+    </a>
+</p>
+
+<br>
+<hr>
+<br>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://github.com/DevPsyLab" target="_blank" class="fa fa-github fa-fw fa-3x"></a>
+    <a href="https://twitter.com/devpsylab" target="_blank" class="fa fa-twitter fa-fw fa-3x"></a>
+    <a href="https://www.facebook.com/DevPsyLab" target="_blank" class="fa fa-facebook fa-fw fa-3x"></a>
+	<a href="https://www.instagram.com/dev_psy_lab" target="_blank" class="fa fa-instagram fa-fw fa-3x"></a>
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("hpc.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
