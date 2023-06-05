@@ -310,9 +310,30 @@ https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library
 1. Select `y`
 1. Select `y` again when prompted to create the directory; your package should download and install into your personal library directory
 
+Example:
+
+```r
+install.packages(c(
+    "packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"),
+    repos = "http://cran.r-project.org",
+    #dependencies = TRUE,
+    Ncpus = 40)
+```
+
 ### Install R package locally from source
 
 `install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)`
+
+Example:
+
+```r
+install.packages(c(
+    "packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"),
+    repos = "http://cran.r-project.org",
+    type = "source",
+    dependencies = TRUE,
+    Ncpus = 40)
+```
 
 ### Managing packages for a project using `renv`
 
