@@ -84,7 +84,7 @@ Note: many of these initial setup steps described below are not necessary for ge
 1. Install tools to allow you to compile `R` packages so you can install packages from source, if necessary (i.e., if package binaries are not available):
     - If on Windows, install [Rtools](https://cran.r-project.org/bin/windows/Rtools/); may have to right click and "Run As Administrator"
     - If on Mac, install [R Compiler Tools for Rcpp on MacOS](https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/)
-1. Set up git, GitLab, and the GitHub Desktop App in the main program files directory; may have to right click and "Run As Administrator"; For instructions setting up and using GitLab, see here: https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md
+1. Set up git, GitLab, and the GitHub Desktop App in the main program files directory; may have to right click and "Run As Administrator"; For instructions setting up and using GitLab, see here: https://devpsylab.github.io/DataAnalysis/git.html#21_To_begin
 1. The `Rprofile.site` file in the `etc` folder of the `R` installation directory is the code that is run for ***every user*** at the beginning each time you load R.  We will update the default `Rprofile.site` file with the lab's `Rprofile.site` file so `R` installs packages in the correct location, sets the default package repository, updates packages, and gives you a fortune cookie.
 To do this, perform the following steps:
     - Rename the `Rprofile.site` file in the `R` installation directory (`C:/R/R-[InsertVersionNumber]/etc/Rprofile.site`) to be `Rprofile_BACKUP.site`
@@ -103,6 +103,8 @@ To do this, perform the following steps:
     - If your `HOME` directory is in a OneDrive folder (or another cloud-based sync folder), you will want to change the directory of your `HOME` path so that it is not in a OneDrive folder.
     To do that, open [`Environment Variables`](https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10) in Windows.
     Then, add/edit `HOME` as the "variable name" with the intended location as the "variable value" (e.g., `C:/Users/[user]/Documents`, where you replace "user" with your HawkID).
+        - You may also solve this issue by placing the following command in the `Rprofile_site` from the previous step
+            - `Sys.setenv("HOME" = "C:/Users/[specific user ID])/Documents`
     - Move the revised `.Rprofile` file to the `HOME` directory and overwrite the original `.Rprofile` file (if it exists).
     You may have to show hidden files in order to see the file (PC: see Windows Explorer settings; Mac: Command+Shift+Dot).
     - Make sure to show filename extensions in your file explorer window, and make sure the file is named `.Rprofile` (not `.Rprofile.Rprofile`).
