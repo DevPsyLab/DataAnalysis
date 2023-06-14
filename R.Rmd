@@ -166,7 +166,7 @@ Instructions adapted from: [https://mirror.las.iastate.edu/CRAN/bin/windows/base
 1. Close R
 1. Delete anything left of the old installation
 
-# Style Guide
+# Style Guide and Best Practices {#bestPractices}
 
 ## Create `Rstudio Project`
 
@@ -199,6 +199,15 @@ To create computational notebooks see the `Markdown` section on [computational n
 
 It is important to comment code frequently and clearly.
 You want you (and others) to easily be able to understand your code if you come back to it several years later!
+
+## Don't save workspace image
+
+It is best practices to begin R each session with a clean workspace.
+If there is a `.Rdata` file in the same folder as the `Rstudio Project`, Rstudio will automatically load the objects into the workspace at the beginning of the session.
+This is problematic because those objects can interact/interfere withe the code and can lead to problems with replicability for others who are running the code without those objects in the workspace.
+When you exit `RStudio`, `RStudio` asks if you want to "Save workspace image to `[filepath]/.Rdata`?"
+Make sure to select "Don't Save"!
+However, do make sure to save your R scripts before exiting Rstudio.
 
 # Data Management
 
