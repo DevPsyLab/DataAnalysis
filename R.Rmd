@@ -114,6 +114,10 @@ To do this, perform the following steps:
 If the `Rprofile.site` and `.Rprofile` files are correctly set up, they should pre-populate your `path` location when you open R.
 If the contents of the `Global Environment` in `RStudio` are empty, your `Rprofile.site` and/or `.Rprofile` files are not set up correctly.
     - If you get this error (`Error: could not find function "install.packages"`), run the following line manually and then restart `RStudio` after the package finishes installing: `install.packages("fortunes")`
+1. For [reproducibility purposes](#dontSaveWorkspace), prevent `R`/`RStudio` from saving the workspace.
+    - With RStudio running, choose `Tools > Global Options` from the menus.
+    - In the Options dialog, change the value for `Save workspace to .RData on exit` to `Never`.
+    - Click `OK`.
 1. Install the `petersenlab` `R` package using the following steps:
     - Install the `remotes` package using the following command: `install.packages("remotes")`
     - Install the `petersenlab` package using the following command: `remotes::install_github("DevPsyLab/petersenlab")`
@@ -201,11 +205,12 @@ To create computational notebooks see the `Markdown` section on [computational n
 It is important to comment code frequently and clearly.
 You want you (and others) to easily be able to understand your code if you come back to it several years later!
 
-## Don't save workspace image
+## Don't save your workspace image {#dontSaveWorkspace}
 
+For reproducibility purposes, it is important [**not** to save your workspace image](https://www.r-bloggers.com/2017/04/using-r-dont-save-your-workspace/).
 It is best practices to begin R each session with a clean workspace.
 If there is a `.Rdata` file in the same folder as the `Rstudio Project`, Rstudio will automatically load the objects into the workspace at the beginning of the session.
-This is problematic because those objects can interact/interfere withe the code and can lead to problems with replicability for others who are running the code without those objects in the workspace.
+This is problematic because those objects can interact/interfere with the code and can lead to problems with replicability for others who are running the code without those objects in the workspace.
 When you exit `RStudio`, `RStudio` asks if you want to "Save workspace image to `[filepath]/.Rdata`?"
 Make sure to select "Don't Save"!
 However, do make sure to save your R scripts before exiting Rstudio.
