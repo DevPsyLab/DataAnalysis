@@ -114,18 +114,18 @@ To do this, perform the following steps:
 If the `Rprofile.site` and `.Rprofile` files are correctly set up, they should pre-populate your `path` location when you open R.
 If the contents of the `Global Environment` in `RStudio` are empty, your `Rprofile.site` and/or `.Rprofile` files are not set up correctly.
     - If you get this error (`Error: could not find function "install.packages"`), run the following line manually and then restart `RStudio` after the package finishes installing: `install.packages("fortunes")`
-1. For [reproducibility purposes](#dontSaveWorkspace), prevent `R`/`RStudio` from saving the workspace.
-    - With RStudio running, choose `Tools > Global Options` from the menus.
+1. For [reproducibility purposes](#dontSaveWorkspace), prevent `R`/`RStudio` from saving your workspaces automatically using the following steps:
+    - With RStudio running, choose `Tools → Global Options` from the menus.
     - In the Options dialog, change the value for `Save workspace to .RData on exit` to `Never`.
     - Click `OK`.
 1. Install the `petersenlab` `R` package using the following steps:
     - Install the `remotes` package using the following command: `install.packages("remotes")`
     - Install the `petersenlab` package using the following command: `remotes::install_github("DevPsyLab/petersenlab")`
 1. Depending on your role in lab, Request an [API token](https://redcap.icts.uiowa.edu/redcap/api/help/?content=tokens) for the following REDCap project(s):
-    - All Lab personnel
+    - All lab personnel:
        - [School Readiness Study](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=4941)
        - [School Readiness Study Screening](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=4958)
-    - Lab coordinator, lab staff, and undergraduate RA's
+    - Lab coordinator, lab staff, and undergraduate RAs:
        - [201701837 - Mechanisms in the Development of Self-Regulation, School Readiness, and Behavior Problems [Data Extraction]](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=11233)
        - [School Readiness Study - Prospective Participants](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=10440)
 1. When your API token has been approved for these projects, open the `Encrypt REDCap Token.R` script:
@@ -145,7 +145,7 @@ https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.
 `\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data Processing\1. Export Data\Export Data.R`
 1. Ensure your HawkID and location of your encryption key in the script are correct, and then run the script to verify that you can export data from REDCap
 1. For antialiased plots in `RStudio`, change the Graphics backend to `Cairo`:
-Tools → Global Options → Graphics
+`Tools → Global Options → Graphics`
 
 # Install Packages
 
