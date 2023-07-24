@@ -510,6 +510,7 @@ However, some data objects have multiple keys.
 For instance, in long form data objects, each participant may have multiple rows corresponding to multiple timepoints.
 In this case, the keys are `participantID` and `timepoint`.
 If a participant has multiple rows corresponding to timepoints and measures, the keys are `participantID`, `timepoint`, and `measure`.
+In general, each row should have a value on each of the keys; there should be no missingness in the keys.
 
 To merge two objects, the keys must be present in both objects.
 The keys are used to merge the variables in object 1 (`x`) with the variables in object 2 (`y`).
@@ -531,6 +532,7 @@ Note: if the two objects include variables with the same name (apart from the ke
 So, it will add a suffix (e.g., `.x`, `.y`) to each common variable to indicate which object (i.e., object `x` or object `y`) the variable came from, where object `x` is the first object—i.e., the object to which object `y` (the second object) is merged.
 In general, apart from the keys, you should not include variables with the same name in two objects to be merged.
 To prevent this, either remove or rename the shared variable in one of the objects, or include the shared variable as a key.
+However, as described above, you should include it as a key ***only*** if it uniquely identifies each row in terms of levels of nesting.
 
 ## Data Before Merging
 
