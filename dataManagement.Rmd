@@ -512,10 +512,16 @@ In this case, the keys are `participantID` and `timepoint`.
 If a participant has multiple rows corresponding to timepoints and measures, the keys are `participantID`, `timepoint`, and `measure`.
 
 To merge two objects, the keys must be present in both objects.
-The keys are used to merge the variables in `object 1` with the variables in `object 2`.
+The keys are used to merge the variables in object 1 (`x`) with the variables in object 2 (`y`).
 Different merge types select different rows to merge.
 
-Here is a visual that depicts various types of merges/joins:
+Below is a visual that depicts various types of merges/joins.
+Object `x` is the circle labeled as `A`.
+Object `y` is the circle labeled as `B`.
+The area of overlap in the Venn diagram indicates the rows on the keys that are shared between the two objects (e.g., `participantID` values 1, 2, and 3).
+The non-overlapping area indicates the rows on the keys that are unique to each object (e.g., `participantID` values 4, 5, and 6 in Object `x` and values 7, 8, and 9 in Object `y`).
+The shaded yellow area indicates which rows (on the keys) are kept in the merged object from each of the two objects, when using each of the merge types.
+For instance, a left outer join keeps the shared rows and the rows that are unique to object `x`, but it drops the rows that are unique to object `y`.
 
 ![Types of merges/joins](images/joins.png)
 
@@ -524,7 +530,7 @@ Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-join
 Note: if the two objects include variables with the same name (apart from the keys), `R` will not know how you want each to appear in the merged object.
 So, it will add a suffix (e.g., `.x`, `.y`) to each common variable to indicate which object (i.e., object `x` or object `y`) the variable came from, where object `x` is the first object—i.e., the object to which object `y` (the second object) is merged.
 In general, apart from the keys, you should not include variables with the same name in two objects to be merged.
-To prevent this, either remove or rename the variable in one of the objects.
+To prevent this, either remove or rename the shared variable in one of the objects, or include the shared variable as a key.
 
 ## Data Before Merging
 
