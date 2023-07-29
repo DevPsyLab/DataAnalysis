@@ -314,7 +314,7 @@ summary(model2)$adj.r.squared - summary(model1)$adj.r.squared
 
 # Moderated Multiple Regression {#moderation}
 
-https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html
+https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html (archived at https://perma.cc/P34H-7BH3)
 
 ```{r}
 states <- as.data.frame(state.x77)
@@ -393,13 +393,13 @@ confint(listwiseDeletionModel)
 
 Also see here:
 
-- https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002
-- https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure
-- https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re
-- https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values
-- https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps
+- https://stats.stackexchange.com/questions/158366/fit-multiple-regression-model-with-pairwise-deletion-or-on-a-correlation-covari/173002#173002 (archived at https://perma.cc/GH5T-RXD9)
+- https://stats.stackexchange.com/questions/299792/r-lm-covariance-matrix-manual-calculation-failure (archived at https://perma.cc/F7EL-AUFZ)
+- https://stats.stackexchange.com/questions/107597/is-there-a-way-to-use-the-covariance-matrix-to-find-coefficients-for-multiple-re (archived at https://perma.cc/KU3X-FB2C)
+- https://stats.stackexchange.com/questions/105006/how-to-perform-a-bivariate-regression-using-pairwise-deletion-of-missing-values (archived at https://perma.cc/QWQ5-2TLW)
+- https://dl.dropboxusercontent.com/s/4sf0et3p47ykctx/MissingPairwise.sps (archived at https://perma.cc/UC4K-2L9T)
 
-Adapted from here: https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise
+Adapted from here: https://stefvanbuuren.name/fimd/sec-simplesolutions.html#sec:pairwise (archived at https://perma.cc/EGU6-3M3Q)
 
 ```{r}
 modelData <- mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")]
@@ -466,7 +466,7 @@ summary(imputedData_pooledEstimates)
 
 1. Examine extent and type of missing data, consider [how to handle missing values](#missingness) ([multiple imputation](#imputation), [FIML](#fiml), [pairwise deletion](#pairwiseDeletion), [listwise deletion](#listwiseDeletion))
     - Little's MCAR test from `mcar_test()` function of the `njtierney/naniar` package
-    - Bayesian handling of missing data: https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html
+    - Bayesian handling of missing data: https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html (archived at https://perma.cc/Z4HT-QXWR)
 1. Examine descriptive statistics, consider variable transformations
 1. Examine scatterplot matrix to examine whether associations between predictor and outcomes are linear or nonlinear
 1. Model building: theory and empiricism (stepwise regression, likelihood ratio tests, k-fold cross validation to check for over-fitting compared to simpler model)
@@ -506,7 +506,8 @@ hist(generalizedRegressionModelBootstrapped)
 # Cross Validation
 
 To examine degree of prediction error and over-fitting to determine best model
-https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best
+
+https://stats.stackexchange.com/questions/103459/how-do-i-know-which-method-of-cross-validation-is-best (archived at https://perma.cc/38BL-KLRJ)
 
 ## K-fold cross validation
 
@@ -606,7 +607,7 @@ Check for nonlinearities (non-horizontal line) in plots of:
 
 ##### Semi-parametric or non-parametric regression models
 
-http://www.lisa.stat.vt.edu/?q=node/7517
+http://www.lisa.stat.vt.edu/?q=node/7517 (archived at https://web.archive.org/web/20180113065042/http://www.lisa.stat.vt.edu/?q=node/7517)
 
 Note: using semi-parametric or non-parametric models increases fit in context of nonlinearity at the expense of added complexity.
 Make sure to avoid fitting an overly complex model (e.g., use k-fold cross validation).
@@ -614,7 +615,7 @@ Often, the simpler (generalized) linear model is preferable to semi-paremetric o
 
 ###### Semi-parametric: Generalized Additive Models
 
-http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models
+http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models (archived at https://web.archive.org/web/20170213041653/http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models)
 
 ```{r}
 generalizedAdditiveModel <- gam(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
@@ -648,7 +649,7 @@ where `x1` and `x2` are endogenous regressors, `w1` and `w2` exogeneous regresso
 Durbin-Wu-Hausman test:
 
 ```{r}
-hsng2 <- read.dta("http://www.stata-press.com/data/r11/hsng2.dta")
+hsng2 <- read.dta("http://www.stata-press.com/data/r11/hsng2.dta") #archived at https://perma.cc/7P2Q-ARKR
 
 fiv <- ivreg(rent ~ hsngval + pcturban | pcturban + faminc + reg2 + reg3 + reg4, data = hsng2) #Housing values are likely endogeneous and therefore instrumented by median family income (faminc) and 3 regional dummies (reg2, reg4, reg4)
 
@@ -713,7 +714,7 @@ spreadLevelPlot(multipleRegressionModel)
 
 ##### Breusch-Pagan test
 
-http://www.inside-r.org/packages/cran/lmtest/docs/bptest
+https://www.rdocumentation.org/packages/lmtest/versions/0.9-40/topics/bptest (archived at https://perma.cc/K4WC-7TVW)
 
 ```{r}
 bptest(multipleRegressionModel)
@@ -743,7 +744,7 @@ ncvTest(multipleRegressionModel, ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum
 - If residual variance differs as a function of model predictors, consider adding interactions/product terms (the effect of one variable depends on the level of another variable)
 - Try transforming the outcome variable to be normally distributed (log-transform if the errors seem consistent in percentage rather than absolute terms)
 - If the error variance is proportional to a variable $z$, then fit the model using Weighted Least Squares (WLS), with the weights given be $1/z$
-- Weighted least squares (WLS) using the "weights" argument of the `lm()` function; to get weights, see: https://stats.stackexchange.com/a/100410/20338
+- Weighted least squares (WLS) using the "weights" argument of the `lm()` function; to get weights, see: https://stats.stackexchange.com/a/100410/20338 (archived at https://perma.cc/C6BY-G9MS)
 - Huber-White standard errors (a.k.a. "Sandwich" estimates) from a heteroscedasticity-corrected covariance matrix
     - `coeftest()` function from the `sandwich` package along with hccm sandwich estimates from the `car` package 
     - `robcov()` function from the `rms` package
@@ -787,7 +788,7 @@ Independent errors means that the errors are uncorrelated with each other.
 
 #### Ways to Handle
 
-- Generalized least squares (GLS) models are capable of handling correlated errors: https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html
+- Generalized least squares (GLS) models are capable of handling correlated errors: https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/gls.html (archived at https://perma.cc/RHZ6-5GT8)
 - Regression with cluster variable
     - `robcov()` from `rms` package
 - [Hierarchical linear modeling](hlm.html)
@@ -853,7 +854,7 @@ The condition index is calculated using a factor analysis on the independent var
 Values of 10-30 indicate a mediocre multicollinearity in the regression variables.
 Values > 30 indicate strong multicollinearity.
 
-For how to interpret, see here: https://stats.stackexchange.com/a/87610/20338
+For how to interpret, see here: https://stats.stackexchange.com/a/87610/20338 (archived at https://perma.cc/Y4J8-MY7Q)
 
 ```{r}
 ols_eigen_cindex(multipleRegressionModel)
@@ -891,7 +892,7 @@ ols_eigen_cindex(multipleRegressionModel)
 - Robust regression
     - Best when no outliers: MM-type regression estimator
         - `lmrob()`/`glmrob()` function of `robustbase` package
-        - Iteratively reweighted least squares (IRLS): `rlm(, method = "MM")` function of `MASS` package: http://www.ats.ucla.edu/stat/r/dae/rreg.htm
+        - Iteratively reweighted least squares (IRLS): `rlm(, method = "MM")` function of `MASS` package: http://www.ats.ucla.edu/stat/r/dae/rreg.htm (archived at https://web.archive.org/web/20161119025907/http://www.ats.ucla.edu/stat/r/dae/rreg.htm)
     - Most resistant to outliers: Least trimmed squares (LTS)—but not good as a standalone estimator, better for identifying outliers
         - `ltsReg()` function of `robustbase` package (best)
     - Best when single predictor: Theil-Sen estimator
@@ -1072,10 +1073,9 @@ avPlots(multipleRegressionModel_cv, "I(bpi_anxiousDepressedSum * log(bpi_anxious
 Resources
 
 - For comparison of methods, see Book: "Modern Methods for Robust Regression"
-- http://www.ats.ucla.edu/stat/r/dae/rreg.htm
-- http://stats.stackexchange.com/a/46234/20338
-- http://cran.r-project.org/web/views/Robust.html
-
+- http://www.ats.ucla.edu/stat/r/dae/rreg.htm (archived at https://web.archive.org/web/20161119025907/http://www.ats.ucla.edu/stat/r/dae/rreg.htm)
+- http://stats.stackexchange.com/a/46234/20338 (archived at https://perma.cc/WC57-9GA7)
+- http://cran.r-project.org/web/views/Robust.html (archived at https://perma.cc/THN5-KNY3)
 
 ###### Robust correlation
 
@@ -1143,7 +1143,7 @@ lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
    na.action = na.exclude)
 ```
 
-Iteratively reweighted least squares (IRLS): http://www.ats.ucla.edu/stat/r/dae/rreg.htm
+Iteratively reweighted least squares (IRLS): http://www.ats.ucla.edu/stat/r/dae/rreg.htm (archived at https://web.archive.org/web/20161119025907/http://www.ats.ucla.edu/stat/r/dae/rreg.htm)
 
 ```{r}
 rlm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
@@ -1172,7 +1172,7 @@ ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
 
 Quantile (L1) regression: `rq()` function of quantreg package
 
-https://data.library.virginia.edu/getting-started-with-quantile-regression/
+https://data.library.virginia.edu/getting-started-with-quantile-regression/ (archived at https://perma.cc/FSV4-5DCR)
 
 ```{r}
 quantiles <- 1:9/10
@@ -1219,7 +1219,7 @@ plot(
 
 #### QQ plots {#qqPlot}
 
-http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html
+http://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html (archived at https://perma.cc/9UC3-3WRX)
 
 ```{r}
 qqPlot(multipleRegressionModel, main = "QQ Plot", id = TRUE)
@@ -1343,7 +1343,7 @@ leveragePlots(multipleRegressionModel, id = TRUE)
 
 ### Observations with high influence (on OLS regression coefficients)
 
-https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html
+https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html (archived at https://perma.cc/T2TS-PZZ4)
 
 ```{r}
 head(influence.measures(multipleRegressionModel)$infmat)
@@ -1437,13 +1437,13 @@ coef(ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
 
 Book: An R Companion to Applied Regression
 
-http://people.duke.edu/~rnau/testing.htm
+http://people.duke.edu/~rnau/testing.htm (archived at https://perma.cc/9CXH-GBSN)
 
-http://www.statmethods.net/stats/rdiagnostics.html
+http://www.statmethods.net/stats/rdiagnostics.html (archived at https://perma.cc/7JX8-K6BY)
 
-http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html
+http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html (archived at https://perma.cc/4A2P-9S49)
 
-https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions
+https://en.wikipedia.org/wiki/Ordinary_least_squares#Assumptions (archived at https://perma.cc/Q4NS-X8TJ)
 
 # Session Info
 
