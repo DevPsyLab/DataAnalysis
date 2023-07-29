@@ -29,7 +29,7 @@ For code below, Open Git (or Powershell, Terminal, Command Prompt, etc.) in dire
 
 1. Install git (https://git-scm.com/downloads)
 1. Install GitHub Desktop app (https://desktop.github.com)
-1. Create a Personal Access Token (https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html or https://research-git.uiowa.edu/-/profile/personal_access_tokens) on the UI GitLab instance (https://research-git.uiowa.edu) to access UI GitLab repositories from GitHub Desktop.
+1. Create a Personal Access Token (https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html, archived at https://perma.cc/6ZH8-JNZC; or https://research-git.uiowa.edu/-/profile/personal_access_tokens, archived at https://perma.cc/7JPU-WDBS) on the UI GitLab instance (https://research-git.uiowa.edu) to access UI GitLab repositories from GitHub Desktop.
     -  For application name, put "GitHub"
     -  For expiration date, leave it blank
     -  For scopes, select everything
@@ -57,11 +57,11 @@ Enter your HawkID as your username and your UI GitLab Personal Access Token as y
 
 ## Instructions for using GitHub Desktop app with GitLab
 
-- https://itnext.io/how-to-use-github-desktop-with-gitlab-cd4d2de3d104
-- https://community.reclaimhosting.com/t/using-github-desktop-with-gitlab/876
-- https://stackoverflow.com/questions/22639815/does-github-for-windows-work-with-gitlab
-- https://github.com/desktop/desktop/issues/852#issuecomment-402546848
-- https://github.com/desktop/desktop/issues/3816#issuecomment-421060974
+- https://itnext.io/how-to-use-github-desktop-with-gitlab-cd4d2de3d104 (archived at https://perma.cc/S59R-3YT7)
+- https://community.reclaimhosting.com/t/using-github-desktop-with-gitlab/876 (archived at https://perma.cc/ZPT9-KEQL)
+- https://stackoverflow.com/questions/22639815/does-github-for-windows-work-with-gitlab (archived at https://perma.cc/99RR-6KLE)
+- https://github.com/desktop/desktop/issues/852#issuecomment-402546848 (archived at https://perma.cc/3GCU-GTPU)
+- https://github.com/desktop/desktop/issues/3816#issuecomment-421060974 (archived at https://perma.cc/N8RS-BFWR)
 
 ## How to create a repo on local computer
 
@@ -90,7 +90,7 @@ For example, the `SRS-DataProcessing` repo lives on the lab drive.
 1. Click the `URL` tab
 1. Paste in the URL
 1. Navigate to where you want to save it
-    -  The recommended location for your repos is to create a folder titled `GitHub` in your `Documents` folder, and to put repos in the `GitHub` folder (by default: PC: `C:/Users/[USERNAME]/Documents/GitHub/`; Mac: `/Users/[user]/Documents/GitHub/`) because various lab scripts try to read the lab functions from this location; it is *NOT* recommended to put git repos in a OneDrive folder because [git files tend not to play nice with syncing services](https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended) (e.g., OneDrive, Dropbox)
+    -  The recommended location for your repos is to create a folder titled `GitHub` in your `Documents` folder, and to put repos in the `GitHub` folder (by default: PC: `C:/Users/[USERNAME]/Documents/GitHub/`; Mac: `/Users/[user]/Documents/GitHub/`) because various lab scripts try to read the lab functions from this location; it is *NOT* recommended to put git repos in a OneDrive folder because [git files tend not to play nice with syncing services](https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended; archived at https://perma.cc/UTX8-KVL9) (e.g., OneDrive, Dropbox)
 1. Click `Clone`
 1. Enter your GitLab username as your username and your Personal Access Token as your password
 
@@ -132,19 +132,19 @@ git remote -v
 1. Make sure the large files are not in the repo yet.
 1. In GitHub Desktop, open the repo you want to use LFS for
 1. In GitHub Desktop, select the `Repository` tab, then select `Command Prompt` or similar
-1. In the command prompt, type (https://docs.gitlab.com/ee/topics/git/lfs/):
+1. In the command prompt, type (based on instructions from: https://docs.gitlab.com/ee/topics/git/lfs/; archived at https://perma.cc/6WMC-GTKN):
 ```
-git lfs install                       # initialize the Git LFS project
-git lfs track "*.Rdata"               # select the file extensions that you want to treat as large files
+git lfs install          # initialize the Git LFS project
+git lfs track "*.Rdata"  # select the file extensions that you want to treat as large files
 ```
 5. This should have created a `.gitattributes` file in the repo. In GitHub Desktop, commit and push the `.gitattributes` file to the cloud version of the repo.
 6. Copy the large files into the repo.
 7. In GitHub Desktop, commit and push the large file to the cloud version of the repo.
 8. (Or, if not using GitHub Desktop, can commit in the command prompt (https://docs.gitlab.com/ee/topics/git/lfs/)):
 ```
-git add .                                               # add the large file to the project
-git commit -am "insert name of commit message here"     # commit the file meta data
-git push origin master                                  # sync the git repo and large file to the GitLab server
+git add .                                            # add the large file to the project
+git commit -am "insert name of commit message here"  # commit the file meta data
+git push origin master                               # sync the git repo and large file to the GitLab server
 ```
 9. When asked for credentials, use your HawkID as your username and your personal access token as your password
 
@@ -180,7 +180,7 @@ git clone (HTTPS Link)
 1. In GitHub Desktop, click the desired lines in the gutter
 2. Create the commit, and leave the other changes for you to continue working on.
 
-https://github.blog/2015-01-14-partial-commits-in-github-for-windows
+https://github.blog/2015-01-14-partial-commits-in-github-for-windows (archived at https://perma.cc/5U3V-YWRF)
 
 ## How to copy a repo to a new repo {#copyRepo}
 
@@ -190,7 +190,7 @@ https://github.com/new/import
 
 ## GitHub shows all files as being changed even though the files haven't changed
 
-Windows and Mac use different line endings (https://github.com/Microsoft/WSL/issues/184):
+Windows and Mac use different line endings (https://github.com/Microsoft/WSL/issues/184; archived at https://perma.cc/F8UX-YJP3):
 
 ```
 git config --global core.autocrlf true
@@ -198,7 +198,7 @@ git config --global core.autocrlf true
   
 ## Error: `You are not allowed to push code to protected branches on this project`
 
-1. Make sure the owner of the repo unprotects the branch (https://stackoverflow.com/questions/32246503/fix-gitlab-error-you-are-not-allowed-to-push-code-to-protected-branches-on-thi)
+1. Make sure the owner of the repo unprotects the branch (https://stackoverflow.com/questions/32246503/fix-gitlab-error-you-are-not-allowed-to-push-code-to-protected-branches-on-thi; archived at https://perma.cc/98AF-N6BY)
 1. Open the repo, click "Settings", "Repository", "Protected Branches"
 1. Change "Allowed to merge" and "Allowed to push" to "Developers and Maintainers", and click "Unprotect"
 
@@ -227,7 +227,7 @@ git push
 
 ## Error: `Sync failed -- Syncing would overwrite your uncommitted changes`
 
-https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-would-be-over-written-by-syncing:
+https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-would-be-over-written-by-syncing (archived at https://perma.cc/AP5S-G38B):
 
 1. `git stash -u`
 1. (perform manual sync in GitHub Desktop)
@@ -235,7 +235,7 @@ https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-woul
   
 ## Error: `Pipeline has failed for master`
 
-https://docs.gitlab.com/ee/topics/autodevops/#at-the-project-level
+https://docs.gitlab.com/ee/topics/autodevops/#at-the-project-level (archived at https://perma.cc/3MAQ-ZBFF)
 
 1. Open the repo in GitLab
 1. Go to your project's "Settings" > "CI/CD" > "Auto DevOps"
