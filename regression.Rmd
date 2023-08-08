@@ -47,8 +47,12 @@ library("mice")
 
 # Import Data
 
-```{r, class.source = "fold-hide"}
+```{r, eval = FALSE, class.source = "fold-hide"}
 mydata <- read.csv("https://osf.io/8syp5/download")
+```
+
+```{r, include = FALSE}
+mydata <- read.csv("./data/cnlsy.csv") #https://osf.io/8syp5/download
 ```
 
 # Data Preparation
@@ -648,9 +652,15 @@ where `x1` and `x2` are endogenous regressors, `w1` and `w2` exogeneous regresso
 
 Durbin-Wu-Hausman test:
 
-```{r}
+```{r, eval = FALSE}
 hsng2 <- read.dta("http://www.stata-press.com/data/r11/hsng2.dta") #archived at https://perma.cc/7P2Q-ARKR
+```
 
+```{r, include = FALSE}
+hsng2 <- read.dta("./data/hsng2.dta") #http://www.stata-press.com/data/r11/hsng2.dta archived at https://perma.cc/7P2Q-ARKR
+```
+
+```{r}
 fiv <- ivreg(rent ~ hsngval + pcturban | pcturban + faminc + reg2 + reg3 + reg4, data = hsng2) #Housing values are likely endogeneous and therefore instrumented by median family income (faminc) and 3 regional dummies (reg2, reg4, reg4)
 
 summary(fiv, diagnostics = TRUE)
