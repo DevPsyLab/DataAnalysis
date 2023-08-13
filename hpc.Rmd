@@ -300,7 +300,7 @@ https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library (
     * `R`
 1. then install the package, (the code below uses a generic `package_name`):
     * `install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`
-    * It is preferable to install packages by source, if possible for use in `packrat`, but you can remove `type = source` if you want to install binaries
+    * If using `packrat`, it is preferable to install packages by source, if possible, but you can remove `type = source` if you want to install binaries
     * Assuming that you do not have a personal library directory you will see
 
     ```
@@ -317,7 +317,7 @@ Example:
 
 ```r
 install.packages(c(
-    "packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"),
+    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
     repos = "http://cran.r-project.org",
     dependencies = TRUE,
     Ncpus = 40)
@@ -331,7 +331,7 @@ Example:
 
 ```r
 install.packages(c(
-    "packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"),
+    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
     repos = "http://cran.r-project.org",
     type = "source",
     dependencies = TRUE,
@@ -344,13 +344,16 @@ install.packages(c(
 1. `cd` to the above directory
 1. Start R
 1. Load the `renv` package: `library("renv")`
-1. At the R prompt, initialize the `renv` project on the local repository of R packages with: `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
+1. At the R prompt, initialize the `renv` project on the local repository of R packages with:
+    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
+    - or `renv::init()` if you are in the intended working directory
 1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
 1. From this point on you are working in a `renv` project.
 Installed packages will go into a library within this project.
 After initializing the `renv` project on the local repository of R packages, packages from the local repository can be installed with `renv::install()`:
     * `renv::install("package_name")`
-1. To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
+1. To restart a `renv` project, simply start R from the directory created in step (1).
+The project will initialize automatically.
 
 To update version of `renv`: `renv::upgrade()`
 
@@ -362,7 +365,7 @@ To save the current state of your library: `renv::snapshot()`
 
 To restore the state of your library from the lock file: `renv::restore()`
 
-To disable packrat on a project: `renv::deactivate()`
+To disable `renv` on a project: `renv::deactivate()`
 
 ### Managing packages for a project using `packrat`
 
@@ -371,18 +374,18 @@ https://wiki.uiowa.edu/display/hpcdocs/Adding+R+programs+to+a+personal+library (
 1. Create a directory where you want you want to store the project.
 1. `cd` to the above directory
 1. Start R
-1. Load the packrat package: `library("packrat")`
-1. At the R prompt, initialize the packrat project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
+1. Load the `packrat` package: `library("packrat")`
+1. At the R prompt, initialize the `packrat` project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
 1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
-1. From this point on you are working in a packrat project.
+1. From this point on you are working in a `packrat` project.
 Installed packages will go into a library within this project.
-After initializing the packrat project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
+After initializing the `packrat` project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
     * `packrat::install_local("package_name")`
 1. To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
 
 To save the current state of your library: `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)` 
 
-To disable packrat on a project: `disable(restart = FALSE)`
+To disable `packrat` on a project: `disable(restart = FALSE)`
 
 ### To install a new package for a project after `packrat`/`renv` has been initialized
 
@@ -395,19 +398,19 @@ To disable packrat on a project: `disable(restart = FALSE)`
     * `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
 1. `renv::snapshot()` or `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)`
 
-### Build packrat environment on a compute node (only if necessary if package load fails due to issues building packages)
+### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
 
 1. `qlogin` -- for more info, see here: https://wiki.uiowa.edu/display/hpcdocs/Qlogin+for+Interactive+Sessions (archived at https://perma.cc/4B47-HHYJ)
 1. `module load stack/2020.2-base_arch` -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes
 1. `module load r`
 1. cd to the directory of the R project
 1. `R`
-1. Create packrat project (see above)
+1. Create `packrat` project (see above)
 1. Install packages
-1. Take a package snapshot using packrat
+1. Take a package snapshot using `packrat`
 1. `exit` -- to exit the qlogin session
 
-Note: Your packrat environment will then be linked to the proper `glpk` library and will run on any Argon node.
+Note: Your `packrat` environment will then be linked to the proper `glpk` library and will run on any Argon node.
 You do not need to use the `2020.2-base_arch` module at run time, only build time.
 
 ## Update Packages
