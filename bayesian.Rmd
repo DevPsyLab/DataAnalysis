@@ -170,16 +170,19 @@ round(model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo"))
 ## Parameters for Which to Set Priors
 
 ```{r}
-get_prior(Reaction ~ 1 + Days + (1 + Days | Subject), 
-          data = sleepstudy)
+get_prior(
+  Reaction ~ 1 + Days + (1 + Days | Subject), 
+  data = sleepstudy)
 ```
 
 ## Define Priors
 
 ```{r}
-bprior <- c(set_prior("normal(5, 5)", coef = "Days"),
-            set_prior("cauchy(0, 10)", class = "sd"),
-            set_prior("lkj(2)", class = "cor"))
+bprior <- c(
+  set_prior("normal(5, 5)", coef = "Days"),
+  set_prior("cauchy(0, 10)", class = "sd"),
+  set_prior("lkj(2)", class = "cor"))
+
 bprior
 ```
 
