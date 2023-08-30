@@ -190,6 +190,51 @@ knitr::opts_chunk$set(
 ````
 Then, include whatever text and/or code chunks.
 
+## Creating CSS Commands
+
+Personalized commands can be created in Visual Code through the CSS file within the Wiki folder.
+To create a new CSS commands:
+
+1. In Visual Studio Code, open the `css` tab within the Wiki Folder
+
+1. Open the `# srs.css` file under the `css` tab
+
+1. Enter in your personalized command according to the following structure:
+
+```
+COMMAND_NAME {
+  command-specification1: value1;
+  command-specification2: value2;
+  command-specification3: value3;
+  quotes: """ """ "‘" "'";
+}
+```
+
+1. The following specifications may be added to your command:
+   * `font-size`: Value = `percentage`
+      * E.g. `font-size: 150%`
+   * `font-style`: Value = `bold`, `italic`, `underline`
+      * E.g. `font-style: bold`, `font-style: italic`
+   * `color`: Value = `color name` or `color code`
+      * E.g. `color: green`, `color: #0e6b1c`
+   * To edit the command to add quotations, include the following *after* the end bracket of the command: 
+      ```
+      COMMAND_NAME:before { content: open-quote; }
+      COMMAND_NAME:after  { content: close-quote; }
+      ```
+1. An example of a command is presented here:
+
+```
+example {
+  font-size: 150%;
+  font-style: italic;
+  color:#C800FC;
+  quotes: """ """ "‘" "'";
+}
+example:before { content: open-quote; }
+example:after  { content: close-quote; }
+```
+
 # `rmarkdown` Website using GitHub Actions {#website}
 
 ## Steps to Create
