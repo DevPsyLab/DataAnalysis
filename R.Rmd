@@ -72,7 +72,7 @@ If you have questions:
 Note: many of these initial setup steps described below are not necessary for general use; many of these steps are necessary only for using lab-related repositories (e.g., to gain API access to export data from `REDCap`, to use absolute paths rather than relative paths so repos can communicate with each other, etc.).
 
 1. Make sure you are logged onto a computer that can access the lab server (either a lab computer, or a computer you can VPN into the lab server), and that you have admin access to install and uninstall software
-1. Install `R` (https://www.r-project.org/) into a directory that contains no spaces; On PC, change the location from the default `C:/Program Files/R/[R-VERSION]` (which contains a space) to `C:/R/[R-VERSION]` ([which does not contain any spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Windows); archived at ; archived at https://perma.cc/6VMX-3LYX---this is because [some packages that require compilation to install cannot read filepaths with spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation); archived at https://perma.cc/XA3V-JTPY); may have to right click and "Run As Administrator"
+1. Install `R` (https://www.r-project.org/) into a directory that contains no spaces; On PC, change the location from the default `C:/Program Files/R/[R-VERSION]` (which contains a space) to `C:/R/[R-VERSION]` ([which does not contain any spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Windows); archived at https://perma.cc/6VMX-3LYX---this is because [some packages that require compilation to install cannot read filepaths with spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation); archived at https://perma.cc/XA3V-JTPY); may have to right click and "Run As Administrator"
     - If `R` was already installed in a directory that contains spaces (e.g., `C:/Program Files/R/[R-VERSION]`), uninstall `R` before installing it in a directory that doesn't contain spaces
 1. Install `RStudio` Desktop (https://www.rstudio.com/products/rstudio/download/) in the main program files directory; may have to right click and "Run As Administrator".
 `RStudio` is the best available graphical user interface for R.
@@ -166,6 +166,7 @@ Instructions adapted from: https://mirror.las.iastate.edu/CRAN/bin/windows/base/
     Then, click or tap on "Properties".
     In the Properties window, go to the Compatibility tab.
     At the bottom of the window, check the box next to the "Run this program as an administrator" option, and then click or tap on Apply or OK.
+1. Make sure you have the latest version of the tools necessary to compile packages from source (i.e., Rtools for Windows or R Compiler Tools for Rcpp on MacOS; see the instructions in the section on [initial set up](#setup))
 1. Open the new `R` version and run `update.packages(checkBuilt = TRUE, ask = FALSE)`, and install any necessary packages
 1. Close R
 1. Delete anything left of the old installation
