@@ -1102,6 +1102,93 @@ semPaths(
   edge.label.cex = 1.5)
 ```
 
+# Moderation {#moderation}
+
+```{r}
+states <- as.data.frame(state.x77)
+names(states)[which(names(states) == "HS Grad")] <- "HS.Grad"
+```
+
+## Mean Center Predictors
+
+Make sure to mean-center or orthogonalize predictors before computing the interaction term.
+
+```{r}
+states$Illiteracy_centered <- scale(states$Illiteracy, scale = FALSE)
+states$Murder_centered <- scale(states$Murder, scale = FALSE)
+```
+
+## Compute Interaction Term
+
+```{r}
+states$interaction <- states$Illiteracy_centered * states$Murder_centered
+```
+
+## Model Syntax
+
+```{r}
+moderationModel <- '
+Income ~ Illiteracy_centered + Murder_centered + interaction + HS.Grad
+'
+```
+
+## Fit the Model
+
+```{r}
+moderationFit <- sem(
+  moderationModel,
+  data = states,
+  missing = "ML",
+  estimator = "MLR",
+  std.lv = TRUE)
+```
+
+## Summary Output
+
+```{r}
+summary(
+  moderationFit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+The model is saturated because it has as many estimated parameters as there are data points (i.e., in terms of means, variances, and covariances), so it has zero degrees of freedom.
+Because the model is saturated, it has "perfect" fit.
+
+```{r}
+fitMeasures(
+  moderationFit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr"))
+```
+
+## Residuals
+
+```{r}
+residuals(moderationFit, type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(moderationFit, sort. = TRUE)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  moderationFit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
+
 # Power analysis
 
 https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis
