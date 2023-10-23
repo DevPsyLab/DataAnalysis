@@ -27,6 +27,26 @@ Adapted from `brms` workshop by Paul-Christian Bürkner
 library("lme4")
 library("rstan")
 library("brms")
+library("bayestestR")
+```
+
+## Simulate Data
+
+```{r, class.source = "fold-hide"}
+set.seed(52242)
+
+sampleSize <- 1000
+
+id <- rep(1:100, each = 10)
+X <- rnorm(sampleSize)
+M <- 0.5*X + rnorm(sampleSize)
+Y <- 0.7*M + rnorm(sampleSize)
+
+mydata <- data.frame(
+  id = id,
+  X = X,
+  Y = Y,
+  M = M)
 ```
 
 ## Load Data
@@ -56,14 +76,19 @@ methods(class = "brmsfit")
 ### Complete Pooling
 
 ```{r, results = "hide"}
-fit_sleep1 <- brm(Reaction ~ 1 + Days, data = sleepstudy)
+fit_sleep1 <- brm(
+  Reaction ~ 1 + Days,
+  data = sleepstudy,
+  seed  = 52242)
 ```
 
 ### Random Intercepts
 
 ```{r, results = "hide"}
-fit_sleep2 <- brm(Reaction ~ 1 + Days + (1 | Subject), 
-                  data = sleepstudy)
+fit_sleep2 <- brm(
+  Reaction ~ 1 + Days + (1 | Subject), 
+  data = sleepstudy,
+  seed  = 52242)
 ```
 
 ### Random Intercepts and Slopes
@@ -71,7 +96,8 @@ fit_sleep2 <- brm(Reaction ~ 1 + Days + (1 | Subject),
 ```{r, results = "hide"}
 fit_sleep3 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
-  data = sleepstudy
+  data = sleepstudy,
+  seed  = 52242
 )
 ```
 
@@ -115,8 +141,11 @@ plot(conditional_effects(fit_sleep1), points = TRUE)
 
 ```{r}
 # re_formula = NULL ensures that group-level effects are included
-ce2 <- conditional_effects(fit_sleep3, conditions = conditions, 
-                        re_formula = NULL)
+ce2 <- conditional_effects(
+  fit_sleep3,
+  conditions = conditions,
+  re_formula = NULL)
+
 plot(ce2, ncol = 6, points = TRUE)
 ```
 
@@ -165,6 +194,34 @@ model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo")
 round(model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo"))
 ```
 
+# Multilevel Mediation {#multilevelMediation}
+
+The syntax below estimates random intercepts (which allows each participant to have a different intercept) to account for nested data within the same participant.
+
+```{r}
+bayesianMediationSyntax <-
+  bf(M ~ X + (1 |i| id)) +
+  bf(Y ~ X + M + (1 |i| id)) +
+  set_rescor(FALSE) # don't add a residual correlation between M and Y
+
+bayesianMediationModel <- brm(
+  bayesianMediationSyntax,
+  data  = mydata,
+  seed  = 52242
+)
+
+summary(bayesianMediationModel)
+
+hypothesis(
+  bayesianMediationModel,
+  "b_M_X * b_Y_M = 0", # indirect effect = a path * b path
+  class = NULL,
+  seed  =  52242
+)
+
+mediation(bayesianMediationModel)
+```
+
 # Setting Priors
 
 ## Parameters for Which to Set Priors
@@ -195,7 +252,8 @@ fit_sleep4 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
   prior = bprior, 
-  sample_prior = TRUE
+  sample_prior = TRUE,
+  seed  = 52242
 )
 ```
 
@@ -224,7 +282,8 @@ fit_sleep4 <- brm(
   data = sleepstudy,
   prior = bprior, 
   sample_prior = TRUE,
-  cores = 4
+  cores = 4,
+  seed  = 52242
 )
 ```
 
