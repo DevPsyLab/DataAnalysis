@@ -42,6 +42,10 @@ X <- rnorm(sampleSize)
 M <- 0.5*X + rnorm(sampleSize)
 Y <- 0.7*M + rnorm(sampleSize)
 
+X[sample(1:length(X), size = 10)] <- NA
+M[sample(1:length(M), size = 10)] <- NA
+Y[sample(1:length(Y), size = 10)] <- NA
+
 mydata <- data.frame(
   id = id,
   X = X,
@@ -113,6 +117,12 @@ summary(fit_sleep3)
 
 ```{r}
 prior_summary(fit_sleep3)
+```
+
+## Model Parameters
+
+```{r}
+variables(fit_sleep3)
 ```
 
 ## Model Coefficients
@@ -299,10 +309,35 @@ https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html (arch
 ?brm_multiple
 ```
 
-## Multiple Imputation on the Fly
+## Imputation on the Fly During Model Fitting
+
+https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html (archived at https://perma.cc/HLL3-TDB7)
 
 ```{r}
 ?mi
+```
+
+```{r}
+bayesianRegressionImputationSyntax <-
+  bf(X | mi() ~ (1 |i| id)) +
+  bf(M | mi() ~ mi(X) + (1 |i| id)) +
+  bf(Y | mi() ~ mi(X) + mi(M) + (1 |i| id)) +
+  set_rescor(FALSE) # don't add a residual correlation between X, M, and Y
+
+bayesianRegressionModel <- brm(
+  bayesianRegressionImputationSyntax,
+  data  = mydata,
+  seed  = 52242
+)
+
+summary(bayesianRegressionModel)
+
+hypothesis(
+  bayesianRegressionModel,
+  "bsp_M_miX * bsp_Y_miM = 0", # indirect effect = a path * b path
+  class = NULL,
+  seed  =  52242
+)
 ```
 
 # Session Info
