@@ -235,7 +235,7 @@ example:before { content: open-quote; }
 example:after  { content: close-quote; }
 ```
 
-# `rmarkdown` Website using GitHub Actions {#website}
+# `rmarkdown`/`Quarto` Website using GitHub Actions {#website}
 
 ## Steps to Create
 
@@ -250,16 +250,22 @@ example:after  { content: close-quote; }
     - `/.github/workflows/deploy_markdown.yml` file
         - this file tells GitHub Actions was steps to run
         - add the following contents to the file:
-            - if the `rmarkdown` website is intended to be public: https://github.com/DevPsyLab/LabWiki/blob/main/.github/workflows/deploy_rmarkdown.yml
-            - if the `rmarkdown` website is intended to be private: https://github.com/DevPsyLab/SchoolReadinessStudy/blob/main/.github/workflows/deploy_rmarkdown.yml
-        
-    - `_site.yml` file
-        - this file creates the navbar
+            - if using `rmarkdown`:
+                - if the website is intended to be public: https://github.com/DevPsyLab/LabWiki/blob/main/.github/workflows/deploy_rmarkdown.yml
+                - if the website is intended to be private: https://github.com/DevPsyLab/SchoolReadinessStudy/blob/main/.github/workflows/deploy_rmarkdown.yml
+            - if using `Quarto`:
+                - if the website is intended to be public: https://github.com/DevPsyLab/QuartoWebsite/blob/main/.github/workflows/publish.yml
+                - if the website is intended to be private: (we have not created an exemplar yet)
+    - `YAML` file - this file creates the navbar:
+        - if using `rmarkdown`:
+            - `_site.yml` file
+        - if using `Quarto`:
+            - `_quarto.yml` file
     - `LICENSE` file
         - this file is the license
     - `DESCRIPTION` file
         - this file tells GitHub Actions what `R` packages to install
-1. Add each `.Rmd` file
+1. Add each `.Rmd` file (for `rmarkdown`) or `.qmd` file (for `Quarto`)
 1. Add folders for the [`font`](https://github.com/DevPsyLab/LabWiki/tree/main/font), [`images`](https://github.com/DevPsyLab/LabWiki/tree/main/images), and [`includes`](https://github.com/DevPsyLab/LabWiki/tree/main/includes)
     - `includes` contains `css` files, javascript files, footers, and Google Analytics
 1. If the `rmarkdown` website is intended to be public, create a new Google Analytics property, and replace the URL and gtag in the `google_analytics.html` file
