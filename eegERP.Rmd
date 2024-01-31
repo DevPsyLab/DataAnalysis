@@ -684,7 +684,57 @@ To read and combine single subject averaged test files, follow these steps:
     * Navigate to the “Setting up HAPPE” section in the user guide and follow the instructions for setting up the HAPPE pipeline
     * Follow User Guide instructions for using the HAPPE-ER pipeline 
 
-1. User Inputs for Pipeline
+## Oddball Task
+1. User Inputs
+    * Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (Z:\Studies\School Readiness Study\Data\LV2\ERP)
+    * Select "raw"
+    * If this is your first time running data through the pipeline, indicate "N' for "Load pre-existing set of input parameters [Y/N]". If you have decided on a set of parameters. indicate "Y" and enter the path to the folder containing the input parameters. 
+    * Low density data:N
+    * Data type: task
+    * Performing event-related potential (ERP) analysis: Y
+    * Enter the task onset tags. When you have entered all tags, input "done". 
+        * Target: tgt+
+        * Frequent: frq+
+    * Do multiple onset tags belong to a single condition? Indicate "N"
+    * File format, indicate "5" for .mff(EGI) files
+    * Acquisition layout type, indicate "2" for EGI Hydrocel Geodesic Sensor Net
+    * Number of channels: 128
+    * Do you have additioal type fields besides "code"? Indicate "N"
+    * Select channels of interest, indicate "all" 
+    * Frequency of electrical noice in Hz, indicate "60"
+    * Line Noise reduction method: Notch
+        * Low cutoff: 59
+        * high cutoff: 61
+    * Resample: N
+    * Filter
+        * Low Pass Cutoof: 30
+        * High Pass Cutoff: .1
+    * Bad Channel Detection: Y
+        * "after" wavelet thresholding
+    * ECGone: N
+    * Wavelet Thresholding
+        * default
+        * Threshold rule: soft
+    * MuscIL: N
+    * Segmentation: Y
+        * Starting parameter for stimulus: -200
+        * Ending parameter for stimulus: 1000
+        * Task offset: 2ms
+    * Baseline Correction: Y
+        * Baseline Correction start: -200
+        * Baseline Correction end: 0
+    * Interpolation: Y
+    * Segment Rejection: Y
+        * Segment Rejection Method: amplitude
+            * minimum segment rejection threshold: -150
+            * maximum segment rejection threshold: 150
+            * segment rejection based on all channels or ROI: all
+    * Re-referencing: Y
+        * re-referencing method: average
+    * Visualizations: N
+    * Save format: txt
+
+
 
 ## Helpful Notes
 
