@@ -619,35 +619,6 @@ end
 eeglab redraw;
 ```
 
-# ERP PCA (EP) Toolkit
-
-## Reading Text Files to EP Toolkit
-
-To read and combine single subject averaged test files, follow these steps: 
-
-1. Open the toolkit and select `Read`
-1. Use the following options
-    * Format = `text (.txt)`
-    * Type = `average`
-    * Mont = `Adult Hydrocel 128-channel 1.0`
-1. Select `Single File Mode`.
-    * Single file mode will use the filename to assign the task condition and participant ID for each file.
-        * Note: `R` can rename files in batches
-    Thus, **it is critical to use a standard naming convention to name the files**. 
-    For example, an oddball file could be named: 
-        * `frq_1001_36` and `tgt_1001_36`
-1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID. 
-    * For the above example `5:11` would coorespond to `1001_36`
-1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition. 
-    * * For the above example `1:3` would coorespond to `frq` or `tgt`
-    * ![image](images/readTextFile.png)
-1. Select `Read` and select the `GSN-Hydrocel-129.ced` when prompted
-1. The new file will have the participant ID and will combine the conditions for each participant. 
-    * Subject Names: 
-        * ![image](images/subjectCombinedNames.png)
-    * Task Conditions
-        * ![image](images/conditionCombinedNames.png)
-
 # Extracting Behavioral Data from `E-Prime`
 
 1. Run E-Merge
@@ -661,7 +632,7 @@ To read and combine single subject averaged test files, follow these steps:
 1. Make sure `SPSS` is selected and that the `Unicode` option is **unselected**: https://mattkmiecik.com/posts/post-Stop-Using-Excel-to-Preprocess-E-Prime-Data/post-Stop-Using-Excel-to-Preprocess-E-Prime-Data.html (archived at https://perma.cc/N734-4W9X)
 1. Save the file as: `filename.txt`
 
-# HAPPE Pipeline
+# ERP Processing Pipeline using HAPPE
 
 1. Download MATLAB: https://its.uiowa.edu/matlab
     * Click “How to Install MatLab” and follow the relevant instructions
@@ -676,7 +647,7 @@ To read and combine single subject averaged test files, follow these steps:
         * EP_Toolkit
         * eeglab[version number]
         * Fieldtrip-[version number]
-1. Install HAPPE pipeline: https://github.com/PINE-Lab/HAPPE
+1. Install the HAPPE pipeline: https://github.com/PINE-Lab/HAPPE
     * Clone HAPPE repository to GitHub 
     * Open the “HAPPE” folder
     * Open the “HAPPE User Guide” document
@@ -734,11 +705,36 @@ To read and combine single subject averaged test files, follow these steps:
     * Visualizations: N
     * Save format: txt
 
+## Fishshark
 
+## Stop-Signal
 
-## Helpful Notes
+# ERP PCA (EP) Toolkit
 
-The Happe pipeline creates a file folder structure within the pipeline.
-The pipeline exports the files in a number of desired file formats.
-Ben and Alexis tried reading `.txt` files and `.set` files into the Toolkit.
-However, `.txt` files had an extra channel, and `.set` files were not averaged accross trials.
+## Reading Text Files to EP Toolkit
+
+To read and combine single subject averaged test files, follow these steps: 
+
+1. Open the toolkit and select `Read`
+1. Use the following options
+    * Format = `text (.txt)`
+    * Type = `average`
+    * Mont = `Adult Hydrocel 128-channel 1.0`
+1. Select `Single File Mode`.
+    * Single file mode will use the filename to assign the task condition and participant ID for each file.
+        * Note: `R` can rename files in batches
+    Thus, **it is critical to use a standard naming convention to name the files**. 
+    For example, an oddball file could be named: 
+        * `frq_1001_36` and `tgt_1001_36`
+1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID. 
+    * For the above example `5:11` would coorespond to `1001_36`
+1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition. 
+    * * For the above example `1:3` would coorespond to `frq` or `tgt`
+    * ![image](images/readTextFile.png)
+1. Select `Read` and select the `GSN-Hydrocel-129.ced` when prompted
+1. The new file will have the participant ID and will combine the conditions for each participant. 
+    * Subject Names: 
+        * ![image](images/subjectCombinedNames.png)
+    * Task Conditions
+        * ![image](images/conditionCombinedNames.png)
+
