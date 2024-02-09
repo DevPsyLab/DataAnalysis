@@ -131,17 +131,17 @@ In general, RAs should not have an API token.
 https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/REDCap%20Credentials/Encrypt%20REDCap%20Token.R
 1. Revise the API tokens to reflect yours, then run the script to save your encrypted credentials on the lab server and your encryption key on your local computer
     - Verify that the Encryption Key (`REDCap Encryption Key.RData`) was saved where you intended it to be saved on your local computer
-    - Verify that a file named with your HawkID was saved here: `//iowa.uiowa.edu/shared/ResearchData/rdss_itpetersen/Lab/Studies/School Readiness Study/Data Management/REDCap/Tokens/`
+    - Verify that a file named with your HawkID was saved here: `//lc-rs-store24.hpc.uiowa.edu/lss_itpetersen/Lab/Studies/School Readiness Study/Data Management/REDCap/Tokens/`
 1. Copy the Encryption Key (`REDCap Encryption Key.RData`) to the comparable location of any other computers you own that you plan to access the data from
     - The file has to be in the comparable location (relative to the `path` variable you set in `Rprofile.site`) of every computer in order for it to be found by the `Export Data.R` script.
     The default location is: `file.path(path, "GitHub/R/Data/REDCap Encryption Key.RData")`, so if `path` is set as `"C:/User/YourName"`, the file would be saved in: `C:/User/YourName/GitHub/R/Data/REDCap Encryption Key.RData`.
     The recommended location for GitHub repos is to create a folder titled `GitHub` in your `Documents` folder, and to put repos in the `GitHub` folder; it is *NOT* recommended to put git repos in a OneDrive folder because [git files tend not to play nice with syncing services](https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended) (archived at https://perma.cc/XZ6F-43G3; e.g., OneDrive, Dropbox)
-1. Add the SRS Data Processing repo from the lab drive to your GitHub Desktop App (`//iowa.uiowa.edu/Shared/ResearchData/rdss_itpetersen/Lab/Studies/School Readiness Study/Data Processing`)
+1. Add the SRS Data Processing repo from the lab drive to your GitHub Desktop App (`//lc-rs-store24.hpc.uiowa.edu/lss_itpetersen/Lab/Studies/School Readiness Study/Data Processing`)
     - For instructions, see the section on "[How to add a pre-existing repo from the lab drive (RDSS/network share) to your computer](https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md#how-to-add-a-pre-existing-repo-from-the-lab-drive-rdssnetwork-share-to-your-computer)" here: https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/GitLab/GitLab%20Instructions.md
 1. Open `RStudio` by using "Run as Administrator" (always open `RStudio` as an administrator so it has write access to the program files directory);
 1. Open the `Export Data.R` script in R:
 https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.%20Export%20Data/Export%20Data.R
-`\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data Processing\1. Export Data\Export Data.R`
+`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data Processing\1. Export Data\Export Data.R`
 1. Ensure your HawkID and location of your encryption key in the script are correct, and then run the script to verify that you can export data from REDCap
 1. For antialiased plots in `RStudio`, change the Graphics backend to `Cairo`:
 `Tools → Global Options → Graphics`

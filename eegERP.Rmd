@@ -85,7 +85,7 @@ MFFMatlabIO plugin
 File → Import Data → Using EEGLAB functions and plugins → Import Magstim/EGI .mff file
 
 ```matlab
-EEG = pop_mffimport({'\\\\iowa.uiowa.edu\\Shared\\ResearchData\\rdss_itpetersen\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
+EEG = pop_mffimport({'\\\\lc-rs-store24.hpc.uiowa.edu\\lss_itpetersen\\Lab\\Studies\\School Readiness Study\\Data\\LV2\\ERP\\Oddball\\0-Raw Data (mff)\\1613_90_oddball.mff'},{'code'},0,0);
 
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'overwrite','on','gui','off');
 ```
@@ -442,9 +442,9 @@ After that, this script reads in the cleaned files for manually processing to re
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Location of Raw oddball files
-rawOddballFiles = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\0-Raw\';
+rawOddballFiles = '\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\0-Raw\';
 %Location of path to save cleaned files
-cleanAutoPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
+cleanAutoPath = '\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
 
 %all oddball files in the directory to be processed
 filesInDirectory = dir(fullfile(rawOddballFiles, '*.mff')); %Reading the files in the directory
@@ -503,7 +503,7 @@ ALLEEG = [];
 EEG = [];
 
 % Adding the path for cleaned files
-cleanAutoPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
+cleanAutoPath = '\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\10-Clean Artificats (clean)\';
 
 %Starting EEGLAB
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
@@ -556,7 +556,7 @@ Go to `Tools` > `Inspect/reject data by eye`
 
 1. Manually enter the channels to be removed in the `Channel range` field and select the checkbox under `on->remove these` and select `Ok`
 1. Save the file as `tcid_wave_manualClean.set` in the following drive path 
-    * `\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned`
+    * `\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned`
     * This screenshot represents removing channels `23 56 57 97`
 ![visually reject artifacts](images/remove_channels_specific.png)
 1. Repeat step for each cleaned dataset
@@ -580,7 +580,7 @@ ALLEEG = [];
 EEG = [];
 
 % Adding the path for cleaned files
-manualCleanPath = '\\iowa.uiowa.edu\Shared\ResearchData\rdss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned\';
+manualCleanPath = '\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned\';
 
 %Starting EEGLAB
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
@@ -657,7 +657,7 @@ eeglab redraw;
 
 ## Oddball Task
 1. User Inputs
-    * Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (Z:\Studies\School Readiness Study\Data\LV2\ERP)
+    * Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
     * Select "raw"
     * If this is your first time running data through the pipeline, indicate "N' for "Load pre-existing set of input parameters [Y/N]". If you have decided on a set of parameters. indicate "Y" and enter the path to the folder containing the input parameters. 
     * Low density data:N
