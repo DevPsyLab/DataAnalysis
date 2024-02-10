@@ -146,11 +146,39 @@ https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.
 1. For antialiased plots in `RStudio`, change the Graphics backend to `Cairo`:
 `Tools → Global Options → Graphics`
 
-# Install Packages
+# Lab Package {#petersenlab}
 
-Use the syntax: `install.packages("name_of_package")` to install a single package, or `install.packages(c("name_of_package1","name_of_package2","name_of_package3"))` to install multiple packages.
+The `petersenlab` package is here: https://devpsylab.github.io/petersenlab.
+You can install it using the following commands:
 
-# Update `R`
+```{r, eval = FALSE}
+install.packages("remotes")
+remotes::install_github("DevPsyLab/petersenlab")
+```
+
+# Install Packages {#installPackages}
+
+To install a single package that is on the CRAN repository, use the following syntax:
+
+```{r, eval = FALSE}
+install.packages("name_of_package")
+```
+
+To install multiple packages that are on the CRAN repository, use the following syntax:
+
+```{r, eval = FALSE}
+install.packages(c("name_of_package1","name_of_package2","name_of_package3"))
+```
+
+# Load Packages {#loadPackages}
+
+After you have installed (and loaded) the [`petersenlab` package](#petersenlab), you can install (if not already installed) and load packages using the following command:
+
+```{r, eval = FALSE}
+load_or_install(c("name_of_package1","name_of_package2","name_of_package3"))
+```
+
+# Update `R` {#updateR}
 
 Instructions adapted from: https://mirror.las.iastate.edu/CRAN/bin/windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f (archived at https://perma.cc/W5QW-MA6Q)
 
@@ -338,12 +366,12 @@ incoming_webhook_url: https://hooks.slack.com/services/XXXXX/XXXXX/XXXXX
 Once the configuration is complete, it is possible to send messages. 
 For now, we have found it helpful to embed the slacks in the `tryCatch` function. 
 
-```
+```{r, eval = FALSE}
 tryCatch(
 CODE YOU WANT TO RUN,
 error = function(e)
 {
-    #message to send if the code doesn't run
+  #message to send if the code doesn't run
   my_message <- paste( "example message")
   slackr_msg(my_message, channel = "#recruitment")
 })
@@ -358,7 +386,7 @@ It is also possible to slack specific users with instructions found [at this lin
 Many notes in projects that are exported from REDCap come with spaces denotes as `//n`.
 Use the below code to make these fields more readable in the future.
 
-```
+```{r, eval = FALSE}
 gsub('\\n', ', ', df$notesField)
 ```
 
@@ -374,7 +402,7 @@ https://rstudio.github.io/renv/articles/renv.html
 
 To update the package, run the following in `R`:
 
-```
+```{r, eval = FALSE}
 # 1. Update packages in package environment
 renv::upgrade()
 renv::update()
@@ -393,7 +421,7 @@ Then, build the package: Ctrl-Shift-B
 
 Then, install the package:
 
-```
+```{r, eval = FALSE}
 renv::install("C:/R/Packages/petersenlab") #PC
 renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
 ```
@@ -401,11 +429,12 @@ renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
 ### Installing Packages
 
 To install new packages in the package environment, run the following in `R`:
-```
+
+```{r, eval = FALSE}
 renv::install("NAME_OF_PACKAGE")
 ```
 or:
-```
+```{r, eval = FALSE}
 install.packages("NAME_OF_PACKAGE)
 ```
 
@@ -417,7 +446,7 @@ install.packages("NAME_OF_PACKAGE)
  
  Test Package:              'Ctrl + Shift + T'
 
-```
+```{r, eval = FALSE}
 renv::install("C:/R/Packages/petersenlab")
 renv::snapshot()
 renv::install()
