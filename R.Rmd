@@ -355,9 +355,88 @@ It is also possible to slack specific users with instructions found [at this lin
 
 # Replacing `//n` with a space
 
-Many notes in the school readiness study that are exported from REDCap come with spaces denotes as `//n`.
+Many notes in projects that are exported from REDCap come with spaces denotes as `//n`.
 Use the below code to make these fields more readable in the future.
 
 ```
 gsub('\\n', ', ', df$notesField)
 ```
+
+# Package Development
+
+## Working with `renv` for Package Management
+
+`renv` is used for reproducibility, by helping with package management (tracking package versions, etc.):
+
+https://rstudio.github.io/renv/articles/renv.html
+
+### Updating the Package
+
+To update the package, run the following in `R`:
+
+```
+# 1. Update packages in package environment
+renv::upgrade()
+renv::update()
+renv::snapshot()
+
+# 2. Add/edit code
+
+# 3. Update documentation
+roxygen2::roxygenise()
+
+# 4. Update package version
+usethis::use_version()
+```
+
+Then, build the package: Ctrl-Shift-B
+
+Then, install the package:
+
+```
+renv::install("C:/R/Packages/petersenlab") #PC
+renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
+```
+
+### Installing Packages
+
+To install new packages in the package environment, run the following in `R`:
+```
+renv::install("NAME_OF_PACKAGE")
+```
+or:
+```
+install.packages("NAME_OF_PACKAGE)
+```
+
+## Useful keyboard shortcuts for package authoring:
+
+ Install Package:           'Ctrl + Shift + B'
+ 
+ Check Package:             'Ctrl + Shift + E'
+ 
+ Test Package:              'Ctrl + Shift + T'
+
+```
+renv::install("C:/R/Packages/petersenlab")
+renv::snapshot()
+renv::install()
+```
+
+## Resources
+
+- https://rpubs.com/YaRrr/rpackageintro
+- http://r-pkgs.had.co.nz/
+- http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf
+- http://portal.stats.ox.ac.uk/userdata/ruth/APTS2012/Rcourse10.pdf
+- http://web.mit.edu/insong/www/pdf/rpackage_instructions.pdf
+- https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
+
+### For Package Development Tasks
+
+- https://usethis.r-lib.org/index.html
+
+### For Documentation
+
+- https://github.com/r-lib/roxygen2#roxygen2
+- https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
