@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   class.source = "fold-show")
 ```
 
-# Import Data
+# Import Data {#importData}
 
 Importing data takes syntax of the following form for `.csv` files:
 
@@ -36,7 +36,7 @@ Importing data takes syntax of the following form for `.RData` files:
 load("filepath/filename.RData")
 ```
 
-# Save Data
+# Save Data {#saveData}
 
 Saving data takes syntax of the following form for `.csv` files:
 
@@ -56,16 +56,18 @@ Saving data takes syntax of the following form for `.RData` files:
 save(object, file = "filepath/filename.RData")
 ```
 
-# Use Lab Functions
+# Use Lab Functions {#labFunctions}
 
-To use lab functions, first install the `petersenlab` package:
+To use lab functions, first install the [`petersenlab` package](https://devpsylab.github.io/petersenlab).
+The [`petersenlab` package](https://devpsylab.github.io/petersenlab) is here: https://devpsylab.github.io/petersenlab.
+You can install it using the following commands:
 
 ```{r, eval = FALSE}
 install.packages("remotes")
 remotes::install_github("DevPsyLab/petersenlab")
 ```
 
-Once you have the `petersenlab` package installed, load the package:
+Once you have the [`petersenlab` package](https://devpsylab.github.io/petersenlab) installed, load the package:
 
 ```{r}
 library("petersenlab")
@@ -77,13 +79,31 @@ To run scripts on the lab drive, set the path to the lab drive (`//lc-rs-store24
 petersenLabPath <- setLabPath()
 ```
 
-# Load/Install Packages
+# Load/Install Packages {#loadInstallPackages}
 
-The way to install a package in `R` is:
+To install a single package that is on the CRAN repository, use the following syntax:
 
 ```{r, eval = FALSE}
-install.packages("packageName1")
-install.packages(c("packageName1","packageName2","packageName3"))
+install.packages("name_of_package")
+```
+
+To install multiple packages that are on the CRAN repository, use the following syntax:
+
+```{r, eval = FALSE}
+install.packages(c("name_of_package1","name_of_package2","name_of_package3"))
+```
+
+To install a package that is on a GitHub repository, use the following syntax:
+
+```{r, eval = FALSE}
+install.packages("remotes")
+remotes::install_github("username_of_GitHub_author/name_of_package")
+```
+
+For instance:
+
+```{r, eval = FALSE}
+remotes::install_github("DevPsyLab/petersenlab")
 ```
 
 The default way to load a package in `R` is:
@@ -99,19 +119,21 @@ Thus, it can be safer to load packages using the lab function, `load_or_install(
 The `load_or_install()` function checks whether a package is installed.
 If the package is not installed, the function installs and loads the package.
 If the package is installed, the function loads the package.
-To use this function, you must have the `petersenlab` package loaded.
+To use this function, you must have the [`petersenlab` package](https://devpsylab.github.io/petersenlab) loaded.
 
 ```{r, eval = FALSE}
+library("petersenlab")
 load_or_install(c("packageName1","packageName2","packageName3"))
 ```
 
 For example:
 
 ```{r}
+library("petersenlab")
 load_or_install(c("tidyverse","psych"))
 ```
 
-# Set a Seed
+# Set a Seed {#seed}
 
 Set a seed (any number) to reproduce the results of analyses that involve random number generation.
 
@@ -119,7 +141,7 @@ Set a seed (any number) to reproduce the results of analyses that involve random
 set.seed(52242)
 ```
 
-# Run an `R` Script
+# Run an `R` Script {#source}
 
 To run an `R` script, use the following syntax:
 
@@ -127,7 +149,7 @@ To run an `R` script, use the following syntax:
 source("filepath/filename.R")
 ```
 
-# Render an R Markdown (`.Rmd`) File
+# Render an R Markdown (`.Rmd`) File {#renderRmd}
 
 To render a `.Rmd` file, use the following syntax:
 
@@ -135,7 +157,7 @@ To render a `.Rmd` file, use the following syntax:
 render("filepath/filename.Rmd")
 ```
 
-# Variable Names
+# Variable Names {#varNames}
 
 To look at the names of variables in a data frame, use the following syntax:
 
@@ -143,7 +165,7 @@ To look at the names of variables in a data frame, use the following syntax:
 names(mydata)
 ```
 
-# Logical Operators
+# Logical Operators {#logicalOperators}
 
 Logical operators evaluate a condition for each value and yield values of `TRUE` and `FALSE`, corresponding to whether the evaluation for a given value met the condition.
 
@@ -221,7 +243,7 @@ is.na(mydata$prediction)
 is.na(mydata$prediction) | mydata$parch >= 1
 ```
 
-# Subset
+# Subset {#subset}
 
 To subset a data frame, use brackets to specify the subset of rows and columns to keep, where the value/vector before the comma specifies the rows to keep, and the value/vector after the comma specifies the columns to keep:
 
@@ -275,6 +297,18 @@ subsetVars <- c("survived","age","prediction")
 mydata[,c(1,2,3)]
 mydata[,c("survived","age","prediction")]
 mydata[,subsetVars]
+
+
+```
+
+Or, to drop columns:
+
+```{r}
+dropVars <- c("sibsp","parch")
+
+mydata[,-c(5,6)]
+mydata[,names(mydata) %ni% c("sibsp","parch")]
+mydata[,names(mydata) %ni% dropVars]
 ```
 
 ### Tidyverse
@@ -288,6 +322,19 @@ mydata %>%
 
 mydata %>%
   select(all_of(subsetVars))
+```
+
+Or, to drop columns:
+
+```{r}
+mydata %>%
+  select(-sibsp, -parch)
+
+mydata %>%
+  select(-c(sibsp:parch))
+
+mydata %>%
+  select(-all_of(dropVars))
 ```
 
 ## Particular Rows
@@ -337,7 +384,7 @@ mydata %>%
   select(all_of(subsetVars))
 ```
 
-# View Data
+# View Data {#viewData}
 
 ## All Data
 
@@ -356,7 +403,7 @@ head(mydata)
 head(mydata$age)
 ```
 
-# Data Characteristics
+# Data Characteristics {#dataCharacteristics}
 
 ## Data Structure
 
@@ -391,7 +438,7 @@ length(mydata$age[which(!is.na(mydata$age))])
 length(na.omit(mydata$age))
 ```
 
-# Create New Variables
+# Create New Variables {#createNewVars}
 
 To create a new variable, use the following syntax:
 
@@ -409,7 +456,7 @@ Here is an example of creating a new variable:
 mydata$ID <- 1:nrow(mydata)
 ```
 
-# Create a Data Frame
+# Create a Data Frame {#createDF}
 
 Here is an example of creating a data frame:
 
@@ -422,7 +469,7 @@ mydata2 <- data.frame(
 mydata2
 ```
 
-# Recode Variables
+# Recode Variables {#recodeVars}
 
 Here is an example of recoding a variable:
 
@@ -454,7 +501,7 @@ mydata %>%
       c(2,3) ~ 2)))
 ```
 
-# Rename Variables
+# Rename Variables {#renameVars}
 
 ```{r}
 mydata <- mydata %>% 
@@ -473,7 +520,7 @@ mydata <- mydata %>%
   rename_with(~ varNamesTo, all_of(varNamesFrom))
 ```
 
-# Convert the Types of Variables
+# Convert the Types of Variables {#convertVarTypes}
 
 One variable:
 
@@ -680,7 +727,7 @@ crossJoinData
 dim(crossJoinData)
 ```
 
-# Long to Wide
+# Long to Wide {#longToWide}
 
 Original data:
 
@@ -697,7 +744,7 @@ fish_encounters %>%
     values_from = seen)
 ```
 
-# Wide to Long
+# Wide to Long {#wideToLong}
 
 Original data:
 
@@ -715,7 +762,7 @@ mtcars %>%
     values_to = "value")
 ```
 
-# Average Ratings Across Coders
+# Average Ratings Across Coders {#avgAcrossCoders}
 
 Create data with multiple coders:
 
