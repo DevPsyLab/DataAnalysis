@@ -1,0 +1,70 @@
+---
+title: "Mplus"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  error = TRUE,
+  comment = "",
+  class.source = "fold-show")
+```
+
+# Overview of `Mplus`
+
+[`Mplus`](https://www.statmodel.com) is software for [structural equation modeling](sem.html).
+
+# Parameter Label {#parameterLabel}
+
+# Cluster Variable {#clusterVariable}
+
+There are multiple ways of accounting for nested data in [structural equation modeling](sem.html).
+One way to account for nested data is to use multilevel structural equation modeling.
+Another approach is to use a cluster variable to generate cluster-robust standard errors of parameters.
+To use a cluster variable, specify `CLUSTER` under the `VARIABLE` section, and specify `TYPE = COMPLEX` under the `ANALYSIS` section:
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    CLUSTER = ID;
+
+ANALYSIS:
+    TYPE = COMPLEX;
+```
+
+# Low Covariance Coverage {#lowCovarianceCoverage}
+
+To estimate a model with low covariance coverage, lower the `COVERAGE` value under the `ANALYSIS` section:
+
+```
+ANALYSIS:
+    COVERAGE = 0;
+```
+
+# Setting Parameter Constraints {#parameterConstraints}
+
+## Setting Two Parameters to be Equal {#equalParameters}
+
+To set two parameters to be equal, provide the same [parameter label](#parameterLabel) for each parameter.
+
+## Setting Lower and Upper Bounds on a Parameter {#parameterBounds}
+
+To set lower and upper bounds on a parameter, you can assign the parameter a [parameter label](#parameterLabel).
+Then, you can assign the constraint to the parameter (via the label) under the `MODEL CONSTRAINT` section.
+For example, to constrain a parameter between 0–1, 
+
+```
+MODEL:
+    y1 BY x1* x2 x3 (load3);
+
+MODEL CONSTRAINT:
+    load3 > 0; load3 < 1;
+```
+
+# Session Info
+
+```{r, class.source = "fold-hide"}
+sessionInfo()
+```
