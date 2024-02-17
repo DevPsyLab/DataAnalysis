@@ -14,23 +14,51 @@ knitr::opts_chunk$set(
 
 [`Mplus`](https://www.statmodel.com) is software for [structural equation modeling](sem.html).
 
-# Model Estimators {#estimators}
-
-- `MLR`: for likert/continuous data
-- `WLSMV`: for ordinal/categorical data
-- `bayes`
-
-# Parameter Label {#parameterLabel}
-
-To specify a parameter label, provide the label in parenthese after the parameter:
+# Model Title {#modelTitle}
 
 ```
-MODEL:
-    y1 BY x1* x2 x3 (load1-3);
-    y2 BY x4* x5 (load5) x6;
+TITLE: INSERT TITLE HERE
 ```
 
-# Cluster Variable {#clusterVariable}
+# Read Data {#readData}
+
+```
+DATA: 
+    FILE = "C:/[insert_filepath]/filename.dat";
+```
+
+# Variables {#variables}
+
+## Specify Variables {#specifyVariables}
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+```
+
+## Categorical Variables {#categoricalVariables}
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    CATEGORICAL = x1 x2;
+```
+
+## Count Variables {#countVariables}
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    COUNT = x1 x2;
+```
+
+## Cluster Variable {#clusterVariable}
 
 There are multiple ways of accounting for nested data in [structural equation modeling](sem.html).
 One way to account for nested data is to use multilevel structural equation modeling.
@@ -48,7 +76,80 @@ ANALYSIS:
     TYPE = COMPLEX;
 ```
 
-# Low Covariance Coverage {#lowCovarianceCoverage}
+## Individually Varying Times of Observation {#tScores}
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    TSCORES = age;
+```
+
+## Auxiliary Variables {#auxiliaryVariables}
+
+```
+VARIABLE:
+    NAMES = ID age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID x1 x2 y1;
+    AUXILIARY = age;
+```
+
+## Sampling Weight Variable {#samplingWeight}
+
+```
+VARIABLE:
+    NAMES = ID wt age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    WEIGHT = wt;
+```
+
+## Multilevel Variables {#multilevelVariables}
+
+Between- and within-cluster variables:
+
+```
+VARIABLE:
+    NAMES = ID wt age x1 x2 x3 y1;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 y1;
+    WITHIN = x1;
+    BETWEEN = x2;
+```
+
+# Analysis {#analysis}
+
+## Analysis Types {#analysisTypes}
+
+- `TYPE = COMPLEX`
+- `TYPE = TWOLEVEL`
+- `TYPE = EFA`
+
+## Model Estimators {#estimators}
+
+```
+ANALYSIS:
+```
+
+- `MLR`: for likert/continuous data
+- `WLSMV`: for ordinal/categorical data
+- `BAYES`
+
+## Bootstrap Draws {#bootstrap}
+
+```
+BOOTSTRAP = ! insert number of bootstrap draws
+```
+
+## Starts {#starts}
+
+```
+STARTS = ! insert number of initial stage starts and number of final stage optimizations
+```
+
+## Low Covariance Coverage {#lowCovarianceCoverage}
 
 To estimate a model with low covariance coverage, lower the `COVERAGE` value under the `ANALYSIS` section:
 
@@ -57,7 +158,103 @@ ANALYSIS:
     COVERAGE = 0;
 ```
 
+# Exploratory Factor Analysis {#efa}
+
+## Oblique Rotation {#oblique}
+
+```
+ANALYSIS:
+    TYPE = EFA 1 5; ! extract 1-5 factors
+    ROTATION = GEOMIN;
+```
+
+## Orthogonal Rotation {#orthogonal}
+
+```
+ANALYSIS:
+    TYPE = EFA 1 5; ! extract 1-5 factors
+    ROTATION = VARIMAX;
+```
+
+# Model {#model}
+
+BY
+
+short for measured by -- defines latent variables
+
+example: f1 BY y1-y5;
+
+ON
+
+short for regressed on -- defines regression relationships example: f1 ON x1-x9;
+
+PON
+
+short for regressed on -- defines paired regression relationships
+
+example: f2 f3 PON f1 f2;
+
+WITH
+
+short for correlated with -- defines correlational relationships
+
+## Define Latent Variables {#latentVariables}
+
+```
+MODEL:
+    y1 BY x1 x2 x3;
+```
+
+## Regression Paths {#regressionPaths}
+
+Regress outcome variable on predictor variable(s):
+
+```
+MODEL:
+    y1 ON x1 x2;
+```
+
+## Covariance Paths {#covariancePaths}
+
+```
+MODEL:
+    x1 WITH x2;
+```
+
+## Indirect Effects {#indirectEffects}
+
+```
+MODEL INDIRECT:
+    y IND x;
+```
+
+## Parameter Label {#parameterLabel}
+
+To specify a parameter label, provide the label in parentheses after the parameter:
+
+```
+MODEL:
+    y1 BY x1* x2 x3 (load1-3);
+    y2 BY x4* x5 (load5) x6;
+```
+
+# Comments {#comments}
+
+```
+!This is a comment in Mplus
+```
+
 # Setting Parameter Constraints {#parameterConstraints}
+
+## Freeing a Parameter {#freeParameter}
+
+By default, the first loading on a factor is fixed to zero.
+You can freely estimate the parameter by adding an asterisk:
+
+```
+MODEL:
+    y1 BY x1* x2 x3;
+```
 
 ## Setting Two Parameters to be Equal {#equalParameters}
 
@@ -75,6 +272,26 @@ MODEL:
 
 MODEL CONSTRAINT:
     load3 > 0; load3 < 1;
+```
+
+# Output {#output}
+
+```
+OUTPUT:  
+    STDYX; 
+    TECH1;
+    TECH4;
+    SAMPSTAT;
+    MODINDICES (ALL);
+    CINTERVAL;
+```
+
+# Save Factor Scores {#factorScores}
+
+```
+SAVEDATA:
+    FILE = "C:/[insert_filepath]/filename.dat";
+    SAVE = FSCORES;
 ```
 
 # Session Info
