@@ -131,6 +131,7 @@ VARIABLE:
 
 ```
 ANALYSIS:
+    ESTIMATOR = MLR;
 ```
 
 - `MLR`: for likert/continuous data
@@ -140,13 +141,13 @@ ANALYSIS:
 ## Bootstrap Draws {#bootstrap}
 
 ```
-BOOTSTRAP = ! insert number of bootstrap draws
+BOOTSTRAP = 2000; ! insert number of bootstrap draws
 ```
 
 ## Starts {#starts}
 
 ```
-STARTS = ! insert number of initial stage starts and number of final stage optimizations
+STARTS = 20; ! insert number of initial stage starts and number of final stage optimizations
 ```
 
 ## Low Covariance Coverage {#lowCovarianceCoverage}
@@ -177,26 +178,6 @@ ANALYSIS:
 ```
 
 # Model {#model}
-
-BY
-
-short for measured by -- defines latent variables
-
-example: f1 BY y1-y5;
-
-ON
-
-short for regressed on -- defines regression relationships example: f1 ON x1-x9;
-
-PON
-
-short for regressed on -- defines paired regression relationships
-
-example: f2 f3 PON f1 f2;
-
-WITH
-
-short for correlated with -- defines correlational relationships
 
 ## Define Latent Variables {#latentVariables}
 
