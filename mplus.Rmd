@@ -13,6 +13,62 @@ knitr::opts_chunk$set(
 # Overview of `Mplus`
 
 [`Mplus`](https://www.statmodel.com) is software for [structural equation modeling](sem.html).
+A summary of the [`Mplus`](https://www.statmodel.com) language syntax is [here](https://www.statmodel.com/language.html) (archived at: https://perma.cc/962G-QUEG).
+
+# Model Example {#example}
+
+```
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!  MPLUS SYNTAX LINES CANNOT EXCEED 90 CHARACTERS;
+!!!!!  VARIABLE NAMES AND PARAMETER LABELS CANNOT EXCEED 8 CHARACTERS EACH;
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+TITLE: Example Mplus Model
+
+DATA: 
+    FILE = "C:/[insert_filepath]/filename.dat";
+
+VARIABLE:
+    NAMES = ID age x1 x2 x3 x4 x5 x6 y1 y2;
+    MISSING = .;
+    USEVARIABLES = ID age x1 x2 x3 x4 x5 x6 y1 y2;
+
+ANALYSIS:
+    TYPE = COMPLEX;
+    ESTIMATOR = MLR;
+
+MODEL:
+    ! Factor loadings
+    latent1 BY x1* x2 x3;
+    latent2 BY x4* x5 x6;
+
+    ! Covariances between latent factors
+    latent1 WITH latent2
+
+    ! Regression paths
+    y1 ON latent1 + latent2
+    y2 ON latent1 + latent 2
+
+    ! Standardize latent factors: fix means to zero
+    [latent1@0];
+    [latent2@0];
+
+    ! Standardize latent factors: fix variances to one
+    latent1@1;
+    latent2@1;
+
+OUTPUT:  
+    STDYX; 
+    TECH1;
+    TECH4;
+    SAMPSTAT;
+    MODINDICES (3);
+    CINTERVAL;
+
+SAVEDATA:
+    FILE = "C:/[insert_filepath]/filename.dat";
+    SAVE = FSCORES;
+```
 
 # Model Title {#modelTitle}
 
@@ -36,6 +92,7 @@ VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
     MISSING = .;
     USEVARIABLES = ID age x1 x2 y1;
+    CLUSTER = ID;
 ```
 
 ## Categorical Variables {#categoricalVariables}
@@ -183,7 +240,7 @@ ANALYSIS:
 
 ```
 MODEL:
-    y1 BY x1 x2 x3;
+    latent1 BY x1 x2 x3;
 ```
 
 ## Regression Paths {#regressionPaths}
@@ -209,14 +266,46 @@ MODEL INDIRECT:
     y IND x;
 ```
 
+## Means/Intercepts {#means}
+
+Freely estimate:
+
+```
+MODEL:
+    [x1];
+```
+
+Fix to zero:
+
+```
+MODEL:
+    [x1@0];
+```
+
+## Variances {#variances}
+
+Freely estimate:
+
+```
+MODEL:
+    x1;
+```
+
+Fix to one:
+
+```
+MODEL:
+    x1@1;
+```
+
 ## Parameter Label {#parameterLabel}
 
 To specify a parameter label, provide the label in parentheses after the parameter:
 
 ```
 MODEL:
-    y1 BY x1* x2 x3 (load1-3);
-    y2 BY x4* x5 (load5) x6;
+    latent1 BY x1* x2 x3 (load1-3);
+    latent2 BY x4* x5 (load5) x6;
 ```
 
 # Comments {#comments}
@@ -234,7 +323,16 @@ You can freely estimate the parameter by adding an asterisk:
 
 ```
 MODEL:
-    y1 BY x1* x2 x3;
+    latent1 BY x1* x2 x3;
+```
+
+## Constraing a Parameter {#constrainParameter}
+
+```
+MODEL:
+    latent1 BY x1@1 x2 x3;
+    [latent1@0];
+    latent1@1;
 ```
 
 ## Setting Two Parameters to be Equal {#equalParameters}
@@ -249,7 +347,7 @@ For example, to constrain a parameter between 0–1,
 
 ```
 MODEL:
-    y1 BY x1* x2 x3 (load3);
+    latent1 BY x1* x2 x3 (load3);
 
 MODEL CONSTRAINT:
     load3 > 0; load3 < 1;
@@ -263,7 +361,7 @@ OUTPUT:
     TECH1;
     TECH4;
     SAMPSTAT;
-    MODINDICES (ALL);
+    MODINDICES (ALL); ! specify number in parentheses to print only those mod indices that are above a particular chi-square value
     CINTERVAL;
 ```
 
