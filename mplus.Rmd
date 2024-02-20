@@ -235,6 +235,38 @@ ANALYSIS:
     ROTATION = VARIMAX;
 ```
 
+# Bayesian SEM {#bayesian}
+
+Other settings you can specify under the "ANALYSIS" section include:
+
+```
+ANALYSIS:
+    ESTIMATOR = BAYES;
+    BCONVERGENCE = .05; ! value of the Gelman-Rubin convergence criterion; default is .05; van de Schoot et al. (2014) recommend .01
+    BITERATIONS = a (b); ! a = maximum, b = minumum number of iterations for each MCMC chain
+    CHAIN = 4; ! number of chains
+    PROCESSORS = 4; ! number of computer processors to use
+    BSEED = 52242; ! set seed for replicability
+    STVALUES IS ml; set starting values based on ML estimation
+```
+
+You can specify model priors under the "MODEL PRIORS" section.
+
+Other settings you can specify under the "OUTPUT" section include:
+
+```
+OUTPUT:
+    STAND; ! standardized estimates
+    CINTERCAL; ! posterior predictive intervals (credible intervals)
+```
+
+Other settings you can specify under the "PLOT" section include:
+
+```
+PLOT:
+    TYPE = PLOT3; ! trace plots, histogram, and kernal density
+```
+
 # Model {#model}
 
 ## Define Latent Variables {#latentVariables}
