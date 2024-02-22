@@ -9,9 +9,9 @@ knitr::opts_chunk$set(
   comment = "")
 ```
 
-# R Markdown
+# R Markdown {#rMarkdown}
 
-## Overview
+## Overview {#overview}
 
 This is an R Markdown document.
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
@@ -93,13 +93,13 @@ You can create/edit R Markdown (`.Rmd`) files with the following free software:
 If you use `Visual Studio Code` to create/edit `.Rmd` documents, you can view the source code side-by-side with the markdown Preview (after selecting the code type as `markdown`):
 ![Visual Studio Code](images/vsCode.png)
 
-## RStudio
+## RStudio {#rstudio}
 
-### Creating a Code Chunk
+### Creating a Code Chunk {#createCodeChunk}
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
-### Running a Code Chunk
+### Running a Code Chunk {#runCodeChunk}
 
 You can execute a code chunk in an R Markdown Notebook by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
 To run more than one code chunk, you have several options:
@@ -109,7 +109,7 @@ To run more than one code chunk, you have several options:
 - select "Run All Chunks Below"
 - select "Run All"
 
-### Creating the HTML Output
+### Creating the HTML Output {#htmlOutput}
 
 When you click the **Knit** button, a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
@@ -121,7 +121,7 @@ Instead, the output of the chunk when it was last run in the editor is displayed
 
 # Computational Notebook {#computationalNotebook}
 
-## General Info
+## General Info {#general}
 
 You can use an R Markdown Notebook to create a computational notebook.
 For more information on the value of computational notebooks, see the article titled "[The Scientific Paper Is Obsolete](https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/; archived at https://perma.cc/XHW4-K89V)".
@@ -131,7 +131,7 @@ https://garrettgman.github.io/rmarkdown/r_notebooks (archived at https://perma.c
 
 https://bookdown.org/yihui/rmarkdown/notebook.html (archived at https://perma.cc/P5YT-395F)
 
-## Files
+## Files {#files}
 
 Consistent with the [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for how to structure your repo, you should have two computational notebooks: 1) a "Prepare Data" script (`prepareData.Rmd`) and 2) a "Computational Notebook" script (`computationalNotebook.Rmd`).
 The "Prepare Data" script is used to update the data file by re-exporting, merging, re-running calculations, etc.
@@ -139,7 +139,7 @@ This script should be separate from the "Computational Notebook" file that is us
 Every time you run the "Computational Notebook" file with the exact same data, you should get the exact same findings (i.e., reproducibility).
 Thus, we keep the "Prepare Data script" separate from the "Computational Notebook" file so that you update the data only when you intend to.
 
-## Structure
+## Structure {#structure}
 
 When creating a computational notebook, follow the structure of the computational notebooks in the [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template).
 To create a computational notebook, create a `.Rmd` file with the following `YAML` header at the top of the file:
@@ -190,7 +190,7 @@ knitr::opts_chunk$set(
 ````
 Then, include whatever text and/or code chunks.
 
-## Creating CSS Commands
+## Creating CSS Commands {#css}
 
 Personalized commands can be created in Visual Code through the CSS file within the Wiki folder.
 To create a new CSS commands:
@@ -237,7 +237,7 @@ example:after  { content: close-quote; }
 
 # `rmarkdown`/`Quarto` Website using GitHub Actions {#website}
 
-## Steps to Create
+## Steps to Create {#websiteSteps}
 
 1. Create a new GitHub repo under the [DevPsyLab organization](https://github.com/DevPsyLab) in GitHub
 1. Create the repository using one of the following templates:
@@ -286,7 +286,7 @@ If you do not create the repository from a template, the steps for creating the 
         - Click "Save"
     1. Make sure "Read and write permissions" are enabled in Settings -> Actions -> General -> Workflow permissions
 
-## Troubleshooting
+## Troubleshooting {#troubleshooting}
 
 If you get the following error in GitHub Actions:
 
@@ -316,11 +316,11 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 # Headings {#headings}
 
-## Subheading
+## Subheading {#subheading}
 
-### Subsubheading
+### Subsubheading {#subsubheading}
 
-#### Subsubsubheading
+#### Subsubsubheading {#subsubsubheading}
 
 ```
 # Headings {#heading-label1}
@@ -336,7 +336,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 To add another element in a list while preserving the continuity of the list, indent the element four spaces or one tab.
 
-## Unordered Lists
+## Unordered Lists {#unorderedLists}
 
 To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in front of line items.
 
@@ -362,7 +362,7 @@ To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in
             - sub-item 1
             - sub-item 2
 
-### Checkboxes
+### Checkboxes {#checkboxes}
 
 ````markdown
 - <input type="checkbox" unchecked> Box 1</input>
@@ -372,7 +372,7 @@ To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in
 - <input type="checkbox" unchecked> Box 1</input>
 - <input type="checkbox" checked> Box 2</input>
 
-## Ordered Lists
+## Ordered Lists {#orderedLists}
 
 ````markdown
 1. the first item
@@ -424,7 +424,7 @@ To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in
 
 # Comments {#comments}
 
-## Markdown
+## Markdown {#markdownComments}
 
 ````markdown
 ```markdown
@@ -440,7 +440,7 @@ To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in
 
 [This comment will be hidden.]: # 
 
-## HTML
+## HTML {#htmlComments}
 
 ````html
 <!-- This text will be hidden -->
@@ -486,7 +486,7 @@ This text is ~~strikethrough text~~.
 This text <u>will be underlined</u>; this text <ins>will also be underlined</ins>.
 <font color="red">This text is red!</font>
 
-# Formatting
+# Formatting {#formatting}
 
 ````markdown
 <center>This text is centered.</center>
@@ -494,7 +494,7 @@ This text <u>will be underlined</u>; this text <ins>will also be underlined</ins
 
 <center>This text is centered.</center>
 
-# Code/Syntax Highlighting
+# Code/Syntax Highlighting {#codeHighlighting}
 
 To use syntax highlighting to display code without running the code:
 
@@ -670,9 +670,9 @@ You can also use words, to fit your writing style more closely[^note].
 * en dash: –
 * em dash: —
 
-## Subscript/Superscript {#subSuperScript}
+## Subscript/Superscript {#subSuperscript}
 
-### Markdown
+### Markdown {#markdownSubSuperscript}
 
 ````markdown
 H~2O
@@ -683,7 +683,7 @@ H~2O
 
 X^2
 
-### HTML
+### HTML {#htmlSubSuperscript}
 
 ````html
 H<sub>2</sub>O
@@ -814,7 +814,7 @@ Make sure the document you wish to embed is in a local folder (if you are adding
 <embed src="path to file" width="1000" height="600">
 ```
 
-# Embedding a html file within a markdown document {#html}
+# Embedding a html file within a markdown document {#htmlEmbed}
 
 The below line of code will embed a html document in a markdown file.
 The best way to configure formatting for this is still in progress. <br>
@@ -848,12 +848,12 @@ To convert sentences out of paragraph form:
 **Do not replace all**.
 Bulleted lists may also contain a `. ` that should not be removed.
 
-# Video formatting for Wiki {#video}
+# Video formatting for Wiki {#videoFormatting}
 
 [Handbrake](https://handbrake.fr) can be used to lower video quality, and convert files to `.mp4` format, in order for them to be incorporated into the wiki.
 It is important to lower the quality (i.e., file size) of videos so that we do not exceed the 1gb file size limit on any given repo.
 
-## Lowering File Size
+## Lowering File Size {#lowerFileSize}
 
 * Open Handbrake and drag and drop the video that you would like to lower the file size of.
 * Select the `video` tab and lower the `Constant Quality` to `30`, and the `Framerate (FPS):` to `20`
