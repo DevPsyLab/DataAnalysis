@@ -16,6 +16,18 @@ knitr::opts_chunk$set(
 A summary of the [`Mplus`](https://www.statmodel.com) language syntax is [here](https://www.statmodel.com/language.html) (archived at: https://perma.cc/962G-QUEG).
 The [Mplus User's Guide](https://www.statmodel.com/html_ug.shtml) is located [here](https://www.statmodel.com/download/usersguide/MplusUserGuideVer_8.pdf) (archived at: https://perma.cc/W39W-NRGH).
 
+# Prepare Data {#prepareData}
+
+To prepare the data in `R` for use in `Mplus`:
+
+```r
+library("MplusAutomation")
+
+prepareMplusData(
+  mydata,
+  file.path(path, "/GitHub/Project_Name/Data/mplusdata.dat"))
+```
+
 # Model Example {#example}
 
 ```
@@ -409,6 +421,20 @@ SAVEDATA:
 # Multiple Imputation {#multipleImputation}
 
 For examples of how to conduct [multiple imputation](multipleImputation.html) in [`Mplus`](https://www.statmodel.com), see [here](multipleImputation.html#mplus).
+
+# Run Models in Batch {#runModels}
+
+Run models in batch via `R`:
+
+```r
+library("MplusAutomation")
+
+runModels(
+  file.path(path, "/GitHub/Project_Name/Analyses/Mplus/"),
+  recursive = TRUE,
+  replaceOutfile = "always",
+  showOutput = TRUE)
+```
 
 # Session Info
 
