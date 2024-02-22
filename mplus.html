@@ -479,8 +479,18 @@ href="https://www.statmodel.com/download/usersguide/MplusUserGuideVer_8.pdf">her
 (archived at: <a href="https://perma.cc/W39W-NRGH"
 class="uri">https://perma.cc/W39W-NRGH</a>).</p>
 </div>
-<div id="example" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Model Example</h1>
+<div id="prepareData" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Prepare Data</h1>
+<p>To prepare the data in <code>R</code> for use in
+<code>Mplus</code>:</p>
+<pre class="r"><code>library(&quot;MplusAutomation&quot;)
+
+prepareMplusData(
+  mydata,
+  file.path(path, &quot;/GitHub/Project_Name/Data/mplusdata.dat&quot;))</code></pre>
+</div>
+<div id="example" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Model Example</h1>
 <pre><code>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!  MPLUS SYNTAX LINES CANNOT EXCEED 90 CHARACTERS;
 !!!!!  VARIABLE NAMES AND PARAMETER LABELS CANNOT EXCEED 8 CHARACTERS EACH;
@@ -532,19 +542,19 @@ SAVEDATA:
     FILE = &quot;C:/[insert_filepath]/filename.dat&quot;;
     SAVE = FSCORES;</code></pre>
 </div>
-<div id="modelTitle" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Model Title</h1>
+<div id="modelTitle" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Model Title</h1>
 <pre><code>TITLE: INSERT TITLE HERE</code></pre>
 </div>
-<div id="readData" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Read Data</h1>
+<div id="readData" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Read Data</h1>
 <pre><code>DATA: 
     FILE = &quot;C:/[insert_filepath]/filename.dat&quot;;</code></pre>
 </div>
-<div id="variables" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Variables</h1>
-<div id="specifyVariables" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Specify
+<div id="variables" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Variables</h1>
+<div id="specifyVariables" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Specify
 Variables</h2>
 <pre><code>VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
@@ -552,8 +562,8 @@ Variables</h2>
     USEVARIABLES = ID age x1 x2 y1;
     CLUSTER = ID;</code></pre>
 </div>
-<div id="categoricalVariables" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Categorical
+<div id="categoricalVariables" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Categorical
 Variables</h2>
 <pre><code>VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
@@ -561,16 +571,16 @@ Variables</h2>
     USEVARIABLES = ID age x1 x2 y1;
     CATEGORICAL = x1 x2;</code></pre>
 </div>
-<div id="countVariables" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Count Variables</h2>
+<div id="countVariables" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Count Variables</h2>
 <pre><code>VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
     MISSING = .;
     USEVARIABLES = ID age x1 x2 y1;
     COUNT = x1 x2;</code></pre>
 </div>
-<div id="clusterVariable" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Cluster Variable</h2>
+<div id="clusterVariable" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Cluster Variable</h2>
 <p>There are multiple ways of accounting for nested data in <a
 href="sem.html">structural equation modeling</a>. One way to account for
 nested data is to use multilevel structural equation modeling. Another
@@ -588,8 +598,8 @@ section:</p>
 ANALYSIS:
     TYPE = COMPLEX;</code></pre>
 </div>
-<div id="tScores" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Individually Varying
+<div id="tScores" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Individually Varying
 Times of Observation</h2>
 <pre><code>VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
@@ -597,8 +607,8 @@ Times of Observation</h2>
     USEVARIABLES = ID age x1 x2 y1;
     TSCORES = age;</code></pre>
 </div>
-<div id="auxiliaryVariables" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Auxiliary
+<div id="auxiliaryVariables" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Auxiliary
 Variables</h2>
 <pre><code>VARIABLE:
     NAMES = ID age x1 x2 x3 y1;
@@ -606,8 +616,8 @@ Variables</h2>
     USEVARIABLES = ID x1 x2 y1;
     AUXILIARY = age;</code></pre>
 </div>
-<div id="samplingWeight" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> Sampling Weight
+<div id="samplingWeight" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Sampling Weight
 Variable</h2>
 <pre><code>VARIABLE:
     NAMES = ID wt age x1 x2 x3 y1;
@@ -615,8 +625,8 @@ Variable</h2>
     USEVARIABLES = ID age x1 x2 y1;
     WEIGHT = wt;</code></pre>
 </div>
-<div id="multilevelVariables" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Multilevel
+<div id="multilevelVariables" class="section level2" number="6.8">
+<h2><span class="header-section-number">6.8</span> Multilevel
 Variables</h2>
 <p>Between- and within-cluster variables:</p>
 <pre><code>VARIABLE:
@@ -627,18 +637,18 @@ Variables</h2>
     BETWEEN = x2;</code></pre>
 </div>
 </div>
-<div id="analysis" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Analysis</h1>
-<div id="analysisTypes" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Analysis Types</h2>
+<div id="analysis" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Analysis</h1>
+<div id="analysisTypes" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Analysis Types</h2>
 <ul>
 <li><code>TYPE = COMPLEX</code></li>
 <li><code>TYPE = TWOLEVEL</code></li>
 <li><code>TYPE = EFA</code></li>
 </ul>
 </div>
-<div id="estimators" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Model Estimators</h2>
+<div id="estimators" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Model Estimators</h2>
 <pre><code>ANALYSIS:
     ESTIMATOR = MLR;</code></pre>
 <ul>
@@ -647,16 +657,16 @@ Variables</h2>
 <li><code>BAYES</code></li>
 </ul>
 </div>
-<div id="bootstrap" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Bootstrap Draws</h2>
+<div id="bootstrap" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Bootstrap Draws</h2>
 <pre><code>BOOTSTRAP = 2000; ! insert number of bootstrap draws</code></pre>
 </div>
-<div id="starts" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Starts</h2>
+<div id="starts" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Starts</h2>
 <pre><code>STARTS = 20; ! insert number of initial stage starts and number of final stage optimizations</code></pre>
 </div>
-<div id="lowCovarianceCoverage" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Low Covariance
+<div id="lowCovarianceCoverage" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Low Covariance
 Coverage</h2>
 <p>To estimate a model with low covariance coverage, lower the
 <code>COVERAGE</code> value under the <code>ANALYSIS</code> section:</p>
@@ -664,25 +674,25 @@ Coverage</h2>
     COVERAGE = 0;</code></pre>
 </div>
 </div>
-<div id="efa" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Exploratory Factor
+<div id="efa" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Exploratory Factor
 Analysis</h1>
-<div id="oblique" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Oblique Rotation</h2>
+<div id="oblique" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Oblique Rotation</h2>
 <pre><code>ANALYSIS:
     TYPE = EFA 1 5; ! extract 1-5 factors
     ROTATION = GEOMIN;</code></pre>
 </div>
-<div id="orthogonal" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Orthogonal
+<div id="orthogonal" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Orthogonal
 Rotation</h2>
 <pre><code>ANALYSIS:
     TYPE = EFA 1 5; ! extract 1-5 factors
     ROTATION = VARIMAX;</code></pre>
 </div>
 </div>
-<div id="bayesian" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Bayesian SEM</h1>
+<div id="bayesian" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Bayesian SEM</h1>
 <p>Other settings you can specify under the “ANALYSIS” section
 include:</p>
 <pre><code>ANALYSIS:
@@ -703,32 +713,36 @@ include:</p>
 <pre><code>PLOT:
     TYPE = PLOT3; ! trace plots, histogram, and kernel density</code></pre>
 </div>
-<div id="model" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Model</h1>
-<div id="latentVariables" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Define Latent
+<div id="model" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Model</h1>
+<div id="latentVariables" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Define Latent
 Variables</h2>
 <pre><code>MODEL:
     latent1 BY x1 x2 x3;</code></pre>
 </div>
-<div id="regressionPaths" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Regression Paths</h2>
+<div id="regressionPaths" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Regression
+Paths</h2>
 <p>Regress outcome variable on predictor variable(s):</p>
 <pre><code>MODEL:
     y1 ON x1 x2;</code></pre>
 </div>
-<div id="covariancePaths" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Covariance Paths</h2>
+<div id="covariancePaths" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Covariance
+Paths</h2>
 <pre><code>MODEL:
     x1 WITH x2;</code></pre>
 </div>
-<div id="indirectEffects" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Indirect Effects</h2>
+<div id="indirectEffects" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Indirect
+Effects</h2>
 <pre><code>MODEL INDIRECT:
     y IND x;</code></pre>
 </div>
-<div id="means" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Means/Intercepts</h2>
+<div id="means" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span>
+Means/Intercepts</h2>
 <p>Freely estimate:</p>
 <pre><code>MODEL:
     [x1];</code></pre>
@@ -736,8 +750,8 @@ Variables</h2>
 <pre><code>MODEL:
     [x1@0];</code></pre>
 </div>
-<div id="variances" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Variances</h2>
+<div id="variances" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Variances</h2>
 <p>Freely estimate:</p>
 <pre><code>MODEL:
     x1;</code></pre>
@@ -745,8 +759,8 @@ Variables</h2>
 <pre><code>MODEL:
     x1@1;</code></pre>
 </div>
-<div id="parameterLabel" class="section level2" number="9.7">
-<h2><span class="header-section-number">9.7</span> Parameter Label</h2>
+<div id="parameterLabel" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Parameter Label</h2>
 <p>To specify a parameter label, provide the label in parentheses after
 the parameter:</p>
 <pre><code>MODEL:
@@ -754,37 +768,37 @@ the parameter:</p>
     latent2 BY x4* x5 (load5) x6;</code></pre>
 </div>
 </div>
-<div id="comments" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Comments</h1>
+<div id="comments" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Comments</h1>
 <pre><code>!This is a comment in Mplus</code></pre>
 </div>
-<div id="parameterConstraints" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Setting Parameter
+<div id="parameterConstraints" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Setting Parameter
 Constraints</h1>
-<div id="freeParameter" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Freeing a
+<div id="freeParameter" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Freeing a
 Parameter</h2>
 <p>By default, the first loading on a factor is fixed to zero. You can
 freely estimate the parameter by adding an asterisk:</p>
 <pre><code>MODEL:
     latent1 BY x1* x2 x3;</code></pre>
 </div>
-<div id="constrainParameter" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Constraing a
+<div id="constrainParameter" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Constraing a
 Parameter</h2>
 <pre><code>MODEL:
     latent1 BY x1@1 x2 x3;
     [latent1@0];
     latent1@1;</code></pre>
 </div>
-<div id="equalParameters" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Setting Two
+<div id="equalParameters" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Setting Two
 Parameters to be Equal</h2>
 <p>To set two parameters to be equal, provide the same <a
 href="#parameterLabel">parameter label</a> for each parameter.</p>
 </div>
-<div id="parameterBounds" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Setting Lower and
+<div id="parameterBounds" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Setting Lower and
 Upper Bounds on a Parameter</h2>
 <p>To set lower and upper bounds on a parameter, you can assign the
 parameter a <a href="#parameterLabel">parameter label</a>. Then, you can
@@ -798,8 +812,8 @@ MODEL CONSTRAINT:
     load3 &gt; 0; load3 &lt; 1;</code></pre>
 </div>
 </div>
-<div id="output" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Output</h1>
+<div id="output" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Output</h1>
 <pre><code>OUTPUT:  
     STDYX; 
     TECH1;
@@ -808,27 +822,39 @@ MODEL CONSTRAINT:
     MODINDICES (ALL); ! specify number in parentheses to print only those mod indices that are above a particular chi-square value
     CINTERVAL;</code></pre>
 </div>
-<div id="factorScores" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Save Factor
+<div id="factorScores" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Save Factor
 Scores</h1>
 <pre><code>SAVEDATA:
     FILE = &quot;C:/[insert_filepath]/filename.dat&quot;;
     SAVE = FSCORES;</code></pre>
 </div>
-<div id="multipleImputation" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Multiple
+<div id="multipleImputation" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Multiple
 Imputation</h1>
 <p>For examples of how to conduct <a
 href="multipleImputation.html">multiple imputation</a> in <a
 href="https://www.statmodel.com"><code>Mplus</code></a>, see <a
 href="multipleImputation.html#mplus">here</a>.</p>
 </div>
-<div id="session-info" class="section level1" number="15">
-<h1><span class="header-section-number">15</span> Session Info</h1>
+<div id="runModels" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Run Models in
+Batch</h1>
+<p>Run models in batch via <code>R</code>:</p>
+<pre class="r"><code>library(&quot;MplusAutomation&quot;)
+
+runModels(
+  file.path(path, &quot;/GitHub/Project_Name/Analyses/Mplus/&quot;),
+  recursive = TRUE,
+  replaceOutfile = &quot;always&quot;,
+  showOutput = TRUE)</code></pre>
+</div>
+<div id="session-info" class="section level1" number="17">
+<h1><span class="header-section-number">17</span> Session Info</h1>
 <pre class="r fold-hide"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 22.04.3 LTS
+Running under: Ubuntu 22.04.4 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -854,7 +880,7 @@ loaded via a namespace (and not attached):
 [17] yaml_2.3.8      rlang_1.1.3     jsonlite_1.8.8 </code></pre>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXBsdXMiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KAogIGVjaG8gPSBUUlVFLAogIGVycm9yID0gVFJVRSwKICBjb21tZW50ID0gIiIsCiAgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyIpCmBgYAoKIyBPdmVydmlldyBvZiBgTXBsdXNgCgpbYE1wbHVzYF0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbSkgaXMgc29mdHdhcmUgZm9yIFtzdHJ1Y3R1cmFsIGVxdWF0aW9uIG1vZGVsaW5nXShzZW0uaHRtbCkuCkEgc3VtbWFyeSBvZiB0aGUgW2BNcGx1c2BdKGh0dHBzOi8vd3d3LnN0YXRtb2RlbC5jb20pIGxhbmd1YWdlIHN5bnRheCBpcyBbaGVyZV0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbS9sYW5ndWFnZS5odG1sKSAoYXJjaGl2ZWQgYXQ6IGh0dHBzOi8vcGVybWEuY2MvOTYyRy1RVUVHKS4KVGhlIFtNcGx1cyBVc2VyJ3MgR3VpZGVdKGh0dHBzOi8vd3d3LnN0YXRtb2RlbC5jb20vaHRtbF91Zy5zaHRtbCkgaXMgbG9jYXRlZCBbaGVyZV0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbS9kb3dubG9hZC91c2Vyc2d1aWRlL01wbHVzVXNlckd1aWRlVmVyXzgucGRmKSAoYXJjaGl2ZWQgYXQ6IGh0dHBzOi8vcGVybWEuY2MvVzM5Vy1OUkdIKS4KCiMgTW9kZWwgRXhhbXBsZSB7I2V4YW1wbGV9CgpgYGAKISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIQohISEhISAgTVBMVVMgU1lOVEFYIExJTkVTIENBTk5PVCBFWENFRUQgOTAgQ0hBUkFDVEVSUzsKISEhISEgIFZBUklBQkxFIE5BTUVTIEFORCBQQVJBTUVURVIgTEFCRUxTIENBTk5PVCBFWENFRUQgOCBDSEFSQUNURVJTIEVBQ0g7CiEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEKClRJVExFOiBFeGFtcGxlIE1wbHVzIE1vZGVsCgpEQVRBOiAKICAgIEZJTEUgPSAiQzovW2luc2VydF9maWxlcGF0aF0vZmlsZW5hbWUuZGF0IjsKClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeDQgeDUgeDYgeTEgeTI7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB4MyB4NCB4NSB4NiB5MSB5MjsKCkFOQUxZU0lTOgogICAgVFlQRSA9IENPTVBMRVg7CiAgICBFU1RJTUFUT1IgPSBNTFI7CgpNT0RFTDoKICAgICEgRmFjdG9yIGxvYWRpbmdzCiAgICBsYXRlbnQxIEJZIHgxKiB4MiB4MzsKICAgIGxhdGVudDIgQlkgeDQqIHg1IHg2OwoKICAgICEgQ292YXJpYW5jZXMgYmV0d2VlbiBsYXRlbnQgZmFjdG9ycwogICAgbGF0ZW50MSBXSVRIIGxhdGVudDIKCiAgICAhIFJlZ3Jlc3Npb24gcGF0aHMKICAgIHkxIE9OIGxhdGVudDEgKyBsYXRlbnQyCiAgICB5MiBPTiBsYXRlbnQxICsgbGF0ZW50IDIKCiAgICAhIFN0YW5kYXJkaXplIGxhdGVudCBmYWN0b3JzOiBmaXggbWVhbnMgdG8gemVybwogICAgW2xhdGVudDFAMF07CiAgICBbbGF0ZW50MkAwXTsKCiAgICAhIFN0YW5kYXJkaXplIGxhdGVudCBmYWN0b3JzOiBmaXggdmFyaWFuY2VzIHRvIG9uZQogICAgbGF0ZW50MUAxOwogICAgbGF0ZW50MkAxOwoKT1VUUFVUOiAgCiAgICBTVERZWDsgCiAgICBURUNIMTsKICAgIFRFQ0g0OwogICAgU0FNUFNUQVQ7CiAgICBNT0RJTkRJQ0VTICgzKTsKICAgIENJTlRFUlZBTDsKClNBVkVEQVRBOgogICAgRklMRSA9ICJDOi9baW5zZXJ0X2ZpbGVwYXRoXS9maWxlbmFtZS5kYXQiOwogICAgU0FWRSA9IEZTQ09SRVM7CmBgYAoKIyBNb2RlbCBUaXRsZSB7I21vZGVsVGl0bGV9CgpgYGAKVElUTEU6IElOU0VSVCBUSVRMRSBIRVJFCmBgYAoKIyBSZWFkIERhdGEgeyNyZWFkRGF0YX0KCmBgYApEQVRBOiAKICAgIEZJTEUgPSAiQzovW2luc2VydF9maWxlcGF0aF0vZmlsZW5hbWUuZGF0IjsKYGBgCgojIFZhcmlhYmxlcyB7I3ZhcmlhYmxlc30KCiMjIFNwZWNpZnkgVmFyaWFibGVzIHsjc3BlY2lmeVZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBDTFVTVEVSID0gSUQ7CmBgYAoKIyMgQ2F0ZWdvcmljYWwgVmFyaWFibGVzIHsjY2F0ZWdvcmljYWxWYXJpYWJsZXN9CgpgYGAKVkFSSUFCTEU6CiAgICBOQU1FUyA9IElEIGFnZSB4MSB4MiB4MyB5MTsKICAgIE1JU1NJTkcgPSAuOwogICAgVVNFVkFSSUFCTEVTID0gSUQgYWdlIHgxIHgyIHkxOwogICAgQ0FURUdPUklDQUwgPSB4MSB4MjsKYGBgCgojIyBDb3VudCBWYXJpYWJsZXMgeyNjb3VudFZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBDT1VOVCA9IHgxIHgyOwpgYGAKCiMjIENsdXN0ZXIgVmFyaWFibGUgeyNjbHVzdGVyVmFyaWFibGV9CgpUaGVyZSBhcmUgbXVsdGlwbGUgd2F5cyBvZiBhY2NvdW50aW5nIGZvciBuZXN0ZWQgZGF0YSBpbiBbc3RydWN0dXJhbCBlcXVhdGlvbiBtb2RlbGluZ10oc2VtLmh0bWwpLgpPbmUgd2F5IHRvIGFjY291bnQgZm9yIG5lc3RlZCBkYXRhIGlzIHRvIHVzZSBtdWx0aWxldmVsIHN0cnVjdHVyYWwgZXF1YXRpb24gbW9kZWxpbmcuCkFub3RoZXIgYXBwcm9hY2ggaXMgdG8gdXNlIGEgY2x1c3RlciB2YXJpYWJsZSB0byBnZW5lcmF0ZSBjbHVzdGVyLXJvYnVzdCBzdGFuZGFyZCBlcnJvcnMgb2YgcGFyYW1ldGVycy4KVG8gdXNlIGEgY2x1c3RlciB2YXJpYWJsZSwgc3BlY2lmeSBgQ0xVU1RFUmAgdW5kZXIgdGhlIGBWQVJJQUJMRWAgc2VjdGlvbiwgYW5kIHNwZWNpZnkgYFRZUEUgPSBDT01QTEVYYCB1bmRlciB0aGUgYEFOQUxZU0lTYCBzZWN0aW9uOgoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIENMVVNURVIgPSBJRDsKCkFOQUxZU0lTOgogICAgVFlQRSA9IENPTVBMRVg7CmBgYAoKIyMgSW5kaXZpZHVhbGx5IFZhcnlpbmcgVGltZXMgb2YgT2JzZXJ2YXRpb24geyN0U2NvcmVzfQoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIFRTQ09SRVMgPSBhZ2U7CmBgYAoKIyMgQXV4aWxpYXJ5IFZhcmlhYmxlcyB7I2F1eGlsaWFyeVZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCB4MSB4MiB5MTsKICAgIEFVWElMSUFSWSA9IGFnZTsKYGBgCgojIyBTYW1wbGluZyBXZWlnaHQgVmFyaWFibGUgeyNzYW1wbGluZ1dlaWdodH0KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgd3QgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBXRUlHSFQgPSB3dDsKYGBgCgojIyBNdWx0aWxldmVsIFZhcmlhYmxlcyB7I211bHRpbGV2ZWxWYXJpYWJsZXN9CgpCZXR3ZWVuLSBhbmQgd2l0aGluLWNsdXN0ZXIgdmFyaWFibGVzOgoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCB3dCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIFdJVEhJTiA9IHgxOwogICAgQkVUV0VFTiA9IHgyOwpgYGAKCiMgQW5hbHlzaXMgeyNhbmFseXNpc30KCiMjIEFuYWx5c2lzIFR5cGVzIHsjYW5hbHlzaXNUeXBlc30KCi0gYFRZUEUgPSBDT01QTEVYYAotIGBUWVBFID0gVFdPTEVWRUxgCi0gYFRZUEUgPSBFRkFgCgojIyBNb2RlbCBFc3RpbWF0b3JzIHsjZXN0aW1hdG9yc30KCmBgYApBTkFMWVNJUzoKICAgIEVTVElNQVRPUiA9IE1MUjsKYGBgCgotIGBNTFJgOiBmb3IgbGlrZXJ0L2NvbnRpbnVvdXMgZGF0YQotIGBXTFNNVmA6IGZvciBvcmRpbmFsL2NhdGVnb3JpY2FsIGRhdGEKLSBgQkFZRVNgCgojIyBCb290c3RyYXAgRHJhd3MgeyNib290c3RyYXB9CgpgYGAKQk9PVFNUUkFQID0gMjAwMDsgISBpbnNlcnQgbnVtYmVyIG9mIGJvb3RzdHJhcCBkcmF3cwpgYGAKCiMjIFN0YXJ0cyB7I3N0YXJ0c30KCmBgYApTVEFSVFMgPSAyMDsgISBpbnNlcnQgbnVtYmVyIG9mIGluaXRpYWwgc3RhZ2Ugc3RhcnRzIGFuZCBudW1iZXIgb2YgZmluYWwgc3RhZ2Ugb3B0aW1pemF0aW9ucwpgYGAKCiMjIExvdyBDb3ZhcmlhbmNlIENvdmVyYWdlIHsjbG93Q292YXJpYW5jZUNvdmVyYWdlfQoKVG8gZXN0aW1hdGUgYSBtb2RlbCB3aXRoIGxvdyBjb3ZhcmlhbmNlIGNvdmVyYWdlLCBsb3dlciB0aGUgYENPVkVSQUdFYCB2YWx1ZSB1bmRlciB0aGUgYEFOQUxZU0lTYCBzZWN0aW9uOgoKYGBgCkFOQUxZU0lTOgogICAgQ09WRVJBR0UgPSAwOwpgYGAKCiMgRXhwbG9yYXRvcnkgRmFjdG9yIEFuYWx5c2lzIHsjZWZhfQoKIyMgT2JsaXF1ZSBSb3RhdGlvbiB7I29ibGlxdWV9CgpgYGAKQU5BTFlTSVM6CiAgICBUWVBFID0gRUZBIDEgNTsgISBleHRyYWN0IDEtNSBmYWN0b3JzCiAgICBST1RBVElPTiA9IEdFT01JTjsKYGBgCgojIyBPcnRob2dvbmFsIFJvdGF0aW9uIHsjb3J0aG9nb25hbH0KCmBgYApBTkFMWVNJUzoKICAgIFRZUEUgPSBFRkEgMSA1OyAhIGV4dHJhY3QgMS01IGZhY3RvcnMKICAgIFJPVEFUSU9OID0gVkFSSU1BWDsKYGBgCgojIEJheWVzaWFuIFNFTSB7I2JheWVzaWFufQoKT3RoZXIgc2V0dGluZ3MgeW91IGNhbiBzcGVjaWZ5IHVuZGVyIHRoZSAiQU5BTFlTSVMiIHNlY3Rpb24gaW5jbHVkZToKCmBgYApBTkFMWVNJUzoKICAgIEVTVElNQVRPUiA9IEJBWUVTOwogICAgQkNPTlZFUkdFTkNFID0gLjA1OyAhIHZhbHVlIG9mIHRoZSBHZWxtYW4tUnViaW4gY29udmVyZ2VuY2UgY3JpdGVyaW9uOyAhIGRlZmF1bHQgaXMgLjA1OyB2YW4gZGUgU2Nob290IGV0IGFsLiAoMjAxNCkgcmVjb21tZW5kIC4wMQogICAgQklURVJBVElPTlMgPSBhIChiKTsgISBhID0gbWF4aW11bSwgYiA9IG1pbnVtdW0gbnVtYmVyIG9mIGl0ZXJhdGlvbnMgZm9yIGVhY2ggTUNNQyBjaGFpbgogICAgQ0hBSU4gPSA0OyAhIG51bWJlciBvZiBjaGFpbnMKICAgIFBST0NFU1NPUlMgPSA0OyAhIG51bWJlciBvZiBjb21wdXRlciBwcm9jZXNzb3JzIHRvIHVzZQogICAgQlNFRUQgPSA1MjI0MjsgISBzZXQgc2VlZCBmb3IgcmVwbGljYWJpbGl0eQogICAgU1RWQUxVRVMgPSBtbDsgISBzZXQgc3RhcnRpbmcgdmFsdWVzIGJhc2VkIG9uIE1MIGVzdGltYXRpb24KYGBgCgpZb3UgY2FuIHNwZWNpZnkgbW9kZWwgcHJpb3JzIHVuZGVyIHRoZSAiTU9ERUwgUFJJT1JTIiBzZWN0aW9uLgoKT3RoZXIgc2V0dGluZ3MgeW91IGNhbiBzcGVjaWZ5IHVuZGVyIHRoZSAiT1VUUFVUIiBzZWN0aW9uIGluY2x1ZGU6CgpgYGAKT1VUUFVUOgogICAgU1RBTkQ7ICEgc3RhbmRhcmRpemVkIGVzdGltYXRlcwogICAgQ0lOVEVSQ0FMOyAhIHBvc3RlcmlvciBwcmVkaWN0aXZlIGludGVydmFscyAoY3JlZGlibGUgaW50ZXJ2YWxzKQpgYGAKCk90aGVyIHNldHRpbmdzIHlvdSBjYW4gc3BlY2lmeSB1bmRlciB0aGUgIlBMT1QiIHNlY3Rpb24gaW5jbHVkZToKCmBgYApQTE9UOgogICAgVFlQRSA9IFBMT1QzOyAhIHRyYWNlIHBsb3RzLCBoaXN0b2dyYW0sIGFuZCBrZXJuZWwgZGVuc2l0eQpgYGAKCiMgTW9kZWwgeyNtb2RlbH0KCiMjIERlZmluZSBMYXRlbnQgVmFyaWFibGVzIHsjbGF0ZW50VmFyaWFibGVzfQoKYGBgCk1PREVMOgogICAgbGF0ZW50MSBCWSB4MSB4MiB4MzsKYGBgCgojIyBSZWdyZXNzaW9uIFBhdGhzIHsjcmVncmVzc2lvblBhdGhzfQoKUmVncmVzcyBvdXRjb21lIHZhcmlhYmxlIG9uIHByZWRpY3RvciB2YXJpYWJsZShzKToKCmBgYApNT0RFTDoKICAgIHkxIE9OIHgxIHgyOwpgYGAKCiMjIENvdmFyaWFuY2UgUGF0aHMgeyNjb3ZhcmlhbmNlUGF0aHN9CgpgYGAKTU9ERUw6CiAgICB4MSBXSVRIIHgyOwpgYGAKCiMjIEluZGlyZWN0IEVmZmVjdHMgeyNpbmRpcmVjdEVmZmVjdHN9CgpgYGAKTU9ERUwgSU5ESVJFQ1Q6CiAgICB5IElORCB4OwpgYGAKCiMjIE1lYW5zL0ludGVyY2VwdHMgeyNtZWFuc30KCkZyZWVseSBlc3RpbWF0ZToKCmBgYApNT0RFTDoKICAgIFt4MV07CmBgYAoKRml4IHRvIHplcm86CgpgYGAKTU9ERUw6CiAgICBbeDFAMF07CmBgYAoKIyMgVmFyaWFuY2VzIHsjdmFyaWFuY2VzfQoKRnJlZWx5IGVzdGltYXRlOgoKYGBgCk1PREVMOgogICAgeDE7CmBgYAoKRml4IHRvIG9uZToKCmBgYApNT0RFTDoKICAgIHgxQDE7CmBgYAoKIyMgUGFyYW1ldGVyIExhYmVsIHsjcGFyYW1ldGVyTGFiZWx9CgpUbyBzcGVjaWZ5IGEgcGFyYW1ldGVyIGxhYmVsLCBwcm92aWRlIHRoZSBsYWJlbCBpbiBwYXJlbnRoZXNlcyBhZnRlciB0aGUgcGFyYW1ldGVyOgoKYGBgCk1PREVMOgogICAgbGF0ZW50MSBCWSB4MSogeDIgeDMgKGxvYWQxLTMpOwogICAgbGF0ZW50MiBCWSB4NCogeDUgKGxvYWQ1KSB4NjsKYGBgCgojIENvbW1lbnRzIHsjY29tbWVudHN9CgpgYGAKIVRoaXMgaXMgYSBjb21tZW50IGluIE1wbHVzCmBgYAoKIyBTZXR0aW5nIFBhcmFtZXRlciBDb25zdHJhaW50cyB7I3BhcmFtZXRlckNvbnN0cmFpbnRzfQoKIyMgRnJlZWluZyBhIFBhcmFtZXRlciB7I2ZyZWVQYXJhbWV0ZXJ9CgpCeSBkZWZhdWx0LCB0aGUgZmlyc3QgbG9hZGluZyBvbiBhIGZhY3RvciBpcyBmaXhlZCB0byB6ZXJvLgpZb3UgY2FuIGZyZWVseSBlc3RpbWF0ZSB0aGUgcGFyYW1ldGVyIGJ5IGFkZGluZyBhbiBhc3RlcmlzazoKCmBgYApNT0RFTDoKICAgIGxhdGVudDEgQlkgeDEqIHgyIHgzOwpgYGAKCiMjIENvbnN0cmFpbmcgYSBQYXJhbWV0ZXIgeyNjb25zdHJhaW5QYXJhbWV0ZXJ9CgpgYGAKTU9ERUw6CiAgICBsYXRlbnQxIEJZIHgxQDEgeDIgeDM7CiAgICBbbGF0ZW50MUAwXTsKICAgIGxhdGVudDFAMTsKYGBgCgojIyBTZXR0aW5nIFR3byBQYXJhbWV0ZXJzIHRvIGJlIEVxdWFsIHsjZXF1YWxQYXJhbWV0ZXJzfQoKVG8gc2V0IHR3byBwYXJhbWV0ZXJzIHRvIGJlIGVxdWFsLCBwcm92aWRlIHRoZSBzYW1lIFtwYXJhbWV0ZXIgbGFiZWxdKCNwYXJhbWV0ZXJMYWJlbCkgZm9yIGVhY2ggcGFyYW1ldGVyLgoKIyMgU2V0dGluZyBMb3dlciBhbmQgVXBwZXIgQm91bmRzIG9uIGEgUGFyYW1ldGVyIHsjcGFyYW1ldGVyQm91bmRzfQoKVG8gc2V0IGxvd2VyIGFuZCB1cHBlciBib3VuZHMgb24gYSBwYXJhbWV0ZXIsIHlvdSBjYW4gYXNzaWduIHRoZSBwYXJhbWV0ZXIgYSBbcGFyYW1ldGVyIGxhYmVsXSgjcGFyYW1ldGVyTGFiZWwpLgpUaGVuLCB5b3UgY2FuIGFzc2lnbiB0aGUgY29uc3RyYWludCB0byB0aGUgcGFyYW1ldGVyICh2aWEgdGhlIGxhYmVsKSB1bmRlciB0aGUgYE1PREVMIENPTlNUUkFJTlRgIHNlY3Rpb24uCkZvciBleGFtcGxlLCB0byBjb25zdHJhaW4gYSBwYXJhbWV0ZXIgYmV0d2VlbiAw4oCTMSwgCgpgYGAKTU9ERUw6CiAgICBsYXRlbnQxIEJZIHgxKiB4MiB4MyAobG9hZDMpOwoKTU9ERUwgQ09OU1RSQUlOVDoKICAgIGxvYWQzID4gMDsgbG9hZDMgPCAxOwpgYGAKCiMgT3V0cHV0IHsjb3V0cHV0fQoKYGBgCk9VVFBVVDogIAogICAgU1REWVg7IAogICAgVEVDSDE7CiAgICBURUNINDsKICAgIFNBTVBTVEFUOwogICAgTU9ESU5ESUNFUyAoQUxMKTsgISBzcGVjaWZ5IG51bWJlciBpbiBwYXJlbnRoZXNlcyB0byBwcmludCBvbmx5IHRob3NlIG1vZCBpbmRpY2VzIHRoYXQgYXJlIGFib3ZlIGEgcGFydGljdWxhciBjaGktc3F1YXJlIHZhbHVlCiAgICBDSU5URVJWQUw7CmBgYAoKIyBTYXZlIEZhY3RvciBTY29yZXMgeyNmYWN0b3JTY29yZXN9CgpgYGAKU0FWRURBVEE6CiAgICBGSUxFID0gIkM6L1tpbnNlcnRfZmlsZXBhdGhdL2ZpbGVuYW1lLmRhdCI7CiAgICBTQVZFID0gRlNDT1JFUzsKYGBgCgojIE11bHRpcGxlIEltcHV0YXRpb24geyNtdWx0aXBsZUltcHV0YXRpb259CgpGb3IgZXhhbXBsZXMgb2YgaG93IHRvIGNvbmR1Y3QgW211bHRpcGxlIGltcHV0YXRpb25dKG11bHRpcGxlSW1wdXRhdGlvbi5odG1sKSBpbiBbYE1wbHVzYF0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbSksIHNlZSBbaGVyZV0obXVsdGlwbGVJbXB1dGF0aW9uLmh0bWwjbXBsdXMpLgoKIyBTZXNzaW9uIEluZm8KCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0Kc2Vzc2lvbkluZm8oKQpgYGAK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTXBsdXMiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KAogIGVjaG8gPSBUUlVFLAogIGVycm9yID0gVFJVRSwKICBjb21tZW50ID0gIiIsCiAgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyIpCmBgYAoKIyBPdmVydmlldyBvZiBgTXBsdXNgCgpbYE1wbHVzYF0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbSkgaXMgc29mdHdhcmUgZm9yIFtzdHJ1Y3R1cmFsIGVxdWF0aW9uIG1vZGVsaW5nXShzZW0uaHRtbCkuCkEgc3VtbWFyeSBvZiB0aGUgW2BNcGx1c2BdKGh0dHBzOi8vd3d3LnN0YXRtb2RlbC5jb20pIGxhbmd1YWdlIHN5bnRheCBpcyBbaGVyZV0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbS9sYW5ndWFnZS5odG1sKSAoYXJjaGl2ZWQgYXQ6IGh0dHBzOi8vcGVybWEuY2MvOTYyRy1RVUVHKS4KVGhlIFtNcGx1cyBVc2VyJ3MgR3VpZGVdKGh0dHBzOi8vd3d3LnN0YXRtb2RlbC5jb20vaHRtbF91Zy5zaHRtbCkgaXMgbG9jYXRlZCBbaGVyZV0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbS9kb3dubG9hZC91c2Vyc2d1aWRlL01wbHVzVXNlckd1aWRlVmVyXzgucGRmKSAoYXJjaGl2ZWQgYXQ6IGh0dHBzOi8vcGVybWEuY2MvVzM5Vy1OUkdIKS4KCiMgUHJlcGFyZSBEYXRhIHsjcHJlcGFyZURhdGF9CgpUbyBwcmVwYXJlIHRoZSBkYXRhIGluIGBSYCBmb3IgdXNlIGluIGBNcGx1c2A6CgpgYGByCmxpYnJhcnkoIk1wbHVzQXV0b21hdGlvbiIpCgpwcmVwYXJlTXBsdXNEYXRhKAogIG15ZGF0YSwKICBmaWxlLnBhdGgocGF0aCwgIi9HaXRIdWIvUHJvamVjdF9OYW1lL0RhdGEvbXBsdXNkYXRhLmRhdCIpKQpgYGAKCiMgTW9kZWwgRXhhbXBsZSB7I2V4YW1wbGV9CgpgYGAKISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIQohISEhISAgTVBMVVMgU1lOVEFYIExJTkVTIENBTk5PVCBFWENFRUQgOTAgQ0hBUkFDVEVSUzsKISEhISEgIFZBUklBQkxFIE5BTUVTIEFORCBQQVJBTUVURVIgTEFCRUxTIENBTk5PVCBFWENFRUQgOCBDSEFSQUNURVJTIEVBQ0g7CiEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEKClRJVExFOiBFeGFtcGxlIE1wbHVzIE1vZGVsCgpEQVRBOiAKICAgIEZJTEUgPSAiQzovW2luc2VydF9maWxlcGF0aF0vZmlsZW5hbWUuZGF0IjsKClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeDQgeDUgeDYgeTEgeTI7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB4MyB4NCB4NSB4NiB5MSB5MjsKCkFOQUxZU0lTOgogICAgVFlQRSA9IENPTVBMRVg7CiAgICBFU1RJTUFUT1IgPSBNTFI7CgpNT0RFTDoKICAgICEgRmFjdG9yIGxvYWRpbmdzCiAgICBsYXRlbnQxIEJZIHgxKiB4MiB4MzsKICAgIGxhdGVudDIgQlkgeDQqIHg1IHg2OwoKICAgICEgQ292YXJpYW5jZXMgYmV0d2VlbiBsYXRlbnQgZmFjdG9ycwogICAgbGF0ZW50MSBXSVRIIGxhdGVudDIKCiAgICAhIFJlZ3Jlc3Npb24gcGF0aHMKICAgIHkxIE9OIGxhdGVudDEgKyBsYXRlbnQyCiAgICB5MiBPTiBsYXRlbnQxICsgbGF0ZW50IDIKCiAgICAhIFN0YW5kYXJkaXplIGxhdGVudCBmYWN0b3JzOiBmaXggbWVhbnMgdG8gemVybwogICAgW2xhdGVudDFAMF07CiAgICBbbGF0ZW50MkAwXTsKCiAgICAhIFN0YW5kYXJkaXplIGxhdGVudCBmYWN0b3JzOiBmaXggdmFyaWFuY2VzIHRvIG9uZQogICAgbGF0ZW50MUAxOwogICAgbGF0ZW50MkAxOwoKT1VUUFVUOiAgCiAgICBTVERZWDsgCiAgICBURUNIMTsKICAgIFRFQ0g0OwogICAgU0FNUFNUQVQ7CiAgICBNT0RJTkRJQ0VTICgzKTsKICAgIENJTlRFUlZBTDsKClNBVkVEQVRBOgogICAgRklMRSA9ICJDOi9baW5zZXJ0X2ZpbGVwYXRoXS9maWxlbmFtZS5kYXQiOwogICAgU0FWRSA9IEZTQ09SRVM7CmBgYAoKIyBNb2RlbCBUaXRsZSB7I21vZGVsVGl0bGV9CgpgYGAKVElUTEU6IElOU0VSVCBUSVRMRSBIRVJFCmBgYAoKIyBSZWFkIERhdGEgeyNyZWFkRGF0YX0KCmBgYApEQVRBOiAKICAgIEZJTEUgPSAiQzovW2luc2VydF9maWxlcGF0aF0vZmlsZW5hbWUuZGF0IjsKYGBgCgojIFZhcmlhYmxlcyB7I3ZhcmlhYmxlc30KCiMjIFNwZWNpZnkgVmFyaWFibGVzIHsjc3BlY2lmeVZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBDTFVTVEVSID0gSUQ7CmBgYAoKIyMgQ2F0ZWdvcmljYWwgVmFyaWFibGVzIHsjY2F0ZWdvcmljYWxWYXJpYWJsZXN9CgpgYGAKVkFSSUFCTEU6CiAgICBOQU1FUyA9IElEIGFnZSB4MSB4MiB4MyB5MTsKICAgIE1JU1NJTkcgPSAuOwogICAgVVNFVkFSSUFCTEVTID0gSUQgYWdlIHgxIHgyIHkxOwogICAgQ0FURUdPUklDQUwgPSB4MSB4MjsKYGBgCgojIyBDb3VudCBWYXJpYWJsZXMgeyNjb3VudFZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBDT1VOVCA9IHgxIHgyOwpgYGAKCiMjIENsdXN0ZXIgVmFyaWFibGUgeyNjbHVzdGVyVmFyaWFibGV9CgpUaGVyZSBhcmUgbXVsdGlwbGUgd2F5cyBvZiBhY2NvdW50aW5nIGZvciBuZXN0ZWQgZGF0YSBpbiBbc3RydWN0dXJhbCBlcXVhdGlvbiBtb2RlbGluZ10oc2VtLmh0bWwpLgpPbmUgd2F5IHRvIGFjY291bnQgZm9yIG5lc3RlZCBkYXRhIGlzIHRvIHVzZSBtdWx0aWxldmVsIHN0cnVjdHVyYWwgZXF1YXRpb24gbW9kZWxpbmcuCkFub3RoZXIgYXBwcm9hY2ggaXMgdG8gdXNlIGEgY2x1c3RlciB2YXJpYWJsZSB0byBnZW5lcmF0ZSBjbHVzdGVyLXJvYnVzdCBzdGFuZGFyZCBlcnJvcnMgb2YgcGFyYW1ldGVycy4KVG8gdXNlIGEgY2x1c3RlciB2YXJpYWJsZSwgc3BlY2lmeSBgQ0xVU1RFUmAgdW5kZXIgdGhlIGBWQVJJQUJMRWAgc2VjdGlvbiwgYW5kIHNwZWNpZnkgYFRZUEUgPSBDT01QTEVYYCB1bmRlciB0aGUgYEFOQUxZU0lTYCBzZWN0aW9uOgoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIENMVVNURVIgPSBJRDsKCkFOQUxZU0lTOgogICAgVFlQRSA9IENPTVBMRVg7CmBgYAoKIyMgSW5kaXZpZHVhbGx5IFZhcnlpbmcgVGltZXMgb2YgT2JzZXJ2YXRpb24geyN0U2NvcmVzfQoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIFRTQ09SRVMgPSBhZ2U7CmBgYAoKIyMgQXV4aWxpYXJ5IFZhcmlhYmxlcyB7I2F1eGlsaWFyeVZhcmlhYmxlc30KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCB4MSB4MiB5MTsKICAgIEFVWElMSUFSWSA9IGFnZTsKYGBgCgojIyBTYW1wbGluZyBXZWlnaHQgVmFyaWFibGUgeyNzYW1wbGluZ1dlaWdodH0KCmBgYApWQVJJQUJMRToKICAgIE5BTUVTID0gSUQgd3QgYWdlIHgxIHgyIHgzIHkxOwogICAgTUlTU0lORyA9IC47CiAgICBVU0VWQVJJQUJMRVMgPSBJRCBhZ2UgeDEgeDIgeTE7CiAgICBXRUlHSFQgPSB3dDsKYGBgCgojIyBNdWx0aWxldmVsIFZhcmlhYmxlcyB7I211bHRpbGV2ZWxWYXJpYWJsZXN9CgpCZXR3ZWVuLSBhbmQgd2l0aGluLWNsdXN0ZXIgdmFyaWFibGVzOgoKYGBgClZBUklBQkxFOgogICAgTkFNRVMgPSBJRCB3dCBhZ2UgeDEgeDIgeDMgeTE7CiAgICBNSVNTSU5HID0gLjsKICAgIFVTRVZBUklBQkxFUyA9IElEIGFnZSB4MSB4MiB5MTsKICAgIFdJVEhJTiA9IHgxOwogICAgQkVUV0VFTiA9IHgyOwpgYGAKCiMgQW5hbHlzaXMgeyNhbmFseXNpc30KCiMjIEFuYWx5c2lzIFR5cGVzIHsjYW5hbHlzaXNUeXBlc30KCi0gYFRZUEUgPSBDT01QTEVYYAotIGBUWVBFID0gVFdPTEVWRUxgCi0gYFRZUEUgPSBFRkFgCgojIyBNb2RlbCBFc3RpbWF0b3JzIHsjZXN0aW1hdG9yc30KCmBgYApBTkFMWVNJUzoKICAgIEVTVElNQVRPUiA9IE1MUjsKYGBgCgotIGBNTFJgOiBmb3IgbGlrZXJ0L2NvbnRpbnVvdXMgZGF0YQotIGBXTFNNVmA6IGZvciBvcmRpbmFsL2NhdGVnb3JpY2FsIGRhdGEKLSBgQkFZRVNgCgojIyBCb290c3RyYXAgRHJhd3MgeyNib290c3RyYXB9CgpgYGAKQk9PVFNUUkFQID0gMjAwMDsgISBpbnNlcnQgbnVtYmVyIG9mIGJvb3RzdHJhcCBkcmF3cwpgYGAKCiMjIFN0YXJ0cyB7I3N0YXJ0c30KCmBgYApTVEFSVFMgPSAyMDsgISBpbnNlcnQgbnVtYmVyIG9mIGluaXRpYWwgc3RhZ2Ugc3RhcnRzIGFuZCBudW1iZXIgb2YgZmluYWwgc3RhZ2Ugb3B0aW1pemF0aW9ucwpgYGAKCiMjIExvdyBDb3ZhcmlhbmNlIENvdmVyYWdlIHsjbG93Q292YXJpYW5jZUNvdmVyYWdlfQoKVG8gZXN0aW1hdGUgYSBtb2RlbCB3aXRoIGxvdyBjb3ZhcmlhbmNlIGNvdmVyYWdlLCBsb3dlciB0aGUgYENPVkVSQUdFYCB2YWx1ZSB1bmRlciB0aGUgYEFOQUxZU0lTYCBzZWN0aW9uOgoKYGBgCkFOQUxZU0lTOgogICAgQ09WRVJBR0UgPSAwOwpgYGAKCiMgRXhwbG9yYXRvcnkgRmFjdG9yIEFuYWx5c2lzIHsjZWZhfQoKIyMgT2JsaXF1ZSBSb3RhdGlvbiB7I29ibGlxdWV9CgpgYGAKQU5BTFlTSVM6CiAgICBUWVBFID0gRUZBIDEgNTsgISBleHRyYWN0IDEtNSBmYWN0b3JzCiAgICBST1RBVElPTiA9IEdFT01JTjsKYGBgCgojIyBPcnRob2dvbmFsIFJvdGF0aW9uIHsjb3J0aG9nb25hbH0KCmBgYApBTkFMWVNJUzoKICAgIFRZUEUgPSBFRkEgMSA1OyAhIGV4dHJhY3QgMS01IGZhY3RvcnMKICAgIFJPVEFUSU9OID0gVkFSSU1BWDsKYGBgCgojIEJheWVzaWFuIFNFTSB7I2JheWVzaWFufQoKT3RoZXIgc2V0dGluZ3MgeW91IGNhbiBzcGVjaWZ5IHVuZGVyIHRoZSAiQU5BTFlTSVMiIHNlY3Rpb24gaW5jbHVkZToKCmBgYApBTkFMWVNJUzoKICAgIEVTVElNQVRPUiA9IEJBWUVTOwogICAgQkNPTlZFUkdFTkNFID0gLjA1OyAhIHZhbHVlIG9mIHRoZSBHZWxtYW4tUnViaW4gY29udmVyZ2VuY2UgY3JpdGVyaW9uOyAhIGRlZmF1bHQgaXMgLjA1OyB2YW4gZGUgU2Nob290IGV0IGFsLiAoMjAxNCkgcmVjb21tZW5kIC4wMQogICAgQklURVJBVElPTlMgPSBhIChiKTsgISBhID0gbWF4aW11bSwgYiA9IG1pbnVtdW0gbnVtYmVyIG9mIGl0ZXJhdGlvbnMgZm9yIGVhY2ggTUNNQyBjaGFpbgogICAgQ0hBSU4gPSA0OyAhIG51bWJlciBvZiBjaGFpbnMKICAgIFBST0NFU1NPUlMgPSA0OyAhIG51bWJlciBvZiBjb21wdXRlciBwcm9jZXNzb3JzIHRvIHVzZQogICAgQlNFRUQgPSA1MjI0MjsgISBzZXQgc2VlZCBmb3IgcmVwbGljYWJpbGl0eQogICAgU1RWQUxVRVMgPSBtbDsgISBzZXQgc3RhcnRpbmcgdmFsdWVzIGJhc2VkIG9uIE1MIGVzdGltYXRpb24KYGBgCgpZb3UgY2FuIHNwZWNpZnkgbW9kZWwgcHJpb3JzIHVuZGVyIHRoZSAiTU9ERUwgUFJJT1JTIiBzZWN0aW9uLgoKT3RoZXIgc2V0dGluZ3MgeW91IGNhbiBzcGVjaWZ5IHVuZGVyIHRoZSAiT1VUUFVUIiBzZWN0aW9uIGluY2x1ZGU6CgpgYGAKT1VUUFVUOgogICAgU1RBTkQ7ICEgc3RhbmRhcmRpemVkIGVzdGltYXRlcwogICAgQ0lOVEVSQ0FMOyAhIHBvc3RlcmlvciBwcmVkaWN0aXZlIGludGVydmFscyAoY3JlZGlibGUgaW50ZXJ2YWxzKQpgYGAKCk90aGVyIHNldHRpbmdzIHlvdSBjYW4gc3BlY2lmeSB1bmRlciB0aGUgIlBMT1QiIHNlY3Rpb24gaW5jbHVkZToKCmBgYApQTE9UOgogICAgVFlQRSA9IFBMT1QzOyAhIHRyYWNlIHBsb3RzLCBoaXN0b2dyYW0sIGFuZCBrZXJuZWwgZGVuc2l0eQpgYGAKCiMgTW9kZWwgeyNtb2RlbH0KCiMjIERlZmluZSBMYXRlbnQgVmFyaWFibGVzIHsjbGF0ZW50VmFyaWFibGVzfQoKYGBgCk1PREVMOgogICAgbGF0ZW50MSBCWSB4MSB4MiB4MzsKYGBgCgojIyBSZWdyZXNzaW9uIFBhdGhzIHsjcmVncmVzc2lvblBhdGhzfQoKUmVncmVzcyBvdXRjb21lIHZhcmlhYmxlIG9uIHByZWRpY3RvciB2YXJpYWJsZShzKToKCmBgYApNT0RFTDoKICAgIHkxIE9OIHgxIHgyOwpgYGAKCiMjIENvdmFyaWFuY2UgUGF0aHMgeyNjb3ZhcmlhbmNlUGF0aHN9CgpgYGAKTU9ERUw6CiAgICB4MSBXSVRIIHgyOwpgYGAKCiMjIEluZGlyZWN0IEVmZmVjdHMgeyNpbmRpcmVjdEVmZmVjdHN9CgpgYGAKTU9ERUwgSU5ESVJFQ1Q6CiAgICB5IElORCB4OwpgYGAKCiMjIE1lYW5zL0ludGVyY2VwdHMgeyNtZWFuc30KCkZyZWVseSBlc3RpbWF0ZToKCmBgYApNT0RFTDoKICAgIFt4MV07CmBgYAoKRml4IHRvIHplcm86CgpgYGAKTU9ERUw6CiAgICBbeDFAMF07CmBgYAoKIyMgVmFyaWFuY2VzIHsjdmFyaWFuY2VzfQoKRnJlZWx5IGVzdGltYXRlOgoKYGBgCk1PREVMOgogICAgeDE7CmBgYAoKRml4IHRvIG9uZToKCmBgYApNT0RFTDoKICAgIHgxQDE7CmBgYAoKIyMgUGFyYW1ldGVyIExhYmVsIHsjcGFyYW1ldGVyTGFiZWx9CgpUbyBzcGVjaWZ5IGEgcGFyYW1ldGVyIGxhYmVsLCBwcm92aWRlIHRoZSBsYWJlbCBpbiBwYXJlbnRoZXNlcyBhZnRlciB0aGUgcGFyYW1ldGVyOgoKYGBgCk1PREVMOgogICAgbGF0ZW50MSBCWSB4MSogeDIgeDMgKGxvYWQxLTMpOwogICAgbGF0ZW50MiBCWSB4NCogeDUgKGxvYWQ1KSB4NjsKYGBgCgojIENvbW1lbnRzIHsjY29tbWVudHN9CgpgYGAKIVRoaXMgaXMgYSBjb21tZW50IGluIE1wbHVzCmBgYAoKIyBTZXR0aW5nIFBhcmFtZXRlciBDb25zdHJhaW50cyB7I3BhcmFtZXRlckNvbnN0cmFpbnRzfQoKIyMgRnJlZWluZyBhIFBhcmFtZXRlciB7I2ZyZWVQYXJhbWV0ZXJ9CgpCeSBkZWZhdWx0LCB0aGUgZmlyc3QgbG9hZGluZyBvbiBhIGZhY3RvciBpcyBmaXhlZCB0byB6ZXJvLgpZb3UgY2FuIGZyZWVseSBlc3RpbWF0ZSB0aGUgcGFyYW1ldGVyIGJ5IGFkZGluZyBhbiBhc3RlcmlzazoKCmBgYApNT0RFTDoKICAgIGxhdGVudDEgQlkgeDEqIHgyIHgzOwpgYGAKCiMjIENvbnN0cmFpbmcgYSBQYXJhbWV0ZXIgeyNjb25zdHJhaW5QYXJhbWV0ZXJ9CgpgYGAKTU9ERUw6CiAgICBsYXRlbnQxIEJZIHgxQDEgeDIgeDM7CiAgICBbbGF0ZW50MUAwXTsKICAgIGxhdGVudDFAMTsKYGBgCgojIyBTZXR0aW5nIFR3byBQYXJhbWV0ZXJzIHRvIGJlIEVxdWFsIHsjZXF1YWxQYXJhbWV0ZXJzfQoKVG8gc2V0IHR3byBwYXJhbWV0ZXJzIHRvIGJlIGVxdWFsLCBwcm92aWRlIHRoZSBzYW1lIFtwYXJhbWV0ZXIgbGFiZWxdKCNwYXJhbWV0ZXJMYWJlbCkgZm9yIGVhY2ggcGFyYW1ldGVyLgoKIyMgU2V0dGluZyBMb3dlciBhbmQgVXBwZXIgQm91bmRzIG9uIGEgUGFyYW1ldGVyIHsjcGFyYW1ldGVyQm91bmRzfQoKVG8gc2V0IGxvd2VyIGFuZCB1cHBlciBib3VuZHMgb24gYSBwYXJhbWV0ZXIsIHlvdSBjYW4gYXNzaWduIHRoZSBwYXJhbWV0ZXIgYSBbcGFyYW1ldGVyIGxhYmVsXSgjcGFyYW1ldGVyTGFiZWwpLgpUaGVuLCB5b3UgY2FuIGFzc2lnbiB0aGUgY29uc3RyYWludCB0byB0aGUgcGFyYW1ldGVyICh2aWEgdGhlIGxhYmVsKSB1bmRlciB0aGUgYE1PREVMIENPTlNUUkFJTlRgIHNlY3Rpb24uCkZvciBleGFtcGxlLCB0byBjb25zdHJhaW4gYSBwYXJhbWV0ZXIgYmV0d2VlbiAw4oCTMSwgCgpgYGAKTU9ERUw6CiAgICBsYXRlbnQxIEJZIHgxKiB4MiB4MyAobG9hZDMpOwoKTU9ERUwgQ09OU1RSQUlOVDoKICAgIGxvYWQzID4gMDsgbG9hZDMgPCAxOwpgYGAKCiMgT3V0cHV0IHsjb3V0cHV0fQoKYGBgCk9VVFBVVDogIAogICAgU1REWVg7IAogICAgVEVDSDE7CiAgICBURUNINDsKICAgIFNBTVBTVEFUOwogICAgTU9ESU5ESUNFUyAoQUxMKTsgISBzcGVjaWZ5IG51bWJlciBpbiBwYXJlbnRoZXNlcyB0byBwcmludCBvbmx5IHRob3NlIG1vZCBpbmRpY2VzIHRoYXQgYXJlIGFib3ZlIGEgcGFydGljdWxhciBjaGktc3F1YXJlIHZhbHVlCiAgICBDSU5URVJWQUw7CmBgYAoKIyBTYXZlIEZhY3RvciBTY29yZXMgeyNmYWN0b3JTY29yZXN9CgpgYGAKU0FWRURBVEE6CiAgICBGSUxFID0gIkM6L1tpbnNlcnRfZmlsZXBhdGhdL2ZpbGVuYW1lLmRhdCI7CiAgICBTQVZFID0gRlNDT1JFUzsKYGBgCgojIE11bHRpcGxlIEltcHV0YXRpb24geyNtdWx0aXBsZUltcHV0YXRpb259CgpGb3IgZXhhbXBsZXMgb2YgaG93IHRvIGNvbmR1Y3QgW211bHRpcGxlIGltcHV0YXRpb25dKG11bHRpcGxlSW1wdXRhdGlvbi5odG1sKSBpbiBbYE1wbHVzYF0oaHR0cHM6Ly93d3cuc3RhdG1vZGVsLmNvbSksIHNlZSBbaGVyZV0obXVsdGlwbGVJbXB1dGF0aW9uLmh0bWwjbXBsdXMpLgoKIyBSdW4gTW9kZWxzIGluIEJhdGNoIHsjcnVuTW9kZWxzfQoKUnVuIG1vZGVscyBpbiBiYXRjaCB2aWEgYFJgOgoKYGBgcgpsaWJyYXJ5KCJNcGx1c0F1dG9tYXRpb24iKQoKcnVuTW9kZWxzKAogIGZpbGUucGF0aChwYXRoLCAiL0dpdEh1Yi9Qcm9qZWN0X05hbWUvQW5hbHlzZXMvTXBsdXMvIiksCiAgcmVjdXJzaXZlID0gVFJVRSwKICByZXBsYWNlT3V0ZmlsZSA9ICJhbHdheXMiLAogIHNob3dPdXRwdXQgPSBUUlVFKQpgYGAKCiMgU2Vzc2lvbiBJbmZvCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9CnNlc3Npb25JbmZvKCkKYGBgCg==</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
