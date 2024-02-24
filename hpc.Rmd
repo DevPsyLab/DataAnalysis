@@ -18,15 +18,19 @@ knitr::opts_chunk$set(
 Analysis scripts for High Performance Computing (HPC) at the University of Iowa.
 Currently uses Argon.
 
-From here: https://workflow.uiowa.edu/entry/new/3282/11927336
+## Links to Documentation
 
+Workflow: https://workflow.uiowa.edu/entry/new/3282/11927336
+
+Cluster Systems Documentation:
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513411/Cluster+Systems+Documentation (archived at https://perma.cc/EKB8-ZKR7)
 
+Argon Cluster Documentation:
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513466/Argon+Cluster (archived at https://perma.cc/6HST-VV6Y)
 
 ## Data Storage
 
-WARNING: Significant amounts of data storage are provided on Argon, but data is not backed up in any way unless special arrangements are made.
+Significant amounts of data storage are provided on Argon, but data are not backed up in any way unless special arrangements are made.
 It is the responsibility of the user to back up important information.
 
 ## Sensitive Data
@@ -82,7 +86,7 @@ cd /Users/itpetersen/Documents/Projects/Test/
 ### Installing Linux Packages to Install R Packages
 
 ```bash
-module load stack
+module load stack/2022.2
 module load r/4.2.2_gcc-9.5.0
 module load geos/3.9.1_gcc-9.5.0
 module load gdal/2.4.4_gcc-9.5.0
@@ -106,6 +110,7 @@ module load r-scales/1.2.1_gcc-9.5.0
 module load r-tzdb/0.3.0_gcc-9.5.0
 module load r-timechange/0.1.1_gcc-9.5.0
 module load r-dbi/1.1.3_gcc-9.5.0
+
 ```
 
 ### Load the Latest Stack
@@ -117,40 +122,6 @@ module load r-dbi/1.1.3_gcc-9.5.0
 ```bash
 module load stack/2022.2
 module load r/4.2.2_gcc-9.5.0
-cd path
-```
-
-### Old Stacks
-
-#### Stack 2022.1
-
-```bash
-module load stack/2022.1
-module load r/4.1.3_gcc-9.4.0
-cd path
-```
-
-#### Stack 2021.1
-
-```bash
-module load stack/2021.1
-module load r/4.0.5_gcc-9.3.0
-cd path
-```
-
-#### Stack 2020.2
-
-```bash
-module load stack/2020.2
-module load r/4.0.2_gcc-8.4.0
-cd path
-```
-
-#### Stack 2020.1
-
-```bash
-module load stack/2020.1
-module load r/3.6.2_gcc-9.2.0
 cd path
 ```
 
@@ -180,8 +151,8 @@ cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 #$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
 
 # Load the environment modules
-module load stack/2022.1
-module load r/4.1.3_gcc-9.4.0
+module load stack/2022.2
+module load r/4.2.2_gcc-9.5.0
 
 # Run the R script
 Rscript ./Analyses/factorScores.R
@@ -343,7 +314,7 @@ install.packages(c(
     Ncpus = 40)
 ```
 
-### Managing packages for a project using `renv`
+### Managing packages for a project using `renv` {#renv}
 
 1. Create a directory where you want you want to store the project.
 1. `cd` to the above directory
@@ -372,27 +343,7 @@ To restore the state of your library from the lock file: `renv::restore()`
 
 To disable `renv` on a project: `renv::deactivate()`
 
-### Managing packages for a project using `packrat`
-
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
-
-1. Create a directory where you want you want to store the project.
-1. `cd` to the above directory
-1. Start R
-1. Load the `packrat` package: `library("packrat")`
-1. At the R prompt, initialize the `packrat` project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
-1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
-1. From this point on you are working in a `packrat` project.
-Installed packages will go into a library within this project.
-After initializing the `packrat` project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
-    * `packrat::install_local("package_name")`
-1. To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
-
-To save the current state of your library: `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)` 
-
-To disable `packrat` on a project: `disable(restart = FALSE)`
-
-### To install a new package for a project after `packrat`/`renv` has been initialized
+### To install a new package for a project after `renv` has been initialized
 
 1. First, load the R environment module (see `Install R packages` section above)
 1. cd to the directory of the R project
@@ -400,23 +351,8 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
     * `R`
 1. then install the package, (the code below uses a generic `package_name`):
     * `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-    * `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-1. `renv::snapshot()` or `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)`
-
-### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
-
-1. `qlogin` -- for more info, see here: https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions (archived at https://perma.cc/Y3A9-WQ3W)
-1. `module load stack/2020.2-base_arch` -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes
-1. `module load r`
-1. cd to the directory of the R project
-1. `R`
-1. Create `packrat` project (see above)
-1. Install packages
-1. Take a package snapshot using `packrat`
-1. `exit` -- to exit the qlogin session
-
-Note: Your `packrat` environment will then be linked to the proper `glpk` library and will run on any Argon node.
-You do not need to use the `2020.2-base_arch` module at run time, only build time.
+    * `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+1. `renv::snapshot()`
 
 ## Update Packages
 
@@ -513,3 +449,87 @@ https://stackoverflow.com/questions/46186375/r-parallel-error-in-unserializenode
 https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function (archived at https://perma.cc/3Q75-DA2D)
 
 https://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load (archived at https://perma.cc/2JRF-8Y5F)
+
+# Appendix {#appendix}
+
+## Old Stacks
+
+### Stack 2022.1
+
+```bash
+module load stack/2022.1
+module load r/4.1.3_gcc-9.4.0
+cd path
+```
+
+### Stack 2021.1
+
+```bash
+module load stack/2021.1
+module load r/4.0.5_gcc-9.3.0
+cd path
+```
+
+### Stack 2020.2
+
+```bash
+module load stack/2020.2
+module load r/4.0.2_gcc-8.4.0
+cd path
+```
+
+### Stack 2020.1
+
+```bash
+module load stack/2020.1
+module load r/3.6.2_gcc-9.2.0
+cd path
+```
+
+## Managing packages for a project using `packrat`
+
+Please note: we now use [`renv`](#renv) rather than `packrat` for package management
+
+https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
+
+1. Create a directory where you want you want to store the project.
+1. `cd` to the above directory
+1. Start R
+1. Load the `packrat` package: `library("packrat")`
+1. At the R prompt, initialize the `packrat` project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
+1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
+1. From this point on you are working in a `packrat` project.
+Installed packages will go into a library within this project.
+After initializing the `packrat` project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
+    * `packrat::install_local("package_name")`
+1. To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
+
+To save the current state of your library: `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)` 
+
+To disable `packrat` on a project: `disable(restart = FALSE)`
+
+### To install a new package for a project after `packrat` has been initialized
+
+1. First, load the R environment module (see `Install R packages` section above)
+1. cd to the directory of the R project
+1. launch R
+    * `R`
+1. then install the package, (the code below uses a generic `package_name`):
+    * `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    * `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+1. `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)`
+
+### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
+
+1. `qlogin` -- for more info, see here: https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions (archived at https://perma.cc/Y3A9-WQ3W)
+1. `module load stack/2020.2-base_arch` -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes
+1. `module load r`
+1. cd to the directory of the R project
+1. `R`
+1. Create `packrat` project (see above)
+1. Install packages
+1. Take a package snapshot using `packrat`
+1. `exit` -- to exit the qlogin session
+
+Note: Your `packrat` environment will then be linked to the proper `glpk` library and will run on any Argon node.
+You do not need to use the `2020.2-base_arch` module at run time, only build time.
