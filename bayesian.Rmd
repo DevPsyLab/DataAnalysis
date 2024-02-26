@@ -28,6 +28,7 @@ library("lme4")
 library("rstan")
 library("brms")
 library("bayestestR")
+library("mice")
 ```
 
 ## Simulate Data
@@ -299,7 +300,7 @@ fit_sleep4 <- brm(
 
 ## Within-Chain Parallelization
 
-https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html (archived at https://perma.cc/2WBN-E4S2)
+https://paul-buerkner.github.io/brms/articles/brms_threading.html (archived at https://perma.cc/NCG3-KV4G)
 
 # Missing Data Handling
 
@@ -309,9 +310,21 @@ https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html (arch
 ?brm_multiple
 ```
 
+```{r}
+imp <- mice::mice(
+  mydata,
+  m = 5,
+  print = FALSE)
+
+fit_imp <- brm_multiple(
+  bayesianMediationSyntax,
+  data = imp,
+  chains = 2)
+```
+
 ## Imputation on the Fly During Model Fitting
 
-https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html (archived at https://perma.cc/HLL3-TDB7)
+https://paul-buerkner.github.io/brms/articles/brms_missings.html (archived at https://perma.cc/4Y9L-USQR)
 
 ```{r}
 ?mi
@@ -326,8 +339,8 @@ bayesianRegressionImputationSyntax <-
 
 bayesianRegressionModel <- brm(
   bayesianRegressionImputationSyntax,
-  data  = mydata,
-  seed  = 52242
+  data = mydata,
+  seed = 52242
 )
 
 summary(bayesianRegressionModel)
@@ -336,7 +349,7 @@ hypothesis(
   bayesianRegressionModel,
   "bsp_M_miX * bsp_Y_miM = 0", # indirect effect = a path * b path
   class = NULL,
-  seed  =  52242
+  seed = 52242
 )
 ```
 
