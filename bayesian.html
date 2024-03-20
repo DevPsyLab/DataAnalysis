@@ -527,13 +527,13 @@ Methods</h2>
  [16] bayesfactor_models      bayesfactor_parameters  bayesfactor_restricted 
  [19] bci                     bridge_sampler          check_prior            
  [22] ci                      coef                    conditional_effects    
- [25] conditional_smooths     control_params          describe_posterior     
- [28] describe_prior          diagnostic_draws        diagnostic_posterior   
- [31] effective_sample        equivalence_test        estimate_density       
- [34] eti                     expose_functions        family                 
- [37] fitted                  fixef                   formula                
- [40] getCall                 hdi                     hypothesis             
- [43] kfold                   launch_shinystan        log_lik                
+ [25] conditional_smooths     control_params          default_prior          
+ [28] describe_posterior      describe_prior          diagnostic_draws       
+ [31] diagnostic_posterior    effective_sample        equivalence_test       
+ [34] estimate_density        eti                     expose_functions       
+ [37] family                  fitted                  fixef                  
+ [40] formula                 getCall                 hdi                    
+ [43] hypothesis              kfold                   log_lik                
  [46] log_posterior           logLik                  loo_compare            
  [49] loo_linpred             loo_model_weights       loo_moment_match       
  [52] loo_predict             loo_predictive_interval loo_R2                 
@@ -553,13 +553,14 @@ Methods</h2>
  [94] pp_check                pp_mixture              predict                
  [97] predictive_error        predictive_interval     prepare_predictions    
 [100] print                   prior_draws             prior_summary          
-[103] ranef                   reloo                   residuals              
-[106] rhat                    rope                    sexit_thresholds       
-[109] si                      simulate_prior          spi                    
-[112] stancode                standata                stanplot               
-[115] summary                 unupdate                update                 
-[118] VarCorr                 variables               vcov                   
-[121] waic                    WAIC                    weighted_posteriors    
+[103] psis                    ranef                   reloo                  
+[106] residuals               restructure             rhat                   
+[109] rope                    sexit_thresholds        si                     
+[112] simulate_prior          spi                     stancode               
+[115] standata                stanplot                summary                
+[118] unupdate                update                  VarCorr                
+[121] variables               vcov                    waic                   
+[124] WAIC                    weighted_posteriors    
 see &#39;?methods&#39; for accessing help and source code</code></pre>
 </div>
 </div>
@@ -620,19 +621,19 @@ Formula: Reaction ~ 1 + Days + (1 + Days | Subject)
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Group-Level Effects: 
+Multilevel Hyperparameters:
 ~Subject (Number of levels: 18) 
                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)          26.73      6.85    15.35    42.67 1.00     1795     2510
 sd(Days)                6.51      1.52     4.09    10.09 1.00     1468     1809
 cor(Intercept,Days)     0.09      0.30    -0.48     0.69 1.00     1052     1442
 
-Population-Level Effects: 
+Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept   251.51      7.63   236.39   266.74 1.00     1693     2026
 Days         10.44      1.72     7.05    13.83 1.00     1151     1568
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma    25.93      1.59    23.04    29.27 1.00     3810     2691
 
@@ -655,25 +656,26 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code> [1] &quot;b_Intercept&quot;                  &quot;b_Days&quot;                      
  [3] &quot;sd_Subject__Intercept&quot;        &quot;sd_Subject__Days&quot;            
  [5] &quot;cor_Subject__Intercept__Days&quot; &quot;sigma&quot;                       
- [7] &quot;r_Subject[308,Intercept]&quot;     &quot;r_Subject[309,Intercept]&quot;    
- [9] &quot;r_Subject[310,Intercept]&quot;     &quot;r_Subject[330,Intercept]&quot;    
-[11] &quot;r_Subject[331,Intercept]&quot;     &quot;r_Subject[332,Intercept]&quot;    
-[13] &quot;r_Subject[333,Intercept]&quot;     &quot;r_Subject[334,Intercept]&quot;    
-[15] &quot;r_Subject[335,Intercept]&quot;     &quot;r_Subject[337,Intercept]&quot;    
-[17] &quot;r_Subject[349,Intercept]&quot;     &quot;r_Subject[350,Intercept]&quot;    
-[19] &quot;r_Subject[351,Intercept]&quot;     &quot;r_Subject[352,Intercept]&quot;    
-[21] &quot;r_Subject[369,Intercept]&quot;     &quot;r_Subject[370,Intercept]&quot;    
-[23] &quot;r_Subject[371,Intercept]&quot;     &quot;r_Subject[372,Intercept]&quot;    
-[25] &quot;r_Subject[308,Days]&quot;          &quot;r_Subject[309,Days]&quot;         
-[27] &quot;r_Subject[310,Days]&quot;          &quot;r_Subject[330,Days]&quot;         
-[29] &quot;r_Subject[331,Days]&quot;          &quot;r_Subject[332,Days]&quot;         
-[31] &quot;r_Subject[333,Days]&quot;          &quot;r_Subject[334,Days]&quot;         
-[33] &quot;r_Subject[335,Days]&quot;          &quot;r_Subject[337,Days]&quot;         
-[35] &quot;r_Subject[349,Days]&quot;          &quot;r_Subject[350,Days]&quot;         
-[37] &quot;r_Subject[351,Days]&quot;          &quot;r_Subject[352,Days]&quot;         
-[39] &quot;r_Subject[369,Days]&quot;          &quot;r_Subject[370,Days]&quot;         
-[41] &quot;r_Subject[371,Days]&quot;          &quot;r_Subject[372,Days]&quot;         
-[43] &quot;lprior&quot;                       &quot;lp__&quot;                        </code></pre>
+ [7] &quot;Intercept&quot;                    &quot;r_Subject[308,Intercept]&quot;    
+ [9] &quot;r_Subject[309,Intercept]&quot;     &quot;r_Subject[310,Intercept]&quot;    
+[11] &quot;r_Subject[330,Intercept]&quot;     &quot;r_Subject[331,Intercept]&quot;    
+[13] &quot;r_Subject[332,Intercept]&quot;     &quot;r_Subject[333,Intercept]&quot;    
+[15] &quot;r_Subject[334,Intercept]&quot;     &quot;r_Subject[335,Intercept]&quot;    
+[17] &quot;r_Subject[337,Intercept]&quot;     &quot;r_Subject[349,Intercept]&quot;    
+[19] &quot;r_Subject[350,Intercept]&quot;     &quot;r_Subject[351,Intercept]&quot;    
+[21] &quot;r_Subject[352,Intercept]&quot;     &quot;r_Subject[369,Intercept]&quot;    
+[23] &quot;r_Subject[370,Intercept]&quot;     &quot;r_Subject[371,Intercept]&quot;    
+[25] &quot;r_Subject[372,Intercept]&quot;     &quot;r_Subject[308,Days]&quot;         
+[27] &quot;r_Subject[309,Days]&quot;          &quot;r_Subject[310,Days]&quot;         
+[29] &quot;r_Subject[330,Days]&quot;          &quot;r_Subject[331,Days]&quot;         
+[31] &quot;r_Subject[332,Days]&quot;          &quot;r_Subject[333,Days]&quot;         
+[33] &quot;r_Subject[334,Days]&quot;          &quot;r_Subject[335,Days]&quot;         
+[35] &quot;r_Subject[337,Days]&quot;          &quot;r_Subject[349,Days]&quot;         
+[37] &quot;r_Subject[350,Days]&quot;          &quot;r_Subject[351,Days]&quot;         
+[39] &quot;r_Subject[352,Days]&quot;          &quot;r_Subject[369,Days]&quot;         
+[41] &quot;r_Subject[370,Days]&quot;          &quot;r_Subject[371,Days]&quot;         
+[43] &quot;r_Subject[372,Days]&quot;          &quot;lprior&quot;                      
+[45] &quot;lp__&quot;                        </code></pre>
 </div>
 <div id="model-coefficients" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Model
@@ -1152,9 +1154,9 @@ errors of the <code>elpd_diff</code> values indicate a significantly
 better model (i.e., if <code>elpd_diff</code> value is greater than 2
 times the <code>se_diff</code> value).</p>
 <pre class="r fold-show"><code>loo(fit_sleep1, fit_sleep2, fit_sleep3)</code></pre>
-<pre><code>Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;fit_sleep3&#39;. It
-is recommended to set &#39;moment_match = TRUE&#39; in order to perform moment matching
-for problematic observations.</code></pre>
+<pre><code>Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;fit_sleep3&#39;. We
+recommend to set &#39;moment_match = TRUE&#39; in order to perform moment matching for
+problematic observations.</code></pre>
 <pre><code>Output of model &#39;fit_sleep1&#39;:
 
 Computed from 4000 by 180 log-likelihood matrix.
@@ -1210,9 +1212,9 @@ fit_sleep3   0.0       0.0
 fit_sleep2 -23.3      11.6  
 fit_sleep1 -91.7      21.0  </code></pre>
 <pre class="r fold-show"><code>print(loo(fit_sleep1, fit_sleep2, fit_sleep3), simplify = FALSE)</code></pre>
-<pre><code>Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;fit_sleep3&#39;. It
-is recommended to set &#39;moment_match = TRUE&#39; in order to perform moment matching
-for problematic observations.</code></pre>
+<pre><code>Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;fit_sleep3&#39;. We
+recommend to set &#39;moment_match = TRUE&#39; in order to perform moment matching for
+problematic observations.</code></pre>
 <pre><code>Output of model &#39;fit_sleep1&#39;:
 
 Computed from 4000 by 180 log-likelihood matrix.
@@ -1305,8 +1307,8 @@ bayesianMediationModel &lt;- brm(
 <pre><code>
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000178 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.78 seconds.
+Chain 1: Gradient evaluation took 0.000175 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.75 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1323,15 +1325,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 6.221 seconds (Warm-up)
-Chain 1:                4.431 seconds (Sampling)
-Chain 1:                10.652 seconds (Total)
+Chain 1:  Elapsed Time: 6.248 seconds (Warm-up)
+Chain 1:                4.424 seconds (Sampling)
+Chain 1:                10.672 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000145 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.45 seconds.
+Chain 2: Gradient evaluation took 0.00014 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.4 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1348,15 +1350,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 6.023 seconds (Warm-up)
-Chain 2:                4.43 seconds (Sampling)
-Chain 2:                10.453 seconds (Total)
+Chain 2:  Elapsed Time: 6.087 seconds (Warm-up)
+Chain 2:                4.454 seconds (Sampling)
+Chain 2:                10.541 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 0.00015 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.5 seconds.
+Chain 3: Gradient evaluation took 0.00014 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.4 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -1373,15 +1375,15 @@ Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 6.426 seconds (Warm-up)
-Chain 3:                4.435 seconds (Sampling)
-Chain 3:                10.861 seconds (Total)
+Chain 3:  Elapsed Time: 6.488 seconds (Warm-up)
+Chain 3:                4.452 seconds (Sampling)
+Chain 3:                10.94 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 0.000143 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.43 seconds.
+Chain 4: Gradient evaluation took 0.00014 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.4 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -1398,9 +1400,9 @@ Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 5.783 seconds (Warm-up)
-Chain 4:                3.911 seconds (Sampling)
-Chain 4:                9.694 seconds (Total)
+Chain 4:  Elapsed Time: 5.824 seconds (Warm-up)
+Chain 4:                3.915 seconds (Sampling)
+Chain 4:                9.739 seconds (Total)
 Chain 4: </code></pre>
 <pre class="r fold-show"><code>summary(bayesianMediationModel)</code></pre>
 <pre><code> Family: MV(gaussian, gaussian) 
@@ -1412,7 +1414,7 @@ Formula: M ~ X + (1 | i | id)
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Group-Level Effects: 
+Multilevel Hyperparameters:
 ~id (Number of levels: 100) 
                              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
 sd(M_Intercept)                  0.07      0.05     0.00     0.17 1.00     1746
@@ -1423,7 +1425,7 @@ sd(M_Intercept)                  1730
 sd(Y_Intercept)                  2027
 cor(M_Intercept,Y_Intercept)     1951
 
-Population-Level Effects: 
+Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 M_Intercept     0.00      0.03    -0.06     0.07 1.00     7652     2690
 Y_Intercept     0.06      0.03    -0.01     0.13 1.00     6857     2994
@@ -1431,7 +1433,7 @@ M_X             0.51      0.03     0.45     0.57 1.00     8868     2660
 Y_X             0.03      0.04    -0.04     0.10 1.00     7229     3120
 Y_M             0.68      0.03     0.62     0.75 1.00     7216     3446
 
-Family Specific Parameters: 
+Further Distributional Parameters:
         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma_M     1.01      0.02     0.97     1.06 1.00     7747     2629
 sigma_Y     1.00      0.02     0.96     1.05 1.00     6806     2912
@@ -1583,12 +1585,11 @@ fit_imp &lt;- brm_multiple(
   data = imp,
   chains = 2)</code></pre>
 <pre><code>Compiling the C++ model</code></pre>
-<pre><code>Fitting imputed model 1</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000303 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.03 seconds.
+Chain 1: Gradient evaluation took 0.000233 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.33 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1605,15 +1606,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 6.131 seconds (Warm-up)
-Chain 1:                4.599 seconds (Sampling)
-Chain 1:                10.73 seconds (Total)
+Chain 1:  Elapsed Time: 6.735 seconds (Warm-up)
+Chain 1:                2.352 seconds (Sampling)
+Chain 1:                9.087 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000146 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.46 seconds.
+Chain 2: Gradient evaluation took 0.000148 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.48 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1630,17 +1631,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 6.639 seconds (Warm-up)
-Chain 2:                2.615 seconds (Sampling)
-Chain 2:                9.254 seconds (Total)
-Chain 2: </code></pre>
-<pre><code>Start sampling</code></pre>
-<pre><code>Fitting imputed model 2</code></pre>
-<pre><code>
+Chain 2:  Elapsed Time: 6.554 seconds (Warm-up)
+Chain 2:                4.547 seconds (Sampling)
+Chain 2:                11.101 seconds (Total)
+Chain 2: 
+
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000157 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.57 seconds.
+Chain 1: Gradient evaluation took 0.000156 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.56 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1657,9 +1656,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 6.586 seconds (Warm-up)
-Chain 1:                4.615 seconds (Sampling)
-Chain 1:                11.201 seconds (Total)
+Chain 1:  Elapsed Time: 6.323 seconds (Warm-up)
+Chain 1:                4.717 seconds (Sampling)
+Chain 1:                11.04 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
@@ -1682,13 +1681,11 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 6.333 seconds (Warm-up)
-Chain 2:                4.575 seconds (Sampling)
-Chain 2:                10.908 seconds (Total)
-Chain 2: </code></pre>
-<pre><code>Start sampling</code></pre>
-<pre><code>Fitting imputed model 3</code></pre>
-<pre><code>
+Chain 2:  Elapsed Time: 6.847 seconds (Warm-up)
+Chain 2:                4.739 seconds (Sampling)
+Chain 2:                11.586 seconds (Total)
+Chain 2: 
+
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 Chain 1: 
 Chain 1: Gradient evaluation took 0.000158 seconds
@@ -1709,15 +1706,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 6.543 seconds (Warm-up)
-Chain 1:                4.592 seconds (Sampling)
-Chain 1:                11.135 seconds (Total)
+Chain 1:  Elapsed Time: 6.697 seconds (Warm-up)
+Chain 1:                4.457 seconds (Sampling)
+Chain 1:                11.154 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000145 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.45 seconds.
+Chain 2: Gradient evaluation took 0.000144 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.44 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1734,114 +1731,119 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 6.188 seconds (Warm-up)
-Chain 2:                4.576 seconds (Sampling)
-Chain 2:                10.764 seconds (Total)
+Chain 2:  Elapsed Time: 6.823 seconds (Warm-up)
+Chain 2:                4.751 seconds (Sampling)
+Chain 2:                11.574 seconds (Total)
+Chain 2: 
+
+SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0.000158 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.58 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 7.002 seconds (Warm-up)
+Chain 1:                2.339 seconds (Sampling)
+Chain 1:                9.341 seconds (Total)
+Chain 1: 
+
+SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0.000168 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.68 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 6.461 seconds (Warm-up)
+Chain 2:                4.774 seconds (Sampling)
+Chain 2:                11.235 seconds (Total)
+Chain 2: 
+
+SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 0.000162 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.62 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 6.209 seconds (Warm-up)
+Chain 1:                3.585 seconds (Sampling)
+Chain 1:                9.794 seconds (Total)
+Chain 1: 
+
+SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 0.000153 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.53 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 6.583 seconds (Warm-up)
+Chain 2:                4.773 seconds (Sampling)
+Chain 2:                11.356 seconds (Total)
 Chain 2: </code></pre>
+<pre><code>Fitting imputed model 1</code></pre>
+<pre><code>Start sampling</code></pre>
+<pre><code>Fitting imputed model 2</code></pre>
+<pre><code>Start sampling</code></pre>
+<pre><code>Fitting imputed model 3</code></pre>
 <pre><code>Start sampling</code></pre>
 <pre><code>Fitting imputed model 4</code></pre>
-<pre><code>
-SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
-Chain 1: 
-Chain 1: Gradient evaluation took 0.000155 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.55 seconds.
-Chain 1: Adjust your expectations accordingly!
-Chain 1: 
-Chain 1: 
-Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 1: 
-Chain 1:  Elapsed Time: 5.943 seconds (Warm-up)
-Chain 1:                4.354 seconds (Sampling)
-Chain 1:                10.297 seconds (Total)
-Chain 1: 
-
-SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
-Chain 2: 
-Chain 2: Gradient evaluation took 0.000146 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.46 seconds.
-Chain 2: Adjust your expectations accordingly!
-Chain 2: 
-Chain 2: 
-Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 2: 
-Chain 2:  Elapsed Time: 6.541 seconds (Warm-up)
-Chain 2:                4.609 seconds (Sampling)
-Chain 2:                11.15 seconds (Total)
-Chain 2: </code></pre>
 <pre><code>Start sampling</code></pre>
 <pre><code>Fitting imputed model 5</code></pre>
-<pre><code>
-SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
-Chain 1: 
-Chain 1: Gradient evaluation took 0.000156 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.56 seconds.
-Chain 1: Adjust your expectations accordingly!
-Chain 1: 
-Chain 1: 
-Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 1: 
-Chain 1:  Elapsed Time: 6.622 seconds (Warm-up)
-Chain 1:                4.37 seconds (Sampling)
-Chain 1:                10.992 seconds (Total)
-Chain 1: 
-
-SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
-Chain 2: 
-Chain 2: Gradient evaluation took 0.000145 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.45 seconds.
-Chain 2: Adjust your expectations accordingly!
-Chain 2: 
-Chain 2: 
-Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 2: 
-Chain 2:  Elapsed Time: 7.197 seconds (Warm-up)
-Chain 2:                4.571 seconds (Sampling)
-Chain 2:                11.768 seconds (Total)
-Chain 2: </code></pre>
 <pre><code>Start sampling</code></pre>
 </div>
 <div id="imputation-on-the-fly-during-model-fitting"
@@ -1870,8 +1872,8 @@ bayesianRegressionModel &lt;- brm(
 <pre><code>
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000564 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.64 seconds.
+Chain 1: Gradient evaluation took 0.00057 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.7 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1888,15 +1890,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 22.849 seconds (Warm-up)
-Chain 1:                15.259 seconds (Sampling)
-Chain 1:                38.108 seconds (Total)
+Chain 1:  Elapsed Time: 23.118 seconds (Warm-up)
+Chain 1:                15.414 seconds (Sampling)
+Chain 1:                38.532 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000495 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.95 seconds.
+Chain 2: Gradient evaluation took 0.000485 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.85 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1913,15 +1915,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 27.041 seconds (Warm-up)
-Chain 2:                15.248 seconds (Sampling)
-Chain 2:                42.289 seconds (Total)
+Chain 2:  Elapsed Time: 27.288 seconds (Warm-up)
+Chain 2:                15.418 seconds (Sampling)
+Chain 2:                42.706 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 0.000471 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 4.71 seconds.
+Chain 3: Gradient evaluation took 0.00053 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 5.3 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -1938,15 +1940,15 @@ Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 23.024 seconds (Warm-up)
-Chain 3:                15.26 seconds (Sampling)
-Chain 3:                38.284 seconds (Total)
+Chain 3:  Elapsed Time: 23.235 seconds (Warm-up)
+Chain 3:                15.402 seconds (Sampling)
+Chain 3:                38.637 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL &#39;anon_model&#39; NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 0.00048 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 4.8 seconds.
+Chain 4: Gradient evaluation took 0.000484 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 4.84 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -1963,9 +1965,9 @@ Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 26.055 seconds (Warm-up)
-Chain 4:                15.252 seconds (Sampling)
-Chain 4:                41.307 seconds (Total)
+Chain 4:  Elapsed Time: 26.351 seconds (Warm-up)
+Chain 4:                15.471 seconds (Sampling)
+Chain 4:                41.822 seconds (Total)
 Chain 4: </code></pre>
 <pre class="r fold-show"><code>summary(bayesianRegressionModel)</code></pre>
 <pre><code> Family: MV(gaussian, gaussian, gaussian) 
@@ -1979,7 +1981,7 @@ Formula: X | mi() ~ (1 | i | id)
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Group-Level Effects: 
+Multilevel Hyperparameters:
 ~id (Number of levels: 100) 
                              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
 sd(X_Intercept)                  0.10      0.06     0.01     0.22 1.00      940
@@ -1996,7 +1998,7 @@ cor(X_Intercept,M_Intercept)     2669
 cor(X_Intercept,Y_Intercept)     1813
 cor(M_Intercept,Y_Intercept)     2264
 
-Population-Level Effects: 
+Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 X_Intercept    -0.02      0.03    -0.08     0.05 1.00     6350     3132
 M_Intercept     0.01      0.03    -0.06     0.07 1.00     6230     2860
@@ -2005,7 +2007,7 @@ M_miX           0.51      0.03     0.45     0.58 1.00     8022     2457
 Y_miX           0.04      0.04    -0.04     0.11 1.00     5385     3250
 Y_miM           0.68      0.03     0.62     0.75 1.00     5923     3050
 
-Family Specific Parameters: 
+Further Distributional Parameters:
         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma_X     0.98      0.02     0.94     1.03 1.00     5490     2750
 sigma_M     1.01      0.02     0.96     1.06 1.00     8156     2841
@@ -2056,49 +2058,42 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] mice_3.16.0        bayestestR_0.13.2  brms_2.20.4        Rcpp_1.0.12       
+[1] mice_3.16.0        bayestestR_0.13.2  brms_2.21.0        Rcpp_1.0.12       
 [5] rstan_2.32.6       StanHeaders_2.32.6 lme4_1.1-35.1      Matrix_1.6-5      
 
 loaded via a namespace (and not attached):
-  [1] gridExtra_2.3        inline_0.3.19        rlang_1.1.3         
-  [4] magrittr_2.0.3       matrixStats_1.2.0    compiler_4.3.3      
-  [7] loo_2.7.0            callr_3.7.5          vctrs_0.6.5         
- [10] reshape2_1.4.4       stringr_1.5.1        pkgconfig_2.0.3     
- [13] shape_1.4.6.1        fastmap_1.1.1        backports_1.4.1     
- [16] ellipsis_0.3.2       labeling_0.4.3       utf8_1.2.4          
- [19] threejs_0.3.3        promises_1.2.1       rmarkdown_2.26      
- [22] markdown_1.12        ps_1.7.6             nloptr_2.0.3        
- [25] purrr_1.0.2          xfun_0.42            glmnet_4.1-8        
- [28] jomo_2.7-6           cachem_1.0.8         jsonlite_1.8.8      
- [31] highr_0.10           later_1.3.2          pan_1.9             
- [34] broom_1.0.5          parallel_4.3.3       R6_2.5.1            
- [37] dygraphs_1.1.1.6     bslib_0.6.1          stringi_1.8.3       
- [40] parallelly_1.37.1    rpart_4.1.23         boot_1.3-29         
- [43] jquerylib_0.1.4      iterators_1.0.14     knitr_1.45          
- [46] zoo_1.8-12           base64enc_0.1-3      bayesplot_1.11.1    
- [49] nnet_7.3-19          httpuv_1.6.14        splines_4.3.3       
- [52] igraph_2.0.3         tidyselect_1.2.1     abind_1.4-5         
- [55] yaml_2.3.8           codetools_0.2-19     miniUI_0.1.1.1      
- [58] processx_3.8.4       listenv_0.9.1        pkgbuild_1.4.4      
- [61] lattice_0.22-5       tibble_3.2.1         plyr_1.8.9          
- [64] withr_3.0.0          shiny_1.8.0          bridgesampling_1.1-2
- [67] posterior_1.5.0      coda_0.19-4.1        evaluate_0.23       
- [70] future_1.33.1        survival_3.5-8       RcppParallel_5.1.7  
- [73] xts_0.13.2           pillar_1.9.0         tensorA_0.36.2.1    
- [76] checkmate_2.3.1      DT_0.32              foreach_1.5.2       
- [79] stats4_4.3.3         insight_0.19.9       shinyjs_2.1.0       
- [82] distributional_0.4.0 generics_0.1.3       ggplot2_3.5.0       
- [85] rstantools_2.4.0     munsell_0.5.0        scales_1.3.0        
- [88] minqa_1.2.6          globals_0.16.3       gtools_3.9.5        
- [91] xtable_1.8-4         glue_1.7.0           tools_4.3.3         
- [94] shinystan_2.6.0      colourpicker_1.3.0   mvtnorm_1.2-4       
- [97] grid_4.3.3           tidyr_1.3.1          QuickJSR_1.1.3      
-[100] crosstalk_1.2.1      colorspace_2.1-0     nlme_3.1-164        
-[103] cli_3.6.2            fansi_1.0.6          Brobdingnag_1.2-9   
-[106] dplyr_1.1.4          gtable_0.3.4         sass_0.4.9          
-[109] digest_0.6.35        farver_2.1.1         htmlwidgets_1.6.4   
-[112] htmltools_0.5.7      lifecycle_1.0.4      mitml_0.4-5         
-[115] mime_0.12            shinythemes_1.2.0    MASS_7.3-60.0.1     </code></pre>
+ [1] tidyselect_1.2.1     farver_2.1.1         dplyr_1.1.4         
+ [4] loo_2.7.0            fastmap_1.1.1        tensorA_0.36.2.1    
+ [7] digest_0.6.35        rpart_4.1.23         lifecycle_1.0.4     
+[10] survival_3.5-8       processx_3.8.4       magrittr_2.0.3      
+[13] posterior_1.5.0      compiler_4.3.3       rlang_1.1.3         
+[16] sass_0.4.9           tools_4.3.3          utf8_1.2.4          
+[19] yaml_2.3.8           knitr_1.45           labeling_0.4.3      
+[22] bridgesampling_1.1-2 pkgbuild_1.4.4       plyr_1.8.9          
+[25] abind_1.4-5          withr_3.0.0          purrr_1.0.2         
+[28] nnet_7.3-19          grid_4.3.3           stats4_4.3.3        
+[31] fansi_1.0.6          jomo_2.7-6           future_1.33.1       
+[34] colorspace_2.1-0     inline_0.3.19        ggplot2_3.5.0       
+[37] globals_0.16.3       scales_1.3.0         iterators_1.0.14    
+[40] MASS_7.3-60.0.1      insight_0.19.9       cli_3.6.2           
+[43] mvtnorm_1.2-4        rmarkdown_2.26       generics_0.1.3      
+[46] RcppParallel_5.1.7   future.apply_1.11.1  reshape2_1.4.4      
+[49] minqa_1.2.6          cachem_1.0.8         stringr_1.5.1       
+[52] splines_4.3.3        bayesplot_1.11.1     parallel_4.3.3      
+[55] matrixStats_1.2.0    vctrs_0.6.5          boot_1.3-29         
+[58] glmnet_4.1-8         jsonlite_1.8.8       callr_3.7.5         
+[61] mitml_0.4-5          listenv_0.9.1        foreach_1.5.2       
+[64] jquerylib_0.1.4      tidyr_1.3.1          parallelly_1.37.1   
+[67] glue_1.7.0           nloptr_2.0.3         pan_1.9             
+[70] codetools_0.2-19     ps_1.7.6             distributional_0.4.0
+[73] stringi_1.8.3        gtable_0.3.4         shape_1.4.6.1       
+[76] QuickJSR_1.1.3       munsell_0.5.0        tibble_3.2.1        
+[79] pillar_1.9.0         htmltools_0.5.7      Brobdingnag_1.2-9   
+[82] R6_2.5.1             evaluate_0.23        lattice_0.22-5      
+[85] highr_0.10           backports_1.4.1      broom_1.0.5         
+[88] bslib_0.6.1          rstantools_2.4.0     coda_0.19-4.1       
+[91] gridExtra_2.3        nlme_3.1-164         checkmate_2.3.1     
+[94] xfun_0.42            pkgconfig_2.0.3     </code></pre>
 </div>
 
 <div id="rmd-source-code">LS0tCnRpdGxlOiAiQmF5ZXNpYW4gQW5hbHlzaXMiCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGUgPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KAogIGVjaG8gPSBUUlVFLAogIGVycm9yID0gVFJVRSwKICBjb21tZW50ID0gIiIsCiAgY2xhc3Muc291cmNlID0gImZvbGQtc2hvdyIpCmBgYAoKQWRhcHRlZCBmcm9tIGBicm1zYCB3b3Jrc2hvcCBieSBQYXVsLUNocmlzdGlhbiBCw7xya25lcgoKIyBQcmVhbWJsZQoKIyMgSW5zdGFsbCBMaWJyYXJpZXMKCmBgYHtyfQojaW5zdGFsbC5wYWNrYWdlcygicmVtb3RlcyIpCiNyZW1vdGVzOjppbnN0YWxsX2dpdGh1YigiRGV2UHN5TGFiL3BldGVyc2VubGFiIikKYGBgCgojIyBMb2FkIExpYnJhcmllcwoKYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFfQpsaWJyYXJ5KCJsbWU0IikKbGlicmFyeSgicnN0YW4iKQpsaWJyYXJ5KCJicm1zIikKbGlicmFyeSgiYmF5ZXN0ZXN0UiIpCmxpYnJhcnkoIm1pY2UiKQpgYGAKCiMjIFNpbXVsYXRlIERhdGEKCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0Kc2V0LnNlZWQoNTIyNDIpCgpzYW1wbGVTaXplIDwtIDEwMDAKCmlkIDwtIHJlcCgxOjEwMCwgZWFjaCA9IDEwKQpYIDwtIHJub3JtKHNhbXBsZVNpemUpCk0gPC0gMC41KlggKyBybm9ybShzYW1wbGVTaXplKQpZIDwtIDAuNypNICsgcm5vcm0oc2FtcGxlU2l6ZSkKClhbc2FtcGxlKDE6bGVuZ3RoKFgpLCBzaXplID0gMTApXSA8LSBOQQpNW3NhbXBsZSgxOmxlbmd0aChNKSwgc2l6ZSA9IDEwKV0gPC0gTkEKWVtzYW1wbGUoMTpsZW5ndGgoWSksIHNpemUgPSAxMCldIDwtIE5BCgpteWRhdGEgPC0gZGF0YS5mcmFtZSgKICBpZCA9IGlkLAogIFggPSBYLAogIFkgPSBZLAogIE0gPSBNKQpgYGAKCiMjIExvYWQgRGF0YQoKYGBge3J9CmRhdGEoInNsZWVwc3R1ZHkiLCBwYWNrYWdlID0gImxtZTQiKQpgYGAKCiMjIFByZXBhcmUgRGF0YQoKYGBge3J9CmNvbmRpdGlvbnMgPC0gbWFrZV9jb25kaXRpb25zKHNsZWVwc3R1ZHksICJTdWJqZWN0IikKYGBgCgojIGJybXMKCiMjIFBvc3QtUHJvY2Vzc2luZyBNZXRob2RzCgpgYGB7ciwgY2xhc3Muc291cmNlID0gImZvbGQtaGlkZSJ9Cm1ldGhvZHMoY2xhc3MgPSAiYnJtc2ZpdCIpCmBgYAoKIyBNdWx0aWxldmVsIE1vZGVscwoKIyMgRml0IHRoZSBNb2RlbHMKCiMjIyBDb21wbGV0ZSBQb29saW5nCgpgYGB7ciwgcmVzdWx0cyA9ICJoaWRlIn0KZml0X3NsZWVwMSA8LSBicm0oCiAgUmVhY3Rpb24gfiAxICsgRGF5cywKICBkYXRhID0gc2xlZXBzdHVkeSwKICBzZWVkICA9IDUyMjQyKQpgYGAKCiMjIyBSYW5kb20gSW50ZXJjZXB0cwoKYGBge3IsIHJlc3VsdHMgPSAiaGlkZSJ9CmZpdF9zbGVlcDIgPC0gYnJtKAogIFJlYWN0aW9uIH4gMSArIERheXMgKyAoMSB8IFN1YmplY3QpLCAKICBkYXRhID0gc2xlZXBzdHVkeSwKICBzZWVkICA9IDUyMjQyKQpgYGAKCiMjIyBSYW5kb20gSW50ZXJjZXB0cyBhbmQgU2xvcGVzCgpgYGB7ciwgcmVzdWx0cyA9ICJoaWRlIn0KZml0X3NsZWVwMyA8LSBicm0oCiAgUmVhY3Rpb24gfiAxICsgRGF5cyArICgxICsgRGF5cyB8IFN1YmplY3QpLCAKICBkYXRhID0gc2xlZXBzdHVkeSwKICBzZWVkICA9IDUyMjQyCikKYGBgCgojIyBTdW1tYXJpemUgUmVzdWx0cwoKRm9yIGNvbnZlcmdlbmNlLCBgUmhhdGAgdmFsdWVzIHNob3VsZCBub3QgYmUgYWJvdmUgMS4wMC4KCmBgYHtyfQpzdW1tYXJ5KGZpdF9zbGVlcDMpCmBgYAoKIyMgTW9kZWwgUHJpb3JzCgpgYGB7cn0KcHJpb3Jfc3VtbWFyeShmaXRfc2xlZXAzKQpgYGAKCiMjIE1vZGVsIFBhcmFtZXRlcnMKCmBgYHtyfQp2YXJpYWJsZXMoZml0X3NsZWVwMykKYGBgCgojIyBNb2RlbCBDb2VmZmljaWVudHMKCmBgYHtyfQpjb2VmKGZpdF9zbGVlcDMpCmBgYAoKIyMgUGxvdHMKCiMjIyBUcmFjZSBQbG90cwoKYGBge3J9CnBsb3QoZml0X3NsZWVwMywgYXNrID0gRkFMU0UpCmBgYAoKIyMjIFZpc3VhbGl6ZSBQcmVkaWN0aW9ucwoKIyMjIyBTYW1wbGUtTGV2ZWwKCmBgYHtyfQpwbG90KGNvbmRpdGlvbmFsX2VmZmVjdHMoZml0X3NsZWVwMSksIHBvaW50cyA9IFRSVUUpCmBgYAoKIyMjIyBQZXJzb24tTGV2ZWwKCmBgYHtyfQojIHJlX2Zvcm11bGEgPSBOVUxMIGVuc3VyZXMgdGhhdCBncm91cC1sZXZlbCBlZmZlY3RzIGFyZSBpbmNsdWRlZApjZTIgPC0gY29uZGl0aW9uYWxfZWZmZWN0cygKICBmaXRfc2xlZXAzLAogIGNvbmRpdGlvbnMgPSBjb25kaXRpb25zLAogIHJlX2Zvcm11bGEgPSBOVUxMKQoKcGxvdChjZTIsIG5jb2wgPSA2LCBwb2ludHMgPSBUUlVFKQpgYGAKCiMjIyBDaGVjayBNb2RlbCBGaXQKCiMjIyMgUG9zdGVyaW9yIFByZWRpY3RpdmUgQ2hlY2sKCkV2YWx1YXRlIGhvdyBjbG9zZWx5IHRoZSBwb3N0ZXJpb3IgcHJlZGljdGlvbnMgbWF0Y2ggdGhlIG9ic2VydmVkIHZhbHVlcy4KSWYgdGhleSBkbyBub3QgbWF0Y2ggdGhlIGdlbmVyYWwgcGF0dGVybiBvZiB0aGUgb2JzZXJ2ZWQgdmFsdWVzLCBhIGRpZmZlcmVudCByZXNwb25zZSBkaXN0cmlidXRpb24gbWF5IGJlIG5lY2Vzc2FyeS4KCmBgYHtyfQpwcF9jaGVjayhmaXRfc2xlZXAzKQpwcF9jaGVjayhmaXRfc2xlZXAzLCB0eXBlID0gImRlbnNfb3ZlcmxheSIpCnBwX2NoZWNrKGZpdF9zbGVlcDMsICJlcnJvcl9zY2F0dGVyX2F2ZyIpCmBgYAoKIyMgRml0dGVkIFZhbHVlcwoKYGBge3J9CmZpdHRlZChmaXRfc2xlZXAzKQpgYGAKCiMjIFJlc2lkdWFscwoKYGBge3J9CnJlc2lkdWFscyhmaXRfc2xlZXAzKQpgYGAKCiMjIENvbXBhcmUgTW9kZWxzCgpgZWxwZGAgdmFsdWVzOiBoaWdoZXIgaXMgYmV0dGVyCmBsb29pY2AgdmFsdWVzOiBsb3dlciBpcyBiZXR0ZXIKCmBlbHBkX2RpZmZgIHZhbHVlcyB0aGF0IGFyZSBncmVhdGVyIHRoYW4gfjIgc3RhbmRhcmQgZXJyb3JzIG9mIHRoZSBgZWxwZF9kaWZmYCB2YWx1ZXMgaW5kaWNhdGUgYSBzaWduaWZpY2FudGx5IGJldHRlciBtb2RlbCAoaS5lLiwgaWYgYGVscGRfZGlmZmAgdmFsdWUgaXMgZ3JlYXRlciB0aGFuIDIgdGltZXMgdGhlIGBzZV9kaWZmYCB2YWx1ZSkuCgpgYGB7cn0KbG9vKGZpdF9zbGVlcDEsIGZpdF9zbGVlcDIsIGZpdF9zbGVlcDMpCnByaW50KGxvbyhmaXRfc2xlZXAxLCBmaXRfc2xlZXAyLCBmaXRfc2xlZXAzKSwgc2ltcGxpZnkgPSBGQUxTRSkKYGBgCgojIyMgQ29tcHV0ZSBNb2RlbCBXZWlnaHRzCgpgYGB7cn0KbW9kZWxfd2VpZ2h0cyhmaXRfc2xlZXAxLCBmaXRfc2xlZXAyLCBmaXRfc2xlZXAzLCB3ZWlnaHRzID0gImxvbyIpCgpyb3VuZChtb2RlbF93ZWlnaHRzKGZpdF9zbGVlcDEsIGZpdF9zbGVlcDIsIGZpdF9zbGVlcDMsIHdlaWdodHMgPSAibG9vIikpCmBgYAoKIyBNdWx0aWxldmVsIE1lZGlhdGlvbiB7I211bHRpbGV2ZWxNZWRpYXRpb259CgpUaGUgc3ludGF4IGJlbG93IGVzdGltYXRlcyByYW5kb20gaW50ZXJjZXB0cyAod2hpY2ggYWxsb3dzIGVhY2ggcGFydGljaXBhbnQgdG8gaGF2ZSBhIGRpZmZlcmVudCBpbnRlcmNlcHQpIHRvIGFjY291bnQgZm9yIG5lc3RlZCBkYXRhIHdpdGhpbiB0aGUgc2FtZSBwYXJ0aWNpcGFudC4KCmBgYHtyfQpiYXllc2lhbk1lZGlhdGlvblN5bnRheCA8LQogIGJmKE0gfiBYICsgKDEgfGl8IGlkKSkgKwogIGJmKFkgfiBYICsgTSArICgxIHxpfCBpZCkpICsKICBzZXRfcmVzY29yKEZBTFNFKSAjIGRvbid0IGFkZCBhIHJlc2lkdWFsIGNvcnJlbGF0aW9uIGJldHdlZW4gTSBhbmQgWQoKYmF5ZXNpYW5NZWRpYXRpb25Nb2RlbCA8LSBicm0oCiAgYmF5ZXNpYW5NZWRpYXRpb25TeW50YXgsCiAgZGF0YSAgPSBteWRhdGEsCiAgc2VlZCAgPSA1MjI0MgopCgpzdW1tYXJ5KGJheWVzaWFuTWVkaWF0aW9uTW9kZWwpCgpoeXBvdGhlc2lzKAogIGJheWVzaWFuTWVkaWF0aW9uTW9kZWwsCiAgImJfTV9YICogYl9ZX00gPSAwIiwgIyBpbmRpcmVjdCBlZmZlY3QgPSBhIHBhdGggKiBiIHBhdGgKICBjbGFzcyA9IE5VTEwsCiAgc2VlZCAgPSAgNTIyNDIKKQoKbWVkaWF0aW9uKGJheWVzaWFuTWVkaWF0aW9uTW9kZWwpCmBgYAoKIyBTZXR0aW5nIFByaW9ycwoKIyMgUGFyYW1ldGVycyBmb3IgV2hpY2ggdG8gU2V0IFByaW9ycwoKYGBge3J9CmdldF9wcmlvcigKICBSZWFjdGlvbiB+IDEgKyBEYXlzICsgKDEgKyBEYXlzIHwgU3ViamVjdCksIAogIGRhdGEgPSBzbGVlcHN0dWR5KQpgYGAKCiMjIERlZmluZSBQcmlvcnMKCmBgYHtyfQpicHJpb3IgPC0gYygKICBzZXRfcHJpb3IoIm5vcm1hbCg1LCA1KSIsIGNvZWYgPSAiRGF5cyIpLAogIHNldF9wcmlvcigiY2F1Y2h5KDAsIDEwKSIsIGNsYXNzID0gInNkIiksCiAgc2V0X3ByaW9yKCJsa2ooMikiLCBjbGFzcyA9ICJjb3IiKSkKCmJwcmlvcgpgYGAKCiMjIEZpdCB0aGUgTW9kZWwKCkZpdCB0aGUgbW9kZWwgd2l0aCB0aGVzZSBwcmlvcnMsIGFuZCBzYW1wbGUgZnJvbSB0aGVzZSBwcmlvcnM6CgpgYGB7ciwgcmVzdWx0cyA9ICJoaWRlIn0KZml0X3NsZWVwNCA8LSBicm0oCiAgUmVhY3Rpb24gfiAxICsgRGF5cyArICgxICsgRGF5cyB8IFN1YmplY3QpLCAKICBkYXRhID0gc2xlZXBzdHVkeSwKICBwcmlvciA9IGJwcmlvciwgCiAgc2FtcGxlX3ByaW9yID0gVFJVRSwKICBzZWVkICA9IDUyMjQyCikKYGBgCgojIEV2YWx1YXRlIGEgSHlwb3RoZXNpcwoKYGBge3J9CiMgRXZpZC5SYXRpbyBpcyB0aGUgcmF0aW8gb2YgUChEYXlzID4gNykgLyBQKERheXMgPD0gNykKKGh5cDEgPC0gaHlwb3RoZXNpcyhmaXRfc2xlZXA0LCAiRGF5cyA8IDciKSkKcGxvdChoeXAxKQpgYGAKCmBgYHtyfQojIEV2aWQuUmF0aW8gaXMgdGhlIEJheWVzIEZhY3RvciBvZiB0aGUgcG9zdGVyaW9yCiMgdnMgdGhlIHByaW9yIHRoYXQgRGF5cyA9IDEwIGlzIFRSVUUgKFNhdmFnZS1EaWNrZXkgUmF0aW8pCihoeXAyIDwtIGh5cG90aGVzaXMoZml0X3NsZWVwNCwgIkRheXMgPSAxMCIpKQpwbG90KGh5cDIpCmBgYAoKIyBQYXJhbGxlbCBQcm9jZXNzaW5nCgojIyBCZXR3ZWVuLUNoYWluIFBhcmFsbGVsaXphdGlvbgoKYGBge3IsIHJlc3VsdHMgPSAiaGlkZSJ9CmZpdF9zbGVlcDQgPC0gYnJtKAogIFJlYWN0aW9uIH4gMSArIERheXMgKyAoMSArIERheXMgfCBTdWJqZWN0KSwgCiAgZGF0YSA9IHNsZWVwc3R1ZHksCiAgcHJpb3IgPSBicHJpb3IsIAogIHNhbXBsZV9wcmlvciA9IFRSVUUsCiAgY29yZXMgPSA0LAogIHNlZWQgID0gNTIyNDIKKQpgYGAKCiMjIFdpdGhpbi1DaGFpbiBQYXJhbGxlbGl6YXRpb24KCmh0dHBzOi8vcGF1bC1idWVya25lci5naXRodWIuaW8vYnJtcy9hcnRpY2xlcy9icm1zX3RocmVhZGluZy5odG1sIChhcmNoaXZlZCBhdCBodHRwczovL3Blcm1hLmNjL05DRzMtS1Y0RykKCiMgTWlzc2luZyBEYXRhIEhhbmRsaW5nCgojIyBNdWx0aXBseSBJbXB1dGVkIERhdGFzZXRzIGZyb20gYG1pY2VgCgpgYGB7cn0KP2JybV9tdWx0aXBsZQpgYGAKCmBgYHtyfQppbXAgPC0gbWljZTo6bWljZSgKICBteWRhdGEsCiAgbSA9IDUsCiAgcHJpbnQgPSBGQUxTRSkKCmZpdF9pbXAgPC0gYnJtX211bHRpcGxlKAogIGJheWVzaWFuTWVkaWF0aW9uU3ludGF4LAogIGRhdGEgPSBpbXAsCiAgY2hhaW5zID0gMikKYGBgCgojIyBJbXB1dGF0aW9uIG9uIHRoZSBGbHkgRHVyaW5nIE1vZGVsIEZpdHRpbmcKCmh0dHBzOi8vcGF1bC1idWVya25lci5naXRodWIuaW8vYnJtcy9hcnRpY2xlcy9icm1zX21pc3NpbmdzLmh0bWwgKGFyY2hpdmVkIGF0IGh0dHBzOi8vcGVybWEuY2MvNFk5TC1VU1FSKQoKYGBge3J9Cj9taQpgYGAKCmBgYHtyfQpiYXllc2lhblJlZ3Jlc3Npb25JbXB1dGF0aW9uU3ludGF4IDwtCiAgYmYoWCB8IG1pKCkgfiAoMSB8aXwgaWQpKSArCiAgYmYoTSB8IG1pKCkgfiBtaShYKSArICgxIHxpfCBpZCkpICsKICBiZihZIHwgbWkoKSB+IG1pKFgpICsgbWkoTSkgKyAoMSB8aXwgaWQpKSArCiAgc2V0X3Jlc2NvcihGQUxTRSkgIyBkb24ndCBhZGQgYSByZXNpZHVhbCBjb3JyZWxhdGlvbiBiZXR3ZWVuIFgsIE0sIGFuZCBZCgpiYXllc2lhblJlZ3Jlc3Npb25Nb2RlbCA8LSBicm0oCiAgYmF5ZXNpYW5SZWdyZXNzaW9uSW1wdXRhdGlvblN5bnRheCwKICBkYXRhID0gbXlkYXRhLAogIHNlZWQgPSA1MjI0MgopCgpzdW1tYXJ5KGJheWVzaWFuUmVncmVzc2lvbk1vZGVsKQoKaHlwb3RoZXNpcygKICBiYXllc2lhblJlZ3Jlc3Npb25Nb2RlbCwKICAiYnNwX01fbWlYICogYnNwX1lfbWlNID0gMCIsICMgaW5kaXJlY3QgZWZmZWN0ID0gYSBwYXRoICogYiBwYXRoCiAgY2xhc3MgPSBOVUxMLAogIHNlZWQgPSA1MjI0MgopCmBgYAoKIyBTZXNzaW9uIEluZm8KCmBgYHtyLCBjbGFzcy5zb3VyY2UgPSAiZm9sZC1oaWRlIn0Kc2Vzc2lvbkluZm8oKQpgYGAK</div>
