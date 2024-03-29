@@ -9,37 +9,37 @@ knitr::opts_chunk$set(
   comment = "")
 ```
 
-# When to use SPSS {#whenSPSS}
+# When to use `SPSS` {#whenSPSS}
 
  We use [R](R.html) for almost all data analysis.
  However, [R](R.html) is code-based and has a steep learning curve.
- As a result, undergraduate students in the lab most often use SPSS or [`Jamovi`](jamovi.html) for their research projects (e.g., [Honors projects](https://devpsylab.github.io/LabWiki/honors.html) and [SROP projects](https://devpsylab.github.io/LabWiki/expectations-SROP.html)), because SPSS and [`Jamovi`](jamovi.html) have a point-and-click interface.
+ As a result, undergraduate students in the lab most often use `SPSS` or [`jamovi`](jamovi.html) for their research projects (e.g., [Honors projects](https://devpsylab.github.io/LabWiki/honors.html) and [SROP projects](https://devpsylab.github.io/LabWiki/expectations-SROP.html)), because `SPSS` and [`jamovi`](jamovi.html) have a point-and-click interface.
  
-# Creating a SPSS Syntax File to Import a `.csv` Data File {#import}
+# Creating a `SPSS` Syntax File to Import a `.csv` Data File {#import}
 
 A `.csv` file is a "comma-separated values" file—a file whose values are separated by commas.
 The lab will provide you with a `.csv` in your member user folder.
-You will then need to create a SPSS syntax file to import and save the data into SPSS format. 
+You will then need to create a `SPSS` syntax file to import and save the data into `SPSS` format. 
 This data file imports the data and only needs to be run when there's a new data set.
 
-1. Open SPSS in the search bar
+1. Open `SPSS` in the search bar
 1. Go to file, import data, select .csv data
 1. Navigate to the desired .csv file
 1. Select data file and select paste
 1. Once the data preview opens, select paste again
-1. A SPSS syntax file will open, select save as and move the file to the desired location
+1. A `SPSS` syntax file will open, select save as and move the file to the desired location
     * save file as: `import.sps`
 1. Open the syntax file and make sure lab path is saved as the absolute file path in the (`/FILE=`) field (**not** a mapped network drive like `R:`)
    * `\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.csv`
 1. To run your script, select CTRL A  and press the green play button to run the script
-1. In the import script, SPSS will automatically determine the type of variable each should be, but it does not always classify them correctly.
+1. In the import script, `SPSS` will automatically determine the type of variable each should be, but it does not always classify them correctly.
    * For numeric variables used in analysis, use the following command to change the variable to numeric
    * E.g., (`tcid AUTO`) to  (`tcid F4.2`)
 1. At this point, the data file should appear.
-Next, save the data in SPSS format (`.sav`) with the below steps:
+Next, save the data in `SPSS` format (`.sav`) with the below steps:
    * On the open data file, select `save as` and `paste`
    * This will copy and paste the syntax at the **end of the syntax file** in the import script.
-   The completed import script will now read the `.csv` file and convert it to an SPSS data file (`.sav`).
+   The completed import script will now read the `.csv` file and convert it to an `SPSS` data file (`.sav`).
    * At this point, you can proceed [here](#analysis) to start your analysis script! 
 
 Example:
@@ -107,7 +107,7 @@ SAVE OUTFILE='\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Members\HAWKID\Th
   /COMPRESSED.
 ```
 
-# Creating a SPSS Syntax File for Analysis {#analysis}
+# Creating a `SPSS` Syntax File for Analysis {#analysis}
 
 1. To create a new syntax file, select file then new then syntax
    * Save file as: `descriptives.sps`
@@ -115,7 +115,7 @@ SAVE OUTFILE='\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Members\HAWKID\Th
    * e.g., frequencies, descriptives, correlations
 1. In your new data file, select an analysis and choose paste.
 In your despriptives syntax file, the analysis should now be added. For each subsequent analysis, select paste to add it to the descriptives file under the appropriate syntax.
-1. Create a new SPSS syntax file for your analysis. In this syntax file, add your analysis
+1. Create a new `SPSS` syntax file for your analysis. In this syntax file, add your analysis
    * e.g., regressions
 
 ## Frequencies {#frequencies}
@@ -239,11 +239,11 @@ PROCESS
 
 # Best Practices {#bestPractices}
 
- - Use SPSS syntax files (`.sps`) for performing all commands, including [importing data](#import), computing variables, recoding variables, running analyses, etc.
- The benefit of using SPSS syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file.
+ - Use `SPSS` syntax files (`.sps`) for performing all commands, including [importing data](#import), computing variables, recoding variables, running analyses, etc.
+ The benefit of using `SPSS` syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file.
  This is important so you do not have to remember all of the steps you followed to generate the analysis.
  This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data.
- If you are unsure what SPSS command is needed, run the command via "point and click" in the interface; however, instead of clicking "OK", click "Paste".
+ If you are unsure what `SPSS` command is needed, run the command via "point and click" in the interface; however, instead of clicking "OK", click "Paste".
  This will paste the syntax that is used to run the command into a syntax file.
     - Have one syntax file for importing data, computing composites, recoding variables, and saving data (e.g., `import.sps`).
     - Have a separate syntax file for generating frequencies, descriptive statistics, and correlation matrices (e.g., `descriptives.sps`).

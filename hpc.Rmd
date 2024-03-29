@@ -83,7 +83,7 @@ cd /Users/itpetersen/Documents/Projects/Test/
 
 ## Initial run
 
-### Installing Linux Packages to Install R Packages
+### Installing Linux Packages to Install `R` Packages
 
 ```bash
 module load stack/2022.2
@@ -254,7 +254,7 @@ https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Polici
 
 `qdel JOB_ID`
 
-## Run R Script
+## Run `R` Script
 
 See [here](#runRscript)
 
@@ -262,17 +262,17 @@ See [here](#runRscript)
 
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC (archived at https://perma.cc/99JQ-43ZG)
 
-## Find which versions of R are installed
+## Find which versions of `R` are installed
 
 `module spider R`
 
-But, there may be more recent version of R installed in the "Additional Software Stacks" (https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List; archived at https://perma.cc/WJ4Q-GDUS)
+But, there may be more recent version of `R` installed in the "Additional Software Stacks" (https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List; archived at https://perma.cc/WJ4Q-GDUS)
 
-## Install R packages
+## Install `R` packages
 
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
 
-1. first load the R environment module
+1. first load the `R` environment module
     * `module load r/4.0.5_gcc-9.3.0`
 1. launch R
     * `R`
@@ -301,7 +301,7 @@ install.packages(c(
     Ncpus = 40)
 ```
 
-### Install R package locally from source
+### Install `R` package locally from source
 
 `install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)`
 
@@ -322,15 +322,15 @@ install.packages(c(
 1. `cd` to the above directory
 1. Start R
 1. Load the `renv` package: `library("renv")`
-1. At the R prompt, initialize the `renv` project on the local repository of R packages with:
+1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:
     - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
     - or `renv::init()` if you are in the intended working directory
-1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
+1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!
 1. From this point on you are working in a `renv` project.
 Installed packages will go into a library within this project.
-After initializing the `renv` project on the local repository of R packages, packages from the local repository can be installed with `renv::install()`:
+After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:
     * `renv::install("package_name")`
-1. To restart a `renv` project, simply start R from the directory created in step (1).
+1. To restart a `renv` project, simply start `R` from the directory created in step (1).
 The project will initialize automatically.
 
 To update version of `renv`: `renv::upgrade()`
@@ -347,8 +347,8 @@ To disable `renv` on a project: `renv::deactivate()`
 
 ### To install a new package for a project after `renv` has been initialized
 
-1. First, load the R environment module (see `Install R packages` section above)
-1. cd to the directory of the R project
+1. First, load the `R` environment module (see `Install R packages` section above)
+1. cd to the directory of the `R` project
 1. launch R
     * `R`
 1. then install the package, (the code below uses a generic `package_name`):
@@ -362,7 +362,7 @@ To disable `renv` on a project: `renv::deactivate()`
 update.packages(ask = FALSE)
 ```
 
-## Run R Script {#runRscript}
+## Run `R` Script {#runRscript}
 
 `module load r/4.0.5_gcc-9.3.0`
 
@@ -403,13 +403,13 @@ module load r/4.1.3_gcc-9.4.0
 module load nlopt
 ```
 
-2. Set `LIBRARY_PATH` so linker can find library while launching R session (single line below):
+2. Set `LIBRARY_PATH` so linker can find library while launching `R` session (single line below):
 
 ```
 LIBRARY_PATH=$ROOT_NLOPT/lib64:$LIBRARY_PATH R
 ```
 
-3. In R console, install `nloptr` (two lines below)
+3. In `R` console, install `nloptr` (two lines below)
 
 ```{r, eval = FALSE}
 install.packages(verbose = 1, "nloptr")
@@ -424,13 +424,13 @@ module load stack/2022.1
 module load r/4.1.3_gcc-9.4.0
 ```
 
-2. Set LIBRARY_PATH so linker can find library while launching R session (single line below):
+2. Set LIBRARY_PATH so linker can find library while launching `R` session (single line below):
 
 ```
 C_INCLUDE_PATH=$ROOT_XPROTO/include LIBRARY_PATH=$ROOT_LIBXEXT/lib:$ROOT_LIBXSCRNSAVER/lib R
 ```
 
-3. In R console, install `tkrplot` (two lines below)
+3. In `R` console, install `tkrplot` (two lines below)
 
 ```{r, eval = FALSE}
 install.packages(verbose = 1, "tkrplot")
@@ -498,13 +498,13 @@ https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs
 1. `cd` to the above directory
 1. Start R
 1. Load the `packrat` package: `library("packrat")`
-1. At the R prompt, initialize the `packrat` project on the local repository of R packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
-1. You must restart your R session in the given project directory after running init in order for the changes to take effect!
+1. At the `R` prompt, initialize the `packrat` project on the local repository of `R` packages with: `packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`
+1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!
 1. From this point on you are working in a `packrat` project.
 Installed packages will go into a library within this project.
-After initializing the `packrat` project on the local repository of R packages, packages from the local repository can be installed with `packrat::install_local()`:
+After initializing the `packrat` project on the local repository of `R` packages, packages from the local repository can be installed with `packrat::install_local()`:
     * `packrat::install_local("package_name")`
-1. To restart a packrat project simply start R from the directory created in step (1). The project will initialize automatically.
+1. To restart a packrat project simply start `R` from the directory created in step (1). The project will initialize automatically.
 
 To save the current state of your library: `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)` 
 
@@ -512,8 +512,8 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
 
 ### To install a new package for a project after `packrat` has been initialized
 
-1. First, load the R environment module (see `Install R packages` section above)
-1. cd to the directory of the R project
+1. First, load the `R` environment module (see `Install R packages` section above)
+1. cd to the directory of the `R` project
 1. launch R
     * `R`
 1. then install the package, (the code below uses a generic `package_name`):
@@ -526,7 +526,7 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
 1. `qlogin` -- for more info, see here: https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions (archived at https://perma.cc/Y3A9-WQ3W)
 1. `module load stack/2020.2-base_arch` -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes
 1. `module load r`
-1. cd to the directory of the R project
+1. cd to the directory of the `R` project
 1. `R`
 1. Create `packrat` project (see above)
 1. Install packages
