@@ -28,6 +28,7 @@ library("nlme")
 library("lmerTest")
 library("MASS")
 library("MCMCglmm")
+library("performance")
 library("ggplot2")
 ```
 
@@ -194,6 +195,13 @@ linearMixedModel_nlme <- lme(
   na.action = na.exclude)
 
 summary(linearMixedModel_nlme)
+```
+
+## Intraclass Correlation Coefficent {#icc}
+
+```{r}
+icc(linearMixedModel)
+icc(linearMixedModel_nlme)
 ```
 
 # Generalized Linear Mixed Models {#generalized}
