@@ -428,8 +428,8 @@ Warning messages appeared when using the automatic cleaning of data.
 We may have to send a dataset to someone so they can check on it.
 Some documentation is found here:
 
-* https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html (archived at https://perma.cc/9SDG-NGXD)
-* https://sccn.ucsd.edu/wiki/EEGLAB_bug1971 (archived at https://perma.cc/H7PA-TPTZ)
+- https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html (archived at https://perma.cc/9SDG-NGXD)
+- https://sccn.ucsd.edu/wiki/EEGLAB_bug1971 (archived at https://perma.cc/H7PA-TPTZ)
 
 ## Filterning, average referencing, and automatically cleaning the data.
 
@@ -548,7 +548,7 @@ Go to `Tools` > `Inspect/reject data by eye`
 ![visually reject artifacts](images/reject_time_periods.png)
 
 1. Select `REJECT` and overwrite the file in memory
-   * select `Overwrite it in memory (set=yes; unset=create a new dataset)`
+   - select `Overwrite it in memory (set=yes; unset=create a new dataset)`
 1. Visually inspect the data and select any bad channels, and write them down
 1. Next, manually reject the channels by selecting `Edit` then `Select Data`
 
@@ -556,8 +556,8 @@ Go to `Tools` > `Inspect/reject data by eye`
 
 1. Manually enter the channels to be removed in the `Channel range` field and select the checkbox under `on->remove these` and select `Ok`
 1. Save the file as `tcid_wave_manualClean.set` in the following drive path 
-    * `\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned`
-    * This screenshot represents removing channels `23 56 57 97`
+    - `\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP\Oddball\MATLAB\11-Manually Cleaned`
+    - This screenshot represents removing channels `23 56 57 97`
 ![visually reject artifacts](images/remove_channels_specific.png)
 1. Repeat step for each cleaned dataset
 
@@ -635,82 +635,84 @@ eeglab redraw;
 # ERP Processing Pipeline using HAPPE
 
 1. Download MATLAB: https://its.uiowa.edu/matlab
-    * Click `How to Install MatLab` and follow the relevant instructions
-    * Create a `MatLab` folder in your local directory. You will keep all of your MatLab related files in this folder. 
+    - Click `How to Install MatLab` and follow the relevant instructions
+    - Create a `MatLab` folder in your local directory. You will keep all of your MatLab related files in this folder. 
 1. Install the HAPPE pipeline: https://github.com/PINE-Lab/HAPPE
-    * Clone the HAPPE repository to your `GitHub` account
-    * Open the `HAPPE` folder
-    * Open the `HAPPE User Guide` document
-    * Read through the `HAPPE User Guide`
-    * Navigate to the `Setting up HAPPE` section in the user guide and follow the instructions for setting up the HAPPE pipeline, including installation of add-ons and eeglab
+    - Clone the HAPPE repository to your `GitHub` account
+    - Open the `HAPPE` folder
+    - Open the `HAPPE User Guide` document
+    - Read through the `HAPPE User Guide`
+    - Navigate to the `Setting up HAPPE` section in the user guide and follow the instructions for setting up the HAPPE pipeline, including installation of add-ons and eeglab
 1. Install EP Toolkit: https://sourceforge.net/projects/erppcatoolkit/
-    * After downloading, copy the `EP_Toolkit` folder to your `Matlab` folder (in your local directory)
-    * In the `EP_toolkit` folder: 
-        * Open `EP_Toolkit`
-        * Open `Documentation`
-        * Open `tutorial`
-    * In the `tutorial` document, navigate to the `Set Up` section and follow the instructions for installing and setting up EP Toolkit and FieldTrip.
-    Do **NOT** follow instructions for setting up EEGLAB. You have already set up your path to EEGLAB when you set up the HAPPE pipeline. 
-    * You should have the following subfolders in your `MatLab` folder:
-        * `EP_Toolkit`
-        * `Fieldtrip-[version number]`
+    - After downloading, copy the `EP_Toolkit` folder to your `Matlab` folder (in your local directory)
+    - In the `EP_toolkit` folder: 
+        - Open `EP_Toolkit`
+        - Open `Documentation`
+        - Open `tutorial`
+    - In the `tutorial` document, navigate to the `Set Up` section and follow the instructions for installing and setting up EP Toolkit and FieldTrip.
+    Do **NOT** follow instructions for setting up EEGLAB.
+    You have already set up your path to EEGLAB when you set up the HAPPE pipeline. 
+    - You should have the following subfolders in your `MatLab` folder:
+        - `EP_Toolkit`
+        - `Fieldtrip-[version number]`
 1. Open the HAPPE pipeline V4 script in MATLAB
-    * Follow the User Guide instructions for the HAPPE-ER pipeline, using the user inputs described below. 
+    - Follow the User Guide instructions for the HAPPE-ER pipeline, using the user inputs described below. 
 
 ## Oddball Task
-1. User Inputs
-    * Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
-    * Select `raw`
-    * Load pre-existing set of input parameter: 
-        * `N` if this is your first time running data through the pipeline. 
-        * `Y` if you have decided on a set of parameters. Enter the path to the folder containing the input parameters. 
-    * Low density data: `N`
-    * Data type: `task`
-    * Performing event-related potential (ERP) analysis: `Y`
-    * Enter the task onset tags
-        * Target: `tgt+`
-        * Frequent: `frq+`
-        * `done`
-    * Do multiple onset tags belong to a single condition? `N`
-    * File format: `5`
-    * Acquisition layout type: `2`
-    * Number of channels: `128`
-    * Do you have additioal type fields besides "code"? `N`
-    * Select channels of interest: `all`
-    * Frequency of electrical noice in Hz: `60`
-    * Line Noise reduction method: `notch`
-        * Low cutoff: `59`
-        * high cutoff: `61`
-    * Resample: `N`
-    * Filter
-        * Low Pass Cutoff: `30`
-        * High Pass Cutoff: `.1`
-    * Bad Channel Detection: `Y`
-        * `after` wavelet thresholding
-    * ECGone: `N`
-    * Wavelet Thresholding
-        * `default`
-        * Threshold rule: `soft`
-    * MuscIL: `N`
-    * Segmentation: `Y`
-        * Starting parameter for stimulus: `-200`
-        * Ending parameter for stimulus: `1000`
-        * Task offset: `2`
-    * Baseline Correction: `Y`
-        * Baseline Correction start: `-200`
-        * Baseline Correction end: `0`
-    * Interpolation: `Y`
-    * Segment Rejection: `Y`
-        * Segment Rejection Method: `amplitude`
-            * minimum segment rejection threshold: `-150`
-            * maximum segment rejection threshold: `150`
-            * segment rejection based on all channels or ROI: `all`
-    * Re-referencing: `Y`
-        * re-referencing method: `average`
-    * Visualizations: `N`
-    * Save format: `1`
 
-## Fishshark
+1. User Inputs
+    - Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
+    - Select `raw`
+    - Load pre-existing set of input parameter: 
+        - `N` if this is your first time running data through the pipeline. 
+        - `Y` if you have decided on a set of parameters. Enter the path to the folder containing the input parameters. 
+    - Low density data: `N`
+    - Data type: `task`
+    - Performing event-related potential (ERP) analysis: `Y`
+    - Enter the task onset tags
+        - Target: `tgt+`
+        - Frequent: `frq+`
+        - `done`
+    - Do multiple onset tags belong to a single condition? `N`
+    - File format: `5`
+    - Acquisition layout type: `2`
+    - Number of channels: `128`
+    - Do you have additioal type fields besides "code"? `N`
+    - Select channels of interest: `all`
+    - Frequency of electrical noice in Hz: `60`
+    - Line Noise reduction method: `notch`
+        - Low cutoff: `59`
+        - high cutoff: `61`
+    - Resample: `N`
+    - Filter
+        - Low Pass Cutoff: `30`
+        - High Pass Cutoff: `.1`
+    - Bad Channel Detection: `Y`
+        - `after` wavelet thresholding
+    - ECGone: `N`
+    - Wavelet Thresholding
+        - `default`
+        - Threshold rule: `soft`
+    - MuscIL: `N`
+    - Segmentation: `Y`
+        - Starting parameter for stimulus: `-200`
+        - Ending parameter for stimulus: `1000`
+        - Task offset: `2`
+    - Baseline Correction: `Y`
+        - Baseline Correction start: `-200`
+        - Baseline Correction end: `0`
+    - Interpolation: `Y`
+    - Segment Rejection: `Y`
+        - Segment Rejection Method: `amplitude`
+            - minimum segment rejection threshold: `-150`
+            - maximum segment rejection threshold: `150`
+            - segment rejection based on all channels or ROI: `all`
+    - Re-referencing: `Y`
+        - re-referencing method: `average`
+    - Visualizations: `N`
+    - Save format: `1`
+
+## Fish/Shark
 
 ## Stop-Signal
 
@@ -722,24 +724,24 @@ To read and combine single subject averaged test files, follow these steps:
 
 1. Open the toolkit and select `Read`
 1. Use the following options
-    * Format = `text (.txt)`
-    * Type = `average`
-    * Mont = `Adult Hydrocel 128-channel 1.0`
+    - Format = `text (.txt)`
+    - Type = `average`
+    - Mont = `Adult Hydrocel 128-channel 1.0`
 1. Select `Single File Mode`.
-    * Single file mode will use the filename to assign the task condition and participant ID for each file.
-        * Note: `R` can rename files in batches
+    - Single file mode will use the filename to assign the task condition and participant ID for each file.
+        - Note: `R` can rename files in batches
     Thus, **it is critical to use a standard naming convention to name the files**. 
     For example, an oddball file could be named: 
-        * `frq_1001_36` and `tgt_1001_36`
+        - `frq_1001_36` and `tgt_1001_36`
 1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID. 
-    * For the above example `5:11` would coorespond to `1001_36`
+    - For the above example `5:11` would coorespond to `1001_36`
 1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition. 
-    * * For the above example `1:3` would coorespond to `frq` or `tgt`
-    * ![image](images/readTextFile.png)
+    - For the above example `1:3` would coorespond to `frq` or `tgt`
+    - ![image](images/readTextFile.png)
 1. Select `Read` and select the `GSN-Hydrocel-129.ced` when prompted
 1. The new file will have the participant ID and will combine the conditions for each participant. 
-    * Subject Names: 
-        * ![image](images/subjectCombinedNames.png)
-    * Task Conditions
-        * ![image](images/conditionCombinedNames.png)
+    - Subject Names: 
+        - ![image](images/subjectCombinedNames.png)
+    - Task Conditions
+        - ![image](images/conditionCombinedNames.png)
 

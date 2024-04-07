@@ -163,17 +163,18 @@ Rscript ./Analyses/factorScores.R
 ### qsub options
 
 `-pe smp 4`: specify a parellel environment and number of cores to be used (`smp` = shared memory parallel environment)
-*  The `OMP_NUM_THREADS` variable is set to '1' by default.
+-  The `OMP_NUM_THREADS` variable is set to '1' by default.
 If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
 
 `-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs. This must be your University of Iowa email address.
 
 `-m eas`: Specify when to send an email message (; ; ; ; )
-*  `b` = beginning of job
-*  `e` = end of job
-*  `a` = when job is aborted
-*  `s` = when job is suspended
-*  `n` = no mail is sent
+
+-  `b` = beginning of job
+-  `e` = end of job
+-  `a` = when job is aborted
+-  `s` = when job is suspended
+-  `n` = no mail is sent
 
 `-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)
 
@@ -247,8 +248,8 @@ https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Polici
 
 ## Job Time and Memory
 
-*  Terminated jobs: `qacct -j JOB_ID`
-*  Jobs in progress: `qstat -j JOB_ID | grep usage`
+-  Terminated jobs: `qacct -j JOB_ID`
+-  Jobs in progress: `qstat -j JOB_ID | grep usage`
 
 ## Cancel Job
 
@@ -273,13 +274,13 @@ But, there may be more recent version of `R` installed in the "Additional Softwa
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
 
 1. first load the `R` environment module
-    * `module load r/4.0.5_gcc-9.3.0`
+    - `module load r/4.0.5_gcc-9.3.0`
 1. launch R
-    * `R`
+    - `R`
 1. then install the package, (the code below uses a generic `package_name`):
-    * `install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`
-    * If using `packrat`, it is preferable to install packages by source, if possible, but you can remove `type = source` if you want to install binaries
-    * Assuming that you do not have a personal library directory you will see
+    - `install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`
+    - If using `packrat`, it is preferable to install packages by source, if possible, but you can remove `type = source` if you want to install binaries
+    - Assuming that you do not have a personal library directory you will see
 
     ```
     Warning in install.packages("package_name", repos = "http://cran.r-project.org") :
@@ -329,7 +330,7 @@ install.packages(c(
 1. From this point on you are working in a `renv` project.
 Installed packages will go into a library within this project.
 After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:
-    * `renv::install("package_name")`
+    - `renv::install("package_name")`
 1. To restart a `renv` project, simply start `R` from the directory created in step (1).
 The project will initialize automatically.
 
@@ -350,10 +351,10 @@ To disable `renv` on a project: `renv::deactivate()`
 1. First, load the `R` environment module (see `Install R packages` section above)
 1. cd to the directory of the `R` project
 1. launch R
-    * `R`
+    - `R`
 1. then install the package, (the code below uses a generic `package_name`):
-    * `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-    * `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
 1. `renv::snapshot()`
 
 ## Update Packages
@@ -503,7 +504,7 @@ https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs
 1. From this point on you are working in a `packrat` project.
 Installed packages will go into a library within this project.
 After initializing the `packrat` project on the local repository of `R` packages, packages from the local repository can be installed with `packrat::install_local()`:
-    * `packrat::install_local("package_name")`
+    - `packrat::install_local("package_name")`
 1. To restart a packrat project simply start `R` from the directory created in step (1). The project will initialize automatically.
 
 To save the current state of your library: `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)` 
@@ -515,10 +516,10 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
 1. First, load the `R` environment module (see `Install R packages` section above)
 1. cd to the directory of the `R` project
 1. launch R
-    * `R`
+    - `R`
 1. then install the package, (the code below uses a generic `package_name`):
-    * `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-    * `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    - `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
 1. `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)`
 
 ### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
