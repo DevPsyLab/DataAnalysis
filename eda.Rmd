@@ -60,13 +60,14 @@ outcomeOverplot <- predictorOverplot + sample(1:75, n, replace = TRUE)
 categorical1 <- sample(1:5, size = n, replace = TRUE)
 categorical2 <- sample(1:5, size = n, replace = TRUE)
 
-mydata <- data.frame(ID = ID,
-                     predictor = predictor,
-                     outcome = outcome,
-                     predictorOverplot = predictorOverplot,
-                     outcomeOverplot = outcomeOverplot,
-                     categorical1 = categorical1,
-                     categorical2 = categorical2)
+mydata <- data.frame(
+  ID = ID,
+  predictor = predictor,
+  outcome = outcome,
+  predictorOverplot = predictorOverplot,
+  outcomeOverplot = outcomeOverplot,
+  categorical1 = categorical1,
+  categorical2 = categorical2)
 
 mydata[sample(1:n, size = 10), "predictor"] <- NA
 mydata[sample(1:n, size = 10), "outcome"] <- NA
@@ -314,6 +315,13 @@ ggplot(mydata, aes(x = "", y = outcome)) +
 # Bivariate Associations
 
 For more advanced scatterplots, see [here](figures.html#marginalDistributions).
+
+## Correlation Coefficients
+
+```{r}
+cor(mydata, use = "pairwise.complete.obs")
+cor.test( ~ predictor + outcome, data = mydata)
+```
 
 ## Scatterplot
 
