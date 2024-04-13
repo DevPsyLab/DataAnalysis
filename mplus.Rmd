@@ -310,8 +310,19 @@ MODEL:
 ## Indirect Effects {#indirectEffects}
 
 ```
-MODEL INDIRECT:
-    y IND x;
+ANALYSIS:
+    TYPE = GENERAL;
+    ESTIMATOR = ML;
+    BOOTSTRAP = 1000;
+
+MODEL:
+    MODEL INDIRECT:
+        y IND x;
+
+OUTPUT:
+    STAND;
+    CINTERVAL (BOOTSTRAP); !percentile boostrap CI
+    CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI
 ```
 
 ## Means/Intercepts {#means}
