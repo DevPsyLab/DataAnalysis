@@ -902,21 +902,47 @@ summary(
 
 ## Parameter Estimates
 
+### Bias-Corrected Bootstrap
+
+Adjusted bootstrap percentile (BCa) method, but with no correction for acceleration (only for bias):
+
 ```{r}
-mediationFit_estimates <- parameterEstimates(
+mediationFit_estimates_bca <- parameterEstimates(
   mediationFit,
   boot.ci.type = "bca.simple",
   standardized = TRUE)
 
-mediationFit_estimates
+mediationFit_estimates <- mediationFit_estimates_bca
+
+mediationFit_estimates_bca
+```
+
+### Percentile Bootstrap
+
+```{r}
+mediationFit_estimates_perc <- parameterEstimates(
+  mediationFit,
+  boot.ci.type = "perc",
+  standardized = TRUE)
+
+mediationFit_estimates_perc
 ```
 
 ## Indirect Effect
 
 ### Parameter Estimate
 
+Bias-Corrected Bootstrap:
+
 ```{r}
-mediationFit_estimates %>% 
+mediationFit_estimates_bca %>% 
+  filter(label == "indirect")
+```
+
+Percentile Bootstrap:
+
+```{r}
+mediationFit_estimates_perc %>% 
   filter(label == "indirect")
 ```
 
