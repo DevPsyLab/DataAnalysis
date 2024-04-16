@@ -43,6 +43,7 @@ library("interactions")
 library("lavaan")
 library("regtools")
 library("mice")
+library("XICOR")
 ```
 
 # Import Data
@@ -914,6 +915,7 @@ ols_eigen_cindex(multipleRegressionModel)
         - Minimum covariance determinant:
         - Winsorized correlation
         - Biweight midcorrelation
+        - Xi ($\xi$) correlation
     - Not great options:
         - Quantile (L1) regression: `rq()` function of `quantreg` package
 
@@ -1126,6 +1128,18 @@ correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "p
 
 ```{r}
 correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "biweight", p_adjust = "none")
+```
+
+####### Xi ($\xi$)
+
+Xi ($\xi$) is an index of the degree of dependence between two variables
+
+Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. https://doi.org/10.1080/01621459.2020.1758115
+
+```{r}
+calculateXI(
+  mydata$bpi_antisocialT1Sum,
+  mydata$bpi_antisocialT2Sum)
 ```
 
 ###### Robust regression with a single predictor
