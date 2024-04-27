@@ -485,6 +485,19 @@ pkgdown::build_site()
 1. Commit and push changes
 1. Update release version in GitHub
 
+## Add sub-packages
+
+```{r, eval = FALSE}
+devtools::build(pkg = "D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1")
+devtools::build(pkg = "D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2")
+
+install.packages("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1_0.1.0.tar.gz", repos = NULL, source = TRUE)
+install.packages("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz", repos = NULL, source = TRUE)
+
+remotes::install_local("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz")
+remotes::install_local("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz")
+```
+
 ## Submit Package to CRAN
 
 https://cran.r-project.org/submit.html
