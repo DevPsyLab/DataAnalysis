@@ -367,6 +367,29 @@ MODEL:
     latent2 BY x4* x5 (load5) x6;
 ```
 
+## Multigroup Model {#multigroup}
+
+```
+VARIABLE:
+    NAMES = group x1 x2 x3 y1;
+    GROUPING = group (0=boys, 1=girls);
+    MISSING = .;
+    USEVARIABLES = group x1 x2 x3 y1;
+
+MODEL:
+    Model boys:
+        latent BY x1* x2 x3;
+        [latent@0];
+        latent@1;
+        y ~ latent;
+
+    Model girls:
+        latent BY x1* x2 x3;
+        [latent@0];
+        latent@1;
+        y ~ latent;
+```
+
 # Comments {#comments}
 
 ```
@@ -449,6 +472,166 @@ runModels(
   recursive = TRUE,
   replaceOutfile = "always",
   showOutput = TRUE)
+```
+
+# Monte Carlo Simulation/Power Analysis {#monteCarlo}
+
+## Single Group Model {#monteCarloSingleGroup}
+
+```
+TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;
+
+MONTECARLO:
+    NAMES = v1-v5; ! variable names
+    NOBSERVATIONS = 500; ! number of participants in each sample
+    NREPS = 100000; ! number of samples to create
+    SEED = 52242; ! random seed
+    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)
+    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical
+
+ANALYSIS:
+    PROCESSORS = 4 1; ! number of processors; number of threads
+    ESTIMATOR = WLSMV;
+    PARAMETERIZATION = THETA;
+
+MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command
+    dep BY v1-v5*.7; ! factor loadings
+    [dep@0]; ! set factor mean to 0
+    dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1
+    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2
+    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3
+    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4
+    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5
+    v1-v5@1; ! item residual variances
+
+MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates
+    dep BY v1-v5*.7; ! factor loadings
+    [dep@0]; ! set factor mean to 0
+    dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1
+    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2
+    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3
+    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4
+    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5
+    v1-v5@1; ! item residual variances
+
+MODEL CONSTRAINT:
+    NEW (stdt stdt1 stdt2 stdt3 noninvt noninvt1 noninvt2 noninvt3 diff);
+    
+    stdt1 = (v1t1 + v2t1 + v3t1) / 3;
+    stdt2 = (v1t2 + v2t2 + v3t2) / 3;
+    stdt3 = (v1t3 + v2t3 + v3t3) / 3;
+    
+    noninvt1 = (v4t1 + v5t1) / 2;
+    noninvt2 = (v4t2 + v5t2) / 2;
+    noninvt3 = (v4t3 + v5t3) / 2;
+    
+    stdt = (stdt1 + stdt2 + stdt3) / 3;
+    noninvt = (noninvt1 + noninvt2 + noninvt3) / 3;
+    
+    diff = noninvt - stdt;
+
+OUTPUT:
+    TECH9;
+```
+
+## Multi-Group Model {#monteCarloMultigroup}
+
+```
+TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;
+
+MONTECARLO:
+    NAMES = v1-v5; ! variable names
+    NGROUPS = 2; ! number of groups
+    NOBSERVATIONS = 500 300; ! number of participants in each sample
+    NREPS = 100000; ! number of samples to create
+    SEED = 52242; ! random seed
+    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)
+    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical
+
+ANALYSIS:
+    PROCESSORS = 4 1; ! number of processors; number of threads
+    ESTIMATOR = WLSMV;
+    PARAMETERIZATION = THETA;
+
+MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command
+    dep BY v1-v5*.7; ! factor loadings
+    [dep@0]; ! set factor mean to 0
+    dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1
+    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2
+    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3
+    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4
+    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5
+    v1-v5@1; ! item residual variances
+    
+MODEL POPULATION-g2: ! tell Mplus how to generate the population data for group 2; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command
+    !dep BY v1-v5*.7; ! factor loadings
+    ![dep@0]; ! set factor mean to 0
+    !dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1
+    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2
+    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3
+    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4
+    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5
+    !v1-v5@1; ! item residual variances
+
+MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates
+    dep BY v1-v5*.7; ! factor loadings
+    [dep@0]; ! set factor mean to 0
+    dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1
+    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2
+    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3
+    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4
+    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5
+    v1-v5@1; ! item residual variances
+   
+MODEL g2: ! tell Mplus to estimate our model in group 2; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates
+    !dep BY v1-v5*.7; ! factor loadings
+    ![dep@0]; ! set factor mean to 0
+    !dep@1; ! set factor variance to 1 (standardize)
+    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1
+    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2
+    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3
+    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4
+    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5
+    !v1-v5@1; ! item residual variances
+
+MODEL CONSTRAINT:
+    NEW (stdt1g1 stdt2g1 stdt3g1 stdt1g2 stdt2g2 stdt3g2
+    nonit1g1 nonit2g1 nonit3g1 nonit1g2 nonit2g2 nonit3g2
+    stdtg1 stdtg2 nonitg1 nonitg2 diffwg diffbg);
+    
+    stdt1g1 = (v1t1g1 + v2t1g1 + v3t1g1) / 3;
+    stdt2g1 = (v1t2g1 + v2t2g1 + v3t2g1) / 3;
+    stdt3g1 = (v1t3g1 + v2t3g1 + v3t3g1) / 3;
+    
+    stdt1g2 = (v1t1g2 + v2t1g2 + v3t1g2) / 3;
+    stdt2g2 = (v1t2g2 + v2t2g2 + v3t2g2) / 3;
+    stdt3g2 = (v1t3g2 + v2t3g2 + v3t3g2) / 3;
+    
+    nonit1g1 = (v4t1g1 + v5t1g1) / 2;
+    nonit2g1 = (v4t2g1 + v5t2g1) / 2;
+    nonit3g1 = (v4t3g1 + v5t3g1) / 2;
+    
+    nonit1g2 = (v4t1g2 + v5t1g2) / 2;
+    nonit2g2 = (v4t2g2 + v5t2g2) / 2;
+    nonit3g2 = (v4t3g2 + v5t3g2) / 2;
+    
+    stdtg1 = (stdt1g1 + stdt2g1 + stdt3g1) / 3;
+    stdtg2 = (stdt1g2 + stdt2g2 + stdt3g2) / 3;
+    
+    nonitg1 = (nonit1g1 + nonit2g1 + nonit3g1) / 3;
+    nonitg2 = (nonit1g2 + nonit2g2 + nonit3g2) / 3;
+    
+    diffwg = nonitg2 - stdtg2; ! difference within group
+    
+    diffbg = nonitg2 - nonitg1; ! difference between groups
+    
+OUTPUT:
+    TECH9;
 ```
 
 # Session Info
