@@ -41,6 +41,7 @@ library("purrr")
 library("naniar")
 library("mvnormtest")
 library("ggExtra")
+library("XICOR")
 ```
 
 # Simulate Data
@@ -318,9 +319,32 @@ For more advanced scatterplots, see [here](figures.html#marginalDistributions).
 
 ## Correlation Coefficients
 
+### Pearson Correlation
+
 ```{r}
 cor(mydata, use = "pairwise.complete.obs")
 cor.test( ~ predictor + outcome, data = mydata)
+cor.table(mydata)
+```
+
+### Spearman Correlation
+
+```{r}
+cor(mydata, use = "pairwise.complete.obs", method = "spearman")
+cor.test( ~ predictor + outcome, data = mydata, method = "spearman")
+cor.table(mydata, correlation = "spearman")
+```
+
+### Xi ($\xi$)
+
+Xi ($\xi$) is an index of the degree of dependence between two variables, which is useful as an index of nonlinear correlation.
+
+Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. https://doi.org/10.1080/01621459.2020.1758115
+
+```{r}
+calculateXI(
+  mydata$predictor,
+  mydata$outcome)
 ```
 
 ## Scatterplot
