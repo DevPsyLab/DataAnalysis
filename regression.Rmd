@@ -44,6 +44,7 @@ library("lavaan")
 library("regtools")
 library("mice")
 library("XICOR")
+library("cocor")
 ```
 
 # Import Data
@@ -376,6 +377,49 @@ probe_interaction(interactionModel,
                   cond.int = TRUE,
                   interval = TRUE,
                   jnplot = TRUE)
+```
+
+# Comparing Correlations {#compareCorrelations}
+
+Fisher's *r*-to-*z* test.
+
+http://comparingcorrelations.org (archived at https://perma.cc/X3EU-24GL)
+
+Independent groups (two different groups):
+
+```{r}
+cocor::cocor.indep.groups(
+  r1.jk = .7,
+  r2.hm = .6,
+  n1 = 305,
+  n2 = 210,
+  data.name = c("group1", "group2"),
+  var.labels = c("age", "intelligence", "age", "intelligence"))
+```
+
+Dependent groups (same group), overlapping correlation (shares a variable in common—in this case, the variable `age` is shared in both correlations):
+
+```{r}
+cocor::cocor.dep.groups.overlap(
+  r.jk = .2, # Correlation (age, intelligence)
+  r.jh = .5, # Correlation (age, shoe size)
+  r.kh = .1, # Correlation (intelligence, shoe index)
+  n = 315,
+  var.labels = c("age", "intelligence", "shoe size"))
+```
+
+Dependent groups (same group), non-overlapping correlation (does not share a variable in common):
+
+```{r}
+cocor::cocor.dep.groups.nonoverlap(
+  r.jk = .2, # Correlation (age, intelligence)
+  r.hm = .7, # Correlation (body mass index, shoe size)
+  r.jh = .4, # Correlation (age, body mass index)
+  r.jm = .5, # Correlation (age, shoe size)
+  r.kh = .1, # Correlation (intelligence, body mass index)
+  r.km = .3, # Correlation (intelligence, shoe size)
+  n = 232,
+  var.labels = c("age", "intelligence", "body mass index", "shoe size"))
 ```
 
 # Approaches to Handling Missingness {#missingness}
