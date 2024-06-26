@@ -1365,15 +1365,95 @@ summary(
   standardized = TRUE,
   rsquare = TRUE)
 
-parameterEstimates(
+moderationModelSimpleSlopesFit_parameters <- parameterEstimates(
   moderationModelSimpleSlopes_fit,
   level = 0.95,
   boot.ci.type = "bca.simple")
+
+moderationModelSimpleSlopesFit_parameters
 ```
 
 In this particular model, the predictor (`Illiteracy`) is not significant at any of the levels of the moderator (`Murder`), because the 95% confidence intervals of all simple slopes include zero, in this case, likely due to a small sample size ($N = 50$) and the resulting low power.
 
 ## Johnson-Neyman Plot
+
+As I noted above, the predictor is not significant at any levels of the moderator.
+Nevertheless, I created a made up Johnson-Neyman plot by specifying the (fictitious) range of significance, for purposes of demonstration.
+
+```{r}
+# Create a data frame for plotting
+Murder_min <- min(states$Murder, na.rm = TRUE)
+Murder_max <- max(states$Murder, na.rm = TRUE)
+
+plot_data <- data.frame(
+  Murder = seq(Murder_min, Murder_max, length.out = 10000)
+)
+
+plot_data$Murder_centered <- scale(plot_data$Murder, scale = FALSE)
+
+# Calculate predicted slopes and confidence intervals
+b1 <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b1"), "est"]
+b3 <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b3"), "est"]
+
+b1_se <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b1"), "se"]
+b3_se <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b3"), "se"]
+
+plot_data$predicted_slopes <- b1 + b3 * plot_data$Murder_centered
+plot_data$slope_se <- sqrt((b1_se)^2 + (plot_data$Murder_centered^2 * b3_se)^2 + 2 * plot_data$Murder_centered * b1_se * b3_se)
+
+plot_data$lower_ci <- plot_data$predicted_slopes - qnorm(.975) * plot_data$slope_se
+plot_data$upper_ci <- plot_data$predicted_slopes + qnorm(.975) * plot_data$slope_se
+
+plot_data$significant_slope <- FALSE
+plot_data$significant_slope[which(plot_data$Murder_centered < -4.2 | plot_data$Murder_centered > -0.2)] <-TRUE # specify significant range
+
+plot_data$significantRegionNumber <- NA
+plot_data$significantRegionNumber[which(plot_data$Murder_centered < -4.2)] <- 1 # specify significant range 1
+plot_data$significantRegionNumber[which(plot_data$Murder_centered > -0.2)] <- 2 # specify significant range 2
+
+min(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
+max(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
+
+ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
+  geom_ribbon(
+    data = plot_data %>% filter(significant_slope == FALSE),
+    aes(ymin = lower_ci, ymax = upper_ci),
+    fill = "#F8766D",
+    alpha = 0.2) + 
+  geom_ribbon(
+    data = plot_data %>% filter(significantRegionNumber == 1),
+    aes(ymin = lower_ci, ymax = upper_ci),
+    fill = "#00BFC4",
+    alpha = 0.2) + 
+  geom_ribbon(
+    data = plot_data %>% filter(significantRegionNumber == 2),
+    aes(ymin = lower_ci, ymax = upper_ci),
+    fill = "#00BFC4",
+    alpha = 0.2) +
+  geom_line(
+    data = plot_data %>% filter(significant_slope == FALSE),
+    aes(x = Murder, y = predicted_slopes),
+    color = "#F8766D",
+    linewidth = 2) +
+  geom_line(
+    data = plot_data %>% filter(significantRegionNumber == 1),
+    aes(x = Murder, y = predicted_slopes),
+    color = "#00BFC4",
+    linewidth = 2) +
+  geom_line(
+    data = plot_data %>% filter(significantRegionNumber == 2),
+    aes(x = Murder, y = predicted_slopes),
+    color = "#00BFC4",
+    linewidth = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_vline(xintercept = c(4.051215, 8.049275), linetype = 2, color = "#00BFC4") + # update based on numbers above
+  labs(
+    title = "Johnson-Neyman Plot",
+    subtitle = "(blue = significant slope; pink = nonsignificant slope)",
+    x = "Moderator (Murder)",
+    y = "Simple Slope of Predictor (Illiteracy)") +
+  theme_classic()
+```
 
 # Power Analysis {#powerAnalysis}
 
