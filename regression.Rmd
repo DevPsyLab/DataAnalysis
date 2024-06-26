@@ -73,9 +73,10 @@ mydata$female[which(mydata$sex == "female")] <- 1
 ## Linear regression model
 
 ```{r}
-multipleRegressionModel <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                              data = mydata,
-                              na.action = na.exclude)
+multipleRegressionModel <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 
 summary(multipleRegressionModel)
 confint(multipleRegressionModel)
@@ -84,12 +85,14 @@ confint(multipleRegressionModel)
 ### Remove missing data
 
 ```{r}
-multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                       data = mydata,
-                                       na.action = na.omit)
+multipleRegressionModelNoMissing <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.omit)
 
-multipleRegressionModelNoMissing <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                       data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit)
+multipleRegressionModelNoMissing <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit)
 ```
 
 ## Linear regression model on correlation/covariance matrix (for pairwise deletion)
@@ -108,10 +111,11 @@ multipleRegressionModelPairwise[c("coefficients","se","Probability","R2","shrunk
 ## Linear regression model with robust covariance matrix (rms)
 
 ```{r}
-rmsMultipleRegressionModel <- robcov(ols(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                         data = mydata,
-                                         x = TRUE,
-                                         y = TRUE))
+rmsMultipleRegressionModel <- robcov(ols(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE))
 
 rmsMultipleRegressionModel
 confint(rmsMultipleRegressionModel)
@@ -120,9 +124,10 @@ confint(rmsMultipleRegressionModel)
 ## Robust linear regression (MM-type iteratively reweighted least squares regression)
 
 ```{r}
-robustLinearRegression <- lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude)
+robustLinearRegression <- lmrob(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 
 summary(robustLinearRegression)
 confint(robustLinearRegression)
@@ -131,9 +136,10 @@ confint(robustLinearRegression)
 ## Least trimmed squares regression (for removing outliers)
 
 ```{r}
-ltsRegression <- ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                        data = mydata,
-                        na.action = na.exclude)
+ltsRegression <- ltsReg(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 
 summary(ltsRegression)
 ```
@@ -141,11 +147,12 @@ summary(ltsRegression)
 ## Bayesian linear regression
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianRegularizedRegression <- brm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                     data = mydata,
-                                     chains = 4,
-                                     iter = 2000,
-                                     seed = 52242)
+bayesianRegularizedRegression <- brm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  chains = 4,
+  iter = 2000,
+  seed = 52242)
 ```
 
 ```{r}
@@ -160,10 +167,11 @@ In this example, we predict a count variable that has a poisson distribution.
 We could change the distribution.
 
 ```{r}
-generalizedRegressionModel <- glm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                  data = mydata,
-                                  family = "poisson",
-                                  na.action = na.exclude)
+generalizedRegressionModel <- glm(
+  countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = "poisson",
+  na.action = na.exclude)
 
 summary(generalizedRegressionModel)
 confint(generalizedRegressionModel)
@@ -175,11 +183,12 @@ In this example, we predict a count variable that has a poisson distribution.
 We could change the distribution.
 
 ```{r}
-rmsGeneralizedRegressionModel <- Glm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                     data = mydata,
-                                     x = TRUE,
-                                     y = TRUE,
-                                     family = "poisson")
+rmsGeneralizedRegressionModel <- Glm(
+  countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE,
+  family = "poisson")
 
 rmsGeneralizedRegressionModel
 confint(rmsGeneralizedRegressionModel)
@@ -192,12 +201,13 @@ We could change the distribution.
 For example, we could use Gamma regression, `family = Gamma`, when the response variable is continuous and positive, and the coefficient of variation--rather than the variance--is constant.
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianGeneralizedLinearRegression <- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                           data = mydata,
-                                           family = poisson,
-                                           chains = 4,
-                                           seed = 52242,
-                                           iter = 2000)
+bayesianGeneralizedLinearRegression <- brm(
+  countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = poisson,
+  chains = 4,
+  seed = 52242,
+  iter = 2000)
 ```
 
 ```{r}
@@ -207,10 +217,11 @@ summary(bayesianGeneralizedLinearRegression)
 ## Robust generalized regression
 
 ```{r}
-robustGeneralizedRegression <- glmrob(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                      data = mydata,
-                                      family = "poisson",
-                                      na.action = na.exclude)
+robustGeneralizedRegression <- glmrob(
+  countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = "poisson",
+  na.action = na.exclude)
 
 summary(robustGeneralizedRegression)
 confint(robustGeneralizedRegression)
@@ -247,12 +258,13 @@ confint(ordinalRegressionModel3)
 ## Bayesian ordinal regression model
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianOrdinalRegression <- brm(orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                 data = mydata,
-                                 family = cumulative(),
-                                 chains = 4,
-                                 seed = 52242,
-                                 iter = 2000)
+bayesianOrdinalRegression <- brm(
+  orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = cumulative(),
+  chains = 4,
+  seed = 52242,
+  iter = 2000)
 ```
 
 ```{r}
@@ -262,12 +274,13 @@ summary(bayesianOrdinalRegression)
 ## Bayesian count regression model
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianCountRegression <- brm(countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                               data = mydata,
-                               family = "poisson",
-                               chains = 4,
-                               seed = 52242,
-                               iter = 2000)
+bayesianCountRegression <- brm(
+  countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = "poisson",
+  chains = 4,
+  seed = 52242,
+  iter = 2000)
 ```
 
 ```{r}
@@ -277,10 +290,11 @@ summary(bayesianCountRegression)
 ## Logistic regression model (rms)
 
 ```{r}
-logisticRegressionModel <- robcov(lrm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                      data = mydata,
-                                      x = TRUE,
-                                      y = TRUE))
+logisticRegressionModel <- robcov(lrm(
+  female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE))
 
 logisticRegressionModel
 confint(logisticRegressionModel)
@@ -289,12 +303,13 @@ confint(logisticRegressionModel)
 ## Bayesian logistic regression model
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianLogisticRegression <- brm(female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                  data = mydata,
-                                  family = bernoulli,
-                                  chains = 4,
-                                  seed = 52242,
-                                  iter = 2000)
+bayesianLogisticRegression <- brm(
+  female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = bernoulli,
+  chains = 4,
+  seed = 52242,
+  iter = 2000)
 ```
 
 ```{r}
@@ -304,13 +319,15 @@ summary(bayesianLogisticRegression)
 # Hierarchical Linear Regression
 
 ```{r}
-model1 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
-             data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
-             na.action = na.exclude)
+model1 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
+  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+  na.action = na.exclude)
 
-model2 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-             data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
-             na.action = na.exclude)
+model2 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+  na.action = na.exclude)
 
 summary(model2)$adj.r.squared
 
@@ -346,22 +363,45 @@ interactionModel <- lm(
 ## Plots
 
 ```{r}
-interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered)
-interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, plot.points = TRUE)
-interact_plot(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, interval = TRUE)
+interact_plot(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered)
 
-johnson_neyman(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, alpha = .05)
+interact_plot(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  plot.points = TRUE)
+
+interact_plot(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  interval = TRUE)
+
+johnson_neyman(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  alpha = .05)
 ```
 
 ## Simple Slopes Analysis
 
 ```{r}
-sim_slopes(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, johnson_neyman = FALSE)
-sim_slopes(interactionModel,
-           pred = Illiteracy_centered,
-           modx = Murder_centered,
-           modx.values = c(0, 5, 10),
-           johnson_neyman = FALSE)
+sim_slopes(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  johnson_neyman = FALSE)
+
+sim_slopes(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  modx.values = c(0, 5, 10),
+  johnson_neyman = FALSE)
 ```
 
 ## Johnson-Neyman intervals
@@ -369,14 +409,19 @@ sim_slopes(interactionModel,
 Indicates all the values of the moderator for which the slope of the predictor is statistically significant.
 
 ```{r}
-sim_slopes(interactionModel, pred = Illiteracy_centered, modx = Murder_centered, johnson_neyman = TRUE)
+sim_slopes(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  johnson_neyman = TRUE)
 
-probe_interaction(interactionModel,
-                  pred = Illiteracy_centered,
-                  modx = Murder_centered,
-                  cond.int = TRUE,
-                  interval = TRUE,
-                  jnplot = TRUE)
+probe_interaction(
+  interactionModel,
+  pred = Illiteracy_centered,
+  modx = Murder_centered,
+  cond.int = TRUE,
+  interval = TRUE,
+  jnplot = TRUE)
 ```
 
 # Comparing Correlations {#compareCorrelations}
@@ -566,27 +611,46 @@ replications <- 20
 
 folds <- cvFolds(nrow(mydata), K = kFolds, R = replications)
 
-fitLm <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-            data = mydata,
-            na.action = "na.exclude")
+fitLm <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = "na.exclude")
 
-fitLmrob <- lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                  data = mydata,
-                  na.action = "na.exclude")
+fitLmrob <- lmrob(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = "na.exclude")
 
-fitLts <- ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                 data = mydata,
-                 na.action = "na.exclude")
+fitLts <- ltsReg(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = "na.exclude")
 
-cvFitLm <- cvLm(fitLm, K = kFolds, R = replications)
+cvFitLm <- cvLm(
+  fitLm,
+  K = kFolds,
+  R = replications)
 
-cvFitLmrob <- cvLmrob(fitLmrob, K = kFolds, R = replications)
-cvFitLts <- cvLts(fitLts, K = kFolds, R = replications)
+cvFitLmrob <- cvLmrob(
+  fitLmrob,
+  K = kFolds,
+  R = replications)
 
-cvFits <- cvSelect(OLS = cvFitLm, MM = cvFitLmrob, LTS = cvFitLts)
+cvFitLts <- cvLts(
+  fitLts,
+  K = kFolds,
+  R = replications)
+
+cvFits <- cvSelect(
+  OLS = cvFitLm,
+  MM = cvFitLmrob,
+  LTS = cvFitLts)
 cvFits
 
-bwplot(cvFits, xlab = "Root Mean Square Error", xlim= c(0, max(cvFits$cv$CV) + 0.2))
+bwplot(
+  cvFits,
+  xlab = "Root Mean Square Error",
+  xlim = c(0, max(cvFits$cv$CV) + 0.2))
 ```
 
 # Examining Model Fits
@@ -601,14 +665,19 @@ plot(allEffects(multipleRegressionModel))
 ## Confidence Ellipses
 
 ```{r}
-confidenceEllipse(multipleRegressionModel, levels = c(0.5, .95))
+confidenceEllipse(
+  multipleRegressionModel,
+  levels = c(0.5, .95))
 ```
 
 ## Data Ellipse
 
 ```{r}
 mydata_nomissing <- na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")])
-dataEllipse(mydata_nomissing$bpi_antisocialT1Sum, mydata_nomissing$bpi_antisocialT2Sum, levels = c(0.5, .95))
+dataEllipse(
+  mydata_nomissing$bpi_antisocialT1Sum,
+  mydata_nomissing$bpi_antisocialT2Sum,
+  levels = c(0.5, .95))
 ```
 
 # Diagnostics
@@ -627,7 +696,9 @@ dataEllipse(mydata_nomissing$bpi_antisocialT1Sum, mydata_nomissing$bpi_antisocia
 ###### Scatterplot Matrix
 
 ```{r}
-scatterplotMatrix(~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepressedSum, data = mydata)
+scatterplotMatrix(
+  ~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata)
 ```
 
 ###### Distance correlation
@@ -635,7 +706,10 @@ scatterplotMatrix(~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepre
 The distance correlation is an index of the degree of the linear and non-linear association between two variables.
 
 ```{r}
-correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "distance", p_adjust = "none")
+correlation(
+  mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
+  method = "distance",
+  p_adjust = "none")
 ```
 
 ##### After Model Fitting
@@ -667,9 +741,11 @@ Often, the simpler (generalized) linear model is preferable to semi-paremetric o
 http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models (archived at https://web.archive.org/web/20170213041653/http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models)
 
 ```{r}
-generalizedAdditiveModel <- gam(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                family = gaussian(),
-                                data = mydata, na.action = na.exclude)
+generalizedAdditiveModel <- gam(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  family = gaussian(),
+  data = mydata,
+  na.action = na.exclude)
 
 summary(generalizedAdditiveModel)
 confint(generalizedAdditiveModel)
@@ -706,9 +782,13 @@ hsng2 <- read.dta("./data/hsng2.dta") #https://www.stata-press.com/data/r11/hsng
 ```
 
 ```{r}
-fiv <- ivreg(rent ~ hsngval + pcturban | pcturban + faminc + reg2 + reg3 + reg4, data = hsng2) #Housing values are likely endogeneous and therefore instrumented by median family income (faminc) and 3 regional dummies (reg2, reg4, reg4)
+fiv <- ivreg(
+  rent ~ hsngval + pcturban | pcturban + faminc + reg2 + reg3 + reg4,
+  data = hsng2) #Housing values are likely endogeneous and therefore instrumented by median family income (faminc) and 3 regional dummies (reg2, reg4, reg4)
 
-summary(fiv, diagnostics = TRUE)
+summary(
+  fiv,
+  diagnostics = TRUE)
 ```
 
 The Eicker-Huber-White covariance estimator which is robust to heteroscedastic error terms is reported after estimation with `vcov = sandwich` in `coeftest()`
@@ -717,7 +797,9 @@ First stage results are reported by explicitly estimating them.
 For example:
 
 ```{r}
-first <- lm(hsngval ~ pcturban + faminc + reg2 + reg3 + reg4, data = hsng2)
+first <- lm(
+  hsngval ~ pcturban + faminc + reg2 + reg3 + reg4,
+  data = hsng2)
 
 summary(first)
 ```
@@ -725,13 +807,18 @@ summary(first)
 In case of a single endogenous variable (K = 1), the F-statistic to assess weak instruments is reported after estimating the first stage with, for example:
 
 ```{r}
-waldtest(first, . ~ . - faminc - reg2 - reg3 - reg4)
+waldtest(
+  first,
+  . ~ . - faminc - reg2 - reg3 - reg4)
 ```
 
 or in case of heteroscedatistic errors:
 
 ```{r}
-waldtest(first, . ~ . - faminc - reg2 - reg3- reg4, vcov = sandwich)
+waldtest(
+  first,
+  . ~ . - faminc - reg2 - reg3- reg4,
+  vcov = sandwich)
 ```
 
 #### Ways to Handle
@@ -790,7 +877,9 @@ ncvTest(multipleRegressionModel)
 ##### Test of dependence of spread on predictors
 
 ```{r}
-ncvTest(multipleRegressionModel, ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum)
+ncvTest(
+  multipleRegressionModel,
+  ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum)
 ```
 
 #### Ways to Handle
@@ -818,16 +907,18 @@ summary(multipleRegressionModel)
 coeftest(multipleRegressionModel, vcov = sandwich)
 coeftest(multipleRegressionModel, vcov = hccm)
 
-robcov(ols(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-           data = mydata,
-           x = TRUE,
-           y = TRUE))
+robcov(ols(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  x = TRUE,
+  y = TRUE))
 
-robcov(ols(t_ext ~ m_ext + age,
-           data = mydata,
-           x = TRUE,
-           y = TRUE),
-       cluster = mydata$tcid) #account for nested data within subject
+robcov(ols(
+  t_ext ~ m_ext + age,
+  data = mydata,
+  x = TRUE,
+  y = TRUE),
+  cluster = mydata$tcid) #account for nested data within subject
 ```
 
 ### 4. Errors are independent
@@ -889,7 +980,9 @@ Useful when models have related regressors (multiple polynomial terms or contras
 correlation among all independent variables the correlation coefficients should be smaller than .08
 
 ```{r}
-cor(mydata[,c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise.complete.obs")
+cor(
+  mydata[,c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum")],
+  use = "pairwise.complete.obs")
 ```
 
 ##### Tolerance
@@ -986,9 +1079,10 @@ plot(density(na.omit(mydata$bpi_antisocialT2Sum)))
 ####### Add constant to outcome to make it strictly positive
 
 ```{r}
-strictlyPositiveDV <- lm(bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                         data = mydata,
-                         na.action = na.exclude)
+strictlyPositiveDV <- lm(
+  bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 ```
 
 ####### Identify best power transformation (lambda)
@@ -1016,18 +1110,20 @@ plot(density(na.omit(mydata$bpi_antisocialT2SumTransformed)))
 ######## Model without transformation
 
 ```{r}
-summary(modelWithoutTransformation <- lm(bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                         data = mydata,
-                         na.action = na.exclude))
+summary(modelWithoutTransformation <- lm(
+  bpi_antisocialT2Sum + 1 ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude))
 plot(density(na.omit(studres(modelWithoutTransformation))))
 ```
 
 ######## Model with transformation
 
 ```{r}
-summary(modelWithTransformation <- lm(bpi_antisocialT2SumTransformed ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                      data = mydata,
-                                      na.action = na.exclude))
+summary(modelWithTransformation <- lm(
+  bpi_antisocialT2SumTransformed ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude))
 
 plot(density(na.omit(studres(modelWithTransformation))))
 ```
@@ -1037,7 +1133,9 @@ plot(density(na.omit(studres(modelWithTransformation))))
 A significant *p*-value indicates a strong need to transform variable:
 
 ```{r}
-multipleRegressionModel_constructedVariable <- update(multipleRegressionModel, . ~ . + boxCoxVariable(bpi_antisocialT1Sum + 1))
+multipleRegressionModel_constructedVariable <- update(
+  multipleRegressionModel,
+  . ~ . + boxCoxVariable(bpi_antisocialT1Sum + 1))
 summary(multipleRegressionModel_constructedVariable)$coef["boxCoxVariable(bpi_antisocialT1Sum + 1)", , drop = FALSE]
 ```
 
@@ -1081,12 +1179,15 @@ crPlots(multipleRegressionModelNoMissing, order = 2)
 
 
 ```{r}
-multipleRegressionModel_quadratic <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + I(bpi_antisocialT1Sum^2) + bpi_anxiousDepressedSum,
-                                        data = mydata,
-                                        na.action = na.exclude)
+multipleRegressionModel_quadratic <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + I(bpi_antisocialT1Sum^2) + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 
 summary(multipleRegressionModel_quadratic)
-anova(multipleRegressionModel_quadratic, multipleRegressionModel)
+anova(
+  multipleRegressionModel_quadratic,
+  multipleRegressionModel)
 crPlots(multipleRegressionModel_quadratic, order = 1)
 ```
 
@@ -1104,18 +1205,20 @@ ceresPlots(multipleRegressionModel_quadratic)
 predictors must be strictly positive (or add a constant to make it strictly positive)
 
 ```{r}
-boxTidwell(bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1),
-           other.x = NULL, #list variables not to be transformed in other.x
-           data = mydata,
-           na.action = na.exclude)
+boxTidwell(
+  bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1),
+  other.x = NULL, #list variables not to be transformed in other.x
+  data = mydata,
+  na.action = na.exclude)
 ```
 
 ###### Constructed-Variables Plot
 
 ```{r}
-multipleRegressionModel_cv <- lm(bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1) + I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum)) + I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum)),
-                              data = mydata,
-                              na.action = na.exclude)
+multipleRegressionModel_cv <- lm(
+  bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1) + I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum)) + I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum)),
+  data = mydata,
+  na.action = na.exclude)
 
 summary(multipleRegressionModel_cv)$coef["I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum))", , drop = FALSE]
 summary(multipleRegressionModel_cv)$coef["I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum))", , drop = FALSE]
@@ -1140,38 +1243,56 @@ Resources
 Spearman's rho is a non-parametric correlation.
 
 ```{r}
-cor.test(mydata$bpi_antisocialT1Sum, mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers
-cor.test(mydata$bpi_antisocialT1Sum, mydata$bpi_antisocialT2Sum, method = "spearman") #Spearman's rho, a rank correlation that is less sensitive to outliers
+cor.test(
+  mydata$bpi_antisocialT1Sum,
+  mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers
+
+cor.test(
+  mydata$bpi_antisocialT1Sum,
+  mydata$bpi_antisocialT2Sum, method = "spearman") #Spearman's rho, a rank correlation that is less sensitive to outliers
 ```
 
 ####### Minimum vollume ellipsoid
 
 ```{r}
-cov.mve(na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]), cor = TRUE)
+cov.mve(
+  na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
+  cor = TRUE)
 ```
 
 ####### Minimum covariance determinant
 
 ```{r}
-cov.mcd(na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]), cor = TRUE)
+cov.mcd(
+  na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
+  cor = TRUE)
 ```
 
 ####### Winsorized correlation
 
 ```{r}
-correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], winsorize = 0.2, p_adjust = "none")
+correlation(
+  mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
+  winsorize = 0.2,
+  p_adjust = "none")
 ```
 
 ####### Percentage bend correlation
 
 ```{r}
-correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "percentage", p_adjust = "none")
+correlation(
+  mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
+  method = "percentage",
+  p_adjust = "none")
 ```
 
 ####### Biweight midcorrelation
 
 ```{r}
-correlation(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")], method = "biweight", p_adjust = "none")
+correlation(
+  mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
+  method = "biweight",
+  p_adjust = "none")
 ```
 
 ####### Xi ($\xi$)
@@ -1194,7 +1315,10 @@ The Theil-Sen single median estimator is robust to outliers; have to remove miss
 
 ```{r}
 mydata_subset <- na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")])[1:400,]
-mblm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum, dataframe = mydata_subset, repeated = FALSE)
+mblm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
+  dataframe = mydata_subset,
+  repeated = FALSE)
 ```
 
 ###### Robust multiple regression
@@ -1206,34 +1330,38 @@ Best when no outliers: MM-type regression estimator
 MM-type regression estimator (best):
 
 ```{r}
-lmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-   data = mydata,
-   na.action = na.exclude)
+lmrob(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 ```
 
 Iteratively reweighted least squares (IRLS): http://www.ats.ucla.edu/stat/r/dae/rreg.htm (archived at https://web.archive.org/web/20161119025907/http://www.ats.ucla.edu/stat/r/dae/rreg.htm)
 
 ```{r}
-rlm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-    data = mydata,
-    na.action = na.exclude)
+rlm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 ```
 
 ####### Robust generalized regression
 
 ```{r, warning = FALSE}
-glmrob(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-    data = mydata,
-    family = "poisson",
-    na.action = "na.exclude")
+glmrob(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  family = "poisson",
+  na.action = "na.exclude")
 ```
 
 Most resistant to outliers: Least trimmed squares (LTS)—but not good as a standalone estimator, better for identifying outliers
 
 ```{r}
-ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-       data = mydata,
-       na.action = na.exclude)
+ltsReg(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude)
 ```
 
 ######## Not great options:
@@ -1321,9 +1449,17 @@ ppPlot(robustGeneralizedRegression)
 
 ```{r}
 studentizedResiduals <- na.omit(rstudent(multipleRegressionModel))
-plot(density(studentizedResiduals), col="red")
-xfit <- seq(min(studentizedResiduals, na.rm=TRUE), max(studentizedResiduals, na.rm=TRUE), length=40)
-lines(xfit, dnorm(xfit), col="gray") #compare to normal distribution
+plot(
+  density(studentizedResiduals),
+  col="red")
+xfit <- seq(
+  min(studentizedResiduals, na.rm = TRUE),
+  max(studentizedResiduals, na.rm = TRUE),
+  length = 40)
+lines(
+  xfit,
+  dnorm(xfit),
+  col="gray") #compare to normal distribution
 ```
 
 ### Residual Plots {#residualPlots}
@@ -1340,7 +1476,9 @@ Tests include:
 - Tukey's test for nonadditivity: adding the squares of the fitted values to the model and refitting (evaluates adequacy of model fit)
 
 ```{r}
-residualPlots(multipleRegressionModelNoMissing, id = TRUE)
+residualPlots(
+  multipleRegressionModelNoMissing,
+  id = TRUE)
 ```
 
 ### Marginal Model Plots {#marginalModelPlots}
@@ -1350,7 +1488,10 @@ Marginal model plots are plots of the outcome versus predictors/fitted values.
 Includes plots of a) observed outcome values versus values on predictors (ignoring the other predictors) and b) observed outcome values versus model fitted values.
 
 ```{r}
-marginalModelPlots(multipleRegressionModel, sd = TRUE, id = TRUE)
+marginalModelPlots(
+  multipleRegressionModel,
+  sd = TRUE,
+  id = TRUE)
 ```
 
 ### Added-Variable Plots {#addedVariablePlots}
@@ -1364,20 +1505,27 @@ y-axis: residuals from model with all predictors excluding the predictor of inte
 x-axis: residuals from model regressing predictor of interest on all other predictors
 
 ```{r}
-avPlots(multipleRegressionModel, id = TRUE)
+avPlots(
+  multipleRegressionModel,
+  id = TRUE)
 ```
 
 #### Refit model removing jointly influential observations
 
 ```{r}
-multipleRegressionModel_removeJointlyInfluentialObs <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                                          data = mydata,
-                                                          na.action = na.exclude,
-                                                          subset = -c(6318,6023,4022,4040))
+multipleRegressionModel_removeJointlyInfluentialObs <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(6318,6023,4022,4040))
 
-avPlots(multipleRegressionModel_removeJointlyInfluentialObs, id = TRUE)
+avPlots(
+  multipleRegressionModel_removeJointlyInfluentialObs,
+  id = TRUE)
 
-compareCoefs(multipleRegressionModel, multipleRegressionModel_removeJointlyInfluentialObs)
+compareCoefs(
+  multipleRegressionModel,
+  multipleRegressionModel_removeJointlyInfluentialObs)
 ```
 
 ### Outlier test
@@ -1402,11 +1550,17 @@ hat values are an index of leverage (observations that are far from the center o
 hist(hatvalues(multipleRegressionModel))
 plot(hatvalues(multipleRegressionModel))
 
-influenceIndexPlot(multipleRegressionModel, id = TRUE)
+influenceIndexPlot(
+  multipleRegressionModel,
+  id = TRUE)
 
-influencePlot(multipleRegressionModel, id = TRUE) # circle size is proportional to Cook's Distance
+influencePlot(
+  multipleRegressionModel,
+  id = TRUE) # circle size is proportional to Cook's Distance
 
-leveragePlots(multipleRegressionModel, id = TRUE)
+leveragePlots(
+  multipleRegressionModel,
+  id = TRUE)
 ```
 
 ### Observations with high influence (on OLS regression coefficients)
@@ -1423,7 +1577,9 @@ head(influence.measures(multipleRegressionModel)$infmat)
 head(dfbeta(multipleRegressionModel))
 
 hist(dfbeta(multipleRegressionModel))
-dfbetasPlots(multipleRegressionModel, id = TRUE)
+dfbetasPlots(
+  multipleRegressionModel,
+  id = TRUE)
 ```
 
 ### DFFITS {#dffits}
@@ -1452,53 +1608,68 @@ plot(cooks.distance(multipleRegressionModel)[order(cooks.distance(multipleRegres
 #### Refit model removing values with high cook's distance
 
 ```{r}
-multipleRegressionModel_2 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371))
+multipleRegressionModel_2 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371))
 
-multipleRegressionModel_3 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371,2767))
+multipleRegressionModel_3 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371,2767))
 
-multipleRegressionModel_4 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371,2767,8472))
+multipleRegressionModel_4 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371,2767,8472))
 
-multipleRegressionModel_5 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371,2767,8472,6170))
+multipleRegressionModel_5 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371,2767,8472,6170))
 
-multipleRegressionModel_6 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371,2767,8472,6170,6023))
+multipleRegressionModel_6 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371,2767,8472,6170,6023))
 
-multipleRegressionModel_7 <- lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-                                data = mydata,
-                                na.action = na.exclude,
-                                subset = -c(2765,1371,2767,8472,6170,6023,2766))
+multipleRegressionModel_7 <- lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = na.exclude,
+  subset = -c(2765,1371,2767,8472,6170,6023,2766))
 ```
 
 ##### Examine how much regression coefficients change when excluding influential observations
 
 ```{r}
-compareCoefs(multipleRegressionModel, multipleRegressionModel_2, multipleRegressionModel_3, multipleRegressionModel_4, multipleRegressionModel_5, multipleRegressionModel_6, multipleRegressionModel_7)
+compareCoefs(
+  multipleRegressionModel,
+  multipleRegressionModel_2,
+  multipleRegressionModel_3,
+  multipleRegressionModel_4,
+  multipleRegressionModel_5,
+  multipleRegressionModel_6,
+  multipleRegressionModel_7)
 ```
 
 #### Examine how much regression coefficients change when using least trimmed squares (LTS) that is resistant to outliers
 
 ```{r}
-coef(lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-        data = mydata,
-        na.action="na.exclude"))
+coef(lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action="na.exclude"))
 
-coef(ltsReg(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-            data = mydata,
-            na.action = "na.exclude"))
+coef(ltsReg(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
+  data = mydata,
+  na.action = "na.exclude"))
 ```
 
 ### Resources
