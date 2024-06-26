@@ -1223,7 +1223,7 @@ semPaths(
   edge.label.cex = 1.5)
 ```
 
-## Simple Slopes
+## Interaction Plot {#moderationInteractionPlot}
 
 ```{r}
 # Created Model-Implied Predicted Data Object
@@ -1313,9 +1313,65 @@ ggplot(
   labs(color = "Murder")
 ```
 
-## Johnson-Neyman Plot (Regions of Significance)
+## Regions of Significance {#moderationRegionsOfSignificance}
 
 https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval (archived at https://perma.cc/6XR6-ZPSL)
+
+```{r}
+# Find the min and max values of the moderator
+Murder_centered_min <- min(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+Murder_centered_max <- max(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+
+Murder_centered_cutoff1 <- -1.5 # pick and titrate cutoff to help find the region of significance
+Murder_centered_cutoff2 <- -1 # pick and titrate cutoff to help find the region of significance
+
+Murder_centered_sd <- sd(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+
+Murder_centered_low <- mean(modelImpliedPredictedData$Murder_centered, na.rm = TRUE) - sd(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+Murder_centered_mean <- mean(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+Murder_centered_high <- mean(modelImpliedPredictedData$Murder_centered, na.rm = TRUE) + sd(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
+
+# Extend the moderation model to compute the simple slopes and conditional effects at specific values of the moderator
+moderationModelSimpleSlopes <- paste0('
+  # Regression
+  Income_rescaled ~ b1*Illiteracy_centered + b2*Murder_centered + b3*interaction + b4*HS.Grad
+  
+  # Simple Slopes
+  SS_Min := b1 + b3 * ', Murder_centered_min, '
+  SS_Cutoff1 := b1 + b3 * ', Murder_centered_cutoff1, '
+  SS_Cutoff2 := b1 + b3 * ', Murder_centered_cutoff2, '
+  SS_Low := b1 + b3 * ', Murder_centered_low, '
+  SS_Mean := b1 + b3 * ', Murder_centered_mean, '
+  SS_High := b1 + b3 * ', Murder_centered_high, '
+  SS_Max := b1 + b3 * ', Murder_centered_max, '
+')
+
+# Fit the Model
+set.seed(52242) # for reproducibility
+
+moderationModelSimpleSlopes_fit <- sem(
+  model = moderationModelSimpleSlopes, 
+  data = states,
+  missing = "ML",
+  estimator = "ML",
+  se = "bootstrap",
+  bootstrap = 1000,
+  std.lv = TRUE,
+  fixed.x = FALSE)
+
+summary(
+  moderationModelSimpleSlopes_fit,
+  #fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+
+parameterEstimates(
+  moderationModelSimpleSlopes_fit,
+  level = 0.95,
+  boot.ci.type = "bca.simple")
+```
+
+## Johnson-Neyman Plot
 
 # Power Analysis {#powerAnalysis}
 
