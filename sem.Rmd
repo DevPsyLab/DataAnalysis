@@ -8,6 +8,8 @@ knitr::opts_chunk$set(
   error = TRUE,
   comment = "",
   class.source = "fold-show")
+
+options(scipen = 999)
 ```
 
 # Preamble
@@ -1222,6 +1224,94 @@ semPaths(
 ```
 
 ## Simple Slopes
+
+```{r}
+# Created Model-Implied Predicted Data Object
+modelImpliedPredictedData <- expand.grid(
+  Illiteracy_factor = c("Low","Middle","High"),
+  Murder_factor = c("Low","Middle","High"))
+
+Illiteracy_mean <- mean(states$Illiteracy, na.rm = TRUE)
+Illiteracy_sd <- sd(states$Illiteracy, na.rm = TRUE)
+
+Murder_mean <- mean(states$Murder, na.rm = TRUE)
+Murder_sd <- sd(states$Murder, na.rm = TRUE)
+
+Illiteracy_centered_mean <- mean(states$Illiteracy_centered, na.rm = TRUE)
+Illiteracy_centered_sd <- sd(states$Illiteracy_centered, na.rm = TRUE)
+
+Murder_centered_mean <- mean(states$Murder_centered, na.rm = TRUE)
+Murder_centered_sd <- sd(states$Murder_centered, na.rm = TRUE)
+
+modelImpliedPredictedData <- modelImpliedPredictedData %>%
+  mutate(
+    Illiteracy = case_when(
+      Illiteracy_factor == "Low" ~ Illiteracy_mean - Illiteracy_sd,
+      Illiteracy_factor == "Middle" ~ Illiteracy_mean,
+      Illiteracy_factor == "High" ~ Illiteracy_mean + Illiteracy_sd
+    ),
+    Illiteracy_centered = case_when(
+      Illiteracy_factor == "Low" ~ Illiteracy_centered_mean - Illiteracy_centered_sd,
+      Illiteracy_factor == "Middle" ~ Illiteracy_centered_mean,
+      Illiteracy_factor == "High" ~ Illiteracy_centered_mean + Illiteracy_centered_sd
+    ),
+    Murder = case_when(
+      Murder_factor == "Low" ~ Murder_mean - Murder_sd,
+      Murder_factor == "Middle" ~ Murder_mean,
+      Murder_factor == "High" ~ Murder_mean + Murder_sd
+    ),
+    Murder_centered = case_when(
+      Murder_factor == "Low" ~ Murder_centered_mean - Murder_centered_sd,
+      Murder_factor == "Middle" ~ Murder_centered_mean,
+      Murder_factor == "High" ~ Murder_centered_mean + Murder_centered_sd
+    ),
+    interaction = Illiteracy_centered * Murder_centered,
+    HS.Grad = mean(states$HS.Grad, na.rm = TRUE), # mean for covariates
+    Income_rescaled = NA
+  )
+
+Murder_labels <- factor(
+  modelImpliedPredictedData$Murder_factor,
+  levels = c("High", "Middle", "Low"),
+  labels = c("High (+1 SD)", "Middle (mean)", "Low (−1 SD)"))
+
+modelImpliedPredictedData$Income_rescaled <- lavPredictY(
+  moderationFit,
+  newdata = modelImpliedPredictedData,
+  ynames = "Income_rescaled"
+) %>% 
+  as.vector()
+
+# Verify Computation Manually
+moderationFit_parameters <- parameterEstimates(moderationFit)
+
+moderationFit_parameters
+
+intercept <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$op == "~1"), "est"]
+b_Illiteracy_centered <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "Illiteracy_centered"), "est"]
+b_Murder_centered <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "Murder_centered"), "est"]
+b_interaction <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "interaction"), "est"]
+b_HS.Grad <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "HS.Grad"), "est"]
+
+modelImpliedPredictedData <- modelImpliedPredictedData %>%
+  mutate(
+    Income_rescaled_calculatedManually = intercept + (b_Illiteracy_centered * Illiteracy_centered) + (b_Murder_centered * Murder_centered) + (b_interaction * interaction) + (b_HS.Grad * HS.Grad))
+
+# Model-Implied Predicted Data
+modelImpliedPredictedData
+
+# Plot
+ggplot(
+  data = modelImpliedPredictedData,
+  mapping = aes(
+    x = Illiteracy,
+    y = Income_rescaled,
+    color = Murder_labels
+  )
+) +
+  geom_line() +
+  labs(color = "Murder")
+```
 
 ## Johnson-Neyman Plot (Regions of Significance)
 
