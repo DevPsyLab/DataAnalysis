@@ -1313,7 +1313,7 @@ ggplot(
   labs(color = "Murder")
 ```
 
-## Regions of Significance {#moderationRegionsOfSignificance}
+## Simple Slopes and Regions of Significance {#moderationRegionsOfSignificance}
 
 https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval (archived at https://perma.cc/6XR6-ZPSL)
 
@@ -1322,8 +1322,8 @@ https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-m
 Murder_centered_min <- min(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
 Murder_centered_max <- max(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
 
-Murder_centered_cutoff1 <- -1.5 # pick and titrate cutoff to help find the region of significance
-Murder_centered_cutoff2 <- -1 # pick and titrate cutoff to help find the region of significance
+Murder_centered_cutoff1 <- -1.5 # pick and titrate cutoff to help find the lower bound of the region of significance
+Murder_centered_cutoff2 <- -1 # pick and titrate cutoff to help find the upper bound of the region of significance
 
 Murder_centered_sd <- sd(modelImpliedPredictedData$Murder_centered, na.rm = TRUE)
 
@@ -1337,13 +1337,13 @@ moderationModelSimpleSlopes <- paste0('
   Income_rescaled ~ b1*Illiteracy_centered + b2*Murder_centered + b3*interaction + b4*HS.Grad
   
   # Simple Slopes
-  SS_Min := b1 + b3 * ', Murder_centered_min, '
-  SS_Cutoff1 := b1 + b3 * ', Murder_centered_cutoff1, '
-  SS_Cutoff2 := b1 + b3 * ', Murder_centered_cutoff2, '
-  SS_Low := b1 + b3 * ', Murder_centered_low, '
-  SS_Mean := b1 + b3 * ', Murder_centered_mean, '
-  SS_High := b1 + b3 * ', Murder_centered_high, '
-  SS_Max := b1 + b3 * ', Murder_centered_max, '
+  SS_min := b1 + b3 * ', Murder_centered_min, '
+  SS_cutoff1 := b1 + b3 * ', Murder_centered_cutoff1, '
+  SS_cutoff2 := b1 + b3 * ', Murder_centered_cutoff2, '
+  SS_low := b1 + b3 * ', Murder_centered_low, '
+  SS_mean := b1 + b3 * ', Murder_centered_mean, '
+  SS_high := b1 + b3 * ', Murder_centered_high, '
+  SS_max := b1 + b3 * ', Murder_centered_max, '
 ')
 
 # Fit the Model
@@ -1370,6 +1370,8 @@ parameterEstimates(
   level = 0.95,
   boot.ci.type = "bca.simple")
 ```
+
+In this particular model, the predictor (`Illiteracy`) is not significant at any of the levels of the moderator (`Murder`), because the 95% confidence intervals of all simple slopes include zero, in this case, likely due to a small sample size ($N = 50$) and the resulting low power.
 
 ## Johnson-Neyman Plot
 
