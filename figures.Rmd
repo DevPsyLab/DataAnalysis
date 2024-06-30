@@ -680,6 +680,84 @@ Gallery: https://r-graph-gallery.com/animation.html
 
 Gallery: https://r-graph-gallery.com/3d.html
 
+## Color Palettes
+
+- https://colorbrewer2.org
+
+### Sequential
+
+- https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+- viridis, cividis, etc.: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+
+### Diverging
+
+- https://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3
+
+### Qualitative/Categorical
+
+- https://colorbrewer2.org/#type=qualitative&scheme=Accent&n=3
+- `Polychrome` package: https://stackoverflow.com/a/62939405 (archived at https://perma.cc/3HWM-MMFS)
+- `pals` package: https://stackoverflow.com/a/41230685 (archived at https://perma.cc/WH56-HMVD)
+
+Color palettes for color-blindness:
+
+- `Safe` palette from the `rcartocolor` package: https://stackoverflow.com/a/56066712 (archived at https://perma.cc/WUH5-F4Z7)
+- Okabe Ito scale: https://stackoverflow.com/a/56066712 (archived at https://perma.cc/WUH5-F4Z7)
+
+#### 8 Colors
+
+```{r}
+# From here: https://github.com/clauswilke/colorblindr/blob/master/R/palettes.R
+# Two color palettes taken from the article ["Color Universal Design" by Okabe and Ito](https://web.archive.org/web/20210108233739/http://jfly.iam.u-tokyo.ac.jp/color/)
+# The variant `palette_OkabeIto` contains a gray color, while `palette_OkabeIto_black` contains black instead
+
+palette_OkabeIto <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
+
+pie(rep(1, 8), col = palette_OkabeIto)
+
+palette_OkabeIto_black <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+
+pie(rep(1, 8), col = palette_OkabeIto_black)
+```
+
+#### 25 Colors
+
+https://stackoverflow.com/a/9568659 (archived at https://perma.cc/5ALZ-3AQD)
+
+```{r}
+c25 <- c(
+  "dodgerblue2", "#E31A1C", # red
+  "green4",
+  "#6A3D9A", # purple
+  "#FF7F00", # orange
+  "black", "gold1",
+  "skyblue2", "#FB9A99", # lt pink
+  "palegreen2",
+  "#CAB2D6", # lt purple
+  "#FDBF6F", # lt orange
+  "gray70", "khaki2",
+  "maroon", "orchid1", "deeppink1", "blue1", "steelblue4",
+  "darkturquoise", "green1", "yellow4", "yellow3",
+  "darkorange4", "brown"
+)
+pie(rep(1, 25), col = c25)
+```
+
+#### 36 Colors
+
+```{r}
+# from: Polychrome::palette36.colors(36)
+
+c36 <- c("#5A5156","#E4E1E3","#F6222E","#FE00FA","#16FF32","#3283FE","#FEAF16","#B00068","#1CFFCE","#90AD1C","#2ED9FF","#DEA0FD","#AA0DFE","#F8A19F","#325A9B","#C4451C","#1C8356","#85660D","#B10DA1","#FBE426","#1CBE4F","#FA0087",
+"#FC1CBF","#F7E1A0","#C075A6","#782AB6","#AAF400","#BDCDFF","#822E1C","#B5EFB5","#7ED7D1","#1C7F93","#D85FF7","#683B79","#66B0FF","#3B00FB")
+
+pie(rep(1, 36), col = c36)
+```
+
+### Maps
+
+- https://github.com/thomasp85/scico
+
 # Session Info
 
 ```{r}
