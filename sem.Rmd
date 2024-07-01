@@ -1373,12 +1373,15 @@ moderationModelSimpleSlopesFit_parameters <- parameterEstimates(
 moderationModelSimpleSlopesFit_parameters
 ```
 
+A simple slope of the predictor on the outcome is considered significant at a given level of the moderator if the 95% confidence interval from the bootstrapped estimates of the simple slopes at that level of the moderator (i.e., [`ci.lower`,`ci.upper`]) does not include zero.
 In this particular model, the predictor (`Illiteracy`) is not significant at any of the levels of the moderator (`Murder`), because the 95% confidence intervals of all simple slopes include zero, in this case, likely due to a small sample size ($N = 50$) and the resulting low power.
 
 ## Johnson-Neyman Plot
 
 As I noted above, the predictor is not significant at any levels of the moderator.
 Nevertheless, I created a made up Johnson-Neyman plot by specifying the (fictitious) range of significance, for purposes of demonstration.
+The band around the line indicates the 95% confidence interval of the simple slope of the predictor on the outcome as a function of different levels of the moderator.
+In reality (unlike in this fictitious example), the regions of significance would only be regions where the 95% confidence interval of the simple slope does not include zero.
 
 ```{r}
 # Create a data frame for plotting
@@ -1398,18 +1401,30 @@ b3 <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlope
 b1_se <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b1"), "se"]
 b3_se <- moderationModelSimpleSlopesFit_parameters[which(moderationModelSimpleSlopesFit_parameters$label == "b3"), "se"]
 
-plot_data$predicted_slopes <- b1 + b3 * plot_data$Murder_centered
-plot_data$slope_se <- sqrt((b1_se)^2 + (plot_data$Murder_centered^2 * b3_se)^2 + 2 * plot_data$Murder_centered * b1_se * b3_se)
+varianceCovarianceMatrix <- vcov(moderationFit)
 
+b1_var <- varianceCovarianceMatrix["Income_rescaled~Illiteracy_centered","Income_rescaled~Illiteracy_centered"]
+b3_var <- varianceCovarianceMatrix["interaction~~interaction","interaction~~interaction"]
+cov_b1b3 <- varianceCovarianceMatrix["Income_rescaled~Illiteracy_centered","interaction~~interaction"]
+
+#sqrt((b1_se^2) + ((b3_se^2) * plot_data$Murder_centered^2) + (2 * plot_data$Murder_centered * cov_b1b3))
+#sqrt((b1_var) + ((b3_var) * plot_data$Murder_centered^2) + (2 * plot_data$Murder_centered * cov_b1b3))
+
+plot_data$predicted_slopes <- b1 + b3 * plot_data$Murder_centered
+plot_data$slope_se <- sqrt((b1_var) + ((b3_var) * plot_data$Murder_centered^2) + (2 * plot_data$Murder_centered * cov_b1b3))
+
+# Calculated the 95% confidence interval around the simple slope
 plot_data$lower_ci <- plot_data$predicted_slopes - qnorm(.975) * plot_data$slope_se
 plot_data$upper_ci <- plot_data$predicted_slopes + qnorm(.975) * plot_data$slope_se
 
+# Specify the significant range (based on the regions identified in the simple slopes analysis, see "Simple Slopes and Regions of Significance" section above)
 plot_data$significant_slope <- FALSE
-plot_data$significant_slope[which(plot_data$Murder_centered < -4.2 | plot_data$Murder_centered > -0.2)] <-TRUE # specify significant range
+plot_data$significant_slope[which(plot_data$Murder_centered < -4.2 | plot_data$Murder_centered > 3.75)] <-TRUE # specify significant range
 
+# Specify the significant region number (there are either 0, 1, or 2 significant regions; in such cases, there would be 1, 0 or 1 or 2, or 1 nonsignificant regions, respectively)--for instance, sig from 0-4, ns from 4-12, and sig from 12-16 would be 2 significant regions and 1 nonsignificant region
 plot_data$significantRegionNumber <- NA
 plot_data$significantRegionNumber[which(plot_data$Murder_centered < -4.2)] <- 1 # specify significant range 1
-plot_data$significantRegionNumber[which(plot_data$Murder_centered > -0.2)] <- 2 # specify significant range 2
+plot_data$significantRegionNumber[which(plot_data$Murder_centered > 3.75)] <- 2 # specify significant range 2
 
 min(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
 max(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
@@ -1446,7 +1461,7 @@ ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
     color = "#00BFC4",
     linewidth = 2) +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_vline(xintercept = c(4.051215, 8.049275), linetype = 2, color = "#00BFC4") + # update based on numbers above
+  geom_vline(xintercept = c(4.051215, 12.00075), linetype = 2, color = "#00BFC4") + # update based on numbers above
   labs(
     title = "Johnson-Neyman Plot",
     subtitle = "(blue = significant slope; pink = nonsignificant slope)",
