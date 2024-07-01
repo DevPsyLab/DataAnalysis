@@ -36,6 +36,33 @@ Importing data takes syntax of the following form for `.RData` files:
 load("filepath/filename.RData")
 ```
 
+## Import Multiple Data Files {#importMultipleDataFiles}
+
+```{r, eval = FALSE}
+dataNames <- paste("data", 1:100, sep = "")
+dataFilenames <- paste(dataNames, ".csv", sep = "")
+dataFilepaths <- paste("C:/users/username/", dataFilenames, sep = "")
+
+data_list <- lapply(dataFilepaths, read.csv) # lapply(dataFilepaths, data.table::fread) is even faster
+names(data_list) <- basename(dataFilepaths)
+```
+
+Alternatively, if you want to load all `.csv` files in a directory, you can identify the filenames programmatically:
+
+```{r, eval = FALSE}
+dataFilenames <- list.files(
+  path = "C:/users/username/",
+  pattern = "\\.csv$")
+
+dataFilepaths <- list.files(
+  path = "C:/users/username/",
+  pattern = "\\.csv$",
+  full.names = TRUE)
+
+data_list <- lapply(dataFilepaths, read.csv) # lapply(dataFilepaths, data.table::fread) is even faster
+names(data_list) <- basename(dataFilepaths)
+```
+
 # Save Data {#saveData}
 
 Saving data takes syntax of the following form for `.csv` files:
@@ -793,6 +820,20 @@ idWave <- idWaveCoder %>%
   select(-coder)
 
 idWave
+```
+
+# Loops {#loops}
+
+If you want to perform the same computation multiple times, it can be faster to do it in a loop compared to writing out the same computation many times.
+For instance, here is a loop that prints each element of a vector and the loop index (`i`) that indicates where the loop is in terms of its iterations:
+
+```{r}
+fruits <- c("apple", "banana", "cherry")
+
+for(i in 1:length(fruits)){
+  print(paste("The loop is at index:", i, sep = " "))
+  print(fruits[i])
+}
 ```
 
 # Session Info
