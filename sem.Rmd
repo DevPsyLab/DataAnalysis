@@ -1383,6 +1383,21 @@ Nevertheless, I created a made up Johnson-Neyman plot by specifying the (fictiti
 The band around the line indicates the 95% confidence interval of the simple slope of the predictor on the outcome as a function of different levels of the moderator.
 In reality (unlike in this fictitious example), the regions of significance would only be regions where the 95% confidence interval of the simple slope does not include zero.
 
+The standard error of the slope is the square root of the variance of the slope.
+The forumula for computing the standard error of the slope is based on the formula for computing the variance of a weighted sum.
+
+The standard error of the slope of the predictor on the outcome at different levels of the moderator is calculated as (https://stats.stackexchange.com/a/55973/20338; Jaccard & Turisi, 2003):
+
+$$
+SE(b_1) = \sqrt{Var(b_1) + Var(b_3) \cdot Z^2 + 2 \cdot Z \cdot Cov(b1, b3)}
+$$
+
+where:
+
+- $b_1$ is the slope of the predictor on the outcome
+- $b_3$ is the slope of the interaction term on the outcome
+- $Z$ is the moderator
+
 ```{r}
 # Create a data frame for plotting
 Murder_min <- min(states$Murder, na.rm = TRUE)
