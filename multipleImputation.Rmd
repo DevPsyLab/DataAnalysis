@@ -334,11 +334,12 @@ ANALYSIS:
   PROCESSORS = 2;
     
 DATA IMPUTATION:
-  IMPUTE = age height Occasion; !put ' (c)' after categorical vars
+  IMPUTE = age(0-100) height Occasion; !put ' (c)' after categorical vars
   NDATASETS = 100;
   SAVE = imp*.dat
 ```
 
+Putting a range of values after a variable (e.g., `0-100`) sets the lower and upper bounds of the imputed values.
 This would save a `implist.dat` file that can be used to run the model on the multiply imputed data, as shown [here](mplus.html#multipleImputation).
 
 # Parallel Processing
