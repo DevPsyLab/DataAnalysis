@@ -1386,10 +1386,19 @@ In reality (unlike in this fictitious example), the regions of significance woul
 The standard error of the slope is the square root of the variance of the slope.
 The forumula for computing the standard error of the slope is based on the formula for computing the variance of a weighted sum.
 
+The slope of the predictor on the outcome at different levels of the moderator is calculated as (Jaccard & Turisi, 2003):
+
+$$
+\text{slope}_\text{predictor} = b_1 + b_3 \cdot Z
+$$
+
 The standard error of the slope of the predictor on the outcome at different levels of the moderator is calculated as (https://stats.stackexchange.com/a/55973/20338; archived at https://perma.cc/V255-853Z; Jaccard & Turisi, 2003):
 
 $$
-SE(b_1) = \sqrt{Var(b_1) + Var(b_3) \cdot Z^2 + 2 \cdot Z \cdot Cov(b1, b3)}
+\begin{aligned}
+SE(\text{slope}_\text{predictor}) &= \sqrt{Var(b_1) + Var(b_3) \cdot Z^2 + 2 \cdot Z \cdot Cov(b1, b3)} \\
+SE(b_1 + b_3 \cdot Z) &=
+\end{aligned}
 $$
 
 where:
@@ -1397,6 +1406,18 @@ where:
 - $b_1$ is the slope of the predictor on the outcome
 - $b_3$ is the slope of the interaction term on the outcome
 - $Z$ is the moderator
+
+The variance of a weighted sum is:
+
+$$
+\begin{aligned}
+Var(\text{slope}_\text{predictor}) &= Var(b_1) + Var(b_3) \cdot Z^2 + 2 \cdot Z \cdot Cov(b1, b3) \\
+Var(b_1 + b_3 \cdot Z) &=
+\end{aligned}
+$$
+
+The standard error is the square root of the variance.
+The 95% confidence interval of the slope is $\pm$ `r qnorm(.975)` (i.e., `qnorm(.975)`) standard errors of the slope estimate.
 
 ```{r}
 # Create a data frame for plotting
