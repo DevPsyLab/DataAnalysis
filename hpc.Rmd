@@ -49,6 +49,13 @@ If you are interested in dedicated hardware, contact research-computing@uiowa.ed
 
 `/Shared/lss_itpetersen`
 
+# Map Argon Drive to Local Computer
+
+## Windows
+
+1. Right click on `This PC` and select `Map Network Drive`
+2. Select `Y` and type `\\data.hpc.uiowa.edu\argon_home\Documents`
+
 # Accessing Argon
 
 ## SSH
@@ -59,7 +66,12 @@ If you are interested in dedicated hardware, contact research-computing@uiowa.ed
 
 Windows Explorer:
 
-`\\data.hpc.uiowa.edu\argon_home` (username: itpetersen@uiowa.edu)
+`\\data.hpc.uiowa.edu\argon_home` (username: itpetersen@uiowa.edu or hawkid@uiowa.edu)
+
+Using SecureCRT for an SSH connection:
+1. Download SecureCRT from UIowa Informational Technology Services: https://its.uiowa.edu/securecrt
+2. In Hostname type `argon.hpc.uiowa.edu` and in username type HawkID
+3. Click connect
 
 ## Mac
 
@@ -69,7 +81,19 @@ Mac OS Terminal:
 
 `ssh -p 40 itpetersen@argon.hpc.uiowa.edu` (off campus without VPN)
 
-# Projects
+# General Commands
+-  `pwd` print current working directory
+-  `cd path/to/directory` sets working directory
+-  `module load moduleName` loads modules required for analyses; necessary to complete prior to submitting jobs involving R
+-  `module list` lists downloaded modules
+-  `qsub` submit a job script to Argon processing
+-  `R CMD BATCH` submit a single R script to Argon processing
+-  Argon requires Linux-compatible file endings, which is problematic for files created outside Argon (using DOS or CRLF file endings). Use the following commands to check if your files are Argon compatible (i.e., Unix LF) and resolve incompatible file endings:
+-     `file myfile.job | grep CRLF` checks if a file ending uses the incompatible CRLF format. Remember to check the ending of your file; this script assumes it is .job
+-     `dos2unix myfile.job` converts CRLF file endings to Argon-compatible LF endings
+-     `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change '*job' to change other file types
+
+# Access Project Directories
 
 ```
 cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
@@ -274,7 +298,7 @@ But, there may be more recent version of `R` installed in the "Additional Softwa
 https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
 
 1. first load the `R` environment module
-    - `module load r/4.0.5_gcc-9.3.0`
+    - `module load r/4.2.2_gcc-9.5.0`
 1. launch R
     - `R`
 1. then install the package, (the code below uses a generic `package_name`):
