@@ -413,6 +413,14 @@ Makevars:
 
 # Troubleshooting
 
+## Having trouble installing packages?
+
+Sometimes Argon will fail to install packages in an R workspace. We advise the following steps:
+1. Sometimes R provides an error stating something like "fatal error: modulename: No such file or directory". In this instance, you may wish to exist R with q() and load all the modules that begin with the listed module name, as listed above in "Installing Linux Packages to Install R Packages". Then reopen R and try to install the package again.
+2. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type 'install.packages("/Users/path/to/directory/package_name", repos = NULL, type = "source")'. Note that you may need to download an older version of the package, such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version).
+3. If steps 1 and 2 fail, email research-computing@uiowa.edu and ask them to install the packages for you.
+
+
 ## Error When Installing Packages from Source
 
 You may have to set environment variables in each module file to help the compiler find headers and libraries.
