@@ -35,7 +35,7 @@ There are many reasons why it is important to use git/version control:
 1. Install `GitHub Desktop` app (https://desktop.github.com)
 1. Create a Personal Access Token (https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html, archived at https://perma.cc/6ZH8-JNZC; or https://research-git.uiowa.edu/-/profile/personal_access_tokens, archived at https://perma.cc/7JPU-WDBS) on the UI `GitLab` instance (https://research-git.uiowa.edu) to access UI `GitLab` repositories from `GitHub Desktop`.
     -  For application name, put "GitHub"
-    -  For expiration date, leave it blank
+    -  For expiration date, leave it blank (or set it for as late an expiration date as possible)
     -  For scopes, select everything
 1. When cloning a repository from UI's `GitLab` instance using `GitHub Desktop`, `GitHub Desktop` will ask for your username and password.
 Enter your HawkID as your username and your UI `GitLab` Personal Access Token as your password.
@@ -207,6 +207,24 @@ https://docs.github.com/en/repositories/creating-and-managing-repositories/creat
 https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template (archived at https://perma.cc/9E2C-MUCK)
 
 # Troubleshooting {#troubleshooting}
+
+## Error: Authentication Failed {#authenticationFailed}
+
+![authentication failed](images/githubDesktopAuthenticationError.png)
+
+This error can occur for a variety of reasons.
+One possibility is that your GitLab Personal Access Token (PAT) has expired.
+To fix this:
+
+1. Create a Personal Access Token (https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html, archived at https://perma.cc/6ZH8-JNZC; or https://research-git.uiowa.edu/-/profile/personal_access_tokens, archived at https://perma.cc/7JPU-WDBS) on the UI `GitLab` instance (https://research-git.uiowa.edu) to access UI `GitLab` repositories from `GitHub Desktop`.
+    -  For application name, put "GitHub"
+    -  For expiration date, leave it blank (or set it for as late an expiration date as possible)
+    -  For scopes, select everything
+1. When cloning a repository from UI's `GitLab` instance using `GitHub Desktop`, `GitHub Desktop` will ask for your username and password.
+Enter your HawkID as your username and your UI `GitLab` Personal Access Token as your password.
+
+If you do not receive a prompt to enter your username and password, try removing the saved GitHubcredentials from Windows Credential Manager:
+https://github.com/desktop/desktop/issues/8860#issuecomment-2211812646
 
 ## `GitHub` shows all files as being changed even though the files haven't changed
 
