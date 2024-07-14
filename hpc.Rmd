@@ -372,6 +372,22 @@ To restore the state of your library from the lock file: `renv::restore()`
 
 To disable `renv` on a project: `renv::deactivate()`
 
+#### To control which packages to install with `renv` using a `DESCRIPTION` file
+
+If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
+
+1. Create a `DESCRIPTION` file in the project directory with the following format:
+    ```
+    Type: project
+    Description: My project.
+    Depends:
+        packageName1,
+        packageName2,
+        packageName3
+    ```
+1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies
+1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
+
 ### To install a new package for a project after `renv` has been initialized
 
 1. First, load the `R` environment module (see `Install R packages` section above)
