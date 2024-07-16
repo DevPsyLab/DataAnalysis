@@ -886,6 +886,8 @@ mediationFit <- sem(
   data = mydata,
   se = "bootstrap",
   bootstrap = 1000, # generally use 10,000 bootstrap draws; this example uses 1,000 for speed
+  parallel = "multicore", # parallelization for speed: use "multicore" for Mac/Linux; "snow" for PC
+  iseed = 52242, # for reproducibility
   missing = "ML",
   estimator = "ML",
   std.lv = TRUE,
