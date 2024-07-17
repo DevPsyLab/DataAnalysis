@@ -377,6 +377,7 @@ To disable `renv` on a project: `renv::deactivate()`
 If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
 
 1. Create a `DESCRIPTION` file in the project directory with the following format:
+
     ```
     Type: project
     Description: My project.
@@ -385,6 +386,7 @@ If you want to control which packages are installed in a `renv` project, you can
         packageName2,
         packageName3
     ```
+
 1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies
 1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
 
@@ -440,13 +442,20 @@ We advise the following steps:
 In this instance, you may wish to exist R with q() and load all the modules that begin with the listed module name, as listed above in "Installing Linux Packages to Install R Packages".
 Then reopen R and try to install the package again.
 1. You can also try installing the package from binary using the RStudio Package Manager (RSPM):
+
     ```r
     remotes::install_github("cran4linux/rspm")
     rspm::enable()
     install.packages("PACKAGE_NAME")
     ```
+
 1. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type 'install.packages("/Users/path/to/directory/package_name", repos = NULL, type = "source")'.
-Note that you may need to download an older version of the package, such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version).
+Note that you may need to download an older version of the package (e.g., from the [CRAN Archive](https://cran.r-project.org/src/contrib/Archive/)), such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version):
+
+    ```r
+    install.packages("http://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-60.0.1.tar.gz", repos = NULL, type = "source")
+    ```
+
 1. If steps 1 and 2 fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.
 
 ## Error When Installing Packages from Source
