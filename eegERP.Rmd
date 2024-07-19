@@ -26,7 +26,8 @@ knitr::opts_chunk$set(
 
 1. Download MATLAB: https://its.uiowa.edu/matlab
     - Click `How to Install MatLab` and follow the relevant instructions
-    - Create a `MatLab` folder in your local directory. You will keep all of your MatLab related files in this folder. 
+    - Create a `MatLab` folder in your local directory.
+    You will keep all of your MatLab related files in this folder.
 1. Install the HAPPE pipeline: https://github.com/PINE-Lab/HAPPE
     - Clone the HAPPE repository to your `GitHub` account
     - Open the `HAPPE` folder
@@ -41,21 +42,23 @@ knitr::opts_chunk$set(
         - Open `tutorial`
     - In the `tutorial` document, navigate to the `Set Up` section and follow the instructions for installing and setting up EP Toolkit and FieldTrip.
     Do **NOT** follow instructions for setting up EEGLAB.
-    You have already set up your path to EEGLAB when you set up the HAPPE pipeline. 
+    You have already set up your path to EEGLAB when you set up the HAPPE pipeline.
     - You should have the following subfolders in your `MatLab` folder:
         - `EP_Toolkit`
         - `Fieldtrip-[version number]`
 1. Open the HAPPE pipeline V4 script in MATLAB
-    - Follow the User Guide instructions for the HAPPE-ER pipeline, using the user inputs described below. 
+    - Follow the User Guide instructions for the HAPPE-ER pipeline, using the user inputs described below.
 
 ## Oddball Task
 
 1. User Inputs
-    - Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
+    - Enter the path to the folder containing the dataset.
+    All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
     - Select `raw`
     - Load pre-existing set of input parameter: 
-        - `N` if this is your first time running data through the pipeline. 
-        - `Y` if you have decided on a set of parameters. Enter the path to the folder containing the input parameters. 
+        - `N` if this is your first time running data through the pipeline.
+        - `Y` if you have decided on a set of parameters.
+        Enter the path to the folder containing the input parameters.
     - Low density data: `N`
     - Data type: `task`
     - Performing event-related potential (ERP) analysis: `Y`
@@ -108,11 +111,13 @@ knitr::opts_chunk$set(
 
 ## Fish/Shark
 1. User Inputs
-    - Enter the path to the folder containing the dataset. All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
+    - Enter the path to the folder containing the dataset.
+    All ERP files are stored on the lab drive (`\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data\LV2\ERP`)
     - Select `raw`
     - Load pre-existing set of input parameter: 
-        - `N` if this is your first time running data through the pipeline. 
-        - `Y` if you have decided on a set of parameters. Enter the path to the folder containing the input parameters. 
+        - `N` if this is your first time running data through the pipeline.
+        - `Y` if you have decided on a set of parameters.
+        Enter the path to the folder containing the input parameters.
     - Low density data: `N`
     - Data type: `task`
     - Performing event-related potential (ERP) analysis: `Y`
@@ -181,16 +186,16 @@ knitr::opts_chunk$set(
 1. Select `Single File Mode`.
     - Single file mode will use the filename to assign the task condition and participant ID for each file.
         - Note: `R` can rename files in batches
-    Thus, **it is critical to use a standard naming convention to name the files**. 
+    Thus, **it is critical to use a standard naming convention to name the files**.
     For example, an oddball file could be named: 
         - `frq_1001_36` and `tgt_1001_36`
-1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID. 
+1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID.
     - For the above example `1:7` would correspond to `1001_36`
-1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition. 
+1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition.
     - For the above example `X:Y` would correspond to `frq` or `tgt`
     - ![image](images/readTextFile.png)
 1. Select `Read` and select the `GSN-Hydrocel-129.ced` when prompted
-1. The new file will have the participant ID and will combine the conditions for each participant. 
+1. The new file will have the participant ID and will combine the conditions for each participant.
     - Subject Names: 
         - ![image](images/subjectCombinedNames.png)
     - Task Conditions
@@ -206,7 +211,8 @@ knitr::opts_chunk$set(
     - Nominal sampling rate: change to `1000`
 1. Click `Done`
 1. Go to `Main` and click `Save`
-    - Save the combined file as an `.ept` file in the `4-EPT Averages` folder using the following naming convention: "task_condition_age". For example, if you were working on the target condition of oddball for all age groups, you would save the file as `ob_tgt_all`
+    - Save the combined file as an `.ept` file in the `4-EPT Averages` folder using the following naming convention: "task_condition_age".
+    For example, if you were working on the target condition of oddball for all age groups, you would save the file as `ob_tgt_all`
 
 ## Temporal PCA
 1. Go to `Main` and click `PCA`
@@ -217,7 +223,8 @@ knitr::opts_chunk$set(
     - Title: tPCA_experimentname (example: `tPCA_ob_tgt_all`)
 1. Click the appropriate file (e.g., `ob_tgt_all`)
 1. Determine how many factors to retain using the scree plot (keep the number of factors where the blue line is above the red line)
-1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion". Record the number of factors retained and % variance accounted for by that number of factors. 
+1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion".
+Record the number of factors retained and % variance accounted for by that number of factors.
 1. Re-run the temporal PCA using the above inputs, **but change the number of factors to the number of factors retained from the above step**
 1. Return to `Main` and click `Save`. Save the tPCA file in the `5-PCA` folder
 
@@ -230,9 +237,11 @@ knitr::opts_chunk$set(
     - Title: sPCA_experimentname (e.g., `sPCA_ob_tgt_all`)
 1. Click the appropriate file (e.g., `ob_tgt_all`)
 1. Determine how many factors to retain using the scree plot (keep the number of factors where the blue line is above the red line)
-1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion". Record the number of factors retained and % variance accounted for by that number of factors. 
+1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion".
+Record the number of factors retained and % variance accounted for by that number of factors.
 1. Re-run the spatial PCA using the above inputs, **but change the number of factors to the number of factors retained from the above step**
-1. Return to `Main` and click `Save`. Save the sPCA file in the `5-PCA` folder
+1. Return to `Main` and click `Save`.
+Save the sPCA file in the `5-PCA` folder
 
 ## Temporospatial PCA
 1. Go to `Main` and click `PCA`
@@ -243,23 +252,25 @@ knitr::opts_chunk$set(
     - Title: tsPCA_experimentname (e.g., `tsPCA_ob_tgt_all`)
 1. Click the `tPCA` file (created in the previous step)
 1. Determine how many factors to retain using the scree plot (keep the number of factors where the blue line is above the red line)
-1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion". Record the number of factors retained and % variance accounted for by that number of factors. 
+1. Determine the percent variance accounted for by the number of factors retained by changing the "minimum % age accounted for criterion".
+Record the number of factors retained and % variance accounted for by that number of factors.
 1. Re-run the spatial PCA using the above inputs, **but change the number of factors to the number of factors retained from the above step**
-1. Return to `Main` and click `Save`. Save the tsPCA file in the `5-PCA` folder. 
+1. Return to `Main` and click `Save`. Save the tsPCA file in the `5-PCA` folder.
 
 ## Component Selection
-1. Generate tsPCA components. Go to `Window` and input the following:
+1. Generate tsPCA components.
+Go to `Window` and input the following:
     - select the tsPCA file
     - select `mean`
     - select `AutoPCA` [XXX][**NOTE: NEED TO CHANGE; WE WILL NO LONGER USE `AutoPCA`; WE WANT TO USE MEAN AMPLITUDE, NOT PEAK AMPLITUDE**]
-    - Save the files generated from the AutoPCA in the `6-PCA Components` folder using the following naming convention: "task_condition_age" (e.g.,`ob_tgt_all`). 
+    - Save the files generated from the AutoPCA in the `6-PCA Components` folder using the following naming convention: "task_condition_age" (e.g.,`ob_tgt_all`).
 1. To view all of the tsPCA components, click `View` and input the following
     - select the appropriate file (e.g., `ob_tgt_all`)
     - select `gave`
     - select `none`
     - click `Waves`
-1. Return to `View` to begin the component selection process. 
-    - Iteratively select and view each temporospatial component to identify the PCA factor corresponding to the ERP of interest (e.g., N2 or P3). Components are selected based on a priori hypotheses about the temporal and spatial location of the ERP of interest. 
+1. Return to `View` to begin the component selection process.
+    - Iteratively select and view each temporospatial component to identify the PCA factor corresponding to the ERP of interest (e.g., N2 or P3).
 
 # Appendix 
 
@@ -268,7 +279,8 @@ knitr::opts_chunk$set(
 - Better describe the missingness for files
      - We need a systematic way to identify new ways to process the missingness
      - Find a way to best describe and report the ways of missingness
-- Go through the maxmem edits on the clean_rawData question. We want a standardized value on the machines
+- Go through the maxmem edits on the clean_rawData question.
+We want a standardized value on the machines
 - Look at the warning messages for the automatic script updates
      - automatic cleaning of files problems
 - Integrate ERPLAB with our existing EEGLab Functions including: 
