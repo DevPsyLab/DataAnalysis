@@ -390,6 +390,91 @@ MODEL:
         y ~ latent;
 ```
 
+## Multigroup Measurement Invariance {#measurementInvariance}
+
+### Configural Invariance {#configuralInvariance}
+
+```
+VARIABLE:
+    NAMES = group x1 x2 x3 y1;
+    GROUPING = group (0=boys, 1=girls);
+    MISSING = .;
+    USEVARIABLES = group x1 x2 x3;
+
+MODEL:
+    Model boys:
+        latent BY x1* x2 x3;
+        [latent@0];
+        latent@1;
+
+    Model girls:
+        latent BY x1* x2 x3;
+        [latent@0];
+        latent@1;
+```
+
+### Metric (Weak Factorial) Invariance {#metricInvariance}
+
+```
+VARIABLE:
+    NAMES = group x1 x2 x3 y1;
+    GROUPING = group (0=boys, 1=girls);
+    MISSING = .;
+    USEVARIABLES = group x1 x2 x3;
+
+MODEL:
+    Model boys:
+        latent BY x1* (load1);
+        latent BY x2* (load2);
+        latent BY x3* (load3);
+
+        [latent@0];
+        latent@1;
+
+    Model girls:
+        latent BY x1* (load1);
+        latent BY x2* (load2);
+        latent BY x3* (load3);
+
+        [latent@0];
+        latent@1;
+```
+
+### Scalar (Strong Factorial) Invariance {#scalarInvariance}
+
+```
+VARIABLE:
+    NAMES = group x1 x2 x3 y1;
+    GROUPING = group (0=boys, 1=girls);
+    MISSING = .;
+    USEVARIABLES = group x1 x2 x3;
+
+MODEL:
+    Model boys:
+        latent BY x1* (load1);
+        latent BY x2* (load2);
+        latent BY x3* (load3);
+
+        [x1] (int1);
+        [x2] (int2);
+        [x3] (int3);
+
+        [latent@0];
+        latent@1;
+
+    Model girls:
+        latent BY x1* (load1);
+        latent BY x2* (load2);
+        latent BY x3* (load3);
+
+        [x1] (int1);
+        [x2] (int2);
+        [x3] (int3);
+
+        [latent@0];
+        latent@1;
+```
+
 # Comments {#comments}
 
 ```
