@@ -270,20 +270,28 @@ Save the tsPCA file in the `5-PCA` folder.
 
 Here, the goal is to select the PCA component that corresponds to the ERP component of interest.
 
+1. Go to `View` to begin the process of selecting the PCA component that corresponds to the ERP of interest.
+    - Iteratively select and view each temporospatial PCA component to identify the PCA component ("factor") that corresponds to the ERP of interest (e.g., N2 or P3).
+    Select the temporospatial PCA component that corresponds to the ERP of interest based on the timing, spatial location, morphology, and (as relevant) any condition- or age-related differences of the component based on prior work.
 1. Generate tsPCA components.
 Go to `Window` and input the following:
     - select the tsPCA file
-    - select `mean`
-    - select `AutoPCA` [XXX][**NOTE: NEED TO CHANGE; WE WILL NO LONGER USE `AutoPCA`; WE WANT TO USE MEAN AMPLITUDE, NOT PEAK AMPLITUDE**]
+    - select among `mean`, `maxPeak`, or other options
+      All the different methods result in comparable p-values, so select a method that makes sense for the story you want to tell
+    - select `AutoPCA` or `Window` to select channels
+      If the peak amplitude is where you expect temporally and spatially, then use the autoPCA function, and if it is not, then window to where you expect it to be
+        This will allow you to report results that are more interpretable
     - Save the files generated from the AutoPCA in the `6-PCA Components` folder using the following naming convention: "task_condition_age" (e.g.,`ob_tgt_all`).
 1. To view all of the tsPCA components, click `View` and input the following
     - select the appropriate file (e.g., `ob_tgt_all`)
     - select `gave`
     - select `none`
     - click `Waves`
-1. Return to `View` to begin the process of selecting the PCA component that corresponds to the ERP of interest.
-    - Iteratively select and view each temporospatial PCA component to identify the PCA component ("factor") that corresponds to the ERP of interest (e.g., N2 or P3).
-    Select the temporospatial PCA component that corresponds to the ERP of interest based on the timing, spatial location, morphology, and (as relevant) any condition- or age-related differences of the component based on prior work.
+1. It is good practice to check to make sure that components are comparable across different age ranges
+    - You can check this in one of two ways:
+      - Visually examine grand averages between age ranges
+      - Apply the PCA from one age group and apply it to another age group and examine whether the results hold up using cross-validation in EPToolkit
+
 
 # Appendix 
 
