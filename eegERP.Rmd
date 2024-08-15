@@ -268,7 +268,7 @@ Save the tsPCA file in the `5-PCA` folder.
 
 ## PCA Component Selection
 
-Here, the goal is to select the PCA component that corresponds to the ERP component of interest.
+Here, the goal is to select the PCA component that corresponds to the ERP component of interest, and the extraction that supports the intended interpretability of the component.
 
 1. Go to `View` to begin the process of selecting the PCA component that corresponds to the ERP of interest.
     - Iteratively select and view each temporospatial PCA component to identify the PCA component ("factor") that corresponds to the ERP of interest (e.g., N2 or P3).
@@ -276,11 +276,22 @@ Here, the goal is to select the PCA component that corresponds to the ERP compon
 1. Generate tsPCA components.
 Go to `Window` and input the following:
     - select the tsPCA file
-    - select among `mean`, `maxPeak`, or other options
-      (According to Joe Dien), all the different methods result in comparable *p*-values when dealing with PCA components (however, they do not give the results when windowing the raw waveforms), so select a method that makes sense for the story you want to tell
-    - select `AutoPCA` or `Window` to select channels
-      If the peak amplitude is where you expect temporally and spatially, then use the autoPCA function, and if it is not, then window to where you expect it to be
-        This will allow you to report results that are more interpretable
+    - select among `mean`, `maxPeak`, or other options.
+      (According to Joe Dien), when using amplitudes from PCA components, it does not matter which option you select—all the different methods result in comparable *p*-values when dealing with PCA components (it would be good to verify this).
+      So, select a method that makes sense for the story you want to tell.
+      The methods will yield different results when dealing with the raw waveforms.
+    - select `AutoPCA` or `Window` to select channels.
+      If the peak amplitude is where you expect temporally and spatially, then use the autoPCA function, and if it is not, then window to where you expect it to be.
+      This will allow you to report results that are more interpretable.
+      As Joe Dien described, the way that PCA data are stored internally in the toolkit are as factor scores (i.e., component scores).
+      When you extract amplitudes from a PCA component, you are extracting the factor scores multiplied by a constant (some scaling factor, representing the electrode where you extract it from).
+      Thus, according to Joe Dien, the *p*-values should be the same regardless of whether you use AutoPCA, or extract from a single electrode or multiple electrodes (it would be good to verify this).
+      What is changing is merely the scaling factor (i.e., the constant that is multiplied by all factor scores).
+      When you select multiple electrodes, it is computing the PCA-estimated amplitude at each electrode and performing a simple average across those electrodes.
+      The AutoPCA extracts the PCA-estimated amplitude at the peak channel and the peak timepoint.
+      If the waveform is negative-going at the peak channel, and you are interested in the positive-going dipole, you would select the peak positive channel to identify the PCA-estimated amplitude of the positive-going waveform on that PCA component.
+      Nevertheless, even though you are selecting the PCA-estimated amplitude for a given channel at a given electrode, there are now "virtual channels"; the estimates include the contributions of all channels and all timepoints <u>to the extent that</u> they load onto the PCA component of interest.
+      Thus, even if you select to window a PCA component from only 1 channel at 1 timepoint, it is using ALL channels and timepoints in the estimation—this is not the case if windowing the raw ERP waveforms.
     - Save the files generated from the AutoPCA in the `6-PCA Components` folder using the following naming convention: "task_condition_age" (e.g.,`ob_tgt_all`).
 1. To view all of the tsPCA components, click `View` and input the following
     - select the appropriate file (e.g., `ob_tgt_all`)
@@ -291,7 +302,6 @@ Go to `Window` and input the following:
     - You can check this in one of two ways:
       - Visually examine grand averages between age ranges
       - Apply the PCA from one age group and apply it to another age group and examine whether the results hold up using cross-validation in EPToolkit
-
 
 # Appendix 
 
