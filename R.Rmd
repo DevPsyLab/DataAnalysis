@@ -453,6 +453,25 @@ If errors compiling the PDF manual:
 R CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
 ```
 
+### Troubleshooting
+
+#### `no visible binding for global variable`; `Undefined global functions or variables`
+
+For example:
+```r
+no visible binding for global variable
+    'moderatorVal_centered'
+  Undefined global functions or variables:
+    moderatorVal_centered predictorVal_centered
+```
+
+Solution: set each variable to `NULL` in the package function before it is mentioned.
+For example:
+
+```r
+predictorVal_centered <- moderatorVal_centered <- NULL
+```
+
 ## `R CMD check` via GitHub Actions
 
 ```{r, eval = FALSE}
