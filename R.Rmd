@@ -452,55 +452,53 @@ install.packages("NAME_OF_PACKAGE)
 
 ## `R CMD check` {#rCmdCheck}
 
-1. Build the source package
-    - click on the "Build" tab in the top-right pane of RStudio, and then click "Build Source Package"
+1. Build the source package (`.tar.gz` file)
+    - Click on the "Build" tab in the top-right pane of RStudio, and then click "Build Source Package", or run the following code in the `R` console:
+
+    ```{r, eval = FALSE}
+    devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
+    ```
+
 1. Open terminal in RStudio
-    - After the package is built, open a terminal window directly in RStudio by clicking on the "Terminal" tab at the bottom of RStudio
+    - After the package source (`.tar.gz` file) is built, open a terminal window directly in RStudio by clicking on the "Terminal" tab at the bottom of RStudio
 1. Run `R CMD check --as-cran`
-    - In the terminal window, navigate to the directory where your package source is located.
-    Then, run `R CMD check --as-cran` followed by the name of your package tarball. For example:
+    - In the terminal window, navigate to the directory where your package source (`.tar.gz` file) is located (commonly up one directory):
 
-Build `.tar.gz` file:
+    ```bash
+    cd ..
+    ```
 
-```{r, eval = FALSE}
-devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
-```
+    Then, run `R CMD check --as-cran` followed by the name of your package tarball (making sure to update the package version in the filename). For example:
 
-In the terminal, change the directory to where the `.tar.gz` file is located (commonly up one directory):
-
-```bash
-cd ..
-```
-
-In the terminal, Run `R CMD check` (making sure to update the package version in the filename):
-
-```bash
-R CMD check --as-cran petersenlab_1.0.0.tar.gz
-```
+    ```bash
+    R CMD check --as-cran petersenlab_1.0.0.tar.gz
+    ```
 
 ### Troubleshooting
 
 #### If errors compiling the PDF manual
 
-In the terminal:
+1. In the terminal:
 
-```bash
-cd ./petersenlab
-R CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
-```
+    ```bash
+    cd ./petersenlab
+    R CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
+    ```
 
-In the R Console, build the source package in `R` (or using the instructions described [above](#rCmdCheck)):
+1. Then, delete the created folder whose name begins with ".Rd2pdf..."
 
-```{r, eval = FALSE}
-devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
-```
+1. In the R Console, build the source package in `R` (or using the instructions described [above](#rCmdCheck)):
 
-In the terminal (making sure to update the package version in the filename):
+    ```{r, eval = FALSE}
+    devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
+    ```
 
-```bash
-cd ..
-R CMD check --as-cran petersenlab_1.0.0.tar.gz
-```
+1. In the terminal (making sure to update the package version in the filename):
+
+    ```bash
+    cd ..
+    R CMD check --as-cran petersenlab_1.0.0.tar.gz
+    ```
 
 #### `no visible binding for global variable`; `Undefined global functions or variables`
 
