@@ -408,31 +408,35 @@ https://packagemanager.posit.co
 
 ### Updating the Package
 
-To update the package, run the following in `R`:
+1. To update the package, run the following in `R`:
 
-```{r, eval = FALSE}
-# 1. Update packages in package environment
-renv::upgrade()
-renv::update()
-renv::snapshot()
+    ```{r, eval = FALSE}
+    # 1. Update packages in package environment
+    renv::upgrade()
+    renv::update()
+    renv::snapshot()
 
-# 2. Add/edit code
+    # 2. Add/edit code
 
-# 3. Update documentation
-roxygen2::roxygenise()
+    # 3. Update documentation
+    roxygen2::roxygenise()
 
-# 4. Update package version
-usethis::use_version()
-```
+    # 4. Update package version (or can do this manually)
+    usethis::use_version()
+    ```
 
-Then, build the package: Ctrl-Shift-B
+1. Then, build the package: Ctrl-Shift-B
 
-Then, install the package:
+1. Then, check the package: Ctrl-Shift-E
 
-```{r, eval = FALSE}
-renv::install("C:/R/Packages/petersenlab") #PC
-renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
-```
+1. Then, run [`R CMD check`](#rCmdCheck)
+
+1. Then, install the package:
+
+    ```{r, eval = FALSE}
+    renv::install("C:/R/Packages/petersenlab") #PC
+    renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
+    ```
 
 ### Installing Packages
 
@@ -462,17 +466,41 @@ Build `.tar.gz` file:
 devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
 ```
 
-```{r, eval = FALSE}
+In the terminal, change the directory to where the `.tar.gz` file is located (commonly up one directory):
+
+```bash
+cd ..
+```
+
+In the terminal, Run `R CMD check` (making sure to update the package version in the filename):
+
+```bash
 R CMD check --as-cran petersenlab_1.0.0.tar.gz
 ```
 
-If errors compiling the PDF manual:
+### Troubleshooting
 
-```{r, eval = FALSE}
+#### If errors compiling the PDF manual
+
+In the terminal:
+
+```bash
+cd ./petersenlab
 R CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
 ```
 
-### Troubleshooting
+In the R Console, build the source package in `R` (or using the instructions described [above](#rCmdCheck)):
+
+```{r, eval = FALSE}
+devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
+```
+
+In the terminal (making sure to update the package version in the filename):
+
+```bash
+cd ..
+R CMD check --as-cran petersenlab_1.0.0.tar.gz
+```
 
 #### `no visible binding for global variable`; `Undefined global functions or variables`
 
