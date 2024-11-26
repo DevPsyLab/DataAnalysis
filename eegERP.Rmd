@@ -303,7 +303,21 @@ Go to `Window` and input the following:
       - Visually examine grand averages between age ranges
       - Apply the PCA from one age group and apply it to another age group and examine whether the results hold up using cross-validation in EPToolkit
 
-## Generating Grand Average Waveforms in EP Toolkit
+## Identifying Electrodes that Load Onto PCA Component
+1. Go to `Window`
+1. Select the PCA file of interest (e.g., `tsPCA-ob_tgt_all`)
+1. Click the `Channels` button (about halfway down the `Window` window)
+1. Click `Factor` 
+   - From the dropdown, select the PCA file of interest (e.g., `tsPCA_ob_tgt_all)
+   - Enter the threshold in the space below (e.g., 0.5)
+      - This sets the minumum factor loading value for an electrode to be "included" in the component-related cluster
+    - Depending on whenther you are interested in positive or negative factor loadings, select the appropriate sign (`+`, `-`, or `+/-`)
+    - A popup window with PCA factors will appear.
+    Select the component(s) you wish to identify spatially (e.g., `TF01SF01`)
+1. When prompted, give the electrode cluster a name
+1. The channels that change color are those which load onto the selected component at or above the threshold value
+
+## Generating Grand Average Waveforms
 1. If the EPT average file (e.g., `ob_tgt_all`) is not already in the working environment, read it in using the steps below
    - Go to `Read`
    - Format = `EP (.ept)`
