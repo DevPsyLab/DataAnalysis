@@ -303,6 +303,48 @@ Go to `Window` and input the following:
       - Visually examine grand averages between age ranges
       - Apply the PCA from one age group and apply it to another age group and examine whether the results hold up using cross-validation in EPToolkit
 
+## Generating Grand Average Waveforms in EP Toolkit
+1. If the EPT average file (e.g., `ob_tgt_all`) is not already in the working environment, read it in using the steps below
+   - Go to `Read`
+   - Format = `EP (.ept)`
+   - Click `Read`
+   - Navigate to the `4 - EPT Averages` folder and select desired file(s)
+   - Click `Open` in the browser window to read the file(s)
+   - Click `Main` to return to main menu
+1. Select `Edit`
+1. When the editor window opens, navigate to the `Subjects` pane
+1. Select `All` from among the many options along the lefthand pane of the editor
+   - This will select all of the subjects included in the file and assign them a weight of 1
+1. Confirm that all subjects have been selected (look for a checked box in the subject row) and that all weights have been set to 1
+1. Click `Add`
+1. A new "subject" should have now been added to the bottom of the subjects list
+   - This subject is called `gave` and represents the grand average across all subjects
+1. Click `Done` to exit the editor window, then `Main` to return to the EP Toolkit home
+
+## Exporting Grand Average Data
+1. From EP Toolkit home (`Main` screen), select `Edit`
+1. Select the .ept averages file (e.g., `ob_tgt_all`) that contains a "subject" representing the grand average
+   - If the file does NOT contain a grand average subject, follow the steps in the above section to generate it
+1. Rename the file 
+   - For example, `ob_tgt_all` could be renamed to `ob_tgt_gav`
+   - Renaming the file will prompt EP Toolkit to ask whether you want to generate a new file with this new name, or overwrite the existing datafile once your changes are complete
+1. Select `Subjects` from the options at the top of the editor window
+1. Click `All` from among the options on the lefthand side of the `Subjects` window
+   - This will select all of the subjects
+1. Scroll to the bottom of the list of subjects and **deselect** the subject labeled `grand average`
+   - Essentially, the goal here is to create a dataset that includes ONLY the grand average information, rather than each individual subject
+1. Once everything EXCEPT for the grand average subject is selected, click `Delete` on the lefthand side of the editor window
+   - This will remove the individual subject data from the dataset and leave the grand average information 
+1. Click `Done`
+1. If you renamed the datafile, EP Toolkit should generate a popup message asking whether you would like to rename your dataset OR generate a new dataset using the new name (leaving the original dataset untouched).
+From the options presented, clikc `New` to generate a new file and preserve the original
+1. The editor window should close, returning you to the EP Toolkit pane that asks you to select a dataset to edit. 
+From here, click `Main` to return to EP Toolkit "home"
+1. Once in the main window, clikc `Save`
+   - Set the save format to `Text (.txt)`
+   - Click the grand average data (e.g., `ob_tgt_gav`) to save it
+   - A file explorer window should open, prompting you to select the appropriate save location and give your file a name 
+
 # Appendix 
 
 ## Troubleshooting
