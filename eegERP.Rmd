@@ -359,6 +359,88 @@ From here, click `Main` to return to EP Toolkit "home"
    - Click the grand average data (e.g., `ob_tgt_gav`) to save it
    - A file explorer window should open, prompting you to select the appropriate save location and give your file a name 
 
+# Visualizations in R 
+
+## R Code for Grand Average Waveform Plot
+
+1. Read in the grand average waveform data exported from EP Toolkit.
+   - We currently process the conditions within a given task separately, so each condition should have its own grand average file.
+   ```
+   obTgt <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_tgt_gav.txt")
+   obFrq <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_frq_gav.txt")
+   ```
+
+1. Create a subset of data that only includes those electrodes that are part of the clusters identified in EP Toolkit.
+   - The grand average data does not have row or column labels, but the columns represent the EEG net channels in numerical order (1-129).
+   We can therefore use their column index values to select the desired electrodes; so, the list containing the channel numbers should include ONLY numbers.
+   The code that selects these channels out of the full dataset will rely on numerical input.  
+   ```
+   # Set electrode clusters
+   obElectrodes <- c(58, 59, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76, 77, 81, 82, 83, 84, 89, 80, 91, 95, 96, 101)
+
+   # Subset to desired electrodes
+   obTgt_sub <- obTgt[, obElectrodes]
+   obFrq_sub <- obFrq[, obElectrodes]
+   ```
+1. Compute averages and create labels for conditions
+   - Once the data have been subsetted down to include only the electrode channels of interest, all that remains is to compute the average amplitude across all of those channels
+   - Adding a condition label will allow us to combine the two condition-specific datasets into one that can be used for visualizations 
+      - For ease of plotting, name the conditions the way that you would like them to appear on the figure (i.e., "Target" instead of "tgt")
+   ```
+   # Compute averages 
+   obTgt_sub$amplitude <- rowMeans(obTgt_sub)
+   obFrq_sub$amplitude <- rowMeans(obFrq_sub)
+
+   # Remove raw values and add condition labels
+   obTgt_amps <- obTgt_sub %>% select(amplitude) %>% mutate(condition = "Target")
+   obFrq_amps <- obFrq_sub %>% select(amplitude) %>% mutate(condition = "Frequent")
+   ```
+
+1. Add timing-related information to the data
+   - EP Toolkit exports ERP data without timestamps, but arranges it in order of timing
+   - We can create a template with the appropriate timestamps and append this column to the amplitude data
+   ```
+   # Create template
+   erpTemplate <- data.frame(
+     time = -199:1000
+   )
+
+   # Merge template with amplitude data
+   obTgtTimes <- cbind(erpTemplate, obTgt_amps)
+   obFrqTimes <- cbind(erpTemplate, obFrq_amps)
+   ```
+1. Combine all conditions into a single data object to be used for plotting 
+   ```
+   oddball <- rbind(obTgtTimes, obFrqTimes) %>% select(time, condition, amplitude) %>% arrange(time)
+   ```
+
+1. Generate the waveform figures 
+   ```
+   ggplot(
+     data = oddball,
+     aes(
+       x = time,
+       y = amplitude,
+       group = condition,
+       color = condition
+     )
+   ) +
+     geom_line(linewidth = 1.5) +
+     scale_x_continuous(
+       name = "Time Relative to Stimulus Onset (ms)",
+       limits = c(-200, 1000),
+       breaks = seq(from = -200, to = 1000, by = 200)) +
+     scale_y_continuous(
+       name = "Voltage (microvolts)",
+       limits = c(-4, 10),
+       breaks = seq(from = -10, to = 15, by = 2)) +
+     scale_color_viridis_d()+
+     theme_classic(base_size = 18) +
+     theme(
+       legend.position = c(.7, .9),
+       legend.title = element_blank())
+   ```
+
 # Appendix 
 
 ## Troubleshooting
