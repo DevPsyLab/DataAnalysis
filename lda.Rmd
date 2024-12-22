@@ -9,7 +9,30 @@ knitr::opts_chunk$set(
   comment = "")
 ```
 
+# Approaches for Modeling Longitudinal Data {#approaches}
+
 - [Growth curve model](hlm.html#gcm)
 - [Latent growth curve model](sem.html#lgcm)
 - [Latent change score model](sem.html#lcsm)
 - [Cross-lagged panel model](sem.html#clpm)
+
+# Estimating Nonlinear Growth {#nonlinear}
+
+There are a variety of ways to estimate nonlinear growth in a growth curve model using a mixed-effects or structural equation model:
+
+- polynomial growth model
+  - fractional polynomial model (more parsimonious than traditional polynomials because can capture nonlinear growth with fewer parameters, thus reducing overfitting)
+- piecewise/spline model
+  - can have fixed or random knots
+  - location of knots can be estimated for the data
+  - each individual can have a different numbers of knots and different location for the knots
+- latent basis growth model
+  - can specify the rate of change between T1 and T2 to be one; can allow the rate of change to freely vary between remaining timepoints
+- exponential growth model
+- logistic growth model
+- logarithmic growth model
+- generalized additive model
+- nonparametric growth model (e.g., kernel smoothing)
+- Gompertz growth model
+- Richards growth model
+- Taylor series approximation model
