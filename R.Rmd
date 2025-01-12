@@ -292,6 +292,19 @@ However, do make sure to save your `R` scripts before exiting Rstudio.
 - [Regression](regression.html)
 - [Structural Equation Modeling](sem.html)
 
+# Troubleshooting {#troubleshooting}
+
+## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated
+
+This warning might indicate that it cannot update the package because it is part of the base `R` installation.
+To fix this:
+
+- find and delete the package that is part of the base `R` installation in the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
+- make sure the package is also not in any other package installation locations (e.g., `C:\R\Packages\PACKAGENAME\`); if it is, delete it from there as well
+- then, after deleting the package from these locations, restart `R` and run `install.packages("PACKAGENAME")` to reinstall the package
+- close `R`
+- if the package was part of the base `R` installation, move the installed package folder `C:\R\Packages\PACKAGENAME\` to the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
+
 # Running Scripts Automatically with Windows
 
 https://www.spsanderson.com/steveondata/posts/2023-06-29/index.html (archived at https://perma.cc/9EXK-W99Y)
