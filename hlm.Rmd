@@ -115,7 +115,7 @@ ggplot(
 
 ```{r}
 linearMixedModel <- lmer(
-  math ~ female + ageYearsCentered + (ageYearsCentered | id),
+  math ~ female + ageYearsCentered + (1 + ageYearsCentered | id),
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -141,7 +141,7 @@ newData$sex[which(newData$female == 0)] <- "male"
 newData$sex[which(newData$female == 1)] <- "female"
 newData$sex <- as.factor(newData$sex)
 
-newData$predictedValue <- predict(
+newData$predictedValue <- predict( # predict.merMod
   linearMixedModel,
   newdata = newData,
   re.form = NA
