@@ -384,6 +384,12 @@ For example, it can be helpful to have an `R` markdown report run automatically 
 1. Set the action for the task by selecting `Start a program`
 1. Under, `Program/script` browse to the `.bat` file that was created in step 1 and select `Next`
 1. Click `Finish` and the script is now configured to run automatically
+1. If you wish to schedule a task to run during a time at which your computer is likely to be asleep, you'll need to change the `Conditions` of the task to ensure that the computer "wakes up" to execute the script
+   - In the Task Scheduler Library, select the task you just created
+   - The task should appear on the lower half of the screen (double click to open in a new window).
+   Select `Conditions` from the tabs across the top of the task window
+   - Select `Wake the computer to run this task`
+      - Note that elevated account permissions may be required to set this condition 
 1. **Note: When `R` is updated, the path to the `bin` folder within `R` needs to be updated to reflect an accurate absolute path to R.**
     - Example: `C:\R\4.1.3\bin\R CMD BATCH` changed to `C:\R\4.3.0\bin\R CMD BATCH`
 
