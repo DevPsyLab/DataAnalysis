@@ -399,6 +399,102 @@ pandoc version 1.12.3 or higher is required and was not found.
 
 The solution to this problem [can be found at this link](https://stackoverflow.com/questions/28432607/pandoc-version-1-12-3-or-higher-is-required-and-was-not-found-r-shiny) (archived at https://perma.cc/YX57-BPRS)
 
+# Using R Script to Commit and Push Changes
+
+When using R to perform such actions as rendering sites and processing data, it can be useful to include code that commits and pushes relevant changes into the appropriate `git` repository. 
+The steps below assume that you have `Git` and the `GitHub` desktop app installed.
+The instructions to download and configure `git` software can be found [here](git.Rmd#toBegin)
+
+1. Install and/or load `git2r` package
+   ```
+   install.packages("git2r")
+   library(git2r)
+   ```
+
+1. Specify the path to your repository
+   ```
+   repoPath <- "C:/Users/username/Documents/GitHub/exampleRepo"
+   ```
+
+1. Open and define the repository
+   ```
+   repo <- repository(repoPath)
+   ```
+
+1. Stage changes to be committed 
+   - Stage all files in repo:
+      ```
+      add:(repo, "*")
+      ```
+
+   - Stage files with a specific file extension:
+      ```
+      add(repo, "*.txt")
+      ```
+    
+    - Stage files with one of any specified file extension:
+       ```
+       add(repo, c("*.txt", "*.csv", "*.html"))
+       ```
+
+    - Stage files within a specific folder:
+       ```
+       add(repo, "/folderName/*)
+       ```
+    
+    - Stage one specific file:
+       ```
+       add(repo, "fileName.txt)
+       ```
+    
+    - Stage multiple specific files:
+       ```
+       add(repo, c("thisFile.txt", "thatFile.txt", "anotherFile.txt"))
+       ```
+1. Commit the changes
+   - Commit with a customized commit message:
+      ```
+      commit(repo, "My commit message")
+      ```
+   
+   - Commit with a generated message using system or environment variables:
+      ```
+      # example: include system date in commit message
+      date <- format(Sys.Date(), format = %Y-%m-%d)
+      message <- paste(date, "daily site update", sep = " ")
+
+      commit(repo, message)
+      ``` 
+1. Push changes
+   ```
+   push(repo)
+   ```
+
+   **Note:** The code included above will prompt `Git` to authenticate your credentials by manually providing your username and password in a popup window. 
+   The `push()` function accepts a `credentials = cred_user_pass("username", "password")` argument that will "bypass" the need for user input by including the relevant credentials in the `push()` function call. 
+   One could provide their username and password directly in the script running this function, but other more-secure options include:
+      - Using a [Personal Access Token](https://docs.gitlab.com/user/profile/personal_access_tokens/)
+      - Using an [SSH key](https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key)
+      - Encrypting credential information and storing the encrypted credential file somewhere accessible for use
+         - See [here](https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/REDCap%20Credentials/Encrypt%20REDCap%20Token.R) for an exmaple of encryption and key creation
+         - Using the encrypted credential and encryption key:
+            ```
+            # Define key location
+            encryptionKeyLocation <- "path/to/key/location/myKey.RData"
+
+            # Load key into environment
+            load(encryptionKeyLocation)
+            
+            # Read encrypted credential file using key
+            creds <- read.aes("path/to/encrypted/credentials/file.txt", key = key)
+            
+            # Extract password from credential data
+            myPassword <- creds$password
+
+            # Push changes to git using credentials
+            push(repo, credentials = cred_user_pass("insertUsername", myPassword))
+            ```
+            
 # Reading Password Protected Excel Databases
 
 A helpful post can be found here: <br>
