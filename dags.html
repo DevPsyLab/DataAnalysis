@@ -11,7 +11,7 @@
 
 
 
-<title>Principal Component Analysis</title>
+<title>Directed Acyclic Graphs (DAGs)</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -470,25 +470,47 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Principal Component Analysis</h1>
+<h1 class="title toc-ignore">Directed Acyclic Graphs (DAGs)</h1>
 
 </div>
 
 
-<div id="overview" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Overview</h1>
-<p><a
-href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#pca"
-class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#pca</a></p>
-</div>
-<div id="analysis-example" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Analysis example</h1>
-<p><a
-href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#pcaAnalysis"
-class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#pcaAnalysis</a></p>
-</div>
+<p>When conceptualizing and designing a study, or when developing plans
+to test a research question, it is important to draw a directed acyclic
+graph (DAG). DAGs, like <a href="figures.html#pathDiagrams">path
+diagrams</a>, are causal diagrams. Causal diagrams depict the
+hypoothesized causal processes that link two or more variables. Path
+diagrams are typically used after analysis to describe and report the
+findings in analysis (when using path analysis, <a
+href="factorAnalysis.html">factor analysis</a>, or <a
+href="sem.html">structural equation modeling</a>). By contrast, DAGs are
+particularly useful when designing a study or before analysis, because
+they can help specify which variables it is important to control for
+and—just as importantly—which variables it is important not to control
+for.</p>
+<p>When drawing a DAG for your study, draw all the variables that link
+the hypothesized cause to the hypothesized effect, including
+confounders, mediators, and colliders. In your study, it is important to
+control for confounders. Moreover, it is important not to control to
+control for mediators when you are interested in the total effect of the
+predictor on the outcome. In addition, it is important not to control
+for descendants of the outcome variable. When there is a collision, it
+is important not to control for the collider when examining the
+association between the two causes of the collider. The only time when
+one should control for a collider is when the collider is also a cause
+(i.e., confound) of both the predictor and outcome variable rather than
+a common effect of both.</p>
+<p>For more information on DAGs, including ancestors, descendants,
+confounders, and colliders, see here: <a
+href="https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/causal-inference.html#sec-causalDiagrams"
+class="uri">https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/causal-inference.html#sec-causalDiagrams</a>.</p>
+<p>After determining what variables are confounders and what are
+important to control for, there are various ways one can control for
+variables, as described here: <a
+href="https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/causal-inference.html#sec-causalInferenceControlVariables"
+class="uri">https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/causal-inference.html#sec-causalInferenceControlVariables</a>.</p>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJpbmNpcGFsIENvbXBvbmVudCBBbmFseXNpcyIKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoCiAgZWNobyA9IFRSVUUsCiAgZXJyb3IgPSBUUlVFLAogIGNvbW1lbnQgPSAiIikKYGBgCgojIE92ZXJ2aWV3IHsjb3ZlcnZpZXd9CgpodHRwczovL2lzYWFjdHBldGVyc2VuLmdpdGh1Yi5pby9QcmluY2lwbGVzLVBzeWNob2xvZ2ljYWwtQXNzZXNzbWVudC9mYWN0b3ItYW5hbHlzaXMtUENBLmh0bWwjcGNhCgojIEFuYWx5c2lzIGV4YW1wbGUKCmh0dHBzOi8vaXNhYWN0cGV0ZXJzZW4uZ2l0aHViLmlvL1ByaW5jaXBsZXMtUHN5Y2hvbG9naWNhbC1Bc3Nlc3NtZW50L2ZhY3Rvci1hbmFseXNpcy1QQ0EuaHRtbCNwY2FBbmFseXNpcwo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGlyZWN0ZWQgQWN5Y2xpYyBHcmFwaHMgKERBR3MpIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCgKICBlY2hvID0gVFJVRSwKICBlcnJvciA9IFRSVUUsCiAgd2FybmluZyA9IEZBTFNFLAogIGNvbW1lbnQgPSAiIikKYGBgCgpXaGVuIGNvbmNlcHR1YWxpemluZyBhbmQgZGVzaWduaW5nIGEgc3R1ZHksIG9yIHdoZW4gZGV2ZWxvcGluZyBwbGFucyB0byB0ZXN0IGEgcmVzZWFyY2ggcXVlc3Rpb24sIGl0IGlzIGltcG9ydGFudCB0byBkcmF3IGEgZGlyZWN0ZWQgYWN5Y2xpYyBncmFwaCAoREFHKS4KREFHcywgbGlrZSBbcGF0aCBkaWFncmFtc10oZmlndXJlcy5odG1sI3BhdGhEaWFncmFtcyksIGFyZSBjYXVzYWwgZGlhZ3JhbXMuCkNhdXNhbCBkaWFncmFtcyBkZXBpY3QgdGhlIGh5cG9vdGhlc2l6ZWQgY2F1c2FsIHByb2Nlc3NlcyB0aGF0IGxpbmsgdHdvIG9yIG1vcmUgdmFyaWFibGVzLgpQYXRoIGRpYWdyYW1zIGFyZSB0eXBpY2FsbHkgdXNlZCBhZnRlciBhbmFseXNpcyB0byBkZXNjcmliZSBhbmQgcmVwb3J0IHRoZSBmaW5kaW5ncyBpbiBhbmFseXNpcyAod2hlbiB1c2luZyBwYXRoIGFuYWx5c2lzLCBbZmFjdG9yIGFuYWx5c2lzXShmYWN0b3JBbmFseXNpcy5odG1sKSwgb3IgW3N0cnVjdHVyYWwgZXF1YXRpb24gbW9kZWxpbmddKHNlbS5odG1sKSkuCkJ5IGNvbnRyYXN0LCBEQUdzIGFyZSBwYXJ0aWN1bGFybHkgdXNlZnVsIHdoZW4gZGVzaWduaW5nIGEgc3R1ZHkgb3IgYmVmb3JlIGFuYWx5c2lzLCBiZWNhdXNlIHRoZXkgY2FuIGhlbHAgc3BlY2lmeSB3aGljaCB2YXJpYWJsZXMgaXQgaXMgaW1wb3J0YW50IHRvIGNvbnRyb2wgZm9yIGFuZOKAlGp1c3QgYXMgaW1wb3J0YW50bHnigJR3aGljaCB2YXJpYWJsZXMgaXQgaXMgaW1wb3J0YW50IG5vdCB0byBjb250cm9sIGZvci4KCldoZW4gZHJhd2luZyBhIERBRyBmb3IgeW91ciBzdHVkeSwgZHJhdyBhbGwgdGhlIHZhcmlhYmxlcyB0aGF0IGxpbmsgdGhlIGh5cG90aGVzaXplZCBjYXVzZSB0byB0aGUgaHlwb3RoZXNpemVkIGVmZmVjdCwgaW5jbHVkaW5nIGNvbmZvdW5kZXJzLCBtZWRpYXRvcnMsIGFuZCBjb2xsaWRlcnMuCkluIHlvdXIgc3R1ZHksIGl0IGlzIGltcG9ydGFudCB0byBjb250cm9sIGZvciBjb25mb3VuZGVycy4KTW9yZW92ZXIsIGl0IGlzIGltcG9ydGFudCBub3QgdG8gY29udHJvbCB0byBjb250cm9sIGZvciBtZWRpYXRvcnMgd2hlbiB5b3UgYXJlIGludGVyZXN0ZWQgaW4gdGhlIHRvdGFsIGVmZmVjdCBvZiB0aGUgcHJlZGljdG9yIG9uIHRoZSBvdXRjb21lLgpJbiBhZGRpdGlvbiwgaXQgaXMgaW1wb3J0YW50IG5vdCB0byBjb250cm9sIGZvciBkZXNjZW5kYW50cyBvZiB0aGUgb3V0Y29tZSB2YXJpYWJsZS4KV2hlbiB0aGVyZSBpcyBhIGNvbGxpc2lvbiwgaXQgaXMgaW1wb3J0YW50IG5vdCB0byBjb250cm9sIGZvciB0aGUgY29sbGlkZXIgd2hlbiBleGFtaW5pbmcgdGhlIGFzc29jaWF0aW9uIGJldHdlZW4gdGhlIHR3byBjYXVzZXMgb2YgdGhlIGNvbGxpZGVyLgpUaGUgb25seSB0aW1lIHdoZW4gb25lIHNob3VsZCBjb250cm9sIGZvciBhIGNvbGxpZGVyIGlzIHdoZW4gdGhlIGNvbGxpZGVyIGlzIGFsc28gYSBjYXVzZSAoaS5lLiwgY29uZm91bmQpIG9mIGJvdGggdGhlIHByZWRpY3RvciBhbmQgb3V0Y29tZSB2YXJpYWJsZSByYXRoZXIgdGhhbiBhIGNvbW1vbiBlZmZlY3Qgb2YgYm90aC4KCkZvciBtb3JlIGluZm9ybWF0aW9uIG9uIERBR3MsIGluY2x1ZGluZyBhbmNlc3RvcnMsIGRlc2NlbmRhbnRzLCBjb25mb3VuZGVycywgYW5kIGNvbGxpZGVycywgc2VlIGhlcmU6IGh0dHBzOi8vaXNhYWN0cGV0ZXJzZW4uZ2l0aHViLmlvL0ZhbnRhc3ktRm9vdGJhbGwtQW5hbHl0aWNzLVRleHRib29rL2NhdXNhbC1pbmZlcmVuY2UuaHRtbCNzZWMtY2F1c2FsRGlhZ3JhbXMuCgpBZnRlciBkZXRlcm1pbmluZyB3aGF0IHZhcmlhYmxlcyBhcmUgY29uZm91bmRlcnMgYW5kIHdoYXQgYXJlIGltcG9ydGFudCB0byBjb250cm9sIGZvciwgdGhlcmUgYXJlIHZhcmlvdXMgd2F5cyBvbmUgY2FuIGNvbnRyb2wgZm9yIHZhcmlhYmxlcywgYXMgZGVzY3JpYmVkIGhlcmU6IGh0dHBzOi8vaXNhYWN0cGV0ZXJzZW4uZ2l0aHViLmlvL0ZhbnRhc3ktRm9vdGJhbGwtQW5hbHl0aWNzLVRleHRib29rL2NhdXNhbC1pbmZlcmVuY2UuaHRtbCNzZWMtY2F1c2FsSW5mZXJlbmNlQ29udHJvbFZhcmlhYmxlcy4K</div>
 <script type="text/javascript" src="includes/external-links.js"></script>
 
 <br>
@@ -553,7 +575,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("pca.Rmd");
+  window.initializeSourceEmbed("dags.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
