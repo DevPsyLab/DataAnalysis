@@ -115,7 +115,7 @@ ggplot(
 
 ```{r}
 linearMixedModel <- lmer(
-  math ~ female + ageYearsCentered + (1 + ageYearsCentered | id),
+  math ~ female + ageYearsCentered + female:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -197,8 +197,8 @@ ranef(linearMixedModel)
 
 ```{r}
 linearMixedModel_nlme <- lme(
-  math ~ female + ageYearsCentered,
-  random = ~ 1 + ageYearsCentered|id,
+  math ~ female + ageYearsCentered + female:ageYearsCentered, # sex as a fixed-effect predictor of the intercepts and slopes
+  random = ~ 1 + ageYearsCentered|id, # random intercepts and slopes
   data = mydata,
   method = "ML",
   na.action = na.exclude)
