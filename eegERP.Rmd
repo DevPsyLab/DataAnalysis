@@ -883,6 +883,85 @@ From here, click `Main` to return to EP Toolkit "home"
    - Click the grand average data (e.g., `ob_tgt_gav`) to save it
    - A file explorer window should open, prompting you to select the appropriate save location and give your file a name 
 
+# Generating ERP Composite Datafiles
+
+1. Save a copy of all extracted PCA component files (e.g., `erp_ob_tgt_all_P3`) in the following location on the Lab Drive: `Lab/Studies/School Readiness Study/Data/LV2/PCA Components` under the appropriate task (i.e., Oddball, Fishshark, or Stop Signal)
+1. Use the following R Code to combine all components into a single composites datafile.
+The following example is taken from the `erpOddball.R` composite script located in `Lab/Studies/School Readiness Study/Data Processing/3. Composites`.
+Comparable scripts have also been created for FishShark and Stop Signal tasks.
+   1. Create a list of all PCA component files in the specified directory.
+   This list will contain the full filepaths to each component file which are used to read the data into R.
+
+      ```
+      oddballFilePaths <- list.files(
+       path = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/LV2/ERP/PCA Components/Oddball"), 
+       pattern = "*.txt",
+       recursive = FALSE,
+       full.names = TRUE)
+      ```
+   1. Generate a list of the names of each PCA component file in the specified directory.
+   This list will be used to rename columns in the final composite dataset according to the name of the component file.
+   For this reason, the naming convention of each component files is crucial; this will determine how the corresponding column of the composite datafile is named.
+
+      ```
+      oddballFiles <- list.files(
+       path = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/LV2/ERP/PCA Components/Oddball"),
+       pattern = "*.txt",
+       recursive = FALSE)
+      ```
+   1. Read in each component file, skipping the rows containing summary information about the extracted component (the first 7 rows in this example).
+
+      ```
+      oddballData <- lapply(oddballFilePaths, function(x) read_delim(x, delim = "\t", skip = 7)) 
+      ```
+
+   1. "Clean" the list of component file names by removing the file extension (in this case, `.txt`).
+
+      ```
+      componentNames <- oddballFiles %>% str_remove(".txt")
+      ```
+
+    1. Give `ID` variable a proper name.
+
+       ```
+       oddballData <- lapply(oddballData, function(x){
+        names(x)[length(names(x))] <- "ID"
+        return(x)
+        })
+       ```
+    1. At this stage, the ERP component data are nested within a list of separate data objects.
+    We must therefore merge them into a single dataframe object.
+
+       ```
+       oddballDataMerged <- oddballData %>%
+          reduce(full_join, by = c("ID"))
+       ```
+    1. Organize the combined data.
+    The code below performs the following operations (in order of appearance):
+       * Create `tcid` variable by extracting the first four characters of existing `ID` variable
+       * Create `wave` variable by extracting the 6th and 7th characters of existing `ID` variable
+       * Re-order the data so that `tcid` and `wave` appear as the first two columns while all other columns retain their order in the dataset
+       * Remove the `ID` variable now that it has been separated into `tcid` and `wave`
+       * Convert all values to numeric
+
+       ```
+       oddballDataClean <- oddballDataMerged %>%
+          mutate(tcid = substr(ID, 1, 4),
+                 wave = substr(ID, 6, 7)) %>%
+          select(tcid, wave, everything()) %>%
+          select(-ID) %>% 
+          type_convert()
+       ```
+    1. Update column names of merged data according to the list of PCA component files.
+
+       ```
+       names(oddballDataClean) <- c("tcid", "wave", componentNames)
+       ```
+    1. Save composite data to desired location.
+
+       ```
+       write_csv(oddballDataClean, file = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/REDCap/Composites/erpOddball.csv"))
+       ```
 # Visualizations in R 
 
 ## R Code for Grand Average Waveform Plot
