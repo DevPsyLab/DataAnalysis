@@ -805,7 +805,7 @@ Record the number of factors retained and % variance accounted for by that numbe
 1. Return to `Main` and click `Save`.
 Save the tsPCA file in the `5-PCA` folder.
 
-## PCA Component Selection
+## PCA Component Selection and Extraction
 
 Here, the goal is to select the PCA component that corresponds to the ERP component of interest, and the extraction that supports the intended interpretability of the component.
 
@@ -831,7 +831,7 @@ Go to `Window` and input the following:
       If the waveform is negative-going at the peak channel, and you are interested in the positive-going dipole, you would select the peak positive channel to identify the PCA-estimated amplitude of the positive-going waveform on that PCA component.
       Nevertheless, even though you are selecting the PCA-estimated amplitude for a given channel at a given electrode, there are now "virtual channels"; the estimates include the contributions of all channels and all timepoints <u>to the extent that</u> they load onto the PCA component of interest.
       Thus, even if you select to window a PCA component from only 1 channel at 1 timepoint, it is using ALL channels and timepoints in the estimation—this is not the case if windowing the raw ERP waveforms.
-    - Save the files generated from the AutoPCA in the `6-PCA Components` folder using the following naming convention: "task_condition_age" (e.g.,`ob_tgt_all`).
+    - Save the files generated from the AutoPCA in the `6 - PCA Components` folder using the following naming convention: "erp_task_condition_age_component" (e.g.,`erp_ob_tgt_all_P3`).
 1. To view all of the tsPCA components, click `View` and input the following
     - select the appropriate file (e.g., `ob_tgt_all`)
     - select `gave`
@@ -841,6 +841,9 @@ Go to `Window` and input the following:
     - You can check this in one of two ways:
       - Visually examine grand averages between age ranges
       - Apply the PCA from one age group and apply it to another age group and examine whether the results hold up using cross-validation in EPToolkit
+1. It is generally useful to keep track of the extraction process for each PCA component.
+Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in the `6-PCA Components` folder.
+   * Relevant information may include the timing used to window a component and the electrodes that load onto the component of interest at a given threshold
 
 ## Identifying Electrodes that Load Onto PCA Component
 1. Go to `Window`
@@ -875,10 +878,10 @@ If you are only interested in the grand average data and not individual subjects
    - This will remove the individual subject data from the dataset and leave the grand average information 
 1. Click `Done`
 1. If you renamed the datafile, EP Toolkit should generate a popup message asking whether you would like to rename your dataset OR generate a new dataset using the new name (leaving the original dataset untouched).
-From the options presented, clikc `New` to generate a new file and preserve the original
+From the options presented, click `New` to generate a new file and preserve the original
 1. The editor window should close, returning you to the EP Toolkit pane that asks you to select a dataset to edit. 
 From here, click `Main` to return to EP Toolkit "home"
-1. Once in the main window, clikc `Save`
+1. Once in the main window, click `Save`
    - Set the save format to `Text (.txt)`
    - Click the grand average data (e.g., `ob_tgt_gav`) to save it
    - A file explorer window should open, prompting you to select the appropriate save location and give your file a name 
