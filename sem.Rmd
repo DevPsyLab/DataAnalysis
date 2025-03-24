@@ -1570,6 +1570,15 @@ fit1 <- cfa(
   bounds = "pos.var", # forces all variances of both observed and latent variables to be strictly nonnegative
   rstarts = 10, # random starts
   verbose = TRUE) # print all output
+
+fit2 <- cfa(
+  HS.model,
+  data = HolzingerSwineford1939,
+  missing = "ML",
+  estimator = "MLR",
+  bounds = "standard", # uses bounds for observed and latent variances, and for factor loadings
+  rstarts = 10, # random starts
+  verbose = TRUE) # print all output
 ```
 
 # Power Analysis {#powerAnalysis}
