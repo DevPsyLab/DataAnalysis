@@ -857,24 +857,209 @@ semPaths(
   edge.label.cex = 1.5)
 ```
 
-# Mediation {#mediation}
+# Latent Curve Model with Structured Residuals {#lcm-sr}
+
+A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR).
 
 ## Model Syntax
 
+Adapted from Mund & Nestler (2017): https://osf.io/a4dhk
+
 ```{r}
-mediationModel <- '
-# direct effect (cPrime)
-Y ~ direct*X
+lcmsr_syntax <- '
+  # Define intercept and growth factors
+  intercept.t =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope.t =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  
+  intercept.c =~ 1*c1 + 1*c2 + 1*c3 + 1*c4
+  slope.c =~ 0*c1 + 1*c2 + 2*c3 + 3*c4
+  
+  # Define phantom latent variables
+  e.t1 =~ 1*t1
+  e.t2 =~ 1*t2
+  e.t3 =~ 1*t3
+  e.t4 =~ 1*t4
+  
+  e.c1 =~ 1*c1
+  e.c2 =~ 1*c2
+  e.c3 =~ 1*c3
+  e.c4 =~ 1*c4
+  
+  # Autoregressive paths
+  e.t2 ~ a1*e.t1
+  e.t3 ~ a1*e.t2
+  e.t4 ~ a1*e.t3
+  
+  e.c2 ~ a2*e.c1
+  e.c3 ~ a2*e.c2
+  e.c4 ~ a2*e.c3
+  
+  # Cross-lagged paths
+  e.c2 ~ c1*e.t1
+  e.c3 ~ c1*e.t2
+  e.c4 ~ c1*e.t3
+  
+  e.t2 ~ c2*e.c1
+  e.t3 ~ c2*e.c2
+  e.t4 ~ c2*e.c3
+  
+  # Some further constraints on the variance structure
+  # 1. Set error variances of the observed variables to zero
+  t1 ~~ 0*t1
+  t2 ~~ 0*t2
+  t3 ~~ 0*t3
+  t4 ~~ 0*t4
+  
+  c1 ~~ 0*c1
+  c2 ~~ 0*c2
+  c3 ~~ 0*c3
+  c4 ~~ 0*c4
+  
+  # 2. Let lavaan estimate the variance of the latent variables (residuals)
+  e.t1 ~~ vart1*e.t1
+  e.t2 ~~ vart2*e.t2
+  e.t3 ~~ vart3*e.t3
+  e.t4 ~~ vart4*e.t4
+  
+  e.c1 ~~ varc1*e.c1
+  e.c2 ~~ varc2*e.c2
+  e.c3 ~~ varc3*e.c3
+  e.c4 ~~ varc4*e.c4
+  
+  # 3. We also want estimates of the intercept factor variances, the slope
+  #    variances, and the covariances
+  intercept.t ~~ varintercept.t*intercept.t
+  intercept.c ~~ varintercept.c*intercept.c
+  slope.t ~~ varslope.t*slope.t
+  slope.c ~~ varslope.c*slope.c
+  
+  intercept.t ~~ covintercept*intercept.c
+  slope.t ~~ covslope*slope.c
+  
+  intercept.t ~~ covintercept.tslope.t*slope.t
+  intercept.t ~~ covintercept.tslope.c*slope.c
+  intercept.c ~~ covintercept.cslope.t*slope.t
+  intercept.c ~~ covintercept.cslope.c*slope.c
+  
+  # 4. We have to define that the covariance between the intercepts and
+  #    the slopes and the latents of the first time point are zero
+  e.t1 ~~ 0*intercept.t
+  e.c1 ~~ 0*intercept.t
+  e.t1 ~~ 0*slope.t
+  e.c1 ~~ 0*slope.t
+  e.t1 ~~ 0*intercept.c
+  e.c1 ~~ 0*intercept.c
+  e.t1 ~~ 0*slope.c
+  e.c1 ~~ 0*slope.c
+  
+  # 5. Finally, we estimate the covariance between the latents of x and y
+  #    of the first time point, the second time-point and so on. Note that
+  #    for the second to fourth time point the correlation is constrained to
+  #    the same value
+  e.t1 ~~ cov1*e.c1
+  e.t2 ~~ e1*e.c2
+  e.t3 ~~ e1*e.c3
+  e.t4 ~~ e1*e.c4
+  
+  # The model also contains a mean structure and we have to define some
+  # constraints for this part of the model. The assumption is that we
+  # only want estimates of the mean of the intercept factors. All other means
+  # are defined to be zero:
+  t1 ~ 0*1
+  t2 ~ 0*1
+  t3 ~ 0*1
+  t4 ~ 0*1
+  
+  c1 ~ 0*1
+  c2 ~ 0*1
+  c3 ~ 0*1
+  c4 ~ 0*1
+  
+  e.t1 ~ 0*1
+  e.t2 ~ 0*1
+  e.t3 ~ 0*1
+  e.t4 ~ 0*1
+  
+  e.c1 ~ 0*1
+  e.c2 ~ 0*1
+  e.c3 ~ 0*1
+  e.c4 ~ 0*1
+  
+  intercept.t ~ 1
+  intercept.c ~ 1
+  slope.t ~ 1
+  slope.c ~ 1
+'
+```
 
-# mediator
-M ~ a*X
-Y ~ b*M
+## Fit the Model
 
-# indirect effect = a*b
-indirect := a*b
+```{r}
+lcmsr_fit <- sem(
+  lcmsr_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
 
-# total effect (c)
-total := direct + indirect
+## Summary Output
+
+```{r}
+summary(
+  lcmsr_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  lcmsr_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  lcmsr_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  lcmsr_fit,
+  sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(lcmsr_fit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  lcmsr_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
+
 # Mediation {#mediation}
 
 ## Model Syntax
