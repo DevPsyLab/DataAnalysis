@@ -343,6 +343,10 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
              - The c/x indicator will be appended to the front of the existing event tag (e.g., `Go++` will become `cGo++`)
           - Export an updated version of the .mff file with accuracy information to the specified location ("pathSub")
 
+   **NOTE: When exporting EEG data from MATLAB, it is absolutely necessary for the data to be organized in order of event latency.**
+   **If the rows are out of order, latency errors may be introduced.**
+      - Correct row order can be achieved in `.mff` filetypes by sorting according to either the `latency` column or the `urevent` column (as shown below) 
+
        ```
        for row = 1:height(mergePaths)
            % Specify paths
@@ -417,10 +421,17 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
            % Replace codes where new code is needed
            EEGnew.code(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
            EEGnew.type(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
-           EEGnew = table2struct(EEGnew(:, 1:28))
 
-           % Replace event table in original struct
+           % Arrange table in order of event (CRUCIAL for correct export)
+           EEGnew = sortrows(EEGnew, 'urevent')
+          
+           % Convert table back to struct and restore original dimensions
+           EEGnew = table2struct(EEGnew(:, 1:29))
+           EEGnew = reshape(EEGnew, [1, height(EEGnew)])
+
+           % Replace event table(s) in original struct
            EEGraw.event = EEGnew
+           EEGraw.urevent = table2struct(struct2table(EEGnew(:, 1:28)))
 
            % Export updated file
            pop_mffexport(EEGraw, char(subFolder))
