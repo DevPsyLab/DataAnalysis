@@ -1077,7 +1077,7 @@ mediationModel <- '
   indirect := a*b
   
   # total effect (c)
-  total := direct + indirect
+  total := abs(direct) + abs(indirect)
 '
 ```
 
@@ -1096,7 +1096,7 @@ mediationFit <- sem(
   iseed = 52242, # for reproducibility
   missing = "ML",
   estimator = "ML",
-  std.lv = TRUE,
+  # std.lv = TRUE, # for models with latent variables
   fixed.x = FALSE)
 ```
 
@@ -1176,7 +1176,7 @@ mediationFit_indirect
 #### Proportion Mediated (*P*<sub>*M*</sub>) {#proportionMediated}
 
 $$
-P_M = \frac{ab}{c} = \frac{ab}{c' + ab}
+P_M = \frac{|ab|}{|c|} = \frac{|ab|}{|c'| + |ab|}
 $$
 
 Effect size: Proportion mediated (*P*<sub>*M*</sub>); i.e., the proportion of the total effect that is mediated; calculated by the magnitude of the indirect effect divided by the magnitude of the total effect:
@@ -1187,12 +1187,14 @@ mediationFit_total <- mediationFit_estimates %>%
   select(std.all) %>% 
   as.numeric
 
-mediationFit_pm <- mediationFit_indirect / mediationFit_total
+mediationFit_pm <- abs(mediationFit_indirect) / abs(mediationFit_total)
 mediationFit_pm
 ```
 
 In this case, the direct effect and indirect effect have opposite signs (negative and positive, respectively).
-This is called *inconsistent mediation*, and renders the estimate of proportion mediated not a meaningful estimate of effect size (which explains why it the estimate exceeds 1.0; Fairchild & McDaniel, 2017).
+This is called *inconsistent mediation*, and can render the estimate of proportion mediated not a meaningful estimate of effect size (in this case, the estimate would exceed 1.0; Fairchild & McDaniel, 2017).
+To address this, we can use the absolute value of the direct and indirect effects (in computation of the total effect), as recommended by MacKinnon et al. (2007).
+When using the absolute value of the direct and indirect effects, the proportion mediated (*P*<sub>*M*</sub>) is `r petersenlab::apa(mediationFit_pm, decimals = 2)`, indicating that the mediator explained `r petersenlab::apa(mediationFit_pm * 100, decimals = 0)`% of the total effect.
 
 #### Proportion of Variance in Y That is Explained by the Indirect Effect (*R*<sup>2</sup><sub>mediated</sub>) {#rSquaredMediated}
 
