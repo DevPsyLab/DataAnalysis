@@ -24,6 +24,8 @@ knitr::opts_chunk$set(
 
 # ERP Processing Pipeline using HAPPE
 
+## Inital Set-up
+
 1. Download MATLAB: https://its.uiowa.edu/matlab
     - Click `How to Install MatLab` and follow the relevant instructions
     - Create a `MatLab` folder in your local directory.
@@ -46,13 +48,80 @@ knitr::opts_chunk$set(
     - You should have the following subfolders in your `MatLab` folder:
         - `EP_Toolkit`
         - `Fieldtrip-[version number]`
-1. Open the HAPPE pipeline V4 script in MATLAB
-    - Follow the User Guide instructions for the HAPPE-ER pipeline, using the user inputs described below.
-    - Alternatively, open the [MATLAB processing file](#matlabScripts) that runs the HAPPE-ER pipeline and deals with the output. 
-       - e.g., `/Data Processing/6. MATLAB EEG Pipeline/eegProcessingOddball.m`
 
-## Oddball Task
+## MATLAB Scripts to Manage HAPPE Files {#matlabScripts}
 
+We have scripts for each task that can prepare files for the HAPPE Pipeline and/or manage the files outputted from HAPPE.
+These actions can be done manually as well, but the MATLAB scripts make the process more efficient.
+The scripts will also generate a "log" of all of the files processed through HAPPE to facilitate tracking of EEG data processing.
+The sections below detail the code used to perform these actions as well as the instructions for using the current scripts.
+
+Note: Before using the scripts/code detailed below, ensure that all filepaths used are in your MATLAB path collection.
+These may include:
+   
+   - The location where the automatic scripts are stored (for our lab, this is under `/Data Processing/6. MATLAB EEG Pipeline`)
+   - The location where the HAPPE pre-processing script is stored
+   - The location of the raw data (to be processed)
+   - The location(s) of any intermediate files for processing (e.g., the updated .mff files that contain accuracy information in FishShark)
+   - The location(s) for any files outputted by HAPPE and/or places you wish to use the script to move them to
+
+## Oddball Processing Pipeline 
+
+### MATLAB Script
+
+The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#inputOddballHAPPE) section. 
+
+1. Open the `eegProccessingOddball.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`) in MATLAB
+1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
+   - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
+   Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
+   
+   ```
+   % Set quality threshold parameters
+   trialCutoff = 10;
+   ```
+   - We also set environment variables with all of the filepaths that are relevant for managing HAPPE output files and tracking processed data.
+   The following paths should be checked and updated as necessary to reflect the organization of processing on your computer.
+      - `passPath` is the location you wish to have files that meet or exceed the above-defined thresholds to be saved
+      - `allPath` is the location you wish to have ALL files outputted from HAPPE saved to (regardless of whether threshold is met or not)
+      - `failPath` is the location you wish to have files that do not meet the above-defined thresholds to be copied to
+         - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
+      - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
+         - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
+    
+    ```
+    % Set paths for file sorting
+    passPath = 'V:\Processing-Repo\Folder Structure\3 - Files for PCA'; %location for .txt output files
+    allPath = 'V:\Processing-Repo\Folder Structure\2 - Processed Files'; %location for all processed files to end up
+    failPath = 'V:\Processing-Repo\Folder Structure\1b - Manual Processing'; %location to copy unsuccessful .mff to for manual process
+
+    % Set path for processing summary
+    summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
+    ```
+1. Run the HAPPE Pipeline
+   - This first section is designed to rely on user input.
+   Press "Run" on the MATLAB editor window with the file open to begin the process.
+   - A message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
+   - Once the path is entered, MATLAB will run the file
+
+   ```
+   % Set path to HAPPE pre-processing script
+   happeRun = input('Enter the full path to the HAPPE pre-processing file:\n> ','s') ;
+
+   % Call and run HAPPE pre-processing script
+   run(happeRun);
+   ```
+1. Enter HAPPE inputs
+   - See the following section for HAPPE user inputs for Oddball
+
+After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
+The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
+See [Oddball Post-HAPPE Steps](#oddballPost) for a detailed explanation of the code used to accomplish this.
+
+### HAPPE Inputs {#inputOddballHAPPE}
+
+1. If you are not using the MATLAB scripts described above, you must first open the HAPPE pipeline V4 script in MATLAB and click "Run"
+   - This will be stored in the location to which you mapped the HAPPE Git repo (e.g. `Documents/GitHub/HAPPE/1. pre-process/HAPPE_v4.m`)
 1. User Inputs
     - Enter the path to the folder containing the dataset.
     - Select `raw`
@@ -110,365 +179,20 @@ knitr::opts_chunk$set(
     - Visualizations: `N`
     - Parameter file save name: `default`
 
-## Fish/Shark
+### Oddball Post-HAPPE Steps {#oddballPost}
 
-1. User Inputs
-    - Enter the path to the folder containing the dataset.
-    - Select `raw`
-    - Load pre-existing set of input parameter: 
-        - `N` if this is your first time running data through the pipeline.
-        - `Y` if you have decided on a set of parameters.
-        Enter the path to the folder containing the input parameters.
-    - Low density data: `N`
-    - Data type: `task`
-    - Performing event-related potential (ERP) analysis: `Y`
-    - Enter the task onset tags
-        - Correct Go: `cGo++`
-        - Incorrect Go: `xGo++`
-        - Correct NoGo: `cNG++`
-        - Incorrect NoGo: `xNG++`
-        - `done`
-    - Do multiple onset tags belong to a single condition? `N`
-    - File format: `5`
-    - Acquisition layout type: `2`
-    - Number of channels: `128`
-    - Do you have additional type fields besides "code"? `N`
-    - Select channels of interest: `all`
-    - Frequency of electrical noice in Hz: `60`
-    - Are there any additional frequencies, (e.g., harmonics) to reduce? `N`
-    - Line Noise reduction method: `notch`
-        - Low cutoff: `59`
-        - high cutoff: `61`
-    - Resample: `N`
-    - Filter
-        - Low Pass Cutoff: `30`
-        - High Pass Cutoff: `.1`
-    - Choose a filter: `fir`
-    - Bad Channel Detection: `Y`
-        - `after` wavelet thresholding
-    - ECGone: `N`
-    - Wavelet Thresholding
-        - `default`
-        - Threshold rule: `hard`
-    - MuscIL: `N`
-    - Segmentation: `Y`
-        - Starting parameter for stimulus: `-200`
-        - Ending parameter for stimulus: `1000`
-        - Task offset: `17`
-    - Baseline Correction: `Y`
-        - Baseline Correction start: `-200`
-        - Baseline Correction end: `0`
-    - Interpolation: `Y`
-    - Segment Rejection: `Y`
-        - Segment Rejection Method: `amplitude`
-            - minimum segment rejection threshold: `-150`
-            - maximum segment rejection threshold: `150`
-            - segment rejection based on all channels or ROI: `all`
-    - Re-referencing: `Y`
-        - Does your data contain a flatline or all zero reference channel? `N`
-        - re-referencing method: `average`
-    - Save format: `1`
-    - Visualizations: `N`
-    - Parameter file save name: `default`
+This section details the actions performed by the MATLAB scripts once HAPPE is completed.
+These actions will take place automatically upon completion of the HAPPE pipeline.
+**No user inputs or actions are necessary at this stage.**
 
-## Stop-Signal
-
-# MATLAB Scripts to Manage HAPPE Files {#matlabScripts}
-
-We have scripts for each task that can prepare files for the HAPPE Pipeline and/or manage the files outputted from HAPPE.
-These actions can be done manually as well, but the MATLAB scripts make the process more efficient.
-The scripts will also generate a "log" of all of the files processed through HAPPE to facilitate tracking of EEG data processing.
-The sections below detail the code used to perform these actions as well as the instructions for using the current scripts.
-
-Note: Before using the scripts/code detailed below, ensure that all filepaths used are in your MATLAB path collection.
-These may include:
-   
-   - The location where the automatic script is stored (for our lab, this is under `/Data Processing/6. MATLAB EEG Pipeline`)
-   - The location where the HAPPE pre-processing script is stored
-   - The location of the raw data (to be processed)
-   - The location(s) of any intermediate files for processing (e.g., the updated .mff files that contain accuracy information in FishShark)
-   - The location(s) for any files outputted by HAPPE and/or places you wish to use the script to move them to
-
-## Oddball (Pre-HAPPE) 
-1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
-   - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
-   Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
-   
-   ```
-   % Set quality threshold parameters
-   trialCutoff = 10;
-   ```
-   - We also set environment variables with all of the filepaths that are relevant for managing HAPPE output files and tracking processed data.
-   The following paths should be checked and updated as necessary to reflect the organization of processing on your computer.
-      - `passPath` is the location you wish to have files that meet or exceed the above-defined thresholds to be saved
-      - `allPath` is the location you wish to have ALL files outputted from HAPPE saved to (regardless of whether threshold is met or not)
-      - `failPath` is the location you wish to have files that do not meet the above-defined thresholds to be copied to
-         - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
-      - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
-         - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
-    
-    ```
-    % Set paths for file sorting
-    passPath = 'V:\Processing-Repo\Folder Structure\3 - Files for PCA'; %location for .txt output files
-    allPath = 'V:\Processing-Repo\Folder Structure\2 - Processed Files'; %location for all processed files to end up
-    failPath = 'V:\Processing-Repo\Folder Structure\1b - Manual Processing'; %location to copy unsuccessful .mff to for manual process
-
-    % Set path for processing summary
-    summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
-    ```
-1. Run the HAPPE Pipeline
-   - This first section is designed to rely on user input.
-   Press "Run" on the MATLAB editor window with the file open to begin the process.
-   - A message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
-   - Once the path is entered, MATLAB will run the file
-
-   ```
-   % Set path to HAPPE pre-processing script
-   happeRun = input('Enter the full path to the HAPPE pre-processing file:\n> ','s') ;
-
-   % Call and run HAPPE pre-processing script
-   run(happeRun);
-   ```
-1. Enter HAPPE inputs
-   - See the above section for HAPPE user inputs for Oddball
-
-At this point, no more user interaction is required for the script to do its job.
-The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation.
-See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and an explanation of what it does.
-
-## FishSharks (Pre-HAPPE)
-
-1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
-   - In the fifth section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
-   Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
-   - Note that setting these parameters occurs later in the FishSharks script than the one for Oddball; 
-   this is because FishSharks files require additional processing before they are ready for HAPPE (see step 2 for details)
-   
-   ```
-   % Set quality threshold parameters
-   trialCutoff = 10;
-   ```
-   - We also set environment variables with all of the filepaths that are relevant for managing HAPPE output files and tracking processed data.
-   The following paths should be checked and updated as necessary to reflect the organization of processing on your computer.
-      - `passPath` is the location you wish to have files that meet or exceed the above-defined thresholds to be saved
-      - `allPath` is the location you wish to have ALL files outputted from HAPPE saved to (regardless of whether threshold is met or not)
-      - `failPath` is the location you wish to have files that do not meet the above-defined thresholds to be copied to
-         - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
-      - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
-         - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
-    
-    ```
-    % Set paths for file sorting
-    passPath = 'V:\Processing-Repo\Folder Structure\3 - Files for PCA'; %location for .txt output files
-    allPath = 'V:\Processing-Repo\Folder Structure\2 - Processed Files'; %location for all processed files to end up
-    failPath = 'V:\Processing-Repo\Folder Structure\1b - Manual Processing'; %location to copy unsuccessful .mff to for manual process
-
-    % Set path for processing summary
-    summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
-    ```
-1. Update raw (.mff) files' condition tags with accuracy information
-   - Unlike the Passive Oddball task, FishSharks trials can be either correct or incorrect. 
-   Whether or not a trial was "responded to" correctly is relevant to the nature of the extracted ERP.
-   Because the event tags in our .mff files do not inherently contain information about whether each trial was responded to correctly, we need to add it ourselves.
-   This process can be done manually in NetStation, but it can also be automated using the MATLAB code detailed below.
-   - NOTE: This code requires eeglab.
-   Before running the code, open eeglab in your MATLAB session by typing `eeglab` into the console.
-   You can close it as soon as it opens, but this step ensures that eeglab is loaded into your current session and helps prevent the subsequent code from erroring out.
-   
-   1. Set the filepaths for raw and updated .mff files
-      - This section is set to rely on user inputs.
-      Press "Run" in the MATLAB editor to start the processing.
-      - A message will appear in the console prompting you to enter two filepaths: 
-      the first is the location of the raw .mff files, and the second is the location you would like the updated files to save in.
-
-      ```
-      % User input for location of raw files
-      pathRaw = input('Enter the full path to the folder containing the raw files:\n> ','s');
-      
-      % User input for destination of subsetted files
-      pathSub = input('Enter the full path to the folder in which to save the subsetted files:\n> ','s');
-      ```
-       At this point, there will be no user input/actions necessary until all of the .mff files in the "pathRaw" directory have been updated and saved into the "pathSub" directory.
-       The code that asks the user for the path to HAPPE will run when that process has finished.
-       The following section will describe the code used to automate the process of updated .mff event tags to include accuracy information at the trial level.
-       Move on to Step 3 when the process has completed.
-
-   1. Gather and manage information from the directory housing the raw (.mff) files
-      
-      ```
-      % Have MATLAB gather a list of raw files housed in specified location (pathRaw)
-      dirInfo = struct2table(dir(pathRaw));
-
-      % Remove blank rows
-      noName = strcmp(dirInfo.name, '.') | strcmp(dirInfo.name, '..');
-      dirInfo(noName, :) = [];
-      ```
-   1. Generate variables necessary for managing raw and updated files
-      - This code will generate the full filepaths (including file name) necessary for reading in and saving each .mff file and its updated counterpart
-      - It will also generate an ID variable for joining purposes based on the expected location of the subject name in the name of each file 
-
-      ```
-      % Generate ID variable
-      dataFiles = dirInfo(:, "name");
-      
-      % Add ID variable to file data
-      dataFiles.ID = extractBefore(dataFiles.name, 8);
-      
-      % Generate path to read raw data
-      rawPaths = dataFiles;
-      rawPaths.path = strcat({pathRaw}, "/", dirInfo.name);
-      rawPaths = rawPaths(:, ["ID", "path"]);
-      
-      % Generate path to save updated versions of the data (containing accuracy info at trial level)
-      subPaths = dataFiles;
-      subPaths.path = strcat({pathSub}, "/", subPaths.ID, "_sub_fishshark.mff");
-      subPaths = subPaths(:, ["ID", "path"]);
-      
-      % Join filepath datatables
-      mergePaths = join(rawPaths, subPaths, 'Keys', {'ID'})
-      ```
-    1. Use a loop to update the event tags in each .mff file to reflect accuracy of response
-       - For every file included in the "mergePaths" dataset, MATLAB will perform the following actions:
-          - Set environment variables representing the path to read in the original .mff file and save its updated counterpart (updates with each iteration of the loop)
-          - Read in the .mff file
-          - Extract the "event" information from the .mff file 
-          - Evaluate whether there is usable data in the file 
-             - This step prevents the code from erroring out if a subject did not make it past the practice trials
-             - If the evaluation determines that there is NOT usable data in the present file, the loop will jump to the next file
-          - Create a table containing response information (response vs no response and reaction time) and condition information (go vs no-go) at the trial level
-          - Evaluate each trial to determine whether the response was correct or incorrect
-             - For No-Go trials, responses are CORRECT if there was no response (incorrect if subject did respond)
-             - For Go trials, responses are CORRECT if there was a response AND subject's reaction time was at least 200 ms (incorrect if subject did not respond OR if subject responded too quickly for response to be considered "valid")
-          - Update the event tags in the .mff file to contain a "c" for correct trials and an "x" for incorrect trials 
-             - The c/x indicator will be appended to the front of the existing event tag (e.g., `Go++` will become `cGo++`)
-          - Export an updated version of the .mff file with accuracy information to the specified location ("pathSub")
-
-   **NOTE: When exporting EEG data from MATLAB, it is absolutely necessary for the data to be organized in order of event latency.**
-   **If the rows are out of order, latency errors may be introduced.**
-      - Correct row order can be achieved in .mff filetypes by sorting according to either the `latency` column or the `urevent` column (as shown below) 
-
-       ```
-       for row = 1:height(mergePaths)
-           % Specify paths
-           rawFolder = mergePaths{row, "path_rawPaths"}
-           subFolder = mergePaths{row, "path_subPaths"}
-    
-           % Read in EEG data
-           EEGraw = pop_mffimport(char(rawFolder), 'code')
-
-           % Create table from "event" field of raw data
-           EEGevent = struct2table(EEGraw.event)
-
-           % Check for the existence of usable rows
-           checkVars = strcmp(EEGevent.Properties.VariableNames, 'mffkey_cel')
-
-           % Skip files without necessary variables
-           if max(checkVars) == 0
-               continue
-           end
-
-           % Create table without practice/training trials
-           keepRows = strcmp(EEGevent.mffkey_cel, '4')
-           EEGsub  = EEGevent(keepRows, :)
-
-           % Check for the existence of usable rows
-           checkRows = max(keepRows)
-
-           % Skip files with no usable rows
-           if checkRows == 0
-               continue
-           end
-
-           % Get response info at trial level
-           EEGresp = table(EEGsub.mffkey_obs, EEGsub.mffkey_eval, EEGsub.mffkey_rtim)
-           EEGresp = rmmissing(EEGresp)
-           EEGresp = renamevars(EEGresp, ["Var1", "Var2", "Var3"], ["Trial", "Eval", "RTime"])
-
-           % Get condition info at trial level
-           EEGconds = table(EEGsub.mffkey_obs, EEGsub.type)
-           EEGconds = renamevars(EEGconds, ["Var1", "Var2"], ["Trial", "Cond"])
-           keepConds = strcmp(EEGconds.Cond, 'Go++') | strcmp(EEGconds.Cond, 'NG++')
-           EEGcond = EEGconds(keepConds, :)
-
-           % Merge datasets
-           EEGtrials = join(EEGcond, EEGresp)
-
-           EEGtrials.RTime = cellfun(@str2num, EEGtrials.RTime)
-           % Evaluate trials for correct-ness of response
-           correct = strcmp(EEGtrials.Cond, 'Go++') & strcmp(EEGtrials.Eval, '1') & EEGtrials.RTime > 200 | strcmp(EEGtrials.Cond, 'NG++') & strcmp(EEGtrials.Eval, '0')
-           EEGtrials.Acc = correct
-
-
-           % Create new code tags including accuracy information
-           EEGtrials.newCode(EEGtrials.Acc & strcmp(EEGtrials.Cond, 'Go++')) = {'cGo++'}
-           EEGtrials.newCode(~EEGtrials.Acc & strcmp(EEGtrials.Cond, 'Go++')) = {'xGo++'}
-           EEGtrials.newCode(EEGtrials.Acc & strcmp(EEGtrials.Cond, 'NG++')) = {'cNG++'}
-           EEGtrials.newCode(~EEGtrials.Acc & strcmp(EEGtrials.Cond, 'NG++')) = {'xNG++'}
-
-           % Subset information for merge
-           EEGmerge = EEGtrials(:, {'Trial', 'Cond', 'newCode'})
-
-           % Prep key in original data
-           EEGevent.key = strcat(EEGevent.mffkey_obs, EEGevent.type)
-
-           % Prep key in merge data
-           EEGmerge.key = strcat(EEGmerge.Trial, EEGmerge.Cond)
-           EEGmerge = EEGmerge(:, {'key', 'newCode'})
-
-           % Merge new codes with event table
-           EEGnew = outerjoin(EEGevent, EEGmerge)
-
-           % Replace codes where new code is needed
-           EEGnew.code(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
-           EEGnew.type(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
-
-           % Arrange table in order of event (CRUCIAL for correct export)
-           EEGnew = sortrows(EEGnew, 'urevent')
-          
-           % Convert table back to struct and restore original dimensions
-           EEGnew = table2struct(EEGnew(:, 1:29))
-           EEGnew = reshape(EEGnew, [1, height(EEGnew)])
-
-           % Replace event table(s) in original struct
-           EEGraw.event = EEGnew
-           EEGraw.urevent = table2struct(struct2table(EEGnew(:, 1:28)))
-
-           % Export updated file
-           pop_mffexport(EEGraw, char(subFolder))
-       end 
-       ```
-
-    
-1. Run the HAPPE Pipeline
-   - This section is designed to rely on user input.
-   - When the prior steps have finsihed, a message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
-   - Once the path is entered, MATLAB will run the file
-
-   ```
-   % Set path to HAPPE pre-processing script
-   happeRun = input('Enter the full path to the HAPPE pre-processing file:\n> ','s') ;
-
-   % Call and run HAPPE pre-processing script
-   run(happeRun);
-   ```
-1. Enter HAPPE inputs
-   - See the above section for HAPPE user inputs for FishSharks
-
-At this point, no more user interaction is required for the script to do its job.
-The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation.
-See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and an explanation of what it does.
-
-
-## Stop-Signal (Pre-HAPPE) 
-
-## General Post-HAPPE Steps {#generalPost}
-1. Remove files that don't have any output data from the dataset that will be used to assess file quality
+1. Exclude files that don't have any output data from the dataset (containing filename and quality reports from HAPPE pipeline) that will be used to assess file quality
    - This step is important because "empty" files don't play nicely with the code used to evaluate files that have some data in them (even if the data do not meet threshold)
    - This code relies on HAPPE's quality data that remains in the MATLAB environment after the pipeline has finished.
 
    ```
    % Create a list of files that received some kind of error message
    noTags = any(strcmp(dataQC, 'NO_TAGS'), 2);
+   oneRej = any(strcmp(dataQC, 'REJ_ONE_SEG'), 2);
    allRej = any(strcmp(dataQC, 'ALL_SEG_REJ'), 2);
    error = any(strcmp(dataQC, 'ERROR'), 2);
    loadFail = any(strcmp(dataQC, 'LOAD_FAIL'), 2);
@@ -477,19 +201,16 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
    dataQCNew = [FileNames', dataQC];
 
    % Remove all files in the above lists (those receiving errors) from the quality data
-   dataQCNew(noTags | allRej | error | loadFail, :) = [];
+   dataQCNew(noTags | allRej | error | loadFail | oneRej, :) = [];
 
    % Create list of variable names for quality data
    dataQCnamesNew = ["File", dataQCnames];
    
    % Save the data as a table for ease of use in subsequent steps
    qcTable = cell2table(dataQCNew, 'VariableNames', dataQCnamesNew);
-
-   % Subset to ID and threshold information
-   testInfo = qcTable(:, ["idWave", "File", "Test"]);
    ```
 
-2. Identify the files that meet (or don't meet) the threshold
+1. Identify the files that meet (or don't meet) the threshold
 
    ```
    % Create a list of files (i.e., rows in the table) that meet threshold
@@ -508,6 +229,15 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
 
    % Append ID variable to quality data
    qcTable.idWave = idWaveQC;
+   ```
+
+1. Create a subsetted dataset conataining only the `idWave`, file name, and "test results" (i.e., whether a given file meets the specified cutoff threshold for inclusion) variables
+
+   ```
+   % Subset to ID and threshold information
+   testInfo = qcTable(:, ["idWave", "File", "Test"]);
+   
+   fprintf('Assessment Complete \n');
    ```
 
 1. Generate a list of files outputted by HAPPE
@@ -680,6 +410,560 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
 1. Generate a .txt file listing all processed .mff files
    - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) and save the list to the specified location ("summPath")
    - The file will have the current date and time appended to the end so that it will be distinguishable from past logs 
+   - The list of processed files is generated using an environment variable (`FileNames`) that the HAPPE pipeline creates that lists all files inputted to the pipeline
+
+   ```
+   % Create a table from HAPPE FileNames cell array
+   processedList = cell2table(FileNames(:));
+
+   % Rename file variable from default
+   processedList = renamevars(processedList, {'Var1'}, {'File'});
+
+   % Save current date as a string variable 
+   today = string(date());
+
+   % Save time as a string variable, replacing ":" with "_" so that file can be written 
+   time = strrep(datestr(now, 'HH:MM:SS:FFF'), ':', "_");
+
+   % Generate file name to include current date and time 
+   listFile = strcat("\oddballProcessed_", today, "_", time);
+
+   % Generate full path including file name
+   summPathFull = strcat(summPath, listFile);
+
+   % Write table to specified location
+   writetable(processedList, summPathFull);
+   ```
+
+## Fish/Shark Processing Pipeline
+
+### MATLAB Script
+
+The following section describes the MATLAB scripts used to manage HAPPE input and output files for the Fish/Shark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Fish/Shark HAPPE inputs](#inputFishSharkHAPPE) section. 
+
+1. Open the `eegProccessingFishshark.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`) in MATLAB
+1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
+   - In the fifth section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
+   Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
+   - Note that setting these parameters occurs later in the FishSharks script than the one for Oddball; 
+   this is because FishSharks files require additional processing before they are ready for HAPPE (see step 2 for details)
+   
+   ```
+   % Set quality threshold parameters
+   trialCutoff = 10;
+   ```
+   - We also set environment variables with all of the filepaths that are relevant for managing HAPPE output files and tracking processed data.
+   The following paths should be checked and updated as necessary to reflect the organization of processing on your computer.
+      - `passPath` is the location you wish to have files that meet or exceed the above-defined thresholds to be saved
+      - `allPath` is the location you wish to have ALL files outputted from HAPPE saved to (regardless of whether threshold is met or not)
+      - `failPath` is the location you wish to have files that do not meet the above-defined thresholds to be copied to
+         - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
+      - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
+         - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
+    
+    ```
+    % Set paths for file sorting
+    passPath = 'V:\Processing-Repo\Folder Structure\3 - Files for PCA'; %location for .txt output files
+    allPath = 'V:\Processing-Repo\Folder Structure\2 - Processed Files'; %location for all processed files to end up
+    failPath = 'V:\Processing-Repo\Folder Structure\1b - Manual Processing'; %location to copy unsuccessful .mff to for manual process
+
+    % Set path for processing summary
+    summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
+    ```
+1. Update raw (.mff) files' condition tags with accuracy information
+   - Unlike the Passive Oddball task, FishSharks trials can be either correct or incorrect. 
+   Whether or not a trial was "responded to" correctly is relevant to the nature of the extracted ERP.
+   Because the event tags in our .mff files do not inherently contain information about whether each trial was responded to correctly, we need to add it ourselves.
+   This process can be done manually in NetStation, but it can also be automated using the MATLAB code detailed below.
+   - NOTE: This code requires eeglab.
+   Before running the code, open eeglab in your MATLAB session by typing `eeglab` into the console.
+   You can close it as soon as it opens, but this step ensures that eeglab is loaded into your current session and helps prevent the subsequent code from erroring out.
+   
+   1. Set the filepaths for raw and updated .mff files
+      - This section is set to rely on user inputs.
+      Click "Run" in the MATLAB editor to start the processing.
+      - A message will appear in the console prompting you to enter two filepaths: 
+      the first is the location of the raw .mff files, and the second is the location you would like the updated files to save in.
+
+      ```
+      % User input for location of raw files
+      pathRaw = input('Enter the full path to the folder containing the raw files:\n> ','s');
+      
+      % User input for destination of subsetted files
+      pathSub = input('Enter the full path to the folder in which to save the subsetted files:\n> ','s');
+      ```
+       At this point, there will be no user input/actions necessary until all of the .mff files in the "pathRaw" directory have been updated and saved into the "pathSub" directory.
+       The code that asks the user for the path to HAPPE will run when that process has finished.
+       The following section will describe the code used to automate the process of updated .mff event tags to include accuracy information at the trial level.
+       Move on to Step 3 when the process has completed.
+
+   1. Gather and manage information from the directory housing the raw (.mff) files
+      
+      ```
+      % Have MATLAB gather a list of raw files housed in specified location (pathRaw)
+      dirInfo = struct2table(dir(pathRaw));
+
+      % Remove blank rows
+      noName = strcmp(dirInfo.name, '.') | strcmp(dirInfo.name, '..');
+      dirInfo(noName, :) = [];
+      ```
+   1. Generate variables necessary for managing raw and updated files
+      - This code will generate the full filepaths (including file name) necessary for reading in and saving each .mff file and its updated counterpart
+      - It will also generate an ID variable for joining purposes based on the expected location of the subject name in the name of each file 
+
+      ```
+      % Generate ID variable
+      dataFiles = dirInfo(:, "name");
+      
+      % Add ID variable to file data
+      dataFiles.ID = extractBefore(dataFiles.name, 8);
+      
+      % Generate path to read raw data
+      rawPaths = dataFiles;
+      rawPaths.path = strcat({pathRaw}, "/", dirInfo.name);
+      rawPaths = rawPaths(:, ["ID", "path"]);
+      
+      % Generate path to save updated versions of the data (containing accuracy info at trial level)
+      subPaths = dataFiles;
+      subPaths.path = strcat({pathSub}, "/", subPaths.ID, "_sub_fishshark.mff");
+      subPaths = subPaths(:, ["ID", "path"]);
+      
+      % Join filepath datatables
+      mergePaths = join(rawPaths, subPaths, 'Keys', {'ID'})
+      ```
+    1. Use a loop to update the event tags in each .mff file to reflect accuracy of response
+       - For every file included in the "mergePaths" dataset, MATLAB will perform the following actions:
+          - Set environment variables representing the path to read in the original .mff file and save its updated counterpart (updates with each iteration of the loop)
+          - Read in the .mff file
+          - Extract the "event" information from the .mff file 
+          - Evaluate whether there is usable data in the file 
+             - This step prevents the code from erroring out if a subject did not make it past the practice trials
+             - If the evaluation determines that there is NOT usable data in the present file, the loop will jump to the next file
+          - Create a table containing response information (response vs no response and reaction time) and condition information (go vs no-go) at the trial level
+          - Evaluate each trial to determine whether the response was correct or incorrect
+             - For No-Go trials, responses are CORRECT if there was no response (incorrect if subject did respond)
+             - For Go trials, responses are CORRECT if there was a response AND subject's reaction time was at least 200 ms (incorrect if subject did not respond OR if subject responded too quickly for response to be considered "valid")
+          - Update the event tags in the .mff file to contain a "c" for correct trials and an "x" for incorrect trials 
+             - The c/x indicator will be appended to the front of the existing event tag (e.g., `Go++` will become `cGo++`)
+          - Export an updated version of the .mff file with accuracy information to the specified location ("pathSub")
+
+   **NOTE: When exporting EEG data from MATLAB, it is absolutely necessary for the data to be organized in order of event latency.**
+   **If the rows are out of order, latency errors may be introduced.**
+
+      - Correct row order can be achieved in .mff filetypes by sorting according to either the `latency` column or the `urevent` column (as shown below) 
+
+       ```
+       for row = 1:height(mergePaths)
+           % Specify paths
+           rawFolder = mergePaths{row, "path_rawPaths"}
+           subFolder = mergePaths{row, "path_subPaths"}
+    
+           % Read in EEG data
+           EEGraw = pop_mffimport(char(rawFolder), 'code')
+
+           % Create table from "event" field of raw data
+           EEGevent = struct2table(EEGraw.event)
+
+           % Check for the existence of usable rows
+           checkVars = strcmp(EEGevent.Properties.VariableNames, 'mffkey_cel')
+
+           % Skip files without necessary variables
+           if max(checkVars) == 0
+               continue
+           end
+
+           % Create table without practice/training trials
+           keepRows = strcmp(EEGevent.mffkey_cel, '4')
+           EEGsub  = EEGevent(keepRows, :)
+
+           % Check for the existence of usable rows
+           checkRows = max(keepRows)
+
+           % Skip files with no usable rows
+           if checkRows == 0
+               continue
+           end
+
+           % Get response info at trial level
+           EEGresp = table(EEGsub.mffkey_obs, EEGsub.mffkey_eval, EEGsub.mffkey_rtim)
+           EEGresp = rmmissing(EEGresp)
+           EEGresp = renamevars(EEGresp, ["Var1", "Var2", "Var3"], ["Trial", "Eval", "RTime"])
+
+           % Get condition info at trial level
+           EEGconds = table(EEGsub.mffkey_obs, EEGsub.type)
+           EEGconds = renamevars(EEGconds, ["Var1", "Var2"], ["Trial", "Cond"])
+           keepConds = strcmp(EEGconds.Cond, 'Go++') | strcmp(EEGconds.Cond, 'NG++')
+           EEGcond = EEGconds(keepConds, :)
+
+           % Merge datasets
+           EEGtrials = join(EEGcond, EEGresp)
+
+           EEGtrials.RTime = cellfun(@str2num, EEGtrials.RTime)
+           % Evaluate trials for correct-ness of response
+           correct = strcmp(EEGtrials.Cond, 'Go++') & strcmp(EEGtrials.Eval, '1') & EEGtrials.RTime > 200 | strcmp(EEGtrials.Cond, 'NG++') & strcmp(EEGtrials.Eval, '0')
+           EEGtrials.Acc = correct
+
+
+           % Create new code tags including accuracy information
+           EEGtrials.newCode(EEGtrials.Acc & strcmp(EEGtrials.Cond, 'Go++')) = {'cGo++'}
+           EEGtrials.newCode(~EEGtrials.Acc & strcmp(EEGtrials.Cond, 'Go++')) = {'xGo++'}
+           EEGtrials.newCode(EEGtrials.Acc & strcmp(EEGtrials.Cond, 'NG++')) = {'cNG++'}
+           EEGtrials.newCode(~EEGtrials.Acc & strcmp(EEGtrials.Cond, 'NG++')) = {'xNG++'}
+
+           % Subset information for merge
+           EEGmerge = EEGtrials(:, {'Trial', 'Cond', 'newCode'})
+
+           % Prep key in original data
+           EEGevent.key = strcat(EEGevent.mffkey_obs, EEGevent.type)
+
+           % Prep key in merge data
+           EEGmerge.key = strcat(EEGmerge.Trial, EEGmerge.Cond)
+           EEGmerge = EEGmerge(:, {'key', 'newCode'})
+
+           % Merge new codes with event table
+           EEGnew = outerjoin(EEGevent, EEGmerge)
+
+           % Replace codes where new code is needed
+           EEGnew.code(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
+           EEGnew.type(~strcmp(EEGnew.newCode, '')) = EEGnew.newCode(~strcmp(EEGnew.newCode, ''))
+
+           % Arrange table in order of event (CRUCIAL for correct export)
+           EEGnew = sortrows(EEGnew, 'urevent')
+          
+           % Convert table back to struct and restore original dimensions
+           EEGnew = table2struct(EEGnew(:, 1:29))
+           EEGnew = reshape(EEGnew, [1, height(EEGnew)])
+
+           % Replace event table(s) in original struct
+           EEGraw.event = EEGnew
+           EEGraw.urevent = table2struct(struct2table(EEGnew(:, 1:28)))
+
+           % Export updated file
+           pop_mffexport(EEGraw, char(subFolder))
+       end 
+       ```
+
+    
+1. Run the HAPPE Pipeline
+   - This section is designed to rely on user input.
+   - When the prior steps have finsihed, a message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
+   - Once the path is entered, MATLAB will run the file
+
+   ```
+   % Set path to HAPPE pre-processing script
+   happeRun = input('Enter the full path to the HAPPE pre-processing file:\n> ','s') ;
+
+   % Call and run HAPPE pre-processing script
+   run(happeRun);
+   ```
+1. Enter HAPPE inputs 
+   - See the following section for HAPPE inputs for the Fish/Shark task
+
+After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
+The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
+See [Fish/Shark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of the code used to accomplish this.
+
+### HAPPE Inputs {#inputFishSharkHAPPE}
+
+1. If you are not using the MATLAB scripts described above, you must first open the HAPPE pipeline V4 script in MATLAB and click "Run"
+   - This will be stored in the location to which you mapped the HAPPE Git repo (e.g. `Documents/GitHub/HAPPE/1. pre-process/HAPPE_v4.m`)
+1. User Inputs
+    - Enter the path to the folder containing the dataset.
+    - Select `raw`
+    - Load pre-existing set of input parameter: 
+        - `N` if this is your first time running data through the pipeline.
+        - `Y` if you have decided on a set of parameters.
+        Enter the path to the folder containing the input parameters.
+    - Low density data: `N`
+    - Data type: `task`
+    - Performing event-related potential (ERP) analysis: `Y`
+    - Enter the task onset tags
+        - Correct Go: `cGo++`
+        - Incorrect Go: `xGo++`
+        - Correct NoGo: `cNG++`
+        - Incorrect NoGo: `xNG++`
+        - `done`
+    - Do multiple onset tags belong to a single condition? `N`
+    - File format: `5`
+    - Acquisition layout type: `2`
+    - Number of channels: `128`
+    - Do you have additional type fields besides "code"? `N`
+    - Select channels of interest: `all`
+    - Frequency of electrical noice in Hz: `60`
+    - Are there any additional frequencies, (e.g., harmonics) to reduce? `N`
+    - Line Noise reduction method: `notch`
+        - Low cutoff: `59`
+        - high cutoff: `61`
+    - Resample: `N`
+    - Filter
+        - Low Pass Cutoff: `30`
+        - High Pass Cutoff: `.1`
+    - Choose a filter: `fir`
+    - Bad Channel Detection: `Y`
+        - `after` wavelet thresholding
+    - ECGone: `N`
+    - Wavelet Thresholding
+        - `default`
+        - Threshold rule: `hard`
+    - MuscIL: `N`
+    - Segmentation: `Y`
+        - Starting parameter for stimulus: `-200`
+        - Ending parameter for stimulus: `1000`
+        - Task offset: `17`
+    - Baseline Correction: `Y`
+        - Baseline Correction start: `-200`
+        - Baseline Correction end: `0`
+    - Interpolation: `Y`
+    - Segment Rejection: `Y`
+        - Segment Rejection Method: `amplitude`
+            - minimum segment rejection threshold: `-150`
+            - maximum segment rejection threshold: `150`
+            - segment rejection based on all channels or ROI: `all`
+    - Re-referencing: `Y`
+        - Does your data contain a flatline or all zero reference channel? `N`
+        - re-referencing method: `average`
+    - Save format: `1`
+    - Visualizations: `N`
+    - Parameter file save name: `default`
+
+### Fish/Shark Post-HAPPE Steps {#fishSharkPost}
+
+This section details the actions performed by the MATLAB scripts once HAPPE is completed.
+These actions will take place automatically upon completion of the HAPPE pipeline.
+**No user inputs or actions are necessary at this stage.**
+
+1. Exclude files that don't have any output data from the dataset (containing filename and quality reports from HAPPE pipeline) that will be used to assess file quality
+   - This step is important because "empty" files don't play nicely with the code used to evaluate files that have some data in them (even if the data do not meet threshold)
+   - This code relies on HAPPE's quality data that remains in the MATLAB environment after the pipeline has finished.
+
+   ```
+   % Create a list of files that received some kind of error message
+   noTags = any(strcmp(dataQC, 'NO_TAGS'), 2);
+   allRej = any(strcmp(dataQC, 'ALL_SEG_REJ'), 2);
+   oneRej = any(strcmp(dataQC, 'REJ_ONE_SEG'), 2);
+   error = any(strcmp(dataQC, 'ERROR'), 2);
+   loadFail = any(strcmp(dataQC, 'LOAD_FAIL'), 2);
+
+   % Combine filenames with quality data (for some reason, they are not automatically connected by HAPPE)
+   dataQCNew = [FileNames', dataQC];
+
+   % Remove all files in the above lists (those receiving errors) from the quality data
+   dataQCNew(noTags | allRej | error | loadFail | oneRej, :) = [];
+
+   % Create list of variable names for quality data
+   dataQCnamesNew = ["File", dataQCnames];
+   
+   % Save the data as a table for ease of use in subsequent steps
+   qcTable = cell2table(dataQCNew, 'VariableNames', dataQCnamesNew);
+
+   % Subset to ID and threshold information
+   testInfo = qcTable(:, ["idWave", "File", "Test"]);
+   ```
+
+2. Identify the files that meet (or don't meet) the threshold
+
+   ```
+   % Create a list of files (i.e., rows in the table) that meet threshold
+   thresholdTest = qcTable.("Number_cNG++_Segs_Post-Seg_Rej") >= trialCutoff & qcTable.("Number_cGo++_Segs_Post-Seg_Rej") >= trialCutoff;
+
+   % Add a variable to the quality data table that include whether or not the file meet threshold
+   qcTable.Test = thresholdTest;
+   ```
+
+1. Add an identifying variable to be used for data joining down the line
+   - This variable is generated using its expected location in the file name (i.e., how many text characters "in" it is)
+
+   ```
+   % Generate IDs based on File variable
+   idWaveQC = extractBefore(qcTable.File, 8);
+
+   % Append ID variable to quality data
+   qcTable.idWave = idWaveQC;
+   ```
+
+1. Create a subsetted dataset conataining only the `idWave`, file name, and "test" results (i.e., whether a given file meets the specified cutoff threshold for inclusion)
+
+   ```
+   % Subset to ID and threshold information
+   testInfo = qcTable(:, ["idWave", "File", "Test"]);
+   
+   fprintf('Assessment Complete \n');
+   ```
+
+1. Generate a list of files outputted by HAPPE
+
+   ```
+   % Generate path for HAPPE pre-processing output (using the HAPPE environment variable from user's input of location of raw data for processing)
+   inputPath = strcat(srcDir, "\5 - processed");
+
+   % Read in list of files outputted from HAPPE 
+   preprocessingOutput = dir(inputPath);
+   
+   % Remove "empty" rows 
+   preprocessingOutput = preprocessingOutput(~ismember({preprocessingOutput.name}, {'.', '..'}));
+   
+   % Save data as a table for ease of later use
+   preprocessingOutput = struct2table(preprocessingOutput);
+   
+   % Subset to file info
+   fileInfo = preprocessingOutput(:, ["name", "folder"]);
+   ```
+1. Select only desired files to be moved/copied
+   - Currently, we don't do anything with the "Individual Trial" files outputted by HAPPE.
+   These files are quite large and take a long time to move, so it is more efficient to just remove them from the data and not worry about moving them anywhere.
+
+   ```
+   % Subset to desired files (AveOverTrial)
+   fileSubset = fileInfo(contains(fileInfo.name, "AveOverTrials"), :);
+   ```
+1. Add condition, ID, and threshold-related variables to the file data
+   - NOTE: The value for `Condition` variable (i.e., "cGo" or "cNoGo") should match the name of the condition-specific folders you wish the files to save to within the processing repo.
+
+   
+   ```
+   % Generate list of IDs based on file name variable
+   idWaveFS = extractBefore(fileSubset.name, 8);
+   
+   % Add ID list to file data
+   fileSubset.idWave = idWaveFS;
+   
+   % Generate list of files belonging to each condition based on file name variable
+   cGo = contains(fileSubset.name, "cGo++");
+   cNoGo = contains(fileSubset.name, "cNG++");
+   xGo = contains(fileSubset.name, "xGo++");
+   xNoGo = contains(fileSubset.name, "xNG++");
+
+   % Create empty variable for condition
+   fileSubset.cond = cell(size(fileSubset, 1), 1);
+
+   % Fill in condition variable based on the lists generated above
+   fileSubset.cond(cGo) = {'cGo'};
+   fileSubset.cond(cNoGo) = {'cNoGo'};
+   fileSubset.cond(xGo) = {'xGo'};
+   fileSubset.cond(xNoGo) = {'xNoGo'};
+   fileSubset.cond(~cGo & ~cNoGo & ~xGo & ~xNoGo) = {'All'};
+
+   % Join threshold test information
+   fileTest = join(fileSubset, testInfo);
+   ```
+1. Prepare data table with information about files that met the threshold
+   - The data generated here are preparing to copy the .txt files outputted by HAPPE into a folder containing all files that are suitable for PCA
+
+   ```
+   % Create a separate table for only files that meet threshold
+   movingInfo = fileTest(fileTest.Test, :);
+
+   % Create empty columns for filepath variables
+   movingInfo.destination = cell(size(movingInfo, 1), 1);
+   movingInfo.origin = cell(size(movingInfo, 1), 1);
+   movingInfo.processedTo = cell(size(movingInfo, 1), 1);
+   movingInfo.processedFrom = cell(size(movingInfo, 1), 1);
+
+   % Generate file paths based on condition 
+   movingInfo.destination = strcat({passPath}, "\", movingInfo.cond, "\", movingInfo.name);
+   movingInfo.origin = strcat(movingInfo.folder, "\", movingInfo.name);
+   movingInfo.processedTo = strcat({allPath}, "\", movingInfo.name);
+   movingInfo.processedFrom = strcat(movingInfo.folder, "\", movingInfo.name);
+   ```
+
+1. Prepare data table with information about files that do NOT meet the threshold
+   - The data generated here are preparing to copy .mff files from the location of the raw files into a folder indicating the need for manual processing
+
+   ```
+   % Create a separate table for only files that did not meet threshold
+   failFiles = fileTest(~fileTest.Test, ["File", "folder", "name"]);
+
+   % Create empty columns for filepath variables
+   failFiles.destination = cell(size(failFiles, 1), 1);
+   failFiles.origin = cell(size(failFiles, 1), 1);
+   failFiles.processedTo = cell(size(failFiles, 1), 1);
+   failFiles.processedFrom = cell(size(failFiles, 1), 1);
+
+   % Generate filepaths based on ID and task
+   failFiles.destination = strcat({failPath}, "\", failFiles.File);
+   failFiles.origin = strcat({srcDir}, "\", failFiles.File);
+   failFiles.processedFrom = strcat(failFiles.folder, "\", failFiles.name);
+   failFiles.processedTo = strcat({allPath}, "\", failFiles.name);
+
+   ```
+
+1. Generate environment variables that correspond to the column index of relevant variables for file sorting
+   - Note that the very last line of this code defines the varaible(s) to exclude from the HAPPE outputted files.
+   This variable must be stripped from the data before saving them, because the presence of the extra variable makes the file incompatible with EP Toolkit's PCA process.
+
+   ```
+   % Define column locations for each filepath variable
+
+   % For files that meet threshold:
+   toCol = find(strcmp(movingInfo.Properties.VariableNames, "destination"));
+   fromCol = find(strcmp(movingInfo.Properties.VariableNames, "origin"));
+   procColto = find(strcmp(movingInfo.Properties.VariableNames, "processedTo"));
+   procColfrom = find(strcmp(movingInfo.Properties.VariableNames, "processedFrom"));
+   
+   % For files that do not meet threshold
+   rawCol = find(strcmp(failFiles.Properties.VariableNames, "origin"));
+   manCol = find(strcmp(failFiles.Properties.VariableNames, "destination"));
+   failProcColto = find(strcmp(failFiles.Properties.VariableNames, "processedTo"));
+   failProcColFrom = find(strcmp(failFiles.Properties.VariableNames, "processedFrom"));
+   
+   % Define variable to exclude
+   extraVar = 'Time';
+   ```
+1. Use a loop to process all files that met threshold
+   - For each row in the "movingInfo" dataset, the loop will:
+      - Identify the origin and destination paths
+      - Read in the HAPPE output file
+      - Remove the extra variable
+      - Save the "cleaned" data in the appropriate folder (without variable names, as required by EP Toolkit) 
+
+   ```
+   for row = 1:height(movingInfo)
+       % Specify path info
+       pathFrom = movingInfo{row, fromCol};
+       pathTo = movingInfo{row, toCol};
+       % Read in the data
+       rawTable = readtable(pathFrom);
+       % Remove extra column (Time)
+       cleanTable = rawTable{:, ~strcmp(rawTable.Properties.VariableNames, extraVar)};
+       % Save without headers
+       writematrix(cleanTable, pathTo, 'Delimiter', '\t')
+   end
+
+   ```
+1. Use a loop to copy raw (.mff) files into a location that stores files requiring manual processing
+
+   ```
+   for row = 1:height(failFiles)
+       % Specify path info
+       pathFrom = failFiles{row, rawCol};
+       pathTo = failFiles{row, manCol};
+       % Copy file 
+       copyfile(pathFrom, pathTo)
+   end
+   ```
+
+1. Use a set of loops to copy all HAPPE output files into a folder intended to house all output (whether threshold is met or not)
+
+   ```
+   for row = 1:height(movingInfo)
+       % Specify path info
+       pathFrom = movingInfo{row, procColfrom};
+       pathTo = movingInfo{row, procColto};
+       % Copy file
+       copyfile(pathFrom, pathTo);
+   end
+
+   for row = 1:height(failFiles)
+       % Specify path info
+       pathFrom = failFiles{row, failProcColFrom};
+       pathTo = failFiles{row, failProcColto};
+       % Copy file
+       copyfile(pathFrom, pathTo);
+   end
+   ```
+1. Generate a .txt file listing all processed .mff files
+   - This file will contain a list of all raw files (e.g., `1111_22_fishshark.mff`) and save the list to the specified location ("summPath")
+   - The file will have the current date and time appended to the end so that it will be distinguishable from past logs 
    - The list of processed files is generated using an environment variable that the HAPPE pipeline creates that lists all files inputted to the pipeline
 
    ```
@@ -704,6 +988,8 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
    % Write table to specified location
    writetable(processedList, summPathFull);
    ```
+
+## Stop-Signal Processing Pipeline 
 
 # ERP PCA (EP) Toolkit
 
@@ -752,6 +1038,7 @@ See [General Post-Happe Steps](#generalPost) for examples of the MATLAB code and
     For example, if you were working on the target condition of oddball for all age groups, you would save the file as `ob_tgt_all`
 
 ## Generating Grand Average Waveforms
+
 1. If the EPT average file (e.g., `ob_tgt_all`) is not already in the working environment, read it in using the steps below
    - Go to `Read`
    - Format = `EP (.ept)`
@@ -857,6 +1144,7 @@ Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in 
    * Relevant information may include the timing used to window a component and the electrodes that load onto the component of interest at a given threshold
 
 ## Identifying Electrodes that Load Onto PCA Component
+
 1. Go to `Window`
 1. Select the PCA file of interest (e.g., `tsPCA-ob_tgt_all`)
 1. Click the `Channels` button (about halfway down the `Window` window)
@@ -899,16 +1187,16 @@ From here, click `Main` to return to EP Toolkit "home"
 
 # Generating ERP Composite Datafiles
 
-1. Save a copy of all extracted PCA component files (e.g., `erp_ob_tgt_all_P3`) in the following location on the Lab Drive: `Lab/Studies/School Readiness Study/Data/LV2/PCA Components` under the appropriate task (i.e., Oddball, Fishshark, or Stop Signal)
+1. Save a copy of all extracted PCA component files (e.g., `erp_ob_tgt_all_P3`) in the following location on the Lab Drive: `[...]/Data/LV2/PCA Components` under the appropriate task (i.e., Oddball, Fishshark, or Stop Signal)
 1. Use the following R Code to combine all components into a single composites datafile.
-The following example is taken from the `erpOddball.R` composite script located in `Lab/Studies/School Readiness Study/Data Processing/3. Composites`.
+The following example is taken from the `erpOddball.R` composite script located in `[...]Data Processing/3. Composites`.
 Comparable scripts have also been created for FishShark and Stop Signal tasks.
    1. Create a list of all PCA component files in the specified directory.
    This list will contain the full filepaths to each component file which are used to read the data into R.
 
       ```
       oddballFilePaths <- list.files(
-       path = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/LV2/ERP/PCA Components/Oddball"), 
+       path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball", 
        pattern = "*.txt",
        recursive = FALSE,
        full.names = TRUE)
@@ -919,7 +1207,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 
       ```
       oddballFiles <- list.files(
-       path = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/LV2/ERP/PCA Components/Oddball"),
+       path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball",
        pattern = "*.txt",
        recursive = FALSE)
       ```
@@ -974,8 +1262,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
     1. Save composite data to desired location.
 
        ```
-       write_csv(oddballDataClean, file = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/REDCap/Composites/erpOddball.csv"))
+       write_csv(oddballDataClean, file = "Z:/Shared Server/Study Folder/Data/REDCap/Composites/erpOddball.csv")
        ```
+
 # Visualizations in R 
 
 ## R Code for Grand Average Waveform Plot
