@@ -1,12 +1,16 @@
 ---
 title: "EEG and ERP Processing and Analysis"
+output: 
+  html_document:
+    code_folding: show
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   error = TRUE,
-  comment = "")
+  comment = "",
+  class.source = "fold-show")
 ```
 
 # Extracting Behavioral Data from `E-Prime`
@@ -76,7 +80,7 @@ The following section describes the MATLAB scripts used to manage HAPPE output f
    - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
    Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
    
-   ```matlab
+   ```
    % Set quality threshold parameters
    trialCutoff = 10;
    ```
@@ -1194,7 +1198,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    1. Create a list of all PCA component files in the specified directory.
    This list will contain the full filepaths to each component file which are used to read the data into R.
 
-      ```r
+      ```{r, eval = FALSE}
       oddballFilePaths <- list.files(
        path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball", 
        pattern = "*.txt",
@@ -1205,7 +1209,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    This list will be used to rename columns in the final composite dataset according to the name of the component file.
    For this reason, the naming convention of each component files is crucial; this will determine how the corresponding column of the composite datafile is named.
 
-      ```r
+      ```{r, eval = FALSE}
       oddballFiles <- list.files(
        path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball",
        pattern = "*.txt",
@@ -1213,19 +1217,19 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
       ```
    1. Read in each component file, skipping the rows containing summary information about the extracted component (the first 7 rows in this example).
 
-      ```r
+      ```{r, eval = FALSE}
       oddballData <- lapply(oddballFilePaths, function(x) read_delim(x, delim = "\t", skip = 7)) 
       ```
 
    1. "Clean" the list of component file names by removing the file extension (in this case, `.txt`).
 
-      ```r
+      ```{r, eval = FALSE}
       componentNames <- oddballFiles %>% str_remove(".txt")
       ```
 
     1. Give `ID` variable a proper name.
 
-       ```r
+       ```{r, eval = FALSE}
        oddballData <- lapply(oddballData, function(x){
         names(x)[length(names(x))] <- "ID"
         return(x)
@@ -1234,7 +1238,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
     1. At this stage, the ERP component data are nested within a list of separate data objects.
     We must therefore merge them into a single dataframe object.
 
-       ```r
+       ```{r, eval = FALSE}
        oddballDataMerged <- oddballData %>%
           reduce(full_join, by = c("ID"))
        ```
@@ -1246,7 +1250,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        * Remove the `ID` variable now that it has been separated into `tcid` and `wave`
        * Convert all values to numeric
 
-       ```r
+       ```{r, eval = FALSE}
        oddballDataClean <- oddballDataMerged %>%
           mutate(tcid = substr(ID, 1, 4),
                  wave = substr(ID, 6, 7)) %>%
@@ -1256,12 +1260,12 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        ```
     1. Update column names of merged data according to the list of PCA component files.
 
-       ```r
+       ```{r, eval = FALSE}
        names(oddballDataClean) <- c("tcid", "wave", componentNames)
        ```
     1. Save composite data to desired location.
 
-       ```r
+       ```{r, eval = FALSE}
        write_csv(oddballDataClean, file = "Z:/Shared Server/Study Folder/Data/REDCap/Composites/erpOddball.csv")
        ```
 
@@ -1271,7 +1275,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 
 1. Read in the grand average waveform data exported from EP Toolkit.
    - We currently process the conditions within a given task separately, so each condition should have its own grand average file.
-   ```r
+   ```{r, eval = FALSE}
    obTgt <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_tgt_gav.txt")
    obFrq <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_frq_gav.txt")
    ```
@@ -1280,7 +1284,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    - The grand average data does not have row or column labels, but the columns represent the EEG net channels in numerical order (1-129).
    We can therefore use their column index values to select the desired electrodes; so, the list containing the channel numbers should include ONLY numbers.
    The code that selects these channels out of the full dataset will rely on numerical input.  
-   ```r
+   ```{r, eval = FALSE}
    # Set electrode clusters
    obElectrodes <- c(58, 59, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76, 77, 81, 82, 83, 84, 89, 80, 91, 95, 96, 101)
 
@@ -1293,7 +1297,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    - Adding a condition label will allow us to combine the two condition-specific datasets into one that can be used for visualizations 
       - For ease of plotting, name the conditions the way that you would like them to appear on the figure (i.e., "Target" instead of "tgt")
    
-   ```r
+   ```{r, eval = FALSE}
    # Compute averages 
    obTgt_sub$amplitude <- rowMeans(obTgt_sub)
    obFrq_sub$amplitude <- rowMeans(obFrq_sub)
@@ -1306,7 +1310,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 1. Add timing-related information to the data
    - EP Toolkit exports ERP data without timestamps, but arranges it in order of timing
    - We can create a template with the appropriate timestamps and append this column to the amplitude data
-   ```r
+   ```{r, eval = FALSE}
    # Create template
    erpTemplate <- data.frame(
      time = -199:1000
@@ -1317,14 +1321,14 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    obFrqTimes <- cbind(erpTemplate, obFrq_amps)
    ```
 1. Combine all conditions into a single data object to be used for plotting 
-   ```r
+   ```{r, eval = FALSE}
    oddball <- rbind(obTgtTimes, obFrqTimes) %>% 
               select(time, condition, amplitude) %>% 
               arrange(time)
    ```
 
 1. Generate the waveform figures 
-   ```r
+   ```{r, eval = FALSE}
    ggplot(
      data = oddball,
      aes(
