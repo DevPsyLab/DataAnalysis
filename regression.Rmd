@@ -915,7 +915,11 @@ robcov(ols(
   data = mydata,
   x = TRUE,
   y = TRUE))
+```
 
+Use "cluster" variable to account for nested data within-subject:
+
+```{r, eval = FALSE}
 robcov(ols(
   t_ext ~ m_ext + age,
   data = mydata,
@@ -923,6 +927,7 @@ robcov(ols(
   y = TRUE),
   cluster = mydata$tcid) #account for nested data within subject
 ```
+
 
 ### 4. Errors are independent
 
