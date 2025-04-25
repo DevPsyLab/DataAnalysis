@@ -1306,9 +1306,14 @@ Xi ($\xi$) is an index of the degree of dependence between two variables
 Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. https://doi.org/10.1080/01621459.2020.1758115
 
 ```{r}
-calculateXI(
+set.seed(52242) # for reproducibility
+
+XICOR::xicor(
   mydata$bpi_antisocialT1Sum,
-  mydata$bpi_antisocialT2Sum)
+  mydata$bpi_antisocialT2Sum,
+  method = "permutation",
+  pvalue = TRUE
+)
 ```
 
 ###### Robust regression with a single predictor
