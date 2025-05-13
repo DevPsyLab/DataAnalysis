@@ -12,31 +12,9 @@ knitr::opts_chunk$set(
   comment = "",
   class.source = "fold-show")
 ```
+# ERP Processing Pipeline using HAPPE {#happe}
 
-# Extracting Behavioral Data from `E-Prime`
-
-1. Run E-Merge
-1. Navigate to the folder with the task data
-1. Select `Merge`
-1. Select `Recursive Merge`
-1. Only merge: `All specified files regardless of merge status`
-1. Save target file (`filename.emrg2`)
-1. Double click the newly saved file (`filename.emrg2`) to open it in E-DataAid
-1. Go to `File`, `Export`
-1. Make sure `SPSS` is selected and that the `Unicode` option is **unselected**: https://mattkmiecik.com/posts/post-Stop-Using-Excel-to-Preprocess-E-Prime-Data/post-Stop-Using-Excel-to-Preprocess-E-Prime-Data.html (archived at https://perma.cc/N734-4W9X)
-1. Save the file as: `filename.txt`
-
-# ERP Processing Pipeline using HAPPE
-
-## Moving data from LV2 Observation Room to File Storage
-1. Power all the LV2 computer equipment down
-1. Find the black box (the external harddrive) behind the Apple computer monitor
-1. Unplug the black box
-1. Plug it in to the computer you plan to perform processing onthe computer you plan to perform EEG processing on (note--will likely need large file storage on the computer)
-1. Move the .mff files to the raw file folder (1a- Files for HAPPE) on the ERP processing repository stored on your large file storage drive
-1. Power off your lab computer to unplug the black box and put it back
-
-## Inital Set-up
+## Inital Set-up {#initial}
 
 1. Download MATLAB: https://its.uiowa.edu/matlab
     - Click `How to Install MatLab` and follow the relevant instructions
@@ -83,7 +61,7 @@ These may include:
 
 The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#inputOddballHAPPE) section. 
 
-1. Open the `eegProccessingOddball.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`) in MATLAB
+1. Open the `eegProccessingOddball.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`; accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingOddball.m)) in MATLAB
 1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
    - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
    Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
@@ -112,7 +90,7 @@ The following section describes the MATLAB scripts used to manage HAPPE output f
     ```
 1. Run the HAPPE Pipeline
    - This first section is designed to rely on user input.
-   Press "Run" on the MATLAB editor window with the file open to begin the process.
+   Click "Run" on the MATLAB editor window with the file open to begin the process.
    - A message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
    - Once the path is entered, MATLAB will run the file
 
@@ -451,9 +429,12 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
 ### MATLAB Script
 
-The following section describes the MATLAB scripts used to manage HAPPE input and output files for the Fish/Shark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Fish/Shark HAPPE inputs](#inputFishSharkHAPPE) section. 
+The following section describes the MATLAB scripts used to manage HAPPE input and output files for the Fish/Shark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Fish/Shark HAPPE inputs](#inputFishSharkHAPPE) section.
 
-1. Open the `eegProccessingFishshark.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`) in MATLAB
+**The first two steps dsescribed in this section are the same as those described for Oddball processing.**
+**Processing actions specific to FishSharks task begin in Step 3**
+
+1. Open the `eegProccessingFishshark.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`; accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingFishshark.m)) in MATLAB
 1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
    - In the fifth section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
    Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
@@ -1003,9 +984,9 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
 ## Stop-Signal Processing Pipeline 
 
-# ERP PCA (EP) Toolkit
+# ERP PCA (EP) Toolkit {#eptPCA}
 
-## Reading Text Files into EP Toolkit
+## Reading Text Files into EP Toolkit {#average}
 
 1. Open MATLAB with "Run as Administrator"
 1. Open ERP PCA Toolkit in MATLAB
@@ -1017,18 +998,27 @@ These actions will take place automatically upon completion of the HAPPE pipelin
     - Mont = `Adult Hydrocel 128-channel 1.0`
 1. Select `Single File Mode`.
     - Single file mode will use the filename to assign the task condition and participant ID for each file.
-        - Note: `R` can rename files in batches
     Thus, **it is critical to use a standard naming convention to name the files**.
-    For example, an oddball file could be named: 
-        - `frq_1001_36` and `tgt_1001_36`
-    - A FishSharks file meanwhile could be named: `cgo_1001_36` and `cng_1001_36`
+       - For example, an oddball file could be named: `1001_36_oddball_processed_AveOverTrials_tgt+.txt`
+       - A FishSharks file meanwhile could be named: `1004_36_oddball_processed_AveOverTrials_cGo++.txt`
+       - *Note: The filename examples above reflect the automated naming convention of the files outputted by the HAPPE pipeline.*
+       *If another processing pipeline is used or if the naming conventions become unstandardized, it is **crucial** that standardization of filenames is implemented*
 1. In the `Single File Mode` menu use the `Subject` field to denote which characters in the filename name will determine the participant ID.
-    - For the above example `1:7` would correspond to `1001_36`
+    - For the above example `1:7` would correspond to `1001_36` in a file called `1001_36_oddball_processed_AveOverTrials_tgt+.txt` (outputted by HAPPE)
 1. Next, In the `Single File Mode` menu use the `Cell` field to denote which characters in the file name will determine the task condition.
-    - For the below example `41:43` would correspond to `frq` or `tgt`. 
+    - For the below example `41:43` would correspond to `frq` or `tgt` in a file called `1001_36_oddball_processed_AveOverTrials_tgt+.txt`
     - For FishSharks files, it might be `47:49` that correspond to `cgo` or `cng`.
     - ![image](images/readTextFile2024.png)
-1. Select `Read` and select the `2_9AverageNet128` when prompted
+1. Select `Read`.
+You will be asked to name the aggregate file created by importing and combining the single files.
+Use the convention "task_condition_age" to name the file (e.g., `ob_tgt_54`)
+1. A new window will open prompting you to select the files you wish to import.
+Navigate to the folder housing the data to be imported (e.g., `3 - Files for PCA\Target`) and use `Ctrl + A` to select all files in that folder.
+Click `Open` once all desired files are selected
+1. Select the `2_9AverageNet128.ced` file when prompted by another popup.
+This file corresponds to the electrode template associated with the participant age range and type of net represented in the data
+   - For our study using a 128-channel net on children aged 3-7, the `2_9AverageNet128.ced` template is most appropriate 
+   ![image](images/netTemplateFile.png)
 1. The new file will have the participant ID and will combine the conditions for each participant.
     - Subject Names: 
         - ![image](images/subjectCombinedNames.png)
@@ -1068,7 +1058,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    - This subject is called `gave` and represents the grand average across all subjects
 1. Click `Done` to exit the editor window, then `Main` to return to the EP Toolkit home
 
-## Temporal PCA
+## Temporal PCA {#tPCA}
 
 1. Go to `Main` and click `PCA`
 1. Input the following:
@@ -1115,7 +1105,7 @@ Record the number of factors retained and % variance accounted for by that numbe
 1. Return to `Main` and click `Save`.
 Save the tsPCA file in the `5-PCA` folder.
 
-## PCA Component Selection and Extraction
+## PCA Component Selection and Extraction {#extract}
 
 Here, the goal is to select the PCA component that corresponds to the ERP component of interest, and the extraction that supports the intended interpretability of the component.
 
@@ -1158,10 +1148,10 @@ Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in 
 ## Identifying Electrodes that Load Onto PCA Component
 
 1. Go to `Window`
-1. Select the PCA file of interest (e.g., `tsPCA-ob_tgt_all`)
+1. Select the PCA file of interest (e.g., `tsPCA_ob_tgt_all`)
 1. Click the `Channels` button (about halfway down the `Window` window)
 1. Click `Factor` 
-   - From the dropdown, select the PCA file of interest (e.g., `tsPCA_ob_tgt_all)
+   - From the dropdown, select the PCA file of interest (e.g., `tsPCA_ob_tgt_all`)
    - Enter the threshold in the space below (e.g., 0.5)
       - This sets the minumum factor loading value for an electrode to be "included" in the component-related cluster
     - Depending on whenther you are interested in positive or negative factor loadings, select the appropriate sign (`+`, `-`, or `+/-`)
@@ -1201,7 +1191,7 @@ From here, click `Main` to return to EP Toolkit "home"
 
 1. Save a copy of all extracted PCA component files (e.g., `erp_ob_tgt_all_P3`) in the following location on the Lab Drive: `[...]/Data/LV2/PCA Components` under the appropriate task (i.e., Oddball, Fishshark, or Stop Signal)
 1. Use the following R Code to combine all components into a single composites datafile.
-The following example is taken from the `erpOddball.R` composite script located in `[...]Data Processing/3. Composites`.
+The following example is taken from the `erpOddball.R` composite script located in `[...]Data Processing/3. Composites` and available via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/3.%20Composites/erpOddball.R).
 Comparable scripts have also been created for FishShark and Stop Signal tasks.
    1. Create a list of all PCA component files in the specified directory.
    This list will contain the full filepaths to each component file which are used to read the data into R.
