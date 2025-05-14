@@ -61,7 +61,7 @@ These may include:
 
 The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#inputOddballHAPPE) section. 
 
-1. Open the `eegProccessingOddball.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`; accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingOddball.m)) in MATLAB
+1. Open the `eegProccessingOddball.m` file (accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingOddball.m)) in MATLAB
 1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
    - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
    Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
@@ -250,7 +250,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    ```
 1. Select only desired files to be moved/copied
    - Currently, we don't do anything with the "Individual Trial" files outputted by HAPPE.
-   These files are quite large and take a long time to move, so it is more efficient to just remove them from the data and not worry about moving them anywhere.
+   These files are quite large and take a long time to move, so it is more efficient to just remove them from the list of filenames and not worry about moving them anywhere.
 
    ```
    % Subset to desired files (AveOverTrial)
@@ -398,7 +398,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    end
    ```
 1. Generate a .txt file listing all processed .mff files
-   - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) and save the list to the specified location ("summPath")
+   - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) and save the list to the specified location (`summPath`)
    - The file will have the current date and time appended to the end so that it will be distinguishable from past logs 
    - The list of processed files is generated using an environment variable (`FileNames`) that the HAPPE pipeline creates that lists all files inputted to the pipeline
 
@@ -425,21 +425,21 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    writetable(processedList, summPathFull);
    ```
 
-## Fish/Shark Processing Pipeline
+## FishShark Processing Pipeline
 
 ### MATLAB Script
 
-The following section describes the MATLAB scripts used to manage HAPPE input and output files for the Fish/Shark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Fish/Shark HAPPE inputs](#inputFishSharkHAPPE) section.
+The following section describes the MATLAB scripts used to manage HAPPE input and output files for the FishShark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [FishShark HAPPE inputs](#inputFishSharkHAPPE) section.
 
-**The first two steps dsescribed in this section are the same as those described for Oddball processing.**
-**Processing actions specific to FishSharks task begin in Step 3**
+**The first two steps described in this section are the same as those described for Oddball processing.**
+**Processing actions specific to FishSharks task begin in Step 3.**
 
-1. Open the `eegProccessingFishshark.m` file (stored here: `/Data Processing/6. MATLAB EEG Pipeline/`; accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingFishshark.m)) in MATLAB
+1. Open the `eegProccessingFishshark.m` file (accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingFishshark.m)) in MATLAB
 1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
    - In the fifth section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
    Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
    - Note that setting these parameters occurs later in the FishSharks script than the one for Oddball; 
-   this is because FishSharks files require additional processing before they are ready for HAPPE (see step 2 for details)
+   this is because FishSharks files require additional processing before they are ready for HAPPE (see step 3 for details)
    
    ```
    % Set quality threshold parameters
@@ -469,7 +469,7 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
    Because the event tags in our .mff files do not inherently contain information about whether each trial was responded to correctly, we need to add it ourselves.
    This process can be done manually in NetStation, but it can also be automated using the MATLAB code detailed below.
    - NOTE: This code requires eeglab.
-   Before running the code, open eeglab in your MATLAB session by typing `eeglab` into the console.
+   **Before running the code, open eeglab in your MATLAB session by typing `eeglab` into the console.**
    You can close it as soon as it opens, but this step ensures that eeglab is loaded into your current session and helps prevent the subsequent code from erroring out.
    
    1. Set the filepaths for raw and updated .mff files
@@ -483,12 +483,12 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
       pathRaw = input('Enter the full path to the folder containing the raw files:\n> ','s');
       
       % User input for destination of subsetted files
-      pathSub = input('Enter the full path to the folder in which to save the subsetted files:\n> ','s');
+      pathSub = input('Enter the full path to the folder in which to save the updated files:\n> ','s');
       ```
-       At this point, there will be no user input/actions necessary until all of the .mff files in the "pathRaw" directory have been updated and saved into the "pathSub" directory.
+       At this point, there will be no user input/actions necessary until all of the .mff files in the `pathRaw` directory have been updated and saved into the `pathSub` directory.
        The code that asks the user for the path to HAPPE will run when that process has finished.
-       The following section will describe the code used to automate the process of updated .mff event tags to include accuracy information at the trial level.
-       Move on to Step 3 when the process has completed.
+       The following section will describe the code used to automate the process of updating .mff event tags to include accuracy information at the trial level.
+       Move on to Step 4 (Run the HAPPE Pipeline) when the process has completed.
 
    1. Gather and manage information from the directory housing the raw (.mff) files
       
@@ -501,7 +501,7 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
       dirInfo(noName, :) = [];
       ```
    1. Generate variables necessary for managing raw and updated files
-      - This code will generate the full filepaths (including file name) necessary for reading in and saving each .mff file and its updated counterpart
+      - This code will generate the full filepaths (including file name) necessary for reading in each .mff file and saving its updated counterpart
       - It will also generate an ID variable for joining purposes based on the expected location of the subject name in the name of each file 
 
       ```
@@ -525,7 +525,7 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
       mergePaths = join(rawPaths, subPaths, 'Keys', {'ID'})
       ```
     1. Use a loop to update the event tags in each .mff file to reflect accuracy of response
-       - For every file included in the "mergePaths" dataset, MATLAB will perform the following actions:
+       - For every file included in the `mergePaths` dataset, MATLAB will perform the following actions:
           - Set environment variables representing the path to read in the original .mff file and save its updated counterpart (updates with each iteration of the loop)
           - Read in the .mff file
           - Extract the "event" information from the .mff file 
@@ -538,12 +538,12 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
              - For Go trials, responses are CORRECT if there was a response AND subject's reaction time was at least 200 ms (incorrect if subject did not respond OR if subject responded too quickly for response to be considered "valid")
           - Update the event tags in the .mff file to contain a "c" for correct trials and an "x" for incorrect trials 
              - The c/x indicator will be appended to the front of the existing event tag (e.g., `Go++` will become `cGo++`)
-          - Export an updated version of the .mff file with accuracy information to the specified location ("pathSub")
+          - Export an updated version of the .mff file with accuracy information to the specified location (`pathSub`)
 
-   **NOTE: When exporting EEG data from MATLAB, it is absolutely necessary for the data to be organized in order of event latency.**
-   **If the rows are out of order, latency errors may be introduced.**
+      **NOTE: When exporting EEG data from MATLAB, it is absolutely necessary for the data to be organized in order of event latency.**
+      **If the rows are out of order, latency errors may be introduced.**
 
-      - Correct row order can be achieved in .mff filetypes by sorting according to either the `latency` column or the `urevent` column (as shown below) 
+         - Correct row order can be achieved in .mff filetypes by sorting according to either the `latency` column or the `urevent` column (as shown below) 
 
        ```
        for row = 1:height(mergePaths)
@@ -654,7 +654,7 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
 
 After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
 The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
-See [Fish/Shark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of the code used to accomplish this.
+See [FishShark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of the code used to accomplish this.
 
 ### HAPPE Inputs {#inputFishSharkHAPPE}
 
@@ -719,7 +719,7 @@ See [Fish/Shark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of 
     - Visualizations: `N`
     - Parameter file save name: `default`
 
-### Fish/Shark Post-HAPPE Steps {#fishSharkPost}
+### FishShark Post-HAPPE Steps {#fishSharkPost}
 
 This section details the actions performed by the MATLAB scripts once HAPPE is completed.
 These actions will take place automatically upon completion of the HAPPE pipeline.
@@ -803,7 +803,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    ```
 1. Select only desired files to be moved/copied
    - Currently, we don't do anything with the "Individual Trial" files outputted by HAPPE.
-   These files are quite large and take a long time to move, so it is more efficient to just remove them from the data and not worry about moving them anywhere.
+   These files are quite large and take a long time to move, so it is more efficient to just remove them from the list of filenames and not worry about moving them anywhere.
 
    ```
    % Subset to desired files (AveOverTrial)
@@ -955,7 +955,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
    end
    ```
 1. Generate a .txt file listing all processed .mff files
-   - This file will contain a list of all raw files (e.g., `1111_22_fishshark.mff`) and save the list to the specified location ("summPath")
+   - This file will contain a list of all raw files (e.g., `1111_22_fishshark.mff`) and save the list to the specified location (`summPath`)
    - The file will have the current date and time appended to the end so that it will be distinguishable from past logs 
    - The list of processed files is generated using an environment variable that the HAPPE pipeline creates that lists all files inputted to the pipeline
 
