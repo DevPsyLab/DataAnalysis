@@ -78,6 +78,8 @@ The following section describes the MATLAB scripts used to manage HAPPE output f
          - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
       - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
          - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
+      - `manPath` is the location you wish to save the file that lists all files that do not meet the above-defined thresholds
+         - We currently use this to save the "to process manually" list to a location that all team members/computers have access to so it is easier to determine which files require manual processing because the copied .mff file would not be acessible via our shared server
     
     ```
     % Set paths for file sorting
@@ -87,6 +89,9 @@ The following section describes the MATLAB scripts used to manage HAPPE output f
 
     % Set path for processing summary
     summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
+
+    % Set path for summary of files to process manually 
+    manPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processing To Do\Cases to Process Manually\Lists of Cases by Batch';
     ```
 1. Run the HAPPE Pipeline
    - This first section is designed to rely on user input.
@@ -400,7 +405,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 1. Generate a .txt file listing all processed .mff files
    - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) and save the list to the specified location (`summPath`)
    - The file will have the current date and time appended to the end so that it will be distinguishable from past logs 
-   - The list of processed files is generated using an environment variable (`FileNames`) that the HAPPE pipeline creates that lists all files inputted to the pipeline
+   - The list of processed files is generated using an environment object (`FileNames`) that the HAPPE pipeline creates that lists all files inputted to the pipeline
 
    ```
    % Create a table from HAPPE FileNames cell array
@@ -423,6 +428,26 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
    % Write table to specified location
    writetable(processedList, summPathFull);
+   ```
+
+1. Generate a .txt file listing all of the files that did not meet threshold to go through subsequent processing
+   - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) that did not meet threshold and save the list to the specified location (`manPath`)
+   - The file will have the current date and time appended to the end so that it will be distinguishable from past lists
+   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up this list
+
+   ```
+   % Compare movingInfo with FileNames to isolate files that don't meet threshold
+   manualList = cell2table(FileNames(~ismember(FileNames', movingInfo.File)));
+   manualList = renamevars(manualList, {'Var1'}, {'File'});
+   
+   % Generate file name to include current date
+   manFile = strcat("\oddballManual_", today, "_", time);
+   
+   % Generate full path including filename
+   manPathFull = strcat(manPath, manFile);
+   
+   % Write table to specified location
+   writetable(manualList, manPathFull);
    ```
 
 ## FishShark Processing Pipeline
@@ -453,6 +478,8 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
          - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
       - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
          - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
+      - `manPath` is the location you wish to save the file that lists all files that do not meet the above-defined thresholds
+         - We currently use this to save the "to process manually" list to a location that all team members/computers have access to so it is easier to determine which files require manual processing because the copied .mff file would not be acessible via our shared server
     
     ```
     % Set paths for file sorting
@@ -462,6 +489,9 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
 
     % Set path for processing summary
     summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
+
+    % Set path for summary of files to process manually 
+    manPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processing To Do\Cases to Process Manually\Lists of Cases by Batch';
     ```
 1. Update raw (.mff) files' condition tags with accuracy information
    - Unlike the Passive Oddball task, FishSharks trials can be either correct or incorrect. 
@@ -980,7 +1010,27 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
    % Write table to specified location
    writetable(processedList, summPathFull);
+  
+  
+1. Generate a .txt file listing all of the files that did not meet threshold to go through subsequent processing
+   - This file will contain a list of all raw files (e.g., `1111_22_fishshark.mff`) that did not meet threshold and save the list to the specified location (`manPath`)
+   - The file will have the current date and time appended to the end so that it will be distinguishable from past lists
+   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up this list
+
    ```
+   % Compare movingInfo with FileNames to isolate files that don't meet threshold
+   manualList = cell2table(FileNames(~ismember(FileNames', movingInfo.File)));
+   manualList = renamevars(manualList, {'Var1'}, {'File'});
+   
+   % Generate file name to include current date
+   manFile = strcat("\fishSharkManual_", today, "_", time);
+   
+   % Generate full path including filename
+   manPathFull = strcat(manPath, manFile);
+   
+   % Write table to specified location
+   writetable(manualList, manPathFull);
+   ``` ```
 
 ## Stop-Signal Processing Pipeline 
 
@@ -1119,7 +1169,7 @@ Go to `Window` and input the following:
       (According to Joe Dien), when using amplitudes from PCA components, it does not matter which option you select—all the different methods result in comparable *p*-values when dealing with PCA components.
       So, select a method that makes sense for the story you want to tell.
       The methods will yield different results when dealing with the raw waveforms.
-    - select `AutoPCA` or `Window` to select channels.
+    - select `AutoPCA` or `Window` to [select channels](#channels).
       If the peak amplitude is where you expect temporally and spatially, then use the autoPCA function, and if it is not, then window to where you expect it to be.
       This will allow you to report results that are more interpretable.
       As Joe Dien described, the way that PCA data are stored internally in the toolkit are as factor scores (i.e., component scores).
@@ -1145,7 +1195,7 @@ Go to `Window` and input the following:
 Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in the `6-PCA Components` folder.
    * Relevant information may include the timing used to window a component and the electrodes that load onto the component of interest at a given threshold
 
-## Identifying Electrodes that Load Onto PCA Component
+## Identifying Electrodes that Load Onto PCA Component {#channels}
 
 1. Go to `Window`
 1. Select the PCA file of interest (e.g., `tsPCA_ob_tgt_all`)
@@ -1159,6 +1209,9 @@ Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in 
     Select the component(s) you wish to identify spatially (e.g., `TF01SF01`)
 1. When prompted, give the electrode cluster a name
 1. The channels that change color are those which load onto the selected component at or above the threshold value
+1. If you plan to use this cluster in extracting a PCA component, you'll need save the cluster
+   - Click `Save` in the `Window` window
+   - Save the cluster to `6-PCA Components`
 
 ## Exporting Grand Average Data
 
