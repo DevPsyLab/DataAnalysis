@@ -574,6 +574,48 @@ DATA: FILE = "implist.dat"; ! where implist.dat is the name of the *list.dat fil
     TYPE = IMPUTATION;
 ```
 
+# Latent Class Growth Analysis {#lcga}
+
+```
+VARIABLE:
+  NAMES = id y1 y2 y3 y4;
+  USEVARIABLES = y1 y2 y3 y4;
+  IDVARIABLE = id;
+  CLASSES = c(3); ! 3 latent classes
+  MISSING = .;
+
+ANALYSIS:
+  TYPE = MIXTURE;
+  ESTIMATOR = MLR;
+  STARTS = 500 20;
+  STITERATIONS = 20;
+
+MODEL:
+  %OVERALL%
+    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope
+    i@0; s@0; q@0; ! fix variances to zero (LCGA assumption)
+
+  %c#1%
+    [i s q]; ! freely estimate class-specific means
+
+  %c#2%
+    [i s q];
+
+  %c#3%
+    [i s q];
+
+OUTPUT:
+  standardized TECH1 TECH4 TECH8 TECH11 TECH14;
+
+PLOT:
+  TYPE = PLOT3;
+  SERIES = y1(0) y2(1) y3(2) y4(3);
+
+SAVEDATA:
+    FILE = lcga_3class_prob.dat;
+    SAVE = CPROBABILITIES;
+```
+
 # Run Models in Batch {#runModels}
 
 Run models in batch via `R`:
