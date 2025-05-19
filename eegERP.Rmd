@@ -433,7 +433,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 1. Generate a .txt file listing all of the files that did not meet threshold to go through subsequent processing
    - This file will contain a list of all raw files (e.g., `1111_22_oddball.mff`) that did not meet threshold and save the list to the specified location (`manPath`)
    - The file will have the current date and time appended to the end so that it will be distinguishable from past lists
-   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up this list
+   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up the `manualList`
 
    ```
    % Compare movingInfo with FileNames to isolate files that don't meet threshold
@@ -1015,7 +1015,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 1. Generate a .txt file listing all of the files that did not meet threshold to go through subsequent processing
    - This file will contain a list of all raw files (e.g., `1111_22_fishshark.mff`) that did not meet threshold and save the list to the specified location (`manPath`)
    - The file will have the current date and time appended to the end so that it will be distinguishable from past lists
-   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up this list
+   - This list of file to process manually is generated using the environment object `FileNames` that HAPPE creates; any files listed in `FileNames` but not in the dataset of files that pass threshold make up the `manualList`
 
    ```
    % Compare movingInfo with FileNames to isolate files that don't meet threshold
@@ -1440,7 +1440,11 @@ We want a standardized value on the machines
     - [Haresign et al. (2021)](https://www.sciencedirect.com/science/article/pii/S1878929321001146)
     - [Kumaravel et al. (2022)](https://www.sciencedirect.com/science/article/pii/S1878929322000123)
 
-## EEGLab Processing Steps
+
+
+## EEGLAB
+
+### EEGLab Processing Steps
 
 https://eeglab.org/tutorials/
 
@@ -1462,8 +1466,6 @@ https://eeglab.org/tutorials/
 1. Average Referencing
 1. Segmentation
 1. Baseline Correction (save final file)
-
-## EEGLAB
 
 ### Install Plugins
 
@@ -1733,7 +1735,7 @@ EEG = pop_rmbase( EEG, [-200 0] ,[]);
 eeglab redraw;
 ```
 
-## Automatic Script example 
+### Automatic Script example 
 
 ```matlab
 % Starting EEG Lab 
@@ -1809,9 +1811,9 @@ eeglab redraw;
 
 ```
 
-## Automatic script that loops files
+### Automatic script that loops files
 
-### Warning messages with script
+#### Warning messages with script
 
 Warning messages appeared when using the automatic cleaning of data.
 We may have to send a dataset to someone so they can check on it.
@@ -1820,7 +1822,7 @@ Some documentation is found here:
 - https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html (archived at https://perma.cc/9SDG-NGXD)
 - https://sccn.ucsd.edu/wiki/EEGLAB_bug1971 (archived at https://perma.cc/H7PA-TPTZ)
 
-### Filtering, average referencing, and automatically cleaning the data.
+#### Filtering, average referencing, and automatically cleaning the data.
 
 This script batch reads in files, filters them, average references, and automatically cleans them.
 After that, this script reads in the cleaned files for manually processing to remove bad time periods and bad channels
@@ -2007,11 +2009,351 @@ for i=1:numberOfSubjectManualClean
 end
 eeglab redraw;
 ```
+## NetStation
 
-## Notes
+### Processing Order
 
-### Mount/Cap Type
+1. Filtering (fil)
+1. Segmentation (seg)
+1. Manually selected bad channels (seg) 
+1. Bad Channel Replacement (bcr)
+1. Artifact Detection (art)
+1. Bad Channel Replacement (bcr)
+1. Artifact Detection (art)
+1. Averaging (ave) 
+1. Average Reference (ref)
+1. Baseline Correction (blc)
+1. Grand-Averaging
+1. 2-step PCA: Temporal PCA then Spatial PCA
 
-Options that say "AverageNet128" are suitable for our 128 channel cap when selecting the template option when reading in text files.
-These are age-normed coordinates provided by EGI.
-So, "2_9" is age-normed for 2 to 9 year olds.
+### Folder Structure
+
+- 0. Raw Data (mff)
+- 1. Filtering (fil)
+- 2. Segmentation (seg)
+- 3. Manually Selected Bad Channels
+- 4. Bad Channel Replacement_m (bcr)
+- 5. Artifact Detection (art)
+- 6. Bad Channel Replacement (bcr)
+- 7. Artifact Detection (art)
+- 8. Averaging (ave)
+      - Skip if doing PCA on individual trial-level data
+- 9. Average Reference (ref)
+- 10. Baseline Correction (blc)
+- 11. Files for PCA -- drop files that have fewer than 10 artifact-free (and correct?) trials per condition
+- 12. Simple Binary
+- 13. Individual Trials
+- 14. EPT Averages
+- 15. PCA
+- 16. PCA Components
+
+![](images/folderStructureNetStation.png)
+
+### Data Processing
+
+
+1. Open NetStation Tools and select Automated Processing Script 1: Run on raw data files (mff)
+   - Filtering
+   - Segmentation
+1. Open segmented (seg) files in NetStation Review and select bad channels manually
+   - To mark channels as bad across all segments:
+      - Put Ø next to bad channels, these changes will automatically be saved when you close the file 
+   - To mark channels as bad in individual segments:
+      - When in topoplot mode, make sure to have the “Click to Change Channel Status” checked, then click on the channel.
+1. Open NetStation Tools and Manual Script 2: Run on segmented files (seg)
+   - Bad Channel Replacement (bcr)
+   - Artifact Detection (art)
+   - Bad Channel Replacement (bcr)
+   - Artifact Detection (art)
+   - Averaging (ave) 
+   - Average Reference (ref)
+   - Baseline Correction (blc)
+1. In NetStation Review, open each file after the second Bad Channel Replacement
+   - Determine how many trials are marked as good in each condition
+      - This is found in the Segment panel on the bottom left when you have your file open.  If you open that view, you can use the diverging arrows (those may be hard to see depending on your screen size) in the upper right corner of the “Bad Channels” button in the Segment panel to open in a new window for more screen real estate.  The categories will be listed on the left, with the number of good trials noted over the total number of trials in that category.
+   - If the file has 10 or more good trials in each condition:
+      - Make note of the bad channels (that are marked as bad across all segments) for each subject on “EEG Behavior and Bad Channels Sheet”
+      - Then, proceed with the next step
+   - If the file does not have 10 more good trials in each condition:
+      - Go back to Step 2 and proceed from there
+      - Select additional bad channels manually so that they aren’t included in later processing steps, which might increase the number of trials kept
+      - It can be helpful to take a look, in the file after the second Bad Channel Replacement file, at each trial that was marked as bad.
+         - If a trial was clearly bad (many artifacts across many channels) and correctly marked as bad, leave it alone.
+         - If a trial was marked as bad but appeared to have only a few bad channels (i.e., only a few bad channels led it to be marked as bad), then it can be helpful to mark those channels as bad for that individual segment (rather than marking the channel as bad across all segments---unless the channel is bad across many segments)
+1. In NetStation Review, open each file after the Averaging step
+   - If there are continue to be channels that look bad, go back to Step 2 and proceed from there
+   - In Step 2, mark those channel(s) as bad across all segments
+   - Repeat process until there are no more bad channels after Script 2
+1. For files that have at least 10 good trials in each condition, copy and paste (don’t cut/move!) their file from the “10-Baseline Correction (blc)” folder into the “11-Files for PCA” folder
+1. Run the temporo-spatial PCA on those files for data reduction 
+
+
+### Notes
+
+<u>Options for removing bad segments:</u>
+   - The combine files tool has an exclude bad trials checkbox. If you run this tool on only one file, it is considered a no-op, the intended operation is not done, but it does appear to remove the bad segments. You would have to do this one run per file, if there are multiple files in the input subpane, they will be combined.
+   - In the Net Station File Export Tool, there is a checkbox option to "Export only good segments" when exporting to both the MAT format, and also when exporting to Simple Binary (RAW) format.
+   - In Net Station 5.3, EGI introduced the workflow concept into Net Station Review. The first workflow is combine segment/categories. This workflow allows for shuffling segments around between categories. It is quite a flexible tool, but importantly it includes a "Remove Bad Segments" button. So, you could do a no-op as far as changing categories but write out a MFF with the bad segments excluded.
+
+
+<u>Options for data processing:</u>
+   - Data processing in Net Station → file export to simple binary → PCA in ERP PCA Toolkit
+   - Data processing and PCA in ERP PCA Toolkit
+   - Data processing in EEGLab → PCA in ERP PCA Toolkit
+   - Data processing in MATLAB using scripts → PCA in ERP PCA Toolkit
+   - Ryan Priefer’s approach:
+      - Filter in EEGLab → data processing and PCA in ERP PCA Toolkit: segment, artifact detection/bad channel replacement, montage re-reference/baseline correct, average, then export to .txt file and PCA
+
+
+### Waveform Tools
+
+1. Filtering
+   - Highpass: 0.1 Hz
+   - Lowpass: 30.0 Hz
+
+   ![](images/filteringNetStation.png)
+
+
+1. Segmentation
+   - Oddball
+      - Frequent: 
+         - code is `frq+`
+      - Target: 
+         - code is `tgt+`
+      - **Options**:
+         - Segment length before: 200ms (baseline length)
+         - Segment length after: 1000ms (post-stimulus length)
+         - Offset: 2ms 
+         - Check "Copy specs to segment"
+
+      ![](images/oddballSegmentingNetStation_frq.png)
+      ![](images/oddballSegmentingNetStation_tgt.png)
+
+   - Fishsharks
+      - Correct go:
+         - code is `Go++`
+         - Trial spec eval is 1
+         - Trial spec rtim is greater than or equal to 200
+
+      ![](images/fishSharkSegmentingNetStation_cGo.png)
+
+      - Correct no-go:
+         - code is `NG++`
+         - Trial spec eval is 0
+      
+      ![](images/fishSharkSegmentingNetStation_cNg.png)
+
+      - Incorrect go:
+         - code is `Go++`
+         - Trial spec eval is 0 OR Trial spec rtim is less than 200
+
+      ![](images/fishSharkSegmentingNetStation_xGo.png)
+
+      - Incorrect no-go:
+         - code is `NG++`
+         - Trial spec eval is 1
+      
+      ![](images/fishSharkSegmentingNetStation_xNg.png)
+
+      - All go:
+         - Code is `Go++`
+      
+      ![](images/fishSharkSegmentingNetStation_allGo.png)
+
+      - All no-go:
+         - Code is `NG++`
+
+      ![](images/fishSharkSegmentingNetStation_allNg.png)
+
+      - **Options**:
+         - Segment length before: 200ms
+         - Segment length after: 1000ms
+         - Offset: 17ms
+   - Stop-signal
+      - Go - correct response
+          - code is `GoCR` or `NGGC`
+          - trial spec rtim is greater than or equal to 200
+
+      ![](images/stopSignalSegmentingNetStation_crGo.png)
+      
+      - Go - incorrect response
+         - code is `GoIn` or `NGGI`
+      
+      ![](images/stopSignalSegmentingNetStation_xrGo.png)
+
+      - Go - omission error
+         - code is `GoOm`
+
+      ![](images/stopSignalSegmentingNetStation_oeGo.png)
+
+      - NoGo - correct
+         - code is `NNCR`
+      
+      ![](images/stopSignalSegmentingNetStation_cNG.png)
+      
+      - NoGo - incorrect
+         - code is `NNCC` or `NNCI`
+      
+      ![](images/stopSignalSegmentingNetStation_xNG.png)
+      
+      - NoGo - incorrect: correct E
+         - code is `NNCC`
+
+      ![](images/stopSignalSegmentingNetStation_xceNG.png)   
+      
+      - NoGo - incorrect: incorrect E
+         - code is `NNCI`
+
+      ![](images/stopSignalSegmentingNetStation_xxeNG.png)
+
+      - All go:
+         - Code is `CoGR` or `GoOm` or `GoIn` or `NGGC`
+      
+      ![](images/stopSignalSegmentingNetStation_allGo.png)
+
+      - All no-go:
+         - Code is `NNCR` or `NNCC` or `NNCI`
+
+      ![](images/stopSignalSegmentingNetStation_allNG.png)
+
+      - Response-locked correct go
+         - Code is `rcor`
+         - Key code `cel#` is 3
+
+      ![](images/stopSignalSegmentingNetStation_rlcGo.png)
+
+      - Response-locked incorrect stop
+         - code is `resp`
+         - key code `cel#` is 4
+
+      ![](images/stopSignalSegmentingNetStation_rlxNG.png)
+
+      - Response-locked incorrect go
+         - code is `rinc`
+         - key code `cel#` is 3
+      
+      ![](images/stopSignalSegmentingNetStation_rlxGo.png)
+
+      - **Options**:
+         - Segment length before: 200ms
+         - Segment length after: 1000ms
+         - Offset: 16ms
+            - Note: for "response locked", offset is 0ms
+1. Manually prcoess data 
+1. Bad channel replacement
+   - Prior to running, select bad channels manually
+
+   ![](images/badChannelReplacementNetStation.png)
+
+
+1. Artifact detection
+   - Bad channels: 
+      - Max - min > 200.00 uv
+      - Entire segment
+      - Moving average: 80ms
+   - Eye blink:
+      - Max - min ? 175.00 uv
+      - Window size: 640ms
+      - Moving average: 80ms
+   - Eye movement:
+      - Max - min > 200.00 uv
+      - Window size: 640 ms
+      - Moving average: 80 ms
+   - Mark channel bad for all sefments if bad for greater than: 20% of segments
+   - Mark segment bad if it:
+      - Contains more than 20 bad channels
+      - Contains an eyeblink (remove if doing ocular artifact removal)
+      - Contains an eye movement (remove if doing ocular artifact removal)
+   - Overwrite all previous bad Segment information
+   - Overwrite all previous bad Channel information
+
+   ![](images/artifactDetectionNetStation.png)
+
+1. Bad channel replacement
+   - Same as step 4
+   - Specification name: Oddball 06. Bad Channel Replacement
+1. Artifact detection
+   - Same as step 5
+1. Averaging
+   - Handle source files: separately
+   - Handle subjects: separately
+      - To create final merge file for one ERP for whole sample (i.e., grand average -- for graphing purposes only, not analysis -- select "Together" for each)
+   - Do **not** compute noise estimate
+
+   ![](images/averagingNetStation.png)
+
+1. Montage options
+   - Average reference
+
+   ![](images/averageReferenceNetStation.png)
+
+1. Baseline correction
+   - Sample baseline with respect to: segment time = 0
+   - Baseline begins: 200ms (length of baseline) before sample and is 200 ms (length of baseline) long
+
+   ![](images/baselineCorrectionNetStation.png)
+
+1. Combine files (using the Averaging Tool)
+   - Handle source files: Together
+   - Handle subjects: Separately
+   - Do **not** copute noise estimate
+
+   ![](images/combineFilesNetStation.png)
+
+1. File Export
+   - Simple binary
+   - calibrate data
+   - Export calibration information
+   - Export history information
+   - Export reference channel
+   - Export only good segments (if not doing data processing in othe software)
+
+   ![](images/fileExportNetStation_1.png)
+
+1. Grand averaging
+   - Handle source files: Together
+   - Handle subjects: together
+   - Copy events from first file
+
+   ![](images/grandAverageNetStation.png)
+
+1. File export
+   - Format: Tab-delimited text (.txt)
+   - Export only good segments
+
+   ![](images/fileExportNetStation_2.png)
+
+### EEG Behaviors and Bad Channels Form
+
+- Indicate which channels were badd across **all** trials in the last "bad channel replacement" (bcr) step (Step 6)
+   - Include tirals that were marked bad (across all trials) either manually or automatically
+- Indicate which channels were manually marked bad on each trial for those that were marked bad on a trial by trial basis (step 3)
+
+
+### Troubleshooting and Q&A
+
+**Q: How do I mark a channel as bad for an individual trial/segment?**
+
+A: To mark an individual trial bad when in topoplot mode, make sure to have the "Click to Change Channel Status" checked and then click on the channel.
+Click again to make it good.
+Hold down the `Command` key to make it good or bad for the whole experiment.
+
+
+**Q: When trying to do some batch data processing in NetStattion Tools, I received an error when trying to add a group of .mff files to the "Input Files" box.**
+**The error says "Blue files are open in review. In order to process these files, they need to be closed in Review fist"**
+**What can I do?**
+
+A: If you run files through the FileValidator found in the Utilities (Application>EGI>Utilities) folder, this will fix the error.
+If you don't have that, you can right-click on the files, choose "Show package contents" and deleted the `lock.txt` or `aquiriring.xml` file if found
+
+
+**Q: When trying to import files to NetStation Tools from an external hard drive, they do not show up in the "Input Files" box but no error is given.**
+**How can I resolve this?**
+
+A: Copy the files to a local directory (e.g., a folder on the Desktop) before importing to NetStation Tools.
+
+
+
+
+
+
