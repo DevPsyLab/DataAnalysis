@@ -311,59 +311,6 @@ However, do make sure to save your `R` scripts before exiting Rstudio.
 - [Regression](regression.html)
 - [Structural Equation Modeling](sem.html)
 
-# Troubleshooting {#troubleshooting}
-
-To troubleshoot `R` issues, be resourceful.
-Try googling the error message or issue you are experiencing.
-See [here](#questions) for a list of places you can pose `R`-related questions for help.
-In addition, particular errors/warnings/issues are included below:
-
-## General Troubleshooting Tips
-
-1. **Run code line-by-line to identify the source of the error**
-   - If you are using RStudio, a red line will often appear on the lefthand side of the screen to indicate the particular line(s) of code that result in an error
-   - It may be useful to clear your working environment in R before trying to diagnose an error to be sure that you are not experiencing any interference from existing objects in the environment
-   - Running code line-by-line is particularly useful because it allows you to inspect the data at each step of its processing
-      - Data issues are commonly the culprit of code errors (see below)
-1. **Check for typos**
-   - Are all brackets/parentheses/etc. closed? 
-   - Does the object/variable that you are referring to exist? (*If the object does not exisit, you will likely get an error message indicating `[object name] not found`*)
-      - Has it been defined somewhere prior in the code? 
-      - Does it depend on something else to be created? 
-      - Is its name spelled correctly? 
-      - Highlighting the object or variable in question and using `CTRL-F` to search for it is a good way to check these things
-    - Did you spell the function you want to use correctly?
-    - Do you have commas separating items within a list/function/etc.?
-1. **Does your working environment have what it needs?**
-    - Are all necessary packages/libraries installed? 
-    Do any require an update?
-    - Are all expected objects (dataframes, lists, environment variables, etc) present? 
-    Are they correct? 
-1. **Investigate the structure of your data**
-   - Errors such as `non-numeric argument to binary operator` indicate that the function you are trying to use is expecting to recieve numeric data as an input but one or more of the inputs are not numeric
-      - The function `class(data$variable)` (replace "data" and "variable" with whatever you are trying to invesitgate) is useful for determining how R is interpreting your data.
-      Often, data that look like numbers can end up being stored as a character (text) variable.
-      This can be due to import/export processes or due to an issue with data entry. 
-         - For example, when `00` is entered instead of `0` in a numeric field R is likely to interpret the variable as a character instead of a number when importing the data
-    - Check to make sure that all expected rows/columns are present and that they look the way you expect them to
-       - If your dataset has been created by joining/merging multiple dataframes, any duplicate columns not accounted for when joining may have a suffix appended to distinguish them (i.e., `variable.x` or `variable.y`)
-       - To resolve this, either call the appended variable in subsequent manipulations (`variable.x` instead of `variable`) or deal with the duplicated columns before/during the joining process (e.g., include duplicate columns in the `by` argument of joining function or remove the redundant column from one of the datasets to be joined)
-    - If you have been creating/computing variables in your dataset, ensure that they are being computed as expected
-       - Check for `NA` (missing) or `NaN` (not a number) values.
-       Such values may not be an issue or error in all cases, but if you are not expecting that as a result of your computations, this might suggest an issue with the code and/or data structure
-       - Check whether the computed values are reasonable 
-
-## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated
-
-This warning might indicate that it cannot update the package because it is part of the base `R` installation.
-To fix this:
-
-- find and delete the package that is part of the base `R` installation in the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
-- make sure the package is also not in any other package installation locations (e.g., `C:\R\Packages\PACKAGENAME\`); if it is, delete it from there as well
-- then, after deleting the package from these locations, restart `R` and run `install.packages("PACKAGENAME")` to reinstall the package
-- close `R`
-- if the package was part of the base `R` installation, move the installed package folder `C:\R\Packages\PACKAGENAME\` to the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
-
 # Running Scripts Automatically with Windows
 
 https://www.spsanderson.com/steveondata/posts/2023-06-29/index.html (archived at https://perma.cc/9EXK-W99Y)
@@ -502,6 +449,37 @@ The instructions to download and configure `git` software can be found [here](gi
             # Push changes to git using credentials
             push(repo, credentials = cred_user_pass("insertUsername", myPassword))
             ```
+
+# Using `try()` Statements {#try}
+
+[`try()` statements](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/try) can be very useful in cases where you would like code to continue running even if a certain line errors out. 
+If the code inside of the statement results in an error, the `try()` statement will allow R to simply jump to the next line of code, rather than halting the entire process.
+
+It is best practice to ensure that the smallest possible "unit" of code is wrapped in the `try()` statement rather than a large section.
+This is because the `try()` statement will treat everything within it as a "single" operation.
+Thus, an error ocurring early in the sequence within a `try()` statement will cause the remainder of the sequence to be skipped, and R will skip to the next line of code outside of the present `try()` statement.
+
+For example:
+
+The following code does NOT have `try()` statements around the smallest possible unit.
+If `file_b.R` were to error out, `file_c.R` would not run.
+In other words, `file_c.R` would be skipped because it occurs after `file_b.R` in the **same** `try()` statement.
+```
+try({
+source(path/to/file/file_a.R)
+source(path/to/file/file_b.R)
+source(path/to/file_c.R)    
+})
+```
+
+On the other hand, the revised code below IS using `try()` statements around the smallest possible unit.
+If `file_b.R` were to error out, `file_c.R` would then begin to run.
+This is because each individual file being "sourced" is wrapped in its **own** `try()` statement.
+```
+try({source(path/to/file/file_a.R)})
+try({source(path/to/file/file_b.R)})
+try({source(path/to/file_c.R)})    
+```
 
 # Reading Password Protected Excel Databases
 
@@ -796,3 +774,66 @@ Unofficial documentation:
 ### For Licensing
 
 - https://usethis.r-lib.org/reference/licenses.html
+
+
+# Troubleshooting {#troubleshooting}
+
+To troubleshoot `R` issues, be resourceful.
+Try googling the error message or issue you are experiencing.
+See [here](#questions) for a list of places you can pose `R`-related questions for help.
+In addition, particular errors/warnings/issues are included below:
+
+## General Troubleshooting Tips
+
+1. **Run code line-by-line to identify the source of the error**
+   - If you are using RStudio, a red line will often appear on the lefthand side of the screen to indicate the particular line(s) of code that result in an error
+   - It may be useful to clear your working environment in R before trying to diagnose an error to be sure that you are not experiencing any interference from existing objects in the environment
+   - Running code line-by-line is particularly useful because it allows you to inspect the data at each step of its processing
+      - Data issues are commonly the culprit of code errors (see below)
+1. **Check for typos**
+   - Are all brackets/parentheses/etc. closed? 
+   - Does the object/variable that you are referring to exist? (*If the object does not exisit, you will likely get an error message indicating `[object name] not found`*)
+      - Has it been defined somewhere prior in the code? 
+      - Does it depend on something else to be created? 
+      - Is its name spelled correctly? 
+      - Highlighting the object or variable in question and using `CTRL-F` to search for it is a good way to check these things
+    - Did you spell the function you want to use correctly?
+    - Do you have commas separating items within a list/function/etc.?
+1. **Does your working environment have what it needs?**
+    - Are all necessary packages/libraries installed? 
+    Do any require an update?
+    - Are all expected objects (dataframes, lists, environment variables, etc) present? 
+    Are they correct? 
+1. **Investigate the structure of your data**
+   - Errors such as `non-numeric argument to binary operator` indicate that the function you are trying to use is expecting to recieve numeric data as an input but one or more of the inputs are not numeric
+      - The function `class(data$variable)` (replace "data" and "variable" with whatever you are trying to invesitgate) is useful for determining how R is interpreting your data.
+      Often, data that look like numbers can end up being stored as a character (text) variable.
+      This can be due to import/export processes or due to an issue with data entry. 
+         - For example, when `00` is entered instead of `0` in a numeric field R is likely to interpret the variable as a character instead of a number when importing the data
+    - Check to make sure that all expected rows/columns are present and that they look the way you expect them to
+       - If your dataset has been created by joining/merging multiple dataframes, any duplicate columns not accounted for when joining may have a suffix appended to distinguish them (i.e., `variable.x` or `variable.y`)
+       - To resolve this, either call the appended variable in subsequent manipulations (`variable.x` instead of `variable`) or deal with the duplicated columns before/during the joining process (e.g., include duplicate columns in the `by` argument of joining function or remove the redundant column from one of the datasets to be joined)
+    - If you have been creating/computing variables in your dataset, ensure that they are being computed as expected
+       - Check for `NA` (missing) or `NaN` (not a number) values.
+       Such values may not be an issue or error in all cases, but if you are not expecting that as a result of your computations, this might suggest an issue with the code and/or data structure
+       - Check whether the computed values are reasonable 
+
+## A single error preventing a Wiki site from rendering
+
+Code can be wrapped in `try()` statements so that if an error occurs, the script will simply "skip" to the next line of code.
+These `try()` statements are particularly useful when rendering a site; if they are not used, a single error will halt the entire process. `try()` statements allow the code to continue running in spite of a line or two erroring out.
+
+If you have already incorporated `try()` statements and are still experiencing fatal errors in code, check to make sure that the smallest possible "unit" of code is wrapped in `try()` statements, rather than large sections of code. 
+See [here](#try) for more information.
+
+
+## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated
+
+This warning might indicate that it cannot update the package because it is part of the base `R` installation.
+To fix this:
+
+- find and delete the package that is part of the base `R` installation in the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
+- make sure the package is also not in any other package installation locations (e.g., `C:\R\Packages\PACKAGENAME\`); if it is, delete it from there as well
+- then, after deleting the package from these locations, restart `R` and run `install.packages("PACKAGENAME")` to reinstall the package
+- close `R`
+- if the package was part of the base `R` installation, move the installed package folder `C:\R\Packages\PACKAGENAME\` to the `library` directory of the `R` installation (e.g., `C:\R\R-4.3.1\library\PACKAGENAME\`)
