@@ -2141,41 +2141,41 @@ eeglab redraw;
 1. Segmentation
    - Oddball
       - Frequent: 
-         - code is `frq+`
+         - Code is `frq+`
       - Target: 
-         - code is `tgt+`
+         - Code is `tgt+`
       - **Options**:
          - Segment length before: 200ms (baseline length)
          - Segment length after: 1000ms (post-stimulus length)
          - Offset: 2ms 
-         - Check "Copy specs to segment"
+         - Check "Copy specs to Segment"
 
       ![](images/oddballSegmentingNetStation_frq.png)
       ![](images/oddballSegmentingNetStation_tgt.png)
 
    - Fishsharks
       - Correct go:
-         - code is `Go++`
-         - Trial spec eval is 1
-         - Trial spec rtim is greater than or equal to 200
+         - Code is `Go++`
+         - Trial Spec eval is 1
+         - Trial Spec rtim is greater than or equal to 200
 
       ![](images/fishSharkSegmentingNetStation_cGo.png)
 
       - Correct no-go:
-         - code is `NG++`
-         - Trial spec eval is 0
+         - Code is `NG++`
+         - Trial Spec eval is 0
       
       ![](images/fishSharkSegmentingNetStation_cNg.png)
 
       - Incorrect go:
-         - code is `Go++`
-         - Trial spec eval is 0 OR Trial spec rtim is less than 200
+         - Code is `Go++`
+         - Trial Spec eval is 0 **or** Trial Spec rtim is less than 200
 
       ![](images/fishSharkSegmentingNetStation_xGo.png)
 
       - Incorrect no-go:
-         - code is `NG++`
-         - Trial spec eval is 1
+         - Code is `NG++`
+         - Trial Spec eval is 1
       
       ![](images/fishSharkSegmentingNetStation_xNg.png)
 
@@ -2195,48 +2195,48 @@ eeglab redraw;
          - Offset: 17ms
    - Stop-signal
       - Go - correct response
-          - code is `GoCR` or `NGGC`
-          - trial spec rtim is greater than or equal to 200
+          - Code is `GoCR` **or** `NGGC`
+          - Trial Spec rtim is greater than or equal to 200
 
       ![](images/stopSignalSegmentingNetStation_crGo.png)
       
       - Go - incorrect response
-         - code is `GoIn` or `NGGI`
+         - Code is `GoIn` **or** `NGGI`
       
       ![](images/stopSignalSegmentingNetStation_xrGo.png)
 
       - Go - omission error
-         - code is `GoOm`
+         - Code is `GoOm`
 
       ![](images/stopSignalSegmentingNetStation_oeGo.png)
 
       - NoGo - correct
-         - code is `NNCR`
+         - Code is `NNCR`
       
       ![](images/stopSignalSegmentingNetStation_cNG.png)
       
       - NoGo - incorrect
-         - code is `NNCC` or `NNCI`
+         - Code is `NNCC` **or** `NNCI`
       
       ![](images/stopSignalSegmentingNetStation_xNG.png)
       
       - NoGo - incorrect: correct E
-         - code is `NNCC`
+         - Code is `NNCC`
 
       ![](images/stopSignalSegmentingNetStation_xceNG.png)   
       
       - NoGo - incorrect: incorrect E
-         - code is `NNCI`
+         - Code is `NNCI`
 
       ![](images/stopSignalSegmentingNetStation_xxeNG.png)
 
       - All go:
-         - Code is `CoGR` or `GoOm` or `GoIn` or `NGGC`
+         - Code is `CoGR` **or** `GoOm` **or** `GoIn` **or** `NGGC`
       
       ![](images/stopSignalSegmentingNetStation_allGo.png)
 
       - All no-go:
-         - Code is `NNCR` or `NNCC` or `NNCI`
+         - Code is `NNCR` **or** `NNCC` **or** `NNCI`
 
       ![](images/stopSignalSegmentingNetStation_allNG.png)
 
@@ -2247,14 +2247,14 @@ eeglab redraw;
       ![](images/stopSignalSegmentingNetStation_rlcGo.png)
 
       - Response-locked incorrect stop
-         - code is `resp`
-         - key code `cel#` is 4
+         - Code is `resp`
+         - Key Code `cel#` is 4
 
       ![](images/stopSignalSegmentingNetStation_rlxNG.png)
 
       - Response-locked incorrect go
-         - code is `rinc`
-         - key code `cel#` is 3
+         - Code is `rinc`
+         - Key Code `cel#` is 3
       
       ![](images/stopSignalSegmentingNetStation_rlxGo.png)
 
@@ -2276,13 +2276,13 @@ eeglab redraw;
       - Entire segment
       - Moving average: 80ms
    - Eye blink:
-      - Max - min ? 175.00 uv
+      - Max - min > 175.00 uv
       - Window size: 640ms
       - Moving average: 80ms
    - Eye movement:
       - Max - min > 200.00 uv
-      - Window size: 640 ms
-      - Moving average: 80 ms
+      - Window size: 640ms
+      - Moving average: 80ms
    - Mark channel bad for all sefments if bad for greater than: 20% of segments
    - Mark segment bad if it:
       - Contains more than 20 bad channels
@@ -2299,8 +2299,8 @@ eeglab redraw;
 1. Artifact detection
    - Same as step 5
 1. Averaging
-   - Handle source files: separately
-   - Handle subjects: separately
+   - Handle source files: Separately
+   - Handle subjects: Separately
       - To create final merge file for one ERP for whole sample (i.e., grand average -- for graphing purposes only, not analysis -- select "Together" for each)
    - Do **not** compute noise estimate
 
@@ -2313,20 +2313,20 @@ eeglab redraw;
 
 1. Baseline correction
    - Sample baseline with respect to: segment time = 0
-   - Baseline begins: 200ms (length of baseline) before sample and is 200 ms (length of baseline) long
+   - Baseline begins: 200ms (length of baseline) before sample and is 200ms (length of baseline) long
 
    ![](images/baselineCorrectionNetStation.png)
 
 1. Combine files (using the Averaging Tool)
    - Handle source files: Together
    - Handle subjects: Separately
-   - Do **not** copute noise estimate
+   - Do **not** compute noise estimate
 
    ![](images/combineFilesNetStation.png)
 
 1. File Export
    - Simple binary
-   - calibrate data
+   - Calibrate data
    - Export calibration information
    - Export history information
    - Export reference channel
@@ -2363,7 +2363,7 @@ Click again to make it good.
 Hold down the `Command` key to make it good or bad for the whole experiment.
 
 
-**Q: When trying to do some batch data processing in NetStattion Tools, I received an error when trying to add a group of .mff files to the "Input Files" box.**
+**Q: When trying to do some batch data processing in NetStation Tools, I received an error when trying to add a group of .mff files to the "Input Files" box.**
 **The error says "Blue files are open in review. In order to process these files, they need to be closed in Review fist"**
 **What can I do?**
 
