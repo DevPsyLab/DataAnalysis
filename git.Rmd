@@ -242,6 +242,19 @@ Enter your HawkID as your username and your UI `GitLab` Personal Access Token as
 If you do not receive a prompt to enter your username and password, try removing the saved GitHubcredentials from Windows Credential Manager:
 https://github.com/desktop/desktop/issues/8860#issuecomment-2211812646
 
+## GitHub trying to connect to `git config` in another user's User folder
+
+To resolve, ensure that the `HOME` environment variable is set to your user folder (assuming that it is not a shared computer)
+
+To do so:
+   - Type "Environment Variables" into the search bar of your Windows task bar
+   - Click "Open" under the result of "Edit the system environment variables"
+   - Enter an admin user/password when prompted
+   - Click "Environment Variables" at the bottom right corner of the popup window that should open after entering admin credentials
+   - Find the `HOME` environment variable and click it to select (highlighted blue)
+   - Click "Edit" and update the path to match your Users folder
+
+
 ## `GitHub` shows all files as being changed even though the files haven't changed
 
 Windows and Mac use different line endings (https://github.com/Microsoft/WSL/issues/184; archived at https://perma.cc/F8UX-YJP3):
