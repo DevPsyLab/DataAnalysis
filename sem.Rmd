@@ -374,6 +374,249 @@ ggplot(
     linewidth = 2)
 ```
 
+# Latent Basis Growth Curve Model {#lbgcm}
+
+## Model Syntax
+
+### Abbreviated
+
+```{r}
+lbgcm1_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + a*t2 + b*t3 + 3*t4 # freely estimate the loadings for t2 and t3
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+'
+```
+
+### Full
+
+```{r}
+lbgcm2_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + a*t2 + b*t3 + 3*t4 # freely estimate the loadings for t2 and t3
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Constrain observed intercepts to zero
+  t1 ~ 0
+  t2 ~ 0
+  t3 ~ 0
+  t4 ~ 0
+  
+  # Estimate mean of intercept and slope
+  intercept ~ 1
+  slope ~ 1
+'
+```
+
+## Fit the Model
+
+### Abbreviated
+
+```{r}
+lbgcm1_fit <- growth(
+  lbgcm1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = FALSE,
+  int.lv.free = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+### Full
+
+```{r}
+lbgcm2_fit <- sem(
+  lbgcm2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+## Summary Output
+
+### Abbreviated
+
+```{r}
+summary(
+  lbgcm1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Full
+
+```{r}
+summary(
+  lbgcm2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  lbgcm1_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  lbgcm1_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  lbgcm1_fit,
+  sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(lbgcm1_fit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  lbgcm1_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+```
+
+## Plot Trajectories
+
+### Protoypical Growth Curve
+
+```{r}
+lbgcm1_intercept <- coef(lbgcm1_fit)["intercept~1"]
+lbgcm1_slope <- coef(lbgcm1_fit)["slope~1"]
+lbgcm1_slopeloadingt2 <- coef(lbgcm1_fit)["a"]
+lbgcm1_slopeloadingt3 <- coef(lbgcm1_fit)["b"]
+
+timepoints <- 4
+
+newData <- data.frame(
+  time = 1:4,
+  slopeloading = c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 3)
+)
+
+newData$predictedValue <- NA
+newData$predictedValue <- lbgcm1_intercept + lbgcm1_slope * newData$slopeloading
+
+ggplot(
+  data = newData,
+  mapping = aes(x = time, y = predictedValue)) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(0, 5)) +
+  geom_line()
+```
+
+### Individuals' Growth Curves
+
+```{r}
+person_factors <- as.data.frame(predict(lbgcm1_fit))
+person_factors$id <- rownames(person_factors)
+
+slope_loadings <- c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 3)
+
+# Compute model-implied values for each person at each time point
+individual_trajectories <- person_factors %>%
+  rowwise() %>%
+  mutate(
+    t1 = intercept + slope * slope_loadings[1],
+    t2 = intercept + slope * slope_loadings[2],
+    t3 = intercept + slope * slope_loadings[3],
+    t4 = intercept + slope * slope_loadings[4]
+  ) %>%
+  ungroup() %>%
+  select(id, t1, t2, t3, t4) %>%
+  pivot_longer(
+    cols = starts_with("t"),
+    names_to = "timepoint",
+    values_to = "value") %>%
+  mutate(
+    time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
+  )
+
+ggplot(
+  data = individual_trajectories,
+  mapping = aes(x = time, y = value, group = factor(id))) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
+  geom_line()
+```
+
+### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+#ggplot(
+#  data = newData) +
+#  xlab("Timepoint") +
+#  ylab("Score") +
+#  scale_x_continuous(
+#    limits = c(0, 3),
+#    labels = 1:4) +
+#  scale_y_continuous(
+#    limits = c(-10, 20)) +
+#  geom_abline(
+#    mapping = aes(
+#      slope = slope,
+#      intercept = intercept)) +
+#  geom_abline(
+#    mapping = aes(
+#      slope = lgcm1_slope,
+#      intercept = lgcm1_intercept),
+#    color = "blue",
+#    linewidth = 2)
+```
+
 # Latent Change Score Model {#lcsm}
 
 ## Model Syntax
