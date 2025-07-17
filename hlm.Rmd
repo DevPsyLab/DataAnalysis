@@ -95,7 +95,9 @@ The following models are models that are fit in a linear mixed modeling framewor
 
 ## Growth Curve Models {#gcm}
 
-### Plot Observed Growth Curves
+### Linear Growth Curve Model {#linearGCM}
+
+#### Plot Observed Growth Curves
 
 ```{r}
 ggplot(
@@ -111,7 +113,7 @@ ggplot(
     name = "Math Score")
 ```
 
-### `lme4`
+#### `lme4`
 
 ```{r}
 linearMixedModel <- lmer(
@@ -124,7 +126,7 @@ linearMixedModel <- lmer(
 summary(linearMixedModel)
 ```
 
-#### Protoypical Growth Curve
+##### Protoypical Growth Curve
 
 ```{r}
 newData <- expand.grid(
@@ -155,7 +157,7 @@ ggplot(
   geom_line()
 ```
 
-#### Individuals' Growth Curves
+##### Individuals' Growth Curves
 
 ```{r}
 mydata$predictedValue <- predict(
@@ -172,7 +174,7 @@ ggplot(
   geom_line()
 ```
 
-#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+##### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
 ggplot(
@@ -187,13 +189,13 @@ ggplot(
     linewidth = 2)
 ```
 
-#### Extract Random Effects {#extractRandomEffects}
+##### Extract Random Effects {#extractRandomEffects}
 
 ```{r}
 ranef(linearMixedModel)
 ```
 
-### `nlme`
+#### `nlme`
 
 ```{r}
 linearMixedModel_nlme <- lme(
@@ -206,12 +208,16 @@ linearMixedModel_nlme <- lme(
 summary(linearMixedModel_nlme)
 ```
 
-## Intraclass Correlation Coefficent {#icc}
+#### Intraclass Correlation Coefficent {#icc}
 
 ```{r}
 icc(linearMixedModel)
 icc(linearMixedModel_nlme)
 ```
+
+### Quadratic Growth Curve Model {#quadraticGCM}
+
+### Spline Growth Curve Model {#splineGCM}
 
 # Generalized Linear Mixed Models {#generalized}
 

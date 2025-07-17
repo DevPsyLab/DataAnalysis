@@ -102,9 +102,11 @@ ggplot(
 
 # Latent Growth Curve Model {#lgcm}
 
-## Model Syntax
+## Linear Model {#linearLGCM}
 
-### Abbreviated
+### Model Syntax
+
+#### Abbreviated
 
 ```{r}
 lgcm1_syntax <- '
@@ -124,7 +126,7 @@ lgcm1_syntax <- '
 '
 ```
 
-### Full
+#### Full
 
 ```{r}
 lgcm2_syntax <- '
@@ -154,9 +156,9 @@ lgcm2_syntax <- '
 '
 ```
 
-## Fit the Model
+### Fit the Model
 
-### Abbreviated
+#### Abbreviated
 
 ```{r}
 lgcm1_fit <- growth(
@@ -171,7 +173,7 @@ lgcm1_fit <- growth(
   em.h1.iter.max = 100000)
 ```
 
-### Full
+#### Full
 
 ```{r}
 lgcm2_fit <- sem(
@@ -184,9 +186,9 @@ lgcm2_fit <- sem(
   em.h1.iter.max = 100000)
 ```
 
-## Summary Output
+### Summary Output
 
-### Abbreviated
+#### Abbreviated
 
 ```{r}
 summary(
@@ -196,7 +198,7 @@ summary(
   rsquare = TRUE)
 ```
 
-### Full
+#### Full
 
 ```{r}
 summary(
@@ -206,7 +208,7 @@ summary(
   rsquare = TRUE)
 ```
 
-## Estimates of Model Fit
+### Estimates of Model Fit
 
 ```{r}
 fitMeasures(
@@ -220,7 +222,7 @@ fitMeasures(
     "rmsea.robust", "cfi.robust", "tli.robust"))
 ```
 
-## Residuals of Observed vs. Model-Implied Correlation Matrix
+### Residuals of Observed vs. Model-Implied Correlation Matrix
 
 ```{r}
 residuals(
@@ -228,7 +230,7 @@ residuals(
   type = "cor")
 ```
 
-## Modification Indices
+### Modification Indices
 
 ```{r}
 modificationindices(
@@ -236,13 +238,13 @@ modificationindices(
   sort. = TRUE)
 ```
 
-## Internal Consistency Reliability
+### Internal Consistency Reliability
 
 ```{r}
 compRelSEM(lgcm1_fit)
 ```
 
-## Path Diagram
+### Path Diagram
 
 ```{r}
 semPaths(
@@ -252,9 +254,9 @@ semPaths(
   edge.label.cex = 1.5)
 ```
 
-## Plot Trajectories
+### Plot Trajectories
 
-### Protoypical Growth Curve
+#### Protoypical Growth Curve
 
 Calculated from intercept and slope parameters:
 
@@ -299,7 +301,7 @@ ggplot(
   geom_line()
 ```
 
-### Individuals' Growth Curves
+#### Individuals' Growth Curves
 
 Calculated from intercept and slope parameters:
 
@@ -347,7 +349,7 @@ ggplot(
   geom_line()
 ```
 
-### Individuals' Trajectories Overlaid with Prototypical Trajectory
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
 newData <- as.data.frame(predict(lgcm1_fit))
@@ -374,11 +376,11 @@ ggplot(
     linewidth = 2)
 ```
 
-# Latent Basis Growth Curve Model {#lbgcm}
+## Latent Basis Model {#latentBasisLGCM}
 
-## Model Syntax
+### Model Syntax
 
-### Abbreviated
+#### Abbreviated
 
 ```{r}
 lbgcm1_syntax <- '
@@ -398,7 +400,7 @@ lbgcm1_syntax <- '
 '
 ```
 
-### Full
+#### Full
 
 ```{r}
 lbgcm2_syntax <- '
@@ -428,9 +430,9 @@ lbgcm2_syntax <- '
 '
 ```
 
-## Fit the Model
+### Fit the Model
 
-### Abbreviated
+#### Abbreviated
 
 ```{r}
 lbgcm1_fit <- growth(
@@ -445,7 +447,7 @@ lbgcm1_fit <- growth(
   em.h1.iter.max = 100000)
 ```
 
-### Full
+#### Full
 
 ```{r}
 lbgcm2_fit <- sem(
@@ -458,9 +460,9 @@ lbgcm2_fit <- sem(
   em.h1.iter.max = 100000)
 ```
 
-## Summary Output
+### Summary Output
 
-### Abbreviated
+#### Abbreviated
 
 ```{r}
 summary(
@@ -470,7 +472,7 @@ summary(
   rsquare = TRUE)
 ```
 
-### Full
+#### Full
 
 ```{r}
 summary(
@@ -480,7 +482,7 @@ summary(
   rsquare = TRUE)
 ```
 
-## Estimates of Model Fit
+### Estimates of Model Fit
 
 ```{r}
 fitMeasures(
@@ -494,7 +496,7 @@ fitMeasures(
     "rmsea.robust", "cfi.robust", "tli.robust"))
 ```
 
-## Residuals of Observed vs. Model-Implied Correlation Matrix
+### Residuals of Observed vs. Model-Implied Correlation Matrix
 
 ```{r}
 residuals(
@@ -502,7 +504,7 @@ residuals(
   type = "cor")
 ```
 
-## Modification Indices
+### Modification Indices
 
 ```{r}
 modificationindices(
@@ -510,13 +512,13 @@ modificationindices(
   sort. = TRUE)
 ```
 
-## Internal Consistency Reliability
+### Internal Consistency Reliability
 
 ```{r}
 compRelSEM(lbgcm1_fit)
 ```
 
-## Path Diagram
+### Path Diagram
 
 ```{r}
 semPaths(
@@ -526,9 +528,9 @@ semPaths(
   edge.label.cex = 1.5)
 ```
 
-## Plot Trajectories
+### Plot Trajectories
 
-### Protoypical Growth Curve
+#### Protoypical Growth Curve
 
 ```{r}
 lbgcm1_intercept <- coef(lbgcm1_fit)["intercept~1"]
@@ -556,7 +558,7 @@ ggplot(
   geom_line()
 ```
 
-### Individuals' Growth Curves
+#### Individuals' Growth Curves
 
 ```{r}
 person_factors <- as.data.frame(predict(lbgcm1_fit))
@@ -593,29 +595,25 @@ ggplot(
   geom_line()
 ```
 
-### Individuals' Trajectories Overlaid with Prototypical Trajectory
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-#ggplot(
-#  data = newData) +
-#  xlab("Timepoint") +
-#  ylab("Score") +
-#  scale_x_continuous(
-#    limits = c(0, 3),
-#    labels = 1:4) +
-#  scale_y_continuous(
-#    limits = c(-10, 20)) +
-#  geom_abline(
-#    mapping = aes(
-#      slope = slope,
-#      intercept = intercept)) +
-#  geom_abline(
-#    mapping = aes(
-#      slope = lgcm1_slope,
-#      intercept = lgcm1_intercept),
-#    color = "blue",
-#    linewidth = 2)
+ggplot() +
+  geom_line( # individuals' model-implied trajectories
+    data = individual_trajectories,
+    aes(x = time, y = value, group = id),
+  ) +
+  geom_line( # prototypical trajectory
+    data = newData,
+    aes(x = time, y = predictedValue),
+    color = "blue",
+    linewidth = 2
+  )
 ```
+
+## Quadratic Model {#quadraticLGCM}
+
+## Spline Model {#splineLGCM}
 
 # Latent Change Score Model {#lcsm}
 
