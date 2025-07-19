@@ -285,6 +285,9 @@ if(score <= 10){ # check this condition first
 } else if(score <= 20){ # if first condition was not met, check this condition next
   rank <- 2
   print(rank)
+} else if(score <= 30){ # if first condition was not met, check this condition next
+  rank <- 3
+  print(rank)
 } else{ # if all other conditions were not met, then do this
   print("Not Applicable!")
 }
@@ -865,6 +868,65 @@ for(i in 1:length(fruits)){
   print(paste("The loop is at index:", i, sep = " "))
   print(fruits[i])
 }
+```
+
+## Create a Function {#createFunction}
+
+Now, let's put together what we have learned to create a useful function.
+Functions are useful if you want to perform an operation multiple times.
+Any operation that you want to perform multiple times, you can create a function to accomplish.
+Use of a function can save you time without needed to retype out all of the code each time.
+For instance, let's say you want to convert temperature between Fahrenheit and Celsius, you could create a function to do that.
+In this case, our function has two arguments: `temperature` (in degrees) and `unit` of the original temperature (`F` for Fahrenheit or `C` for Celsius, where the default unit is Fahrenheit).
+
+```{r}
+convert_temperature <- function(temperature, unit = "F"){
+  if(unit == "F"){ # if the input temperature(s) in Fahrenheit
+    newtemp <- (temperature - 32) / (9/5)
+  } else if(unit == "C"){ # if the input temperature(s) in Celsius
+    newtemp <- (temperature * (9/5)) + 32
+  }
+  
+  return(newtemp)
+}
+```
+
+Now we can use the function to convert temperatures between Fahrenheit and Celsius.
+A temperature of 32°F is equal to 0°C.
+A temperature of 0°C is equal to 89.6°F.
+
+```{r}
+convert_temperature(
+  temperature = 32,
+  unit = "F"
+)
+
+convert_temperature(
+  temperature = 32,
+  unit = "C"
+)
+```
+
+We can also convert the temperature for a vector of values at once:
+
+```{r}
+convert_temperature(
+  temperature = c(0, 10, 20, 30, 40, 50),
+  unit = "F"
+)
+
+convert_temperature(
+  temperature = c(0, 10, 20, 30, 40, 50),
+  unit = "C"
+)
+```
+
+Because the default unit is "F", we do not need to specify the unit if our input temperatures are in Fahrenheit:
+
+```{r}
+convert_temperature(
+  c(0, 10, 20, 30, 40, 50)
+)
 ```
 
 # Session Info
