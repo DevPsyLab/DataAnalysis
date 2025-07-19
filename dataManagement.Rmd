@@ -211,7 +211,7 @@ mydata$survived == 1
 mydata$survived != 1
 ```
 
-### Greater Than: `>`
+## Greater Than: `>`
 
 ```{r}
 mydata$parch > 1
@@ -234,6 +234,7 @@ mydata$parch >= 1
 ```{r}
 mydata$parch <= 1
 ```
+
 ## Is in a Value of Another Vector: `%in%`
 
 ```{r}
@@ -271,6 +272,33 @@ is.na(mydata$prediction)
 
 ```{r}
 is.na(mydata$prediction) | mydata$parch >= 1
+```
+
+# If...Else Conditions {#ifelse}
+
+```{r}
+score <- 15
+
+if(score <= 10){ # check this condition first
+  rank <- 1
+  print(rank)
+} else if(score <= 20){ # if first condition was not met, check this condition next
+  rank <- 2
+  print(rank)
+} else{ # if all other conditions were not met, then do this
+  print("Not Applicable!")
+}
+```
+
+```{r}
+score <- c(1, 10, 20, 40, 100)
+
+rank <- ifelse(
+  score <= 10, # check this condition
+  1, # assign this value if true
+  2) # assign this value if false
+
+rank
 ```
 
 # Subset {#subset}
