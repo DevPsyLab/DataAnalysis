@@ -460,7 +460,21 @@ Note that you may need to download an older version of the package (e.g., from t
     install.packages("http://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-60.0.1.tar.gz", repos = NULL, type = "source")
     ```
 
-1. If steps 1 and 2 fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.
+1. Check if you are installing the necessary modules within your job script: 
+
+    ```r
+    module load stack/2022.2
+    module load r/4.2.2_gcc-9.5.0
+    ```
+1. Add a line to your R script to make sure it is accessing the same repository where you installed the packages manually:
+
+    ```r
+    .libPaths(c("/old_Users/HAWKID/Rlibs", 
+            "/cvmfs/argon.hpc.uiowa.edu/2022.2/apps/linux-centos7-broadwell/gcc-9.5.0/r-4.2.2-lv7yirk/rlib/R/library"))
+    ```
+
+1. If the prior steps fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.
+
 
 ## Error When Installing Packages from Source
 
