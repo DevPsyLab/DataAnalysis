@@ -624,7 +624,7 @@ individual_trajectories <- person_factors %>%
   ungroup() %>%
   select(id, t1, t2, t3, t4) %>%
   pivot_longer(
-    cols = starts_with("t"),
+    cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") %>%
   mutate(
@@ -863,19 +863,6 @@ quadraticGCM1_intercept <- coef(quadraticGCM1_fit)["intercept~1"]
 quadraticGCM1_linear <- coef(quadraticGCM1_fit)["linear~1"]
 quadraticGCM1_quadratic <- coef(quadraticGCM1_fit)["quadratic~1"]
 
-#ggplot() +
-#  xlab("Timepoint") +
-#  ylab("Score") +
-#  scale_x_continuous(
-#    limits = c(0, 3),
-#    labels = 1:4) +
-#  scale_y_continuous(
-#    limits = c(0, 5)) +
-#  geom_abline(
-#    mapping = aes(
-#      slope = lgcm1_slope,
-#      intercept = lgcm1_intercept))
-
 timepoints <- 4
 
 newData <- data.frame(
@@ -920,7 +907,7 @@ individual_trajectories <- person_factors %>%
   ungroup() %>%
   select(id, t1, t2, t3, t4) %>%
   pivot_longer(
-    cols = starts_with("t"),
+    cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") %>%
   mutate(
@@ -961,7 +948,289 @@ ggplot() +
   )
 ```
 
-## Spline Growth Curve Model {#splineLGCM}
+## Spline (Piecewise) Growth Curve Model {#splineLGCM}
+
+### Model Syntax
+
+#### Abbreviated
+
+```{r}
+splineGCM1_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  knot =~ 0*t1 + 0*t2 + 1*t3 + 1*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  knot ~ x1 + x2
+  
+  # Spline has no variance
+  knot ~~ 0*knot
+
+  # Spline does not covary with intercept and slope
+  knot ~~ 0*intercept
+  knot ~~ 0*slope
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+'
+```
+
+#### Full
+
+```{r}
+splineGCM2_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  knot =~ 0*t1 + 0*t2 + 1*t3 + 1*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  knot ~ x1 + x2
+  
+  # Spline has no variance
+  knot ~~ 0*knot
+  
+  # Spline does not covary with intercept and slope
+  knot ~~ 0*intercept
+  knot ~~ 0*slope
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Constrain observed intercepts to zero
+  t1 ~ 0
+  t2 ~ 0
+  t3 ~ 0
+  t4 ~ 0
+  
+  # Estimate mean of intercept and slope
+  intercept ~ 1
+  slope ~ 1
+  knot ~ 1
+'
+```
+
+### Fit the Model
+
+#### Abbreviated
+
+```{r}
+splineGCM1_fit <- growth(
+  splineGCM1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = FALSE,
+  int.lv.free = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+#### Full
+
+```{r}
+splineGCM2_fit <- sem(
+  splineGCM2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+### Summary Output
+
+#### Abbreviated
+
+```{r}
+summary(
+  splineGCM1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+#### Full
+
+```{r}
+summary(
+  splineGCM2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  splineGCM1_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+### Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  splineGCM1_fit,
+  type = "cor")
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  splineGCM1_fit,
+  sort. = TRUE)
+```
+
+### Internal Consistency Reliability
+
+```{r}
+compRelSEM(splineGCM1_fit)
+```
+
+### Path Diagram
+
+```{r}
+semPlot::semPaths(
+  splineGCM1_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+
+lavaanPlot::lavaanPlot(
+  splineGCM1_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+
+lavaanPlot::lavaanPlot2(
+  splineGCM1_fit,
+  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r, eval = FALSE}
+lavaangui::plot_lavaan(splineGCM1_fit)
+```
+
+### Plot Trajectories
+
+#### Protoypical Growth Curve
+
+Calculated from intercept and slope parameters:
+
+```{r}
+splineGCM1_intercept <- coef(splineGCM1_fit)["intercept~1"]
+splineGCM1_slope <- coef(splineGCM1_fit)["slope~1"]
+splineGCM1_knot <- coef(splineGCM1_fit)["knot~1"]
+
+timepoints <- 4
+
+newData <- data.frame(
+  time = 1:4,
+  linearLoading = c(0, 1, 2, 3),
+  knotLoading = c(0, 0, 1, 1)
+)
+
+newData$predictedValue <- NA
+newData$predictedValue <- splineGCM1_intercept + (splineGCM1_slope * newData$linearLoading) + (splineGCM1_knot * newData$knotLoading)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = time,
+    y = predictedValue)) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(0, 5)) +
+  geom_line()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+person_factors <- as.data.frame(predict(splineGCM1_fit))
+person_factors$id <- rownames(person_factors)
+
+slope_loadings <- c(0, 1, 2, 3)
+knot_loadings <- c(0, 0, 1, 1)
+
+# Compute model-implied values for each person at each time point
+individual_trajectories <- person_factors %>%
+  rowwise() %>%
+  mutate(
+    t1 = intercept + (slope * slope_loadings[1]) + (knot * knot_loadings[1]),
+    t2 = intercept + (slope * slope_loadings[2]) + (knot * knot_loadings[2]),
+    t3 = intercept + (slope * slope_loadings[3]) + (knot * knot_loadings[3]),
+    t4 = intercept + (slope * slope_loadings[4]) + (knot * knot_loadings[4])
+  ) %>%
+  ungroup() %>%
+  select(id, t1, t2, t3, t4) %>%
+  pivot_longer(
+    cols = t1:t4,
+    names_to = "timepoint",
+    values_to = "value") %>%
+  mutate(
+    time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
+  )
+
+ggplot(
+  data = individual_trajectories,
+  mapping = aes(
+    x = time,
+    y = value,
+    group = factor(id))) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
+  geom_line()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot() +
+  geom_line( # individuals' model-implied trajectories
+    data = individual_trajectories,
+    aes(
+      x = time,
+      y = value,
+      group = id),
+  ) +
+  geom_line( # prototypical trajectory
+    data = newData,
+    aes(
+      x = time,
+      y = predictedValue),
+    color = "blue",
+    linewidth = 2
+  )
+```
 
 ## Saturated Growth Curve Model {#saturatedGCM}
 
