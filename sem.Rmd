@@ -247,11 +247,28 @@ compRelSEM(lgcm1_fit)
 ### Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   lgcm1_fit,
   what = "Std.all",
   layout = "tree2",
   edge.label.cex = 1.5)
+
+lavaanPlot::lavaanPlot(
+  lgcm1_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+
+lavaanPlot::lavaanPlot2(
+  lgcm1_fit,
+  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+lavaangui::plot_lavaan(lgcm1_fit)
 ```
 
 ### Plot Trajectories
