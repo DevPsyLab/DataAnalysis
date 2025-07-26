@@ -647,17 +647,319 @@ ggplot(
 ggplot() +
   geom_line( # individuals' model-implied trajectories
     data = individual_trajectories,
-    aes(x = time, y = value, group = id),
+    aes(
+      x = time,
+      y = value,
+      group = id),
   ) +
   geom_line( # prototypical trajectory
     data = newData,
-    aes(x = time, y = predictedValue),
+    aes(
+      x = time,
+      y = predictedValue),
     color = "blue",
     linewidth = 2
   )
 ```
 
 ## Quadratic Growth Curve Model {#quadraticLGCM}
+
+When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
+
+```{r}
+factorLoadings <- poly(
+  x = c(0,1,2,3), # times (can allow unequal spacing)
+  degree = 2)
+
+factorLoadings
+
+linearLoadings <- factorLoadings[,1]
+quadraticLoadings <- factorLoadings[,2]
+
+linearLoadings
+quadraticLoadings
+```
+
+### Model Syntax
+
+#### Abbreviated
+
+```{r}
+quadraticGCM1_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  linear =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  quadratic =~ 0*t1 + 1*t2 + 4*t3 + 9*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  linear ~ x1 + x2
+  quadratic ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+'
+```
+
+#### Full
+
+```{r}
+quadraticGCM2_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  linear =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  quadratic =~ 0*t1 + 1*t2 + 4*t3 + 9*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  linear ~ x1 + x2
+  quadratic ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Constrain observed intercepts to zero
+  t1 ~ 0
+  t2 ~ 0
+  t3 ~ 0
+  t4 ~ 0
+  
+  # Estimate mean of intercept and slope
+  intercept ~ 1
+  linear ~ 1
+  quadratic ~ 1
+'
+```
+
+### Fit the Model
+
+#### Abbreviated
+
+```{r}
+quadraticGCM1_fit <- growth(
+  quadraticGCM1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = FALSE,
+  int.lv.free = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+#### Full
+
+```{r}
+quadraticGCM2_fit <- sem(
+  quadraticGCM2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+### Summary Output
+
+#### Abbreviated
+
+```{r}
+summary(
+  quadraticGCM1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+#### Full
+
+```{r}
+summary(
+  quadraticGCM2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  quadraticGCM1_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+### Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  quadraticGCM1_fit,
+  type = "cor")
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  quadraticGCM1_fit,
+  sort. = TRUE)
+```
+
+### Internal Consistency Reliability
+
+```{r}
+compRelSEM(quadraticGCM1_fit)
+```
+
+### Path Diagram
+
+```{r}
+semPlot::semPaths(
+  quadraticGCM1_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+
+lavaanPlot::lavaanPlot(
+  quadraticGCM1_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+
+lavaanPlot::lavaanPlot2(
+  quadraticGCM1_fit,
+  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r, eval = FALSE}
+lavaangui::plot_lavaan(quadraticGCM1_fit)
+```
+
+### Plot Trajectories
+
+#### Protoypical Growth Curve
+
+Calculated from intercept and slope parameters:
+
+```{r}
+quadraticGCM1_intercept <- coef(quadraticGCM1_fit)["intercept~1"]
+quadraticGCM1_linear <- coef(quadraticGCM1_fit)["linear~1"]
+quadraticGCM1_quadratic <- coef(quadraticGCM1_fit)["quadratic~1"]
+
+#ggplot() +
+#  xlab("Timepoint") +
+#  ylab("Score") +
+#  scale_x_continuous(
+#    limits = c(0, 3),
+#    labels = 1:4) +
+#  scale_y_continuous(
+#    limits = c(0, 5)) +
+#  geom_abline(
+#    mapping = aes(
+#      slope = lgcm1_slope,
+#      intercept = lgcm1_intercept))
+
+timepoints <- 4
+
+newData <- data.frame(
+  time = 1:4,
+  linearLoading = c(0, 1, 2, 3),
+  quadraticLoading = c(0, 1, 4, 9)
+)
+
+newData$predictedValue <- NA
+newData$predictedValue <- quadraticGCM1_intercept + (quadraticGCM1_linear * newData$linearLoading) + (quadraticGCM1_quadratic * newData$quadraticLoading)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = time,
+    y = predictedValue)) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(0, 5)) +
+  geom_line()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+person_factors <- as.data.frame(predict(quadraticGCM1_fit))
+person_factors$id <- rownames(person_factors)
+
+linear_loadings <- c(0, 1, 2, 3)
+quadratic_loadings <- c(0, 1, 4, 9)
+
+# Compute model-implied values for each person at each time point
+individual_trajectories <- person_factors %>%
+  rowwise() %>%
+  mutate(
+    t1 = intercept + (linear * linear_loadings[1]) + (quadratic * quadratic_loadings[1]),
+    t2 = intercept + (linear * linear_loadings[2]) + (quadratic * quadratic_loadings[2]),
+    t3 = intercept + (linear * linear_loadings[3]) + (quadratic * quadratic_loadings[3]),
+    t4 = intercept + (linear * linear_loadings[4]) + (quadratic * quadratic_loadings[4])
+  ) %>%
+  ungroup() %>%
+  select(id, t1, t2, t3, t4) %>%
+  pivot_longer(
+    cols = starts_with("t"),
+    names_to = "timepoint",
+    values_to = "value") %>%
+  mutate(
+    time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
+  )
+
+ggplot(
+  data = individual_trajectories,
+  mapping = aes(
+    x = time,
+    y = value,
+    group = factor(id))) +
+  xlab("Timepoint") +
+  ylab("Score") +
+  scale_y_continuous(
+    limits = c(-10, 20)) +
+  geom_line()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot() +
+  geom_line( # individuals' model-implied trajectories
+    data = individual_trajectories,
+    aes(
+      x = time,
+      y = value,
+      group = id),
+  ) +
+  geom_line( # prototypical trajectory
+    data = newData,
+    aes(
+      x = time,
+      y = predictedValue),
+    color = "blue",
+    linewidth = 2
+  )
+```
 
 ## Spline Growth Curve Model {#splineLGCM}
 
