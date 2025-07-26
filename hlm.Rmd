@@ -76,6 +76,7 @@ mydata$ageYears <- mydata$age / 12
 mydata$ageMonthsCentered <- mydata$age - min(mydata$age, na.rm = TRUE)
 
 mydata$ageYearsCentered <- mydata$ageMonthsCentered / 12
+mydata$ageYearsCenteredSquared <- mydata$ageYearsCentered ^ 2
 ```
 
 # Estimator: ML or REML
@@ -217,7 +218,233 @@ icc(linearMixedModel_nlme)
 
 ### Quadratic Growth Curve Model {#quadraticGCM}
 
+When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
+
+```{r}
+factorLoadings <- poly(
+  x = c(0,1,2,3), # times (can allow unequal spacing)
+  degree = 2)
+
+factorLoadings
+
+linearLoadings <- factorLoadings[,1]
+quadraticLoadings <- factorLoadings[,2]
+
+linearLoadings
+quadraticLoadings
+```
+
+#### Fit Model
+
+```{r}
+quadraticGCM <- lmer(
+  math ~ female + ageYearsCentered + ageYearsCenteredSquared + female:ageYearsCentered + female:ageYearsCenteredSquared + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(quadraticGCM)
+```
+
+This is equivalent to:
+
+```{r}
+quadraticGCM <- lmer(
+  math ~ female + ageYearsCentered + I(ageYearsCentered^2) + female:ageYearsCentered + female:I(ageYearsCentered^2) + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(quadraticGCM)
+```
+
+#### Protoypical Growth Curve
+
+```{r}
+newData <- expand.grid(
+  female = c(0, 1),
+  ageYears = seq(from = min(mydata$ageYears, na.rm = TRUE), to = max(mydata$ageYears, na.rm = TRUE), length.out = 10000))
+
+newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
+newData$ageYearsCenteredSquared <- newData$ageYearsCentered ^ 2
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+newData$predictedValue <- predict( # predict.merMod
+  quadraticGCM,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  quadraticGCM,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line() +
+  geom_line(
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2)
+```
+
+#### Extract Random Effects
+
+```{r}
+ranef(quadraticGCM)
+```
+
 ### Spline Growth Curve Model {#splineGCM}
+
+#### Create Knot
+
+```{r}
+mydata$knot <- NA
+mydata$knot[which(mydata$ageYears <= 11)] <- 0
+mydata$knot[which(mydata$ageYears > 11)] <- 1
+```
+
+#### Fit Model
+
+```{r}
+splineGCM <- lmer(
+  math ~ female + ageYearsCentered + female:ageYearsCentered + knot + knot:ageYearsCentered + female:knot + female:knot:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(splineGCM)
+```
+
+#### Protoypical Growth Curve
+
+```{r}
+newData <- expand.grid(
+  female = c(0, 1),
+  ageYears = seq(from = min(mydata$ageYears, na.rm = TRUE), to = max(mydata$ageYears, na.rm = TRUE), length.out = 10000))
+
+newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
+
+newData$knot <- NA
+newData$knot[which(newData$ageYears <= 11)] <- 0
+newData$knot[which(newData$ageYears > 11)] <- 1
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+newData$predictedValue <- predict( # predict.merMod
+  splineGCM,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  splineGCM,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line() +
+  geom_line(
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2)
+```
+
+#### Extract Random Effects
+
+```{r}
+ranef(splineGCM)
+```
 
 # Generalized Linear Mixed Models {#generalized}
 
