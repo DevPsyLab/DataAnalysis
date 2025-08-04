@@ -216,6 +216,21 @@ icc(linearMixedModel)
 icc(linearMixedModel_nlme)
 ```
 
+### Growth Curve Model with Timepoint-Specific Errors {#timepointSpecificErrorsGCM}
+
+Adapted from Usami & Murayama (2018):
+
+```{r}
+timepointSpecificErrorsMixedModel <- lmer(
+  math ~ female + ageYearsCentered + female:ageYearsCentered + (1 | id) + (1 | ageYearsCentered), # timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(timepointSpecificErrorsMixedModel)
+```
+
 ### Quadratic Growth Curve Model {#quadraticGCM}
 
 When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
