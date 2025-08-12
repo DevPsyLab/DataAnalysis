@@ -37,6 +37,8 @@ library("parallel")
 library("future")
 library("furrr")
 library("nlme")
+library("lme4")
+library("broom.mixed")
 library("MplusAutomation")
 ```
 
@@ -452,6 +454,36 @@ mi_amelia_mids <- miceadds::datlist2mids(mi_amelia$imputations)
 mids2mplus(mi_mice_mids, path = file.path("InsertFilePathHere", fsep = ""))
 mids2mplus(mi_jomo_mids, path = file.path("InsertFilePathHere", fsep = ""))
 mids2mplus(mi_amelia_mids, path = file.path("InsertFilePathHere", fsep = ""))
+```
+
+# Fit Model to Multiply Imputed Data
+
+## Multiple Regression
+
+```{r}
+fit_lm <- with(
+  data = mi_mice,
+  expr = lm(height ~ age + Occasion))
+```
+
+### Pool Results Across Models
+
+```{r}
+mice::pool(fit_lm)
+```
+
+## Mixed Model
+
+```{r}
+fit_lmer <- with(
+  data = mi_mice,
+  expr = lme4::lmer(height ~ age + Occasion + (1|id)))
+```
+
+### Pool Results Across Models
+
+```{r}
+mice::pool(fit_lmer)
 ```
 
 # Resources
