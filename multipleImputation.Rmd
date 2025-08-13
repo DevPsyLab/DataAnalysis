@@ -33,7 +33,7 @@ library("miceadds")
 library("mitml")
 library("Amelia")
 library("jomo")
-library("parallel")
+library("parallely")
 library("future")
 library("furrr")
 library("nlme")
@@ -58,8 +58,6 @@ set.seed(52242)
 Oxboys_addNA[sample(1:nrow(Oxboys_addNA), 25), "height"] <- NA
 
 dataToImpute <- Oxboys_addNA
-varsToImpute <- c("height")
-Y <- varsToImpute
 ```
 
 # Types of Missingness
@@ -129,6 +127,13 @@ md.pattern(dataToImpute, rotate.names = TRUE)
 
 # Pre-Imputation Setup
 
+## Specify Variables to Impute
+
+```{r}
+varsToImpute <- c("height")
+Y <- varsToImpute
+```
+
 ## Specify Number of Imputations
 
 ```{r}
@@ -138,7 +143,7 @@ numImputations <- 5 # generally use 100 imputations; this example uses 5 for spe
 ## Detect Cores
 
 ```{r}
-numCores <- parallel::detectCores() - 1
+numCores <- parallelly::availableCores() - 1
 ```
 
 # Multilevel Multiple Imputation
@@ -469,7 +474,10 @@ fit_lm <- with(
 ### Pool Results Across Models
 
 ```{r}
-mice::pool(fit_lm)
+fit_lm_pooled <- mice::pool(fit_lm)
+
+fit_lm_pooled
+summary(fit_lm_pooled)
 ```
 
 ## Mixed Model
@@ -483,7 +491,10 @@ fit_lmer <- with(
 ### Pool Results Across Models
 
 ```{r}
-mice::pool(fit_lmer)
+fit_lmer_pooled <- mice::pool(fit_lmer)
+
+fit_lmer_pooled
+summary(fit_lmer_pooled)
 ```
 
 # Resources
