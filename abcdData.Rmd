@@ -1,0 +1,79 @@
+---
+title: "ABCD Data"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  error = TRUE,
+  comment = "")
+```
+
+# ABCD Data {#abcddata}
+[XXX] Add summary of dataset
+
+# Accessing ABCD Data
+
+## Connecting to the RRDS
+
+To access ABCD data, you need to access an RRDS.
+
+1. Create an RRDS Account: https://its.uiowa.edu/services/research-remote-desktop-service 
+1. Once your account is approved, contact PBS IT to set up a remote desktop profile  (???)
+1. Connect to the RRDS: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-research-remote-desktop-services-rrds 
+    - Instructions for Windows: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc
+    - Instructions for Mac: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac
+1. Log in to the RRDS using your HawkID and password
+1. The RRDS is mapped to an LSS Drive containing the ABCD data.
+
+## Connecting to the Share
+
+Please contact Dr. Petersen to receive the network path for the ABCD LSS.
+
+## Access Management
+
+[XXX]
+
+Dr. Petersen can grant or revoke access to the share: https://iam.uiowa.edu/access
+- Instructions for granting or revoking access: https://its.uiowa.edu/support/article/118771
+- Delegate management of share access: https://its.uiowa.edu/support/article/119191
+
+A few notes:
+- When granting someone Read/Write or Read Only permissions and search for their name or ID, you may see both a HealthcareID and HawkID listed, <mark>select their HawkID</mark>.
+- Changes take about an hour to propagate through Argon and will not be reflected in existing sessions.
+- Changes are immediately reflected for SMB connections, however, users may have to remap/remount the volume or log out then back in for Windows/MacOS to be happy.
+
+# LSS Structure
+
+The LSS should not be accessed on your local computer. 
+The LSS should **only** be accessed through the RRDS.
+The main folder within the LSS is: `ABCD Study`
+
+## Analyses Projects
+- `Analyses Projects > PetersenLab` contains user folders for anyone working on projects with the ABCD data.
+    1. Create a folder with your HawkID as the folder name
+    1. Create a subfolder for your specific project
+    1. Follow [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for structuring your project folder
+
+## Data
+
+The folder `Data > Version 6.0` contains tabulated ABCD data.
+
+Imaging data, wearables data, and concatenated data are available for download [here](https://nbdc-datashare.lassoinformatics.com/)
+
+- [XXX] need instructions for accessing this
+- NOTE: The file sizes for these data exceed the capacity of our LSS
+
+`01-Raw` contains the raw ABCD data files that should not be altered.
+
+`02-Processed` contains scored measures and other cleaned data for universal use.
+
+## File types
+- JSON files: data dictionary/codebook files
+- Parquet files: columnar structured data (efficient for storage, can be used with the Arrow package in R)
+- TSV files: tab-separated value data files
+
+# Version Control
+
+[XXX] TBD
+
