@@ -10,35 +10,46 @@ knitr::opts_chunk$set(
 ```
 
 # ABCD Data {#abcddata}
-[XXX] Add summary of dataset
+
+The [Adolescent Brain Cognitive Development (ABCD) Study](https://abcdstudy.org/) is the largest long-term study of brain development and child health in the United States. This study explores how childhood experiences (such as sports, videogames, social media, unhealthy sleep patterns, and smoking) interact with each other and with a child’s changing biology to affect brain development and social, behavioral, academic, health, and other outcomes. The ABCD study follows a cohort of over 10,000 children from pre-adolescence into adulthood.
 
 # Accessing ABCD Data
 
-## Connecting to the RRDS
+## Step 1: Data Use Certificate
 
-To access ABCD data, you need to access an RRDS.
+Work with Dr. Petersen to get added to the Data Use Certificate.
+
+## Step 2: Connect to the Research Remote Desktop Service (RRDS)
+
+To access ABCD data, you need to access a RRDS.
 
 1. Create an RRDS Account: https://its.uiowa.edu/services/research-remote-desktop-service 
-1. Once your account is approved, contact PBS IT to set up a remote desktop profile  (???)
-1. Connect to the RRDS: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-research-remote-desktop-services-rrds 
+1. Connect to the RRDS: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-research-remote-desktop-services-rrds
     - Instructions for Windows: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc
     - Instructions for Mac: https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac
 1. Log in to the RRDS using your HawkID and password
-1. The RRDS is mapped to an LSS Drive containing the ABCD data.
 
-## Connecting to the Share
+If you run into issues connecting to the RRDS, please reach out to PBS IT Support (PBS-help@uiowa.edu) or Research Computing Support (research-computing@uiowa.edu) 
 
-Please contact Dr. Petersen to receive the network path for the ABCD LSS.
+## Step 3: Connect to the ABCD LSS Server
+
+Please contact Dr. Petersen to receive the network path for the ABCD Large Scale Storage server (LSS).
+
+<u>Mapping the Server on Windows:</u> Windows Explorer -> This PC -> Computer Tab -> Map Network Drive button: `\\server path`
+
+<u>Mapping the Server on MacOS:</u> Finder -> Go menu -> Connect to Server: smb://iowa\hawkid:`*@server path` 
 
 ## Access Management
 
 [XXX]
 
-Dr. Petersen can grant or revoke access to the share: https://iam.uiowa.edu/access
+Dr. Petersen can grant or revoke access to the share, or give other people roles if they are to manage the share using the Access Management tool: https://iam.uiowa.edu/access
+
 - Instructions for granting or revoking access: https://its.uiowa.edu/support/article/118771
 - Delegate management of share access: https://its.uiowa.edu/support/article/119191
 
 A few notes:
+
 - When granting someone Read/Write or Read Only permissions and search for their name or ID, you may see both a HealthcareID and HawkID listed, <mark>select their HawkID</mark>.
 - Changes take about an hour to propagate through Argon and will not be reflected in existing sessions.
 - Changes are immediately reflected for SMB connections, however, users may have to remap/remount the volume or log out then back in for Windows/MacOS to be happy.
@@ -50,10 +61,12 @@ The LSS should **only** be accessed through the RRDS.
 The main folder within the LSS is: `ABCD Study`
 
 ## Analyses Projects
-- `Analyses Projects > PetersenLab` contains user folders for anyone working on projects with the ABCD data.
-    1. Create a folder with your HawkID as the folder name
-    1. Create a subfolder for your specific project
-    1. Follow [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for structuring your project folder
+
+`Analyses Projects > PetersenLab` contains user folders for anyone working on projects with the ABCD data.
+
+  1. Create a folder with your HawkID as the folder name
+  1. Create a subfolder for your specific project
+  1. Follow [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for structuring your project folder
 
 ## Data
 
@@ -69,9 +82,14 @@ Imaging data, wearables data, and concatenated data are available for download [
 `02-Processed` contains scored measures and other cleaned data for universal use.
 
 ## File types
+
 - JSON files: data dictionary/codebook files
-- Parquet files: columnar structured data (efficient for storage, can be used with the Arrow package in R)
+- Parquet files: columnar structured data (efficient for storage, can be used with the `arrow` package in R)
 - TSV files: tab-separated value data files
+
+## Available Measures
+
+[XXX] Add measures currently downloaded
 
 # Version Control
 
