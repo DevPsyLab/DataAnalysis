@@ -160,16 +160,6 @@ ANALYSIS:
     TYPE = COMPLEX;
 ```
 
-## Individually Varying Times of Observation {#tScores}
-
-```
-VARIABLE:
-    NAMES = ID age x1 x2 x3 y1;
-    MISSING = .;
-    USEVARIABLES = ID age x1 x2 y1;
-    TSCORES = age;
-```
-
 ## Auxiliary Variables {#auxiliaryVariables}
 
 ```
@@ -573,6 +563,43 @@ To run a model on multiply imputed data, use the following:
 ```
 DATA: FILE = "implist.dat"; ! where implist.dat is the name of the *list.dat file saved from the imputation step
     TYPE = IMPUTATION;
+```
+
+# Latent Growth Curve Model {#lgcm}
+
+## Equally Spaced Time Points {#equallySpaced}
+
+```
+VARIABLE: 
+    NAMES = id y0 y1 y2 y3 y4 x;
+    USEVARIABLES = y0 y1 y2 y3 y4 x;
+
+ANALYSIS:
+    TYPE = RANDOM;
+
+MODEL:
+    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes
+    i s q ON x;
+```
+
+## Unequally Spaced Time Points (Individually Varying Times of Observation) {#tScores}
+
+Unequally spaced time points can be accounted for using the `TSCORES` option.
+
+https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/ (archived at https://perma.cc/Z7QY-TL6W)
+
+```
+VARIABLE: 
+    NAMES = id t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;
+    USEVARIABLES = t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;
+    TSCORES = t0 t1 t2 t3 t4;
+
+ANALYSIS:
+    TYPE = RANDOM;
+
+MODEL:
+    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope
+    i s q ON x;
 ```
 
 # Latent Class Growth Analysis {#lcga}
