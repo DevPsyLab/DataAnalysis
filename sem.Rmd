@@ -1238,6 +1238,8 @@ https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-mo
 
 # Latent Change Score Model {#lcsm}
 
+To generate the syntax for a latent change score model, we use the [lcsm](https://doi.org/10.32614/CRAN.package.lcsm) package.
+
 ## Model Syntax
 
 ```{r}
@@ -1336,7 +1338,9 @@ semPaths(
 plot_lcsm(
   lavaan_object = bivariateLCSM_fit,
   lcsm = "bivariate",
-  lavaan_syntax = bivariateLCSM_syntax)
+  lavaan_syntax = bivariateLCSM_syntax,
+  edge.label.cex = .9,
+  lcsm_colours = TRUE)
 
 #lavaanPlot::lavaanPlot( # throws error
 #  bivariateLCSM_fit,
@@ -1362,8 +1366,19 @@ lavaangui::plot_lavaan(bivariateLCSM_fit)
 plot_trajectories(
   data_bi_lcsm,
   id_var = "id",
-  var_list = c("y1", "y2", "y3", "y4", "y5",
-               "y6", "y7", "y8", "y9", "y10"),
+  var_list = c(
+    "x1", "x2", "x3", "x4", "x5", 
+    "x6", "x7", "x8", "x9", "x10"),
+  xlab = "Time",
+  ylab = "X Score",
+  connect_missing = FALSE)
+
+  plot_trajectories(
+  data_bi_lcsm,
+  id_var = "id",
+  var_list = c(
+    "y1", "y2", "y3", "y4", "y5",
+    "y6", "y7", "y8", "y9", "y10"),
   xlab = "Time",
   ylab = "Y Score",
   connect_missing = FALSE)
