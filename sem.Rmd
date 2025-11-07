@@ -1244,7 +1244,7 @@ To generate the syntax for a latent change score model, we use the [lcsm](https:
 
 ```{r}
 bivariateLCSM_syntax <- specify_bi_lcsm(
-  timepoints = 10,
+  timepoints = 3,
   var_x = "x",
   model_x = list(
     alpha_constant = TRUE, # alpha = intercept (constant change factor)
@@ -1274,7 +1274,7 @@ bivariateLCSM_fit <- fit_bi_lcsm(
   model_x = list(
     alpha_constant = TRUE, # alpha = intercept (constant change factor)
     beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
-    phi = FALSE), # phi = autoregression of change scores
+    phi = TRUE), # phi = autoregression of change scores
   model_y = list(
     alpha_constant = TRUE, # alpha = intercept (constant change factor)
     beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
@@ -1350,7 +1350,7 @@ plot_lcsm(
 
 lavaanPlot::lavaanPlot2(
   bivariateLCSM_fit,
-  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
   coef_labels = TRUE)
 ```
 
