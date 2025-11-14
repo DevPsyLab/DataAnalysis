@@ -340,6 +340,14 @@ summary(model2)$adj.r.squared - summary(model1)$adj.r.squared
 
 # Moderated Multiple Regression {#moderation}
 
+When testing for the possibility of moderation/interaction, it is first important to think about what shape the interaction might take.
+If you expect a bilinear interaction (i.e., the slope of the regression line between `X` and `Y` changes as a *linear* function of a third variable, `Z`), it is appropriate to treat the moderator as continuous in moderated multiple regression.
+However, if you expect that the interaction might take a different form (e.g., a threshold effect), you may need to consider other approaches, such as using categorical variables, polynomial interactions, spline functions, generalized additive models (GAMs), or machine learning.
+
+For information on the (low) power to detect interactions and how to improve it, see:
+https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#productTerm-reliability
+
+The examples below use the `interactions` package in R.
 https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html (archived at https://perma.cc/P34H-7BH3)
 
 ```{r}
