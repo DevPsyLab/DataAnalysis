@@ -2030,10 +2030,11 @@ mediationModel <- '
   indirect := a*b
   
   # total effect (c)
-  total := abs(direct) + abs(indirect)
+  total := direct + indirect
+  totalAbs := abs(direct) + abs(indirect)
   
   # proportion mediated
-  Pm := abs(indirect) / total
+  Pm := abs(indirect) / totalAbs
 '
 ```
 
@@ -2139,7 +2140,7 @@ Effect size: Proportion mediated (*P*<sub>*M*</sub>); i.e., the proportion of th
 
 ```{r}
 mediationFit_total <- mediationFit_estimates %>% 
-  filter(label == "total") %>% 
+  filter(label == "totalAbs") %>% 
   select(std.all) %>% 
   as.numeric
 
