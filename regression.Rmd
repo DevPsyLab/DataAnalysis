@@ -48,6 +48,10 @@ library("regtools")
 library("mice")
 library("XICOR")
 library("cocor")
+library("performance")
+library("effectsize")
+library("rockchalk")
+library("yhat")
 ```
 
 # Import Data
@@ -565,6 +569,47 @@ imputedData_fit <- with(
 
 imputedData_pooledEstimates <- pool(imputedData_fit)
 summary(imputedData_pooledEstimates)
+```
+
+# Squared Semi-Partial Correlation ($sr^2) {#squaredSemiPartialCorrelation}
+
+```{r}
+rockchalk::getDeltaRsquare(multipleRegressionModel)
+```
+
+# Dominance Analysis {#dominanceAnalysis}
+
+```{r}
+parameters::dominance_analysis(multipleRegressionModel)
+```
+
+```{r}
+allPossibleSubsetsRegression <- yhat::aps(
+  dataMatrix = mydata,
+  dv = "bpi_antisocialT2Sum",
+  ivlist = list("bpi_antisocialT1Sum", "bpi_anxiousDepressedSum"))
+
+yhat::dominance(allPossibleSubsetsRegression)
+```
+
+# Commonality Analysis {#commonalityAnalysis}
+
+```{r}
+yhat::calc.yhat(multipleRegressionModel)
+
+allPossibleSubsetsRegression <- yhat::aps(
+  dataMatrix = mydata,
+  dv = "bpi_antisocialT2Sum",
+  ivlist = list("bpi_antisocialT1Sum", "bpi_anxiousDepressedSum"))
+
+yhat::commonality(allPossibleSubsetsRegression)
+
+commonalityAnalysis <- yhat::commonalityCoefficients(
+  dataMatrix = mydata,
+  dv = "bpi_antisocialT2Sum",
+  ivlist = list("bpi_antisocialT1Sum", "bpi_anxiousDepressedSum"))
+
+commonalityAnalysis
 ```
 
 # Model Building Steps
