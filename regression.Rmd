@@ -87,6 +87,7 @@ multipleRegressionModel <- lm(
 
 summary(multipleRegressionModel)
 confint(multipleRegressionModel)
+print(effectsize::standardize_parameters(multipleRegressionModel), digits = 2)
 ```
 
 ### Remove missing data
@@ -105,7 +106,7 @@ multipleRegressionModelNoMissing <- lm(
 ## Linear regression model on correlation/covariance matrix (for pairwise deletion)
 
 ```{r, warning = FALSE}
-multipleRegressionModelPairwise <- setCor(
+multipleRegressionModelPairwise <- psych::setCor(
   y = "bpi_antisocialT2Sum",
   x = c("bpi_antisocialT1Sum","bpi_anxiousDepressedSum"),
   data = cov(mydata[,c("bpi_antisocialT2Sum","bpi_antisocialT1Sum","bpi_anxiousDepressedSum")], use = "pairwise.complete.obs"),
@@ -126,6 +127,7 @@ rmsMultipleRegressionModel <- robcov(ols(
 
 rmsMultipleRegressionModel
 confint(rmsMultipleRegressionModel)
+print(effectsize::standardize_parameters(rmsMultipleRegressionModel), digits = 2)
 ```
 
 ## Robust linear regression (MM-type iteratively reweighted least squares regression)
@@ -138,23 +140,25 @@ robustLinearRegression <- lmrob(
 
 summary(robustLinearRegression)
 confint(robustLinearRegression)
+print(effectsize::standardize_parameters(robustLinearRegression), digits = 2)
 ```
 
 ## Least trimmed squares regression (for removing outliers)
 
 ```{r}
-ltsRegression <- ltsReg(
+ltsRegression <- robustbase::ltsReg(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = na.exclude)
 
 summary(ltsRegression)
+confint(robustLinearRegression)
 ```
 
 ## Bayesian linear regression
 
 ```{r, message = FALSE, warning = FALSE, results = FALSE}
-bayesianRegularizedRegression <- brm(
+bayesianRegularizedRegression <- brms::brm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   chains = 4,
@@ -164,6 +168,7 @@ bayesianRegularizedRegression <- brm(
 
 ```{r}
 summary(bayesianRegularizedRegression)
+print(effectsize::standardize_parameters(bayesianRegularizedRegression, method = "basic"), digits = 2)
 ```
 
 # Generalized Linear Regression
@@ -182,6 +187,7 @@ generalizedRegressionModel <- glm(
 
 summary(generalizedRegressionModel)
 confint(generalizedRegressionModel)
+print(effectsize::standardize_parameters(generalizedRegressionModel), digits = 2)
 ```
 
 ## Generalized regression model (rms)
@@ -190,7 +196,7 @@ In this example, we predict a count variable that has a poisson distribution.
 We could change the distribution.
 
 ```{r}
-rmsGeneralizedRegressionModel <- Glm(
+rmsGeneralizedRegressionModel <- rms::Glm(
   countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
@@ -199,6 +205,7 @@ rmsGeneralizedRegressionModel <- Glm(
 
 rmsGeneralizedRegressionModel
 confint(rmsGeneralizedRegressionModel)
+print(effectsize::standardize_parameters(rmsGeneralizedRegressionModel), digits = 2)
 ```
 
 ## Bayesian generalized linear model
@@ -219,12 +226,13 @@ bayesianGeneralizedLinearRegression <- brm(
 
 ```{r}
 summary(bayesianGeneralizedLinearRegression)
+print(effectsize::standardize_parameters(bayesianGeneralizedLinearRegression, method = "basic"), digits = 2)
 ```
 
 ## Robust generalized regression
 
 ```{r}
-robustGeneralizedRegression <- glmrob(
+robustGeneralizedRegression <- robustbase::glmrob(
   countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = "poisson",
@@ -232,22 +240,23 @@ robustGeneralizedRegression <- glmrob(
 
 summary(robustGeneralizedRegression)
 confint(robustGeneralizedRegression)
+print(effectsize::standardize_parameters(robustGeneralizedRegression), digits = 2)
 ```
 
 ## Ordinal regression model
 
 ```{r}
-ordinalRegressionModel1 <- polr(
+ordinalRegressionModel1 <- MASS::polr(
   orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata)
 
-ordinalRegressionModel2 <- lrm(
+ordinalRegressionModel2 <- rms::lrm(
   orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
   y = TRUE)
 
-ordinalRegressionModel3 <- orm(
+ordinalRegressionModel3 <- rms::orm(
   orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
@@ -257,9 +266,11 @@ summary(ordinalRegressionModel1)
 confint(ordinalRegressionModel1)
 
 ordinalRegressionModel2
+print(effectsize::standardize_parameters(ordinalRegressionModel2), digits = 2)
 
 ordinalRegressionModel3
 confint(ordinalRegressionModel3)
+print(effectsize::standardize_parameters(ordinalRegressionModel3), digits = 2)
 ```
 
 ## Bayesian ordinal regression model
@@ -276,6 +287,7 @@ bayesianOrdinalRegression <- brm(
 
 ```{r}
 summary(bayesianOrdinalRegression)
+print(effectsize::standardize_parameters(bayesianOrdinalRegression, method = "basic"), digits = 2)
 ```
 
 ## Bayesian count regression model
@@ -292,12 +304,13 @@ bayesianCountRegression <- brm(
 
 ```{r}
 summary(bayesianCountRegression)
+print(effectsize::standardize_parameters(bayesianCountRegression, method = "basic"), digits = 2)
 ```
 
 ## Logistic regression model (rms)
 
 ```{r}
-logisticRegressionModel <- robcov(lrm(
+logisticRegressionModel <- rms::robcov(rms::lrm(
   female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
@@ -305,6 +318,7 @@ logisticRegressionModel <- robcov(lrm(
 
 logisticRegressionModel
 confint(logisticRegressionModel)
+print(effectsize::standardize_parameters(logisticRegressionModel), digits = 2)
 ```
 
 ## Bayesian logistic regression model
@@ -321,6 +335,7 @@ bayesianLogisticRegression <- brm(
 
 ```{r}
 summary(bayesianLogisticRegression)
+print(effectsize::standardize_parameters(bayesianLogisticRegression, method = "basic"), digits = 2)
 ```
 
 # Hierarchical Linear Regression
@@ -356,6 +371,7 @@ https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html
 
 ```{r}
 states <- as.data.frame(state.x77)
+states$HS.Grad <- states$`HS Grad`
 ```
 
 ## Mean Center Predictors
@@ -371,31 +387,34 @@ states$Murder_centered <- scale(states$Murder, scale = FALSE)
 
 ```{r}
 interactionModel <- lm(
-  Income ~ Illiteracy_centered + Murder_centered + Illiteracy_centered:Murder_centered + `HS Grad`,
+  Income ~ Illiteracy_centered + Murder_centered + Illiteracy_centered:Murder_centered + HS.Grad,
   data = states)
+
+summary(interactionModel)
+print(effectsize::standardize_parameters(interactionModel), digits = 2)
 ```
 
 ## Plots
 
 ```{r}
-interact_plot(
+interactions::interact_plot(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered)
 
-interact_plot(
+interactions::interact_plot(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
   plot.points = TRUE)
 
-interact_plot(
+interactions::interact_plot(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
   interval = TRUE)
 
-johnson_neyman(
+interactions::johnson_neyman(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
@@ -405,13 +424,13 @@ johnson_neyman(
 ## Simple Slopes Analysis
 
 ```{r}
-sim_slopes(
+interactions::sim_slopes(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
   johnson_neyman = FALSE)
 
-sim_slopes(
+interactions::sim_slopes(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
@@ -424,13 +443,13 @@ sim_slopes(
 Indicates all the values of the moderator for which the slope of the predictor is statistically significant.
 
 ```{r}
-sim_slopes(
+interactions::sim_slopes(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
   johnson_neyman = TRUE)
 
-probe_interaction(
+interactions::probe_interaction(
   interactionModel,
   pred = Illiteracy_centered,
   modx = Murder_centered,
@@ -496,6 +515,7 @@ listwiseDeletionModel <- lm(
 
 summary(listwiseDeletionModel)
 confint(listwiseDeletionModel)
+print(effectsize::standardize_parameters(listwiseDeletionModel), digits = 2)
 ```
 
 ## Pairwise deletion {#pairwiseDeletion}
@@ -521,7 +541,7 @@ pairwiseRegression_syntax <- '
   bpi_antisocialT2Sum ~ 1
 '
 
-pairwiseRegression_fit <- lavaan(
+pairwiseRegression_fit <- lavaan::lavaan(
   pairwiseRegression_syntax,
   sample.mean = varMeans,
   sample.cov = varCovariances,
@@ -543,7 +563,7 @@ fimlRegression_syntax <- '
   bpi_antisocialT2Sum ~ 1
 '
 
-fimlRegression_fit <- lavaan(
+fimlRegression_fit <- lavaan::lavaan(
   fimlRegression_syntax,
   data = mydata,
   missing = "ML",
@@ -558,7 +578,7 @@ summary(
 ## Multiple imputation {#imputation}
 
 ```{r}
-modelData_imputed <- mice(
+modelData_imputed <- mice::mice(
   modelData,
   m = 5,
   method = "pmm") # predictive mean matching; can choose among many methods
