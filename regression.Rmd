@@ -596,6 +596,46 @@ summary(imputedData_pooledEstimates)
 rockchalk::getDeltaRsquare(multipleRegressionModel)
 ```
 
+# Partial Regression Plot {#partialRegressionPlot}
+
+A partial regression plot (aka added-variable) examines the association between the predictor and the outcome after controlling for the covariates.
+
+```{r}
+car::avPlots(
+  multipleRegressionModel,
+  id = FALSE)
+```
+
+Manually:
+
+```{r}
+# DV residuals (outcome residualized on covariates)
+ry <- resid(lm(
+  bpi_antisocialT2Sum ~ bpi_antisocialT1Sum, 
+  data = mydata, na.action = na.exclude))
+
+# Predictor residuals (focal predictor residualized on covariates)
+rx <- resid(lm(
+  bpi_anxiousDepressedSum ~ bpi_antisocialT1Sum,
+  data = mydata, na.action = na.exclude))
+
+# Create the partial regression plot
+df_plot <- data.frame(rx, ry)
+
+ggplot(
+  data = df_plot,
+  mapping = aes(x = rx, y = ry)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(
+    method = "lm",
+    color = "blue") +
+  labs(
+    x = "Residualized bpi_antisocialT1Sum",
+    y = "Residualized bpi_antisocialT2Sum",
+    title = "Partial Regression Plot\nbpi_antisocialT2Sum ~ bpi_antisocialT1Sum controlling for bpi_anxiousDepressedSum"
+  )
+```
+
 # Dominance Analysis {#dominanceAnalysis}
 
 ```{r}

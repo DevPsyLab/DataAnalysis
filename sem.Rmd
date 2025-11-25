@@ -2773,6 +2773,62 @@ https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#mo
 
 For a list of tools to create path diagrams, see [here](figures.html#pathDiagrams).
 
+# Partial Regression Plot {#partialRegressionPlot}
+
+```{r}
+# simulate extra observed covariates
+N <- nrow(PoliticalDemocracy)
+PoliticalDemocracy$z1 <- rnorm(N)
+PoliticalDemocracy$z2 <- 0.3*PoliticalDemocracy$x1 + 0.3*PoliticalDemocracy$x2 + 0.3*PoliticalDemocracy$x3 + rnorm(N)
+
+# model syntax
+myModel <- ' 
+ # latent variables 
+   ind60 =~ x1 + x2 + x3 
+   dem60 =~ y1 + y2 + y3 + y4 
+   dem65 =~ y5 + y6 + y7 + y8 
+ # regressions
+   dem60 ~ ind60 
+   dem65 ~ ind60 + dem60 + z1 + z2
+ # residual covariances 
+   y1 ~~ y5
+   y2 ~~ y4 + y6 
+   y3 ~~ y7 
+   y4 ~~ y8
+   y6 ~~ y8
+'
+
+# fit the model
+fit <- sem(
+  model = myModel,
+  data = PoliticalDemocracy)
+
+# extract the factor scores
+factorScores <- as.data.frame(lavaan::lavPredict(fit))
+
+# merge the factor scores with the original data
+mydata <- cbind(PoliticalDemocracy, factorScores)
+
+# residualize latent Y (dem65) on covariates
+ry <- resid(lm(dem65 ~ dem60 + z1 + z2, data = mydata))
+
+# residualize latent X (ind60) on same covariates
+rx <- resid(lm(ind60 ~ dem60 + z1 + z2, data = mydata))
+
+# create the partial regression plot
+ggplot(
+  data = data.frame(rx, ry),
+  mapping = aes(rx, ry)) +
+  geom_point() +
+  geom_smooth(
+    method = "lm") +
+  labs(
+    x = "Residualized ind60",
+    y = "Residualized dem65",
+    title = "Partial Regression Plot from SEM"
+  )
+```
+
 # Session Info
 
 ```{r, class.source = "fold-hide"}
