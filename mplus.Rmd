@@ -545,14 +545,23 @@ PLOT:
         ext36 (36) ext45 (45) ext54 (54) ext63 (63) 
         ext72 (72) ext81 (81) ext90 (90);
     TYPE = PLOT3;
+    OUTLIERS =
+        MAHALANOBIS ! Mahalanobis distance and its p-value
+        LOGLIKELIHOOD ! Loglikelihood contribution
+        INFLUENCE ! Loglikelihood distance influence measure
+        COOKS; ! Cook's D parameter estimate influence measure
 ```
 
-# Save Factor Scores {#factorScores}
+# Save Data {#saveData}
 
 ```
 SAVEDATA:
     FILE = "C:/[insert_filepath]/filename.dat";
-    SAVE = FSCORES;
+    SAVE = 
+        FSCORES ! Factor scores
+        LOGLIKELIHOOD ! Loglikelihood contribution from each observation
+        INFLUENCE ! Loglikelihood distance influence measure (Cook & Weisberg, 1982) for each observation
+        COOKS; !Cook's D (Cook, 1977) for each observation
 ```
 
 # Multiple Imputation {#multipleImputation}
