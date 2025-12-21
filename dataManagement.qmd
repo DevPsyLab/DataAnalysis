@@ -232,44 +232,100 @@ Logical operators evaluate a condition for each value and yield values of `TRUE`
 ## Is Equal To: `==`
 
 ```{r}
+#| output: false
+
 mydata$survived == 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$survived == 1)
 ```
 
 ## Is Not Equal To: `!=`
 
 ```{r}
+#| output: false
+
 mydata$survived != 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$survived != 1)
 ```
 
 ## Greater Than: `>`
 
 ```{r}
+#| output: false
+
 mydata$parch > 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch > 1)
 ```
 
 ## Less Than: `<`
 
 ```{r}
+#| output: false
+
 mydata$parch < 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch < 1)
 ```
 
 ## Greater Than or Equal To: `>=`
 
 ```{r}
+#| output: false
+
 mydata$parch >= 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch >= 1)
 ```
 
 ## Less Than or Equal To: `<=`
 
 ```{r}
+#| output: false
+
 mydata$parch <= 1
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch <= 1)
 ```
 
 ## Is in a Value of Another Vector: `%in%`
 
 ```{r}
+#| output: false
+
 anotherVector <- c(0,1)
 mydata$parch %in% anotherVector
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch %in% anotherVector)
 ```
 
 ## Is Not in a Value of Another Vector: `%ni%`
@@ -277,31 +333,71 @@ mydata$parch %in% anotherVector
 Note: this function is part of the [`petersenlab`](https://github.com/DevPsyLab/petersenlab) package and is not available in base `R`.
 
 ```{r}
+#| output: false
+
 mydata$parch %ni% anotherVector
+```
+
+```{r}
+#| echo: false
+
+head(mydata$parch %ni% anotherVector)
 ```
 
 ## Is Missing: `is.na()`
 
 ```{r}
+#| output: false
+
 is.na(mydata$prediction)
+```
+
+```{r}
+#| echo: false
+
+head(is.na(mydata$prediction))
 ```
 
 ## Is Not Missing: `!is.na()`
 
 ```{r}
+#| output: false
+
 !is.na(mydata$prediction)
+```
+
+```{r}
+#| echo: false
+
+head(!is.na(mydata$prediction))
 ```
 
 ## And: `&`
 
 ```{r}
+#| output: false
+
 !is.na(mydata$prediction) & mydata$parch >= 1
+```
+
+```{r}
+#| echo: false
+
+head(!is.na(mydata$prediction) & mydata$parch >= 1)
 ```
 
 ## Or: `|`
 
 ```{r}
+#| output: false
+
 is.na(mydata$prediction) | mydata$parch >= 1
+```
+
+```{r}
+#| echo: false
+
+head(is.na(mydata$prediction) | mydata$parch >= 1)
 ```
 
 # If...Else Conditions {#ifelse}
@@ -365,13 +461,29 @@ You can subset by using any of the following:
 To subset one variable, use the following syntax:
 
 ```{r}
+#| output: false
+
 mydata$age
+```
+
+```{r}
+#| echo: false
+
+head(mydata$age)
 ```
 
 or:
 
 ```{r}
+#| output: false
+
 mydata[,"age"]
+```
+
+```{r}
+#| echo: false
+
+head(mydata[,"age"])
 ```
 
 ## Particular Rows of One Variable
@@ -379,13 +491,29 @@ mydata[,"age"]
 To subset one variable, use the following syntax:
 
 ```{r}
+#| output: false
+
 mydata$age[which(mydata$survived == 1)]
+```
+
+```{r}
+#| echo: false
+
+head(mydata$age[which(mydata$survived == 1)])
 ```
 
 or:
 
 ```{r}
+#| output: false
+
 mydata[which(mydata$survived == 1), "age"]
+```
+
+```{r}
+#| echo: false
+
+head(mydata[which(mydata$survived == 1), "age"])
 ```
 
 ## Particular Columns (Variables)

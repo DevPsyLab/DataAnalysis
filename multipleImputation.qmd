@@ -508,12 +508,30 @@ summary(fit_lmer_pooled)
 # Model-Implied Predictions
 
 ```{r}
+#| output: false
+
 mice::predict_mi(
   fit_lm,
   #newdata = # can include if want to make predictions based on another (i.e., "new") data object
   se.fit = TRUE,
   interval = c("prediction")
 )
+```
+
+```{r}
+#| echo: false
+
+mice::predict_mi(
+  fit_lm,
+  #newdata = # can include if want to make predictions based on another (i.e., "new") data object
+  se.fit = TRUE,
+  interval = c("prediction")
+) %>% 
+  head()
+```
+
+```{r}
+#| output: false
 
 mice::predict_mi(
   fit_lmer,
@@ -521,6 +539,18 @@ mice::predict_mi(
   se.fit = TRUE,
   interval = c("prediction")
 )
+```
+
+```{r}
+#| echo: false
+
+mice::predict_mi(
+  fit_lmer,
+  #newdata = # can include if want to make predictions based on another (i.e., "new") data object
+  se.fit = TRUE,
+  interval = c("prediction")
+) %>% 
+  head()
 ```
 
 # Resources
