@@ -1384,6 +1384,7 @@ Resources
 Spearman's rho is a non-parametric correlation.
 
 ```{r}
+
 cor.test(
   mydata$bpi_antisocialT1Sum,
   mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers
@@ -1396,17 +1397,47 @@ cor.test(
 ####### Minimum vollume ellipsoid
 
 ```{r}
+#| eval: false
+
 cov.mve(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
 ```
 
+```{r}
+#| echo: false
+
+cov.mve.fit <- cov.mve(
+  na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
+  cor = TRUE)
+
+cov.mve.fit$best <- head(cov.mve.fit$best)
+cov.mve.fit
+```
+
 ####### Minimum covariance determinant
 
 ```{r}
+
+```
+
+```{r}
+#| eval: false
+
 cov.mcd(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
+```
+
+```{r}
+#| echo: false
+
+cov.mcd.fit <- cov.mcd(
+  na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
+  cor = TRUE)
+
+cov.mcd.fit$best <- head(cov.mcd.fit$best)
+cov.mcd.fit
 ```
 
 ####### Winsorized correlation

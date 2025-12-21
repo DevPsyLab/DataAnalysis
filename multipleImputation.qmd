@@ -521,13 +521,18 @@ mice::predict_mi(
 ```{r}
 #| echo: false
 
-mice::predict_mi(
+fit_lm_fitted <- mice::predict_mi(
   fit_lm,
   #newdata = # can include if want to make predictions based on another (i.e., "new") data object
   se.fit = TRUE,
   interval = c("prediction")
-) %>% 
-  head()
+)
+
+fit_lm_fitted$fit <- head(fit_lm_fitted$fit)
+fit_lm_fitted$se.fit <- head(fit_lm_fitted$se.fit)
+fit_lm_fitted$df <- head(fit_lm_fitted$df)
+
+fit_lm_fitted
 ```
 
 ```{r}
@@ -544,13 +549,18 @@ mice::predict_mi(
 ```{r}
 #| echo: false
 
-mice::predict_mi(
+fit_lmer_fitted <- mice::predict_mi(
   fit_lmer,
   #newdata = # can include if want to make predictions based on another (i.e., "new") data object
   se.fit = TRUE,
   interval = c("prediction")
-) %>% 
-  head()
+)
+
+fit_lmer_fitted$fit <- head(fit_lmer_fitted$fit)
+fit_lmer_fitted$se.fit <- head(fit_lmer_fitted$se.fit)
+fit_lmer_fitted$df <- head(fit_lmer_fitted$df)
+
+fit_lmer_fitted
 ```
 
 # Resources
