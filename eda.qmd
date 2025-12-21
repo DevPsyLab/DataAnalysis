@@ -2,13 +2,6 @@
 title: "Exploratory Data Analysis"
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "")
-```
-
 # Rationale
 
 Exploratory data analysis is important for understanding your data, checking for data issues/errors, and checking assumptions for different statistical models.
@@ -26,7 +19,7 @@ LOOK AT YOUR DATA—this is one of the most overlooked steps in data analysis!
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r}
 library("petersenlab")
 library("car")
 library("vioplot")
@@ -232,7 +225,7 @@ summaryTableTransposed
 
 ## Distribution Plots
 
-See [here](figures.html) for resources for creating figures in R.
+See [here](figures.qmd) for resources for creating figures in R.
 
 ### Histogram
 
@@ -315,7 +308,8 @@ ggplot(mydata, aes(x = "", y = outcome)) +
 
 # Bivariate Associations
 
-For more advanced scatterplots, see [here](figures.html#marginalDistributions).
+For more advanced scatterplots, see [here](figures.qmd#marginalDistributions).
+For an overview of correlation analysis, see [here](https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/correlation.html).
 
 ## Correlation Coefficients
 
@@ -339,7 +333,7 @@ cor.table(mydata, correlation = "spearman")
 
 Xi ($\xi$) is an index of the degree of dependence between two variables, which is useful as an index of nonlinear correlation.
 
-Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. https://doi.org/10.1080/01621459.2020.1758115
+Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. <https://doi.org/10.1080/01621459.2020.1758115>
 
 ```{r}
 calculateXI(
@@ -409,7 +403,9 @@ dataEllipse(mydata_nomissing$predictor, mydata_nomissing$outcome, levels = c(0.5
 
 ## Visually Weighted Regression
 
-```{r, message = FALSE, results = "hide"}
+```{r}
+#| output: false
+
 vwReg(outcome ~ predictor, data = mydata)
 ```
 
@@ -436,7 +432,7 @@ mydata %>%
 
 ## Statistical decision tree
 
-https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf (archived at https://perma.cc/L2QR-ALFA)
+<https://upload.wikimedia.org/wikipedia/commons/7/74/InferentialStatisticalDecisionMakingTrees.pdf> (archived at <https://perma.cc/L2QR-ALFA>)
 
 ## Tests of systematic missingness (i.e., whether missingness on a variable depends on other variables)
 
@@ -530,6 +526,8 @@ plot(allEffects(multilevelRegressionModel))
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

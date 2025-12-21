@@ -5,14 +5,6 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Overview
 
 Analysis scripts for High Performance Computing (HPC) at the University of Iowa.
@@ -20,13 +12,13 @@ Currently uses Argon.
 
 ## Links to Documentation
 
-Workflow: https://workflow.uiowa.edu/entry/new/3282/11927336
+Workflow: <https://workflow.uiowa.edu/entry/new/3282/11927336>
 
 Cluster Systems Documentation:
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513411/Cluster+Systems+Documentation (archived at https://perma.cc/EKB8-ZKR7)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513411/Cluster+Systems+Documentation> (archived at <https://perma.cc/EKB8-ZKR7>)
 
 Argon Cluster Documentation:
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513466/Argon+Cluster (archived at https://perma.cc/6HST-VV6Y)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513466/Argon+Cluster> (archived at <https://perma.cc/6HST-VV6Y>)
 
 ## Data Storage
 
@@ -69,7 +61,7 @@ Windows Explorer:
 `\\data.hpc.uiowa.edu\argon_home` (username: itpetersen@uiowa.edu or hawkid@uiowa.edu)
 
 Using SecureCRT for an SSH connection:
-1. Download SecureCRT from UIowa Informational Technology Services: https://its.uiowa.edu/securecrt
+1. Download SecureCRT from UIowa Informational Technology Services: <https://its.uiowa.edu/securecrt>
 2. In Hostname type `argon.hpc.uiowa.edu` and in username type HawkID
 3. Click connect
 
@@ -155,7 +147,7 @@ cd path
 
 ## Load Software Stacks
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List (archived at https://perma.cc/WJ4Q-GDUS)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List> (archived at <https://perma.cc/WJ4Q-GDUS>)
 
 `module load stack/2022.2`
 
@@ -218,9 +210,9 @@ If not specified, the job will be run from your home directory.
 
 ## Submit Job
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission (archived at https://perma.cc/2SS2-LEJR)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission> (archived at <https://perma.cc/2SS2-LEJR>)
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission (archived at https://perma.cc/8H6G-2M2F)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission> (archived at <https://perma.cc/8H6G-2M2F>)
 
 `cd path/to/dataSet123`
 
@@ -248,7 +240,7 @@ Job dependency (run `Job B` when `Job A` is finished):
 
 ## Queues
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies (archived at https://perma.cc/UUR7-XLBZ)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies> (archived at <https://perma.cc/UUR7-XLBZ>)
 
 `UI`
 
@@ -287,21 +279,21 @@ See [here](#runRscript)
 
 # R
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC (archived at https://perma.cc/99JQ-43ZG)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC> (archived at <https://perma.cc/99JQ-43ZG>)
 
 ## Find which versions of `R` are installed
 
 `module spider R`
 
-But, there may be more recent version of `R` installed in the "Additional Software Stacks" (https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List; archived at https://perma.cc/WJ4Q-GDUS)
+But, there may be more recent version of `R` installed in the "Additional Software Stacks" (<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List>; archived at <https://perma.cc/WJ4Q-GDUS>)
 
 ## Compile `R`
 
-If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at https://perma.cc/C6EX-EZL4).
+If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at <https://perma.cc/C6EX-EZL4>).
 
 ## Install `R` packages
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library> (archived at <https://perma.cc/3SRR-2JE7>)
 
 1. first load the `R` environment module
     - `module load r/4.2.2_gcc-9.5.0`
@@ -324,7 +316,9 @@ https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs
 
 Example:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages(c(
     "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
     repos = "http://cran.r-project.org",
@@ -338,7 +332,9 @@ install.packages(c(
 
 Example:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages(c(
     "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
     repos = "http://cran.r-project.org",
@@ -391,7 +387,7 @@ If you want to control which packages are installed in a `renv` project, you can
         packageName3
     ```
 
-1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies
+1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: <https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies>
 1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
 
 ### To install a new package for a project after `renv` has been initialized
@@ -407,7 +403,9 @@ If you want to control which packages are installed in a `renv` project, you can
 
 ## Update Packages
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 update.packages(ask = FALSE)
 ```
 
@@ -429,7 +427,7 @@ update.packages(ask = FALSE)
 
 # Stan
 
-https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux (archived at https://perma.cc/89H9-L8S6)
+<https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux> (archived at <https://perma.cc/89H9-L8S6>)
 
 Makevars:
 
@@ -499,7 +497,9 @@ LIBRARY_PATH=$ROOT_NLOPT/lib64:$LIBRARY_PATH R
 
 3. In `R` console, install `nloptr` (two lines below)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages(verbose = 1, "nloptr")
 ```
 
@@ -520,7 +520,9 @@ C_INCLUDE_PATH=$ROOT_XPROTO/include LIBRARY_PATH=$ROOT_LIBXEXT/lib:$ROOT_LIBXSCR
 
 3. In `R` console, install `tkrplot` (two lines below)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages(verbose = 1, "tkrplot")
 ```
 
@@ -534,11 +536,11 @@ Calls: parlmice ... FUN -> recvData -> recvData.SOCK0node -> unserialize
 There likely wasn't sufficient memory for a given core.
 Try increasing the max memory available and decreasing the number of cores and/or slots, so there is more memory available per core:
 
-https://stackoverflow.com/questions/46186375/r-parallel-error-in-unserializenodecon-in-hpc (archived at https://perma.cc/MF6V-NAVS)
+<https://stackoverflow.com/questions/46186375/r-parallel-error-in-unserializenodecon-in-hpc> (archived at <https://perma.cc/MF6V-NAVS>)
 
-https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function (archived at https://perma.cc/3Q75-DA2D)
+<https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function> (archived at <https://perma.cc/3Q75-DA2D>)
 
-https://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load (archived at https://perma.cc/2JRF-8Y5F)
+<https://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load> (archived at <https://perma.cc/2JRF-8Y5F>)
 
 # Appendix {#appendix}
 
@@ -580,7 +582,7 @@ cd path
 
 Please note: we now use [`renv`](#renv) rather than `packrat` for package management
 
-https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library (archived at https://perma.cc/3SRR-2JE7)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library> (archived at <https://perma.cc/3SRR-2JE7>)
 
 1. Create a directory where you want you want to store the project.
 1. `cd` to the above directory
@@ -611,7 +613,7 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
 
 ### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
 
-1. `qlogin` -- for more info, see here: https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions (archived at https://perma.cc/Y3A9-WQ3W)
+1. `qlogin` -- for more info, see here: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions> (archived at <https://perma.cc/Y3A9-WQ3W>)
 1. `module load stack/2020.2-base_arch` -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes
 1. `module load r`
 1. cd to the directory of the `R` project

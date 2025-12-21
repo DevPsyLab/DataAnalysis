@@ -5,14 +5,6 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Preamble
 
 ## Install Libraries
@@ -24,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r}
 library("tidyverse")
 library("psych")
 library("mice")
@@ -81,13 +73,13 @@ dataToImpute <- Oxboys_addNA
 
 ## For MNAR Missingness
 
-https://stefvanbuuren.name/fimd/sec-nonignorable.html (archived at https://perma.cc/N7WW-HDZF)
+<https://stefvanbuuren.name/fimd/sec-nonignorable.html> (archived at <https://perma.cc/N7WW-HDZF>)
 
-https://cran.r-project.org/web/packages/missingHE/vignettes/Fitting_MNAR_models_in_missingHE.html (archived at https://perma.cc/9X25-5D8G)
+<https://cran.r-project.org/web/packages/missingHE/vignettes/Fitting_MNAR_models_in_missingHE.html> (archived at <https://perma.cc/9X25-5D8G>)
 
 1. find more data about the causes for the missingness
 1. sensitivity analyses (what-if analyses) to see how sensitive the results are under various scenarios
-    - https://stefvanbuuren.name/fimd/sec-MCAR.html (archived at https://perma.cc/9KM9-3NX3)
+    - <https://stefvanbuuren.name/fimd/sec-MCAR.html> (archived at <https://perma.cc/9KM9-3NX3>)
 1. selection models
     - simultaneously estimate the focal model and a missingness model, where the missingness model has the missing data indicator as a dependent variable, as predicted by the original dependent variable, the original predictors, and any additional covariates etc.
     - if the missingness model is approximately correct, the focal model adjusts in way that removes nonresponse bias
@@ -95,7 +87,7 @@ https://cran.r-project.org/web/packages/missingHE/vignettes/Fitting_MNAR_models_
         - X → Y
         - Y → missingness
         - X → missingness
-    - https://quantitudepod.org/s4e08-craig-enders/ (archived at https://perma.cc/FY9L-L3F7)
+    - <https://quantitudepod.org/s4e08-craig-enders/> (archived at <https://perma.cc/FY9L-L3F7>)
 1. pattern-mixture models
     - missing data indicator is a predictor variable
     - similar to a moderation process; subgroups of cases have different parameter estimates
@@ -150,7 +142,7 @@ numCores <- parallelly::availableCores() - 1
 
 ## Three-Level and Cross-Classified Data
 
-https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cross-classified-data/ (archived at https://perma.cc/N4PP-A3V6)
+<https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cross-classified-data/> (archived at <https://perma.cc/N4PP-A3V6>)
 
 ## Methods
 
@@ -160,9 +152,11 @@ https://simongrund1.github.io/posts/multiple-imputation-for-three-level-and-cros
 
 ##### Continuous Outcomes
 
-https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods (archived at https://perma.cc/8CDA-TS3K)
+<https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods> (archived at <https://perma.cc/8CDA-TS3K>)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 ?mice::mice.impute.2l.norm
 ?mice::mice.impute.2l.pan
 ?mice::mice.impute.2l.lmer
@@ -177,9 +171,11 @@ https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods (archived at https
 
 ##### Binary Outcomes
 
-https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1 (archived at https://perma.cc/5QHF-YRP6)
+<https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1> (archived at <https://perma.cc/5QHF-YRP6>)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 ?mice::mice.impute.2l.bin
 ?miceadds::mice.impute.2l.binary
 ?miceadds::mice.impute.2l.pmm
@@ -190,9 +186,11 @@ https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1 (archived at https
 
 ##### Ordinal Outcomes
 
-https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods (archived at https://perma.cc/8CDA-TS3K)
+<https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods> (archived at <https://perma.cc/8CDA-TS3K>)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 ?miceadds::mice.impute.2l.pmm
 ?miceadds::mice.impute.2l.contextual.pmm
 ?micemd::mice.impute.2l.2stage.pmm
@@ -200,9 +198,11 @@ https://stefvanbuuren.name/fimd/sec-multioutcome.html#methods (archived at https
 
 ##### Count Outcomes
 
-https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1 (archived at https://perma.cc/5QHF-YRP6)
+<https://stefvanbuuren.name/fimd/sec-catoutcome.html#methods-1> (archived at <https://perma.cc/5QHF-YRP6>)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 ?micemd::mice.impute.2l.2stage.pois
 ?micemd::mice.impute.2l.glm.pois
 ?countimp::mice.impute.2l.poisson
@@ -260,7 +260,9 @@ mi_mice <- mice(
 
 ### `jomo` {#jomo}
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 level1Vars <- c("height")
 level2Vars <- c("v3","v4")
 clusterVars <- c("id")
@@ -350,11 +352,11 @@ DATA IMPUTATION:
 ```
 
 Putting a range of values after a variable (e.g., `0-100`) sets the lower and upper bounds of the imputed values.
-This would save a `implist.dat` file that can be used to run the model on the multiply imputed data, as shown [here](mplus.html#multipleImputation).
+This would save a `implist.dat` file that can be used to run the model on the multiply imputed data, as shown [here](mplus.qmd#multipleImputation).
 
 # Parallel Processing
 
-https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html (archived at https://perma.cc/4SNE-RCSR)
+<https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html> (archived at <https://perma.cc/4SNE-RCSR>)
 
 ```{r}
 mi_parallel_mice <- futuremice(
@@ -381,7 +383,7 @@ mi_mice$loggedEvents
 On convergence, the streams of the trace plots should intermingle and be free of any trend (at the later iterations).
 Convergence is diagnosed when the variance between different sequences is no larger than the variance within each individual sequence.
 
-- https://stefvanbuuren.name/fimd/sec-algoptions.html (archived at https://perma.cc/4S54-465R)
+- <https://stefvanbuuren.name/fimd/sec-algoptions.html> (archived at <https://perma.cc/4S54-465R>)
 
 ```{r}
 plot(mi_mice, c("height"))
@@ -418,7 +420,9 @@ mi_mice_long$newVar <- mi_mice_long$age * mi_mice_long$height
 
 ### `jomo`
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 mi_jomo <- mi_jomo %>% 
   rename(height = dataToImpute...level1Vars.)
 
@@ -443,7 +447,9 @@ mi_mice_mids <- as.mids(mi_mice_long)
 
 ### `jomo`
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 mi_jomo_mids <- miceadds::jomo2mids(mi_jomo)
 ```
 
@@ -455,7 +461,9 @@ mi_amelia_mids <- miceadds::datlist2mids(mi_amelia$imputations)
 
 ## Export for `Mplus`
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 mids2mplus(mi_mice_mids, path = file.path("InsertFilePathHere", fsep = ""))
 mids2mplus(mi_jomo_mids, path = file.path("InsertFilePathHere", fsep = ""))
 mids2mplus(mi_amelia_mids, path = file.path("InsertFilePathHere", fsep = ""))
@@ -517,6 +525,14 @@ mice::predict_mi(
 
 # Resources
 
-https://stefvanbuuren.name/fimd (archived at https://perma.cc/46U2-QTM6)
+<https://stefvanbuuren.name/fimd> (archived at <https://perma.cc/46U2-QTM6>)
 
-https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html (archived at https://perma.cc/SF32-D7ZF)
+<https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html> (archived at <https://perma.cc/SF32-D7ZF>)
+
+# Session Info
+
+```{r}
+#| code-fold: true
+
+sessionInfo()
+```

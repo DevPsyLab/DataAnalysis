@@ -5,25 +5,19 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Overview of `Mplus`
 
-[`Mplus`](https://www.statmodel.com) is software for [structural equation modeling](sem.html).
-A summary of the [`Mplus`](https://www.statmodel.com) language syntax is [here](https://www.statmodel.com/language.html) (archived at: https://perma.cc/962G-QUEG).
-The [Mplus User's Guide](https://www.statmodel.com/html_ug.shtml) is located [here](https://www.statmodel.com/download/usersguide/MplusUserGuideVer_8.pdf) (archived at: https://perma.cc/W39W-NRGH).
+[`Mplus`](https://www.statmodel.com) is software for [structural equation modeling](sem.qmd).
+A summary of the [`Mplus`](https://www.statmodel.com) language syntax is [here](https://www.statmodel.com/language.html) (archived at: <https://perma.cc/962G-QUEG>).
+The [Mplus User's Guide](https://www.statmodel.com/html_ug.shtml) is located [here](https://www.statmodel.com/download/usersguide/MplusUserGuideVer_8.pdf) (archived at: <https://perma.cc/W39W-NRGH>).
 
 # Prepare Data {#prepareData}
 
 To prepare the data in `R` for use in `Mplus`:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 library("MplusAutomation")
 
 prepareMplusData(
@@ -144,7 +138,7 @@ VARIABLE:
 
 ## Cluster Variable {#clusterVariable}
 
-There are multiple ways of accounting for nested data in [structural equation modeling](sem.html).
+There are multiple ways of accounting for nested data in [structural equation modeling](sem.qmd).
 One way to account for nested data is to use multilevel structural equation modeling.
 Another approach is to use a cluster variable to generate cluster-robust standard errors of parameters.
 To use a cluster variable, specify `CLUSTER` under the `VARIABLE` section, and specify `TYPE = COMPLEX` under the `ANALYSIS` section:
@@ -566,7 +560,7 @@ SAVEDATA:
 
 # Multiple Imputation {#multipleImputation}
 
-For examples of how to conduct [multiple imputation](multipleImputation.html) in [`Mplus`](https://www.statmodel.com), see [here](multipleImputation.html#mplus).
+For examples of how to conduct [multiple imputation](multipleImputation.qmd) in [`Mplus`](https://www.statmodel.com), see [here](multipleImputation.qmd#mplus).
 To run a model on multiply imputed data, use the following:
 
 ```
@@ -595,7 +589,7 @@ MODEL:
 
 Unequally spaced time points can be accounted for using the `TSCORES` option.
 
-https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/ (archived at https://perma.cc/Z7QY-TL6W)
+<https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/> (archived at <https://perma.cc/Z7QY-TL6W>)
 
 ```
 VARIABLE: 
@@ -657,7 +651,9 @@ SAVEDATA:
 
 Run models in batch via `R`:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 library("MplusAutomation")
 
 runModels(
@@ -829,6 +825,8 @@ OUTPUT:
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

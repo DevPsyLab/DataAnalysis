@@ -5,26 +5,18 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Preamble
 
 ## Install Libraries
 
-```{r, class.source = "fold-hide"}
+```{r}
 #install.packages("remotes")
 #remotes::install_github("DevPsyLab/petersenlab")
 ```
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+```{r}
 library("petersenlab")
 library("lme4")
 library("nlme")
@@ -37,17 +29,21 @@ library("ggplot2")
 
 ## Import Data
 
-```{r, eval = FALSE, class.source = "fold-hide"}
+```{r}
+#| eval: false
+
 mydata <- read.csv("https://osf.io/cqn3d/download")
 ```
 
-```{r, include = FALSE}
+```{r}
+#| include: false
+
 mydata <- read.csv("./data/nlsy_math_long.csv") #https://osf.io/cqn3d/download
 ```
 
 ## Simulate Data
 
-```{r, class.source = "fold-hide"}
+```{r}
 set.seed(52242)
 
 mydata$outcome <- rpois(nrow(mydata), 4)
@@ -64,7 +60,8 @@ These models go by a variety of different terms:
 
 # Overview
 
-https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels
+- <https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels>
+- <https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/mixed-models.html>
 
 # Pre-Model Computation
 
@@ -233,7 +230,7 @@ summary(timepointSpecificErrorsMixedModel)
 
 ### Quadratic Growth Curve Model {#quadraticGCM}
 
-When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
+When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
 ```{r}
 factorLoadings <- poly(
@@ -463,7 +460,7 @@ ranef(splineGCM)
 
 # Generalized Linear Mixed Models {#generalized}
 
-https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html (archived at https://perma.cc/9RFS-BCE7; source code: https://github.com/bbolker/mixedmodels-misc/blob/master/glmmFAQ.rmd)
+<https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html> (archived at <https://perma.cc/9RFS-BCE7>; source code: <https://github.com/bbolker/mixedmodels-misc/blob/master/glmmFAQ.rmd>)
 
 ## `lmer`
 
@@ -542,7 +539,7 @@ The random effects:
 
 Pinheiro and Bates (2000) book (p. 174, section 4.3.1)
 
-https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r (archived at https://perma.cc/J5GC-PCUT)
+<https://stats.stackexchange.com/questions/77891/checking-assumptions-lmer-lme-mixed-models-in-r> (archived at <https://perma.cc/J5GC-PCUT>)
 
 ## QQ Plots
 
@@ -671,15 +668,17 @@ pairs(linearMixedModel_nlme,
 
 # Power Analysis {#powerAnalysis}
 
-- `mlmpower`: https://github.com/bkeller2/mlmpower ([Enders et al., 2025](https://doi.org/10.1037/met0000614))
-- https://aguinis.shinyapps.io/ml_power/
-- https://www.causalevaluation.org/power-analysis.html
-  - https://powerupr.shinyapps.io/index/
-- https://koumurayama.shinyapps.io/tmethod_mlm/
-- https://webpower.psychstat.org/wiki/models/index
+- `mlmpower`: <https://github.com/bkeller2/mlmpower> ([Enders et al., 2025](https://doi.org/10.1037/met0000614))
+- <https://aguinis.shinyapps.io/ml_power/>
+- <https://www.causalevaluation.org/power-analysis.html>
+  - <https://powerupr.shinyapps.io/index/>
+- <https://koumurayama.shinyapps.io/tmethod_mlm/>
+- <https://webpower.psychstat.org/wiki/models/index>
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

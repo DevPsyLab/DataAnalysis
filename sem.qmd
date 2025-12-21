@@ -5,30 +5,20 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-
-options(scipen = 999)
-```
-
 # Preamble
 
-For a resource on using `lavaan` in `R` for structural equation modeling, see the following e-book: https://tdjorgensen.github.io/SEM-in-Ed-compendium
+For a resource on using `lavaan` in `R` for structural equation modeling, see the following e-book: <https://tdjorgensen.github.io/SEM-in-Ed-compendium>
 
 ## Install Libraries
 
-```{r, class.source = "fold-hide"}
+```{r}
 #install.packages("remotes")
 #remotes::install_github("DevPsyLab/petersenlab")
 ```
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+```{r}
 library("lavaan")
 library("semTools")
 library("semPlot")
@@ -39,9 +29,15 @@ library("MBESS")
 library("tidyverse")
 ```
 
+## Options
+
+```{r}
+options(scipen = 999)
+```
+
 # Simulate Data
 
-```{r, class.source = "fold-hide"}
+```{r}
 set.seed(52242)
 
 sampleSize <- 100
@@ -60,11 +56,11 @@ mydata <- data.frame(
 
 # Overview
 
-https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html>
 
 # Analysis examples
 
-https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem>
 
 # Plot Observed Growth Curve
 
@@ -106,13 +102,13 @@ ggplot(
 
 # Latent Growth Curve Model {#lgcm}
 
-See the chapter on latent growth curve modeling in `lavaan`: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html.
+See the chapter on latent growth curve modeling in `lavaan`: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html>.
 
 For extensions, see the following resources:
 
-- growth curves using latent indicators (rather than observed indicators): https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#latent-indicators-of-growth-factors
-- growth curves using discrete indicators (rather than continuous indicators): https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#discrete-indicators
-- parallel growth curves: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#parallel-growth-curves
+- growth curves using latent indicators (rather than observed indicators): <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#latent-indicators-of-growth-factors>
+- growth curves using discrete indicators (rather than continuous indicators): <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#discrete-indicators>
+- parallel growth curves: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#parallel-growth-curves>
 
 ## Linear Growth Curve Model {#linearLGCM}
 
@@ -279,7 +275,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(lgcm1_fit)
 ```
 
@@ -570,7 +568,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(lbgcm1_fit)
 ```
 
@@ -664,7 +664,7 @@ ggplot() +
 
 ## Quadratic Growth Curve Model {#quadraticLGCM}
 
-When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
+When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
 ```{r}
 factorLoadings <- poly(
@@ -848,7 +848,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(quadraticGCM1_fit)
 ```
 
@@ -1132,7 +1134,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(splineGCM1_fit)
 ```
 
@@ -1234,7 +1238,7 @@ ggplot() +
 
 ## Saturated Growth Curve Model {#saturatedGCM}
 
-https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model
+<https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
 # Latent Change Score Model {#lcsm}
 
@@ -1356,7 +1360,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(bivariateLCSM_fit)
 ```
 
@@ -1493,7 +1499,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(clpm_fit)
 ```
 
@@ -1503,9 +1511,9 @@ lavaangui::plot_lavaan(clpm_fit)
 
 ### Abbreviated
 
-Adapted from Mulder & Hamaker (2021): https://doi.org/10.1080/10705511.2020.1784738
+Adapted from Mulder & Hamaker (2021): <https://doi.org/10.1080/10705511.2020.1784738>
 
-https://jeroendmulder.github.io/RI-CLPM/lavaan.html (archived at https://perma.cc/2K6A-WUJQ)
+<https://jeroendmulder.github.io/RI-CLPM/lavaan.html> (archived at <https://perma.cc/2K6A-WUJQ>)
 
 ```{r}
 riclpm1_syntax <- '
@@ -1568,7 +1576,7 @@ riclpm1_syntax <- '
 
 ### Full
 
-Adapted from Mund & Nestler (2017): https://osf.io/a4dhk
+Adapted from Mund & Nestler (2017): <https://osf.io/a4dhk>
 
 ```{r}
 riclpm2_syntax <- '
@@ -1781,7 +1789,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(riclpm1_fit)
 ```
 
@@ -1791,7 +1801,7 @@ A latent curve model with structured residuals (LCM-SR) is also called an autore
 
 ## Model Syntax
 
-Adapted from Mund & Nestler (2017): https://osf.io/a4dhk
+Adapted from Mund & Nestler (2017): <https://osf.io/a4dhk>
 
 ```{r}
 lcmsr_syntax <- '
@@ -2001,7 +2011,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(lcmsr_fit)
 ```
 
@@ -2314,7 +2326,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(mediationFit)
 ```
 
@@ -2440,7 +2454,9 @@ lavaanPlot::lavaanPlot2(
 
 To generate an interactive/modifiable path diagram, you can use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 lavaangui::plot_lavaan(moderationFit)
 ```
 
@@ -2536,7 +2552,7 @@ ggplot(
 
 ## Simple Slopes and Regions of Significance {#moderationRegionsOfSignificance}
 
-https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval (archived at https://perma.cc/6XR6-ZPSL)
+<https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval> (archived at <https://perma.cc/6XR6-ZPSL>)
 
 ```{r}
 # Find the min and max values of the moderator
@@ -2613,7 +2629,7 @@ $$
 \text{slope}_\text{predictor} = b_1 + b_3 \cdot Z
 $$
 
-The standard error of the slope of the predictor on the outcome at different levels of the moderator is calculated as (https://stats.stackexchange.com/a/55973/20338; archived at https://perma.cc/V255-853Z; Jaccard & Turisi, 2003):
+The standard error of the slope of the predictor on the outcome at different levels of the moderator is calculated as (h<ttps://stats.stackexchange.com/a/55973/20338>; archived at <https://perma.cc/V255-853Z>; Jaccard & Turisi, 2003):
 
 $$
 \begin{aligned}
@@ -2739,7 +2755,9 @@ HS.model <- '
 '
 ```
 
-```{r, message = FALSE, warning = FALSE, results = FALSE}
+```{r}
+#| output: false
+
 fit1 <- cfa(
   HS.model,
   data = HolzingerSwineford1939,
@@ -2761,17 +2779,17 @@ fit2 <- cfa(
 
 # Power Analysis {#powerAnalysis}
 
-https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis>
 
-- https://yilinandrewang.shinyapps.io/pwrSEM/
-- https://schoemanna.shinyapps.io/mc_power_med/
-- https://sjak.shinyapps.io/power4SEM/
-- https://sempower.shinyapps.io/sempower/
-- https://webpower.psychstat.org/wiki/models/index
+- <https://yilinandrewang.shinyapps.io/pwrSEM/>
+- <https://schoemanna.shinyapps.io/mc_power_med/>
+- <https://sjak.shinyapps.io/power4SEM/>
+- <https://sempower.shinyapps.io/sempower/>
+- <https://webpower.psychstat.org/wiki/models/index>
 
 # Path Diagrams {#pathDiagrams}
 
-For a list of tools to create path diagrams, see [here](figures.html#pathDiagrams).
+For a list of tools to create path diagrams, see [here](figures.qmd#pathDiagrams).
 
 # Partial Regression Plot {#partialRegressionPlot}
 
@@ -2831,6 +2849,8 @@ ggplot(
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

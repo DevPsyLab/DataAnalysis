@@ -2,35 +2,27 @@
 title: "Figures in R"
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  warning = FALSE,
-  comment = "")
-```
-
 # Picking a Chart Type
 
-https://www.data-to-viz.com
+<https://www.data-to-viz.com>
 
 # Gallery
 
-https://www.r-graph-gallery.com
+<https://www.r-graph-gallery.com>
 
 # Resources for Learning `R` Syntax for Figures
 
-https://www.statmethods.net/graphs/index.html
+<https://www.statmethods.net/graphs/index.html>
 
-http://www.cookbook-r.com/Graphs/
+<http://www.cookbook-r.com/Graphs/>
 
 # Petersen Lab Examples
 
-https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses
+<https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses>
 
 # Font
 
-You can download the lab fonts for figures here[^1]: https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3
+You can download the lab fonts for figures here[^1]: <https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3>
 
 ## Preamble
 
@@ -43,7 +35,7 @@ You can download the lab fonts for figures here[^1]: https://drive.google.com/dr
 
 ### Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r}
 library("petersenlab")
 library("ellipse")
 library("ggplot2")
@@ -469,7 +461,7 @@ ggplot(df, aes(x = predictorOverplot, y = outcomeOverplot)) +
 
 ### Other implementation
 
-From: https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r
+From: <https://stats.stackexchange.com/questions/7899/complex-regression-plot-in-r>
 
 #### `ggplot2`
 
@@ -524,27 +516,27 @@ do.it(df3, pch = 19, col = rgb(0,0,.7,.5))
 
 ### Default
 
-```{r, message = FALSE, results = "hide"}
+```{r}
 vwReg(outcome ~ predictor, data = df)
 ```
 
 ### Shade
 
-```{r, message = FALSE, results = "hide"}
+```{r}
 vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000, quantize = "continuous")
 vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000, quantize = "SD")
 ```
 
 ### Spaghetti
 
-```{r, message = FALSE, results = "hide"}
+```{r}
 vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = TRUE, show.CI = TRUE, bw = FALSE, B = 1000)
 vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = FALSE, show.CI = FALSE, bw = FALSE, B = 1000)
 ```
 
 ### Black/white
 
-```{r, message = FALSE, results = "hide"}
+```{r}
 vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "continuous")
 vwReg(outcome ~ predictor, data = df, shade = TRUE, spag = FALSE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "SD")
 vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = TRUE, show.CI = TRUE, bw = TRUE, B = 1000, quantize = "SD")
@@ -552,7 +544,7 @@ vwReg(outcome ~ predictor, data = df, shade = FALSE, spag = TRUE, show.lm = TRUE
 
 # Graphic Design Principles for Data Visualization
 
-https://www.data-to-viz.com/caveats.html
+<https://www.data-to-viz.com/caveats.html>
 
 # Types of Plots
 
@@ -562,11 +554,11 @@ Used for: distribution of one numeric variable
 
 ### Gallery
 
-- Violin chart: https://r-graph-gallery.com/violin.html
-- Density chart: https://r-graph-gallery.com/density-plot.html
-- Histogram: https://r-graph-gallery.com/histogram.html
-- Boxplot: https://r-graph-gallery.com/boxplot.html
-- Ridgeline chart: https://r-graph-gallery.com/ridgeline-plot.html
+- Violin chart: <https://r-graph-gallery.com/violin.html>
+- Density chart: <https://r-graph-gallery.com/density-plot.html>
+- Histogram: <https://r-graph-gallery.com/histogram.html>
+- Boxplot: <https://r-graph-gallery.com/boxplot.html>
+- Ridgeline chart: <https://r-graph-gallery.com/ridgeline-plot.html>
 
 ## Bivariate Scatterplots
 
@@ -580,7 +572,7 @@ plot(x, y)
 
 ### ggplot2 package
 
-http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/
+<http://www.cookbook-r.com/Graphs/Scatterplots_(ggplot2)/>
 
 ```
 ggplot(data, aes(x, y)) +
@@ -589,23 +581,23 @@ ggplot(data, aes(x, y)) +
 
 ### Gallery
 
-- Scatterplot: https://r-graph-gallery.com/scatterplot.html
-- Bubble plot: https://r-graph-gallery.com/bubble-chart.html
-- 2D density chart: https://r-graph-gallery.com/2d-density-chart.html
-- Heatmap: https://r-graph-gallery.com/heatmap.html
+- Scatterplot: <https://r-graph-gallery.com/scatterplot.html>
+- Bubble plot: <https://r-graph-gallery.com/bubble-chart.html>
+- 2D density chart: <https://r-graph-gallery.com/2d-density-chart.html>
+- Heatmap: <https://r-graph-gallery.com/heatmap.html>
 
 ### Add lines
 
-- Line chart: https://r-graph-gallery.com/line-plot.html
-- Connected scatterplot: https://r-graph-gallery.com/connected-scatterplot.html
-- Visually-weighted regression: https://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote/
-- Use the `vwReg()` function from the `petersenlab` package: https://github.com/DevPsyLab/petersenlab/blob/main/R/vwReg.R
+- Line chart: <https://r-graph-gallery.com/line-plot.html>
+- Connected scatterplot: <https://r-graph-gallery.com/connected-scatterplot.html>
+- Visually-weighted regression: <https://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote/>
+- Use the `vwReg()` function from the `petersenlab` package: <https://github.com/DevPsyLab/petersenlab/blob/main/R/vwReg.R>
 
 ### Area
 
-- Area chart: https://r-graph-gallery.com/area-chart.html
-- Stacked area chart: https://r-graph-gallery.com/stacked-area-graph.html
-- Streamgraph: https://r-graph-gallery.com/streamgraph.html
+- Area chart: <https://r-graph-gallery.com/area-chart.html>
+- Stacked area chart: <https://r-graph-gallery.com/stacked-area-graph.html>
+- Streamgraph: <https://r-graph-gallery.com/streamgraph.html>
 
 ## Bivariate Barplots
 
@@ -613,8 +605,8 @@ Used for: association between one categorical variable and one numeric variable 
 
 ### Gallery
 
-- Barplot: https://r-graph-gallery.com/barplot.html
-- Lollipop plot: https://r-graph-gallery.com/lollipop-plot.html
+- Barplot: <https://r-graph-gallery.com/barplot.html>
+- Lollipop plot: <https://r-graph-gallery.com/lollipop-plot.html>
 
 ## Multivariate Correlation Matrices
 
@@ -624,92 +616,92 @@ For correlation matrices, I do the following:
 
 1. I use the lab's `cor.table()` function (with `type = "manuscript"`) from the `petersenlab` package to create a correlation matrix.
 1. I save the correlation matrix to a `.csv` file.
-    a. For example: https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures
+    a. For example: <https://research-git.uiowa.edu/PetersenLab/SRS/SRS-SelfRegulationDevelopment/-/blob/master/Analyses/selfRegulationDevelopment.Rmd#self-regulation-measures>
 1. I open the .csv file in Excel and create the table in Excel that can be copied and pasted to Word/Powerpoint/etc.
 
 ### Correlograms
 
-- `corrplot` package: https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html
-- `corrgram` package: https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html
+- `corrplot` package: <https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html>
+- `corrgram` package: <https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html>
 
 #### Gallery
 
-https://r-graph-gallery.com/correlogram.html
+<https://r-graph-gallery.com/correlogram.html>
 
 ### Pairs panels
 
-`psych` package: https://personality-project.org/r/psych/help/pairs.panels.html
+`psych` package: <https://personality-project.org/r/psych/help/pairs.panels.html>
 
-I depict examples of correlograms and pairs panels here: https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations-factorAnalysis
+I depict examples of correlograms and pairs panels here: <https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-PCA.html#correlations-factorAnalysis>
 
 ## Path Diagrams {#pathDiagrams}
 
 Used for: SEM/CFA/path analysis
 
 If you are just trying to visualize the results of a SEM model fitted using the `lavaan` package, I recommend the [`semPlot`](https://doi.org/10.32614/CRAN.package.semPlot), [`lavaanPlot`](https://doi.org/10.32614/CRAN.package.lavaanPlot), or [`lavaangui`](https://doi.org/10.32614/CRAN.package.lavaangui) packages in `R`.
-You can access a web application version of [`lavaangui`](https://doi.org/10.32614/CRAN.package.lavaangui) here: https://lavaangui.org.
-You can see examples of `semPlot` here: http://sachaepskamp.com/semPlot/examples (archived at: https://perma.cc/W2V4-C9C8).
-You can see examples of `lavaanPlot` here: https://lavaanplot.alexlishinski.com/articles/intro_to_lavaanplot (archived at: https://perma.cc/ARZ7-MV24).
-You can see examples of `lavaangui` here: https://doi.org/10.1080/10705511.2024.2420678.
-You can see examples of my implementation here: https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelPathDiagram-sem
+You can access a web application version of [`lavaangui`](https://doi.org/10.32614/CRAN.package.lavaangui) here: <https://lavaangui.org>.
+You can see examples of `semPlot` here: <http://sachaepskamp.com/semPlot/examples> (archived at: <https://perma.cc/W2V4-C9C8>).
+You can see examples of `lavaanPlot` here: <https://lavaanplot.alexlishinski.com/articles/intro_to_lavaanplot> (archived at: <https://perma.cc/ARZ7-MV24>).
+You can see examples of `lavaangui` here: <https://doi.org/10.1080/10705511.2024.2420678>.
+You can see examples of my implementation here: <https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelPathDiagram-sem>
 
 If you are trying to create a figure for a paper or poster, you might want something that you can draw and customize yourself.
 I use Adobe Illustrator for hand-drawn figures.
 
 You can look at various options below:
 
-- `semPlot` package: https://doi.org/10.32614/CRAN.package.semPlot
-- `lavaanPlot` package: https://doi.org/10.32614/CRAN.package.lavaanPlot
-- `lavaangui` package: https://doi.org/10.32614/CRAN.package.lavaangui
+- `semPlot` package: <https://doi.org/10.32614/CRAN.package.semPlot>
+- `lavaanPlot` package: <https://doi.org/10.32614/CRAN.package.lavaanPlot>
+- `lavaangui` package: <https://doi.org/10.32614/CRAN.package.lavaangui>
 - `Adobe Illustrator`
-- `Draw.io`: https://www.drawio.com (formerly https://www.diagrams.net)
-- `Onyx`: https://onyx-sem.com
-- `yworks`: https://www.yworks.com
-- `Microsoft Visio`: https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software
+- `Draw.io`: <https://www.drawio.com> (formerly <https://www.diagrams.net>)
+- `Onyx`: <https://onyx-sem.com>
+- `yworks`: <https://www.yworks.com>
+- `Microsoft Visio`: <https://www.microsoft.com/en-us/microsoft-365/visio/flowchart-software>
 - `Microsoft Powerpoint`
 - `AMOS`
 - `Warppls`
-- `Graphviz`: https://graphviz.org
-    - has an `R` port—this is what we use for our study flowchart via the `DiagrammeR` package: https://rich-iannone.github.io/DiagrammeR/index.html
-- https://app.diagrams.net
-- https://github.com/jgraph/drawio-desktop/releases
+- `Graphviz`: <https://graphviz.org>
+    - has an `R` port—this is what we use for our study flowchart via the `DiagrammeR` package: <https://rich-iannone.github.io/DiagrammeR/index.html>
+- <https://app.diagrams.net>
+- <https://github.com/jgraph/drawio-desktop/releases>
 
 ## Interactive
 
-Gallery: https://r-graph-gallery.com/interactive-charts.html
+Gallery: <https://r-graph-gallery.com/interactive-charts.html>
 
 ## Animation
 
-Gallery: https://r-graph-gallery.com/animation.html
+Gallery: <https://r-graph-gallery.com/animation.html>
 
 ## 3D
 
-Gallery: https://r-graph-gallery.com/3d.html
+Gallery: <https://r-graph-gallery.com/3d.html>
 
 # Color Palettes {#colorPalettes}
 
-- https://colorbrewer2.org
-- https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf (archived at https://perma.cc/8SYT-UC5U)
+- <https://colorbrewer2.org>
+- <https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf> (archived at <https://perma.cc/8SYT-UC5U>)
 
 ## Sequential
 
-- https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
-- viridis, cividis, etc.: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+- <https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3>
+- viridis, cividis, etc.: <https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html>
 
 ## Diverging
 
-- https://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3
+- <https://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3>
 
 ## Qualitative/Categorical
 
-- https://colorbrewer2.org/#type=qualitative&scheme=Accent&n=3
-- `Polychrome` package: https://stackoverflow.com/a/62939405 (archived at https://perma.cc/3HWM-MMFS)
-- `pals` package: https://stackoverflow.com/a/41230685 (archived at https://perma.cc/WH56-HMVD)
+- <https://colorbrewer2.org/#type=qualitative&scheme=Accent&n=3>
+- `Polychrome` package: <https://stackoverflow.com/a/62939405> (archived at <https://perma.cc/3HWM-MMFS>)
+- `pals` package: <https://stackoverflow.com/a/41230685> (archived at <https://perma.cc/WH56-HMVD>)
 
 Color palettes for color-blindness:
 
-- `Safe` palette from the `rcartocolor` package: https://stackoverflow.com/a/56066712 (archived at https://perma.cc/WUH5-F4Z7)
-- Okabe Ito scale: https://stackoverflow.com/a/56066712 (archived at https://perma.cc/WUH5-F4Z7)
+- `Safe` palette from the `rcartocolor` package: <https://stackoverflow.com/a/56066712> (archived at <https://perma.cc/WUH5-F4Z7>)
+- Okabe Ito scale: <https://stackoverflow.com/a/56066712> (archived at <https://perma.cc/WUH5-F4Z7>)
 
 ### 8 Colors
 
@@ -729,7 +721,7 @@ pie(rep(1, 8), col = palette_OkabeIto_black)
 
 ### 12 Colors
 
-`Safe` palette from the `rcartocolor` package: https://stackoverflow.com/a/56066712 (archived at https://perma.cc/WUH5-F4Z7)
+`Safe` palette from the `rcartocolor` package: <https://stackoverflow.com/a/56066712> (archived at <https://perma.cc/WUH5-F4Z7>)
 
 ```{r}
 #from: scales::show_col(carto_pal(12, "Safe"))
@@ -754,7 +746,7 @@ pie(rep(1, 12), col = c12)
 
 ### 25 Colors
 
-https://stackoverflow.com/a/9568659 (archived at https://perma.cc/5ALZ-3AQD)
+<https://stackoverflow.com/a/9568659> (archived at <https://perma.cc/5ALZ-3AQD>)
 
 ```{r}
 c25 <- c(
@@ -789,11 +781,13 @@ pie(rep(1, 36), col = c36)
 
 ## Maps
 
-- https://github.com/thomasp85/scico
+- <https://github.com/thomasp85/scico>
 
 # Session Info
 
 ```{r}
+#| code-fold: true
+
 sessionInfo()
 ```
 

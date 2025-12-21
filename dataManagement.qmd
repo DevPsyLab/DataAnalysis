@@ -5,19 +5,13 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Import Data {#importData}
 
 Importing data takes syntax of the following form for `.csv` files:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 data <- read.csv("filepath/filename.csv")
 ```
 
@@ -25,23 +19,31 @@ Note: it is important to use forward slashes ("/") rather than backslashes ("\\"
 
 Below, I import a `.csv` file and save it into an object called `mydata` (you could call this object whatever you want):
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 mydata <- read.csv("https://osf.io/s6wrm/download")
 ```
 
-```{r, include = FALSE}
+```{r}
+#| include: false
+
 mydata <- read.csv("./data/titanic.csv") #https://osf.io/s6wrm/download
 ```
 
 Importing data takes syntax of the following form for `.RData` files:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 load("filepath/filename.RData")
 ```
 
 ## Import Multiple Data Files {#importMultipleDataFiles}
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 dataNames <- paste("data", 1:100, sep = "")
 dataFilenames <- paste(dataNames, ".csv", sep = "")
 dataFilepaths <- paste("C:/users/username/", dataFilenames, sep = "")
@@ -52,7 +54,9 @@ names(data_list) <- basename(dataFilepaths)
 
 Alternatively, if you want to load all `.csv` files in a directory, you can identify the filenames programmatically:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 dataFilenames <- list.files(
   path = "C:/users/username/",
   pattern = "\\.csv$")
@@ -70,29 +74,37 @@ names(data_list) <- basename(dataFilepaths)
 
 Saving data takes syntax of the following form for `.csv` files:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 write.csv(object, file = "filepath/filename.csv")
 ```
 
 For example:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 write.csv(mydata, file = "mydata.csv")
 ```
 
 Saving data takes syntax of the following form for `.RData` files:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 save(object, file = "filepath/filename.RData")
 ```
 
 # Use Lab Functions {#labFunctions}
 
 To use lab functions, first install the [`petersenlab` package](https://devpsylab.github.io/petersenlab).
-The [`petersenlab` package](https://devpsylab.github.io/petersenlab) is here: https://devpsylab.github.io/petersenlab.
+The [`petersenlab` package](https://devpsylab.github.io/petersenlab) is here: <https://devpsylab.github.io/petersenlab>.
 You can install it using the following commands:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages("remotes")
 remotes::install_github("DevPsyLab/petersenlab")
 ```
@@ -105,7 +117,9 @@ library("petersenlab")
 
 To run scripts on the lab drive, set the path to the lab drive (`//lc-rs-store24.hpc.uiowa.edu/lss_itpetersen/Lab/`) using the following code:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 petersenLabPath <- setLabPath()
 ```
 
@@ -113,32 +127,42 @@ petersenLabPath <- setLabPath()
 
 To install a single package that is on the CRAN repository, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages("name_of_package")
 ```
 
 To install multiple packages that are on the CRAN repository, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages(c("name_of_package1","name_of_package2","name_of_package3"))
 ```
 
 To install a package that is on a `GitHub` repository, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 install.packages("remotes")
 remotes::install_github("username_of_GitHub_author/name_of_package")
 ```
 
 For instance:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 remotes::install_github("DevPsyLab/petersenlab")
 ```
 
 The default way to load a package in `R` is:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 library("packageName1")
 library("packageName2")
 library("packageName3")
@@ -151,7 +175,9 @@ If the package is not installed, the function installs and loads the package.
 If the package is installed, the function loads the package.
 To use this function, you must have the [`petersenlab` package](https://devpsylab.github.io/petersenlab) loaded.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 library("petersenlab")
 load_or_install(c("packageName1","packageName2","packageName3"))
 ```
@@ -175,7 +201,9 @@ set.seed(52242)
 
 To run an `R` script, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 source("filepath/filename.R")
 ```
 
@@ -183,7 +211,9 @@ source("filepath/filename.R")
 
 To render a `.Rmd` file, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 render("filepath/filename.Rmd")
 ```
 
@@ -318,7 +348,9 @@ rank
 
 To subset a data frame, use brackets to specify the subset of rows and columns to keep, where the value/vector before the comma specifies the rows to keep, and the value/vector after the comma specifies the columns to keep:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 dataframe[rowsToKeep, columnsToKeep]
 ```
 
@@ -459,7 +491,9 @@ mydata %>%
 
 To view data, use the following syntax:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 View(mydata)
 ```
 
@@ -525,7 +559,9 @@ To create a new variable, use the following syntax:
 mydata$newVar <- NA
 ```
 
-```{r, include = FALSE}
+```{r}
+#| include: false
+
 mydata$newVar <- NULL
 ```
 
@@ -591,7 +627,9 @@ mydata <- mydata %>%
 
 Using a vector of variable names:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 varNamesFrom <- c("oldVar1","oldVar2")
 varNamesTo <- c("newVar1","newVar2")
 
@@ -684,7 +722,7 @@ For instance, a left outer join keeps the shared rows and the rows that are uniq
 
 ![Types of merges/joins](images/joins.png)
 
-Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-joins-with-pandas) (archived at: https://perma.cc/WV7U-BS68)
+Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-joins-with-pandas) (archived at: <https://perma.cc/WV7U-BS68>)
 
 ### Full Outer Join {#fullJoin}
 
@@ -845,7 +883,9 @@ mtcars %>%
 
 Create data with multiple coders:
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 idWaveCoder <- 
   expand.grid(
     id = 1:100,
@@ -951,6 +991,8 @@ convert_temperature(
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

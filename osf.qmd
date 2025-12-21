@@ -5,19 +5,11 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 # Preamble
 
 ## Install Libraries
 
-```{r, class.source = "fold-hide"}
+```{r}
 #install.packages("remotes")
 #remotes::install_github("DevPsyLab/petersenlab")
 #remotes::install_github("paulhendricks/anonymizer")
@@ -25,14 +17,14 @@ knitr::opts_chunk$set(
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE, class.source = "fold-hide"}
+```{r}
 library("anonymizer")
 library("tidyverse")
 ```
 
 ## Simulate Data
 
-```{r, class.source = "fold-hide"}
+```{r}
 set.seed(52242)
 
 sampleSize <- 100
@@ -52,7 +44,9 @@ mydata <- data.frame(
 To help protect participant anonymity, it is important to anonymize participant IDs so their data cannot be stitched together across papers.
 To anonymize participant IDs, use the following script and change the seed for every paper so that a given participant gets a different anonymized code each time.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 library("tidyverse")
 library("remotes")
 
@@ -78,7 +72,9 @@ mydata <- mydata %>%
   select(-ID)
 ```
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 # Generate Random Anonymized ID
 mydata$anonymizedID <- anonymize(c(
   mydata$ID),
@@ -100,6 +96,8 @@ mydata <- mydata %>%
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

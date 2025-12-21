@@ -5,14 +5,6 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
-
 Adapted from `brms` workshop by Paul-Christian Bürkner
 
 # Preamble
@@ -26,7 +18,7 @@ Adapted from `brms` workshop by Paul-Christian Bürkner
 
 ## Load Libraries
 
-```{r, message = FALSE, warning = FALSE}
+```{r}
 library("lme4")
 library("rstan")
 library("brms")
@@ -36,7 +28,7 @@ library("mice")
 
 ## Simulate Data
 
-```{r, class.source = "fold-hide"}
+```{r}
 set.seed(52242)
 
 sampleSize <- 1000
@@ -73,7 +65,7 @@ conditions <- make_conditions(sleepstudy, "Subject")
 
 ## Post-Processing Methods
 
-```{r, class.source = "fold-hide"}
+```{r}
 methods(class = "brmsfit")
 ```
 
@@ -83,7 +75,9 @@ methods(class = "brmsfit")
 
 ### Complete Pooling
 
-```{r, results = "hide"}
+```{r}
+#| output: false
+
 fit_sleep1 <- brm(
   Reaction ~ 1 + Days,
   data = sleepstudy,
@@ -92,7 +86,9 @@ fit_sleep1 <- brm(
 
 ### Random Intercepts
 
-```{r, results = "hide"}
+```{r}
+#| output: false
+
 fit_sleep2 <- brm(
   Reaction ~ 1 + Days + (1 | Subject), 
   data = sleepstudy,
@@ -101,7 +97,9 @@ fit_sleep2 <- brm(
 
 ### Random Intercepts and Slopes
 
-```{r, results = "hide"}
+```{r}
+#| output: false
+
 fit_sleep3 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
@@ -261,7 +259,9 @@ bprior
 
 Fit the model with these priors, and sample from these priors:
 
-```{r, results = "hide"}
+```{r}
+#| output: false
+
 fit_sleep4 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
@@ -290,7 +290,9 @@ plot(hyp2)
 
 ## Between-Chain Parallelization
 
-```{r, results = "hide"}
+```{r}
+#| output: false
+
 fit_sleep4 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
@@ -303,13 +305,15 @@ fit_sleep4 <- brm(
 
 ## Within-Chain Parallelization
 
-https://paul-buerkner.github.io/brms/articles/brms_threading.html (archived at https://perma.cc/NCG3-KV4G)
+<https://paul-buerkner.github.io/brms/articles/brms_threading.html> (archived at <https://perma.cc/NCG3-KV4G>)
 
 # Missing Data Handling
 
 ## Multiply Imputed Datasets from `mice`
 
 ```{r}
+#| eval: false
+
 ?brm_multiple
 ```
 
@@ -327,9 +331,11 @@ fit_imp <- brm_multiple(
 
 ## Imputation on the Fly During Model Fitting
 
-https://paul-buerkner.github.io/brms/articles/brms_missings.html (archived at https://perma.cc/4Y9L-USQR)
+<https://paul-buerkner.github.io/brms/articles/brms_missings.html> (archived at <https://perma.cc/4Y9L-USQR>)
 
 ```{r}
+#| eval: false
+
 ?mi
 ```
 
@@ -358,6 +364,8 @@ hypothesis(
 
 # Session Info
 
-```{r, class.source = "fold-hide"}
+```{r}
+#| code-fold: true
+
 sessionInfo()
 ```

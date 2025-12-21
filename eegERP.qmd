@@ -5,29 +5,22 @@ output:
     code_folding: show
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  error = TRUE,
-  comment = "",
-  class.source = "fold-show")
-```
 # ERP Processing Pipeline using HAPPE {#happe}
 
 ## Inital Set-up {#initial}
 
-1. Download MATLAB: https://its.uiowa.edu/matlab
+1. Download MATLAB: <https://its.uiowa.edu/matlab>
     - Click `How to Install MatLab` and follow the relevant instructions
     - Create a `MatLab` folder in your local directory.
     You will keep all of your MatLab related files in this folder.
-1. Install the HAPPE pipeline: https://github.com/PINE-Lab/HAPPE
+1. Install the HAPPE pipeline: <https://github.com/PINE-Lab/HAPPE>
     - Clone the HAPPE repository to your `GitHub` account
     - Open the `HAPPE` folder
     - Open the `HAPPE User Guide` document
     - Read through the `HAPPE User Guide`
     - Navigate to the `Setting up HAPPE` section in the user guide and follow the instructions for setting up the HAPPE pipeline, including installation of add-ons and eeglab
     - Note: This version of the HAPPE pipeline includes functionality from the HAPPE 2.0, HAPPE+ER, and HAPPILEE pipelines, so it is suitable for standard EEG processing as well as ERP and low-density EEG/ERP processing.
-1. Install EP Toolkit: https://sourceforge.net/projects/erppcatoolkit/
+1. Install EP Toolkit: <https://sourceforge.net/projects/erppcatoolkit/>
     - After downloading, copy the `EP_Toolkit` folder to your `Matlab` folder (in your local directory)
     - In the `EP_toolkit` folder: 
         - Open `EP_Toolkit`
@@ -1277,7 +1270,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    1. Create a list of all PCA component files in the specified directory.
    This list will contain the full filepaths to each component file which are used to read the data into R.
 
-      ```{r, eval = FALSE}
+      ```{r}
+#| eval: false
+
       oddballFilePaths <- list.files(
        path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball", 
        pattern = "*.txt",
@@ -1288,7 +1283,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    This list will be used to rename columns in the final composite dataset according to the name of the component file.
    For this reason, the naming convention of each component files is crucial; this will determine how the corresponding column of the composite datafile is named.
 
-      ```{r, eval = FALSE}
+      ```{r}
+#| eval: false
+
       oddballFiles <- list.files(
        path = "Z:/Shared Server/Study Folder/Data/LV2/ERP/PCA Components/Oddball",
        pattern = "*.txt",
@@ -1296,19 +1293,25 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
       ```
    1. Read in each component file, skipping the rows containing summary information about the extracted component (the first 7 rows in this example).
 
-      ```{r, eval = FALSE}
+      ```{r}
+#| eval: false
+
       oddballData <- lapply(oddballFilePaths, function(x) read_delim(x, delim = "\t", skip = 7)) 
       ```
 
    1. "Clean" the list of component file names by removing the file extension (in this case, `.txt`).
 
-      ```{r, eval = FALSE}
+      ```{r}
+#| eval: false
+
       componentNames <- oddballFiles %>% str_remove(".txt")
       ```
 
     1. Give `ID` variable a proper name.
 
-       ```{r, eval = FALSE}
+       ```{r}
+#| eval: false
+
        oddballData <- lapply(oddballData, function(x){
         names(x)[length(names(x))] <- "ID"
         return(x)
@@ -1317,7 +1320,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
     1. At this stage, the ERP component data are nested within a list of separate data objects.
     We must therefore merge them into a single dataframe object.
 
-       ```{r, eval = FALSE}
+       ```{r}
+#| eval: false
+
        oddballDataMerged <- oddballData %>%
           reduce(full_join, by = c("ID"))
        ```
@@ -1329,7 +1334,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        * Remove the `ID` variable now that it has been separated into `tcid` and `wave`
        * Convert all values to numeric
 
-       ```{r, eval = FALSE}
+       ```{r}
+#| eval: false
+
        oddballDataClean <- oddballDataMerged %>%
           mutate(tcid = substr(ID, 1, 4),
                  wave = substr(ID, 6, 7)) %>%
@@ -1339,12 +1346,16 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        ```
     1. Update column names of merged data according to the list of PCA component files.
 
-       ```{r, eval = FALSE}
+       ```{r}
+#| eval: false
+
        names(oddballDataClean) <- c("tcid", "wave", componentNames)
        ```
     1. Save composite data to desired location.
 
-       ```{r, eval = FALSE}
+       ```{r}
+#| eval: false
+
        write_csv(oddballDataClean, file = "Z:/Shared Server/Study Folder/Data/REDCap/Composites/erpOddball.csv")
        ```
 
@@ -1354,7 +1365,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 
 1. Read in the grand average waveform data exported from EP Toolkit.
    - We currently process the conditions within a given task separately, so each condition should have its own grand average file.
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    obTgt <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_tgt_gav.txt")
    obFrq <- read.table("V:/SRS-ERP-Oddball/Hard/All/4 - EPT Averages/2024-11-05/gave/ob_frq_gav.txt")
    ```
@@ -1363,7 +1376,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    - The grand average data does not have row or column labels, but the columns represent the EEG net channels in numerical order (1-129).
    We can therefore use their column index values to select the desired electrodes; so, the list containing the channel numbers should include ONLY numbers.
    The code that selects these channels out of the full dataset will rely on numerical input.  
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    # Set electrode clusters
    obElectrodes <- c(58, 59, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76, 77, 81, 82, 83, 84, 89, 80, 91, 95, 96, 101)
 
@@ -1376,7 +1391,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    - Adding a condition label will allow us to combine the two condition-specific datasets into one that can be used for visualizations 
       - For ease of plotting, name the conditions the way that you would like them to appear on the figure (i.e., "Target" instead of "tgt")
    
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    # Compute averages 
    obTgt_sub$amplitude <- rowMeans(obTgt_sub)
    obFrq_sub$amplitude <- rowMeans(obFrq_sub)
@@ -1389,7 +1406,9 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 1. Add timing-related information to the data
    - EP Toolkit exports ERP data without timestamps, but arranges it in order of timing
    - We can create a template with the appropriate timestamps and append this column to the amplitude data
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    # Create template
    erpTemplate <- data.frame(
      time = -199:1000
@@ -1400,14 +1419,18 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    obFrqTimes <- cbind(erpTemplate, obFrq_amps)
    ```
 1. Combine all conditions into a single data object to be used for plotting 
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    oddball <- rbind(obTgtTimes, obFrqTimes) %>% 
               select(time, condition, amplitude) %>% 
               arrange(time)
    ```
 
 1. Generate the waveform figures 
-   ```{r, eval = FALSE}
+   ```{r}
+#| eval: false
+
    ggplot(
      data = oddball,
      aes(
@@ -1440,7 +1463,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 You can navigate to your folder (maybe under Documents/MATLAB/EPwork) and delete everything except for EPprefs to refresh your workspace. 
 NOTE: This will delete everything stored in EP Toolkit, so remember to back up files that you need to save.
 1. If you get an error or a warning from Git when trying to commit and/or push ERP files up to the repo, you may need to initialize Git LFS.
-The instructions for initializing Git LFS can be found [here](https://devpsylab.github.io/DataAnalysis/git.html#gitLfs).
+The instructions for initializing Git LFS can be found [here](git.qmd#gitLfs).
    - The filetypes that commonly cause such errors in our current ERP processing pipeline are:
       - `.txt` files
       - `.ept` files
@@ -1474,7 +1497,7 @@ We want a standardized value on the machines
 
 ### EEGLab Processing Steps
 
-https://eeglab.org/tutorials/
+<https://eeglab.org/tutorials/>
 
 1. Filtering
 1. Average Referencing
@@ -1612,9 +1635,9 @@ Click "REJECT" to remove the bad time periods from the data file.
 
 #### Independent Component Analysis {#ica}
 
-https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html (archived at https://perma.cc/AEU9-GB3B)
+<https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html> (archived at <https://perma.cc/AEU9-GB3B>)
 
-https://socialsci.libretexts.org/Bookshelves/Psychology/Book%3A_Applied_Event-Related_Potential_Data_Analysis_(Luck)/14%3A_Appendix_3%3A_Example_Processing_Pipeline (archived at https://perma.cc/9QYQ-BNFE)
+<https://socialsci.libretexts.org/Bookshelves/Psychology/Book%3A_Applied_Event-Related_Potential_Data_Analysis_(Luck)/14%3A_Appendix_3%3A_Example_Processing_Pipeline> (archived at <https://perma.cc/9QYQ-BNFE>)
 
 The component order returned by `runica.m` is in decreasing order of the EEG variance accounted for by each component.
 
@@ -1653,7 +1676,7 @@ Toggle the "Accept" button to reject an independent component, press "OK" to spe
 
 Automated detection of artifactual ICA components:
 
-https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#automated-detection-of-artifactual-ica-components (archived at https://perma.cc/5RQ7-9WBT)
+<https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#automated-detection-of-artifactual-ica-components> (archived at <https://perma.cc/5RQ7-9WBT>)
 
 ```matlab
 EEG = eeg_checkset( EEG );
@@ -1675,7 +1698,7 @@ Tools → Classify components using ICLabel → Flag components as artifacts
 
 Substracting rejected ICA components:
 
-https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#subtracting-ica-components-from-data (archived at https://perma.cc/HVH4-Z4SA)
+<https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html#subtracting-ica-components-from-data> (archived at <https://perma.cc/HVH4-Z4SA>)
 
 Tools → Remove components
 
@@ -1687,7 +1710,7 @@ eeglab redraw;
 
 ### Interpolate Bad Channels
 
-https://sccn.ucsd.edu/pipermail/eeglablist/2016/011199.html (archived at https://perma.cc/97NH-8LAR)
+<https://sccn.ucsd.edu/pipermail/eeglablist/2016/011199.html> (archived at <https://perma.cc/97NH-8LAR>)
 
 To interpolate channels you would load up one file that has only the good channels, then load up a second file that has the full channel list, and then run the channel interpolation function from the eeglab gui.
 
@@ -1847,8 +1870,8 @@ Warning messages appeared when using the automatic cleaning of data.
 We may have to send a dataset to someone so they can check on it.
 Some documentation is found here:
 
-- https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html (archived at https://perma.cc/9SDG-NGXD)
-- https://sccn.ucsd.edu/wiki/EEGLAB_bug1971 (archived at https://perma.cc/H7PA-TPTZ)
+- <https://sccn.ucsd.edu/pipermail/eeglablist/2021/016222.html> (archived at <https://perma.cc/9SDG-NGXD>)
+- <https://sccn.ucsd.edu/wiki/EEGLAB_bug1971> (archived at <https://perma.cc/H7PA-TPTZ>)
 
 #### Filtering, average referencing, and automatically cleaning the data.
 
@@ -2379,9 +2402,3 @@ If you don't have that, you can right-click on the files, choose "Show package c
 **How can I resolve this?**
 
 A: Copy the files to a local directory (e.g., a folder on the Desktop) before importing to NetStation Tools.
-
-
-
-
-
-
