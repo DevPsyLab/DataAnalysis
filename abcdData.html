@@ -1,693 +1,704 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="author" content="Isaac T. Petersen">
+<meta name="dcterms.date" content="today">
 
-
-
-
-<title>ABCD Data</title>
-
-<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TYR0QMREEW');
-</script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+<title>ABCD Data – Data Analysis Guides for the Developmental Psychopathology Lab</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
 }
-</script>
-
-
-
-
-<style type="text/css">
-#rmd-source-code {
-  display: none;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-</style>
-
-
-<link rel="stylesheet" href="includes/custom.css" type="text/css" />
-<link rel="stylesheet" href="font/css/roboto.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
 @media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
   }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
 </style>
 
 
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d640c705e8c17715bca3574aa719063f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9278de052701f0b3f1191ef96b26c196.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TYR0QMREEW"></script>
 
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="includes/custom.css">
+<link rel="stylesheet" href="font/css/roboto.css">
 </head>
 
-<body>
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Data Analysis Guides for the Developmental Psychopathology Lab</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Guides
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="abcdData.html">ABCD Data</a>
-    </li>
-    <li>
-      <a href="bayesian.html">Bayesian Analysis</a>
-    </li>
-    <li>
-      <a href="dataManagement.html">Data Management</a>
-    </li>
-    <li>
-      <a href="developmentalScaling.html">Developmental Scaling</a>
-    </li>
-    <li>
-      <a href="dags.html">Directed Acyclic Graphs</a>
-    </li>
-    <li>
-      <a href="eegERP.html">Electroencephalography/Event-Related Potentials</a>
-    </li>
-    <li>
-      <a href="eda.html">Exploratory Data Analysis</a>
-    </li>
-    <li>
-      <a href="factorAnalysis.html">Factor Analysis</a>
-    </li>
-    <li>
-      <a href="figures.html">Figures</a>
-    </li>
-    <li>
-      <a href="git.html">Git, GitLab, and GitHub</a>
-    </li>
-    <li>
-      <a href="hlm.html">Hierarchical Linear Modeling</a>
-    </li>
-    <li>
-      <a href="hpc.html">High-Performance Computing</a>
-    </li>
-    <li>
-      <a href="irt.html">Item Response Theory</a>
-    </li>
-    <li>
-      <a href="jamovi.html">jamovi</a>
-    </li>
-    <li>
-      <a href="jatos.html">JATOS (Just Another Tool for Online Studies)</a>
-    </li>
-    <li>
-      <a href="jsPsych.html">jsPsych</a>
-    </li>
-    <li>
-      <a href="lamp.html">LAMP (Linux, Apache, MySQL, PHP)</a>
-    </li>
-    <li>
-      <a href="lda.html">Longitudinal Data Analysis</a>
-    </li>
-    <li>
-      <a href="markdown.html">Markdown</a>
-    </li>
-    <li>
-      <a href="sem.html#mediation">Mediation</a>
-    </li>
-    <li>
-      <a href="regression.html#moderation">Moderation/Interaction</a>
-    </li>
-    <li>
-      <a href="mplus.html">Mplus</a>
-    </li>
-    <li>
-      <a href="multipleImputation.html">Multiple Imputation</a>
-    </li>
-    <li>
-      <a href="osf.html">Open Science Framework</a>
-    </li>
-    <li>
-      <a href="pca.html">Principal Component Analysis</a>
-    </li>
-    <li>
-      <a href="https://devpsylab.github.io/pythonDataAnalysisGuides">Python</a>
-    </li>
-    <li>
-      <a href="R.html">R</a>
-    </li>
-    <li>
-      <a href="regression.html">Regression</a>
-    </li>
-    <li>
-      <a href="SPSS.html">SPSS</a>
-    </li>
-    <li>
-      <a href="statistics.html">Statistics</a>
-    </li>
-    <li>
-      <a href="sem.html">Structural Equation Modeling</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="about.html">About</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/labLogo.png" alt="" class="navbar-logo light-content">
+    <img src="./images/labLogo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Data Analysis Guides for the Developmental Psychopathology Lab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-datasets" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Datasets</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-datasets">    
         <li>
-  <a href="https://devpsylab.github.io/LabWiki">Lab Wiki</a>
-</li>
-<li>
-  <a href="https://developmental-psychopathology.lab.uiowa.edu">Lab Website</a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-<li role="separator" class="divider"></li>
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+    <a class="dropdown-item" href="./abcdData.html">
+ <span class="dropdown-text">ABCD Study Data</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis-techniques" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis Techniques</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis-techniques">    
+        <li>
+    <a class="dropdown-item" href="./bayesian.html">
+ <span class="dropdown-text">Bayesian Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./dataManagement.html">
+ <span class="dropdown-text">Data Management</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./dags.html">
+ <span class="dropdown-text">Directed Acyclic Graphs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./eegERP.html">
+ <span class="dropdown-text">Electroencephalography/Event-Related Potentials</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./eda.html">
+ <span class="dropdown-text">Exploratory Data Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./factorAnalysis.html">
+ <span class="dropdown-text">Factor Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./figures.html">
+ <span class="dropdown-text">Figures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./hlm.html">
+ <span class="dropdown-text">Hierarchical Linear Modeling</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./irt.html">
+ <span class="dropdown-text">Item Response Theory</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lda.html">
+ <span class="dropdown-text">Longitudinal Data Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sem.html#mediation">
+ <span class="dropdown-text">Mediation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regression.html#moderation">
+ <span class="dropdown-text">Moderation/Interaction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./multipleImputation.html">
+ <span class="dropdown-text">Multiple Imputation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pca.html">
+ <span class="dropdown-text">Principal Component Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./regression.html">
+ <span class="dropdown-text">Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./statistics.html">
+ <span class="dropdown-text">Statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sem.html">
+ <span class="dropdown-text">Structural Equation Modeling</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-softwareframeworks" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Software/Frameworks</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-softwareframeworks">    
+        <li>
+    <a class="dropdown-item" href="./git.html">
+ <span class="dropdown-text">Git, GitLab, and GitHub</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./hpc.html">
+ <span class="dropdown-text">High-Performance Computing Cluster</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jamovi.html">
+ <span class="dropdown-text">jamovi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jatos.html">
+ <span class="dropdown-text">JATOS (Just Another Tool for Online Studies)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jsPsych.html">
+ <span class="dropdown-text">jsPsych</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lamp.html">
+ <span class="dropdown-text">LAMP (Linux, Apache, MySQL, PHP)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./markdown.html">
+ <span class="dropdown-text">Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./mplus.html">
+ <span class="dropdown-text">Mplus</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./osf.html">
+ <span class="dropdown-text">Open Science Framework</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://devpsylab.github.io/pythonDataAnalysisGuides">
+ <span class="dropdown-text">Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./R.html">
+ <span class="dropdown-text">R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./SPSS.html">
+ <span class="dropdown-text">SPSS</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://devpsylab.github.io/LabWiki"> 
+<span class="menu-text">Lab Wiki</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://developmental-psychopathology.lab.uiowa.edu"> 
+<span class="menu-text">Lab Website</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/DevPsyLab/DataAnalysis">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/DevPsyLab/DataAnalysis/issues/new">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+    <a href="https://twitter.com/devpsylab" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://www.facebook.com/DevPsyLab" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-facebook"></i></a>
+    <a href="https://www.instagram.com/dev_psy_lab" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-instagram"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./abcdData.html">ABCD Data</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./abcdData.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">ABCD Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataManagement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Management</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./developmentalScaling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Developmental Scaling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dags.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Directed Acyclic Graphs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eegERP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Electroencephalography/Event-Related Potentials</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factorAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factor Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Git, GitLab, and GitHub</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hlm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hierarchical Linear Modeling</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hpc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">High-Performance Computing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./irt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Item Response Theory</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./jamovi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">jamovi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./jatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JATOS (Just Another Tool for Online Studies)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./jsPsych.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">jsPsych</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lamp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LAMP (Linux, Apache, MySQL, PHP)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Longitudinal Data Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Markdown</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sem.html#mediation" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mediation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression.html#moderation" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Moderation/Interaction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mplus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mplus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multipleImputation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Imputation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./osf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Open Science Framework</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://devpsylab.github.io/pythonDataAnalysisGuides" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./SPSS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SPSS</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Structural Equation Modeling</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#abcddata" id="toc-abcddata" class="nav-link active" data-scroll-target="#abcddata"><span class="header-section-number">1</span> ABCD Data</a></li>
+  <li><a href="#dataSecurityProtocols" id="toc-dataSecurityProtocols" class="nav-link" data-scroll-target="#dataSecurityProtocols"><span class="header-section-number">2</span> Data Security Protocols</a></li>
+  <li><a href="#accessingABCDdata" id="toc-accessingABCDdata" class="nav-link" data-scroll-target="#accessingABCDdata"><span class="header-section-number">3</span> Accessing ABCD Data</a>
+  <ul>
+  <li><a href="#dataUseCertificate" id="toc-dataUseCertificate" class="nav-link" data-scroll-target="#dataUseCertificate"><span class="header-section-number">3.1</span> Step 1: Data Use Certificate</a></li>
+  <li><a href="#labProtocols" id="toc-labProtocols" class="nav-link" data-scroll-target="#labProtocols"><span class="header-section-number">3.2</span> Step 2: Read (and Follow) the Lab’s Protocols for Handling ABCD Data</a></li>
+  <li><a href="#connectRRDS" id="toc-connectRRDS" class="nav-link" data-scroll-target="#connectRRDS"><span class="header-section-number">3.3</span> Step 3: Connect to the Research Remote Desktop Service (RRDS)</a></li>
+  <li><a href="#connectLSS" id="toc-connectLSS" class="nav-link" data-scroll-target="#connectLSS"><span class="header-section-number">3.4</span> Step 4: Connect to the ABCD LSS Server</a></li>
+  <li><a href="#accessManagement" id="toc-accessManagement" class="nav-link" data-scroll-target="#accessManagement"><span class="header-section-number">3.5</span> Access Management</a></li>
+  </ul></li>
+  <li><a href="#lssStructure" id="toc-lssStructure" class="nav-link" data-scroll-target="#lssStructure"><span class="header-section-number">4</span> LSS Structure</a>
+  <ul>
+  <li><a href="#analysesProjects" id="toc-analysesProjects" class="nav-link" data-scroll-target="#analysesProjects"><span class="header-section-number">4.1</span> Analyses Projects</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.2</span> Data</a></li>
+  <li><a href="#fileTypes" id="toc-fileTypes" class="nav-link" data-scroll-target="#fileTypes"><span class="header-section-number">4.3</span> File types</a></li>
+  <li><a href="#availableMeasures" id="toc-availableMeasures" class="nav-link" data-scroll-target="#availableMeasures"><span class="header-section-number">4.4</span> Available Measures</a></li>
+  </ul></li>
+  <li><a href="#versionControl" id="toc-versionControl" class="nav-link" data-scroll-target="#versionControl"><span class="header-section-number">5</span> Version Control</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/abcdData.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/abcdData.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">ABCD Data</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
 
-<h1 class="title toc-ignore">ABCD Data</h1>
+<div class="quarto-title-meta">
 
-</div>
+    
+  
+    
+  </div>
+  
 
 
-<div id="abcddata" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> ABCD Data</h1>
-<p>The <a href="https://abcdstudy.org">Adolescent Brain Cognitive
-Development (ABCD) Study</a> is the largest long-term study of brain
-development and child health in the United States. This study explores
-how childhood experiences (such as sports, videogames, social media,
-unhealthy sleep patterns, and smoking) interact with each other and with
-a child’s changing biology to affect brain development and social,
-behavioral, academic, health, and other outcomes. The ABCD study follows
-a cohort of over 10,000 children from pre-adolescence into
-adulthood.</p>
-</div>
-<div id="dataSecurityProtocols" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Data Security
-Protocols</h1>
-<p>All members using data from the ABCD study must abide by the
-following security protocols to ensure data security and participant
-confidentiality.</p>
-<ol style="list-style-type: decimal">
-<li>Only individuals approved by Dr. Petersen and who are added to the
-Data Use Certificate are allowed access to this data.</li>
-<li>Members accessing this data <u><b>MUST</u></b> use the University of
-Iowa Research Remote Desktop Service (RRDS) when viewing or working with
-any data from the ABCD Study. Further, this <u>must be done on a
-University of Iowa computer</u>, unless given direct permission by
-Dr. Petersen.</li>
-<li>Data <b><u>CANNOT</b></u> be moved from the LSS drive where it is
-currently located.
+</header>
+
+
+<section id="abcddata" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> ABCD Data</h1>
+<p>The <a href="https://abcdstudy.org">Adolescent Brain Cognitive Development (ABCD) Study</a> is the largest long-term study of brain development and child health in the United States. This study explores how childhood experiences (such as sports, videogames, social media, unhealthy sleep patterns, and smoking) interact with each other and with a child’s changing biology to affect brain development and social, behavioral, academic, health, and other outcomes. The ABCD study follows a cohort of over 10,000 children from pre-adolescence into adulthood.</p>
+</section>
+<section id="dataSecurityProtocols" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data Security Protocols</h1>
+<p>All members using data from the ABCD study must abide by the following security protocols to ensure data security and participant confidentiality.</p>
+<ol type="1">
+<li>Only individuals approved by Dr.&nbsp;Petersen and who are added to the Data Use Certificate are allowed access to this data.</li>
+<li>Members accessing this data <u><b>MUST</b></u> use the University of Iowa Research Remote Desktop Service (RRDS) when viewing or working with any data from the ABCD Study. Further, this <u>must be done on a University of Iowa computer</u>, unless given direct permission by Dr.&nbsp;Petersen.</li>
+<li>Data <b><u>CANNOT</u></b> be moved from the LSS drive where it is currently located.
 <ul>
-<li>i.e., do not move or save any data to a personal device, a
-university device, or to a RRDS profile.</li>
-<li>This includes any data manipulation or analysis! (e.g., .csv files,
-Excel files, R scripts, etc.).</li>
+<li>i.e., do not move or save any data to a personal device, a university device, or to a RRDS profile.</li>
+<li>This includes any data manipulation or analysis! (e.g., .csv files, Excel files, R scripts, etc.).</li>
 </ul></li>
-<li>If a member is connected to the RRDS, they <b><u>MUST</b></u> lock
-the device whenever they are not seated at the computer.
+<li>If a member is connected to the RRDS, they <b><u>MUST</u></b> lock the device whenever they are not seated at the computer.
 <ul>
-<li>Even if you’re getting up for just a minute, the computer must be
-locked if it has access to ABCD data. This ensures that only those with
-permission from the University and ABCD study are able to access data.
+<li>Even if you’re getting up for just a minute, the computer must be locked if it has access to ABCD data. This ensures that only those with permission from the University and ABCD study are able to access data.
 <ul>
-<li>To do this, press “Ctrl + Alt + Delete” and select “Lock” from the
-given menu.</li>
+<li>To do this, press “Ctrl + Alt + Delete” and select “Lock” from the given menu.</li>
 </ul></li>
 </ul></li>
-<li>At the end of each work session, make sure that all work has been
-saved to the appropriate LSS drive and log out of the RRDS environment
-completely.</li>
-<li>If these protocols are violated for any reason, whether accidentally
-or intentionally, <u><b> reach out to Dr. Petersen immediately</b></u>.
+<li>At the end of each work session, make sure that all work has been saved to the appropriate LSS drive and log out of the RRDS environment completely.</li>
+<li>If these protocols are violated for any reason, whether accidentally or intentionally, <u><b> reach out to Dr.&nbsp;Petersen immediately</b></u>.
 <ul>
-<li>Violation of these security protocols may result in the individual
-losing data privileges.</li>
+<li>Violation of these security protocols may result in the individual losing data privileges.</li>
 </ul></li>
 </ol>
-</div>
-<div id="accessingABCDdata" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Accessing ABCD
-Data</h1>
-<div id="dataUseCertificate" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Step 1: Data Use
-Certificate</h2>
-<p>Work with Dr. Petersen to get added to the Data Use Certificate.</p>
-</div>
-<div id="labProtocols" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Step 2: Read (and
-Follow) the Lab’s Protocols for Handling ABCD Data</h2>
-<ol style="list-style-type: decimal">
-<li>Read and follow the lab’s <a href="#dataSecurityProtocols">Data
-Security Protocols</a> outlined above for handling ABCD data.</li>
-<li>Read and follow the lab’s Standard Operating Procedures (SOP) for
-handling ABCD data. The SOP is located at the following location of the
-lab’s LSS share:
-<code>\Lab\Studies\ABCD Data\Security Requirements for Accessing Data\</code>.</li>
+</section>
+<section id="accessingABCDdata" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Accessing ABCD Data</h1>
+<section id="dataUseCertificate" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="dataUseCertificate"><span class="header-section-number">3.1</span> Step 1: Data Use Certificate</h2>
+<p>Work with Dr.&nbsp;Petersen to get added to the Data Use Certificate.</p>
+</section>
+<section id="labProtocols" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="labProtocols"><span class="header-section-number">3.2</span> Step 2: Read (and Follow) the Lab’s Protocols for Handling ABCD Data</h2>
+<ol type="1">
+<li>Read and follow the lab’s <a href="#dataSecurityProtocols">Data Security Protocols</a> outlined above for handling ABCD data.</li>
+<li>Read and follow the lab’s Standard Operating Procedures (SOP) for handling ABCD data. The SOP is located at the following location of the lab’s LSS share: <code>\Lab\Studies\ABCD Data\Security Requirements for Accessing Data\</code>.</li>
 </ol>
-</div>
-<div id="connectRRDS" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Step 3: Connect to
-the Research Remote Desktop Service (RRDS)</h2>
-<p>To access ABCD data, you need to access the Research Remote Desktop
-Service (RRDS).</p>
-<ol style="list-style-type: decimal">
-<li>Create an RRDS Account: <a
-href="https://its.uiowa.edu/services/research-remote-desktop-service"
-class="uri">https://its.uiowa.edu/services/research-remote-desktop-service</a></li>
-<li>Connect to the RRDS: <a
-href="https://its.uiowa.edu/services/research-remote-desktop-service/connecting-research-remote-desktop-services-rrds"
-class="uri">https://its.uiowa.edu/services/research-remote-desktop-service/connecting-research-remote-desktop-services-rrds</a>
+</section>
+<section id="connectRRDS" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="connectRRDS"><span class="header-section-number">3.3</span> Step 3: Connect to the Research Remote Desktop Service (RRDS)</h2>
+<p>To access ABCD data, you need to access the Research Remote Desktop Service (RRDS).</p>
+<ol type="1">
+<li>Create an RRDS Account: <a href="https://its.uiowa.edu/services/research-remote-desktop-service" class="uri">https://its.uiowa.edu/services/research-remote-desktop-service</a>
 <ul>
-<li>Instructions for Windows: <a
-href="https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc"
-class="uri">https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc</a></li>
-<li>Instructions for Mac: <a
-href="https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac"
-class="uri">https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac</a></li>
+<li>Instructions for Windows: <a href="https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc" class="uri">https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc</a></li>
+<li>Instructions for Mac: <a href="https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac" class="uri">https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac</a></li>
 </ul></li>
 <li>Log in to the RRDS using your HawkID and password</li>
 </ol>
-<p>If you run into issues connecting to the RRDS, please reach out to
-PBS IT Support (<a href="mailto:PBS-help@uiowa.edu"
-class="email">PBS-help@uiowa.edu</a>) or Research Computing Support (<a
-href="mailto:research-computing@uiowa.edu"
-class="email">research-computing@uiowa.edu</a>)</p>
-</div>
-<div id="connectLSS" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Step 4: Connect to
-the ABCD LSS Server</h2>
-<p>Please contact Dr. Petersen to receive the network path for the ABCD
-Large Scale Storage (LSS) server.</p>
-<p><u>Mapping the Server on Windows:</u> Windows Explorer -&gt; This PC
--&gt; Computer Tab -&gt; Map Network Drive button:
-<code>\\server path</code></p>
-<p><u>Mapping the Server on MacOS:</u> Finder -&gt; Go menu -&gt;
-Connect to Server: <code>smb://iowa\hawkid:*@server path</code></p>
-</div>
-<div id="accessManagement" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Access
-Management</h2>
+<p>If you run into issues connecting to the RRDS, please reach out to PBS IT Support (PBS-help@uiowa.edu) or Research Computing Support (research-computing@uiowa.edu)</p>
+</section>
+<section id="connectLSS" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="connectLSS"><span class="header-section-number">3.4</span> Step 4: Connect to the ABCD LSS Server</h2>
+<p>Please contact Dr.&nbsp;Petersen to receive the network path for the ABCD Large Scale Storage (LSS) server.</p>
+<p><u>Mapping the Server on Windows:</u> Windows Explorer -&gt; This PC -&gt; Computer Tab -&gt; Map Network Drive button: <code>\\server path</code></p>
+<p><u>Mapping the Server on MacOS:</u> Finder -&gt; Go menu -&gt; Connect to Server: <code>smb://iowa\hawkid:*@server path</code></p>
+</section>
+<section id="accessManagement" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="accessManagement"><span class="header-section-number">3.5</span> Access Management</h2>
 <p>[XXX]</p>
-<p>Dr. Petersen can grant or revoke access to the share, or give other
-people roles if they are to manage the share using the Access Management
-tool: <a href="https://iam.uiowa.edu/access"
-class="uri">https://iam.uiowa.edu/access</a></p>
+<p>Dr.&nbsp;Petersen can grant or revoke access to the share, or give other people roles if they are to manage the share using the Access Management tool: <a href="https://iam.uiowa.edu/access" class="uri">https://iam.uiowa.edu/access</a></p>
 <ul>
-<li>Instructions for granting or revoking access: <a
-href="https://its.uiowa.edu/support/article/118771"
-class="uri">https://its.uiowa.edu/support/article/118771</a></li>
-<li>Delegate management of share access: <a
-href="https://its.uiowa.edu/support/article/119191"
-class="uri">https://its.uiowa.edu/support/article/119191</a></li>
+<li>Instructions for granting or revoking access: <a href="https://its.uiowa.edu/support/article/118771" class="uri">https://its.uiowa.edu/support/article/118771</a></li>
+<li>Delegate management of share access: <a href="https://its.uiowa.edu/support/article/119191" class="uri">https://its.uiowa.edu/support/article/119191</a></li>
 </ul>
 <p>A few notes:</p>
 <ul>
-<li>When granting someone Read/Write or Read Only permissions and search
-for their name or ID, you may see both a HealthcareID and HawkID listed,
-<mark>select their HawkID</mark>.</li>
-<li>Changes take about an hour to propagate through Argon and will not
-be reflected in existing sessions.</li>
-<li>Changes are immediately reflected for SMB connections, however,
-users may have to remap/remount the volume or log out then back in for
-Windows/MacOS to be happy.</li>
+<li>When granting someone Read/Write or Read Only permissions and search for their name or ID, you may see both a HealthcareID and HawkID listed, <mark>select their HawkID</mark>.</li>
+<li>Changes take about an hour to propagate through Argon and will not be reflected in existing sessions.</li>
+<li>Changes are immediately reflected for SMB connections, however, users may have to remap/remount the volume or log out then back in for Windows/MacOS to be happy.</li>
 </ul>
-</div>
-</div>
-<div id="lssStructure" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> LSS Structure</h1>
-<p>The LSS should not be accessed on your local computer. The LSS should
-<strong>only</strong> be accessed through the RRDS. The main folder
-within the LSS is: <code>ABCD Study</code></p>
-<div id="analysesProjects" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Analyses
-Projects</h2>
-<p><code>Analyses Projects &gt; PetersenLab</code> contains user folders
-for anyone working on projects with the ABCD data.</p>
-<ol style="list-style-type: decimal">
+</section>
+</section>
+<section id="lssStructure" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> LSS Structure</h1>
+<p>The LSS should not be accessed on your local computer. The LSS should <strong>only</strong> be accessed through the RRDS. The main folder within the LSS is: <code>ABCD Study</code></p>
+<section id="analysesProjects" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="analysesProjects"><span class="header-section-number">4.1</span> Analyses Projects</h2>
+<p><code>Analyses Projects &gt; PetersenLab</code> contains user folders for anyone working on projects with the ABCD data.</p>
+<ol type="1">
 <li>Create a folder with your HawkID as the folder name</li>
 <li>Create a subfolder for your specific project</li>
-<li>Follow <a
-href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab
-template</a> for structuring your project folder</li>
-<li>Follow the version control instructions <a
-href="#versionControl">below</a></li>
+<li>Follow <a href="https://research-git.uiowa.edu/PetersenLab/Template">Petersen Lab template</a> for structuring your project folder</li>
+<li>Follow the version control instructions <a href="#versionControl">below</a></li>
 </ol>
-</div>
-<div id="data" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Data</h2>
-<p>The folder <code>Data &gt; Version 6.0</code> contains tabulated ABCD
-data.</p>
-<p>Imaging data, wearables data, and concatenated data are available for
-download <a
-href="https://nbdc-datashare.lassoinformatics.com">here</a></p>
+</section>
+<section id="data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="data"><span class="header-section-number">4.2</span> Data</h2>
+<p>The folder <code>Data &gt; Version 6.0</code> contains tabulated ABCD data.</p>
+<p>Imaging data, wearables data, and concatenated data are available for download <a href="https://nbdc-datashare.lassoinformatics.com">here</a></p>
 <ul>
 <li>[XXX] need instructions for accessing this</li>
-<li>NOTE: The file sizes for these data exceed the capacity of our
-LSS</li>
+<li>NOTE: The file sizes for these data exceed the capacity of our LSS</li>
 </ul>
-<p><code>01-Raw</code> contains the raw ABCD data files that should not
-be altered.</p>
-<p><code>02-Processed</code> contains scored measures and other cleaned
-data for universal use.</p>
-</div>
-<div id="fileTypes" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> File types</h2>
+<p><code>01-Raw</code> contains the raw ABCD data files that should not be altered.</p>
+<p><code>02-Processed</code> contains scored measures and other cleaned data for universal use.</p>
+</section>
+<section id="fileTypes" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="fileTypes"><span class="header-section-number">4.3</span> File types</h2>
 <ul>
 <li>JSON files: data dictionary/codebook files</li>
-<li>Parquet files: columnar structured data (efficient for storage, can
-be used with the <code>arrow</code> package in R)</li>
+<li>Parquet files: columnar structured data (efficient for storage, can be used with the <code>arrow</code> package in R)</li>
 <li>TSV files: tab-separated value data files</li>
 </ul>
-</div>
-<div id="availableMeasures" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Available
-Measures</h2>
+</section>
+<section id="availableMeasures" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="availableMeasures"><span class="header-section-number">4.4</span> Available Measures</h2>
 <p>[XXX] Add measures currently downloaded</p>
-</div>
-</div>
-<div id="versionControl" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Version Control</h1>
-<ol style="list-style-type: decimal">
-<li>Install GitHub Desktop onto the Research Remote Desktop Service
-(RRDS) computer: <a href="https://desktop.github.com"
-class="uri">https://desktop.github.com</a></li>
-<li>Create a GitHub repository for each data analysis project using the
-ABCD data</li>
+</section>
+</section>
+<section id="versionControl" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Version Control</h1>
+<ol type="1">
+<li>Install GitHub Desktop onto the Research Remote Desktop Service (RRDS) computer: <a href="https://desktop.github.com" class="uri">https://desktop.github.com</a></li>
+<li>Create a GitHub repository for each data analysis project using the ABCD data</li>
 <li>Do NOT put data files into the GitHub repository!
 <ul>
-<li><p>To be safe, add the following file extensions to the
-<code>.gitignore</code> file in the repository (so even if data files
-are accidentally added to your GitHub repository folder, they will not
-be committed):</p>
+<li><p>To be safe, add the following file extensions to the <code>.gitignore</code> file in the repository (so even if data files are accidentally added to your GitHub repository folder, they will not be committed):</p>
 <pre><code>*.csv
 *.tsv
 *.parquet
@@ -696,15 +707,13 @@ be committed):</p>
 *.RData</code></pre></li>
 </ul></li>
 </ol>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQUJDRCBEYXRhIgotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCgKICBlY2hvID0gVFJVRSwKICBlcnJvciA9IFRSVUUsCiAgY29tbWVudCA9ICIiKQpgYGAKCiMgQUJDRCBEYXRhIHsjYWJjZGRhdGF9CgpUaGUgW0Fkb2xlc2NlbnQgQnJhaW4gQ29nbml0aXZlIERldmVsb3BtZW50IChBQkNEKSBTdHVkeV0oaHR0cHM6Ly9hYmNkc3R1ZHkub3JnKSBpcyB0aGUgbGFyZ2VzdCBsb25nLXRlcm0gc3R1ZHkgb2YgYnJhaW4gZGV2ZWxvcG1lbnQgYW5kIGNoaWxkIGhlYWx0aCBpbiB0aGUgVW5pdGVkIFN0YXRlcy4KVGhpcyBzdHVkeSBleHBsb3JlcyBob3cgY2hpbGRob29kIGV4cGVyaWVuY2VzIChzdWNoIGFzIHNwb3J0cywgdmlkZW9nYW1lcywgc29jaWFsIG1lZGlhLCB1bmhlYWx0aHkgc2xlZXAgcGF0dGVybnMsIGFuZCBzbW9raW5nKSBpbnRlcmFjdCB3aXRoIGVhY2ggb3RoZXIgYW5kIHdpdGggYSBjaGlsZCdzIGNoYW5naW5nIGJpb2xvZ3kgdG8gYWZmZWN0IGJyYWluIGRldmVsb3BtZW50IGFuZCBzb2NpYWwsIGJlaGF2aW9yYWwsIGFjYWRlbWljLCBoZWFsdGgsIGFuZCBvdGhlciBvdXRjb21lcy4KVGhlIEFCQ0Qgc3R1ZHkgZm9sbG93cyBhIGNvaG9ydCBvZiBvdmVyIDEwLDAwMCBjaGlsZHJlbiBmcm9tIHByZS1hZG9sZXNjZW5jZSBpbnRvIGFkdWx0aG9vZC4KCiMgRGF0YSBTZWN1cml0eSBQcm90b2NvbHMgeyNkYXRhU2VjdXJpdHlQcm90b2NvbHN9CgpBbGwgbWVtYmVycyB1c2luZyBkYXRhIGZyb20gdGhlIEFCQ0Qgc3R1ZHkgbXVzdCBhYmlkZSBieSB0aGUgZm9sbG93aW5nIHNlY3VyaXR5IHByb3RvY29scyB0byBlbnN1cmUgZGF0YSBzZWN1cml0eSBhbmQgcGFydGljaXBhbnQgY29uZmlkZW50aWFsaXR5LgoKICAxLiBPbmx5IGluZGl2aWR1YWxzIGFwcHJvdmVkIGJ5IERyLiBQZXRlcnNlbiBhbmQgd2hvIGFyZSBhZGRlZCB0byB0aGUgRGF0YSBVc2UgQ2VydGlmaWNhdGUgYXJlIGFsbG93ZWQgYWNjZXNzIHRvIHRoaXMgZGF0YS4KICAxLiBNZW1iZXJzIGFjY2Vzc2luZyB0aGlzIGRhdGEgPHU+PGI+TVVTVDwvdT48L2I+IHVzZSB0aGUgVW5pdmVyc2l0eSBvZiBJb3dhIFJlc2VhcmNoIFJlbW90ZSBEZXNrdG9wIFNlcnZpY2UgKFJSRFMpIHdoZW4gdmlld2luZyBvciB3b3JraW5nIHdpdGggYW55IGRhdGEgZnJvbSB0aGUgQUJDRCBTdHVkeS4KICBGdXJ0aGVyLCB0aGlzIDx1Pm11c3QgYmUgZG9uZSBvbiBhIFVuaXZlcnNpdHkgb2YgSW93YSBjb21wdXRlcjwvdT4sIHVubGVzcyBnaXZlbiBkaXJlY3QgcGVybWlzc2lvbiBieSBEci4gUGV0ZXJzZW4uCiAgMS4gRGF0YSA8Yj48dT5DQU5OT1Q8L2I+PC91PiBiZSBtb3ZlZCBmcm9tIHRoZSBMU1MgZHJpdmUgd2hlcmUgaXQgaXMgY3VycmVudGx5IGxvY2F0ZWQuIAogICAgIC0gaS5lLiwgZG8gbm90IG1vdmUgb3Igc2F2ZSBhbnkgZGF0YSB0byBhIHBlcnNvbmFsIGRldmljZSwgYSB1bml2ZXJzaXR5IGRldmljZSwgb3IgdG8gYSBSUkRTIHByb2ZpbGUuCiAgICAgLSBUaGlzIGluY2x1ZGVzIGFueSBkYXRhIG1hbmlwdWxhdGlvbiBvciBhbmFseXNpcyEgKGUuZy4sIC5jc3YgZmlsZXMsIEV4Y2VsIGZpbGVzLCBSIHNjcmlwdHMsIGV0Yy4pLgogIDEuIElmIGEgbWVtYmVyIGlzIGNvbm5lY3RlZCB0byB0aGUgUlJEUywgdGhleSA8Yj48dT5NVVNUPC9iPjwvdT4gbG9jayB0aGUgZGV2aWNlIHdoZW5ldmVyIHRoZXkgYXJlIG5vdCBzZWF0ZWQgYXQgdGhlIGNvbXB1dGVyLgogICAgICAtIEV2ZW4gaWYgeW91J3JlIGdldHRpbmcgdXAgZm9yIGp1c3QgYSBtaW51dGUsIHRoZSBjb21wdXRlciBtdXN0IGJlIGxvY2tlZCBpZiBpdCBoYXMgYWNjZXNzIHRvIEFCQ0QgZGF0YS4KICAgICAgVGhpcyBlbnN1cmVzIHRoYXQgb25seSB0aG9zZSB3aXRoIHBlcm1pc3Npb24gZnJvbSB0aGUgVW5pdmVyc2l0eSBhbmQgQUJDRCBzdHVkeSBhcmUgYWJsZSB0byBhY2Nlc3MgZGF0YS4KICAgICAgICAtIFRvIGRvIHRoaXMsIHByZXNzICJDdHJsICsgQWx0ICsgRGVsZXRlIiBhbmQgc2VsZWN0ICJMb2NrIiBmcm9tIHRoZSBnaXZlbiBtZW51LgogIDEuIEF0IHRoZSBlbmQgb2YgZWFjaCB3b3JrIHNlc3Npb24sIG1ha2Ugc3VyZSB0aGF0IGFsbCB3b3JrIGhhcyBiZWVuIHNhdmVkIHRvIHRoZSBhcHByb3ByaWF0ZSBMU1MgZHJpdmUgYW5kIGxvZyBvdXQgb2YgdGhlIFJSRFMgZW52aXJvbm1lbnQgY29tcGxldGVseS4KICAxLiBJZiB0aGVzZSBwcm90b2NvbHMgYXJlIHZpb2xhdGVkIGZvciBhbnkgcmVhc29uLCB3aGV0aGVyIGFjY2lkZW50YWxseSBvciBpbnRlbnRpb25hbGx5LCA8dT48Yj4gcmVhY2ggb3V0IHRvIERyLiBQZXRlcnNlbiBpbW1lZGlhdGVseTwvYj48L3U+LgogICAgIC0gVmlvbGF0aW9uIG9mIHRoZXNlIHNlY3VyaXR5IHByb3RvY29scyBtYXkgcmVzdWx0IGluIHRoZSBpbmRpdmlkdWFsIGxvc2luZyBkYXRhIHByaXZpbGVnZXMuCgojIEFjY2Vzc2luZyBBQkNEIERhdGEgeyNhY2Nlc3NpbmdBQkNEZGF0YX0KCiMjIFN0ZXAgMTogRGF0YSBVc2UgQ2VydGlmaWNhdGUgeyNkYXRhVXNlQ2VydGlmaWNhdGV9CgpXb3JrIHdpdGggRHIuIFBldGVyc2VuIHRvIGdldCBhZGRlZCB0byB0aGUgRGF0YSBVc2UgQ2VydGlmaWNhdGUuCgojIyBTdGVwIDI6IFJlYWQgKGFuZCBGb2xsb3cpIHRoZSBMYWIncyBQcm90b2NvbHMgZm9yIEhhbmRsaW5nIEFCQ0QgRGF0YSB7I2xhYlByb3RvY29sc30KCjEuIFJlYWQgYW5kIGZvbGxvdyB0aGUgbGFiJ3MgW0RhdGEgU2VjdXJpdHkgUHJvdG9jb2xzXSgjZGF0YVNlY3VyaXR5UHJvdG9jb2xzKSBvdXRsaW5lZCBhYm92ZSBmb3IgaGFuZGxpbmcgQUJDRCBkYXRhLgoxLiBSZWFkIGFuZCBmb2xsb3cgdGhlIGxhYidzIFN0YW5kYXJkIE9wZXJhdGluZyBQcm9jZWR1cmVzIChTT1ApIGZvciBoYW5kbGluZyBBQkNEIGRhdGEuClRoZSBTT1AgaXMgbG9jYXRlZCBhdCB0aGUgZm9sbG93aW5nIGxvY2F0aW9uIG9mIHRoZSBsYWIncyBMU1Mgc2hhcmU6IGBcTGFiXFN0dWRpZXNcQUJDRCBEYXRhXFNlY3VyaXR5IFJlcXVpcmVtZW50cyBmb3IgQWNjZXNzaW5nIERhdGFcYC4KCiMjIFN0ZXAgMzogQ29ubmVjdCB0byB0aGUgUmVzZWFyY2ggUmVtb3RlIERlc2t0b3AgU2VydmljZSAoUlJEUykgeyNjb25uZWN0UlJEU30KClRvIGFjY2VzcyBBQkNEIGRhdGEsIHlvdSBuZWVkIHRvIGFjY2VzcyB0aGUgUmVzZWFyY2ggUmVtb3RlIERlc2t0b3AgU2VydmljZSAoUlJEUykuCgoxLiBDcmVhdGUgYW4gUlJEUyBBY2NvdW50OiBodHRwczovL2l0cy51aW93YS5lZHUvc2VydmljZXMvcmVzZWFyY2gtcmVtb3RlLWRlc2t0b3Atc2VydmljZSAKMS4gQ29ubmVjdCB0byB0aGUgUlJEUzogaHR0cHM6Ly9pdHMudWlvd2EuZWR1L3NlcnZpY2VzL3Jlc2VhcmNoLXJlbW90ZS1kZXNrdG9wLXNlcnZpY2UvY29ubmVjdGluZy1yZXNlYXJjaC1yZW1vdGUtZGVza3RvcC1zZXJ2aWNlcy1ycmRzCiAgICAtIEluc3RydWN0aW9ucyBmb3IgV2luZG93czogaHR0cHM6Ly9pdHMudWlvd2EuZWR1L3NlcnZpY2VzL3Jlc2VhcmNoLXJlbW90ZS1kZXNrdG9wLXNlcnZpY2UvY29ubmVjdGluZy1ycmRzLXVzaW5nLXdpbmRvd3MtcGMKICAgIC0gSW5zdHJ1Y3Rpb25zIGZvciBNYWM6IGh0dHBzOi8vaXRzLnVpb3dhLmVkdS9zZXJ2aWNlcy9yZXNlYXJjaC1yZW1vdGUtZGVza3RvcC1zZXJ2aWNlL2Nvbm5lY3RpbmctcnJkcy11c2luZy1tYWMKMS4gTG9nIGluIHRvIHRoZSBSUkRTIHVzaW5nIHlvdXIgSGF3a0lEIGFuZCBwYXNzd29yZAoKSWYgeW91IHJ1biBpbnRvIGlzc3VlcyBjb25uZWN0aW5nIHRvIHRoZSBSUkRTLCBwbGVhc2UgcmVhY2ggb3V0IHRvIFBCUyBJVCBTdXBwb3J0IChQQlMtaGVscEB1aW93YS5lZHUpIG9yIFJlc2VhcmNoIENvbXB1dGluZyBTdXBwb3J0IChyZXNlYXJjaC1jb21wdXRpbmdAdWlvd2EuZWR1KSAKCiMjIFN0ZXAgNDogQ29ubmVjdCB0byB0aGUgQUJDRCBMU1MgU2VydmVyIHsjY29ubmVjdExTU30KClBsZWFzZSBjb250YWN0IERyLiBQZXRlcnNlbiB0byByZWNlaXZlIHRoZSBuZXR3b3JrIHBhdGggZm9yIHRoZSBBQkNEIExhcmdlIFNjYWxlIFN0b3JhZ2UgKExTUykgc2VydmVyLgoKPHU+TWFwcGluZyB0aGUgU2VydmVyIG9uIFdpbmRvd3M6PC91PiBXaW5kb3dzIEV4cGxvcmVyIC0+IFRoaXMgUEMgLT4gQ29tcHV0ZXIgVGFiIC0+IE1hcCBOZXR3b3JrIERyaXZlIGJ1dHRvbjogYFxcc2VydmVyIHBhdGhgCgo8dT5NYXBwaW5nIHRoZSBTZXJ2ZXIgb24gTWFjT1M6PC91PiBGaW5kZXIgLT4gR28gbWVudSAtPiBDb25uZWN0IHRvIFNlcnZlcjogYHNtYjovL2lvd2FcaGF3a2lkOipAc2VydmVyIHBhdGhgIAoKIyMgQWNjZXNzIE1hbmFnZW1lbnQgeyNhY2Nlc3NNYW5hZ2VtZW50fQoKW1hYWF0KCkRyLiBQZXRlcnNlbiBjYW4gZ3JhbnQgb3IgcmV2b2tlIGFjY2VzcyB0byB0aGUgc2hhcmUsIG9yIGdpdmUgb3RoZXIgcGVvcGxlIHJvbGVzIGlmIHRoZXkgYXJlIHRvIG1hbmFnZSB0aGUgc2hhcmUgdXNpbmcgdGhlIEFjY2VzcyBNYW5hZ2VtZW50IHRvb2w6IGh0dHBzOi8vaWFtLnVpb3dhLmVkdS9hY2Nlc3MKCi0gSW5zdHJ1Y3Rpb25zIGZvciBncmFudGluZyBvciByZXZva2luZyBhY2Nlc3M6IGh0dHBzOi8vaXRzLnVpb3dhLmVkdS9zdXBwb3J0L2FydGljbGUvMTE4NzcxCi0gRGVsZWdhdGUgbWFuYWdlbWVudCBvZiBzaGFyZSBhY2Nlc3M6IGh0dHBzOi8vaXRzLnVpb3dhLmVkdS9zdXBwb3J0L2FydGljbGUvMTE5MTkxCgpBIGZldyBub3RlczoKCi0gV2hlbiBncmFudGluZyBzb21lb25lIFJlYWQvV3JpdGUgb3IgUmVhZCBPbmx5IHBlcm1pc3Npb25zIGFuZCBzZWFyY2ggZm9yIHRoZWlyIG5hbWUgb3IgSUQsIHlvdSBtYXkgc2VlIGJvdGggYSBIZWFsdGhjYXJlSUQgYW5kIEhhd2tJRCBsaXN0ZWQsIDxtYXJrPnNlbGVjdCB0aGVpciBIYXdrSUQ8L21hcms+LgotIENoYW5nZXMgdGFrZSBhYm91dCBhbiBob3VyIHRvIHByb3BhZ2F0ZSB0aHJvdWdoIEFyZ29uIGFuZCB3aWxsIG5vdCBiZSByZWZsZWN0ZWQgaW4gZXhpc3Rpbmcgc2Vzc2lvbnMuCi0gQ2hhbmdlcyBhcmUgaW1tZWRpYXRlbHkgcmVmbGVjdGVkIGZvciBTTUIgY29ubmVjdGlvbnMsIGhvd2V2ZXIsIHVzZXJzIG1heSBoYXZlIHRvIHJlbWFwL3JlbW91bnQgdGhlIHZvbHVtZSBvciBsb2cgb3V0IHRoZW4gYmFjayBpbiBmb3IgV2luZG93cy9NYWNPUyB0byBiZSBoYXBweS4KCiMgTFNTIFN0cnVjdHVyZSB7I2xzc1N0cnVjdHVyZX0KClRoZSBMU1Mgc2hvdWxkIG5vdCBiZSBhY2Nlc3NlZCBvbiB5b3VyIGxvY2FsIGNvbXB1dGVyLiAKVGhlIExTUyBzaG91bGQgKipvbmx5KiogYmUgYWNjZXNzZWQgdGhyb3VnaCB0aGUgUlJEUy4KVGhlIG1haW4gZm9sZGVyIHdpdGhpbiB0aGUgTFNTIGlzOiBgQUJDRCBTdHVkeWAKCiMjIEFuYWx5c2VzIFByb2plY3RzIHsjYW5hbHlzZXNQcm9qZWN0c30KCmBBbmFseXNlcyBQcm9qZWN0cyA+IFBldGVyc2VuTGFiYCBjb250YWlucyB1c2VyIGZvbGRlcnMgZm9yIGFueW9uZSB3b3JraW5nIG9uIHByb2plY3RzIHdpdGggdGhlIEFCQ0QgZGF0YS4KCiAgMS4gQ3JlYXRlIGEgZm9sZGVyIHdpdGggeW91ciBIYXdrSUQgYXMgdGhlIGZvbGRlciBuYW1lCiAgMS4gQ3JlYXRlIGEgc3ViZm9sZGVyIGZvciB5b3VyIHNwZWNpZmljIHByb2plY3QKICAxLiBGb2xsb3cgW1BldGVyc2VuIExhYiB0ZW1wbGF0ZV0oaHR0cHM6Ly9yZXNlYXJjaC1naXQudWlvd2EuZWR1L1BldGVyc2VuTGFiL1RlbXBsYXRlKSBmb3Igc3RydWN0dXJpbmcgeW91ciBwcm9qZWN0IGZvbGRlcgogIDEuIEZvbGxvdyB0aGUgdmVyc2lvbiBjb250cm9sIGluc3RydWN0aW9ucyBbYmVsb3ddKCN2ZXJzaW9uQ29udHJvbCkKCiMjIERhdGEgeyNkYXRhfQoKVGhlIGZvbGRlciBgRGF0YSA+IFZlcnNpb24gNi4wYCBjb250YWlucyB0YWJ1bGF0ZWQgQUJDRCBkYXRhLgoKSW1hZ2luZyBkYXRhLCB3ZWFyYWJsZXMgZGF0YSwgYW5kIGNvbmNhdGVuYXRlZCBkYXRhIGFyZSBhdmFpbGFibGUgZm9yIGRvd25sb2FkIFtoZXJlXShodHRwczovL25iZGMtZGF0YXNoYXJlLmxhc3NvaW5mb3JtYXRpY3MuY29tKQoKLSBbWFhYXSBuZWVkIGluc3RydWN0aW9ucyBmb3IgYWNjZXNzaW5nIHRoaXMKLSBOT1RFOiBUaGUgZmlsZSBzaXplcyBmb3IgdGhlc2UgZGF0YSBleGNlZWQgdGhlIGNhcGFjaXR5IG9mIG91ciBMU1MKCmAwMS1SYXdgIGNvbnRhaW5zIHRoZSByYXcgQUJDRCBkYXRhIGZpbGVzIHRoYXQgc2hvdWxkIG5vdCBiZSBhbHRlcmVkLgoKYDAyLVByb2Nlc3NlZGAgY29udGFpbnMgc2NvcmVkIG1lYXN1cmVzIGFuZCBvdGhlciBjbGVhbmVkIGRhdGEgZm9yIHVuaXZlcnNhbCB1c2UuCgojIyBGaWxlIHR5cGVzIHsjZmlsZVR5cGVzfQoKLSBKU09OIGZpbGVzOiBkYXRhIGRpY3Rpb25hcnkvY29kZWJvb2sgZmlsZXMKLSBQYXJxdWV0IGZpbGVzOiBjb2x1bW5hciBzdHJ1Y3R1cmVkIGRhdGEgKGVmZmljaWVudCBmb3Igc3RvcmFnZSwgY2FuIGJlIHVzZWQgd2l0aCB0aGUgYGFycm93YCBwYWNrYWdlIGluIFIpCi0gVFNWIGZpbGVzOiB0YWItc2VwYXJhdGVkIHZhbHVlIGRhdGEgZmlsZXMKCiMjIEF2YWlsYWJsZSBNZWFzdXJlcyB7I2F2YWlsYWJsZU1lYXN1cmVzfQoKW1hYWF0gQWRkIG1lYXN1cmVzIGN1cnJlbnRseSBkb3dubG9hZGVkCgojIFZlcnNpb24gQ29udHJvbCB7I3ZlcnNpb25Db250cm9sfQoKMS4gSW5zdGFsbCBHaXRIdWIgRGVza3RvcCBvbnRvIHRoZSBSZXNlYXJjaCBSZW1vdGUgRGVza3RvcCBTZXJ2aWNlIChSUkRTKSBjb21wdXRlcjogaHR0cHM6Ly9kZXNrdG9wLmdpdGh1Yi5jb20KMS4gQ3JlYXRlIGEgR2l0SHViIHJlcG9zaXRvcnkgZm9yIGVhY2ggZGF0YSBhbmFseXNpcyBwcm9qZWN0IHVzaW5nIHRoZSBBQkNEIGRhdGEKMS4gRG8gTk9UIHB1dCBkYXRhIGZpbGVzIGludG8gdGhlIEdpdEh1YiByZXBvc2l0b3J5IQogICAgLSBUbyBiZSBzYWZlLCBhZGQgdGhlIGZvbGxvd2luZyBmaWxlIGV4dGVuc2lvbnMgdG8gdGhlIGAuZ2l0aWdub3JlYCBmaWxlIGluIHRoZSByZXBvc2l0b3J5IChzbyBldmVuIGlmIGRhdGEgZmlsZXMgYXJlIGFjY2lkZW50YWxseSBhZGRlZCB0byB5b3VyIEdpdEh1YiByZXBvc2l0b3J5IGZvbGRlciwgdGhleSB3aWxsIG5vdCBiZSBjb21taXR0ZWQpOgogICAgICBgYGAKICAgICAgKi5jc3YKICAgICAgKi50c3YKICAgICAgKi5wYXJxdWV0CiAgICAgICouanNvbgogICAgICAqLnJkcwogICAgICAqLlJEYXRhCiAgICAgIGBgYAo=</div>
-<script type="text/javascript" src="includes/external-links.js"></script>
 
-<br>
-<hr>
-<br>
+<!-- -->
 
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <!-- Add lab logo -->
 <p style="text-align: center;">
     <a href="https://developmental-psychopathology.lab.uiowa.edu" target="_blank">
@@ -726,87 +735,592 @@ be committed):</p>
     <a href="https://www.facebook.com/DevPsyLab" target="_blank" class="fa fa-facebook fa-fw fa-3x"></a>
 	<a href="https://www.instagram.com/dev_psy_lab" target="_blank" class="fa fa-instagram fa-fw fa-3x"></a>
 </p>
-
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("abcdData.Rmd");
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    options.showAndHide = true;
-    options.smoothScroll = true;
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/DevPsyLab\.github\.io\/DataAnalysis\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "ABCD Data"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># ABCD Data {#abcddata}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">Adolescent Brain Cognitive Development (ABCD) Study</span><span class="co">](https://abcdstudy.org)</span> is the largest long-term study of brain development and child health in the United States.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>This study explores how childhood experiences (such as sports, videogames, social media, unhealthy sleep patterns, and smoking) interact with each other and with a child's changing biology to affect brain development and social, behavioral, academic, health, and other outcomes.</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>The ABCD study follows a cohort of over 10,000 children from pre-adolescence into adulthood.</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Security Protocols {#dataSecurityProtocols}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>All members using data from the ABCD study must abide by the following security protocols to ensure data security and participant confidentiality.</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Only individuals approved by Dr. Petersen and who are added to the Data Use Certificate are allowed access to this data.</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Members accessing this data <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>MUST<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;&lt;/</span><span class="kw">b</span><span class="dt">&gt;</span> use the University of Iowa Research Remote Desktop Service (RRDS) when viewing or working with any data from the ABCD Study.</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  Further, this <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>must be done on a University of Iowa computer<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span>, unless given direct permission by Dr. Petersen.</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Data <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>CANNOT<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span> be moved from the LSS drive where it is currently located. </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>i.e., do not move or save any data to a personal device, a university device, or to a RRDS profile.</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>This includes any data manipulation or analysis! (e.g., .csv files, Excel files, R scripts, etc.).</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>If a member is connected to the RRDS, they <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>MUST<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span> lock the device whenever they are not seated at the computer.</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Even if you're getting up for just a minute, the computer must be locked if it has access to ABCD data.</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      This ensures that only those with permission from the University and ABCD study are able to access data.</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>To do this, press "Ctrl + Alt + Delete" and select "Lock" from the given menu.</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>At the end of each work session, make sure that all work has been saved to the appropriate LSS drive and log out of the RRDS environment completely.</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>If these protocols are violated for any reason, whether accidentally or intentionally, <span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;&lt;</span><span class="kw">b</span><span class="dt">&gt;</span> reach out to Dr. Petersen immediately<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span>.</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>Violation of these security protocols may result in the individual losing data privileges.</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu"># Accessing ABCD Data {#accessingABCDdata}</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1: Data Use Certificate {#dataUseCertificate}</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>Work with Dr. Petersen to get added to the Data Use Certificate.</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 2: Read (and Follow) the Lab's Protocols for Handling ABCD Data {#labProtocols}</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Read and follow the lab's <span class="co">[</span><span class="ot">Data Security Protocols</span><span class="co">](#dataSecurityProtocols)</span> outlined above for handling ABCD data.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Read and follow the lab's Standard Operating Procedures (SOP) for handling ABCD data.</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>The SOP is located at the following location of the lab's LSS share: <span class="in">`\Lab\Studies\ABCD Data\Security Requirements for Accessing Data\`</span>.</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 3: Connect to the Research Remote Desktop Service (RRDS) {#connectRRDS}</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>To access ABCD data, you need to access the Research Remote Desktop Service (RRDS).</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create an RRDS Account: <span class="ot">&lt;https://its.uiowa.edu/services/research-remote-desktop-service&gt;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Instructions for Windows: <span class="ot">&lt;https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-windows-pc&gt;</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Instructions for Mac: <span class="ot">&lt;https://its.uiowa.edu/services/research-remote-desktop-service/connecting-rrds-using-mac&gt;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Log in to the RRDS using your HawkID and password</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>If you run into issues connecting to the RRDS, please reach out to PBS IT Support (PBS-help@uiowa.edu) or Research Computing Support (research-computing@uiowa.edu) </span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4: Connect to the ABCD LSS Server {#connectLSS}</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>Please contact Dr. Petersen to receive the network path for the ABCD Large Scale Storage (LSS) server.</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>Mapping the Server on Windows:<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span> Windows Explorer -&gt; This PC -&gt; Computer Tab -&gt; Map Network Drive button: <span class="in">`\\server path`</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">u</span><span class="dt">&gt;</span>Mapping the Server on MacOS:<span class="dt">&lt;/</span><span class="kw">u</span><span class="dt">&gt;</span> Finder -&gt; Go menu -&gt; Connect to Server: <span class="in">`smb://iowa\hawkid:*@server path`</span> </span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Access Management {#accessManagement}</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">XXX</span><span class="co">]</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>Dr. Petersen can grant or revoke access to the share, or give other people roles if they are to manage the share using the Access Management tool: <span class="ot">&lt;https://iam.uiowa.edu/access&gt;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Instructions for granting or revoking access: <span class="ot">&lt;https://its.uiowa.edu/support/article/118771&gt;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Delegate management of share access: <span class="ot">&lt;https://its.uiowa.edu/support/article/119191&gt;</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>A few notes:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When granting someone Read/Write or Read Only permissions and search for their name or ID, you may see both a HealthcareID and HawkID listed, <span class="dt">&lt;</span><span class="kw">mark</span><span class="dt">&gt;</span>select their HawkID<span class="dt">&lt;/</span><span class="kw">mark</span><span class="dt">&gt;</span>.</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Changes take about an hour to propagate through Argon and will not be reflected in existing sessions.</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Changes are immediately reflected for SMB connections, however, users may have to remap/remount the volume or log out then back in for Windows/MacOS to be happy.</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu"># LSS Structure {#lssStructure}</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>The LSS should not be accessed on your local computer. </span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>The LSS should **only** be accessed through the RRDS.</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>The main folder within the LSS is: <span class="in">`ABCD Study`</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analyses Projects {#analysesProjects}</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="in">`Analyses Projects &gt; PetersenLab`</span> contains user folders for anyone working on projects with the ABCD data.</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Create a folder with your HawkID as the folder name</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Create a subfolder for your specific project</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Follow <span class="co">[</span><span class="ot">Petersen Lab template</span><span class="co">](https://research-git.uiowa.edu/PetersenLab/Template)</span> for structuring your project folder</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>Follow the version control instructions <span class="co">[</span><span class="ot">below</span><span class="co">](#versionControl)</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data {#data}</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>The folder <span class="in">`Data &gt; Version 6.0`</span> contains tabulated ABCD data.</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>Imaging data, wearables data, and concatenated data are available for download <span class="co">[</span><span class="ot">here</span><span class="co">](https://nbdc-datashare.lassoinformatics.com)</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">XXX</span><span class="co">]</span> need instructions for accessing this</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>NOTE: The file sizes for these data exceed the capacity of our LSS</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="in">`01-Raw`</span> contains the raw ABCD data files that should not be altered.</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="in">`02-Processed`</span> contains scored measures and other cleaned data for universal use.</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## File types {#fileTypes}</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>JSON files: data dictionary/codebook files</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Parquet files: columnar structured data (efficient for storage, can be used with the <span class="in">`arrow`</span> package in R)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>TSV files: tab-separated value data files</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Available Measures {#availableMeasures}</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">XXX</span><span class="co">]</span> Add measures currently downloaded</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="fu"># Version Control {#versionControl}</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install GitHub Desktop onto the Research Remote Desktop Service (RRDS) computer: <span class="ot">&lt;https://desktop.github.com&gt;</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a GitHub repository for each data analysis project using the ABCD data</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Do NOT put data files into the GitHub repository!</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>To be safe, add the following file extensions to the <span class="in">`.gitignore`</span> file in the repository (so even if data files are accidentally added to your GitHub repository folder, they will not be committed):</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>      <span class="in">```</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="in">      *.csv</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="in">      *.tsv</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="in">      *.parquet</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a><span class="in">      *.json</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="in">      *.rds</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="in">      *.RData</span></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="in">      ```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
 
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
-</body>
-</html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/abcdData.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/abcdData.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
