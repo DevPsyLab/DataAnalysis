@@ -23,6 +23,8 @@ library("nlme")
 library("lmerTest")
 library("MASS")
 library("MCMCglmm")
+library("mgcv")
+library("parallelly")
 library("performance")
 library("ggplot2")
 ```
@@ -74,6 +76,12 @@ mydata$ageMonthsCentered <- mydata$age - min(mydata$age, na.rm = TRUE)
 
 mydata$ageYearsCentered <- mydata$ageMonthsCentered / 12
 mydata$ageYearsCenteredSquared <- mydata$ageYearsCentered ^ 2
+
+mydata$sex <- factor(
+  mydata$female,
+  levels = c(0, 1),
+  labels = c("male", "female")
+)
 ```
 
 # Estimator: ML or REML
@@ -532,6 +540,120 @@ summary(MCMCglmmModel)
 ```
 
 # Nonlinear Mixed Models {#nonlinear}
+
+## Generalized Additive Mixed Model {#gamm}
+
+### Fit Model
+
+```{r}
+#| label: parallel-cores-mixed-models
+#| include: false
+
+num_cores <- parallelly::availableCores()
+num_true_cores <- parallelly::availableCores(logical = FALSE)
+```
+
+```{r}
+#| eval: false
+
+num_cores <- parallelly::availableCores() - 1
+num_true_cores <- parallelly::availableCores(logical = FALSE) - 1
+```
+
+```{r}
+#| label: gam-mixed-models
+
+gamModel <- mgcv::gam(
+  math ~ s(ageYearsCentered, by = sex) + s(ageYearsCentered, id, bs = "fs"),
+  data = mydata,
+  nthreads = num_cores
+)
+
+summary(gamModel)
+```
+
+### Prototypical Growth Curve
+
+```{r}
+newData <- expand.grid(
+  female = c(0, 1),
+  ageYears = seq(from = min(mydata$ageYears, na.rm = TRUE), to = max(mydata$ageYears, na.rm = TRUE), length.out = 10000))
+
+newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
+newData$ageYearsCenteredSquared <- newData$ageYearsCentered ^ 2
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+# add a dummy id
+newData$id <- mydata$id[1]
+
+newData$predictedValue <- predict(
+  gamModel,
+  newdata = newData,
+  exclude = "s(ageYearsCentered,id)"
+)
+
+ggplot(
+  newData,
+  aes(
+    x = ageYearsCentered,
+    y = predictedValue,
+    color = sex
+  )
+) +
+  geom_line(linewidth = 1.5) +
+  labs(
+    x = "Age (Centered)",
+    y = "Math Score",
+    color = "Sex"
+  )
+```
+
+### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  gamModel,
+  newdata = mydata
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line()
+```
+
+##### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = factor(id))) +
+  xlab("Age (Years)") +
+  ylab("Math Score") +
+  geom_line() +
+  geom_line(
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2)
+```
+
+## Asymptotic Growth {#nonlinearAsymptotic}
 
 ```{r}
 nonlinearModel <- nlme(
