@@ -113,10 +113,11 @@ ggplot(
     y = math,
     group = id)) +
   geom_line() +
-  scale_x_continuous(
-    name = "Age (Years)") +
-  scale_y_continuous(
-    name = "Math Score")
+  labs(
+    x = "Age (years)",
+    y = "Math Score"
+  ) +
+  theme_classic()
 ```
 
 #### `lme4`
@@ -157,10 +158,17 @@ newData$predictedValue <- predict( # predict.merMod
 
 ggplot(
   data = newData,
-  mapping = aes(x = ageYears, y = predictedValue, color = sex)) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 ##### Individuals' Growth Curves
@@ -174,10 +182,20 @@ mydata$predictedValue <- predict(
 
 ggplot(
   data = mydata,
-  mapping = aes(x = ageYears, y = predictedValue, group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id,
+    color = sex)) +
+  geom_line(
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 ##### Individuals' Trajectories Overlaid with Prototypical Trajectory
@@ -185,14 +203,28 @@ ggplot(
 ```{r}
 ggplot(
   data = mydata,
-  mapping = aes(x = ageYears, y = predictedValue, group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line() +
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id)) +
+  geom_line(
+    color = "gray",
+    alpha = 0.5
+  ) +
   geom_line(
     data = newData,
-    mapping = aes(x = ageYears, y = predictedValue, group = sex, color = sex),
-    linewidth = 2)
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 ##### Extract Random Effects {#extractRandomEffects}
@@ -318,9 +350,13 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     color = sex)) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
@@ -337,10 +373,22 @@ ggplot(
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+    group = id,
+    color = sex)) +
+  geom_line(
+    stat = "smooth",
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5,
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
@@ -351,10 +399,16 @@ ggplot(
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line() +
+    group = id)) +
+  geom_line(
+    stat = "smooth",
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.4
+  ) +
   geom_line(
     data = newData,
     mapping = aes(
@@ -362,7 +416,13 @@ ggplot(
       y = predictedValue,
       group = sex,
       color = sex),
-    linewidth = 2)
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Extract Random Effects
@@ -435,9 +495,13 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     color = sex)) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
@@ -454,10 +518,17 @@ ggplot(
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+    group = id,
+    color = sex)) +
+  geom_line(
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
@@ -468,10 +539,11 @@ ggplot(
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line() +
+    group = id)) +
+  geom_line(
+    color = "gray",
+    alpha = 0.5
+  ) +
   geom_line(
     data = newData,
     mapping = aes(
@@ -479,7 +551,13 @@ ggplot(
       y = predictedValue,
       group = sex,
       color = sex),
-    linewidth = 2)
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 #### Extract Random Effects
@@ -561,10 +639,8 @@ num_true_cores <- parallelly::availableCores(logical = FALSE) - 1
 ```
 
 ```{r}
-#| label: gam-mixed-models
-
 gamModel <- mgcv::gam(
-  math ~ s(ageYearsCentered, by = sex) + s(ageYearsCentered, id, bs = "fs"),
+  math ~ s(ageYearsCentered, by = sex) + s(id, ageYearsCentered, bs = "re"),
   data = mydata,
   nthreads = num_cores
 )
@@ -597,19 +673,18 @@ newData$predictedValue <- predict(
 )
 
 ggplot(
-  newData,
-  aes(
-    x = ageYearsCentered,
+  data = newData,
+  mapping = aes(
+    x = ageYears,
     y = predictedValue,
-    color = sex
-  )
-) +
-  geom_line(linewidth = 1.5) +
+    color = sex)) +
+  geom_line() +
   labs(
-    x = "Age (Centered)",
+    x = "Age (years)",
     y = "Math Score",
     color = "Sex"
-  )
+  ) +
+  theme_classic()
 ```
 
 ### Individuals' Growth Curves
@@ -620,18 +695,34 @@ mydata$predictedValue <- predict(
   newdata = mydata
 )
 
+gamMethod <- function(formula, data, weights, ...) { # from here: https://stackoverflow.com/a/76762792/2029527
+  if(nrow(data) < 4) return(lm(y ~ x, data = data, ...))
+  else  mgcv::gam(y ~ s(x, bs = "cs", k = 3), data = data, ...)
+}
+
 ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line()
+    group = id,
+    color = sex)) +
+  geom_line(
+    stat = "smooth",
+    method = gamMethod,
+    se = FALSE,
+    linewidth = 0.5,
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
-##### Individuals' Trajectories Overlaid with Prototypical Trajectory
+### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
 ggplot(
@@ -639,10 +730,15 @@ ggplot(
   mapping = aes(
     x = ageYears,
     y = predictedValue,
-    group = factor(id))) +
-  xlab("Age (Years)") +
-  ylab("Math Score") +
-  geom_line() +
+    group = id)) +
+  geom_line(
+    stat = "smooth",
+    method = gamMethod,
+    se = FALSE,
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.4
+  ) +
   geom_line(
     data = newData,
     mapping = aes(
@@ -650,7 +746,13 @@ ggplot(
       y = predictedValue,
       group = sex,
       color = sex),
-    linewidth = 2)
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 ## Asymptotic Growth {#nonlinearAsymptotic}
