@@ -131,6 +131,11 @@ linearMixedModel <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(linearMixedModel)
+
+print(effectsize::standardize_parameters(
+  linearMixedModel,
+  method = "refit"),
+  digits = 2)
 ```
 
 ##### Prototypical Growth Curve
@@ -255,6 +260,11 @@ linearMixedModel_nlme <- lme(
   na.action = na.exclude)
 
 summary(linearMixedModel_nlme)
+
+print(effectsize::standardize_parameters(
+  linearMixedModel_nlme,
+  method = "refit"),
+  digits = 2)
 ```
 
 #### Intraclass Correlation Coefficent {#icc}
@@ -277,6 +287,11 @@ timepointSpecificErrorsMixedModel <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(timepointSpecificErrorsMixedModel)
+
+print(effectsize::standardize_parameters(
+  timepointSpecificErrorsMixedModel,
+  method = "refit"),
+  digits = 2)
 ```
 
 ### Quadratic Growth Curve Model {#quadraticGCM}
@@ -308,6 +323,11 @@ quadraticGCM <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(quadraticGCM)
+
+print(effectsize::standardize_parameters(
+  quadraticGCM,
+  method = "refit"),
+  digits = 2)
 ```
 
 This is equivalent to:
@@ -321,6 +341,11 @@ quadraticGCM <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(quadraticGCM)
+
+print(effectsize::standardize_parameters(
+  quadraticGCM,
+  method = "refit"),
+  digits = 2)
 ```
 
 #### Prototypical Growth Curve
@@ -463,6 +488,11 @@ splineGCM <- lmer(
   control = lmerControl(optimizer = "bobyqa"))
 
 summary(splineGCM)
+
+print(effectsize::standardize_parameters(
+  splineGCM,
+  method = "refit"),
+  digits = 2)
 ```
 
 #### Prototypical Growth Curve
@@ -591,6 +621,11 @@ generalizedLinearMixedModel <- glmer(
   na.action = na.exclude)
 
 summary(generalizedLinearMixedModel)
+
+print(effectsize::standardize_parameters(
+  generalizedLinearMixedModel,
+  method = "refit"),
+  digits = 2)
 ```
 
 ## `MASS`
@@ -603,6 +638,11 @@ glmmPQLmodel <- glmmPQL(
   data = mydata)
 
 summary(glmmPQLmodel)
+
+print(effectsize::standardize_parameters(
+  glmmPQLmodel,
+  method = "refit"),
+  digits = 2)
 ```
 
 ## `MCMCglmm`
@@ -646,6 +686,11 @@ gamModel <- mgcv::gam(
 )
 
 summary(gamModel)
+
+print(effectsize::standardize_parameters(
+  gamModel,
+  method = "refit"),
+  digits = 2)
 ```
 
 ### Prototypical Growth Curve
