@@ -849,8 +849,9 @@ Make QQ plots for each level of the random effects.
 Vary the level from 0, 1, to 2 so that you can check the between- and within-subject residuals.
 
 ```{r}
-qqnorm(linearMixedModel_nlme,
-       ~ ranef(., level = 1))
+qqnorm(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 1))
 ```
 
 ## PP Plots
@@ -875,17 +876,19 @@ plot(linearMixedModel)
 ## Plot residuals by group (in the example below, level 2 represents the individual)
 
 ```{r}
-plot(linearMixedModel,
-     as.factor(id) ~ resid(.),
-     abline = 0,
-     xlab = "Residuals")
+plot(
+  linearMixedModel,
+  as.factor(id) ~ resid(.),
+  abline = 0,
+  xlab = "Residuals")
 ```
 
 ## Plot residuals by levels of a predictor
 
 ```{r}
-plot(linearMixedModel_nlme,
-     resid(., type = "p") ~ fitted(.) | female) #type = "p" specifies standardized residuals
+plot(
+  linearMixedModel_nlme,
+  resid(., type = "p") ~ fitted(.) | female) #type = "p" specifies standardized residuals
 ```
 
 ## Can model heteroscedasticity of the within-group error with the weights argument
@@ -905,8 +908,9 @@ summary(linearMixedModel_nlmeVarStructure)
 ## Plot observed and fitted values
 
 ```{r}
-plot(linearMixedModel,
-     math ~ fitted(.))
+plot(
+  linearMixedModel,
+  math ~ fitted(.))
 ```
 
 ## Plot QQ plot of residuals by levels of a predictor
@@ -923,27 +927,35 @@ Vary the level from 0, 1, to 2 so that you can check the between- and within-sub
 
 
 ```{r}
-qqnorm(linearMixedModel_nlme,
-       ~ ranef(., level = 0))
-qqnorm(linearMixedModel_nlme,
-       ~ ranef(., level = 1))
-qqnorm(linearMixedModel_nlme,
-       ~ ranef(., level = 2))
+qqnorm(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 0))
+
+qqnorm(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 1))
+
+qqnorm(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 2))
 ```
 
 ## QQ plot of random effects by levels of a predictor
 
 ```{r}
-qqnorm(linearMixedModel_nlme, 
-       ~ ranef(., level = 1) | female)
+qqnorm(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 1) | female)
 ```
 
 ## Pairs plot
 
 ```{r}
 pairs(linearMixedModel_nlme)
-pairs(linearMixedModel_nlme,
-      ~ ranef(., level = 1) | female)
+
+pairs(
+  linearMixedModel_nlme,
+  ~ ranef(., level = 1) | female)
 ```
 
 ## Variance functions for modeling heteroscedasticity
