@@ -62,7 +62,7 @@ These models go by a variety of different terms:
 
 # Overview
 
-- <https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#mixedModels>
+- <https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#sec-mixedModels>
 - <https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/mixed-models.html>
 
 # Pre-Model Computation
@@ -95,13 +95,13 @@ In contrast to the maximum likelihood estimation, REML can produce unbiased esti
 To compare whether an effect should be fixed or random, use REML.
 To simultaneously compare fixed and random effects, use ML.
 
-# Linear Mixed Models {#linear}
+# Linear Mixed Models {#sec-linear}
 
 The following models are models that are fit in a linear mixed modeling framework.
 
-## Growth Curve Models {#gcm}
+## Growth Curve Models {#sec-gcm}
 
-### Linear Growth Curve Model {#linearGCM}
+### Linear Growth Curve Model {#sec-linearGCM}
 
 #### Plot Observed Growth Curves
 
@@ -232,7 +232,7 @@ ggplot(
   theme_classic()
 ```
 
-##### Extract Random Effects {#extractRandomEffects}
+##### Extract Random Effects {#sec-extractRandomEffects}
 
 ```{r}
 #| output: false
@@ -267,14 +267,14 @@ print(effectsize::standardize_parameters(
   digits = 2)
 ```
 
-#### Intraclass Correlation Coefficent {#icc}
+#### Intraclass Correlation Coefficent {#sec-icc}
 
 ```{r}
 icc(linearMixedModel)
 icc(linearMixedModel_nlme)
 ```
 
-### Growth Curve Model with Timepoint-Specific Errors {#timepointSpecificErrorsGCM}
+### Growth Curve Model with Timepoint-Specific Errors {#sec-timepointSpecificErrorsGCM}
 
 Adapted from Usami & Murayama (2018):
 
@@ -294,7 +294,7 @@ print(effectsize::standardize_parameters(
   digits = 2)
 ```
 
-### Quadratic Growth Curve Model {#quadraticGCM}
+### Quadratic Growth Curve Model {#sec-quadraticGCM}
 
 When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
@@ -467,7 +467,7 @@ quadraticGCM_re$id <- head(quadraticGCM_re$id)
 quadraticGCM_re
 ```
 
-### Spline Growth Curve Model {#splineGCM}
+### Spline Growth Curve Model {#sec-splineGCM}
 
 #### Create Knot
 
@@ -607,7 +607,7 @@ splineGCM_re$id <- head(splineGCM_re$id)
 splineGCM_re
 ```
 
-# Generalized Linear Mixed Models {#generalized}
+# Generalized Linear Mixed Models {#sec-generalized}
 
 <https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html> (archived at <https://perma.cc/9RFS-BCE7>; source code: <https://github.com/bbolker/mixedmodels-misc/blob/master/glmmFAQ.rmd>)
 
@@ -657,9 +657,9 @@ MCMCglmmModel <- MCMCglmm(
 summary(MCMCglmmModel)
 ```
 
-# Nonlinear Mixed Models {#nonlinear}
+# Nonlinear Mixed Models {#sec-nonlinear}
 
-## Generalized Additive Mixed Model {#gamm}
+## Generalized Additive Mixed Model {#sec-gamm}
 
 ### Fit Model
 
@@ -800,7 +800,7 @@ ggplot(
   theme_classic()
 ```
 
-## Asymptotic Growth {#nonlinearAsymptotic}
+## Asymptotic Growth {#sec-nonlinearAsymptotic}
 
 ```{r}
 nonlinearModel <- nlme(
@@ -980,7 +980,7 @@ pairs(
 - `corRatio`: rational quadratic
 - `corSpher`: spherical
 
-# Power Analysis {#powerAnalysis}
+# Power Analysis {#sec-powerAnalysis}
 
 - `mlmpower`: <https://github.com/bkeller2/mlmpower> ([Enders et al., 2025](https://doi.org/10.1037/met0000614))
 - <https://aguinis.shinyapps.io/ml_power/>

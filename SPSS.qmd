@@ -2,13 +2,13 @@
 title: "SPSS"
 ---
 
-# When to use `SPSS` {#whenSPSS}
+# When to use `SPSS` {#sec-whenSPSS}
 
  We use [R](R.qmd) for almost all data analysis.
  However, [R](R.qmd) is code-based and has a steep learning curve.
  As a result, undergraduate students in the lab most often use `SPSS` or [`jamovi`](jamovi.qmd) for their research projects (e.g., [Honors projects](https://devpsylab.github.io/LabWiki/honors.html) and [SROP projects](https://devpsylab.github.io/LabWiki/expectations-SROP.html)), because `SPSS` and [`jamovi`](jamovi.qmd) have a point-and-click interface.
  
-# Creating a `SPSS` Syntax File to Import a `.csv` Data File {#import}
+# Creating a `SPSS` Syntax File to Import a `.csv` Data File {#sec-import}
 
 A `.csv` file is a "comma-separated values" file—a file whose values are separated by commas.
 The lab will provide you with a `.csv` in your member user folder.
@@ -34,7 +34,7 @@ Next, save the data in `SPSS` format (`.sav`) with the below steps:
    - On the open data file, select `save as` and `paste`
    - This will copy and paste the syntax at the **end of the syntax file** in the import script.
    The completed import script will now read the `.csv` file and convert it to an `SPSS` data file (`.sav`).
-   - At this point, you can proceed [here](#analysis) to start your analysis script! 
+   - At this point, you can proceed [here](#sec-analysis) to start your analysis script! 
 
 Example (you will need to update the filepath to your particular filepath):
 
@@ -61,17 +61,17 @@ SAVE OUTFILE='\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Members\HAWKID\Th
   /COMPRESSED.
 ```
 
-# Data Management {#dataManagement}
+# Data Management {#sec-dataManagement}
 
 Add any data management/transformations at the end of your `import.sps` file (after importing your data), so you re-run the transformations each time you update the data file.
 
-# Recode Variables {#recode}
+# Recode Variables {#sec-recode}
 
 <https://stats.oarc.ucla.edu/spss/modules/creating-and-recoding-variables/> (archived at <https://perma.cc/YJ2H-SRZM>)
 
 <https://wlm.userweb.mwn.de/SPSS/wlmsreco.htm> (archived at <https://perma.cc/G4FN-PYPV>)
 
-## Average Across Variables {#averageVars}
+## Average Across Variables {#sec-averageVars}
 
 ```
 COMPUTE cbcl_externalizingPOM_Average = MEAN(cbcl_externalizingPOM_Father,cbcl_externalizingPOM_Mother,cbcl_externalizingPOM_Secondary).
@@ -79,13 +79,13 @@ COMPUTE cbq_inhibitoryControl_Average = MEAN(cbq_inhibitoryControl_Father,cbq_in
 EXECUTE.
 ```
 
-## Rename Variables {#renameVars}
+## Rename Variables {#sec-renameVars}
 
 ```
 RENAME VARIABLES (ses_hollingsheadSES = SES).
 ```
 
-## Mean-Center Variables {#meanCenter}
+## Mean-Center Variables {#sec-meanCenter}
 
 ```
 COMPUTE ses_hollingsheadSES_mc = ses_hollingsheadSES - mean_ses.
@@ -93,21 +93,21 @@ COMPUTE adi_nationalRank_mc = adi_nationalRank - mean_adiN.
 EXECUTE.
 ```
 
-## Compute Interaction Terms {#interaction}
+## Compute Interaction Terms {#sec-interaction}
 
 ```
 COMPUTE ses_adi_interaction = ses_hollingsheadSES_mc * adi_nationalRank_mc.
 EXECUTE.
 ```
 
-## Save Data File {#saveData}
+## Save Data File {#sec-saveData}
 
 ```
 SAVE OUTFILE='\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Members\HAWKID\Thesis\Data\srs_idWave.sav'
   /COMPRESSED.
 ```
 
-# Creating a `SPSS` Syntax File for Analysis {#analysis}
+# Creating a `SPSS` Syntax File for Analysis {#sec-analysis}
 
 1. To create a new syntax file, select file then new then syntax
    - Save file as: `descriptives.sps`
@@ -118,28 +118,28 @@ In your despriptives syntax file, the analysis should now be added. For each sub
 1. Create a new `SPSS` syntax file for your analysis. In this syntax file, add your analysis
    - e.g., regressions
 
-## Frequencies {#frequencies}
+## Frequencies {#sec-frequencies}
 
 ```
 FREQUENCIES VARIABLES=tc_sex tc_hispanic tc_race tc_ethnicity 
   /ORDER=ANALYSIS.
 ```
 
-## Descriptives {#descriptives}
+## Descriptives {#sec-descriptives}
 
 ```
 DESCRIPTIVES VARIABLES=ICsim IClim IChg ICcbq ses_hollingsheadSES ADINat EXTBx 
   /STATISTICS=MEAN STDDEV MIN MAX KURTOSIS SKEWNESS.
 ```
 
-## Histograms {#histograms}
+## Histograms {#sec-histograms}
 
 ```
 GRAPH
   /HISTOGRAM=ses_hollingsheadSES.
 ```
 
-## Correlations {#correlations}
+## Correlations {#sec-correlations}
 
 ```
 CORRELATIONS
@@ -149,7 +149,7 @@ CORRELATIONS
   /MISSING=PAIRWISE.
 ```
 
-## Multiple Regression {#multipleRegression}
+## Multiple Regression {#sec-multipleRegression}
 
 ```
 REGRESSION
@@ -161,7 +161,7 @@ REGRESSION
 /METHOD=ENTER predictor1 predictor2 predictor3.
 ```
 
-## Mediation {#mediation}
+## Mediation {#sec-mediation}
 
 First, download and run the [`PROCESS` macro](https://www.processmacro.org/download.html).
 
@@ -196,7 +196,7 @@ PROCESS
   .
 ```
 
-## Moderation {#moderation}
+## Moderation {#sec-moderation}
 
 1. Calculate means of the predictor and moderator
    ```
@@ -237,9 +237,9 @@ PROCESS
       - <https://github.com/connorjmccabe/InterActive>
       - <https://connorjmccabe.shinyapps.io/interactive/> (archived at <https://perma.cc/93G6-ALDP>)
 
-# Best Practices {#bestPractices}
+# Best Practices {#sec-bestPractices}
 
- - Use `SPSS` syntax files (`.sps`) for performing all commands, including [importing data](#import), computing variables, recoding variables, running analyses, etc.
+ - Use `SPSS` syntax files (`.sps`) for performing all commands, including [importing data](#sec-import), computing variables, recoding variables, running analyses, etc.
  The benefit of using `SPSS` syntax files (and code-based files, more generally) is that they allow you to reproduce your findings again with the same data file.
  This is important so you do not have to remember all of the steps you followed to generate the analysis.
  This also allows you to quickly re-run the analysis if the data file is updated due to the collection of more data.

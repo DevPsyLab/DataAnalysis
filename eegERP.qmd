@@ -5,9 +5,9 @@ output:
     code_folding: show
 ---
 
-# ERP Processing Pipeline using HAPPE {#happe}
+# ERP Processing Pipeline using HAPPE {#sec-happe}
 
-## Inital Set-up {#initial}
+## Inital Set-up {#sec-initial}
 
 1. Download MATLAB: <https://its.uiowa.edu/matlab>
     - Click `How to Install MatLab` and follow the relevant instructions
@@ -33,7 +33,7 @@ output:
         - `EP_Toolkit`
         - `Fieldtrip-[version number]`
 
-## MATLAB Scripts to Manage HAPPE Files {#matlabScripts}
+## MATLAB Scripts to Manage HAPPE Files {#sec-matlabScripts}
 
 We have scripts for each task that can prepare files for the HAPPE Pipeline and/or manage the files outputted from HAPPE.
 These actions can be done manually as well, but the MATLAB scripts make the process more efficient.
@@ -66,7 +66,7 @@ You don't need to specify the file name, just its containing folder.
 
 ### MATLAB Script
 
-The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#inputOddballHAPPE) section. 
+The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#sec-inputOddballHAPPE) section. 
 
 1. Open the `eegProccessingOddball.m` file (accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingOddball.m)) in MATLAB
 1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
@@ -119,9 +119,9 @@ The following section describes the MATLAB scripts used to manage HAPPE output f
 
 After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
 The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
-See [Oddball Post-HAPPE Steps](#oddballPost) for a detailed explanation of the code used to accomplish this.
+See [Oddball Post-HAPPE Steps](#sec-oddballPost) for a detailed explanation of the code used to accomplish this.
 
-### HAPPE Inputs {#inputOddballHAPPE}
+### HAPPE Inputs {#sec-inputOddballHAPPE}
 
 1. If you are not using the MATLAB scripts described above, you must first open the HAPPE pipeline V4 script in MATLAB and click "Run"
    - This will be stored in the location to which you mapped the HAPPE Git repo (e.g. `Documents/GitHub/HAPPE/1. pre-process/HAPPE_v4.m`)
@@ -182,7 +182,7 @@ See [Oddball Post-HAPPE Steps](#oddballPost) for a detailed explanation of the c
     - Visualizations: `N`
     - Parameter file save name: `default`
 
-### Oddball Post-HAPPE Steps {#oddballPost}
+### Oddball Post-HAPPE Steps {#sec-oddballPost}
 
 This section details the actions performed by the MATLAB scripts once HAPPE is completed.
 These actions will take place automatically upon completion of the HAPPE pipeline.
@@ -473,7 +473,7 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
 ### MATLAB Script
 
-The following section describes the MATLAB scripts used to manage HAPPE input and output files for the FishShark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [FishShark HAPPE inputs](#inputFishSharkHAPPE) section.
+The following section describes the MATLAB scripts used to manage HAPPE input and output files for the FishShark task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [FishShark HAPPE inputs](#sec-inputFishSharkHAPPE) section.
 
 **The first two steps described in this section are the same as those described for Oddball processing.**
 **Processing actions specific to FishSharks task begin in Step 3.**
@@ -704,9 +704,9 @@ The following section describes the MATLAB scripts used to manage HAPPE input an
 
 After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
 The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
-See [FishShark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of the code used to accomplish this.
+See [FishShark Post-HAPPE Steps](#sec-FishSharkPost) for a detailed explanation of the code used to accomplish this.
 
-### HAPPE Inputs {#inputFishSharkHAPPE}
+### HAPPE Inputs {#sec-inputFishSharkHAPPE}
 
 1. If you are not using the MATLAB scripts described above, you must first open the HAPPE pipeline V4 script in MATLAB and click "Run"
    - This will be stored in the location to which you mapped the HAPPE Git repo (e.g. `Documents/GitHub/HAPPE/1. pre-process/HAPPE_v4.m`)
@@ -769,7 +769,7 @@ See [FishShark Post-HAPPE Steps](#FishSharkPost) for a detailed explanation of t
     - Visualizations: `N`
     - Parameter file save name: `default`
 
-### FishShark Post-HAPPE Steps {#fishSharkPost}
+### FishShark Post-HAPPE Steps {#sec-fishSharkPost}
 
 This section details the actions performed by the MATLAB scripts once HAPPE is completed.
 These actions will take place automatically upon completion of the HAPPE pipeline.
@@ -1055,9 +1055,9 @@ These actions will take place automatically upon completion of the HAPPE pipelin
 
 ## Stop-Signal Processing Pipeline 
 
-# ERP PCA (EP) Toolkit {#eptPCA}
+# ERP PCA (EP) Toolkit {#sec-eptPCA}
 
-## Reading Text Files into EP Toolkit {#average}
+## Reading Text Files into EP Toolkit {#sec-average}
 
 1. Open MATLAB with "Run as Administrator"
 1. Open ERP PCA Toolkit in MATLAB
@@ -1129,7 +1129,7 @@ This file corresponds to the electrode template associated with the participant 
    - This subject is called `gave` and represents the grand average across all subjects
 1. Click `Done` to exit the editor window, then `Main` to return to the EP Toolkit home
 
-## Temporal PCA {#tPCA}
+## Temporal PCA {#sec-tPCA}
 
 1. Go to `Main` and click `PCA`
 1. Input the following:
@@ -1176,7 +1176,7 @@ Record the number of factors retained and % variance accounted for by that numbe
 1. Return to `Main` and click `Save`.
 Save the tsPCA file in the `5-PCA` folder.
 
-## PCA Component Selection and Extraction {#extract}
+## PCA Component Selection and Extraction {#sec-extract}
 
 Here, the goal is to select the PCA component that corresponds to the ERP component of interest, and the extraction that supports the intended interpretability of the component.
 
@@ -1190,7 +1190,7 @@ Go to `Window` and input the following:
       (According to Joe Dien), when using amplitudes from PCA components, it does not matter which option you select—all the different methods result in comparable *p*-values when dealing with PCA components.
       So, select a method that makes sense for the story you want to tell.
       The methods will yield different results when dealing with the raw waveforms.
-    - select `AutoPCA` or `Window` to [select channels](#channels).
+    - select `AutoPCA` or `Window` to [select channels](#sec-channels).
       If the peak amplitude is where you expect temporally and spatially, then use the autoPCA function, and if it is not, then window to where you expect it to be.
       This will allow you to report results that are more interpretable.
       As Joe Dien described, the way that PCA data are stored internally in the toolkit are as factor scores (i.e., component scores).
@@ -1216,7 +1216,7 @@ Go to `Window` and input the following:
 Our current procedure for doing so is keeping a `PCA_ComponentInfo.txt` file in the `6-PCA Components` folder.
    * Relevant information may include the timing used to window a component and the electrodes that load onto the component of interest at a given threshold
 
-## Identifying Electrodes that Load Onto PCA Component {#channels}
+## Identifying Electrodes that Load Onto PCA Component {#sec-channels}
 
 1. Go to `Window`
 1. Select the PCA file of interest (e.g., `tsPCA_ob_tgt_all`)
@@ -1463,7 +1463,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
 You can navigate to your folder (maybe under Documents/MATLAB/EPwork) and delete everything except for EPprefs to refresh your workspace. 
 NOTE: This will delete everything stored in EP Toolkit, so remember to back up files that you need to save.
 1. If you get an error or a warning from Git when trying to commit and/or push ERP files up to the repo, you may need to initialize Git LFS.
-The instructions for initializing Git LFS can be found [here](git.qmd#gitLfs).
+The instructions for initializing Git LFS can be found [here](git.qmd#sec-gitLfs).
    - The filetypes that commonly cause such errors in our current ERP processing pipeline are:
       - `.txt` files
       - `.ept` files
@@ -1491,8 +1491,6 @@ We want a standardized value on the machines
     - [Haresign et al. (2021)](https://www.sciencedirect.com/science/article/pii/S1878929321001146)
     - [Kumaravel et al. (2022)](https://www.sciencedirect.com/science/article/pii/S1878929322000123)
 
-
-
 ## EEGLAB
 
 ### EEGLab Processing Steps
@@ -1507,7 +1505,7 @@ We want a standardized value on the machines
     1. Manual selection of bad time periods (save intermediate file)
     1. Removal of manually selected bad channels
     1. Removal of manually selected bad time periods (save intermediate file)
-    1. [Independent Component Analysis](#ica) (ICA)
+    1. [Independent Component Analysis](#sec-ica) (ICA)
         1. Run ICA
         1. Automated removal of bad ICA components
         1. Re-run ICA (save intermediate file)
@@ -1627,13 +1625,13 @@ To deselect a portion of the data, simply click on the selected region.
 After marking some portions of the data for rejection, press REJECT and a new data set will be created with the rejected data omitted.
 A new dataset will be created with the marked regions removed.
 Your goal is to reject non-stereotypic artifacts.
-Do not reject blinks/saccades, because [independent component analysis](#ica) will remove those.
+Do not reject blinks/saccades, because [independent component analysis](#sec-ica) will remove those.
 
 Clicking "Stack" stacks all electrodes on top of each other to more easily identify noisy data.
 
 Click "REJECT" to remove the bad time periods from the data file.
 
-#### Independent Component Analysis {#ica}
+#### Independent Component Analysis {#sec-ica}
 
 <https://eeglab.org/tutorials/06_RejectArtifacts/RunICA.html> (archived at <https://perma.cc/AEU9-GB3B>)
 
@@ -2007,7 +2005,7 @@ Go to `Tools` > `Inspect/reject data by eye`
 
 This script runs the ICA.
 We'll want to think about how to automatically reject the components here.
-Once this runs, see the [ICA section](#ica) to reject components.
+Once this runs, see the [ICA section](#sec-ica) to reject components.
 Tools → Inspect/label components by map is how to reject components.
 
 ```matlab

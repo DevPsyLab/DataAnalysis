@@ -5,7 +5,7 @@ output:
     code_folding: show
 ---
 
-# Import Data {#importData}
+# Import Data {#sec-importData}
 
 Importing data takes syntax of the following form for `.csv` files:
 
@@ -39,7 +39,7 @@ Importing data takes syntax of the following form for `.RData` files:
 load("filepath/filename.RData")
 ```
 
-## Import Multiple Data Files {#importMultipleDataFiles}
+## Import Multiple Data Files {#sec-importMultipleDataFiles}
 
 ```{r}
 #| eval: false
@@ -70,7 +70,7 @@ data_list <- lapply(dataFilepaths, read.csv) # lapply(dataFilepaths, data.table:
 names(data_list) <- basename(dataFilepaths)
 ```
 
-# Save Data {#saveData}
+# Save Data {#sec-saveData}
 
 Saving data takes syntax of the following form for `.csv` files:
 
@@ -96,7 +96,7 @@ Saving data takes syntax of the following form for `.RData` files:
 save(object, file = "filepath/filename.RData")
 ```
 
-# Use Lab Functions {#labFunctions}
+# Use Lab Functions {#sec-labFunctions}
 
 To use lab functions, first install the [`petersenlab` package](https://devpsylab.github.io/petersenlab).
 The [`petersenlab` package](https://devpsylab.github.io/petersenlab) is here: <https://devpsylab.github.io/petersenlab>.
@@ -123,7 +123,7 @@ To run scripts on the lab drive, set the path to the lab drive (`//lc-rs-store24
 petersenLabPath <- setLabPath()
 ```
 
-# Load/Install Packages {#loadInstallPackages}
+# Load/Install Packages {#sec-loadInstallPackages}
 
 To install a single package that is on the CRAN repository, use the following syntax:
 
@@ -189,7 +189,7 @@ library("petersenlab")
 load_or_install(c("tidyverse","psych"))
 ```
 
-# Set a Seed {#seed}
+# Set a Seed {#sec-seed}
 
 Set a seed (any number) to reproduce the results of analyses that involve random number generation.
 
@@ -197,7 +197,7 @@ Set a seed (any number) to reproduce the results of analyses that involve random
 set.seed(52242)
 ```
 
-# Run an `R` Script {#source}
+# Run an `R` Script {#sec-source}
 
 To run an `R` script, use the following syntax:
 
@@ -207,7 +207,7 @@ To run an `R` script, use the following syntax:
 source("filepath/filename.R")
 ```
 
-# Render an `R` Markdown (`.Rmd`) File {#renderRmd}
+# Render an `R` Markdown (`.Rmd`) File {#sec-renderRmd}
 
 To render a `.Rmd` file, use the following syntax:
 
@@ -217,7 +217,7 @@ To render a `.Rmd` file, use the following syntax:
 render("filepath/filename.Rmd")
 ```
 
-# Variable Names {#varNames}
+# Variable Names {#sec-varNames}
 
 To look at the names of variables in a data frame, use the following syntax:
 
@@ -225,7 +225,7 @@ To look at the names of variables in a data frame, use the following syntax:
 names(mydata)
 ```
 
-# Logical Operators {#logicalOperators}
+# Logical Operators {#sec-logicalOperators}
 
 Logical operators evaluate a condition for each value and yield values of `TRUE` and `FALSE`, corresponding to whether the evaluation for a given value met the condition.
 
@@ -400,7 +400,7 @@ is.na(mydata$prediction) | mydata$parch >= 1
 head(is.na(mydata$prediction) | mydata$parch >= 1)
 ```
 
-# If...Else Conditions {#ifelse}
+# If...Else Conditions {#sec-ifelse}
 
 We can use the construction, `if()...else if()...else()` if we want to perform conditional operations.
 The typical construction of `if()...else if()...else()` operates such that it first checks if the first `if()` condition is true.
@@ -440,7 +440,7 @@ rank <- ifelse(
 rank
 ```
 
-# Subset {#subset}
+# Subset {#sec-subset}
 
 To subset a data frame, use brackets to specify the subset of rows and columns to keep, where the value/vector before the comma specifies the rows to keep, and the value/vector after the comma specifies the columns to keep:
 
@@ -613,7 +613,7 @@ mydata %>%
   select(all_of(subsetVars))
 ```
 
-# View Data {#viewData}
+# View Data {#sec-viewData}
 
 ## All Data
 
@@ -644,7 +644,7 @@ mydata %>%
   arrange(survived, -age) #sort by survived (ascending) then by age (descending)
 ```
 
-# Data Characteristics {#dataCharacteristics}
+# Data Characteristics {#sec-dataCharacteristics}
 
 ## Data Structure
 
@@ -679,7 +679,7 @@ length(mydata$age[which(!is.na(mydata$age))])
 length(na.omit(mydata$age))
 ```
 
-# Create New Variables {#createNewVars}
+# Create New Variables {#sec-createNewVars}
 
 To create a new variable, use the following syntax:
 
@@ -699,7 +699,7 @@ Here is an example of creating a new variable:
 mydata$ID <- 1:nrow(mydata)
 ```
 
-# Create a Data Frame {#createDF}
+# Create a Data Frame {#sec-createDF}
 
 Here is an example of creating a data frame:
 
@@ -712,7 +712,7 @@ mydata2 <- data.frame(
 mydata2
 ```
 
-# Recode Variables {#recodeVars}
+# Recode Variables {#sec-recodeVars}
 
 Here is an example of recoding a variable:
 
@@ -744,7 +744,7 @@ mydata %>%
       c(2,3) ~ 2)))
 ```
 
-# Rename Variables {#renameVars}
+# Rename Variables {#sec-renameVars}
 
 ```{r}
 mydata <- mydata %>% 
@@ -765,7 +765,7 @@ mydata <- mydata %>%
   rename_with(~ varNamesTo, all_of(varNamesFrom))
 ```
 
-# Convert the Types of Variables {#convertVarTypes}
+# Convert the Types of Variables {#sec-convertVarTypes}
 
 One variable:
 
@@ -795,7 +795,7 @@ mydata %>%
   mutate(across(where(is.factor), as.character))
 ```
 
-# Merging/Joins {#merging}
+# Merging/Joins {#sec-merging}
 
 ## Overview
 
@@ -836,7 +836,7 @@ mydata2
 dim(mydata2)
 ```
 
-## Types of Joins {#mergeTypes}
+## Types of Joins {#sec-mergeTypes}
 
 ### Visual Overview of Join Types
 
@@ -852,7 +852,7 @@ For instance, a left outer join keeps the shared rows and the rows that are uniq
 
 Image source: [Predictive Hacks](https://predictivehacks.com/?all-tips=anti-joins-with-pandas) (archived at: <https://perma.cc/WV7U-BS68>)
 
-### Full Outer Join {#fullJoin}
+### Full Outer Join {#sec-fullJoin}
 
 A full outer join includes all rows in $x$ **or** $y$.
 It returns columns from $x$ and $y$.
@@ -871,7 +871,7 @@ Or, alternatively, using `tidyverse`:
 full_join(mydata, mydata2, by = "ID")
 ```
 
-### Left Outer Join {#leftJoin}
+### Left Outer Join {#sec-leftJoin}
 
 A left outer join includes all rows in $x$.
 It returns columns from $x$ and $y$.
@@ -890,7 +890,7 @@ Or, alternatively, using `tidyverse`:
 left_join(mydata, mydata2, by = "ID")
 ```
 
-### Right Outer Join {#rightJoin}
+### Right Outer Join {#sec-rightJoin}
 
 A right outer join includes all rows in $y$.
 It returns columns from $x$ and $y$.
@@ -909,7 +909,7 @@ Or, alternatively, using `tidyverse`:
 right_join(mydata, mydata2, by = "ID")
 ```
 
-### Inner Join {#innerJoin}
+### Inner Join {#sec-innerJoin}
 
 An inner join includes all rows that are in **both** $x$ **and** $y$.
 An inner join will return one row of $x$ for each matching row of $y$, and can duplicate values of records on either side (left or right) if $x$ and $y$ have more than one matching record.
@@ -929,12 +929,12 @@ Or, alternatively, using `tidyverse`:
 inner_join(mydata, mydata2, by = "ID")
 ```
 
-### Semi Join {#semiJoin}
+### Semi Join {#sec-semiJoin}
 
 A semi join is a filter.
 A left semi join returns all rows from $x$ **with** a match in $y$.
 That is, it filters out records from $x$ that are not in $y$.
-Unlike an [inner join](#innerJoin), a left semi join will never duplicate rows of $x$, and it includes columns from only $x$ (not from $y$). 
+Unlike an [inner join](#sec-innerJoin), a left semi join will never duplicate rows of $x$, and it includes columns from only $x$ (not from $y$). 
 Here is how to merge two data frames using a left semi join:
 
 ```{r}
@@ -944,7 +944,7 @@ semiJoinData
 dim(semiJoinData)
 ```
 
-### Anti Join {#antiJoin}
+### Anti Join {#sec-antiJoin}
 
 An anti join is a filter.
 A left anti join returns all rows from $x$ **without** a match in $y$.
@@ -959,7 +959,7 @@ antiJoinData
 dim(antiJoinData)
 ```
 
-### Cross Join {#crossJoin}
+### Cross Join {#sec-crossJoin}
 
 A cross join combines each row in $x$ with each row in $y$.
 
@@ -972,7 +972,7 @@ crossJoinData
 dim(crossJoinData)
 ```
 
-# Long to Wide {#longToWide}
+# Long to Wide {#sec-longToWide}
 
 Original data:
 
@@ -989,7 +989,7 @@ fish_encounters %>%
     values_from = seen)
 ```
 
-# Wide to Long {#wideToLong}
+# Wide to Long {#sec-wideToLong}
 
 Original data:
 
@@ -1007,7 +1007,7 @@ mtcars %>%
     values_to = "value")
 ```
 
-# Average Ratings Across Coders {#avgAcrossCoders}
+# Average Ratings Across Coders {#sec-avgAcrossCoders}
 
 Create data with multiple coders:
 
@@ -1044,7 +1044,7 @@ idWave <- idWaveCoder %>%
 idWave
 ```
 
-# Loops {#loops}
+# Loops {#sec-loops}
 
 If you want to perform the same computation multiple times, it can be faster to do it in a loop compared to writing out the same computation many times.
 For instance, here is a loop that prints each element of a vector and the loop index (`i`) that indicates where the loop is in terms of its iterations:
@@ -1058,7 +1058,7 @@ for(i in 1:length(fruits)){
 }
 ```
 
-## Create a Function {#createFunction}
+## Create a Function {#sec-createFunction}
 
 Now, let's put together what we have learned to create a useful function.
 Functions are useful if you want to perform an operation multiple times.

@@ -146,7 +146,7 @@ numCores <- parallelly::availableCores() - 1
 
 ## Methods
 
-### `mice` {#mice}
+### `mice` {#sec-mice}
 
 #### Types
 
@@ -258,7 +258,7 @@ mi_mice <- mice(
   seed = 52242)
 ```
 
-### `jomo` {#jomo}
+### `jomo` {#sec-jomo}
 
 ```{r}
 #| eval: false
@@ -280,7 +280,7 @@ mi_jomo <- jomo(
 )
 ```
 
-### `Amelia` {#amelia}
+### `Amelia` {#sec-amelia}
 
 - `!` in the console output indicates that the current estimated complete data covariance matrix is not invertible
 - `*` in the console output indicates that the likelihood has not monotonically increased in that step
@@ -309,7 +309,7 @@ mi_amelia <- amelia(
   empri = .01*nrow(dataToImpute)) # ridge prior for numerical stability
 ```
 
-### `Mplus` {#mplus}
+### `Mplus` {#sec-mplus}
 
 #### Save `Mplus` Data File
 
@@ -352,7 +352,7 @@ DATA IMPUTATION:
 ```
 
 Putting a range of values after a variable (e.g., `0-100`) sets the lower and upper bounds of the imputed values.
-This would save a `implist.dat` file that can be used to run the model on the multiply imputed data, as shown [here](mplus.qmd#multipleImputation).
+This would save a `implist.dat` file that can be used to run the model on the multiply imputed data, as shown [here](mplus.qmd#sec-multipleImputation).
 
 # Parallel Processing
 

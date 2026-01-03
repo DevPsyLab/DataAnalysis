@@ -366,14 +366,14 @@ anova(model1, model2)
 summary(model2)$adj.r.squared - summary(model1)$adj.r.squared
 ```
 
-# Moderated Multiple Regression {#moderation}
+# Moderated Multiple Regression {#sec-moderation}
 
 When testing for the possibility of moderation/interaction, it is first important to think about what shape the interaction might take.
 If you expect a bilinear interaction (i.e., the slope of the regression line between `X` and `Y` changes as a *linear* function of a third variable, `Z`), it is appropriate to treat the moderator as continuous in moderated multiple regression.
 However, if you expect that the interaction might take a different form (e.g., a threshold effect), you may need to consider other approaches, such as using categorical variables, polynomial interactions, spline functions, generalized additive models (GAMs), or machine learning.
 
 For information on the (low) power to detect interactions and how to improve it, see:
-<https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#productTerm-reliability>
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/reliability.html#sec-productTerm-reliability>
 
 The examples below use the `interactions` package in R.
 <https://cran.r-project.org/web/packages/interactions/vignettes/interactions.html> (archived at <https://perma.cc/P34H-7BH3>)
@@ -467,7 +467,7 @@ interactions::probe_interaction(
   jnplot = TRUE)
 ```
 
-# Comparing Correlations {#compareCorrelations}
+# Comparing Correlations {#sec-compareCorrelations}
 
 Fisher's *r*-to-*z* test.
 
@@ -510,9 +510,9 @@ cocor::cocor.dep.groups.nonoverlap(
   var.labels = c("age", "intelligence", "body mass index", "shoe size"))
 ```
 
-# Approaches to Handling Missingness {#missingness}
+# Approaches to Handling Missingness {#sec-missingness}
 
-## Listwise deletion {#listwiseDeletion}
+## Listwise deletion {#sec-listwiseDeletion}
 
 Listwise deletion deletes every row in the data file that has a missing value for one of the model variables.
 
@@ -527,7 +527,7 @@ confint(listwiseDeletionModel)
 print(effectsize::standardize_parameters(listwiseDeletionModel), digits = 2)
 ```
 
-## Pairwise deletion {#pairwiseDeletion}
+## Pairwise deletion {#sec-pairwiseDeletion}
 
 Also see here:
 
@@ -563,7 +563,7 @@ summary(
   rsquare = TRUE)
 ```
 
-## Full-information maximum likelihood (FIML) {#fiml}
+## Full-information maximum likelihood (FIML) {#sec-fiml}
 
 ```{r}
 fimlRegression_syntax <- '
@@ -584,7 +584,7 @@ summary(
   rsquare = TRUE)
 ```
 
-## Multiple imputation {#imputation}
+## Multiple imputation {#sec-imputation}
 
 ```{r}
 modelData_imputed <- mice::mice(
@@ -600,13 +600,13 @@ imputedData_pooledEstimates <- pool(imputedData_fit)
 summary(imputedData_pooledEstimates)
 ```
 
-# Squared Semi-Partial Correlation ($sr^2$) {#squaredSemiPartialCorrelation}
+# Squared Semi-Partial Correlation ($sr^2$) {#sec-squaredSemiPartialCorrelation}
 
 ```{r}
 rockchalk::getDeltaRsquare(multipleRegressionModel)
 ```
 
-# Partial Regression Plot {#partialRegressionPlot}
+# Partial Regression Plot {#sec-partialRegressionPlot}
 
 A partial regression plot (aka added-variable) examines the association between the predictor and the outcome after controlling for the covariates.
 
@@ -646,7 +646,7 @@ ggplot(
   )
 ```
 
-# Dominance Analysis {#dominanceAnalysis}
+# Dominance Analysis {#sec-dominanceAnalysis}
 
 ```{r}
 parameters::dominance_analysis(multipleRegressionModel)
@@ -661,7 +661,7 @@ allPossibleSubsetsRegression <- yhat::aps(
 yhat::dominance(allPossibleSubsetsRegression)
 ```
 
-# Commonality Analysis {#commonalityAnalysis}
+# Commonality Analysis {#sec-commonalityAnalysis}
 
 ```{r}
 yhat::calc.yhat(multipleRegressionModel)
@@ -683,7 +683,7 @@ commonalityAnalysis
 
 # Model Building Steps
 
-1. Examine extent and type of missing data, consider [how to handle missing values](#missingness) ([multiple imputation](#imputation), [FIML](#fiml), [pairwise deletion](#pairwiseDeletion), [listwise deletion](#listwiseDeletion))
+1. Examine extent and type of missing data, consider [how to handle missing values](#sec-missingness) ([multiple imputation](#imputation), [FIML](#sec-fiml), [pairwise deletion](#sec-pairwiseDeletion), [listwise deletion](#sec-listwiseDeletion))
     - Little's MCAR test from `mcar_test()` function of the `njtierney/naniar` package
     - Bayesian handling of missing data: <https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html> (archived at <https://perma.cc/Z4HT-QXWR>)
 1. Examine descriptive statistics, consider variable transformations
@@ -809,7 +809,7 @@ dataEllipse(
 
 ## Assumptions
 
-### 1. Linear relation between predictors and outcome {#linearAssociation}
+### 1. Linear relation between predictors and outcome {#sec-linearAssociation}
 
 #### Ways to Test
 
@@ -841,11 +841,11 @@ correlation(
 
 Check for nonlinearities (non-horizontal line) in plots of:
 
-- Residuals versus fitted values ([Residual Plots](#residualPlots))—best
-- Residuals versus predictors ([Residual Plots](#residualPlots))
-- Outcome versus fitted values ([Marginal Model Plots](#marginalModelPlots))
-- Outcome versus predictors, ignoring other predictors ([Marginal Model Plots](#marginalModelPlots))
-- Outcome versus predictors, controlling for other predictors ([Added-Variable Plots](#addedVariablePlots))
+- Residuals versus fitted values ([Residual Plots](#sec-residualPlots))—best
+- Residuals versus predictors ([Residual Plots](#sec-residualPlots))
+- Outcome versus fitted values ([Marginal Model Plots](#sec-marginalModelPlots))
+- Outcome versus predictors, ignoring other predictors ([Marginal Model Plots](#sec-marginalModelPlots))
+- Outcome versus predictors, controlling for other predictors ([Added-Variable Plots](#sec-addedVariablePlots))
 
 #### Ways to Handle
 
@@ -963,8 +963,8 @@ Homoscedasticity of the residuals means that the variance of the residuals does 
 
 #### Ways to Test
 
-- Plot residuals vs. outcome and predictor variables ([Residual Plots](#residualPlots))
-- Plot residuals vs. fitted values ([Residual Plots](#residualPlots))
+- Plot residuals vs. outcome and predictor variables ([Residual Plots](#sec-residualPlots))
+- Plot residuals vs. fitted values ([Residual Plots](#sec-residualPlots))
 - Time Series data: Plot residuals vs. time
 - Spread-level plot
 - Breusch-Pagan test: `bptest()` function from `lmtest` package
@@ -972,10 +972,10 @@ Homoscedasticity of the residuals means that the variance of the residuals does 
 
 ##### Residuals vs. outcome and predictor variables
 
-Plot residuals, or perhaps their absolute values, versus the outcome and predictor variables ([Residual Plots](#residualPlots)).
+Plot residuals, or perhaps their absolute values, versus the outcome and predictor variables ([Residual Plots](#sec-residualPlots)).
 Examine whether residual variance is constant at all levels of other variables or whether it increases/decreases as a function of another variable (or shows some others structure, e.g., small variance at low and high levels of a predictor and high variance in the middle).
-Note that this is *different than whether the residuals show non-linearities*—i.e., a non-horizontal line, which would indicate a [nonlinear association between variables](#linearAssociation) (see Assumption #1, above).
-Rather, here we are examining whether there is change in the variance as a function of another variable (e.g., a fan-shaped [Residual Plot](#residualPlots))
+Note that this is *different than whether the residuals show non-linearities*—i.e., a non-horizontal line, which would indicate a [nonlinear association between variables](#sec-linearAssociation) (see Assumption #1, above).
+Rather, here we are examining whether there is change in the variance as a function of another variable (e.g., a fan-shaped [Residual Plot](#sec-residualPlots))
 
 ##### Spread-level plot
 
@@ -1066,7 +1066,7 @@ Independent errors means that the errors are uncorrelated with each other.
 #### Ways to Test
 
 - Intraclass correlation coefficient (ICC) from mixed model
-- Plot residuals vs. predictors ([Residual Plots](#residualPlots))
+- Plot residuals vs. predictors ([Residual Plots](#sec-residualPlots))
 - Time Series data: Residual time series plot (residuals vs. row number)
 - Time Series data: Table or plot of residual autocorrelations
 - Time Series data: Durbin-Watson statistic for test of significant residual autocorrelation at lag 1
@@ -1077,9 +1077,9 @@ Independent errors means that the errors are uncorrelated with each other.
 - Regression with cluster variable
     - `robcov()` from `rms` package
 - [Hierarchical linear modeling](hlm.qmd)
-    - [Linear mixed effects models](hlm.qmd#linear)
-    - [Generalized linear mixed effects models](hlm.qmd#generalized)
-    - [Nonlinear mixed effects models](hlm.qmd#nonlinear)
+    - [Linear mixed effects models](hlm.qmd#sec-linear)
+    - [Generalized linear mixed effects models](hlm.qmd#sec-generalized)
+    - [Nonlinear mixed effects models](hlm.qmd#sec-nonlinear)
 
 ### 5. No multicollinearity
 
@@ -1590,7 +1590,7 @@ plot(
 
 ### Distribution of Residuals
 
-#### QQ plots {#qqPlot}
+#### QQ plots {#sec-qqPlot}
 
 <https://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html> (archived at <https://perma.cc/9UC3-3WRX>)
 
@@ -1609,7 +1609,7 @@ qqnorm(resid(robustGeneralizedRegression))
 qqnorm(resid(multilevelRegressionModel))
 ```
 
-#### PP plots {#ppPlot}
+#### PP plots {#sec-ppPlot}
 
 ```{r}
 ppPlot(multipleRegressionModel)
@@ -1622,7 +1622,7 @@ ppPlot(rmsGeneralizedRegressionModel)
 ppPlot(robustGeneralizedRegression)
 ```
 
-#### Density Plot of Residuals {#densityPlotResiduals}
+#### Density Plot of Residuals {#sec-densityPlotResiduals}
 
 ```{r}
 studentizedResiduals <- na.omit(rstudent(multipleRegressionModel))
@@ -1639,7 +1639,7 @@ lines(
   col="gray") #compare to normal distribution
 ```
 
-### Residual Plots {#residualPlots}
+### Residual Plots {#sec-residualPlots}
 
 Residual plots are plots of the residuals versus observed/fitted values.
 
@@ -1658,7 +1658,7 @@ residualPlots(
   id = TRUE)
 ```
 
-### Marginal Model Plots {#marginalModelPlots}
+### Marginal Model Plots {#sec-marginalModelPlots}
 
 Marginal model plots are plots of the outcome versus predictors/fitted values.
 
@@ -1671,7 +1671,7 @@ marginalModelPlots(
   id = TRUE)
 ```
 
-### Added-Variable Plots {#addedVariablePlots}
+### Added-Variable Plots {#sec-addedVariablePlots}
 
 Added-variable plots are plots of the partial association between the outcome and each predictor, controlling for all other predictors.
 
@@ -1748,7 +1748,7 @@ leveragePlots(
 head(influence.measures(multipleRegressionModel)$infmat)
 ```
 
-### DFBETA {#dfbeta}
+### DFBETA {#sec-dfbeta}
 
 ```{r}
 head(dfbeta(multipleRegressionModel))
@@ -1759,7 +1759,7 @@ dfbetasPlots(
   id = TRUE)
 ```
 
-### DFFITS {#dffits}
+### DFFITS {#sec-dffits}
 
 ```{r}
 head(dffits(multipleRegressionModel)[order(dffits(multipleRegressionModel), decreasing = TRUE)])
@@ -1769,7 +1769,7 @@ plot(dffits(multipleRegressionModel))
 plot(dffits(multipleRegressionModel)[order(dffits(multipleRegressionModel), decreasing = TRUE)])
 ```
 
-### Cook's Distance {#cooksDistance}
+### Cook's Distance {#sec-cooksDistance}
 
 Observations that are both outlying (have a high residual from the regression line) and have high leverage (are far from the center of the regressor space) have high influence on the OLS regression coefficients.
 An observation will have less influence if it lies on the regression line (not an outlier, i.e., has a low residual) or if it has low leverage (i.e., has a value near the center of a predictor's distribution).

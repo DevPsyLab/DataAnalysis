@@ -11,7 +11,7 @@ output:
 A summary of the [`Mplus`](https://www.statmodel.com) language syntax is [here](https://www.statmodel.com/language.html) (archived at: <https://perma.cc/962G-QUEG>).
 The [Mplus User's Guide](https://www.statmodel.com/html_ug.shtml) is located [here](https://www.statmodel.com/download/usersguide/MplusUserGuideVer_8.pdf) (archived at: <https://perma.cc/W39W-NRGH>).
 
-# Prepare Data {#prepareData}
+# Prepare Data {#sec-prepareData}
 
 To prepare the data in `R` for use in `Mplus`:
 
@@ -25,7 +25,7 @@ prepareMplusData(
   file.path(path, "/GitHub/Project_Name/Data/mplusdata.dat"))
 ```
 
-# Model Example {#example}
+# Model Example {#sec-example}
 
 ```
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -81,22 +81,22 @@ SAVEDATA:
     SAVE = FSCORES;
 ```
 
-# Model Title {#modelTitle}
+# Model Title {#sec-modelTitle}
 
 ```
 TITLE: INSERT TITLE HERE
 ```
 
-# Read Data {#readData}
+# Read Data {#sec-readData}
 
 ```
 DATA: 
     FILE = "C:/[insert_filepath]/filename.dat";
 ```
 
-# Variables {#variables}
+# Variables {#sec-variables}
 
-## Specify Variables {#specifyVariables}
+## Specify Variables {#sec-specifyVariables}
 
 ```
 VARIABLE:
@@ -106,7 +106,7 @@ VARIABLE:
     CLUSTER = ID;
 ```
 
-## Categorical Variables {#categoricalVariables}
+## Categorical Variables {#sec-categoricalVariables}
 
 ```
 VARIABLE:
@@ -116,7 +116,7 @@ VARIABLE:
     CATEGORICAL = x1 x2;
 ```
 
-## Count Variables {#countVariables}
+## Count Variables {#sec-countVariables}
 
 ```
 VARIABLE:
@@ -126,7 +126,7 @@ VARIABLE:
     COUNT = x1 x2;
 ```
 
-## ID Variable {#idVariable}
+## ID Variable {#sec-idVariable}
 
 ```
 VARIABLE:
@@ -136,7 +136,7 @@ VARIABLE:
     IDVARIABLE = ID;
 ```
 
-## Cluster Variable {#clusterVariable}
+## Cluster Variable {#sec-clusterVariable}
 
 There are multiple ways of accounting for nested data in [structural equation modeling](sem.qmd).
 One way to account for nested data is to use multilevel structural equation modeling.
@@ -154,7 +154,7 @@ ANALYSIS:
     TYPE = COMPLEX;
 ```
 
-## Auxiliary Variables {#auxiliaryVariables}
+## Auxiliary Variables {#sec-auxiliaryVariables}
 
 ```
 VARIABLE:
@@ -164,7 +164,7 @@ VARIABLE:
     AUXILIARY = age;
 ```
 
-## Sampling Weight Variable {#samplingWeight}
+## Sampling Weight Variable {#sec-samplingWeight}
 
 ```
 VARIABLE:
@@ -174,7 +174,7 @@ VARIABLE:
     WEIGHT = wt;
 ```
 
-## Multilevel Variables {#multilevelVariables}
+## Multilevel Variables {#sec-multilevelVariables}
 
 Between- and within-cluster variables:
 
@@ -187,16 +187,16 @@ VARIABLE:
     BETWEEN = x2;
 ```
 
-# Analysis {#analysis}
+# Analysis {#sec-analysis}
 
-## Analysis Types {#analysisTypes}
+## Analysis Types {#sec-analysisTypes}
 
 - `TYPE = COMPLEX`
 - `TYPE = TWOLEVEL`
 - `TYPE = EFA`
 - `TYPE = MIXTURE`
 
-## Model Estimators {#estimators}
+## Model Estimators {#sec-estimators}
 
 ```
 ANALYSIS:
@@ -207,19 +207,19 @@ ANALYSIS:
 - `WLSMV`: for ordinal/categorical data
 - `BAYES`
 
-## Bootstrap Draws {#bootstrap}
+## Bootstrap Draws {#sec-bootstrap}
 
 ```
 BOOTSTRAP = 2000; ! insert number of bootstrap draws
 ```
 
-## Starts {#starts}
+## Starts {#sec-starts}
 
 ```
 STARTS = 20; ! insert number of initial stage starts and number of final stage optimizations
 ```
 
-## Low Covariance Coverage {#lowCovarianceCoverage}
+## Low Covariance Coverage {#sec-lowCovarianceCoverage}
 
 To estimate a model with low covariance coverage, lower the `COVERAGE` value under the `ANALYSIS` section:
 
@@ -228,9 +228,9 @@ ANALYSIS:
     COVERAGE = 0;
 ```
 
-# Exploratory Factor Analysis {#efa}
+# Exploratory Factor Analysis {#sec-efa}
 
-## Oblique Rotation {#oblique}
+## Oblique Rotation {#sec-oblique}
 
 ```
 ANALYSIS:
@@ -238,7 +238,7 @@ ANALYSIS:
     ROTATION = GEOMIN;
 ```
 
-## Orthogonal Rotation {#orthogonal}
+## Orthogonal Rotation {#sec-orthogonal}
 
 ```
 ANALYSIS:
@@ -246,7 +246,7 @@ ANALYSIS:
     ROTATION = VARIMAX;
 ```
 
-# Bayesian SEM {#bayesian}
+# Bayesian SEM {#sec-bayesian}
 
 Other settings you can specify under the "ANALYSIS" section include:
 
@@ -280,16 +280,16 @@ PLOT:
     TYPE = PLOT3; ! trace plots, histogram, and kernel density
 ```
 
-# Model {#model}
+# Model {#sec-model}
 
-## Define Latent Variables {#latentVariables}
+## Define Latent Variables {#sec-latentVariables}
 
 ```
 MODEL:
     latent1 BY x1 x2 x3;
 ```
 
-## Regression Paths {#regressionPaths}
+## Regression Paths {#sec-regressionPaths}
 
 Regress outcome variable on predictor variable(s):
 
@@ -298,14 +298,14 @@ MODEL:
     y1 ON x1 x2;
 ```
 
-## Covariance Paths {#covariancePaths}
+## Covariance Paths {#sec-covariancePaths}
 
 ```
 MODEL:
     x1 WITH x2;
 ```
 
-## Indirect Effects {#indirectEffects}
+## Indirect Effects {#sec-indirectEffects}
 
 ```
 ANALYSIS:
@@ -323,7 +323,7 @@ OUTPUT:
     CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI
 ```
 
-## Means/Intercepts {#means}
+## Means/Intercepts {#sec-means}
 
 Freely estimate:
 
@@ -339,7 +339,7 @@ MODEL:
     [x1@0];
 ```
 
-## Variances {#variances}
+## Variances {#sec-variances}
 
 Freely estimate:
 
@@ -355,7 +355,7 @@ MODEL:
     x1@1;
 ```
 
-## Parameter Label {#parameterLabel}
+## Parameter Label {#sec-parameterLabel}
 
 To specify a parameter label, provide the label in parentheses after the parameter:
 
@@ -365,7 +365,7 @@ MODEL:
     latent2 BY x4* x5 (load5) x6;
 ```
 
-## Multigroup Model {#multigroup}
+## Multigroup Model {#sec-multigroup}
 
 ```
 VARIABLE:
@@ -388,9 +388,9 @@ MODEL:
         y ~ latent;
 ```
 
-## Multigroup Measurement Invariance {#measurementInvariance}
+## Multigroup Measurement Invariance {#sec-measurementInvariance}
 
-### Configural Invariance {#configuralInvariance}
+### Configural Invariance {#sec-configuralInvariance}
 
 ```
 VARIABLE:
@@ -411,7 +411,7 @@ MODEL:
         latent@1;
 ```
 
-### Metric (Weak Factorial) Invariance {#metricInvariance}
+### Metric (Weak Factorial) Invariance {#sec-metricInvariance}
 
 ```
 VARIABLE:
@@ -438,7 +438,7 @@ MODEL:
         latent@1;
 ```
 
-### Scalar (Strong Factorial) Invariance {#scalarInvariance}
+### Scalar (Strong Factorial) Invariance {#sec-scalarInvariance}
 
 ```
 VARIABLE:
@@ -473,15 +473,15 @@ MODEL:
         latent@1;
 ```
 
-# Comments {#comments}
+# Comments {#sec-comments}
 
 ```
 !This is a comment in Mplus
 ```
 
-# Setting Parameter Constraints {#parameterConstraints}
+# Setting Parameter Constraints {#sec-parameterConstraints}
 
-## Freeing a Parameter {#freeParameter}
+## Freeing a Parameter {#sec-freeParameter}
 
 By default, the first loading on a factor is fixed to zero.
 You can freely estimate the parameter by adding an asterisk:
@@ -491,7 +491,7 @@ MODEL:
     latent1 BY x1* x2 x3;
 ```
 
-## Constraing a Parameter {#constrainParameter}
+## Constraing a Parameter {#sec-constrainParameter}
 
 ```
 MODEL:
@@ -500,13 +500,13 @@ MODEL:
     latent1@1;
 ```
 
-## Setting Two Parameters to be Equal {#equalParameters}
+## Setting Two Parameters to be Equal {#sec-equalParameters}
 
-To set two parameters to be equal, provide the same [parameter label](#parameterLabel) for each parameter.
+To set two parameters to be equal, provide the same [parameter label](#sec-parameterLabel) for each parameter.
 
-## Setting Lower and Upper Bounds on a Parameter {#parameterBounds}
+## Setting Lower and Upper Bounds on a Parameter {#sec-parameterBounds}
 
-To set lower and upper bounds on a parameter, you can assign the parameter a [parameter label](#parameterLabel).
+To set lower and upper bounds on a parameter, you can assign the parameter a [parameter label](#sec-parameterLabel).
 Then, you can assign the constraint to the parameter (via the label) under the `MODEL CONSTRAINT` section.
 For example, to constrain a parameter between 0–1, 
 
@@ -518,7 +518,7 @@ MODEL CONSTRAINT:
     load3 > 0; load3 < 1;
 ```
 
-# Output {#output}
+# Output {#sec-output}
 
 ```
 OUTPUT:  
@@ -531,7 +531,7 @@ OUTPUT:
     RESIDUAL;
 ```
 
-# Plot {#plot}
+# Plot {#sec-plot}
 
 ```
 PLOT:
@@ -546,7 +546,7 @@ PLOT:
         COOKS; ! Cook's D parameter estimate influence measure
 ```
 
-# Save Data {#saveData}
+# Save Data {#sec-saveData}
 
 ```
 SAVEDATA:
@@ -558,9 +558,9 @@ SAVEDATA:
         COOKS; !Cook's D (Cook, 1977) for each observation
 ```
 
-# Multiple Imputation {#multipleImputation}
+# Multiple Imputation {#sec-multipleImputation}
 
-For examples of how to conduct [multiple imputation](multipleImputation.qmd) in [`Mplus`](https://www.statmodel.com), see [here](multipleImputation.qmd#mplus).
+For examples of how to conduct [multiple imputation](multipleImputation.qmd) in [`Mplus`](https://www.statmodel.com), see [here](multipleImputation.qmd#sec-mplus).
 To run a model on multiply imputed data, use the following:
 
 ```
@@ -568,9 +568,9 @@ DATA: FILE = "implist.dat"; ! where implist.dat is the name of the *list.dat fil
     TYPE = IMPUTATION;
 ```
 
-# Latent Growth Curve Model {#lgcm}
+# Latent Growth Curve Model {#sec-lgcm}
 
-## Equally Spaced Time Points {#equallySpaced}
+## Equally Spaced Time Points {#sec-equallySpaced}
 
 ```
 VARIABLE: 
@@ -585,7 +585,7 @@ MODEL:
     i s q ON x;
 ```
 
-## Unequally Spaced Time Points (Individually Varying Times of Observation) {#tScores}
+## Unequally Spaced Time Points (Individually Varying Times of Observation) {#sec-tScores}
 
 Unequally spaced time points can be accounted for using the `TSCORES` option.
 
@@ -605,7 +605,7 @@ MODEL:
     i s q ON x;
 ```
 
-# Latent Class Growth Analysis {#lcga}
+# Latent Class Growth Analysis {#sec-lcga}
 
 ```
 VARIABLE:
@@ -647,7 +647,7 @@ SAVEDATA:
     SAVE = CPROBABILITIES;
 ```
 
-# Run Models in Batch {#runModels}
+# Run Models in Batch {#sec-runModels}
 
 Run models in batch via `R`:
 
@@ -663,9 +663,9 @@ runModels(
   showOutput = TRUE)
 ```
 
-# Monte Carlo Simulation/Power Analysis {#monteCarlo}
+# Monte Carlo Simulation/Power Analysis {#sec-monteCarlo}
 
-## Single Group Model {#monteCarloSingleGroup}
+## Single Group Model {#sec-monteCarloSingleGroup}
 
 ```
 TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;
@@ -725,7 +725,7 @@ OUTPUT:
     TECH9;
 ```
 
-## Multi-Group Model {#monteCarloMultigroup}
+## Multi-Group Model {#sec-monteCarloMultigroup}
 
 ```
 TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;

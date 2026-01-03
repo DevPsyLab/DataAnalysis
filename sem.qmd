@@ -56,11 +56,11 @@ mydata <- data.frame(
 
 # Overview
 
-<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html>
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html>
 
 # Analysis examples
 
-<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#semModelExample-sem>
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-semModelExample-sem>
 
 # Plot Observed Growth Curve
 
@@ -100,7 +100,7 @@ ggplot(
     name = "Score")
 ```
 
-# Latent Growth Curve Model {#lgcm}
+# Latent Growth Curve Model {#sec-lgcm}
 
 See the chapter on latent growth curve modeling in `lavaan`: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html>.
 
@@ -110,7 +110,7 @@ For extensions, see the following resources:
 - growth curves using discrete indicators (rather than continuous indicators): <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#discrete-indicators>
 - parallel growth curves: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#parallel-growth-curves>
 
-## Linear Growth Curve Model {#linearLGCM}
+## Linear Growth Curve Model {#sec-linearLGCM}
 
 ### Model Syntax
 
@@ -403,7 +403,7 @@ ggplot(
     linewidth = 2)
 ```
 
-## Latent Basis Growth Curve Model {#latentBasisLGCM}
+## Latent Basis Growth Curve Model {#sec-latentBasisLGCM}
 
 ### Model Syntax
 
@@ -662,7 +662,7 @@ ggplot() +
   )
 ```
 
-## Quadratic Growth Curve Model {#quadraticLGCM}
+## Quadratic Growth Curve Model {#sec-quadraticLGCM}
 
 When using higher-order polynomials, we could specify contrast codes for time to reduce multicollinearity between the linear and quadratic growth factors: <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
@@ -950,7 +950,7 @@ ggplot() +
   )
 ```
 
-## Spline (Piecewise) Growth Curve Model {#splineLGCM}
+## Spline (Piecewise) Growth Curve Model {#sec-splineLGCM}
 
 ### Model Syntax
 
@@ -1236,11 +1236,11 @@ ggplot() +
   )
 ```
 
-## Saturated Growth Curve Model {#saturatedGCM}
+## Saturated Growth Curve Model {#sec-saturatedGCM}
 
 <https://tdjorgensen.github.io/SEM-in-Ed-compendium/ch27.html#saturated-growth-model>
 
-# Latent Change Score Model {#lcsm}
+# Latent Change Score Model {#sec-lcsm}
 
 To generate the syntax for a latent change score model, we use the [lcsm](https://doi.org/10.32614/CRAN.package.lcsm) package.
 
@@ -1390,7 +1390,7 @@ plot_trajectories(
   connect_missing = FALSE)
 ```
 
-# Cross-Lagged Panel Model {#clpm}
+# Cross-Lagged Panel Model {#sec-clpm}
 
 ## Model Syntax
 
@@ -1505,7 +1505,7 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(clpm_fit)
 ```
 
-# Random Intercept Cross-Lagged Panel Model {#riclpm}
+# Random Intercept Cross-Lagged Panel Model {#sec-riclpm}
 
 ## Model Syntax
 
@@ -1795,7 +1795,7 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(riclpm1_fit)
 ```
 
-# Latent Curve Model with Structured Residuals {#lcm-sr}
+# Latent Curve Model with Structured Residuals {#sec-lcm-sr}
 
 A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR).
 
@@ -2017,7 +2017,7 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(lcmsr_fit)
 ```
 
-# Mediation {#mediation}
+# Mediation {#sec-mediation}
 
 ## Overview
 
@@ -2125,7 +2125,7 @@ mediationFit_estimates_perc %>%
   filter(label == "indirect")
 ```
 
-### Effect Size {#effectSizeMediation}
+### Effect Size {#sec-effectSizeMediation}
 
 #### Standardized Estimate ($\beta$)
 
@@ -2142,7 +2142,7 @@ mediationFit_indirect <- mediationFit_estimates %>%
 mediationFit_indirect
 ```
 
-#### Proportion Mediated (*P*<sub>*M*</sub>) {#proportionMediated}
+#### Proportion Mediated (*P*<sub>*M*</sub>) {#sec-proportionMediated}
 
 $$
 P_M = \frac{|ab|}{|c|} = \frac{|ab|}{|c'| + |ab|}
@@ -2165,7 +2165,7 @@ This is called *inconsistent mediation*, and can render the estimate of proporti
 To address this, we can use the absolute value of the direct and indirect effects (in computation of the total effect), as recommended by MacKinnon et al. (2007).
 When using the absolute value of the direct and indirect effects, the proportion mediated (*P*<sub>*M*</sub>) is `r petersenlab::apa(mediationFit_pm, decimals = 2)`, indicating that the mediator explained `r petersenlab::apa(mediationFit_pm * 100, decimals = 0)`% of the total effect.
 
-#### Proportion of Variance in Y That is Explained by the Indirect Effect (*R*<sup>2</sup><sub>mediated</sub>) {#rSquaredMediated}
+#### Proportion of Variance in Y That is Explained by the Indirect Effect (*R*<sup>2</sup><sub>mediated</sub>) {#sec-rSquaredMediated}
 
 Formulas from Lachowicz et al. (2018):
 
@@ -2218,7 +2218,7 @@ RsquaredMed2 <- ((betaYMgivenX + (betaYXgivenM * betaMX))^2) - ((betaYX^2) + (be
 RsquaredMed2
 ```
 
-#### The Proportion of Variance in Y That is Accounted for Jointly by M and X (upsilon; $v$) {#upsilon}
+#### The Proportion of Variance in Y That is Accounted for Jointly by M and X (upsilon; $v$) {#sec-upsilon}
 
 Formulas from Lachowicz et al. (2018):
 
@@ -2251,7 +2251,7 @@ upsilon(
 )
 ```
 
-#### Ratio of the Indirect Effect Relative to Its Maximum Possible Value in the Data ($\kappa^2$) {#kappaSquared}
+#### Ratio of the Indirect Effect Relative to Its Maximum Possible Value in the Data ($\kappa^2$) {#sec-kappaSquared}
 
 $$
 \kappa^2 = \frac{ab}{\text{MAX}(ab)}
@@ -2260,7 +2260,7 @@ $$
 Kappa-squared ($\kappa^2$) is the ratio of the indirect effect relative to its maximum possible value in the data given the observed variability of X, Y, and M and their intercorrelations in the data.
 This estimate is no longer recommended (Wen & Fan, 2015).
 
-#### Other Effect Sizes {#effectSizeMediationOther}
+#### Other Effect Sizes {#sec-effectSizeMediationOther}
 
 ```{r}
 mediation(
@@ -2332,7 +2332,7 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(mediationFit)
 ```
 
-# Moderation {#moderation}
+# Moderation {#sec-moderation}
 
 ```{r}
 states <- as.data.frame(state.x77)
@@ -2460,7 +2460,7 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(moderationFit)
 ```
 
-## Interaction Plot {#moderationInteractionPlot}
+## Interaction Plot {#sec-moderationInteractionPlot}
 
 ```{r}
 # Created Model-Implied Predicted Data Object
@@ -2550,7 +2550,7 @@ ggplot(
   labs(color = "Murder")
 ```
 
-## Simple Slopes and Regions of Significance {#moderationRegionsOfSignificance}
+## Simple Slopes and Regions of Significance {#sec-moderationRegionsOfSignificance}
 
 <https://gabriellajg.github.io/EPSY-579-R-Cookbook-for-SEM/week6_1-lavaan-lab-4-mediated-moderation-moderated-mediation.html#step-5-johnson-neyman-interval> (archived at <https://perma.cc/6XR6-ZPSL>)
 
@@ -2613,7 +2613,7 @@ moderationModelSimpleSlopesFit_parameters
 A simple slope of the predictor on the outcome is considered significant at a given level of the moderator if the 95% confidence interval from the bootstrapped estimates of the simple slopes at that level of the moderator (i.e., [`ci.lower`,`ci.upper`]) does not include zero.
 In this particular model, the predictor (`Illiteracy`) is not significant at any of the levels of the moderator (`Murder`), because the 95% confidence intervals of all simple slopes include zero, in this case, likely due to a small sample size ($N = 50$) and the resulting low power.
 
-## Johnson-Neyman Plot {#johnsonNeymanPlot}
+## Johnson-Neyman Plot {#sec-johnsonNeymanPlot}
 
 As I noted above, the predictor is not significant at any levels of the moderator.
 Nevertheless, I created a made up Johnson-Neyman plot by specifying the (fictitious) range of significance, for purposes of demonstration.
@@ -2743,7 +2743,7 @@ ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
   theme_classic()
 ```
 
-# Bounded Estimation with Random Starts {#boundedEstimationRandomStarts}
+# Bounded Estimation with Random Starts {#sec-boundedEstimationRandomStarts}
 
 For more info, see De Jonckere and Rosseel (2022, 2025).
 
@@ -2777,9 +2777,9 @@ fit2 <- cfa(
   verbose = TRUE) # print all output
 ```
 
-# Power Analysis {#powerAnalysis}
+# Power Analysis {#sec-powerAnalysis}
 
-<https://isaactpetersen.github.io/Principles-Psychological-Assessment/sem.html#monteCarloPowerAnalysis>
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis>
 
 - <https://yilinandrewang.shinyapps.io/pwrSEM/>
 - <https://schoemanna.shinyapps.io/mc_power_med/>
@@ -2787,11 +2787,11 @@ fit2 <- cfa(
 - <https://sempower.shinyapps.io/sempower/>
 - <https://webpower.psychstat.org/wiki/models/index>
 
-# Path Diagrams {#pathDiagrams}
+# Path Diagrams {#sec-pathDiagrams}
 
-For a list of tools to create path diagrams, see [here](figures.qmd#pathDiagrams).
+For a list of tools to create path diagrams, see [here](figures.qmd#sec-pathDiagrams).
 
-# Partial Regression Plot {#partialRegressionPlot}
+# Partial Regression Plot {#sec-partialRegressionPlot}
 
 ```{r}
 # simulate extra observed covariates
