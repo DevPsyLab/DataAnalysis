@@ -54,6 +54,10 @@ mydata <- data.frame(
 
 # Import data
 
+```{r}
+longitudinalMI <- read.csv("./data/Bliese-Ployhart-2002-indicators-1.csv")
+```
+
 # Overview
 
 <https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html>
@@ -2741,6 +2745,1069 @@ ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
     x = "Moderator (Murder)",
     y = "Simple Slope of Predictor (Illiteracy)") +
   theme_classic()
+```
+
+# Longitudinal Measurement Invariance {#sec-longitudinalMI}
+
+The code examples below follow the approach suggested by Widaman et al. (2010).
+
+Widaman, K. F., Ferrer, E., & Conger, R. D. (2010). Factorial invariance within longitudinal structural equation models: Measuring the same construct across time. *Child Development Perspectives*, *4*(1), 10–18. <https://doi.org/10.1111/j.1750-8606.2009.00110.x>
+
+For the longitudinal measurement invariance models, we use simulated data from <https://mycourses.aalto.fi/mod/assign/view.php?id=1203047> (archived at <https://perma.cc/QTL2-ZHX2>).
+As noted [here](https://mycourses.aalto.fi/mod/assign/view.php?id=1203047) (archived at <https://perma.cc/QTL2-ZHX2>), "The data are in wide format where the variables are coded as [VARIABLE NAME][time index][indicator index]."
+
+## Configural Invariance
+
+Evaluates whether there are the same number of latent factors across time and whether the indicators load onto the same latent factor(s) across time.
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's factor loading to be the same across time
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+
+### Model Syntax
+
+```{r}
+configuralInvariance_syntax <- '
+  # Factor Loadings
+  jobsat_1 =~ NA*loadj1*JOBSAT11 + JOBSAT12 + JOBSAT13
+  jobsat_2 =~ NA*loadj1*JOBSAT21 + JOBSAT22 + JOBSAT23
+  jobsat_3 =~ NA*loadj1*JOBSAT31 + JOBSAT32 + JOBSAT33
+  
+  ready_1 =~ NA*loadr1*READY11 + READY12 + READY13
+  ready_2 =~ NA*loadr1*READY21 + READY22 + READY23
+  ready_3 =~ NA*loadr1*READY31 + READY32 + READY33
+  
+  commit_1 =~ NA*loadc1*COMMIT11 + COMMIT12 + COMMIT13
+  commit_2 =~ NA*loadc1*COMMIT21 + COMMIT22 + COMMIT23
+  commit_3 =~ NA*loadc1*COMMIT31 + COMMIT32 + COMMIT33
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  jobsat_1 ~ 0*1
+  ready_1 ~ 0*1
+  commit_1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  jobsat_1 ~~ 1*jobsat_1
+  ready_1 ~~ 1*ready_1
+  commit_1 ~~ 1*commit_1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  jobsat_2 ~ 1
+  jobsat_3 ~ 1
+  
+  ready_2 ~ 1
+  ready_3 ~ 1
+  
+  commit_2 ~ 1
+  commit_3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  jobsat_2 ~~ jobsat_2
+  jobsat_3 ~~ jobsat_3
+  
+  ready_2 ~~ ready_2
+  ready_3 ~~ ready_3
+  
+  commit_2 ~~ commit_2
+  commit_3 ~~ commit_3
+  
+  # Fix Intercepts of Indicator 1 Across Time
+  JOBSAT11 ~ intj1*1
+  JOBSAT21 ~ intj1*1
+  JOBSAT31 ~ intj1*1
+  
+  READY11 ~ intr1*1
+  READY21 ~ intr1*1
+  READY31 ~ intr1*1
+  
+  COMMIT11 ~ intc1*1
+  COMMIT21 ~ intc1*1
+  COMMIT31 ~ intc1*1
+  
+  # Free Intercepts of Remaining Manifest Variables
+  JOBSAT12 ~ 1
+  JOBSAT13 ~ 1
+  JOBSAT22 ~ 1
+  JOBSAT23 ~ 1
+  JOBSAT32 ~ 1
+  JOBSAT33 ~ 1
+  
+  READY12 ~ 1
+  READY13 ~ 1
+  READY22 ~ 1
+  READY23 ~ 1
+  READY32 ~ 1
+  READY33 ~ 1
+  
+  COMMIT12 ~ 1
+  COMMIT13 ~ 1
+  COMMIT22 ~ 1
+  COMMIT23 ~ 1
+  COMMIT32 ~ 1
+  COMMIT33 ~ 1
+  
+  # Estimate Residual Variances of Manifest Variables
+  JOBSAT11 ~~ JOBSAT11
+  JOBSAT12 ~~ JOBSAT12
+  JOBSAT13 ~~ JOBSAT13
+  JOBSAT21 ~~ JOBSAT21
+  JOBSAT22 ~~ JOBSAT22
+  JOBSAT23 ~~ JOBSAT23
+  JOBSAT31 ~~ JOBSAT31
+  JOBSAT32 ~~ JOBSAT32
+  JOBSAT33 ~~ JOBSAT33
+  
+  READY11 ~~ READY11
+  READY12 ~~ READY12
+  READY13 ~~ READY13
+  READY21 ~~ READY21
+  READY22 ~~ READY22
+  READY23 ~~ READY23
+  READY31 ~~ READY31
+  READY32 ~~ READY32
+  READY33 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT11
+  COMMIT12 ~~ COMMIT12
+  COMMIT13 ~~ COMMIT13
+  COMMIT21 ~~ COMMIT21
+  COMMIT22 ~~ COMMIT22
+  COMMIT23 ~~ COMMIT23
+  COMMIT31 ~~ COMMIT31
+  COMMIT32 ~~ COMMIT32
+  COMMIT33 ~~ COMMIT33
+'
+```
+
+### Fit Model
+
+```{r}
+configuralInvariance_fit <- cfa(
+  configuralInvariance_syntax,
+  data = longitudinalMI,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+### Model Summary
+
+```{r}
+summary(
+  configuralInvariance_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  configuralInvariance_fit,
+  sort. = TRUE)
+```
+
+### Path Diagram
+
+```{r}
+#| fig-cap: "Path Diagram"
+
+lavaanPlot::lavaanPlot2(
+  configuralInvariance_fit,
+  stand = TRUE,
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(configuralInvariance_fit)
+```
+
+## Configural Invariance With Correlated Residuals Within-Indicator Across Time
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's factor loading to be the same across time
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+1. **Allow within-indicator residuals to covary across time**
+
+### Model Syntax
+
+```{r}
+configuralInvarianceCorrelatedResiduals_syntax <- '
+  # Factor Loadings
+  jobsat_1 =~ NA*loadj1*JOBSAT11 + JOBSAT12 + JOBSAT13
+  jobsat_2 =~ NA*loadj1*JOBSAT21 + JOBSAT22 + JOBSAT23
+  jobsat_3 =~ NA*loadj1*JOBSAT31 + JOBSAT32 + JOBSAT33
+  
+  ready_1 =~ NA*loadr1*READY11 + READY12 + READY13
+  ready_2 =~ NA*loadr1*READY21 + READY22 + READY23
+  ready_3 =~ NA*loadr1*READY31 + READY32 + READY33
+  
+  commit_1 =~ NA*loadc1*COMMIT11 + COMMIT12 + COMMIT13
+  commit_2 =~ NA*loadc1*COMMIT21 + COMMIT22 + COMMIT23
+  commit_3 =~ NA*loadc1*COMMIT31 + COMMIT32 + COMMIT33
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  jobsat_1 ~ 0*1
+  ready_1 ~ 0*1
+  commit_1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  jobsat_1 ~~ 1*jobsat_1
+  ready_1 ~~ 1*ready_1
+  commit_1 ~~ 1*commit_1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  jobsat_2 ~ 1
+  jobsat_3 ~ 1
+  
+  ready_2 ~ 1
+  ready_3 ~ 1
+  
+  commit_2 ~ 1
+  commit_3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  jobsat_2 ~~ jobsat_2
+  jobsat_3 ~~ jobsat_3
+  
+  ready_2 ~~ ready_2
+  ready_3 ~~ ready_3
+  
+  commit_2 ~~ commit_2
+  commit_3 ~~ commit_3
+  
+  # Fix Intercepts of Indicator 1 Across Time
+  JOBSAT11 ~ intj1*1
+  JOBSAT21 ~ intj1*1
+  JOBSAT31 ~ intj1*1
+  
+  READY11 ~ intr1*1
+  READY21 ~ intr1*1
+  READY31 ~ intr1*1
+  
+  COMMIT11 ~ intc1*1
+  COMMIT21 ~ intc1*1
+  COMMIT31 ~ intc1*1
+  
+  # Free Intercepts of Remaining Manifest Variables
+  JOBSAT12 ~ 1
+  JOBSAT13 ~ 1
+  JOBSAT22 ~ 1
+  JOBSAT23 ~ 1
+  JOBSAT32 ~ 1
+  JOBSAT33 ~ 1
+  
+  READY12 ~ 1
+  READY13 ~ 1
+  READY22 ~ 1
+  READY23 ~ 1
+  READY32 ~ 1
+  READY33 ~ 1
+  
+  COMMIT12 ~ 1
+  COMMIT13 ~ 1
+  COMMIT22 ~ 1
+  COMMIT23 ~ 1
+  COMMIT32 ~ 1
+  COMMIT33 ~ 1
+  
+  # Estimate Residual Variances of Manifest Variables
+  JOBSAT11 ~~ JOBSAT11
+  JOBSAT12 ~~ JOBSAT12
+  JOBSAT13 ~~ JOBSAT13
+  JOBSAT21 ~~ JOBSAT21
+  JOBSAT22 ~~ JOBSAT22
+  JOBSAT23 ~~ JOBSAT23
+  JOBSAT31 ~~ JOBSAT31
+  JOBSAT32 ~~ JOBSAT32
+  JOBSAT33 ~~ JOBSAT33
+  
+  READY11 ~~ READY11
+  READY12 ~~ READY12
+  READY13 ~~ READY13
+  READY21 ~~ READY21
+  READY22 ~~ READY22
+  READY23 ~~ READY23
+  READY31 ~~ READY31
+  READY32 ~~ READY32
+  READY33 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT11
+  COMMIT12 ~~ COMMIT12
+  COMMIT13 ~~ COMMIT13
+  COMMIT21 ~~ COMMIT21
+  COMMIT22 ~~ COMMIT22
+  COMMIT23 ~~ COMMIT23
+  COMMIT31 ~~ COMMIT31
+  COMMIT32 ~~ COMMIT32
+  COMMIT33 ~~ COMMIT33
+  
+  # Residual Covariances Within Indicator Across Time
+  JOBSAT11 ~~ JOBSAT21
+  JOBSAT21 ~~ JOBSAT31
+  JOBSAT11 ~~ JOBSAT31
+  
+  JOBSAT12 ~~ JOBSAT22
+  JOBSAT22 ~~ JOBSAT32
+  JOBSAT12 ~~ JOBSAT32
+  
+  JOBSAT13 ~~ JOBSAT23
+  JOBSAT23 ~~ JOBSAT33
+  JOBSAT13 ~~ JOBSAT33
+  
+  READY11 ~~ READY21
+  READY21 ~~ READY31
+  READY11 ~~ READY31
+  
+  READY12 ~~ READY22
+  READY22 ~~ READY32
+  READY12 ~~ READY32
+  
+  READY13 ~~ READY23
+  READY23 ~~ READY33
+  READY13 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT21
+  COMMIT21 ~~ COMMIT31
+  COMMIT11 ~~ COMMIT31
+  
+  COMMIT12 ~~ COMMIT22
+  COMMIT22 ~~ COMMIT32
+  COMMIT12 ~~ COMMIT32
+  
+  COMMIT13 ~~ COMMIT23
+  COMMIT23 ~~ COMMIT33
+  COMMIT13 ~~ COMMIT33
+'
+```
+
+### Fit Model
+
+```{r}
+configuralInvarianceCorrelatedResiduals_fit <- cfa(
+  configuralInvarianceCorrelatedResiduals_syntax,
+  data = longitudinalMI,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+### Model Summary
+
+```{r}
+summary(
+  configuralInvarianceCorrelatedResiduals_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  configuralInvarianceCorrelatedResiduals_fit,
+  sort. = TRUE)
+```
+
+### Path Diagram
+
+```{r}
+#| fig-cap: "Path Diagram"
+
+lavaanPlot::lavaanPlot2(
+  configuralInvarianceCorrelatedResiduals_fit,
+  stand = TRUE,
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(configuralInvarianceCorrelatedResiduals_fit)
+```
+
+### Compare Models
+
+```{r}
+anova(
+  configuralInvariance_fit,
+  configuralInvarianceCorrelatedResiduals_fit
+)
+```
+
+## Metric ("Weak Factorial") Invariance
+
+Evaluates whether the items' factor loadings are the same across time.
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+1. Allow within-indicator residuals to covary across time
+1. **For each indicator, constrain its factor loading to be the same across time**
+
+### Model Syntax
+
+```{r}
+metricInvariance_syntax <- '
+  # Factor Loadings
+  jobsat_1 =~ NA*loadj1*JOBSAT11 + loadj2*JOBSAT12 + loadj3*JOBSAT13
+  jobsat_2 =~ NA*loadj1*JOBSAT21 + loadj2*JOBSAT22 + loadj3*JOBSAT23
+  jobsat_3 =~ NA*loadj1*JOBSAT31 + loadj2*JOBSAT32 + loadj3*JOBSAT33
+  
+  ready_1 =~ NA*loadr1*READY11 + loadr2*READY12 + loadr3*READY13
+  ready_2 =~ NA*loadr1*READY21 + loadr2*READY22 + loadr3*READY23
+  ready_3 =~ NA*loadr1*READY31 + loadr2*READY32 + loadr3*READY33
+  
+  commit_1 =~ NA*loadc1*COMMIT11 + loadc2*COMMIT12 + loadc3*COMMIT13
+  commit_2 =~ NA*loadc1*COMMIT21 + loadc2*COMMIT22 + loadc3*COMMIT23
+  commit_3 =~ NA*loadc1*COMMIT31 + loadc2*COMMIT32 + loadc3*COMMIT33
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  jobsat_1 ~ 0*1
+  ready_1 ~ 0*1
+  commit_1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  jobsat_1 ~~ 1*jobsat_1
+  ready_1 ~~ 1*ready_1
+  commit_1 ~~ 1*commit_1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  jobsat_2 ~ 1
+  jobsat_3 ~ 1
+  
+  ready_2 ~ 1
+  ready_3 ~ 1
+  
+  commit_2 ~ 1
+  commit_3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  jobsat_2 ~~ jobsat_2
+  jobsat_3 ~~ jobsat_3
+  
+  ready_2 ~~ ready_2
+  ready_3 ~~ ready_3
+  
+  commit_2 ~~ commit_2
+  commit_3 ~~ commit_3
+  
+  # Fix Intercepts of Indicator 1 Across Time
+  JOBSAT11 ~ intj1*1
+  JOBSAT21 ~ intj1*1
+  JOBSAT31 ~ intj1*1
+  
+  READY11 ~ intr1*1
+  READY21 ~ intr1*1
+  READY31 ~ intr1*1
+  
+  COMMIT11 ~ intc1*1
+  COMMIT21 ~ intc1*1
+  COMMIT31 ~ intc1*1
+  
+  # Free Intercepts of Remaining Manifest Variables
+  JOBSAT12 ~ 1
+  JOBSAT13 ~ 1
+  JOBSAT22 ~ 1
+  JOBSAT23 ~ 1
+  JOBSAT32 ~ 1
+  JOBSAT33 ~ 1
+  
+  READY12 ~ 1
+  READY13 ~ 1
+  READY22 ~ 1
+  READY23 ~ 1
+  READY32 ~ 1
+  READY33 ~ 1
+  
+  COMMIT12 ~ 1
+  COMMIT13 ~ 1
+  COMMIT22 ~ 1
+  COMMIT23 ~ 1
+  COMMIT32 ~ 1
+  COMMIT33 ~ 1
+  
+  # Estimate Residual Variances of Manifest Variables
+  JOBSAT11 ~~ JOBSAT11
+  JOBSAT12 ~~ JOBSAT12
+  JOBSAT13 ~~ JOBSAT13
+  JOBSAT21 ~~ JOBSAT21
+  JOBSAT22 ~~ JOBSAT22
+  JOBSAT23 ~~ JOBSAT23
+  JOBSAT31 ~~ JOBSAT31
+  JOBSAT32 ~~ JOBSAT32
+  JOBSAT33 ~~ JOBSAT33
+  
+  READY11 ~~ READY11
+  READY12 ~~ READY12
+  READY13 ~~ READY13
+  READY21 ~~ READY21
+  READY22 ~~ READY22
+  READY23 ~~ READY23
+  READY31 ~~ READY31
+  READY32 ~~ READY32
+  READY33 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT11
+  COMMIT12 ~~ COMMIT12
+  COMMIT13 ~~ COMMIT13
+  COMMIT21 ~~ COMMIT21
+  COMMIT22 ~~ COMMIT22
+  COMMIT23 ~~ COMMIT23
+  COMMIT31 ~~ COMMIT31
+  COMMIT32 ~~ COMMIT32
+  COMMIT33 ~~ COMMIT33
+  
+  # Residual Covariances Within Indicator Across Time
+  JOBSAT11 ~~ JOBSAT21
+  JOBSAT21 ~~ JOBSAT31
+  JOBSAT11 ~~ JOBSAT31
+  
+  JOBSAT12 ~~ JOBSAT22
+  JOBSAT22 ~~ JOBSAT32
+  JOBSAT12 ~~ JOBSAT32
+  
+  JOBSAT13 ~~ JOBSAT23
+  JOBSAT23 ~~ JOBSAT33
+  JOBSAT13 ~~ JOBSAT33
+  
+  READY11 ~~ READY21
+  READY21 ~~ READY31
+  READY11 ~~ READY31
+  
+  READY12 ~~ READY22
+  READY22 ~~ READY32
+  READY12 ~~ READY32
+  
+  READY13 ~~ READY23
+  READY23 ~~ READY33
+  READY13 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT21
+  COMMIT21 ~~ COMMIT31
+  COMMIT11 ~~ COMMIT31
+  
+  COMMIT12 ~~ COMMIT22
+  COMMIT22 ~~ COMMIT32
+  COMMIT12 ~~ COMMIT32
+  
+  COMMIT13 ~~ COMMIT23
+  COMMIT23 ~~ COMMIT33
+  COMMIT13 ~~ COMMIT33
+'
+```
+
+### Fit Model
+
+```{r}
+metricInvariance_fit <- cfa(
+  metricInvariance_syntax,
+  data = longitudinalMI,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+### Model Summary
+
+```{r}
+summary(
+  metricInvariance_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  metricInvariance_fit,
+  sort. = TRUE)
+```
+
+### Path Diagram
+
+```{r}
+#| fig-cap: "Path Diagram"
+
+lavaanPlot::lavaanPlot2(
+  metricInvariance_fit,
+  stand = TRUE,
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(metricInvariance_fit)
+```
+
+### Compare Models
+
+```{r}
+anova(
+  configuralInvarianceCorrelatedResiduals_fit,
+  metricInvariance_fit
+)
+```
+
+## Scalar ("Strong Factorial") Invariance
+
+Evaluates whether the items' intercepts are the same across time.
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. Allow within-indicator residuals to covary across time
+1. For each indicator, constrain its factor loading to be the same across time
+1. **For each indicator, constrain its intercept to be the same across time**
+
+### Model Syntax
+
+```{r}
+scalarInvariance_syntax <- '
+  # Factor Loadings
+  jobsat_1 =~ NA*loadj1*JOBSAT11 + loadj2*JOBSAT12 + loadj3*JOBSAT13
+  jobsat_2 =~ NA*loadj1*JOBSAT21 + loadj2*JOBSAT22 + loadj3*JOBSAT23
+  jobsat_3 =~ NA*loadj1*JOBSAT31 + loadj2*JOBSAT32 + loadj3*JOBSAT33
+  
+  ready_1 =~ NA*loadr1*READY11 + loadr2*READY12 + loadr3*READY13
+  ready_2 =~ NA*loadr1*READY21 + loadr2*READY22 + loadr3*READY23
+  ready_3 =~ NA*loadr1*READY31 + loadr2*READY32 + loadr3*READY33
+  
+  commit_1 =~ NA*loadc1*COMMIT11 + loadc2*COMMIT12 + loadc3*COMMIT13
+  commit_2 =~ NA*loadc1*COMMIT21 + loadc2*COMMIT22 + loadc3*COMMIT23
+  commit_3 =~ NA*loadc1*COMMIT31 + loadc2*COMMIT32 + loadc3*COMMIT33
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  jobsat_1 ~ 0*1
+  ready_1 ~ 0*1
+  commit_1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  jobsat_1 ~~ 1*jobsat_1
+  ready_1 ~~ 1*ready_1
+  commit_1 ~~ 1*commit_1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  jobsat_2 ~ 1
+  jobsat_3 ~ 1
+  
+  ready_2 ~ 1
+  ready_3 ~ 1
+  
+  commit_2 ~ 1
+  commit_3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  jobsat_2 ~~ jobsat_2
+  jobsat_3 ~~ jobsat_3
+  
+  ready_2 ~~ ready_2
+  ready_3 ~~ ready_3
+  
+  commit_2 ~~ commit_2
+  commit_3 ~~ commit_3
+  
+  # Fix Intercepts of Indicators Across Time
+  JOBSAT11 ~ intj1*1
+  JOBSAT21 ~ intj1*1
+  JOBSAT31 ~ intj1*1
+  JOBSAT12 ~ intj2*1
+  JOBSAT22 ~ intj2*1
+  JOBSAT32 ~ intj2*1
+  JOBSAT13 ~ intj3*1
+  JOBSAT23 ~ intj3*1
+  JOBSAT33 ~ intj3*1
+  
+  READY11 ~ intr1*1
+  READY21 ~ intr1*1
+  READY31 ~ intr1*1
+  READY12 ~ intr2*1
+  READY22 ~ intr2*1
+  READY32 ~ intr2*1
+  READY13 ~ intr3*1
+  READY23 ~ intr3*1
+  READY33 ~ intr3*1
+  
+  COMMIT11 ~ intc1*1
+  COMMIT21 ~ intc1*1
+  COMMIT31 ~ intc1*1
+  COMMIT12 ~ intc2*1
+  COMMIT22 ~ intc2*1
+  COMMIT32 ~ intc2*1
+  COMMIT13 ~ intc3*1
+  COMMIT23 ~ intc3*1
+  COMMIT33 ~ intc3*1
+  
+  # Estimate Residual Variances of Manifest Variables
+  JOBSAT11 ~~ JOBSAT11
+  JOBSAT12 ~~ JOBSAT12
+  JOBSAT13 ~~ JOBSAT13
+  JOBSAT21 ~~ JOBSAT21
+  JOBSAT22 ~~ JOBSAT22
+  JOBSAT23 ~~ JOBSAT23
+  JOBSAT31 ~~ JOBSAT31
+  JOBSAT32 ~~ JOBSAT32
+  JOBSAT33 ~~ JOBSAT33
+  
+  READY11 ~~ READY11
+  READY12 ~~ READY12
+  READY13 ~~ READY13
+  READY21 ~~ READY21
+  READY22 ~~ READY22
+  READY23 ~~ READY23
+  READY31 ~~ READY31
+  READY32 ~~ READY32
+  READY33 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT11
+  COMMIT12 ~~ COMMIT12
+  COMMIT13 ~~ COMMIT13
+  COMMIT21 ~~ COMMIT21
+  COMMIT22 ~~ COMMIT22
+  COMMIT23 ~~ COMMIT23
+  COMMIT31 ~~ COMMIT31
+  COMMIT32 ~~ COMMIT32
+  COMMIT33 ~~ COMMIT33
+  
+  # Residual Covariances Within Indicator Across Time
+  JOBSAT11 ~~ JOBSAT21
+  JOBSAT21 ~~ JOBSAT31
+  JOBSAT11 ~~ JOBSAT31
+  
+  JOBSAT12 ~~ JOBSAT22
+  JOBSAT22 ~~ JOBSAT32
+  JOBSAT12 ~~ JOBSAT32
+  
+  JOBSAT13 ~~ JOBSAT23
+  JOBSAT23 ~~ JOBSAT33
+  JOBSAT13 ~~ JOBSAT33
+  
+  READY11 ~~ READY21
+  READY21 ~~ READY31
+  READY11 ~~ READY31
+  
+  READY12 ~~ READY22
+  READY22 ~~ READY32
+  READY12 ~~ READY32
+  
+  READY13 ~~ READY23
+  READY23 ~~ READY33
+  READY13 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT21
+  COMMIT21 ~~ COMMIT31
+  COMMIT11 ~~ COMMIT31
+  
+  COMMIT12 ~~ COMMIT22
+  COMMIT22 ~~ COMMIT32
+  COMMIT12 ~~ COMMIT32
+  
+  COMMIT13 ~~ COMMIT23
+  COMMIT23 ~~ COMMIT33
+  COMMIT13 ~~ COMMIT33
+'
+```
+
+### Fit Model
+
+```{r}
+scalarInvariance_fit <- cfa(
+  scalarInvariance_syntax,
+  data = longitudinalMI,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+### Model Summary
+
+```{r}
+summary(
+  scalarInvariance_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  scalarInvariance_fit,
+  sort. = TRUE)
+```
+
+### Path Diagram
+
+```{r}
+#| fig-cap: "Path Diagram"
+
+lavaanPlot::lavaanPlot2(
+  scalarInvariance_fit,
+  stand = TRUE,
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(scalarInvariance_fit)
+```
+
+### Compare Models
+
+```{r}
+anova(
+  metricInvariance_fit,
+  scalarInvariance_fit
+)
+```
+
+## Residual ("Strict Factorial") Invariance
+
+Evaluates whether the items' residual variances are the same across time.
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. Allow within-indicator residuals to covary across time
+1. For each indicator, constrain its factor loading to be the same across time
+1. For each indicator, constrain its intercept to be the same across time
+1. **For each indicator, constrain its residual variance to be the same across time**
+
+### Model Syntax
+
+```{r}
+residualInvariance_syntax <- '
+  # Factor Loadings
+  jobsat_1 =~ NA*loadj1*JOBSAT11 + loadj2*JOBSAT12 + loadj3*JOBSAT13
+  jobsat_2 =~ NA*loadj1*JOBSAT21 + loadj2*JOBSAT22 + loadj3*JOBSAT23
+  jobsat_3 =~ NA*loadj1*JOBSAT31 + loadj2*JOBSAT32 + loadj3*JOBSAT33
+  
+  ready_1 =~ NA*loadr1*READY11 + loadr2*READY12 + loadr3*READY13
+  ready_2 =~ NA*loadr1*READY21 + loadr2*READY22 + loadr3*READY23
+  ready_3 =~ NA*loadr1*READY31 + loadr2*READY32 + loadr3*READY33
+  
+  commit_1 =~ NA*loadc1*COMMIT11 + loadc2*COMMIT12 + loadc3*COMMIT13
+  commit_2 =~ NA*loadc1*COMMIT21 + loadc2*COMMIT22 + loadc3*COMMIT23
+  commit_3 =~ NA*loadc1*COMMIT31 + loadc2*COMMIT32 + loadc3*COMMIT33
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  jobsat_1 ~ 0*1
+  ready_1 ~ 0*1
+  commit_1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  jobsat_1 ~~ 1*jobsat_1
+  ready_1 ~~ 1*ready_1
+  commit_1 ~~ 1*commit_1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  jobsat_2 ~ 1
+  jobsat_3 ~ 1
+  
+  ready_2 ~ 1
+  ready_3 ~ 1
+  
+  commit_2 ~ 1
+  commit_3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  jobsat_2 ~~ jobsat_2
+  jobsat_3 ~~ jobsat_3
+  
+  ready_2 ~~ ready_2
+  ready_3 ~~ ready_3
+  
+  commit_2 ~~ commit_2
+  commit_3 ~~ commit_3
+  
+  # Constrain Intercepts of Indicators Across Time
+  JOBSAT11 ~ intj1*1
+  JOBSAT21 ~ intj1*1
+  JOBSAT31 ~ intj1*1
+  JOBSAT12 ~ intj2*1
+  JOBSAT22 ~ intj2*1
+  JOBSAT32 ~ intj2*1
+  JOBSAT13 ~ intj3*1
+  JOBSAT23 ~ intj3*1
+  JOBSAT33 ~ intj3*1
+  
+  READY11 ~ intr1*1
+  READY21 ~ intr1*1
+  READY31 ~ intr1*1
+  READY12 ~ intr2*1
+  READY22 ~ intr2*1
+  READY32 ~ intr2*1
+  READY13 ~ intr3*1
+  READY23 ~ intr3*1
+  READY33 ~ intr3*1
+  
+  COMMIT11 ~ intc1*1
+  COMMIT21 ~ intc1*1
+  COMMIT31 ~ intc1*1
+  COMMIT12 ~ intc2*1
+  COMMIT22 ~ intc2*1
+  COMMIT32 ~ intc2*1
+  COMMIT13 ~ intc3*1
+  COMMIT23 ~ intc3*1
+  COMMIT33 ~ intc3*1
+  
+  # Constrain Residual Variances of Indicators Across Time
+  JOBSAT11 ~~ resj1*JOBSAT11
+  JOBSAT21 ~~ resj1*JOBSAT21
+  JOBSAT31 ~~ resj1*JOBSAT31
+  JOBSAT12 ~~ resj2*JOBSAT12
+  JOBSAT22 ~~ resj2*JOBSAT22
+  JOBSAT32 ~~ resj2*JOBSAT32
+  JOBSAT13 ~~ resj3*JOBSAT13
+  JOBSAT23 ~~ resj3*JOBSAT23
+  JOBSAT33 ~~ resj3*JOBSAT33
+  
+  READY11 ~~ resr1*READY11
+  READY21 ~~ resr1*READY21
+  READY31 ~~ resr1*READY31
+  READY12 ~~ resr2*READY12
+  READY22 ~~ resr2*READY22
+  READY32 ~~ resr2*READY32
+  READY13 ~~ resr3*READY13
+  READY23 ~~ resr3*READY23
+  READY33 ~~ resr3*READY33
+  
+  COMMIT11 ~~ resc1*COMMIT11
+  COMMIT21 ~~ resc1*COMMIT21
+  COMMIT31 ~~ resc1*COMMIT31
+  COMMIT12 ~~ resc2*COMMIT12
+  COMMIT22 ~~ resc2*COMMIT22
+  COMMIT32 ~~ resc2*COMMIT32
+  COMMIT13 ~~ resc3*COMMIT13
+  COMMIT23 ~~ resc3*COMMIT23
+  COMMIT33 ~~ resc3*COMMIT33
+  
+  # Residual Covariances Within Indicator Across Time
+  JOBSAT11 ~~ JOBSAT21
+  JOBSAT21 ~~ JOBSAT31
+  JOBSAT11 ~~ JOBSAT31
+  
+  JOBSAT12 ~~ JOBSAT22
+  JOBSAT22 ~~ JOBSAT32
+  JOBSAT12 ~~ JOBSAT32
+  
+  JOBSAT13 ~~ JOBSAT23
+  JOBSAT23 ~~ JOBSAT33
+  JOBSAT13 ~~ JOBSAT33
+  
+  READY11 ~~ READY21
+  READY21 ~~ READY31
+  READY11 ~~ READY31
+  
+  READY12 ~~ READY22
+  READY22 ~~ READY32
+  READY12 ~~ READY32
+  
+  READY13 ~~ READY23
+  READY23 ~~ READY33
+  READY13 ~~ READY33
+  
+  COMMIT11 ~~ COMMIT21
+  COMMIT21 ~~ COMMIT31
+  COMMIT11 ~~ COMMIT31
+  
+  COMMIT12 ~~ COMMIT22
+  COMMIT22 ~~ COMMIT32
+  COMMIT12 ~~ COMMIT32
+  
+  COMMIT13 ~~ COMMIT23
+  COMMIT23 ~~ COMMIT33
+  COMMIT13 ~~ COMMIT33
+'
+```
+
+### Fit Model
+
+```{r}
+residualInvariance_fit <- cfa(
+  residualInvariance_syntax,
+  data = longitudinalMI,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+### Model Summary
+
+```{r}
+summary(
+  residualInvariance_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  residualInvariance_fit,
+  sort. = TRUE)
+```
+
+### Path Diagram
+
+```{r}
+#| fig-cap: "Path Diagram"
+
+lavaanPlot::lavaanPlot2(
+  residualInvariance_fit,
+  stand = TRUE,
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(residualInvariance_fit)
+```
+
+### Compare Models
+
+```{r}
+anova(
+  scalarInvariance_fit,
+  residualInvariance_fit
+)
 ```
 
 # Bounded Estimation with Random Starts {#sec-boundedEstimationRandomStarts}
