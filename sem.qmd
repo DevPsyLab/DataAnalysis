@@ -3808,6 +3808,12 @@ anova(
   scalarInvariance_fit,
   residualInvariance_fit
 )
+
+round(cbind(
+  configural = inspect(configuralInvarianceCorrelatedResiduals_fit, "fit.measures"), 
+  weak = inspect(metricInvariance_fit, "fit.measures"),
+  strong = inspect(scalarInvariance_fit, "fit.measures"),
+  strict = inspect(residualInvariance_fit, "fit.measures")), 3)
 ```
 
 # Bounded Estimation with Random Starts {#sec-boundedEstimationRandomStarts}
