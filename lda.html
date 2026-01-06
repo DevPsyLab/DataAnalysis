@@ -529,7 +529,8 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#sec-approaches" id="toc-sec-approaches" class="nav-link active" data-scroll-target="#sec-approaches"><span class="header-section-number">1</span> Approaches for Modeling Longitudinal Data</a></li>
-  <li><a href="#sec-nonlinear" id="toc-sec-nonlinear" class="nav-link" data-scroll-target="#sec-nonlinear"><span class="header-section-number">2</span> Estimating Nonlinear Growth</a></li>
+  <li><a href="#longitudinal-scores-are-on-the-same-statistical-scale-across-time" id="toc-longitudinal-scores-are-on-the-same-statistical-scale-across-time" class="nav-link" data-scroll-target="#longitudinal-scores-are-on-the-same-statistical-scale-across-time"><span class="header-section-number">2</span> Longitudinal Scores are on the Same Statistical Scale Across Time</a></li>
+  <li><a href="#sec-nonlinear" id="toc-sec-nonlinear" class="nav-link" data-scroll-target="#sec-nonlinear"><span class="header-section-number">3</span> Estimating Nonlinear Growth</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/lda.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/lda.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -565,8 +566,14 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <li><a href="./sem.html#sec-lcm-sr">Latent curve model with structured residuals</a></li>
 </ul>
 </section>
-<section id="sec-nonlinear" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Estimating Nonlinear Growth</h1>
+<section id="longitudinal-scores-are-on-the-same-statistical-scale-across-time" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Longitudinal Scores are on the Same Statistical Scale Across Time</h1>
+<ul>
+<li><a href="./sem.html#sec-longitudinalMI">Tests of longitudinal measurement invariance</a></li>
+</ul>
+</section>
+<section id="sec-nonlinear" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Estimating Nonlinear Growth</h1>
 <p>There are a variety of ways to estimate nonlinear growth in a growth curve model using a mixed-effects or structural equation model:</p>
 <ul>
 <li>polynomial growth model
@@ -1089,27 +1096,31 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Cross-lagged panel model</span><span class="co">](sem.qmd#sec-clpm)</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Latent curve model with structured residuals</span><span class="co">](sem.qmd#sec-lcm-sr)</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu"># Estimating Nonlinear Growth {#sec-nonlinear}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu"># Longitudinal Scores are on the Same Statistical Scale Across Time</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>There are a variety of ways to estimate nonlinear growth in a growth curve model using a mixed-effects or structural equation model:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tests of longitudinal measurement invariance</span><span class="co">](sem.qmd#sec-longitudinalMI)</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>polynomial growth model</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>fractional polynomial model (more parsimonious than traditional polynomials because can capture nonlinear growth with fewer parameters, thus reducing overfitting)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>piecewise/spline model</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>can have fixed or random knots</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>location of knots can be estimated for the data</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>each individual can have a different numbers of knots and different location for the knots</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>latent basis growth model</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>can specify the rate of change between T1 and T2 to be one; can allow the rate of change to freely vary between remaining timepoints</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exponential growth model</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>logistic growth model</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>logarithmic growth model</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>generalized additive model</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>nonparametric growth model (e.g., kernel smoothing)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gompertz growth model</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Richards growth model</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Taylor series approximation model</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">latent change score model</span><span class="co">](sem.qmd#sec-lcsm)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu"># Estimating Nonlinear Growth {#sec-nonlinear}</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>There are a variety of ways to estimate nonlinear growth in a growth curve model using a mixed-effects or structural equation model:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>polynomial growth model</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>fractional polynomial model (more parsimonious than traditional polynomials because can capture nonlinear growth with fewer parameters, thus reducing overfitting)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>piecewise/spline model</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>can have fixed or random knots</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>location of knots can be estimated for the data</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>each individual can have a different numbers of knots and different location for the knots</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>latent basis growth model</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>can specify the rate of change between T1 and T2 to be one; can allow the rate of change to freely vary between remaining timepoints</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exponential growth model</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>logistic growth model</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>logarithmic growth model</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>generalized additive model</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>nonparametric growth model (e.g., kernel smoothing)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gompertz growth model</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Richards growth model</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Taylor series approximation model</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">latent change score model</span><span class="co">](sem.qmd#sec-lcsm)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
