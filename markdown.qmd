@@ -2,13 +2,14 @@
 title: "Markdown"
 ---
 
-# `R` Markdown {#sec-rMarkdown}
+# Markdown {#sec-rMarkdown}
 
 ## Overview {#sec-overview}
 
-This is an `R `Markdown document.
+This is an [`Quarto`](https://quarto.org) document that is written using Markdown.
 Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
-For more details on using `R` Markdown see <https://rmarkdown.rstudio.com> (archived at <https://perma.cc/4MP3-5RT8>)
+For more details on using `R` Markdown see <https://rmarkdown.rstudio.com> (archived at <https://perma.cc/4MP3-5RT8>).
+For more details on using [`Quarto`](https://quarto.org), see <https://quarto.org>.
 
 You can embed an `R` code chunk like this:
 
@@ -238,6 +239,8 @@ example:after  { content: close-quote; }
 
 # `rmarkdown`/`Quarto` Website using `GitHub Actions` {#sec-website}
 
+`Quarto` markdown files use the `.qmd` extension, whereas `rmarkdown` files use the `.rmd` extension.
+
 ## Steps to Create {#sec-websiteSteps}
 
 1. Create a new `GitHub` repo under the [DevPsyLab organization](https://github.com/DevPsyLab) in GitHub
@@ -333,6 +336,8 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the `R` code that generated the plot.
 
 # Headings {#sec-headings}
+
+When creating a heading, make sure that the heading label begins with the prefix `sec-` (e.g., `{#sec-headingLabel}`).
 
 ## Subheading {#sec-subheading}
 
@@ -600,8 +605,8 @@ Do not use the website-derived link for a given heading because it is not a stab
 
 [I'm a link that opens in a new tab](https://example.com){target="_blank"}
 
-URLs and URLs in angle brackets will automatically get turned into links. 
-http://www.example.com or <http://www.example.com>
+URLs in angle brackets will automatically get turned into links. 
+<http://www.example.com>
 
 Some text to show that the reference links can follow later.
 
@@ -778,6 +783,21 @@ term
 You can easily create tables in Markdown from an Excel or csv file using the following website:
 <https://www.tablesgenerator.com/markdown_tables> (archived at <https://perma.cc/53TQ-DQJ9>)
 
+To cross-reference a table, add a caption below the table, then include a `#tbl-` label in braces at the end of the caption.
+For example:
+
+```markdown
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+: My Caption {#tbl-letters}
+
+See @tbl-letters.
+```
+
 # Adding a Drop Down List {#sec-dropDownList}
 
 **Note:**: When creating dropdown menus, it is important to have spaces between font breaks `</font>`.
@@ -823,6 +843,19 @@ For instance:
 
 ```markdown
 ![Visual Studio Code](images/vsCode.png)
+```
+
+To create a cross-reference to a figure, image followed by the caption inside the div:
+
+```markdown
+::: {#fig-vsCode}
+
+![](images/vsCode.png)
+
+VS Code Example Image
+:::
+
+See @fig-vsCode.
 ```
 
 # Embedding a Video {#sec-video}
