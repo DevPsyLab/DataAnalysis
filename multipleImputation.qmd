@@ -1,8 +1,8 @@
 ---
 title: "Multiple Imputation"
-output:
-  html_document:
-    code_folding: show
+format: 
+   html:
+     df-print: default
 ---
 
 # Preamble
@@ -113,8 +113,19 @@ dataToImpute <- Oxboys_addNA
 # Describe Missing Data
 
 ```{r}
-describe(dataToImpute)
-md.pattern(dataToImpute, rotate.names = TRUE)
+#| eval: false
+
+psych::describe(dataToImpute)
+```
+
+```{r}
+#| echo: false
+
+rmarkdown::paged_table(psych::describe(dataToImpute))
+```
+
+```{r}
+mice::md.pattern(dataToImpute, rotate.names = TRUE)
 ```
 
 # Pre-Imputation Setup
@@ -489,7 +500,18 @@ In any case, the code runs fine locally.
 fit_lm_pooled <- mice::pool(fit_lm)
 
 fit_lm_pooled
+```
+
+```{r}
+#| eval: false
+
 summary(fit_lm_pooled)
+```
+
+```{r}
+#| echo: false
+
+rmarkdown::paged_table(summary(fit_lm_pooled))
 ```
 
 ## Mixed Model {#sec-mixed-model}
@@ -510,7 +532,18 @@ In any case, the code runs fine locally.
 fit_lmer_pooled <- mice::pool(fit_lmer)
 
 fit_lmer_pooled
+```
+
+```{r}
+#| eval: false
+
 summary(fit_lmer_pooled)
+```
+
+```{r}
+#| echo: false
+
+rmarkdown::paged_table(summary(fit_lmer_pooled))
 ```
 
 # Model-Implied Predictions
