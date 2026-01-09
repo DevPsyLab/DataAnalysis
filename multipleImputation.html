@@ -1266,7 +1266,6 @@ DATA IMPUTATION:
 </div>
 <section id="pool-results-across-models" class="level3" data-number="11.1.1"><h3 data-number="11.1.1" class="anchored" data-anchor-id="pool-results-across-models">
 <span class="header-section-number">11.1.1</span> Pool Results Across Models</h3>
-<p>There is currently a bug in the <code>mice</code> package that prevents the pooled results from displaying online due to an error (see below). I have reported this bug to the package developers and they are aware of it: <a href="https://github.com/amices/mice/issues/733" class="uri">https://github.com/amices/mice/issues/733</a>. In any case, the code runs fine locally.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_lm_pooled</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit_lm</span><span class="op">)</span></span>
 <span></span>
@@ -1306,7 +1305,6 @@ DATA IMPUTATION:
 </div>
 <section id="pool-results-across-models-1" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="pool-results-across-models-1">
 <span class="header-section-number">11.2.1</span> Pool Results Across Models</h3>
-<p>There is currently a bug in the <code>mice</code> package that prevents the pooled results from displaying online due to an error (see below). I have reported this bug to the package developers and they are aware of it: <a href="https://github.com/amices/mice/issues/733" class="uri">https://github.com/amices/mice/issues/733</a>. In any case, the code runs fine locally.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_lmer_pooled</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit_lmer</span><span class="op">)</span></span>
 <span></span>
@@ -2431,143 +2429,135 @@ loaded via a namespace (and not attached):
 <span id="cb54-556"><a href="#cb54-556" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-557"><a href="#cb54-557" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pool Results Across Models</span></span>
 <span id="cb54-558"><a href="#cb54-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-559"><a href="#cb54-559" aria-hidden="true" tabindex="-1"></a>There is currently a bug in the <span class="in">`mice`</span> package that prevents the pooled results from displaying online due to an error (see below).</span>
-<span id="cb54-560"><a href="#cb54-560" aria-hidden="true" tabindex="-1"></a>I have reported this bug to the package developers and they are aware of it: <span class="ot">&lt;https://github.com/amices/mice/issues/733&gt;</span>.</span>
-<span id="cb54-561"><a href="#cb54-561" aria-hidden="true" tabindex="-1"></a>In any case, the code runs fine locally.</span>
-<span id="cb54-562"><a href="#cb54-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-565"><a href="#cb54-565" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-566"><a href="#cb54-566" aria-hidden="true" tabindex="-1"></a>fit_lm_pooled <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">pool</span>(fit_lm)</span>
-<span id="cb54-567"><a href="#cb54-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-568"><a href="#cb54-568" aria-hidden="true" tabindex="-1"></a>fit_lm_pooled</span>
-<span id="cb54-569"><a href="#cb54-569" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-570"><a href="#cb54-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-573"><a href="#cb54-573" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-574"><a href="#cb54-574" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb54-575"><a href="#cb54-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-576"><a href="#cb54-576" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_lm_pooled)</span>
-<span id="cb54-577"><a href="#cb54-577" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-578"><a href="#cb54-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-581"><a href="#cb54-581" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-582"><a href="#cb54-582" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb54-583"><a href="#cb54-583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-584"><a href="#cb54-584" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">summary</span>(fit_lm_pooled))</span>
-<span id="cb54-585"><a href="#cb54-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-586"><a href="#cb54-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-587"><a href="#cb54-587" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mixed Model {#sec-mixed-model}</span></span>
-<span id="cb54-588"><a href="#cb54-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-591"><a href="#cb54-591" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-592"><a href="#cb54-592" aria-hidden="true" tabindex="-1"></a>fit_lmer <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
-<span id="cb54-593"><a href="#cb54-593" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mi_mice,</span>
-<span id="cb54-594"><a href="#cb54-594" aria-hidden="true" tabindex="-1"></a>  <span class="at">expr =</span> lme4<span class="sc">::</span><span class="fu">lmer</span>(height <span class="sc">~</span> age <span class="sc">+</span> Occasion <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>id)))</span>
-<span id="cb54-595"><a href="#cb54-595" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-596"><a href="#cb54-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-597"><a href="#cb54-597" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pool Results Across Models</span></span>
-<span id="cb54-598"><a href="#cb54-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-599"><a href="#cb54-599" aria-hidden="true" tabindex="-1"></a>There is currently a bug in the <span class="in">`mice`</span> package that prevents the pooled results from displaying online due to an error (see below).</span>
-<span id="cb54-600"><a href="#cb54-600" aria-hidden="true" tabindex="-1"></a>I have reported this bug to the package developers and they are aware of it: <span class="ot">&lt;https://github.com/amices/mice/issues/733&gt;</span>.</span>
-<span id="cb54-601"><a href="#cb54-601" aria-hidden="true" tabindex="-1"></a>In any case, the code runs fine locally.</span>
+<span id="cb54-561"><a href="#cb54-561" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-562"><a href="#cb54-562" aria-hidden="true" tabindex="-1"></a>fit_lm_pooled <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">pool</span>(fit_lm)</span>
+<span id="cb54-563"><a href="#cb54-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-564"><a href="#cb54-564" aria-hidden="true" tabindex="-1"></a>fit_lm_pooled</span>
+<span id="cb54-565"><a href="#cb54-565" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-566"><a href="#cb54-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-569"><a href="#cb54-569" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-570"><a href="#cb54-570" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb54-571"><a href="#cb54-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-572"><a href="#cb54-572" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_lm_pooled)</span>
+<span id="cb54-573"><a href="#cb54-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-574"><a href="#cb54-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-577"><a href="#cb54-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-578"><a href="#cb54-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb54-579"><a href="#cb54-579" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-580"><a href="#cb54-580" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">summary</span>(fit_lm_pooled))</span>
+<span id="cb54-581"><a href="#cb54-581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-582"><a href="#cb54-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-583"><a href="#cb54-583" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mixed Model {#sec-mixed-model}</span></span>
+<span id="cb54-584"><a href="#cb54-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-587"><a href="#cb54-587" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-588"><a href="#cb54-588" aria-hidden="true" tabindex="-1"></a>fit_lmer <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
+<span id="cb54-589"><a href="#cb54-589" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mi_mice,</span>
+<span id="cb54-590"><a href="#cb54-590" aria-hidden="true" tabindex="-1"></a>  <span class="at">expr =</span> lme4<span class="sc">::</span><span class="fu">lmer</span>(height <span class="sc">~</span> age <span class="sc">+</span> Occasion <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>id)))</span>
+<span id="cb54-591"><a href="#cb54-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-592"><a href="#cb54-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-593"><a href="#cb54-593" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pool Results Across Models</span></span>
+<span id="cb54-594"><a href="#cb54-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-597"><a href="#cb54-597" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-598"><a href="#cb54-598" aria-hidden="true" tabindex="-1"></a>fit_lmer_pooled <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">pool</span>(fit_lmer)</span>
+<span id="cb54-599"><a href="#cb54-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-600"><a href="#cb54-600" aria-hidden="true" tabindex="-1"></a>fit_lmer_pooled</span>
+<span id="cb54-601"><a href="#cb54-601" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-602"><a href="#cb54-602" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-605"><a href="#cb54-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-606"><a href="#cb54-606" aria-hidden="true" tabindex="-1"></a>fit_lmer_pooled <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">pool</span>(fit_lmer)</span>
+<span id="cb54-606"><a href="#cb54-606" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb54-607"><a href="#cb54-607" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-608"><a href="#cb54-608" aria-hidden="true" tabindex="-1"></a>fit_lmer_pooled</span>
+<span id="cb54-608"><a href="#cb54-608" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_lmer_pooled)</span>
 <span id="cb54-609"><a href="#cb54-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-610"><a href="#cb54-610" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-613"><a href="#cb54-613" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-614"><a href="#cb54-614" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb54-614"><a href="#cb54-614" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb54-615"><a href="#cb54-615" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-616"><a href="#cb54-616" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_lmer_pooled)</span>
+<span id="cb54-616"><a href="#cb54-616" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">summary</span>(fit_lmer_pooled))</span>
 <span id="cb54-617"><a href="#cb54-617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-618"><a href="#cb54-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-621"><a href="#cb54-621" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-622"><a href="#cb54-622" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb54-623"><a href="#cb54-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-624"><a href="#cb54-624" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(<span class="fu">summary</span>(fit_lmer_pooled))</span>
-<span id="cb54-625"><a href="#cb54-625" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-626"><a href="#cb54-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-627"><a href="#cb54-627" aria-hidden="true" tabindex="-1"></a><span class="fu"># Model-Implied Predictions</span></span>
-<span id="cb54-628"><a href="#cb54-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-631"><a href="#cb54-631" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-632"><a href="#cb54-632" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb54-619"><a href="#cb54-619" aria-hidden="true" tabindex="-1"></a><span class="fu"># Model-Implied Predictions</span></span>
+<span id="cb54-620"><a href="#cb54-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-623"><a href="#cb54-623" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-624"><a href="#cb54-624" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb54-625"><a href="#cb54-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-626"><a href="#cb54-626" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
+<span id="cb54-627"><a href="#cb54-627" aria-hidden="true" tabindex="-1"></a>  fit_lm,</span>
+<span id="cb54-628"><a href="#cb54-628" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
+<span id="cb54-629"><a href="#cb54-629" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-630"><a href="#cb54-630" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
+<span id="cb54-631"><a href="#cb54-631" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-632"><a href="#cb54-632" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-633"><a href="#cb54-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-634"><a href="#cb54-634" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
-<span id="cb54-635"><a href="#cb54-635" aria-hidden="true" tabindex="-1"></a>  fit_lm,</span>
-<span id="cb54-636"><a href="#cb54-636" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
-<span id="cb54-637"><a href="#cb54-637" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb54-638"><a href="#cb54-638" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
-<span id="cb54-639"><a href="#cb54-639" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-640"><a href="#cb54-640" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-641"><a href="#cb54-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-644"><a href="#cb54-644" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-645"><a href="#cb54-645" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb54-646"><a href="#cb54-646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-647"><a href="#cb54-647" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
-<span id="cb54-648"><a href="#cb54-648" aria-hidden="true" tabindex="-1"></a>  fit_lm,</span>
-<span id="cb54-649"><a href="#cb54-649" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
-<span id="cb54-650"><a href="#cb54-650" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb54-651"><a href="#cb54-651" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
-<span id="cb54-652"><a href="#cb54-652" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-653"><a href="#cb54-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-654"><a href="#cb54-654" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>fit)</span>
-<span id="cb54-655"><a href="#cb54-655" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>se.fit)</span>
-<span id="cb54-656"><a href="#cb54-656" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>df <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>df)</span>
+<span id="cb54-636"><a href="#cb54-636" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-637"><a href="#cb54-637" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb54-638"><a href="#cb54-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-639"><a href="#cb54-639" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
+<span id="cb54-640"><a href="#cb54-640" aria-hidden="true" tabindex="-1"></a>  fit_lm,</span>
+<span id="cb54-641"><a href="#cb54-641" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
+<span id="cb54-642"><a href="#cb54-642" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-643"><a href="#cb54-643" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
+<span id="cb54-644"><a href="#cb54-644" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-645"><a href="#cb54-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-646"><a href="#cb54-646" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>fit)</span>
+<span id="cb54-647"><a href="#cb54-647" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>se.fit)</span>
+<span id="cb54-648"><a href="#cb54-648" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted<span class="sc">$</span>df <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lm_fitted<span class="sc">$</span>df)</span>
+<span id="cb54-649"><a href="#cb54-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-650"><a href="#cb54-650" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted</span>
+<span id="cb54-651"><a href="#cb54-651" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-652"><a href="#cb54-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-655"><a href="#cb54-655" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-656"><a href="#cb54-656" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb54-657"><a href="#cb54-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-658"><a href="#cb54-658" aria-hidden="true" tabindex="-1"></a>fit_lm_fitted</span>
-<span id="cb54-659"><a href="#cb54-659" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-660"><a href="#cb54-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-663"><a href="#cb54-663" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-664"><a href="#cb54-664" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb54-658"><a href="#cb54-658" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
+<span id="cb54-659"><a href="#cb54-659" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
+<span id="cb54-660"><a href="#cb54-660" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
+<span id="cb54-661"><a href="#cb54-661" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-662"><a href="#cb54-662" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
+<span id="cb54-663"><a href="#cb54-663" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-664"><a href="#cb54-664" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-665"><a href="#cb54-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-666"><a href="#cb54-666" aria-hidden="true" tabindex="-1"></a>mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
-<span id="cb54-667"><a href="#cb54-667" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
-<span id="cb54-668"><a href="#cb54-668" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
-<span id="cb54-669"><a href="#cb54-669" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb54-670"><a href="#cb54-670" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
-<span id="cb54-671"><a href="#cb54-671" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-672"><a href="#cb54-672" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-673"><a href="#cb54-673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-676"><a href="#cb54-676" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-677"><a href="#cb54-677" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb54-668"><a href="#cb54-668" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-669"><a href="#cb54-669" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb54-670"><a href="#cb54-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-671"><a href="#cb54-671" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
+<span id="cb54-672"><a href="#cb54-672" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
+<span id="cb54-673"><a href="#cb54-673" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
+<span id="cb54-674"><a href="#cb54-674" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-675"><a href="#cb54-675" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
+<span id="cb54-676"><a href="#cb54-676" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-677"><a href="#cb54-677" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb54-678"><a href="#cb54-678" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-679"><a href="#cb54-679" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
-<span id="cb54-680"><a href="#cb54-680" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
-<span id="cb54-681"><a href="#cb54-681" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
-<span id="cb54-682"><a href="#cb54-682" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb54-683"><a href="#cb54-683" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
-<span id="cb54-684"><a href="#cb54-684" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-685"><a href="#cb54-685" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb54-686"><a href="#cb54-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-689"><a href="#cb54-689" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-690"><a href="#cb54-690" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb54-691"><a href="#cb54-691" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb54-692"><a href="#cb54-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-693"><a href="#cb54-693" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
-<span id="cb54-694"><a href="#cb54-694" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
-<span id="cb54-695"><a href="#cb54-695" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
-<span id="cb54-696"><a href="#cb54-696" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb54-697"><a href="#cb54-697" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
-<span id="cb54-698"><a href="#cb54-698" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-699"><a href="#cb54-699" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-700"><a href="#cb54-700" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>fit)</span>
-<span id="cb54-701"><a href="#cb54-701" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>se.fit)</span>
-<span id="cb54-702"><a href="#cb54-702" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>df <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>df)</span>
-<span id="cb54-703"><a href="#cb54-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-704"><a href="#cb54-704" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted</span>
-<span id="cb54-705"><a href="#cb54-705" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-681"><a href="#cb54-681" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-682"><a href="#cb54-682" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb54-683"><a href="#cb54-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb54-684"><a href="#cb54-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-685"><a href="#cb54-685" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">predict_mi</span>(</span>
+<span id="cb54-686"><a href="#cb54-686" aria-hidden="true" tabindex="-1"></a>  fit_lmer,</span>
+<span id="cb54-687"><a href="#cb54-687" aria-hidden="true" tabindex="-1"></a>  <span class="co">#newdata = # can include if want to make predictions based on another (i.e., "new") data object</span></span>
+<span id="cb54-688"><a href="#cb54-688" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-689"><a href="#cb54-689" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">"prediction"</span>)</span>
+<span id="cb54-690"><a href="#cb54-690" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-691"><a href="#cb54-691" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-692"><a href="#cb54-692" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>fit)</span>
+<span id="cb54-693"><a href="#cb54-693" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>se.fit <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>se.fit)</span>
+<span id="cb54-694"><a href="#cb54-694" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted<span class="sc">$</span>df <span class="ot">&lt;-</span> <span class="fu">head</span>(fit_lmer_fitted<span class="sc">$</span>df)</span>
+<span id="cb54-695"><a href="#cb54-695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-696"><a href="#cb54-696" aria-hidden="true" tabindex="-1"></a>fit_lmer_fitted</span>
+<span id="cb54-697"><a href="#cb54-697" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-698"><a href="#cb54-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-699"><a href="#cb54-699" aria-hidden="true" tabindex="-1"></a><span class="fu"># Resources</span></span>
+<span id="cb54-700"><a href="#cb54-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-701"><a href="#cb54-701" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stefvanbuuren.name/fimd&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/46U2-QTM6&gt;</span>)</span>
+<span id="cb54-702"><a href="#cb54-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-703"><a href="#cb54-703" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/SF32-D7ZF&gt;</span>)</span>
+<span id="cb54-704"><a href="#cb54-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-705"><a href="#cb54-705" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
 <span id="cb54-706"><a href="#cb54-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-707"><a href="#cb54-707" aria-hidden="true" tabindex="-1"></a><span class="fu"># Resources</span></span>
-<span id="cb54-708"><a href="#cb54-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-709"><a href="#cb54-709" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stefvanbuuren.name/fimd&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/46U2-QTM6&gt;</span>)</span>
-<span id="cb54-710"><a href="#cb54-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-711"><a href="#cb54-711" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.gerkovink.com/miceVignettes/Multi_level/Multi_level_data.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/SF32-D7ZF&gt;</span>)</span>
-<span id="cb54-712"><a href="#cb54-712" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-713"><a href="#cb54-713" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb54-714"><a href="#cb54-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-717"><a href="#cb54-717" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb54-718"><a href="#cb54-718" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb54-719"><a href="#cb54-719" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-720"><a href="#cb54-720" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb54-721"><a href="#cb54-721" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb54-709"><a href="#cb54-709" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb54-710"><a href="#cb54-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb54-711"><a href="#cb54-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-712"><a href="#cb54-712" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb54-713"><a href="#cb54-713" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
