@@ -414,7 +414,7 @@ ggplot(
 lbgcm1_syntax <- '
   # Intercept and slope
   intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
-  slope =~ 0*t1 + a*t2 + b*t3 + 3*t4 # freely estimate the loadings for t2 and t3
+  slope =~ 0*t1 + a*t2 + b*t3 + 1*t4 # freely estimate the loadings for t2 and t3
 
   # Regression paths
   intercept ~ x1 + x2
@@ -434,7 +434,7 @@ lbgcm1_syntax <- '
 lbgcm2_syntax <- '
   # Intercept and slope
   intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
-  slope =~ 0*t1 + a*t2 + b*t3 + 3*t4 # freely estimate the loadings for t2 and t3
+  slope =~ 0*t1 + a*t2 + b*t3 + 1*t4 # freely estimate the loadings for t2 and t3
 
   # Regression paths
   intercept ~ x1 + x2
@@ -589,7 +589,7 @@ timepoints <- 4
 
 newData <- data.frame(
   time = 1:4,
-  slopeloading = c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 3)
+  slopeloading = c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 1)
 )
 
 newData$predictedValue <- NA
@@ -611,7 +611,7 @@ ggplot(
 person_factors <- as.data.frame(predict(lbgcm1_fit))
 person_factors$id <- rownames(person_factors)
 
-slope_loadings <- c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 3)
+slope_loadings <- c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 1)
 
 # Compute model-implied values for each person at each time point
 individual_trajectories <- person_factors %>%
