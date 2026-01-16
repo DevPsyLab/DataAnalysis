@@ -1036,7 +1036,11 @@ ANALYSIS:
     TYPE = RANDOM;
 
 MODEL:
-    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes
+    i s q | y0@0 y1@1 y2@2 y3@3 y4@4; ! intercept, linear slope, quadratic slope
+    ! OR ALTERNATIVELY:
+    !i BY y0@1 y1@1 y2@1 y3@1 y4@1;
+    !s BY y0@0 y1@1 y2@2 y3@3 y4@4;
+    !q BY y0@0 y1@1 y2@4 y3@9 y4@16;
     i s q ON x;</code></pre>
 </section><section id="sec-tScores" class="level2" data-number="17.2"><h2 data-number="17.2" class="anchored" data-anchor-id="sec-tScores">
 <span class="header-section-number">17.2</span> Unequally Spaced Time Points (Individually Varying Times of Observation)</h2>
@@ -1051,7 +1055,7 @@ ANALYSIS:
     TYPE = RANDOM;
 
 MODEL:
-    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope
+    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes
     i s q ON x;</code></pre>
 </section></section><section id="sec-lcga" class="level1" data-number="18"><h1 data-number="18">
 <span class="header-section-number">18</span> Latent Class Growth Analysis</h1>
@@ -2344,255 +2348,259 @@ loaded via a namespace (and not attached):
 <span id="cb51-580"><a href="#cb51-580" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
 <span id="cb51-581"><a href="#cb51-581" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-582"><a href="#cb51-582" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb51-583"><a href="#cb51-583" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes</span></span>
-<span id="cb51-584"><a href="#cb51-584" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
-<span id="cb51-585"><a href="#cb51-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-586"><a href="#cb51-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-587"><a href="#cb51-587" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unequally Spaced Time Points (Individually Varying Times of Observation) {#sec-tScores}</span></span>
-<span id="cb51-588"><a href="#cb51-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-589"><a href="#cb51-589" aria-hidden="true" tabindex="-1"></a>Unequally spaced time points can be accounted for using the <span class="in">`TSCORES`</span> option.</span>
+<span id="cb51-583"><a href="#cb51-583" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0@0 y1@1 y2@2 y3@3 y4@4; ! intercept, linear slope, quadratic slope</span></span>
+<span id="cb51-584"><a href="#cb51-584" aria-hidden="true" tabindex="-1"></a><span class="in">    ! OR ALTERNATIVELY:</span></span>
+<span id="cb51-585"><a href="#cb51-585" aria-hidden="true" tabindex="-1"></a><span class="in">    !i BY y0@1 y1@1 y2@1 y3@1 y4@1;</span></span>
+<span id="cb51-586"><a href="#cb51-586" aria-hidden="true" tabindex="-1"></a><span class="in">    !s BY y0@0 y1@1 y2@2 y3@3 y4@4;</span></span>
+<span id="cb51-587"><a href="#cb51-587" aria-hidden="true" tabindex="-1"></a><span class="in">    !q BY y0@0 y1@1 y2@4 y3@9 y4@16;</span></span>
+<span id="cb51-588"><a href="#cb51-588" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
+<span id="cb51-589"><a href="#cb51-589" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb51-590"><a href="#cb51-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-591"><a href="#cb51-591" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Z7QY-TL6W&gt;</span>)</span>
+<span id="cb51-591"><a href="#cb51-591" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unequally Spaced Time Points (Individually Varying Times of Observation) {#sec-tScores}</span></span>
 <span id="cb51-592"><a href="#cb51-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-593"><a href="#cb51-593" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-594"><a href="#cb51-594" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
-<span id="cb51-595"><a href="#cb51-595" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb51-596"><a href="#cb51-596" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb51-597"><a href="#cb51-597" aria-hidden="true" tabindex="-1"></a><span class="in">    TSCORES = t0 t1 t2 t3 t4;</span></span>
-<span id="cb51-598"><a href="#cb51-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-599"><a href="#cb51-599" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb51-600"><a href="#cb51-600" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
-<span id="cb51-601"><a href="#cb51-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-602"><a href="#cb51-602" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb51-603"><a href="#cb51-603" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope</span></span>
-<span id="cb51-604"><a href="#cb51-604" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
-<span id="cb51-605"><a href="#cb51-605" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-606"><a href="#cb51-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-607"><a href="#cb51-607" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Class Growth Analysis {#sec-lcga}</span></span>
-<span id="cb51-608"><a href="#cb51-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-593"><a href="#cb51-593" aria-hidden="true" tabindex="-1"></a>Unequally spaced time points can be accounted for using the <span class="in">`TSCORES`</span> option.</span>
+<span id="cb51-594"><a href="#cb51-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-595"><a href="#cb51-595" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Z7QY-TL6W&gt;</span>)</span>
+<span id="cb51-596"><a href="#cb51-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-597"><a href="#cb51-597" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-598"><a href="#cb51-598" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
+<span id="cb51-599"><a href="#cb51-599" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb51-600"><a href="#cb51-600" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb51-601"><a href="#cb51-601" aria-hidden="true" tabindex="-1"></a><span class="in">    TSCORES = t0 t1 t2 t3 t4;</span></span>
+<span id="cb51-602"><a href="#cb51-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-603"><a href="#cb51-603" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb51-604"><a href="#cb51-604" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
+<span id="cb51-605"><a href="#cb51-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-606"><a href="#cb51-606" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb51-607"><a href="#cb51-607" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes</span></span>
+<span id="cb51-608"><a href="#cb51-608" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
 <span id="cb51-609"><a href="#cb51-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-610"><a href="#cb51-610" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb51-611"><a href="#cb51-611" aria-hidden="true" tabindex="-1"></a><span class="in">  NAMES = id y1 y2 y3 y4;</span></span>
-<span id="cb51-612"><a href="#cb51-612" aria-hidden="true" tabindex="-1"></a><span class="in">  USEVARIABLES = y1 y2 y3 y4;</span></span>
-<span id="cb51-613"><a href="#cb51-613" aria-hidden="true" tabindex="-1"></a><span class="in">  IDVARIABLE = id;</span></span>
-<span id="cb51-614"><a href="#cb51-614" aria-hidden="true" tabindex="-1"></a><span class="in">  CLASSES = c(3); ! 3 latent classes</span></span>
-<span id="cb51-615"><a href="#cb51-615" aria-hidden="true" tabindex="-1"></a><span class="in">  MISSING = .;</span></span>
-<span id="cb51-616"><a href="#cb51-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-617"><a href="#cb51-617" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb51-618"><a href="#cb51-618" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = MIXTURE;</span></span>
-<span id="cb51-619"><a href="#cb51-619" aria-hidden="true" tabindex="-1"></a><span class="in">  ESTIMATOR = MLR;</span></span>
-<span id="cb51-620"><a href="#cb51-620" aria-hidden="true" tabindex="-1"></a><span class="in">  STARTS = 500 20;</span></span>
-<span id="cb51-621"><a href="#cb51-621" aria-hidden="true" tabindex="-1"></a><span class="in">  STITERATIONS = 20;</span></span>
-<span id="cb51-622"><a href="#cb51-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-623"><a href="#cb51-623" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb51-624"><a href="#cb51-624" aria-hidden="true" tabindex="-1"></a><span class="in">  %OVERALL%</span></span>
-<span id="cb51-625"><a href="#cb51-625" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope</span></span>
-<span id="cb51-626"><a href="#cb51-626" aria-hidden="true" tabindex="-1"></a><span class="in">    i@0; s@0; q@0; ! fix variances to zero (LCGA assumption)</span></span>
-<span id="cb51-627"><a href="#cb51-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-628"><a href="#cb51-628" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#1%</span></span>
-<span id="cb51-629"><a href="#cb51-629" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q]; ! freely estimate class-specific means</span></span>
-<span id="cb51-630"><a href="#cb51-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-631"><a href="#cb51-631" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#2%</span></span>
-<span id="cb51-632"><a href="#cb51-632" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
-<span id="cb51-633"><a href="#cb51-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-634"><a href="#cb51-634" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#3%</span></span>
-<span id="cb51-635"><a href="#cb51-635" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
-<span id="cb51-636"><a href="#cb51-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-637"><a href="#cb51-637" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb51-638"><a href="#cb51-638" aria-hidden="true" tabindex="-1"></a><span class="in">  standardized TECH1 TECH4 TECH8 TECH11 TECH14;</span></span>
-<span id="cb51-639"><a href="#cb51-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-640"><a href="#cb51-640" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb51-641"><a href="#cb51-641" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = PLOT3;</span></span>
-<span id="cb51-642"><a href="#cb51-642" aria-hidden="true" tabindex="-1"></a><span class="in">  SERIES = y1(0) y2(1) y3(2) y4(3);</span></span>
+<span id="cb51-610"><a href="#cb51-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-611"><a href="#cb51-611" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Class Growth Analysis {#sec-lcga}</span></span>
+<span id="cb51-612"><a href="#cb51-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-613"><a href="#cb51-613" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-614"><a href="#cb51-614" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb51-615"><a href="#cb51-615" aria-hidden="true" tabindex="-1"></a><span class="in">  NAMES = id y1 y2 y3 y4;</span></span>
+<span id="cb51-616"><a href="#cb51-616" aria-hidden="true" tabindex="-1"></a><span class="in">  USEVARIABLES = y1 y2 y3 y4;</span></span>
+<span id="cb51-617"><a href="#cb51-617" aria-hidden="true" tabindex="-1"></a><span class="in">  IDVARIABLE = id;</span></span>
+<span id="cb51-618"><a href="#cb51-618" aria-hidden="true" tabindex="-1"></a><span class="in">  CLASSES = c(3); ! 3 latent classes</span></span>
+<span id="cb51-619"><a href="#cb51-619" aria-hidden="true" tabindex="-1"></a><span class="in">  MISSING = .;</span></span>
+<span id="cb51-620"><a href="#cb51-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-621"><a href="#cb51-621" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb51-622"><a href="#cb51-622" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = MIXTURE;</span></span>
+<span id="cb51-623"><a href="#cb51-623" aria-hidden="true" tabindex="-1"></a><span class="in">  ESTIMATOR = MLR;</span></span>
+<span id="cb51-624"><a href="#cb51-624" aria-hidden="true" tabindex="-1"></a><span class="in">  STARTS = 500 20;</span></span>
+<span id="cb51-625"><a href="#cb51-625" aria-hidden="true" tabindex="-1"></a><span class="in">  STITERATIONS = 20;</span></span>
+<span id="cb51-626"><a href="#cb51-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-627"><a href="#cb51-627" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb51-628"><a href="#cb51-628" aria-hidden="true" tabindex="-1"></a><span class="in">  %OVERALL%</span></span>
+<span id="cb51-629"><a href="#cb51-629" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope</span></span>
+<span id="cb51-630"><a href="#cb51-630" aria-hidden="true" tabindex="-1"></a><span class="in">    i@0; s@0; q@0; ! fix variances to zero (LCGA assumption)</span></span>
+<span id="cb51-631"><a href="#cb51-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-632"><a href="#cb51-632" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#1%</span></span>
+<span id="cb51-633"><a href="#cb51-633" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q]; ! freely estimate class-specific means</span></span>
+<span id="cb51-634"><a href="#cb51-634" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-635"><a href="#cb51-635" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#2%</span></span>
+<span id="cb51-636"><a href="#cb51-636" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
+<span id="cb51-637"><a href="#cb51-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-638"><a href="#cb51-638" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#3%</span></span>
+<span id="cb51-639"><a href="#cb51-639" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
+<span id="cb51-640"><a href="#cb51-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-641"><a href="#cb51-641" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb51-642"><a href="#cb51-642" aria-hidden="true" tabindex="-1"></a><span class="in">  standardized TECH1 TECH4 TECH8 TECH11 TECH14;</span></span>
 <span id="cb51-643"><a href="#cb51-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-644"><a href="#cb51-644" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
-<span id="cb51-645"><a href="#cb51-645" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = lcga_3class_prob.dat;</span></span>
-<span id="cb51-646"><a href="#cb51-646" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = CPROBABILITIES;</span></span>
-<span id="cb51-647"><a href="#cb51-647" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-648"><a href="#cb51-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-649"><a href="#cb51-649" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Models in Batch {#sec-runModels}</span></span>
-<span id="cb51-650"><a href="#cb51-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-651"><a href="#cb51-651" aria-hidden="true" tabindex="-1"></a>Run models in batch via <span class="in">`R`</span>:</span>
+<span id="cb51-644"><a href="#cb51-644" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb51-645"><a href="#cb51-645" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = PLOT3;</span></span>
+<span id="cb51-646"><a href="#cb51-646" aria-hidden="true" tabindex="-1"></a><span class="in">  SERIES = y1(0) y2(1) y3(2) y4(3);</span></span>
+<span id="cb51-647"><a href="#cb51-647" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-648"><a href="#cb51-648" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
+<span id="cb51-649"><a href="#cb51-649" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = lcga_3class_prob.dat;</span></span>
+<span id="cb51-650"><a href="#cb51-650" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = CPROBABILITIES;</span></span>
+<span id="cb51-651"><a href="#cb51-651" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb51-652"><a href="#cb51-652" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-655"><a href="#cb51-655" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-656"><a href="#cb51-656" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb51-657"><a href="#cb51-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-658"><a href="#cb51-658" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"MplusAutomation"</span>)</span>
-<span id="cb51-659"><a href="#cb51-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-660"><a href="#cb51-660" aria-hidden="true" tabindex="-1"></a><span class="fu">runModels</span>(</span>
-<span id="cb51-661"><a href="#cb51-661" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(path, <span class="st">"/GitHub/Project_Name/Analyses/Mplus/"</span>),</span>
-<span id="cb51-662"><a href="#cb51-662" aria-hidden="true" tabindex="-1"></a>  <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb51-663"><a href="#cb51-663" aria-hidden="true" tabindex="-1"></a>  <span class="at">replaceOutfile =</span> <span class="st">"always"</span>,</span>
-<span id="cb51-664"><a href="#cb51-664" aria-hidden="true" tabindex="-1"></a>  <span class="at">showOutput =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb51-665"><a href="#cb51-665" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-666"><a href="#cb51-666" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-667"><a href="#cb51-667" aria-hidden="true" tabindex="-1"></a><span class="fu"># Monte Carlo Simulation/Power Analysis {#sec-monteCarlo}</span></span>
-<span id="cb51-668"><a href="#cb51-668" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-669"><a href="#cb51-669" aria-hidden="true" tabindex="-1"></a><span class="fu">## Single Group Model {#sec-monteCarloSingleGroup}</span></span>
+<span id="cb51-653"><a href="#cb51-653" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Models in Batch {#sec-runModels}</span></span>
+<span id="cb51-654"><a href="#cb51-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-655"><a href="#cb51-655" aria-hidden="true" tabindex="-1"></a>Run models in batch via <span class="in">`R`</span>:</span>
+<span id="cb51-656"><a href="#cb51-656" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-659"><a href="#cb51-659" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-660"><a href="#cb51-660" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb51-661"><a href="#cb51-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-662"><a href="#cb51-662" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"MplusAutomation"</span>)</span>
+<span id="cb51-663"><a href="#cb51-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-664"><a href="#cb51-664" aria-hidden="true" tabindex="-1"></a><span class="fu">runModels</span>(</span>
+<span id="cb51-665"><a href="#cb51-665" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(path, <span class="st">"/GitHub/Project_Name/Analyses/Mplus/"</span>),</span>
+<span id="cb51-666"><a href="#cb51-666" aria-hidden="true" tabindex="-1"></a>  <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb51-667"><a href="#cb51-667" aria-hidden="true" tabindex="-1"></a>  <span class="at">replaceOutfile =</span> <span class="st">"always"</span>,</span>
+<span id="cb51-668"><a href="#cb51-668" aria-hidden="true" tabindex="-1"></a>  <span class="at">showOutput =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-669"><a href="#cb51-669" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb51-670"><a href="#cb51-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-671"><a href="#cb51-671" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-672"><a href="#cb51-672" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
-<span id="cb51-673"><a href="#cb51-673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-674"><a href="#cb51-674" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
-<span id="cb51-675"><a href="#cb51-675" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
-<span id="cb51-676"><a href="#cb51-676" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500; ! number of participants in each sample</span></span>
-<span id="cb51-677"><a href="#cb51-677" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
-<span id="cb51-678"><a href="#cb51-678" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
-<span id="cb51-679"><a href="#cb51-679" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
-<span id="cb51-680"><a href="#cb51-680" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
-<span id="cb51-681"><a href="#cb51-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-682"><a href="#cb51-682" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb51-683"><a href="#cb51-683" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
-<span id="cb51-684"><a href="#cb51-684" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
-<span id="cb51-685"><a href="#cb51-685" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
-<span id="cb51-686"><a href="#cb51-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-687"><a href="#cb51-687" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb51-688"><a href="#cb51-688" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-689"><a href="#cb51-689" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-690"><a href="#cb51-690" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-691"><a href="#cb51-691" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
-<span id="cb51-692"><a href="#cb51-692" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
-<span id="cb51-693"><a href="#cb51-693" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
-<span id="cb51-694"><a href="#cb51-694" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
-<span id="cb51-695"><a href="#cb51-695" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
-<span id="cb51-696"><a href="#cb51-696" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-697"><a href="#cb51-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-698"><a href="#cb51-698" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb51-699"><a href="#cb51-699" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-700"><a href="#cb51-700" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-701"><a href="#cb51-701" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-702"><a href="#cb51-702" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
-<span id="cb51-703"><a href="#cb51-703" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
-<span id="cb51-704"><a href="#cb51-704" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
-<span id="cb51-705"><a href="#cb51-705" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
-<span id="cb51-706"><a href="#cb51-706" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
-<span id="cb51-707"><a href="#cb51-707" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-708"><a href="#cb51-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-709"><a href="#cb51-709" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
-<span id="cb51-710"><a href="#cb51-710" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt stdt1 stdt2 stdt3 noninvt noninvt1 noninvt2 noninvt3 diff);</span></span>
-<span id="cb51-711"><a href="#cb51-711" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-712"><a href="#cb51-712" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1 = (v1t1 + v2t1 + v3t1) / 3;</span></span>
-<span id="cb51-713"><a href="#cb51-713" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2 = (v1t2 + v2t2 + v3t2) / 3;</span></span>
-<span id="cb51-714"><a href="#cb51-714" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3 = (v1t3 + v2t3 + v3t3) / 3;</span></span>
+<span id="cb51-671"><a href="#cb51-671" aria-hidden="true" tabindex="-1"></a><span class="fu"># Monte Carlo Simulation/Power Analysis {#sec-monteCarlo}</span></span>
+<span id="cb51-672"><a href="#cb51-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-673"><a href="#cb51-673" aria-hidden="true" tabindex="-1"></a><span class="fu">## Single Group Model {#sec-monteCarloSingleGroup}</span></span>
+<span id="cb51-674"><a href="#cb51-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-675"><a href="#cb51-675" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-676"><a href="#cb51-676" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
+<span id="cb51-677"><a href="#cb51-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-678"><a href="#cb51-678" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
+<span id="cb51-679"><a href="#cb51-679" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
+<span id="cb51-680"><a href="#cb51-680" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500; ! number of participants in each sample</span></span>
+<span id="cb51-681"><a href="#cb51-681" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
+<span id="cb51-682"><a href="#cb51-682" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
+<span id="cb51-683"><a href="#cb51-683" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
+<span id="cb51-684"><a href="#cb51-684" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
+<span id="cb51-685"><a href="#cb51-685" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-686"><a href="#cb51-686" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb51-687"><a href="#cb51-687" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
+<span id="cb51-688"><a href="#cb51-688" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
+<span id="cb51-689"><a href="#cb51-689" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
+<span id="cb51-690"><a href="#cb51-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-691"><a href="#cb51-691" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb51-692"><a href="#cb51-692" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-693"><a href="#cb51-693" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-694"><a href="#cb51-694" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-695"><a href="#cb51-695" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
+<span id="cb51-696"><a href="#cb51-696" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
+<span id="cb51-697"><a href="#cb51-697" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
+<span id="cb51-698"><a href="#cb51-698" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
+<span id="cb51-699"><a href="#cb51-699" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
+<span id="cb51-700"><a href="#cb51-700" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-701"><a href="#cb51-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-702"><a href="#cb51-702" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb51-703"><a href="#cb51-703" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-704"><a href="#cb51-704" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-705"><a href="#cb51-705" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-706"><a href="#cb51-706" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
+<span id="cb51-707"><a href="#cb51-707" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
+<span id="cb51-708"><a href="#cb51-708" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
+<span id="cb51-709"><a href="#cb51-709" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
+<span id="cb51-710"><a href="#cb51-710" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
+<span id="cb51-711"><a href="#cb51-711" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-712"><a href="#cb51-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-713"><a href="#cb51-713" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
+<span id="cb51-714"><a href="#cb51-714" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt stdt1 stdt2 stdt3 noninvt noninvt1 noninvt2 noninvt3 diff);</span></span>
 <span id="cb51-715"><a href="#cb51-715" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-716"><a href="#cb51-716" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt1 = (v4t1 + v5t1) / 2;</span></span>
-<span id="cb51-717"><a href="#cb51-717" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt2 = (v4t2 + v5t2) / 2;</span></span>
-<span id="cb51-718"><a href="#cb51-718" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt3 = (v4t3 + v5t3) / 2;</span></span>
+<span id="cb51-716"><a href="#cb51-716" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1 = (v1t1 + v2t1 + v3t1) / 3;</span></span>
+<span id="cb51-717"><a href="#cb51-717" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2 = (v1t2 + v2t2 + v3t2) / 3;</span></span>
+<span id="cb51-718"><a href="#cb51-718" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3 = (v1t3 + v2t3 + v3t3) / 3;</span></span>
 <span id="cb51-719"><a href="#cb51-719" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-720"><a href="#cb51-720" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt = (stdt1 + stdt2 + stdt3) / 3;</span></span>
-<span id="cb51-721"><a href="#cb51-721" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt = (noninvt1 + noninvt2 + noninvt3) / 3;</span></span>
-<span id="cb51-722"><a href="#cb51-722" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-723"><a href="#cb51-723" aria-hidden="true" tabindex="-1"></a><span class="in">    diff = noninvt - stdt;</span></span>
-<span id="cb51-724"><a href="#cb51-724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-725"><a href="#cb51-725" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb51-726"><a href="#cb51-726" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
-<span id="cb51-727"><a href="#cb51-727" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-720"><a href="#cb51-720" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt1 = (v4t1 + v5t1) / 2;</span></span>
+<span id="cb51-721"><a href="#cb51-721" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt2 = (v4t2 + v5t2) / 2;</span></span>
+<span id="cb51-722"><a href="#cb51-722" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt3 = (v4t3 + v5t3) / 2;</span></span>
+<span id="cb51-723"><a href="#cb51-723" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-724"><a href="#cb51-724" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt = (stdt1 + stdt2 + stdt3) / 3;</span></span>
+<span id="cb51-725"><a href="#cb51-725" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt = (noninvt1 + noninvt2 + noninvt3) / 3;</span></span>
+<span id="cb51-726"><a href="#cb51-726" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-727"><a href="#cb51-727" aria-hidden="true" tabindex="-1"></a><span class="in">    diff = noninvt - stdt;</span></span>
 <span id="cb51-728"><a href="#cb51-728" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-729"><a href="#cb51-729" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Group Model {#sec-monteCarloMultigroup}</span></span>
-<span id="cb51-730"><a href="#cb51-730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-729"><a href="#cb51-729" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb51-730"><a href="#cb51-730" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
 <span id="cb51-731"><a href="#cb51-731" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-732"><a href="#cb51-732" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
-<span id="cb51-733"><a href="#cb51-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-734"><a href="#cb51-734" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
-<span id="cb51-735"><a href="#cb51-735" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
-<span id="cb51-736"><a href="#cb51-736" aria-hidden="true" tabindex="-1"></a><span class="in">    NGROUPS = 2; ! number of groups</span></span>
-<span id="cb51-737"><a href="#cb51-737" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500 300; ! number of participants in each sample</span></span>
-<span id="cb51-738"><a href="#cb51-738" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
-<span id="cb51-739"><a href="#cb51-739" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
-<span id="cb51-740"><a href="#cb51-740" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
-<span id="cb51-741"><a href="#cb51-741" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
-<span id="cb51-742"><a href="#cb51-742" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-743"><a href="#cb51-743" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb51-744"><a href="#cb51-744" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
-<span id="cb51-745"><a href="#cb51-745" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
-<span id="cb51-746"><a href="#cb51-746" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
-<span id="cb51-747"><a href="#cb51-747" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-748"><a href="#cb51-748" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb51-749"><a href="#cb51-749" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-750"><a href="#cb51-750" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-751"><a href="#cb51-751" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-752"><a href="#cb51-752" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
-<span id="cb51-753"><a href="#cb51-753" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
-<span id="cb51-754"><a href="#cb51-754" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
-<span id="cb51-755"><a href="#cb51-755" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
-<span id="cb51-756"><a href="#cb51-756" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
-<span id="cb51-757"><a href="#cb51-757" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-758"><a href="#cb51-758" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-759"><a href="#cb51-759" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION-g2: ! tell Mplus how to generate the population data for group 2; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb51-760"><a href="#cb51-760" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-761"><a href="#cb51-761" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-762"><a href="#cb51-762" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-763"><a href="#cb51-763" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
-<span id="cb51-764"><a href="#cb51-764" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
-<span id="cb51-765"><a href="#cb51-765" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
-<span id="cb51-766"><a href="#cb51-766" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
-<span id="cb51-767"><a href="#cb51-767" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
-<span id="cb51-768"><a href="#cb51-768" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-769"><a href="#cb51-769" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-770"><a href="#cb51-770" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb51-771"><a href="#cb51-771" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-772"><a href="#cb51-772" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-773"><a href="#cb51-773" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-774"><a href="#cb51-774" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
-<span id="cb51-775"><a href="#cb51-775" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
-<span id="cb51-776"><a href="#cb51-776" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
-<span id="cb51-777"><a href="#cb51-777" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
-<span id="cb51-778"><a href="#cb51-778" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
-<span id="cb51-779"><a href="#cb51-779" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-780"><a href="#cb51-780" aria-hidden="true" tabindex="-1"></a><span class="in">   </span></span>
-<span id="cb51-781"><a href="#cb51-781" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL g2: ! tell Mplus to estimate our model in group 2; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb51-782"><a href="#cb51-782" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb51-783"><a href="#cb51-783" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
-<span id="cb51-784"><a href="#cb51-784" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb51-785"><a href="#cb51-785" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
-<span id="cb51-786"><a href="#cb51-786" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
-<span id="cb51-787"><a href="#cb51-787" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
-<span id="cb51-788"><a href="#cb51-788" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
-<span id="cb51-789"><a href="#cb51-789" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
-<span id="cb51-790"><a href="#cb51-790" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
-<span id="cb51-791"><a href="#cb51-791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-792"><a href="#cb51-792" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
-<span id="cb51-793"><a href="#cb51-793" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt1g1 stdt2g1 stdt3g1 stdt1g2 stdt2g2 stdt3g2</span></span>
-<span id="cb51-794"><a href="#cb51-794" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 nonit2g1 nonit3g1 nonit1g2 nonit2g2 nonit3g2</span></span>
-<span id="cb51-795"><a href="#cb51-795" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 stdtg2 nonitg1 nonitg2 diffwg diffbg);</span></span>
-<span id="cb51-796"><a href="#cb51-796" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-797"><a href="#cb51-797" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g1 = (v1t1g1 + v2t1g1 + v3t1g1) / 3;</span></span>
-<span id="cb51-798"><a href="#cb51-798" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g1 = (v1t2g1 + v2t2g1 + v3t2g1) / 3;</span></span>
-<span id="cb51-799"><a href="#cb51-799" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g1 = (v1t3g1 + v2t3g1 + v3t3g1) / 3;</span></span>
+<span id="cb51-732"><a href="#cb51-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-733"><a href="#cb51-733" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Group Model {#sec-monteCarloMultigroup}</span></span>
+<span id="cb51-734"><a href="#cb51-734" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-735"><a href="#cb51-735" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-736"><a href="#cb51-736" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
+<span id="cb51-737"><a href="#cb51-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-738"><a href="#cb51-738" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
+<span id="cb51-739"><a href="#cb51-739" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
+<span id="cb51-740"><a href="#cb51-740" aria-hidden="true" tabindex="-1"></a><span class="in">    NGROUPS = 2; ! number of groups</span></span>
+<span id="cb51-741"><a href="#cb51-741" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500 300; ! number of participants in each sample</span></span>
+<span id="cb51-742"><a href="#cb51-742" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
+<span id="cb51-743"><a href="#cb51-743" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
+<span id="cb51-744"><a href="#cb51-744" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
+<span id="cb51-745"><a href="#cb51-745" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
+<span id="cb51-746"><a href="#cb51-746" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-747"><a href="#cb51-747" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb51-748"><a href="#cb51-748" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
+<span id="cb51-749"><a href="#cb51-749" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
+<span id="cb51-750"><a href="#cb51-750" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
+<span id="cb51-751"><a href="#cb51-751" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-752"><a href="#cb51-752" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb51-753"><a href="#cb51-753" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-754"><a href="#cb51-754" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-755"><a href="#cb51-755" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-756"><a href="#cb51-756" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
+<span id="cb51-757"><a href="#cb51-757" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
+<span id="cb51-758"><a href="#cb51-758" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
+<span id="cb51-759"><a href="#cb51-759" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
+<span id="cb51-760"><a href="#cb51-760" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
+<span id="cb51-761"><a href="#cb51-761" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-762"><a href="#cb51-762" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-763"><a href="#cb51-763" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION-g2: ! tell Mplus how to generate the population data for group 2; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb51-764"><a href="#cb51-764" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-765"><a href="#cb51-765" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-766"><a href="#cb51-766" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-767"><a href="#cb51-767" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
+<span id="cb51-768"><a href="#cb51-768" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
+<span id="cb51-769"><a href="#cb51-769" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
+<span id="cb51-770"><a href="#cb51-770" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
+<span id="cb51-771"><a href="#cb51-771" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
+<span id="cb51-772"><a href="#cb51-772" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-773"><a href="#cb51-773" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-774"><a href="#cb51-774" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb51-775"><a href="#cb51-775" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-776"><a href="#cb51-776" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-777"><a href="#cb51-777" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-778"><a href="#cb51-778" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
+<span id="cb51-779"><a href="#cb51-779" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
+<span id="cb51-780"><a href="#cb51-780" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
+<span id="cb51-781"><a href="#cb51-781" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
+<span id="cb51-782"><a href="#cb51-782" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
+<span id="cb51-783"><a href="#cb51-783" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-784"><a href="#cb51-784" aria-hidden="true" tabindex="-1"></a><span class="in">   </span></span>
+<span id="cb51-785"><a href="#cb51-785" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL g2: ! tell Mplus to estimate our model in group 2; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb51-786"><a href="#cb51-786" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb51-787"><a href="#cb51-787" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
+<span id="cb51-788"><a href="#cb51-788" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb51-789"><a href="#cb51-789" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
+<span id="cb51-790"><a href="#cb51-790" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
+<span id="cb51-791"><a href="#cb51-791" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
+<span id="cb51-792"><a href="#cb51-792" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
+<span id="cb51-793"><a href="#cb51-793" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
+<span id="cb51-794"><a href="#cb51-794" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
+<span id="cb51-795"><a href="#cb51-795" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-796"><a href="#cb51-796" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
+<span id="cb51-797"><a href="#cb51-797" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt1g1 stdt2g1 stdt3g1 stdt1g2 stdt2g2 stdt3g2</span></span>
+<span id="cb51-798"><a href="#cb51-798" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 nonit2g1 nonit3g1 nonit1g2 nonit2g2 nonit3g2</span></span>
+<span id="cb51-799"><a href="#cb51-799" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 stdtg2 nonitg1 nonitg2 diffwg diffbg);</span></span>
 <span id="cb51-800"><a href="#cb51-800" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-801"><a href="#cb51-801" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g2 = (v1t1g2 + v2t1g2 + v3t1g2) / 3;</span></span>
-<span id="cb51-802"><a href="#cb51-802" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g2 = (v1t2g2 + v2t2g2 + v3t2g2) / 3;</span></span>
-<span id="cb51-803"><a href="#cb51-803" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g2 = (v1t3g2 + v2t3g2 + v3t3g2) / 3;</span></span>
+<span id="cb51-801"><a href="#cb51-801" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g1 = (v1t1g1 + v2t1g1 + v3t1g1) / 3;</span></span>
+<span id="cb51-802"><a href="#cb51-802" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g1 = (v1t2g1 + v2t2g1 + v3t2g1) / 3;</span></span>
+<span id="cb51-803"><a href="#cb51-803" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g1 = (v1t3g1 + v2t3g1 + v3t3g1) / 3;</span></span>
 <span id="cb51-804"><a href="#cb51-804" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-805"><a href="#cb51-805" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 = (v4t1g1 + v5t1g1) / 2;</span></span>
-<span id="cb51-806"><a href="#cb51-806" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g1 = (v4t2g1 + v5t2g1) / 2;</span></span>
-<span id="cb51-807"><a href="#cb51-807" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g1 = (v4t3g1 + v5t3g1) / 2;</span></span>
+<span id="cb51-805"><a href="#cb51-805" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g2 = (v1t1g2 + v2t1g2 + v3t1g2) / 3;</span></span>
+<span id="cb51-806"><a href="#cb51-806" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g2 = (v1t2g2 + v2t2g2 + v3t2g2) / 3;</span></span>
+<span id="cb51-807"><a href="#cb51-807" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g2 = (v1t3g2 + v2t3g2 + v3t3g2) / 3;</span></span>
 <span id="cb51-808"><a href="#cb51-808" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-809"><a href="#cb51-809" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g2 = (v4t1g2 + v5t1g2) / 2;</span></span>
-<span id="cb51-810"><a href="#cb51-810" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g2 = (v4t2g2 + v5t2g2) / 2;</span></span>
-<span id="cb51-811"><a href="#cb51-811" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g2 = (v4t3g2 + v5t3g2) / 2;</span></span>
+<span id="cb51-809"><a href="#cb51-809" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 = (v4t1g1 + v5t1g1) / 2;</span></span>
+<span id="cb51-810"><a href="#cb51-810" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g1 = (v4t2g1 + v5t2g1) / 2;</span></span>
+<span id="cb51-811"><a href="#cb51-811" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g1 = (v4t3g1 + v5t3g1) / 2;</span></span>
 <span id="cb51-812"><a href="#cb51-812" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-813"><a href="#cb51-813" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 = (stdt1g1 + stdt2g1 + stdt3g1) / 3;</span></span>
-<span id="cb51-814"><a href="#cb51-814" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg2 = (stdt1g2 + stdt2g2 + stdt3g2) / 3;</span></span>
-<span id="cb51-815"><a href="#cb51-815" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-816"><a href="#cb51-816" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg1 = (nonit1g1 + nonit2g1 + nonit3g1) / 3;</span></span>
-<span id="cb51-817"><a href="#cb51-817" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg2 = (nonit1g2 + nonit2g2 + nonit3g2) / 3;</span></span>
-<span id="cb51-818"><a href="#cb51-818" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-819"><a href="#cb51-819" aria-hidden="true" tabindex="-1"></a><span class="in">    diffwg = nonitg2 - stdtg2; ! difference within group</span></span>
-<span id="cb51-820"><a href="#cb51-820" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-821"><a href="#cb51-821" aria-hidden="true" tabindex="-1"></a><span class="in">    diffbg = nonitg2 - nonitg1; ! difference between groups</span></span>
+<span id="cb51-813"><a href="#cb51-813" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g2 = (v4t1g2 + v5t1g2) / 2;</span></span>
+<span id="cb51-814"><a href="#cb51-814" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g2 = (v4t2g2 + v5t2g2) / 2;</span></span>
+<span id="cb51-815"><a href="#cb51-815" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g2 = (v4t3g2 + v5t3g2) / 2;</span></span>
+<span id="cb51-816"><a href="#cb51-816" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-817"><a href="#cb51-817" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 = (stdt1g1 + stdt2g1 + stdt3g1) / 3;</span></span>
+<span id="cb51-818"><a href="#cb51-818" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg2 = (stdt1g2 + stdt2g2 + stdt3g2) / 3;</span></span>
+<span id="cb51-819"><a href="#cb51-819" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-820"><a href="#cb51-820" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg1 = (nonit1g1 + nonit2g1 + nonit3g1) / 3;</span></span>
+<span id="cb51-821"><a href="#cb51-821" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg2 = (nonit1g2 + nonit2g2 + nonit3g2) / 3;</span></span>
 <span id="cb51-822"><a href="#cb51-822" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb51-823"><a href="#cb51-823" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb51-824"><a href="#cb51-824" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
-<span id="cb51-825"><a href="#cb51-825" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-826"><a href="#cb51-826" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-827"><a href="#cb51-827" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb51-828"><a href="#cb51-828" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-831"><a href="#cb51-831" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-832"><a href="#cb51-832" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb51-833"><a href="#cb51-833" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-834"><a href="#cb51-834" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb51-835"><a href="#cb51-835" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-823"><a href="#cb51-823" aria-hidden="true" tabindex="-1"></a><span class="in">    diffwg = nonitg2 - stdtg2; ! difference within group</span></span>
+<span id="cb51-824"><a href="#cb51-824" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-825"><a href="#cb51-825" aria-hidden="true" tabindex="-1"></a><span class="in">    diffbg = nonitg2 - nonitg1; ! difference between groups</span></span>
+<span id="cb51-826"><a href="#cb51-826" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb51-827"><a href="#cb51-827" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb51-828"><a href="#cb51-828" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
+<span id="cb51-829"><a href="#cb51-829" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb51-830"><a href="#cb51-830" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-831"><a href="#cb51-831" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb51-832"><a href="#cb51-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-835"><a href="#cb51-835" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb51-836"><a href="#cb51-836" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb51-837"><a href="#cb51-837" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-838"><a href="#cb51-838" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb51-839"><a href="#cb51-839" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
