@@ -578,7 +578,11 @@ ANALYSIS:
     TYPE = RANDOM;
 
 MODEL:
-    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes
+    i s q | y0@0 y1@1 y2@2 y3@3 y4@4; ! intercept, linear slope, quadratic slope
+    ! OR ALTERNATIVELY:
+    !i BY y0@1 y1@1 y2@1 y3@1 y4@1;
+    !s BY y0@0 y1@1 y2@2 y3@3 y4@4;
+    !q BY y0@0 y1@1 y2@4 y3@9 y4@16;
     i s q ON x;
 ```
 
@@ -598,7 +602,7 @@ ANALYSIS:
     TYPE = RANDOM;
 
 MODEL:
-    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope
+    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes
     i s q ON x;
 ```
 
