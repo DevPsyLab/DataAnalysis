@@ -886,7 +886,12 @@ ggplot(
   ylab("Score") +
   scale_y_continuous(
     limits = c(0, 5)) +
-  geom_line()
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5
+  )
 ```
 
 #### Individuals' Growth Curves
@@ -927,28 +932,47 @@ ggplot(
   ylab("Score") +
   scale_y_continuous(
     limits = c(-10, 20)) +
-  geom_line()
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5
+  )
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
-  geom_line( # individuals' model-implied trajectories
-    data = individual_trajectories,
-    aes(
-      x = time,
-      y = value,
-      group = id),
+ggplot(
+  data = individual_trajectories,
+  mapping = aes(
+    x = time,
+    y = value,
+    group = id)) +
+  geom_smooth( # individuals' model-implied trajectories
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.30
   ) +
-  geom_line( # prototypical trajectory
+  geom_smooth( # prototypical trajectory
     data = newData,
-    aes(
+    mapping = aes(
       x = time,
       y = predictedValue),
-    color = "blue",
+    inherit.aes = FALSE,
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
     linewidth = 2
-  )
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Depression Symptoms"
+  ) +
+  theme_classic()
 ```
 
 ## Spline (Piecewise) Growth Curve Model {#sec-splineLGCM}
