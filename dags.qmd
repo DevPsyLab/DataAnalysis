@@ -8,12 +8,18 @@ Causal diagrams depict the hypoothesized causal processes that link two or more 
 Path diagrams are typically used after analysis to describe and report the findings in analysis (when using path analysis, [factor analysis](factorAnalysis.qmd), or [structural equation modeling](sem.qmd)).
 By contrast, DAGs are particularly useful when designing a study or before analysis, because they can help specify which variables it is important to control for and—just as importantly—which variables it is important not to control for.
 
-When drawing a DAG for your study, draw all the variables that link the hypothesized cause to the hypothesized effect, including confounders, mediators, and colliders.
-In your study, it is important to control for confounders.
-Moreover, it is important not to control to control for mediators when you are interested in the total effect of the predictor on the outcome.
-In addition, it is important not to control for descendants of the outcome variable.
-When there is a collision, it is important not to control for the collider when examining the association between the two causes of the collider.
-The only time when one should control for a collider is when the collider is also a cause (i.e., confound) of both the predictor and outcome variable rather than a common effect of both.
+When drawing a DAG for your study, draw all the variables that link the hypothesized cause to the hypothesized effect, including confounds, mediators, and colliders.
+
+In your study, it is important to control for all confounds.
+In addition, it is okay to control for ancestors of the outcome variable that are not confounds or mediators.
+That is, it is okay to control for variables that influence `Y` that do not influence `X` and that are not influenced by `X`.
+When including these variable as control variables in a model, they are called precision variables.
+You do not need to include precision variables in the model because the estimate of the association is already unbiased if you have controlled for all confounds.
+However, including precision variables in the model reduces residual variance in the outcome variable and can yield more precise estimates (i.e., smaller standard errors) of the association between the predictor variable and outcome variable.
+
+In addition, there are some variables that are important not to control for.
+It is important not to control for mediators of two variables for which you want to determine the estimate of the causal effect—unless you are interested in the direct causal effect of the predictor variable on the outcome variable above and beyond the mediator.
+In addition, it is is important not to control for a) ancestors of the predictor variable that are not confounds, b) descendants of the outcome variable, and c) colliders (unless the collider is also a confound).
 
 For more information on DAGs, including ancestors, descendants, confounders, and colliders, see here: <https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook/causal-inference.html#sec-causalDiagrams>.
 
