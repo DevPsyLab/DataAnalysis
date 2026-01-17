@@ -121,7 +121,7 @@ ggplot(
 
 ```{r}
 linearMixedModel <- lmer(
-  math ~ female + ageYearsCentered + female:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -209,11 +209,11 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     group = id)) +
-  geom_line(
+  geom_line( # individuals' trajectories
     color = "gray",
     alpha = 0.5
   ) +
-  geom_line(
+  geom_line( # prototypical trajectory
     data = newData,
     mapping = aes(
       x = ageYears,
@@ -250,7 +250,7 @@ linearMixedModel_re
 
 ```{r}
 linearMixedModel_nlme <- lme(
-  math ~ female + ageYearsCentered + female:ageYearsCentered, # sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + sex:ageYearsCentered, # sex as a fixed-effect predictor of the intercepts and slopes
   random = ~ 1 + ageYearsCentered|id, # random intercepts and slopes
   data = mydata,
   method = "ML",
@@ -277,7 +277,7 @@ Adapted from Usami & Murayama (2018):
 
 ```{r}
 timepointSpecificErrorsMixedModel <- lmer(
-  math ~ female + ageYearsCentered + female:ageYearsCentered + (1 | id) + (1 | ageYearsCentered), # timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 | id) + (1 | ageYearsCentered), # timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -313,7 +313,7 @@ quadraticLoadings
 
 ```{r}
 quadraticGCM <- lmer(
-  math ~ female + ageYearsCentered + ageYearsCenteredSquared + female:ageYearsCentered + female:ageYearsCenteredSquared + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + ageYearsCenteredSquared + sex:ageYearsCentered + sex:ageYearsCenteredSquared + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -331,7 +331,7 @@ This is equivalent to:
 
 ```{r}
 quadraticGCM <- lmer(
-  math ~ female + ageYearsCentered + I(ageYearsCentered^2) + female:ageYearsCentered + female:I(ageYearsCentered^2) + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + I(ageYearsCentered^2) + sex:ageYearsCentered + sex:I(ageYearsCentered^2) + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -422,7 +422,7 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     group = id)) +
-  geom_line(
+  geom_line( # individuals' trajectories
     stat = "smooth",
     method = "lm",
     formula = y ~ x + I(x^2),
@@ -431,7 +431,7 @@ ggplot(
     color = "gray",
     alpha = 0.4
   ) +
-  geom_line(
+  geom_line( # prototypical trajectory
     data = newData,
     mapping = aes(
       x = ageYears,
@@ -478,7 +478,7 @@ mydata$knot[which(mydata$ageYears > 11)] <- 1
 
 ```{r}
 splineGCM <- lmer(
-  math ~ female + ageYearsCentered + female:ageYearsCentered + knot + knot:ageYearsCentered + female:knot + female:knot:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  math ~ sex + ageYearsCentered + sex:ageYearsCentered + knot + knot:ageYearsCentered + sex:knot + sex:knot:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
@@ -567,11 +567,11 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     group = id)) +
-  geom_line(
+  geom_line( # individuals' trajectories
     color = "gray",
     alpha = 0.5
   ) +
-  geom_line(
+  geom_line( # prototypical trajectory
     data = newData,
     mapping = aes(
       x = ageYears,
@@ -773,7 +773,7 @@ ggplot(
     x = ageYears,
     y = predictedValue,
     group = id)) +
-  geom_line(
+  geom_line( # individuals' trajectories
     stat = "smooth",
     method = gamMethod,
     se = FALSE,
@@ -781,7 +781,7 @@ ggplot(
     color = "gray",
     alpha = 0.4
   ) +
-  geom_line(
+  geom_line( # prototypical trajectory
     data = newData,
     mapping = aes(
       x = ageYears,
