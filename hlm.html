@@ -740,7 +740,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </h4>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linearMixedModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
@@ -750,8 +750,9 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
-Formula: math ~ female + ageYearsCentered + female:ageYearsCentered +  
-    (1 + ageYearsCentered | id)
+Formula: 
+math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 + ageYearsCentered |  
+    id)
    Data: mydata
 Control: lmerControl(optimizer = "bobyqa")
 
@@ -770,19 +771,19 @@ Random effects:
 Number of obs: 2221, groups:  id, 932
 
 Fixed effects:
-                         Estimate Std. Error        df t value Pr(&gt;|t|)    
-(Intercept)              30.51401    0.56142 752.48747  54.352   &lt;2e-16 ***
-female                   -0.61290    0.79482 736.39886  -0.771    0.441    
-ageYearsCentered          4.26792    0.11253 610.09410  37.925   &lt;2e-16 ***
-female:ageYearsCentered  -0.02558    0.16092 598.89155  -0.159    0.874    
+                            Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)                 30.51401    0.56142 752.48747  54.352   &lt;2e-16 ***
+sexfemale                   -0.61290    0.79482 736.39886  -0.771    0.441    
+ageYearsCentered             4.26792    0.11253 610.09410  37.925   &lt;2e-16 ***
+sexfemale:ageYearsCentered  -0.02558    0.16092 598.89155  -0.159    0.874    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
-            (Intr) female agYrsC
-female      -0.706              
+            (Intr) sexfml agYrsC
+sexfemale   -0.706              
 ageYrsCntrd -0.635  0.448       
-fml:gYrsCnt  0.444 -0.631 -0.699</code></pre>
+sxfml:gYrsC  0.444 -0.631 -0.699</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">linearMixedModel</span>,</span>
@@ -791,12 +792,12 @@ fml:gYrsCnt  0.444 -0.631 -0.699</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Standardization method: refit
 
-Parameter                 | Std. Coef. |        95% CI
-------------------------------------------------------
-(Intercept)               |   1.16e-03 | [-0.05, 0.05]
-female                    |      -0.03 | [-0.08, 0.02]
-ageYearsCentered          |       0.61 | [ 0.59, 0.63]
-female × ageYearsCentered |  -1.84e-03 | [-0.02, 0.02]</code></pre>
+Parameter                       | Std. Coef. |        95% CI
+------------------------------------------------------------
+(Intercept)                     |       0.03 | [-0.04, 0.10]
+sex [female]                    |      -0.06 | [-0.15, 0.04]
+ageYearsCentered                |       0.61 | [ 0.58, 0.64]
+sex [female] × ageYearsCentered |  -3.67e-03 | [-0.05, 0.04]</code></pre>
 </div>
 </div>
 <section id="prototypical-growth-curve" class="level5" data-number="6.1.1.2.1"><h5 data-number="6.1.1.2.1" class="anchored" data-anchor-id="prototypical-growth-curve">
@@ -883,11 +884,11 @@ female × ageYearsCentered |  -1.84e-03 | [-0.02, 0.02]</code></pre>
 <span>    x <span class="op">=</span> <span class="va">ageYears</span>,</span>
 <span>    y <span class="op">=</span> <span class="va">predictedValue</span>,</span>
 <span>    group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># individuals' trajectories</span></span>
 <span>    color <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.5</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># prototypical trajectory</span></span>
 <span>    data <span class="op">=</span> <span class="va">newData</span>,</span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
 <span>      x <span class="op">=</span> <span class="va">ageYears</span>,</span>
@@ -933,7 +934,7 @@ with conditional variances for "id" </code></pre>
 </h4>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linearMixedModel_nlme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span>, <span class="co"># sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span>, <span class="co"># sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span><span class="op">|</span><span class="va">id</span>, <span class="co"># random intercepts and slopes</span></span>
 <span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"ML"</span>,</span>
@@ -954,17 +955,17 @@ Random effects:
 ageYearsCentered 0.8225933 0.082 
 Residual         5.6701380       
 
-Fixed effects:  math ~ female + ageYearsCentered + female:ageYearsCentered 
-                            Value Std.Error   DF  t-value p-value
-(Intercept)             30.514011 0.5619217 1287 54.30296  0.0000
-female                  -0.612896 0.7955333  930 -0.77042  0.4412
-ageYearsCentered         4.267923 0.1126360 1287 37.89130  0.0000
-female:ageYearsCentered -0.025585 0.1610671 1287 -0.15885  0.8738
+Fixed effects:  math ~ sex + ageYearsCentered + sex:ageYearsCentered 
+                               Value Std.Error   DF  t-value p-value
+(Intercept)                30.514011 0.5619217 1287 54.30296  0.0000
+sexfemale                  -0.612896 0.7955333  930 -0.77042  0.4412
+ageYearsCentered            4.267923 0.1126360 1287 37.89130  0.0000
+sexfemale:ageYearsCentered -0.025585 0.1610671 1287 -0.15885  0.8738
  Correlation: 
-                        (Intr) female agYrsC
-female                  -0.706              
-ageYearsCentered        -0.635  0.448       
-female:ageYearsCentered  0.444 -0.631 -0.699
+                           (Intr) sexfml agYrsC
+sexfemale                  -0.706              
+ageYearsCentered           -0.635  0.448       
+sexfemale:ageYearsCentered  0.444 -0.631 -0.699
 
 Standardized Within-Group Residuals:
          Min           Q1          Med           Q3          Max 
@@ -980,12 +981,12 @@ Number of Groups: 932 </code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Standardization method: refit
 
-Parameter                 | Std. Coef. |        95% CI
-------------------------------------------------------
-(Intercept)               |   1.16e-03 | [-0.05, 0.05]
-female                    |      -0.03 | [-0.08, 0.02]
-ageYearsCentered          |       0.61 | [ 0.59, 0.63]
-female × ageYearsCentered |  -1.84e-03 | [-0.02, 0.02]</code></pre>
+Parameter                       | Std. Coef. |        95% CI
+------------------------------------------------------------
+(Intercept)                     |       0.03 | [-0.04, 0.10]
+sex [female]                    |      -0.06 | [-0.15, 0.04]
+ageYearsCentered                |       0.61 | [ 0.58, 0.64]
+sex [female] × ageYearsCentered |  -3.67e-03 | [-0.05, 0.04]</code></pre>
 </div>
 </div>
 </section><section id="sec-icc" class="level4" data-number="6.1.1.4"><h4 data-number="6.1.1.4" class="anchored" data-anchor-id="sec-icc">
@@ -1013,7 +1014,7 @@ female × ageYearsCentered |  -1.84e-03 | [-0.02, 0.02]</code></pre>
 <p>Adapted from Usami &amp; Murayama (2018):</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">timepointSpecificErrorsMixedModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">ageYearsCentered</span><span class="op">)</span>, <span class="co"># timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">ageYearsCentered</span><span class="op">)</span>, <span class="co"># timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
@@ -1023,8 +1024,8 @@ female × ageYearsCentered |  -1.84e-03 | [-0.02, 0.02]</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
-Formula: math ~ female + ageYearsCentered + female:ageYearsCentered +  
-    (1 | id) + (1 | ageYearsCentered)
+Formula: math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 | id) +  
+    (1 | ageYearsCentered)
    Data: mydata
 Control: lmerControl(optimizer = "bobyqa")
 
@@ -1043,19 +1044,24 @@ Random effects:
 Number of obs: 2221, groups:  id, 932; ageYearsCentered, 94
 
 Fixed effects:
-                          Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)               29.87438    0.75758  211.81838  39.434   &lt;2e-16 ***
-female                    -0.38123    0.82243 1960.43213  -0.464    0.643    
-ageYearsCentered           4.26419    0.14813  132.95739  28.786   &lt;2e-16 ***
-female:ageYearsCentered   -0.08143    0.14596 1364.56012  -0.558    0.577    
+                             Estimate Std. Error         df t value Pr(&gt;|t|)
+(Intercept)                  29.87438    0.75758  211.81838  39.434   &lt;2e-16
+sexfemale                    -0.38123    0.82243 1960.43213  -0.464    0.643
+ageYearsCentered              4.26419    0.14813  132.95739  28.786   &lt;2e-16
+sexfemale:ageYearsCentered   -0.08143    0.14596 1364.56012  -0.558    0.577
+                              
+(Intercept)                ***
+sexfemale                     
+ageYearsCentered           ***
+sexfemale:ageYearsCentered    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
-            (Intr) female agYrsC
-female      -0.545              
+            (Intr) sexfml agYrsC
+sexfemale   -0.545              
 ageYrsCntrd -0.758  0.321       
-fml:gYrsCnt  0.356 -0.652 -0.482</code></pre>
+sxfml:gYrsC  0.356 -0.652 -0.482</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">timepointSpecificErrorsMixedModel</span>,</span>
@@ -1064,12 +1070,12 @@ fml:gYrsCnt  0.356 -0.652 -0.482</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Standardization method: refit
 
-Parameter                 | Std. Coef. |         95% CI
--------------------------------------------------------
-(Intercept)               |      -1.28 | [-1.38, -1.19]
-female                    |      -0.01 | [-0.08,  0.05]
-ageYearsCentered          |       0.33 | [ 0.31,  0.35]
-female × ageYearsCentered |  -3.18e-03 | [-0.01,  0.01]</code></pre>
+Parameter                       | Std. Coef. |         95% CI
+-------------------------------------------------------------
+(Intercept)                     |      -1.27 | [-1.39, -1.15]
+sex [female]                    |      -0.03 | [-0.16,  0.10]
+ageYearsCentered                |       0.33 | [ 0.31,  0.36]
+sex [female] × ageYearsCentered |  -6.36e-03 | [-0.03,  0.02]</code></pre>
 </div>
 </div>
 </section><section id="sec-quadraticGCM" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="sec-quadraticGCM">
@@ -1115,83 +1121,7 @@ attr(,"class")
 <span class="header-section-number">6.1.3.1</span> Fit Model</h4>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">quadraticGCM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">ageYearsCenteredSquared</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCenteredSquared</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
-<span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
-<span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
-<span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html">lmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">quadraticGCM</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: math ~ female + ageYearsCentered + ageYearsCenteredSquared +  
-    female:ageYearsCentered + female:ageYearsCenteredSquared +  
-    (1 + ageYearsCentered | id)
-   Data: mydata
-Control: lmerControl(optimizer = "bobyqa")
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  15666.9   15724.0   -7823.5   15646.9      2211 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.3660 -0.4945  0.0048  0.5085  2.4377 
-
-Random effects:
- Groups   Name             Variance Std.Dev. Corr 
- id       (Intercept)      69.8860  8.3598        
-          ageYearsCentered  0.7099  0.8426   -0.05
- Residual                  27.1959  5.2150        
-Number of obs: 2221, groups:  id, 932
-
-Fixed effects:
-                                 Estimate Std. Error         df t value
-(Intercept)                      23.43112    0.84914 1380.85816  27.594
-female                            0.61167    1.18734 1370.91791   0.515
-ageYearsCentered                  8.79334    0.42555 1381.21301  20.664
-ageYearsCenteredSquared          -0.57623    0.05255 1382.10819 -10.966
-female:ageYearsCentered          -0.62379    0.60301 1386.34429  -1.034
-female:ageYearsCenteredSquared    0.05700    0.07582 1393.17373   0.752
-                               Pr(&gt;|t|)    
-(Intercept)                      &lt;2e-16 ***
-female                            0.607    
-ageYearsCentered                 &lt;2e-16 ***
-ageYearsCenteredSquared          &lt;2e-16 ***
-female:ageYearsCentered           0.301    
-female:ageYearsCenteredSquared    0.452    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr) female agYrsC agYrCS fml:YC
-female      -0.715                            
-ageYrsCntrd -0.836  0.598                     
-agYrsCntrdS  0.759 -0.543 -0.969              
-fml:gYrsCnt  0.590 -0.829 -0.706  0.683       
-fml:gYrsCnS -0.526  0.751  0.671 -0.693 -0.968</code></pre>
-</div>
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">quadraticGCM</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span>,</span>
-<span>  digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code># Standardization method: refit
-
-Parameter                        | Std. Coef. |         95% CI
---------------------------------------------------------------
-(Intercept)                      |      -0.01 | [-0.06,  0.04]
-female                           |      -0.03 | [-0.08,  0.02]
-ageYearsCentered                 |       1.22 | [ 1.13,  1.30]
-ageYearsCenteredSquared          |      -0.63 | [-0.72, -0.55]
-female × ageYearsCentered        |      -0.04 | [-0.13,  0.04]
-female × ageYearsCenteredSquared |       0.03 | [-0.05,  0.12]</code></pre>
-</div>
-</div>
-<p>This is equivalent to:</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">quadraticGCM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ageYearsCentered</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ageYearsCentered</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">ageYearsCenteredSquared</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCenteredSquared</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
@@ -1202,8 +1132,8 @@ female × ageYearsCenteredSquared |       0.03 | [-0.05,  0.12]</code></pre>
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
 Formula: 
-math ~ female + ageYearsCentered + I(ageYearsCentered^2) + female:ageYearsCentered +  
-    female:I(ageYearsCentered^2) + (1 + ageYearsCentered | id)
+math ~ sex + ageYearsCentered + ageYearsCenteredSquared + sex:ageYearsCentered +  
+    sex:ageYearsCenteredSquared + (1 + ageYearsCentered | id)
    Data: mydata
 Control: lmerControl(optimizer = "bobyqa")
 
@@ -1222,30 +1152,106 @@ Random effects:
 Number of obs: 2221, groups:  id, 932
 
 Fixed effects:
-                               Estimate Std. Error         df t value Pr(&gt;|t|)
-(Intercept)                    23.43112    0.84914 1380.85816  27.594   &lt;2e-16
-female                          0.61167    1.18734 1370.91791   0.515    0.607
-ageYearsCentered                8.79334    0.42555 1381.21301  20.664   &lt;2e-16
-I(ageYearsCentered^2)          -0.57623    0.05255 1382.10819 -10.966   &lt;2e-16
-female:ageYearsCentered        -0.62379    0.60301 1386.34429  -1.034    0.301
-female:I(ageYearsCentered^2)    0.05700    0.07582 1393.17373   0.752    0.452
-                                
-(Intercept)                  ***
-female                          
-ageYearsCentered             ***
-I(ageYearsCentered^2)        ***
-female:ageYearsCentered         
-female:I(ageYearsCentered^2)    
+                                    Estimate Std. Error         df t value
+(Intercept)                         23.43112    0.84914 1380.85816  27.594
+sexfemale                            0.61167    1.18734 1370.91791   0.515
+ageYearsCentered                     8.79334    0.42555 1381.21301  20.664
+ageYearsCenteredSquared             -0.57623    0.05255 1382.10819 -10.966
+sexfemale:ageYearsCentered          -0.62379    0.60301 1386.34429  -1.034
+sexfemale:ageYearsCenteredSquared    0.05700    0.07582 1393.17373   0.752
+                                  Pr(&gt;|t|)    
+(Intercept)                         &lt;2e-16 ***
+sexfemale                            0.607    
+ageYearsCentered                    &lt;2e-16 ***
+ageYearsCenteredSquared             &lt;2e-16 ***
+sexfemale:ageYearsCentered           0.301    
+sexfemale:ageYearsCenteredSquared    0.452    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
-            (Intr) female agYrsC I(YC^2 fml:YC
-female      -0.715                            
+            (Intr) sexfml agYrsC agYrCS sxf:YC
+sexfemale   -0.715                            
+ageYrsCntrd -0.836  0.598                     
+agYrsCntrdS  0.759 -0.543 -0.969              
+sxfml:gYrsC  0.590 -0.829 -0.706  0.683       
+sxfml:gYrCS -0.526  0.751  0.671 -0.693 -0.968</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
+<span>  <span class="va">quadraticGCM</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># Standardization method: refit
+
+Parameter                              | Std. Coef. |         95% CI
+--------------------------------------------------------------------
+(Intercept)                            |       0.02 | [-0.05,  0.08]
+sex [female]                           |      -0.06 | [-0.15,  0.04]
+ageYearsCentered                       |       1.26 | [ 1.14,  1.38]
+ageYearsCenteredSquared                |      -0.67 | [-0.79, -0.55]
+sex [female] × ageYearsCentered        |      -0.09 | [-0.26,  0.08]
+sex [female] × ageYearsCenteredSquared |       0.07 | [-0.11,  0.24]</code></pre>
+</div>
+</div>
+<p>This is equivalent to:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">quadraticGCM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ageYearsCentered</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ageYearsCentered</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
+<span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
+<span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html">lmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">quadraticGCM</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
+Formula: 
+math ~ sex + ageYearsCentered + I(ageYearsCentered^2) + sex:ageYearsCentered +  
+    sex:I(ageYearsCentered^2) + (1 + ageYearsCentered | id)
+   Data: mydata
+Control: lmerControl(optimizer = "bobyqa")
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+  15666.9   15724.0   -7823.5   15646.9      2211 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3660 -0.4945  0.0048  0.5085  2.4377 
+
+Random effects:
+ Groups   Name             Variance Std.Dev. Corr 
+ id       (Intercept)      69.8860  8.3598        
+          ageYearsCentered  0.7099  0.8426   -0.05
+ Residual                  27.1959  5.2150        
+Number of obs: 2221, groups:  id, 932
+
+Fixed effects:
+                                  Estimate Std. Error         df t value
+(Intercept)                       23.43112    0.84914 1380.85816  27.594
+sexfemale                          0.61167    1.18734 1370.91791   0.515
+ageYearsCentered                   8.79334    0.42555 1381.21301  20.664
+I(ageYearsCentered^2)             -0.57623    0.05255 1382.10819 -10.966
+sexfemale:ageYearsCentered        -0.62379    0.60301 1386.34429  -1.034
+sexfemale:I(ageYearsCentered^2)    0.05700    0.07582 1393.17373   0.752
+                                Pr(&gt;|t|)    
+(Intercept)                       &lt;2e-16 ***
+sexfemale                          0.607    
+ageYearsCentered                  &lt;2e-16 ***
+I(ageYearsCentered^2)             &lt;2e-16 ***
+sexfemale:ageYearsCentered         0.301    
+sexfemale:I(ageYearsCentered^2)    0.452    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) sexfml agYrsC I(YC^2 sxf:YC
+sexfemale   -0.715                            
 ageYrsCntrd -0.836  0.598                     
 I(gYrsCn^2)  0.759 -0.543 -0.969              
-fml:gYrsCnt  0.590 -0.829 -0.706  0.683       
-fml:I(YC^2) -0.526  0.751  0.671 -0.693 -0.968</code></pre>
+sxfml:gYrsC  0.590 -0.829 -0.706  0.683       
+sxf:I(YC^2) -0.526  0.751  0.671 -0.693 -0.968</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">quadraticGCM</span>,</span>
@@ -1254,14 +1260,14 @@ fml:I(YC^2) -0.526  0.751  0.671 -0.693 -0.968</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Standardization method: refit
 
-Parameter                   | Std. Coef. |         95% CI
----------------------------------------------------------
-(Intercept)                 |       0.13 | [ 0.08,  0.18]
-female                      |      -0.04 | [-0.09,  0.01]
-ageYearsCentered            |       0.63 | [ 0.61,  0.65]
-ageYearsCentered^2          |      -0.14 | [-0.16, -0.13]
-female × ageYearsCentered   |      -0.01 | [-0.04,  0.01]
-female × ageYearsCentered^2 |   7.53e-03 | [-0.01,  0.03]</code></pre>
+Parameter                         | Std. Coef. |         95% CI
+---------------------------------------------------------------
+(Intercept)                       |       0.17 | [ 0.10,  0.24]
+sex [female]                      |      -0.07 | [-0.17,  0.03]
+ageYearsCentered                  |       0.64 | [ 0.61,  0.67]
+ageYearsCentered^2                |      -0.15 | [-0.18, -0.12]
+sex [female] × ageYearsCentered   |      -0.03 | [-0.07,  0.01]
+sex [female] × ageYearsCentered^2 |       0.02 | [-0.02,  0.05]</code></pre>
 </div>
 </div>
 </section><section id="prototypical-growth-curve-1" class="level4" data-number="6.1.3.2"><h4 data-number="6.1.3.2" class="anchored" data-anchor-id="prototypical-growth-curve-1">
@@ -1351,7 +1357,7 @@ female × ageYearsCentered^2 |   7.53e-03 | [-0.01,  0.03]</code></pre>
 <span>    x <span class="op">=</span> <span class="va">ageYears</span>,</span>
 <span>    y <span class="op">=</span> <span class="va">predictedValue</span>,</span>
 <span>    group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># individuals' trajectories</span></span>
 <span>    stat <span class="op">=</span> <span class="st">"smooth"</span>,</span>
 <span>    method <span class="op">=</span> <span class="st">"lm"</span>,</span>
 <span>    formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
@@ -1360,7 +1366,7 @@ female × ageYearsCentered^2 |   7.53e-03 | [-0.01,  0.03]</code></pre>
 <span>    color <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.4</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># prototypical trajectory</span></span>
 <span>    data <span class="op">=</span> <span class="va">newData</span>,</span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
 <span>      x <span class="op">=</span> <span class="va">ageYears</span>,</span>
@@ -1415,7 +1421,7 @@ with conditional variances for "id" </code></pre>
 <span class="header-section-number">6.1.4.2</span> Fit Model</h4>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">splineGCM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">knot</span> <span class="op">+</span> <span class="va">knot</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">knot</span> <span class="op">+</span> <span class="va">female</span><span class="op">:</span><span class="va">knot</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span>  <span class="va">math</span> <span class="op">~</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">knot</span> <span class="op">+</span> <span class="va">knot</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">knot</span> <span class="op">+</span> <span class="va">sex</span><span class="op">:</span><span class="va">knot</span><span class="op">:</span><span class="va">ageYearsCentered</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">ageYearsCentered</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>, <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span>  data <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  REML <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span>  na.action <span class="op">=</span> <span class="va">na.exclude</span>,</span>
@@ -1425,8 +1431,8 @@ with conditional variances for "id" </code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
-Formula: math ~ female + ageYearsCentered + female:ageYearsCentered +  
-    knot + knot:ageYearsCentered + female:knot + female:knot:ageYearsCentered +  
+Formula: math ~ sex + ageYearsCentered + sex:ageYearsCentered + knot +  
+    knot:ageYearsCentered + sex:knot + sex:knot:ageYearsCentered +  
     (1 + ageYearsCentered | id)
    Data: mydata
 Control: lmerControl(optimizer = "bobyqa")
@@ -1446,36 +1452,36 @@ Random effects:
 Number of obs: 2221, groups:  id, 932
 
 Fixed effects:
-                              Estimate Std. Error        df t value Pr(&gt;|t|)
-(Intercept)                    25.9318     0.7222 1223.0139  35.909  &lt; 2e-16
-female                          0.3473     1.0060 1208.6807   0.345    0.730
-ageYearsCentered                6.2092     0.2328 1374.3269  26.674  &lt; 2e-16
-knot                           12.6515     1.8238 1241.0685   6.937 6.43e-12
-female:ageYearsCentered        -0.3785     0.3240 1373.1043  -1.168    0.243
-ageYearsCentered:knot          -3.4908     0.3746 1283.6771  -9.318  &lt; 2e-16
-female:knot                    -1.2105     2.6098 1234.2550  -0.464    0.643
-female:ageYearsCentered:knot    0.3530     0.5383 1279.7386   0.656    0.512
-                                
-(Intercept)                  ***
-female                          
-ageYearsCentered             ***
-knot                         ***
-female:ageYearsCentered         
-ageYearsCentered:knot        ***
-female:knot                     
-female:ageYearsCentered:knot    
+                                 Estimate Std. Error        df t value Pr(&gt;|t|)
+(Intercept)                       25.9318     0.7222 1223.0139  35.909  &lt; 2e-16
+sexfemale                          0.3473     1.0060 1208.6807   0.345    0.730
+ageYearsCentered                   6.2092     0.2328 1374.3269  26.674  &lt; 2e-16
+knot                              12.6515     1.8238 1241.0685   6.937 6.43e-12
+sexfemale:ageYearsCentered        -0.3785     0.3240 1373.1043  -1.168    0.243
+ageYearsCentered:knot             -3.4908     0.3746 1283.6771  -9.318  &lt; 2e-16
+sexfemale:knot                    -1.2105     2.6098 1234.2550  -0.464    0.643
+sexfemale:ageYearsCentered:knot    0.3530     0.5383 1279.7386   0.656    0.512
+                                   
+(Intercept)                     ***
+sexfemale                          
+ageYearsCentered                ***
+knot                            ***
+sexfemale:ageYearsCentered         
+ageYearsCentered:knot           ***
+sexfemale:knot                     
+sexfemale:ageYearsCentered:knot    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
-            (Intr) female agYrsC knot   fml:YC agYrC: fml:kn
-female      -0.718                                          
+            (Intr) sexfml agYrsC knot   sxf:YC agYrC: sxfml:
+sexfemale   -0.718                                          
 ageYrsCntrd -0.786  0.564                                   
 knot        -0.267  0.192  0.266                            
-fml:gYrsCnt  0.565 -0.776 -0.718 -0.191                     
+sxfml:gYrsC  0.565 -0.776 -0.718 -0.191                     
 agYrsCntrd:  0.470 -0.337 -0.568 -0.925  0.408              
-female:knot  0.187 -0.259 -0.186 -0.699  0.262  0.646       
-fml:gYrsCn: -0.327  0.455  0.395  0.644 -0.559 -0.696 -0.927</code></pre>
+sexfeml:knt  0.187 -0.259 -0.186 -0.699  0.262  0.646       
+sxfml:gYrC: -0.327  0.455  0.395  0.644 -0.559 -0.696 -0.927</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">splineGCM</span>,</span>
@@ -1484,16 +1490,16 @@ fml:gYrsCn: -0.327  0.455  0.395  0.644 -0.559 -0.696 -0.927</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Standardization method: refit
 
-Parameter                          | Std. Coef. |         95% CI
-----------------------------------------------------------------
-(Intercept)                        |       0.19 | [ 0.13,  0.24]
-female                             |      -0.04 | [-0.10,  0.02]
-ageYearsCentered                   |       0.67 | [ 0.63,  0.71]
-knot                               |      -0.01 | [-0.05,  0.03]
-female × ageYearsCentered          |      -0.02 | [-0.06,  0.02]
-ageYearsCentered × knot            |      -0.23 | [-0.27, -0.20]
-female × knot                      |   2.12e-03 | [-0.04,  0.04]
-(female × ageYearsCentered) × knot |       0.01 | [-0.02,  0.05]</code></pre>
+Parameter                                | Std. Coef. |         95% CI
+----------------------------------------------------------------------
+(Intercept)                              |       0.23 | [ 0.15,  0.30]
+sex [female]                             |      -0.08 | [-0.19,  0.03]
+ageYearsCentered                         |       0.69 | [ 0.63,  0.74]
+knot                                     |      -0.02 | [-0.07,  0.04]
+sex [female] × ageYearsCentered          |      -0.03 | [-0.11,  0.04]
+ageYearsCentered × knot                  |      -0.25 | [-0.30, -0.19]
+sex [female] × knot                      |   4.24e-03 | [-0.08,  0.08]
+(sex [female] × ageYearsCentered) × knot |       0.02 | [-0.05,  0.10]</code></pre>
 </div>
 </div>
 </section><section id="prototypical-growth-curve-2" class="level4" data-number="6.1.4.3"><h4 data-number="6.1.4.3" class="anchored" data-anchor-id="prototypical-growth-curve-2">
@@ -1581,11 +1587,11 @@ female × knot                      |   2.12e-03 | [-0.04,  0.04]
 <span>    x <span class="op">=</span> <span class="va">ageYears</span>,</span>
 <span>    y <span class="op">=</span> <span class="va">predictedValue</span>,</span>
 <span>    group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># individuals' trajectories</span></span>
 <span>    color <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.5</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># prototypical trajectory</span></span>
 <span>    data <span class="op">=</span> <span class="va">newData</span>,</span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
 <span>      x <span class="op">=</span> <span class="va">ageYears</span>,</span>
@@ -2002,7 +2008,7 @@ smooth_terms |          Smooth term (id,ageYearsCentered) |            |        
 <span>    x <span class="op">=</span> <span class="va">ageYears</span>,</span>
 <span>    y <span class="op">=</span> <span class="va">predictedValue</span>,</span>
 <span>    group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># individuals' trajectories</span></span>
 <span>    stat <span class="op">=</span> <span class="st">"smooth"</span>,</span>
 <span>    method <span class="op">=</span> <span class="va">gamMethod</span>,</span>
 <span>    se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -2010,7 +2016,7 @@ smooth_terms |          Smooth term (id,ageYearsCentered) |            |        
 <span>    color <span class="op">=</span> <span class="st">"gray"</span>,</span>
 <span>    alpha <span class="op">=</span> <span class="fl">0.4</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span> <span class="co"># prototypical trajectory</span></span>
 <span>    data <span class="op">=</span> <span class="va">newData</span>,</span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
 <span>      x <span class="op">=</span> <span class="va">ageYears</span>,</span>
@@ -3026,7 +3032,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-135"><a href="#cb98-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-138"><a href="#cb98-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-139"><a href="#cb98-139" aria-hidden="true" tabindex="-1"></a>linearMixedModel <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb98-140"><a href="#cb98-140" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-140"><a href="#cb98-140" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-141"><a href="#cb98-141" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-142"><a href="#cb98-142" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span id="cb98-143"><a href="#cb98-143" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.exclude,</span>
@@ -3114,11 +3120,11 @@ loaded via a namespace (and not attached):
 <span id="cb98-231"><a href="#cb98-231" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> ageYears,</span>
 <span id="cb98-232"><a href="#cb98-232" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> predictedValue,</span>
 <span id="cb98-233"><a href="#cb98-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> id)) <span class="sc">+</span></span>
-<span id="cb98-234"><a href="#cb98-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-234"><a href="#cb98-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># individuals' trajectories</span></span>
 <span id="cb98-235"><a href="#cb98-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray"</span>,</span>
 <span id="cb98-236"><a href="#cb98-236" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
 <span id="cb98-237"><a href="#cb98-237" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb98-238"><a href="#cb98-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-238"><a href="#cb98-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># prototypical trajectory</span></span>
 <span id="cb98-239"><a href="#cb98-239" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> newData,</span>
 <span id="cb98-240"><a href="#cb98-240" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
 <span id="cb98-241"><a href="#cb98-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> ageYears,</span>
@@ -3155,7 +3161,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-276"><a href="#cb98-276" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-279"><a href="#cb98-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-280"><a href="#cb98-280" aria-hidden="true" tabindex="-1"></a>linearMixedModel_nlme <span class="ot">&lt;-</span> <span class="fu">lme</span>(</span>
-<span id="cb98-281"><a href="#cb98-281" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered, <span class="co"># sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-281"><a href="#cb98-281" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered, <span class="co"># sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-282"><a href="#cb98-282" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ageYearsCentered<span class="sc">|</span>id, <span class="co"># random intercepts and slopes</span></span>
 <span id="cb98-283"><a href="#cb98-283" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-284"><a href="#cb98-284" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"ML"</span>,</span>
@@ -3182,7 +3188,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-307"><a href="#cb98-307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-310"><a href="#cb98-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-311"><a href="#cb98-311" aria-hidden="true" tabindex="-1"></a>timepointSpecificErrorsMixedModel <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb98-312"><a href="#cb98-312" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ageYearsCentered), <span class="co"># timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-312"><a href="#cb98-312" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ageYearsCentered), <span class="co"># timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-313"><a href="#cb98-313" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-314"><a href="#cb98-314" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span id="cb98-315"><a href="#cb98-315" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.exclude,</span>
@@ -3218,7 +3224,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-347"><a href="#cb98-347" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-350"><a href="#cb98-350" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-351"><a href="#cb98-351" aria-hidden="true" tabindex="-1"></a>quadraticGCM <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb98-352"><a href="#cb98-352" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> ageYearsCenteredSquared <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>ageYearsCenteredSquared <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-352"><a href="#cb98-352" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> ageYearsCenteredSquared <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCenteredSquared <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-353"><a href="#cb98-353" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-354"><a href="#cb98-354" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span id="cb98-355"><a href="#cb98-355" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.exclude,</span>
@@ -3236,7 +3242,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-367"><a href="#cb98-367" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-370"><a href="#cb98-370" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-371"><a href="#cb98-371" aria-hidden="true" tabindex="-1"></a>quadraticGCM <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb98-372"><a href="#cb98-372" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> <span class="fu">I</span>(ageYearsCentered<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span><span class="fu">I</span>(ageYearsCentered<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-372"><a href="#cb98-372" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> <span class="fu">I</span>(ageYearsCentered<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span><span class="fu">I</span>(ageYearsCentered<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-373"><a href="#cb98-373" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-374"><a href="#cb98-374" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span id="cb98-375"><a href="#cb98-375" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.exclude,</span>
@@ -3327,7 +3333,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-466"><a href="#cb98-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> ageYears,</span>
 <span id="cb98-467"><a href="#cb98-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> predictedValue,</span>
 <span id="cb98-468"><a href="#cb98-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> id)) <span class="sc">+</span></span>
-<span id="cb98-469"><a href="#cb98-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-469"><a href="#cb98-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># individuals' trajectories</span></span>
 <span id="cb98-470"><a href="#cb98-470" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"smooth"</span>,</span>
 <span id="cb98-471"><a href="#cb98-471" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
 <span id="cb98-472"><a href="#cb98-472" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>),</span>
@@ -3336,7 +3342,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-475"><a href="#cb98-475" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray"</span>,</span>
 <span id="cb98-476"><a href="#cb98-476" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
 <span id="cb98-477"><a href="#cb98-477" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb98-478"><a href="#cb98-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-478"><a href="#cb98-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># prototypical trajectory</span></span>
 <span id="cb98-479"><a href="#cb98-479" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> newData,</span>
 <span id="cb98-480"><a href="#cb98-480" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
 <span id="cb98-481"><a href="#cb98-481" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> ageYears,</span>
@@ -3383,7 +3389,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-528"><a href="#cb98-528" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-531"><a href="#cb98-531" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb98-532"><a href="#cb98-532" aria-hidden="true" tabindex="-1"></a>splineGCM <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb98-533"><a href="#cb98-533" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> female <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> knot <span class="sc">+</span> knot<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> female<span class="sc">:</span>knot <span class="sc">+</span> female<span class="sc">:</span>knot<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
+<span id="cb98-533"><a href="#cb98-533" aria-hidden="true" tabindex="-1"></a>  math <span class="sc">~</span> sex <span class="sc">+</span> ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> knot <span class="sc">+</span> knot<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> sex<span class="sc">:</span>knot <span class="sc">+</span> sex<span class="sc">:</span>knot<span class="sc">:</span>ageYearsCentered <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> ageYearsCentered <span class="sc">|</span> id), <span class="co"># random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes</span></span>
 <span id="cb98-534"><a href="#cb98-534" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
 <span id="cb98-535"><a href="#cb98-535" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="co">#for ML</span></span>
 <span id="cb98-536"><a href="#cb98-536" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> na.exclude,</span>
@@ -3472,11 +3478,11 @@ loaded via a namespace (and not attached):
 <span id="cb98-625"><a href="#cb98-625" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> ageYears,</span>
 <span id="cb98-626"><a href="#cb98-626" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> predictedValue,</span>
 <span id="cb98-627"><a href="#cb98-627" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> id)) <span class="sc">+</span></span>
-<span id="cb98-628"><a href="#cb98-628" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-628"><a href="#cb98-628" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># individuals' trajectories</span></span>
 <span id="cb98-629"><a href="#cb98-629" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray"</span>,</span>
 <span id="cb98-630"><a href="#cb98-630" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
 <span id="cb98-631"><a href="#cb98-631" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb98-632"><a href="#cb98-632" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-632"><a href="#cb98-632" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># prototypical trajectory</span></span>
 <span id="cb98-633"><a href="#cb98-633" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> newData,</span>
 <span id="cb98-634"><a href="#cb98-634" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
 <span id="cb98-635"><a href="#cb98-635" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> ageYears,</span>
@@ -3678,7 +3684,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-853"><a href="#cb98-853" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> ageYears,</span>
 <span id="cb98-854"><a href="#cb98-854" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> predictedValue,</span>
 <span id="cb98-855"><a href="#cb98-855" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> id)) <span class="sc">+</span></span>
-<span id="cb98-856"><a href="#cb98-856" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-856"><a href="#cb98-856" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># individuals' trajectories</span></span>
 <span id="cb98-857"><a href="#cb98-857" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"smooth"</span>,</span>
 <span id="cb98-858"><a href="#cb98-858" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> gamMethod,</span>
 <span id="cb98-859"><a href="#cb98-859" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
@@ -3686,7 +3692,7 @@ loaded via a namespace (and not attached):
 <span id="cb98-861"><a href="#cb98-861" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray"</span>,</span>
 <span id="cb98-862"><a href="#cb98-862" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
 <span id="cb98-863"><a href="#cb98-863" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb98-864"><a href="#cb98-864" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb98-864"><a href="#cb98-864" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="co"># prototypical trajectory</span></span>
 <span id="cb98-865"><a href="#cb98-865" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> newData,</span>
 <span id="cb98-866"><a href="#cb98-866" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
 <span id="cb98-867"><a href="#cb98-867" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> ageYears,</span>
