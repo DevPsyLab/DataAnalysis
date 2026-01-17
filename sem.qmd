@@ -94,11 +94,11 @@ ggplot(
     y = score,
     group = id)) +
   geom_line() +
-  scale_x_continuous(
-    breaks = 1:4,
-    name = "Timepoint") +
-  scale_y_continuous(
-    name = "Score")
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
 ```
 
 # Latent Growth Curve Model {#sec-lgcm}
@@ -286,29 +286,10 @@ lavaangui::plot_lavaan(lgcm1_fit)
 
 #### Prototypical Growth Curve
 
-Calculated from intercept and slope parameters:
-
 ```{r}
 lgcm1_intercept <- coef(lgcm1_fit)["intercept~1"]
 lgcm1_slope <- coef(lgcm1_fit)["slope~1"]
 
-ggplot() +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_x_continuous(
-    limits = c(0, 3),
-    labels = 1:4) +
-  scale_y_continuous(
-    limits = c(0, 5)) +
-  geom_abline(
-    mapping = aes(
-      slope = lgcm1_slope,
-      intercept = lgcm1_intercept))
-```
-
-Calculated manually:
-
-```{r}
 timepoints <- 4
 
 newData <- expand.grid(
@@ -321,45 +302,32 @@ newData$predictedValue[which(newData$time == 4)] <- lgcm1_intercept + (timepoint
 
 ggplot(
   data = newData,
-  mapping = aes(x = time, y = predictedValue)) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(0, 5)) +
-  geom_line()
+  mapping = aes(
+    x = time,
+    y = predictedValue)) +
+  geom_line(
+    linewidth = 1
+  ) +
+  coord_cartesian(
+    ylim = c(0, 5)) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
 
-Calculated from intercept and slope parameters:
-
 ```{r}
-newData <- as.data.frame(predict(lgcm1_fit))
-newData$id <- row.names(newData)
+newData1 <- as.data.frame(predict(lgcm1_fit))
+newData1$id <- row.names(newData1)
 
-ggplot(
-  data = newData) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_x_continuous(
-    limits = c(0, 3),
-    labels = 1:4) +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
-  geom_abline(
-    mapping = aes(
-      slope = slope,
-      intercept = intercept))
-```
-
-Calculated manually:
-
-```{r}
-newData$t1 <- newData$intercept
-newData$t4 <- newData$intercept + (timepoints - 1)*newData$slope
+newData1$t1 <- newData1$intercept
+newData1$t4 <- newData1$intercept + (timepoints - 1)*newData1$slope
 
 newData2 <- pivot_longer(
-  newData,
+  newData1,
   cols = c(t1, t4)) %>% 
   select(-intercept, -slope)
 
@@ -369,39 +337,44 @@ newData2$time[which(newData2$name == "t4")] <- 4
 
 ggplot(
   data = newData2,
-  mapping = aes(x = time, y = value, group = factor(id))) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
-  geom_line()
+  mapping = aes(
+    x = time,
+    y = value,
+    group = factor(id))) +
+  geom_line() +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-newData <- as.data.frame(predict(lgcm1_fit))
-newData$id <- row.names(newData)
-
-ggplot(
-  data = newData) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_x_continuous(
-    limits = c(0, 3),
-    labels = 1:4) +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
-  geom_abline(
+ggplot() +
+  geom_line( # individuals' trajectories
+    data = newData2,
     mapping = aes(
-      slope = slope,
-      intercept = intercept)) +
-  geom_abline(
+      x = time,
+      y = value,
+    group = factor(id)),
+    color = "gray",
+    alpha = 0.5
+  ) +
+  geom_line( # prototypical trajectory
+    data = newData,
     mapping = aes(
-      slope = lgcm1_slope,
-      intercept = lgcm1_intercept),
-    color = "blue",
-    linewidth = 2)
+      x = time,
+      y = predictedValue
+    ),
+    linewidth = 2
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 ## Latent Basis Growth Curve Model {#sec-latentBasisLGCM}
@@ -597,12 +570,19 @@ newData$predictedValue <- lbgcm1_intercept + lbgcm1_slope * newData$slopeloading
 
 ggplot(
   data = newData,
-  mapping = aes(x = time, y = predictedValue)) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(0, 5)) +
-  geom_line()
+  mapping = aes(
+    x = time,
+    y = predictedValue)) +
+  geom_line(
+    linewidth = 1
+  ) +
+  coord_cartesian(
+    ylim = c(0, 5)) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
@@ -634,12 +614,16 @@ individual_trajectories <- person_factors %>%
 
 ggplot(
   data = individual_trajectories,
-  mapping = aes(x = time, y = value, group = factor(id))) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
-  geom_line()
+  mapping = aes(
+    x = time,
+    y = value,
+    group = factor(id))) +
+  geom_line() +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
@@ -652,6 +636,8 @@ ggplot() +
       x = time,
       y = value,
       group = id),
+    color = "gray",
+    alpha = 0.5
   ) +
   geom_line( # prototypical trajectory
     data = newData,
@@ -660,7 +646,12 @@ ggplot() +
       y = predictedValue),
     color = "blue",
     linewidth = 2
-  )
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 ## Quadratic Growth Curve Model {#sec-quadraticLGCM}
@@ -882,16 +873,19 @@ ggplot(
   mapping = aes(
     x = time,
     y = predictedValue)) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(0, 5)) +
   geom_smooth(
     method = "lm",
     formula = y ~ x + I(x^2),
     se = FALSE,
-    linewidth = 0.5
-  )
+    linewidth = 1
+  ) +
+  coord_cartesian(
+    ylim = c(0, 5)) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
@@ -928,28 +922,29 @@ ggplot(
     x = time,
     y = value,
     group = factor(id))) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
   geom_smooth(
     method = "lm",
     formula = y ~ x + I(x^2),
     se = FALSE,
     linewidth = 0.5
-  )
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
-  data = individual_trajectories,
-  mapping = aes(
-    x = time,
-    y = value,
-    group = id)) +
+ggplot() +
   geom_smooth( # individuals' model-implied trajectories
+    data = individual_trajectories,
+    mapping = aes(
+      x = time,
+      y = value,
+      group = id),
     method = "lm",
     formula = y ~ x + I(x^2),
     se = FALSE,
@@ -969,10 +964,10 @@ ggplot(
     linewidth = 2
   ) +
   labs(
-    x = "Age (years)",
-    y = "Depression Symptoms"
+    x = "Timepoint",
+    y = "Score"
   ) +
-  theme_classic()
+   theme_classic()
 ```
 
 ## Spline (Piecewise) Growth Curve Model {#sec-splineLGCM}
@@ -1192,11 +1187,16 @@ ggplot(
   mapping = aes(
     x = time,
     y = predictedValue)) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(0, 5)) +
-  geom_line()
+  geom_line(
+    linewidth = 1
+  ) +
+  coord_cartesian(
+    ylim = c(0, 5)) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
 ```
 
 #### Individuals' Growth Curves
@@ -1233,11 +1233,12 @@ ggplot(
     x = time,
     y = value,
     group = factor(id))) +
-  xlab("Timepoint") +
-  ylab("Score") +
-  scale_y_continuous(
-    limits = c(-10, 20)) +
-  geom_line()
+  geom_line() +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
@@ -1250,6 +1251,9 @@ ggplot() +
       x = time,
       y = value,
       group = id),
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.30
   ) +
   geom_line( # prototypical trajectory
     data = newData,
@@ -1258,7 +1262,12 @@ ggplot() +
       y = predictedValue),
     color = "blue",
     linewidth = 2
-  )
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
 ```
 
 ## Saturated Growth Curve Model {#sec-saturatedGCM}
