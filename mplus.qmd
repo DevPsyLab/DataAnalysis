@@ -841,8 +841,8 @@ DATA:
 
 VARIABLE:
     NAMES = PersonID sex A B time timesq; ! List of variables in data file
-    USEVARIABLE = sex A B time timesq; ! Variables to be analyzed in this model
-    MISSING ARE ALL (-999);  ! Missing data identifier
+    MISSING = .;                          ! Missing data identifier
+    USEVARIABLES = sex A B time timesq;   ! Variables to be analyzed in this model
     ! MLM options
     CLUSTER = PersonID;      ! Level-2 ID
     BETWEEN = sex;           ! Observed ONLY level-2 predictors
@@ -853,9 +853,10 @@ ANALYSIS:
     TYPE = TWOLEVEL RANDOM;
     ESTIMATOR = BAYES;
     BITERATIONS = 50000;
-
-OUTPUT: 
-    TECH8; ! Used to examine convergence
+    CHAINS = 4;     ! number of chains
+    PROCESSORS = 4; ! number of computer processors to use
+    BSEED = 52242;  ! set seed for replicability
+    STVALUES = ml;  ! set starting values based on ML estimation
 
 MODEL: ! A = construct 1; B = construct 2
   %WITHIN%
@@ -881,6 +882,15 @@ MODEL CONSTRAINT:
     ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)
     A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A->B lagged effect
     B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B->A lagged effect
+
+OUTPUT:
+    STAND;     ! standardized estimates
+    TECH1;     ! model priors
+    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)
+    CINTERVAL; ! posterior predictive intervals (credible intervals)
+
+PLOT:
+    TYPE = PLOT3; ! trace plots, histogram, and kernel density
 ```
 
 Further extensions:
