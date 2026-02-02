@@ -1283,8 +1283,8 @@ DATA:
 
 VARIABLE:
     NAMES = PersonID sex A B time timesq; ! List of variables in data file
-    USEVARIABLE = sex A B time timesq; ! Variables to be analyzed in this model
-    MISSING ARE ALL (-999);  ! Missing data identifier
+    MISSING = .;                          ! Missing data identifier
+    USEVARIABLES = sex A B time timesq;   ! Variables to be analyzed in this model
     ! MLM options
     CLUSTER = PersonID;      ! Level-2 ID
     BETWEEN = sex;           ! Observed ONLY level-2 predictors
@@ -1295,9 +1295,10 @@ ANALYSIS:
     TYPE = TWOLEVEL RANDOM;
     ESTIMATOR = BAYES;
     BITERATIONS = 50000;
-
-OUTPUT: 
-    TECH8; ! Used to examine convergence
+    CHAINS = 4;     ! number of chains
+    PROCESSORS = 4; ! number of computer processors to use
+    BSEED = 52242;  ! set seed for replicability
+    STVALUES = ml;  ! set starting values based on ML estimation
 
 MODEL: ! A = construct 1; B = construct 2
   %WITHIN%
@@ -1322,7 +1323,16 @@ MODEL CONSTRAINT:
     NEW(A2Bsd B2Asd);
     ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)
     A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect
-    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</code></pre>
+    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect
+
+OUTPUT:
+    STAND;     ! standardized estimates
+    TECH1;     ! model priors
+    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)
+    CINTERVAL; ! posterior predictive intervals (credible intervals)
+
+PLOT:
+    TYPE = PLOT3; ! trace plots, histogram, and kernel density</code></pre>
 <p>Further extensions:</p>
 <ul>
 <li>Distinguish between (a) time in study versus (b) age at baseline (as a moderator)</li>
@@ -2675,8 +2685,8 @@ loaded via a namespace (and not attached):
 <span id="cb52-845"><a href="#cb52-845" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-846"><a href="#cb52-846" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
 <span id="cb52-847"><a href="#cb52-847" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = PersonID sex A B time timesq; ! List of variables in data file</span></span>
-<span id="cb52-848"><a href="#cb52-848" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLE = sex A B time timesq; ! Variables to be analyzed in this model</span></span>
-<span id="cb52-849"><a href="#cb52-849" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING ARE ALL (-999);  ! Missing data identifier</span></span>
+<span id="cb52-848"><a href="#cb52-848" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;                          ! Missing data identifier</span></span>
+<span id="cb52-849"><a href="#cb52-849" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = sex A B time timesq;   ! Variables to be analyzed in this model</span></span>
 <span id="cb52-850"><a href="#cb52-850" aria-hidden="true" tabindex="-1"></a><span class="in">    ! MLM options</span></span>
 <span id="cb52-851"><a href="#cb52-851" aria-hidden="true" tabindex="-1"></a><span class="in">    CLUSTER = PersonID;      ! Level-2 ID</span></span>
 <span id="cb52-852"><a href="#cb52-852" aria-hidden="true" tabindex="-1"></a><span class="in">    BETWEEN = sex;           ! Observed ONLY level-2 predictors</span></span>
@@ -2687,48 +2697,58 @@ loaded via a namespace (and not attached):
 <span id="cb52-857"><a href="#cb52-857" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = TWOLEVEL RANDOM;</span></span>
 <span id="cb52-858"><a href="#cb52-858" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = BAYES;</span></span>
 <span id="cb52-859"><a href="#cb52-859" aria-hidden="true" tabindex="-1"></a><span class="in">    BITERATIONS = 50000;</span></span>
-<span id="cb52-860"><a href="#cb52-860" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-861"><a href="#cb52-861" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT: </span></span>
-<span id="cb52-862"><a href="#cb52-862" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8; ! Used to examine convergence</span></span>
-<span id="cb52-863"><a href="#cb52-863" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-864"><a href="#cb52-864" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
-<span id="cb52-865"><a href="#cb52-865" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
-<span id="cb52-866"><a href="#cb52-866" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
-<span id="cb52-867"><a href="#cb52-867" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
-<span id="cb52-868"><a href="#cb52-868" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
-<span id="cb52-869"><a href="#cb52-869" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
-<span id="cb52-870"><a href="#cb52-870" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
-<span id="cb52-871"><a href="#cb52-871" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
-<span id="cb52-872"><a href="#cb52-872" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
-<span id="cb52-873"><a href="#cb52-873" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-874"><a href="#cb52-874" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
-<span id="cb52-875"><a href="#cb52-875" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
-<span id="cb52-876"><a href="#cb52-876" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb52-877"><a href="#cb52-877" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
-<span id="cb52-878"><a href="#cb52-878" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
-<span id="cb52-879"><a href="#cb52-879" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
-<span id="cb52-880"><a href="#cb52-880" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
-<span id="cb52-881"><a href="#cb52-881" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
-<span id="cb52-882"><a href="#cb52-882" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-883"><a href="#cb52-883" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
-<span id="cb52-884"><a href="#cb52-884" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
-<span id="cb52-885"><a href="#cb52-885" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
-<span id="cb52-886"><a href="#cb52-886" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
-<span id="cb52-887"><a href="#cb52-887" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
-<span id="cb52-888"><a href="#cb52-888" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-860"><a href="#cb52-860" aria-hidden="true" tabindex="-1"></a><span class="in">    CHAINS = 4;     ! number of chains</span></span>
+<span id="cb52-861"><a href="#cb52-861" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4; ! number of computer processors to use</span></span>
+<span id="cb52-862"><a href="#cb52-862" aria-hidden="true" tabindex="-1"></a><span class="in">    BSEED = 52242;  ! set seed for replicability</span></span>
+<span id="cb52-863"><a href="#cb52-863" aria-hidden="true" tabindex="-1"></a><span class="in">    STVALUES = ml;  ! set starting values based on ML estimation</span></span>
+<span id="cb52-864"><a href="#cb52-864" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-865"><a href="#cb52-865" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
+<span id="cb52-866"><a href="#cb52-866" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
+<span id="cb52-867"><a href="#cb52-867" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
+<span id="cb52-868"><a href="#cb52-868" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
+<span id="cb52-869"><a href="#cb52-869" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
+<span id="cb52-870"><a href="#cb52-870" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
+<span id="cb52-871"><a href="#cb52-871" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
+<span id="cb52-872"><a href="#cb52-872" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
+<span id="cb52-873"><a href="#cb52-873" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
+<span id="cb52-874"><a href="#cb52-874" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-875"><a href="#cb52-875" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
+<span id="cb52-876"><a href="#cb52-876" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
+<span id="cb52-877"><a href="#cb52-877" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
+<span id="cb52-878"><a href="#cb52-878" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
+<span id="cb52-879"><a href="#cb52-879" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
+<span id="cb52-880"><a href="#cb52-880" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
+<span id="cb52-881"><a href="#cb52-881" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
+<span id="cb52-882"><a href="#cb52-882" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
+<span id="cb52-883"><a href="#cb52-883" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-884"><a href="#cb52-884" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
+<span id="cb52-885"><a href="#cb52-885" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
+<span id="cb52-886"><a href="#cb52-886" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
+<span id="cb52-887"><a href="#cb52-887" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
+<span id="cb52-888"><a href="#cb52-888" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
 <span id="cb52-889"><a href="#cb52-889" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-890"><a href="#cb52-890" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
-<span id="cb52-891"><a href="#cb52-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-892"><a href="#cb52-892" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish between (a) time in study versus (b) age at baseline (as a moderator)</span>
-<span id="cb52-893"><a href="#cb52-893" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects)</span>
-<span id="cb52-894"><a href="#cb52-894" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-895"><a href="#cb52-895" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb52-896"><a href="#cb52-896" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb52-900"><a href="#cb52-900" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb52-890"><a href="#cb52-890" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb52-891"><a href="#cb52-891" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
+<span id="cb52-892"><a href="#cb52-892" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
+<span id="cb52-893"><a href="#cb52-893" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
+<span id="cb52-894"><a href="#cb52-894" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
+<span id="cb52-895"><a href="#cb52-895" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-896"><a href="#cb52-896" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb52-897"><a href="#cb52-897" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
+<span id="cb52-898"><a href="#cb52-898" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-900"><a href="#cb52-900" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
 <span id="cb52-901"><a href="#cb52-901" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-902"><a href="#cb52-902" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb52-903"><a href="#cb52-903" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-902"><a href="#cb52-902" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish between (a) time in study versus (b) age at baseline (as a moderator)</span>
+<span id="cb52-903"><a href="#cb52-903" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects)</span>
+<span id="cb52-904"><a href="#cb52-904" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-905"><a href="#cb52-905" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb52-906"><a href="#cb52-906" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-909"><a href="#cb52-909" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb52-910"><a href="#cb52-910" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb52-911"><a href="#cb52-911" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-912"><a href="#cb52-912" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb52-913"><a href="#cb52-913" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
