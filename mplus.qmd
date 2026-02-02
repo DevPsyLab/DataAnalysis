@@ -862,15 +862,15 @@ MODEL: ! A = construct 1; B = construct 2
     A B (Aresvar Bresvar);  ! L1 residual variances (labels)
     Alin  | A ON time;      ! Placeholder for A linear change
     Aquad | A ON timesq;    ! Placeholder for A quadratic change
-    Blin  | B  ON time;     ! Placeholder for B linear change
-    A WITH B   (ResCov);    ! L1 WP covariance for concurrent B->A
-    A^ ON B^1  (BALagEff);  ! L1 WP fixed effect of ^residual lagged B->A
+    Blin  | B ON time;      ! Placeholder for B linear change
+    A WITH B (ResCov);      ! L1 WP covariance for concurrent B->A
+    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B->A
     B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A->B
 
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
     A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
-    Alin Blin  (Alinvar Blinvar);      ! L2 G: Random linear change variances 
+    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances 
     A Alin ON sex (XtoYint XtoYlin);   ! sex -> A int, A linear change
     B Blin ON sex (XtoYint XtoYlin);   ! sex -> B int, B linear change
     A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
