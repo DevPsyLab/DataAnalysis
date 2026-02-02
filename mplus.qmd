@@ -824,6 +824,71 @@ OUTPUT:
     TECH9;
 ```
 
+# Multilevel Structural Equation Modeling (M-SEM) {#sec-msem}
+
+## Latent Curve Model with Structured Residuals (LCM-SR) {#sec-msem-lcm-sr}
+
+A latent curve model with structured residuals (LCM-SR) estimated with long-form data in multilevel SEM allows estimating a cross-lagged model to (a) determine the direction of effect between two constructs, (b) account for individual differences in level and change of each construct, (c) account for unbalanced time, and (d) disaggregate within-person from between-person effects.
+
+This example is adapted from Hoffman's [Example 5A](https://www.lesahoffman.com/PSQF7375_AdvLong/index.html):
+
+```
+TITLE: Latent Curve Model with Structured Residuals with Long-Form
+       Data in Multilevel SEM
+
+DATA: 
+    FILE = "C:/[insert_filepath]/filename.dat";
+
+VARIABLE: ! List of variables in data file
+  NAMES = PersonID sex A B time timesq;
+! Variables to be analyzed in this model
+  USEVARIABLE = time timesq sex A B;
+  MISSING ARE ALL (-999);  ! Missing data identifier
+! MLM options
+  CLUSTER = PersonID;      ! Level-2 ID
+  BETWEEN = sex;           ! Observed ONLY level-2 predictors
+  WITHIN  = time timesq;   ! Observed ONLY level-1 predictors
+  LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables
+
+ANALYSIS: 
+  TYPE = TWOLEVEL RANDOM;
+  ESTIMATOR = BAYES;
+  BITERATIONS = 50000;
+
+OUTPUT: 
+  TECH8; ! Used to examine convergence
+
+MODEL: ! A = construct 1; B = construct 2
+%WITHIN%
+ A B (Aresvar Bresvar);  ! L1 residual variances (labels)
+ Alin  | A ON time;      ! Placeholder for A linear change
+ Aquad | A ON timesq;    ! Placeholder for A quadratic change
+ Blin  | B  ON time;     ! Placeholder for B linear change
+ A WITH B   (ResCov);    ! L1 WP covariance for concurrent B->A
+ A^ ON B^1  (BALagEff);  ! L1 WP fixed effect of ^residual lagged B->A
+ B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A->B
+
+%BETWEEN%
+[A B Alin Aquad Blin];              ! Fixed intercepts, fixed change slopes
+ A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
+ Alin Blin  (Alinvar Blinvar);      ! L2 G: Random linear change variances 
+ A Alin ON sex (XtoYint XtoYlin);   ! sex -> A int, A linear change
+ B Blin ON sex (XtoYint XtoYlin);   ! sex -> B int, B linear change
+ A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
+ Rquad@0;                           ! No quadratic change variance
+
+MODEL CONSTRAINT:  
+NEW(A2Bsd B2Asd);
+! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)
+  A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A->B lagged effect
+  B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B->A lagged effect
+```
+
+Further extensions:
+
+- Distinguish between (a) time in study versus (b) age at baseline (as a moderator)
+- Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects)
+
 # Session Info
 
 ```{r}
