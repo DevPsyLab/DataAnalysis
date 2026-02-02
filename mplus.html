@@ -1304,19 +1304,19 @@ MODEL: ! A = construct 1; B = construct 2
     A B (Aresvar Bresvar);  ! L1 residual variances (labels)
     Alin  | A ON time;      ! Placeholder for A linear change
     Aquad | A ON timesq;    ! Placeholder for A quadratic change
-    Blin  | B  ON time;     ! Placeholder for B linear change
-    A WITH B   (ResCov);    ! L1 WP covariance for concurrent B-&gt;A
-    A^ ON B^1  (BALagEff);  ! L1 WP fixed effect of ^residual lagged B-&gt;A
+    Blin  | B ON time;      ! Placeholder for B linear change
+    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A
+    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A
     B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B
 
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
     A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
-    Alin Blin  (Alinvar Blinvar);      ! L2 G: Random linear change variances 
+    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances 
     A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change
     B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change
     A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
-    Rquad@0;                           ! No quadratic change variance
+    Aquad@0;                           ! No quadratic change variance
 
 MODEL CONSTRAINT:  
     NEW(A2Bsd B2Asd);
@@ -2696,19 +2696,19 @@ loaded via a namespace (and not attached):
 <span id="cb52-866"><a href="#cb52-866" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
 <span id="cb52-867"><a href="#cb52-867" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
 <span id="cb52-868"><a href="#cb52-868" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
-<span id="cb52-869"><a href="#cb52-869" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B  ON time;     ! Placeholder for B linear change</span></span>
-<span id="cb52-870"><a href="#cb52-870" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B   (ResCov);    ! L1 WP covariance for concurrent B-&gt;A</span></span>
-<span id="cb52-871"><a href="#cb52-871" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1  (BALagEff);  ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
+<span id="cb52-869"><a href="#cb52-869" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
+<span id="cb52-870"><a href="#cb52-870" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
+<span id="cb52-871"><a href="#cb52-871" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
 <span id="cb52-872"><a href="#cb52-872" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
 <span id="cb52-873"><a href="#cb52-873" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-874"><a href="#cb52-874" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
 <span id="cb52-875"><a href="#cb52-875" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
 <span id="cb52-876"><a href="#cb52-876" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb52-877"><a href="#cb52-877" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin  (Alinvar Blinvar);      ! L2 G: Random linear change variances </span></span>
+<span id="cb52-877"><a href="#cb52-877" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
 <span id="cb52-878"><a href="#cb52-878" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
 <span id="cb52-879"><a href="#cb52-879" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
 <span id="cb52-880"><a href="#cb52-880" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
-<span id="cb52-881"><a href="#cb52-881" aria-hidden="true" tabindex="-1"></a><span class="in">    Rquad@0;                           ! No quadratic change variance</span></span>
+<span id="cb52-881"><a href="#cb52-881" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
 <span id="cb52-882"><a href="#cb52-882" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-883"><a href="#cb52-883" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
 <span id="cb52-884"><a href="#cb52-884" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
