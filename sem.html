@@ -5349,7 +5349,7 @@ t1 t2 t3 t4 c1 c2 c3 c4
 </div>
 </section></section><section id="sec-lcm-sr" class="level1" data-number="11"><h1 data-number="11">
 <span class="header-section-number">11</span> Latent Curve Model with Structured Residuals</h1>
-<p>A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR). A LSM-SR model can also be estimated using <a href="#mplus.qmd#sec-msem-lcm-sr">multilevel SEM</a>.</p>
+<p>A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR). A LSM-SR model can also be estimated using <a href="./mplus.html#sec-msem-lcm-sr">multilevel SEM</a>.</p>
 <section id="model-syntax-7" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="model-syntax-7">
 <span class="header-section-number">11.1</span> Model Syntax</h2>
 <p>Adapted from Mund &amp; Nestler (2017): <a href="https://osf.io/a4dhk" class="uri">https://osf.io/a4dhk</a></p>
@@ -6685,22 +6685,22 @@ $mean
 <span></span>
 <span><span class="va">modelImpliedPredictedData</span> <span class="op">&lt;-</span> <span class="va">modelImpliedPredictedData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    Illiteracy <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    Illiteracy <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"Low"</span> <span class="op">~</span> <span class="va">Illiteracy_mean</span> <span class="op">-</span> <span class="va">Illiteracy_sd</span>,</span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"Middle"</span> <span class="op">~</span> <span class="va">Illiteracy_mean</span>,</span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"High"</span> <span class="op">~</span> <span class="va">Illiteracy_mean</span> <span class="op">+</span> <span class="va">Illiteracy_sd</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    Illiteracy_centered <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    Illiteracy_centered <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"Low"</span> <span class="op">~</span> <span class="va">Illiteracy_centered_mean</span> <span class="op">-</span> <span class="va">Illiteracy_centered_sd</span>,</span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"Middle"</span> <span class="op">~</span> <span class="va">Illiteracy_centered_mean</span>,</span>
 <span>      <span class="va">Illiteracy_factor</span> <span class="op">==</span> <span class="st">"High"</span> <span class="op">~</span> <span class="va">Illiteracy_centered_mean</span> <span class="op">+</span> <span class="va">Illiteracy_centered_sd</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    Murder <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    Murder <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"Low"</span> <span class="op">~</span> <span class="va">Murder_mean</span> <span class="op">-</span> <span class="va">Murder_sd</span>,</span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"Middle"</span> <span class="op">~</span> <span class="va">Murder_mean</span>,</span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"High"</span> <span class="op">~</span> <span class="va">Murder_mean</span> <span class="op">+</span> <span class="va">Murder_sd</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    Murder_centered <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    Murder_centered <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"Low"</span> <span class="op">~</span> <span class="va">Murder_centered_mean</span> <span class="op">-</span> <span class="va">Murder_centered_sd</span>,</span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"Middle"</span> <span class="op">~</span> <span class="va">Murder_centered_mean</span>,</span>
 <span>      <span class="va">Murder_factor</span> <span class="op">==</span> <span class="st">"High"</span> <span class="op">~</span> <span class="va">Murder_centered_mean</span> <span class="op">+</span> <span class="va">Murder_centered_sd</span></span>
@@ -9891,9 +9891,9 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] lubridate_1.9.4  forcats_1.0.1    stringr_1.6.0    dplyr_1.1.4     
+ [1] lubridate_1.9.5  forcats_1.0.1    stringr_1.6.0    dplyr_1.2.0     
  [5] purrr_1.2.1      readr_2.1.6      tidyr_1.3.2      tibble_3.3.1    
- [9] ggplot2_4.0.1    tidyverse_2.0.0  MBESS_4.9.42     lcsm_0.3.2      
+ [9] ggplot2_4.0.2    tidyverse_2.0.0  MBESS_4.9.42     lcsm_0.3.2      
 [13] lavaangui_0.3.2  lavaanPlot_0.8.1 semPlot_1.1.7    semTools_0.5-7  
 [17] lavaan_0.6-21   
 
@@ -9908,7 +9908,7 @@ loaded via a namespace (and not attached):
  [22] labeling_0.4.3        pbivnorm_0.6.0        promises_1.5.0       
  [25] rmarkdown_2.30        tzdb_0.5.0            nloptr_2.2.1         
  [28] xfun_0.56             kutils_1.73           jsonlite_2.0.0       
- [31] later_1.4.5           jpeg_0.1-11           psych_2.5.6          
+ [31] later_1.4.5           jpeg_0.1-11           psych_2.6.1          
  [34] parallel_4.5.2        cluster_2.1.8.1       R6_2.6.1             
  [37] stringi_1.8.7         RColorBrewer_1.1-3    boot_1.3-32          
  [40] rpart_4.1.24          Rcpp_1.1.1            knitr_1.51           
@@ -9920,7 +9920,7 @@ loaded via a namespace (and not attached):
  [58] shiny_1.12.1          S7_0.2.1              coda_0.19-4.1        
  [61] evaluate_1.0.5        foreign_0.8-90        RcppParallel_5.1.11-1
  [64] zip_2.3.3             pillar_1.11.1         carData_3.0-6        
- [67] DiagrammeR_1.0.11     checkmate_2.3.3       stats4_4.5.2         
+ [67] DiagrammeR_1.0.11     checkmate_2.3.4       stats4_4.5.2         
  [70] reformulas_0.4.4      generics_0.1.4        mix_1.0-13           
  [73] petersenlab_1.2.2     hms_1.1.4             scales_1.4.0         
  [76] minqa_1.2.8           gtools_3.9.5          xtable_1.8-4         
@@ -9930,7 +9930,7 @@ loaded via a namespace (and not attached):
  [88] XML_3.99-0.20         grid_4.5.2            mitools_2.4          
  [91] sem_3.1-16            rbibutils_2.4.1       colorspace_2.1-2     
  [94] nlme_3.1-168          htmlTable_2.4.3       Formula_1.2-5        
- [97] cli_3.6.5             viridisLite_0.4.2     corpcor_1.6.10       
+ [97] cli_3.6.5             viridisLite_0.4.3     corpcor_1.6.10       
 [100] glasso_1.11           gtable_0.3.6          digest_0.6.39        
 [103] htmlwidgets_1.6.4     farver_2.1.2          htmltools_0.5.9      
 [106] lifecycle_1.0.5       mime_0.13             lisrelToR_0.3        
@@ -12244,7 +12244,7 @@ loaded via a namespace (and not attached):
 <span id="cb274-2026"><a href="#cb274-2026" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Curve Model with Structured Residuals {#sec-lcm-sr}</span></span>
 <span id="cb274-2027"><a href="#cb274-2027" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb274-2028"><a href="#cb274-2028" aria-hidden="true" tabindex="-1"></a>A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR).</span>
-<span id="cb274-2029"><a href="#cb274-2029" aria-hidden="true" tabindex="-1"></a>A LSM-SR model can also be estimated using <span class="co">[</span><span class="ot">multilevel SEM</span><span class="co">](#mplus.qmd#sec-msem-lcm-sr)</span>.</span>
+<span id="cb274-2029"><a href="#cb274-2029" aria-hidden="true" tabindex="-1"></a>A LSM-SR model can also be estimated using <span class="co">[</span><span class="ot">multilevel SEM</span><span class="co">](mplus.qmd#sec-msem-lcm-sr)</span>.</span>
 <span id="cb274-2030"><a href="#cb274-2030" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb274-2031"><a href="#cb274-2031" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Syntax</span></span>
 <span id="cb274-2032"><a href="#cb274-2032" aria-hidden="true" tabindex="-1"></a></span>
