@@ -9794,13 +9794,21 @@ ecvi                               1.143      1.111      1.082      1.025</code>
 </div>
 </section><section id="sec-powerAnalysis" class="level1" data-number="16"><h1 data-number="16">
 <span class="header-section-number">16</span> Power Analysis</h1>
-<p><a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis</a></p>
+<p>Overview of power analysis in SEM: <a href="https://web.pdx.edu/~newsomj/semclass/ho_power.pdf" class="uri">https://web.pdx.edu/~newsomj/semclass/ho_power.pdf</a> (archived at <a href="https://perma.cc/NBB5-C7FL" class="uri">https://perma.cc/NBB5-C7FL</a>)</p>
+<p>Example of Monte Carlo simulation using <code>lavaan</code>: <a href="https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis" class="uri">https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis</a></p>
+<p>Example of Monte Carlo simulation using <code>Mplus</code>: <a href="https://devpsylab.github.io/DataAnalysis/mplus.html#sec-monteCarlo" class="uri">https://devpsylab.github.io/DataAnalysis/mplus.html#sec-monteCarlo</a></p>
+<p>Toolboxes and webapps:</p>
 <ul>
-<li><a href="https://yilinandrewang.shinyapps.io/pwrSEM/" class="uri">https://yilinandrewang.shinyapps.io/pwrSEM/</a></li>
+<li>
+<a href="https://moshagen.github.io/semPower/"><code>semPower</code> <code>R</code> package</a> (based on <a href="https://doi.org/10.3758/s13428-023-02254-7">Moshagen &amp; Bader, 2024</a>), with basic functionality in a Shiny webapp: <a href="https://sempower.shinyapps.io/sempower/" class="uri">https://sempower.shinyapps.io/sempower/</a>
+</li>
+<li>
+<a href="https://yilinandrewang.shinyapps.io/pwrSEM/" class="uri">https://yilinandrewang.shinyapps.io/pwrSEM/</a> (based on <a href="https://doi.org/10.1177/2515245920918253">Wang &amp; Rhemtulla, 2001</a>)</li>
 <li><a href="https://schoemanna.shinyapps.io/mc_power_med/" class="uri">https://schoemanna.shinyapps.io/mc_power_med/</a></li>
-<li><a href="https://sjak.shinyapps.io/power4SEM/" class="uri">https://sjak.shinyapps.io/power4SEM/</a></li>
-<li><a href="https://sempower.shinyapps.io/sempower/" class="uri">https://sempower.shinyapps.io/sempower/</a></li>
-<li><a href="https://webpower.psychstat.org/wiki/models/index" class="uri">https://webpower.psychstat.org/wiki/models/index</a></li>
+<li>
+<a href="https://sjak.shinyapps.io/power4SEM/" class="uri">https://sjak.shinyapps.io/power4SEM/</a> (based on <a href="https://doi.org/10.3758/s13428-020-01479-0">Jak et al., 2020</a>)</li>
+<li>Basic webapps: <a href="https://webpower.psychstat.org/wiki/models/index" class="uri">https://webpower.psychstat.org/wiki/models/index</a> and <a href="https://www.danielsoper.com/statcalc/calculator.aspx?id=89" class="uri">https://www.danielsoper.com/statcalc/calculator.aspx?id=89</a>
+</li>
 </ul></section><section id="sec-pathDiagrams" class="level1" data-number="17"><h1 data-number="17">
 <span class="header-section-number">17</span> Path Diagrams</h1>
 <p>For a list of tools to create path diagrams, see <a href="./figures.html#sec-pathDiagrams">here</a>.</p>
@@ -9898,7 +9906,7 @@ other attached packages:
 [17] lavaan_0.6-21   
 
 loaded via a namespace (and not attached):
-  [1] DBI_1.2.3             Rdpack_2.6.5          mnormt_2.1.2         
+  [1] DBI_1.2.3             Rdpack_2.6.6          mnormt_2.1.2         
   [4] pbapply_1.7-4         gridExtra_2.3         fdrtool_1.2.18       
   [7] rlang_1.1.7           magrittr_2.0.4        otel_0.2.0           
  [10] rockchalk_1.8.157     compiler_4.5.2        mgcv_1.9-3           
@@ -9922,7 +9930,7 @@ loaded via a namespace (and not attached):
  [64] zip_2.3.3             pillar_1.11.1         carData_3.0-6        
  [67] DiagrammeR_1.0.11     checkmate_2.3.4       stats4_4.5.2         
  [70] reformulas_0.4.4      generics_0.1.4        mix_1.0-13           
- [73] petersenlab_1.2.2     hms_1.1.4             scales_1.4.0         
+ [73] petersenlab_1.2.3     hms_1.1.4             scales_1.4.0         
  [76] minqa_1.2.8           gtools_3.9.5          xtable_1.8-4         
  [79] glue_1.8.0            mi_1.2                Hmisc_5.2-5          
  [82] tools_4.5.2           data.table_1.18.2.1   lme4_1.1-38          
@@ -14295,81 +14303,87 @@ loaded via a namespace (and not attached):
 <span id="cb274-4233"><a href="#cb274-4233" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb274-4234"><a href="#cb274-4234" aria-hidden="true" tabindex="-1"></a><span class="fu"># Power Analysis {#sec-powerAnalysis}</span></span>
 <span id="cb274-4235"><a href="#cb274-4235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4236"><a href="#cb274-4236" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis&gt;</span></span>
+<span id="cb274-4236"><a href="#cb274-4236" aria-hidden="true" tabindex="-1"></a>Overview of power analysis in SEM: <span class="ot">&lt;https://web.pdx.edu/~newsomj/semclass/ho_power.pdf&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/NBB5-C7FL&gt;</span>)</span>
 <span id="cb274-4237"><a href="#cb274-4237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4238"><a href="#cb274-4238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://yilinandrewang.shinyapps.io/pwrSEM/&gt;</span></span>
-<span id="cb274-4239"><a href="#cb274-4239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://schoemanna.shinyapps.io/mc_power_med/&gt;</span></span>
-<span id="cb274-4240"><a href="#cb274-4240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://sjak.shinyapps.io/power4SEM/&gt;</span></span>
-<span id="cb274-4241"><a href="#cb274-4241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://sempower.shinyapps.io/sempower/&gt;</span></span>
-<span id="cb274-4242"><a href="#cb274-4242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://webpower.psychstat.org/wiki/models/index&gt;</span></span>
+<span id="cb274-4238"><a href="#cb274-4238" aria-hidden="true" tabindex="-1"></a>Example of Monte Carlo simulation  using <span class="in">`lavaan`</span>: <span class="ot">&lt;https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-monteCarloPowerAnalysis&gt;</span></span>
+<span id="cb274-4239"><a href="#cb274-4239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4240"><a href="#cb274-4240" aria-hidden="true" tabindex="-1"></a>Example of Monte Carlo simulation using <span class="in">`Mplus`</span>: <span class="ot">&lt;https://devpsylab.github.io/DataAnalysis/mplus.html#sec-monteCarlo&gt;</span></span>
+<span id="cb274-4241"><a href="#cb274-4241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4242"><a href="#cb274-4242" aria-hidden="true" tabindex="-1"></a>Toolboxes and webapps:</span>
 <span id="cb274-4243"><a href="#cb274-4243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4244"><a href="#cb274-4244" aria-hidden="true" tabindex="-1"></a><span class="fu"># Path Diagrams {#sec-pathDiagrams}</span></span>
-<span id="cb274-4245"><a href="#cb274-4245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4246"><a href="#cb274-4246" aria-hidden="true" tabindex="-1"></a>For a list of tools to create path diagrams, see <span class="co">[</span><span class="ot">here</span><span class="co">](figures.qmd#sec-pathDiagrams)</span>.</span>
-<span id="cb274-4247"><a href="#cb274-4247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4248"><a href="#cb274-4248" aria-hidden="true" tabindex="-1"></a><span class="fu"># Partial Regression Plot {#sec-partialRegressionPlot}</span></span>
+<span id="cb274-4244"><a href="#cb274-4244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">`semPower` `R` package</span><span class="co">](https://moshagen.github.io/semPower/)</span> (based on <span class="co">[</span><span class="ot">Moshagen &amp; Bader, 2024</span><span class="co">](https://doi.org/10.3758/s13428-023-02254-7)</span>), with basic functionality in a Shiny webapp: <span class="ot">&lt;https://sempower.shinyapps.io/sempower/&gt;</span></span>
+<span id="cb274-4245"><a href="#cb274-4245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://yilinandrewang.shinyapps.io/pwrSEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Wang &amp; Rhemtulla, 2001</span><span class="co">](https://doi.org/10.1177/2515245920918253)</span>)</span>
+<span id="cb274-4246"><a href="#cb274-4246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://schoemanna.shinyapps.io/mc_power_med/&gt;</span></span>
+<span id="cb274-4247"><a href="#cb274-4247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://sjak.shinyapps.io/power4SEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Jak et al., 2020</span><span class="co">](https://doi.org/10.3758/s13428-020-01479-0)</span>)</span>
+<span id="cb274-4248"><a href="#cb274-4248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Basic webapps: <span class="ot">&lt;https://webpower.psychstat.org/wiki/models/index&gt;</span> and <span class="ot">&lt;https://www.danielsoper.com/statcalc/calculator.aspx?id=89&gt;</span></span>
 <span id="cb274-4249"><a href="#cb274-4249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4252"><a href="#cb274-4252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb274-4253"><a href="#cb274-4253" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate extra observed covariates</span></span>
-<span id="cb274-4254"><a href="#cb274-4254" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(PoliticalDemocracy)</span>
-<span id="cb274-4255"><a href="#cb274-4255" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb274-4256"><a href="#cb274-4256" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z2 <span class="ot">&lt;-</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x1 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x2 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x3 <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb274-4257"><a href="#cb274-4257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4258"><a href="#cb274-4258" aria-hidden="true" tabindex="-1"></a><span class="co"># model syntax</span></span>
-<span id="cb274-4259"><a href="#cb274-4259" aria-hidden="true" tabindex="-1"></a>myModel <span class="ot">&lt;-</span> <span class="st">' </span></span>
-<span id="cb274-4260"><a href="#cb274-4260" aria-hidden="true" tabindex="-1"></a><span class="st"> # latent variables </span></span>
-<span id="cb274-4261"><a href="#cb274-4261" aria-hidden="true" tabindex="-1"></a><span class="st">   ind60 =~ x1 + x2 + x3 </span></span>
-<span id="cb274-4262"><a href="#cb274-4262" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 =~ y1 + y2 + y3 + y4 </span></span>
-<span id="cb274-4263"><a href="#cb274-4263" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 =~ y5 + y6 + y7 + y8 </span></span>
-<span id="cb274-4264"><a href="#cb274-4264" aria-hidden="true" tabindex="-1"></a><span class="st"> # regressions</span></span>
-<span id="cb274-4265"><a href="#cb274-4265" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 ~ ind60 </span></span>
-<span id="cb274-4266"><a href="#cb274-4266" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 ~ ind60 + dem60 + z1 + z2</span></span>
-<span id="cb274-4267"><a href="#cb274-4267" aria-hidden="true" tabindex="-1"></a><span class="st"> # residual covariances </span></span>
-<span id="cb274-4268"><a href="#cb274-4268" aria-hidden="true" tabindex="-1"></a><span class="st">   y1 ~~ y5</span></span>
-<span id="cb274-4269"><a href="#cb274-4269" aria-hidden="true" tabindex="-1"></a><span class="st">   y2 ~~ y4 + y6 </span></span>
-<span id="cb274-4270"><a href="#cb274-4270" aria-hidden="true" tabindex="-1"></a><span class="st">   y3 ~~ y7 </span></span>
-<span id="cb274-4271"><a href="#cb274-4271" aria-hidden="true" tabindex="-1"></a><span class="st">   y4 ~~ y8</span></span>
-<span id="cb274-4272"><a href="#cb274-4272" aria-hidden="true" tabindex="-1"></a><span class="st">   y6 ~~ y8</span></span>
-<span id="cb274-4273"><a href="#cb274-4273" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb274-4274"><a href="#cb274-4274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4275"><a href="#cb274-4275" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
-<span id="cb274-4276"><a href="#cb274-4276" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
-<span id="cb274-4277"><a href="#cb274-4277" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> myModel,</span>
-<span id="cb274-4278"><a href="#cb274-4278" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> PoliticalDemocracy)</span>
-<span id="cb274-4279"><a href="#cb274-4279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4280"><a href="#cb274-4280" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the factor scores</span></span>
-<span id="cb274-4281"><a href="#cb274-4281" aria-hidden="true" tabindex="-1"></a>factorScores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lavaan<span class="sc">::</span><span class="fu">lavPredict</span>(fit))</span>
-<span id="cb274-4282"><a href="#cb274-4282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4283"><a href="#cb274-4283" aria-hidden="true" tabindex="-1"></a><span class="co"># merge the factor scores with the original data</span></span>
-<span id="cb274-4284"><a href="#cb274-4284" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(PoliticalDemocracy, factorScores)</span>
+<span id="cb274-4250"><a href="#cb274-4250" aria-hidden="true" tabindex="-1"></a><span class="fu"># Path Diagrams {#sec-pathDiagrams}</span></span>
+<span id="cb274-4251"><a href="#cb274-4251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4252"><a href="#cb274-4252" aria-hidden="true" tabindex="-1"></a>For a list of tools to create path diagrams, see <span class="co">[</span><span class="ot">here</span><span class="co">](figures.qmd#sec-pathDiagrams)</span>.</span>
+<span id="cb274-4253"><a href="#cb274-4253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4254"><a href="#cb274-4254" aria-hidden="true" tabindex="-1"></a><span class="fu"># Partial Regression Plot {#sec-partialRegressionPlot}</span></span>
+<span id="cb274-4255"><a href="#cb274-4255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4258"><a href="#cb274-4258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb274-4259"><a href="#cb274-4259" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate extra observed covariates</span></span>
+<span id="cb274-4260"><a href="#cb274-4260" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(PoliticalDemocracy)</span>
+<span id="cb274-4261"><a href="#cb274-4261" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb274-4262"><a href="#cb274-4262" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z2 <span class="ot">&lt;-</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x1 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x2 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x3 <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb274-4263"><a href="#cb274-4263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4264"><a href="#cb274-4264" aria-hidden="true" tabindex="-1"></a><span class="co"># model syntax</span></span>
+<span id="cb274-4265"><a href="#cb274-4265" aria-hidden="true" tabindex="-1"></a>myModel <span class="ot">&lt;-</span> <span class="st">' </span></span>
+<span id="cb274-4266"><a href="#cb274-4266" aria-hidden="true" tabindex="-1"></a><span class="st"> # latent variables </span></span>
+<span id="cb274-4267"><a href="#cb274-4267" aria-hidden="true" tabindex="-1"></a><span class="st">   ind60 =~ x1 + x2 + x3 </span></span>
+<span id="cb274-4268"><a href="#cb274-4268" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 =~ y1 + y2 + y3 + y4 </span></span>
+<span id="cb274-4269"><a href="#cb274-4269" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 =~ y5 + y6 + y7 + y8 </span></span>
+<span id="cb274-4270"><a href="#cb274-4270" aria-hidden="true" tabindex="-1"></a><span class="st"> # regressions</span></span>
+<span id="cb274-4271"><a href="#cb274-4271" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 ~ ind60 </span></span>
+<span id="cb274-4272"><a href="#cb274-4272" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 ~ ind60 + dem60 + z1 + z2</span></span>
+<span id="cb274-4273"><a href="#cb274-4273" aria-hidden="true" tabindex="-1"></a><span class="st"> # residual covariances </span></span>
+<span id="cb274-4274"><a href="#cb274-4274" aria-hidden="true" tabindex="-1"></a><span class="st">   y1 ~~ y5</span></span>
+<span id="cb274-4275"><a href="#cb274-4275" aria-hidden="true" tabindex="-1"></a><span class="st">   y2 ~~ y4 + y6 </span></span>
+<span id="cb274-4276"><a href="#cb274-4276" aria-hidden="true" tabindex="-1"></a><span class="st">   y3 ~~ y7 </span></span>
+<span id="cb274-4277"><a href="#cb274-4277" aria-hidden="true" tabindex="-1"></a><span class="st">   y4 ~~ y8</span></span>
+<span id="cb274-4278"><a href="#cb274-4278" aria-hidden="true" tabindex="-1"></a><span class="st">   y6 ~~ y8</span></span>
+<span id="cb274-4279"><a href="#cb274-4279" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb274-4280"><a href="#cb274-4280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4281"><a href="#cb274-4281" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
+<span id="cb274-4282"><a href="#cb274-4282" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
+<span id="cb274-4283"><a href="#cb274-4283" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> myModel,</span>
+<span id="cb274-4284"><a href="#cb274-4284" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> PoliticalDemocracy)</span>
 <span id="cb274-4285"><a href="#cb274-4285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4286"><a href="#cb274-4286" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent Y (dem65) on covariates</span></span>
-<span id="cb274-4287"><a href="#cb274-4287" aria-hidden="true" tabindex="-1"></a>ry <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(dem65 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb274-4286"><a href="#cb274-4286" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the factor scores</span></span>
+<span id="cb274-4287"><a href="#cb274-4287" aria-hidden="true" tabindex="-1"></a>factorScores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lavaan<span class="sc">::</span><span class="fu">lavPredict</span>(fit))</span>
 <span id="cb274-4288"><a href="#cb274-4288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4289"><a href="#cb274-4289" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent X (ind60) on same covariates</span></span>
-<span id="cb274-4290"><a href="#cb274-4290" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(ind60 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb274-4289"><a href="#cb274-4289" aria-hidden="true" tabindex="-1"></a><span class="co"># merge the factor scores with the original data</span></span>
+<span id="cb274-4290"><a href="#cb274-4290" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(PoliticalDemocracy, factorScores)</span>
 <span id="cb274-4291"><a href="#cb274-4291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4292"><a href="#cb274-4292" aria-hidden="true" tabindex="-1"></a><span class="co"># create the partial regression plot</span></span>
-<span id="cb274-4293"><a href="#cb274-4293" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb274-4294"><a href="#cb274-4294" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">data.frame</span>(rx, ry),</span>
-<span id="cb274-4295"><a href="#cb274-4295" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(rx, ry)) <span class="sc">+</span></span>
-<span id="cb274-4296"><a href="#cb274-4296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb274-4297"><a href="#cb274-4297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
-<span id="cb274-4298"><a href="#cb274-4298" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb274-4299"><a href="#cb274-4299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb274-4300"><a href="#cb274-4300" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residualized ind60"</span>,</span>
-<span id="cb274-4301"><a href="#cb274-4301" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Residualized dem65"</span>,</span>
-<span id="cb274-4302"><a href="#cb274-4302" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Partial Regression Plot from SEM"</span></span>
-<span id="cb274-4303"><a href="#cb274-4303" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb274-4304"><a href="#cb274-4304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb274-4305"><a href="#cb274-4305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4306"><a href="#cb274-4306" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb274-4307"><a href="#cb274-4307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4310"><a href="#cb274-4310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb274-4311"><a href="#cb274-4311" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb274-4312"><a href="#cb274-4312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb274-4313"><a href="#cb274-4313" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb274-4314"><a href="#cb274-4314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-4292"><a href="#cb274-4292" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent Y (dem65) on covariates</span></span>
+<span id="cb274-4293"><a href="#cb274-4293" aria-hidden="true" tabindex="-1"></a>ry <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(dem65 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb274-4294"><a href="#cb274-4294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4295"><a href="#cb274-4295" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent X (ind60) on same covariates</span></span>
+<span id="cb274-4296"><a href="#cb274-4296" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(ind60 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb274-4297"><a href="#cb274-4297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4298"><a href="#cb274-4298" aria-hidden="true" tabindex="-1"></a><span class="co"># create the partial regression plot</span></span>
+<span id="cb274-4299"><a href="#cb274-4299" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb274-4300"><a href="#cb274-4300" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">data.frame</span>(rx, ry),</span>
+<span id="cb274-4301"><a href="#cb274-4301" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(rx, ry)) <span class="sc">+</span></span>
+<span id="cb274-4302"><a href="#cb274-4302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb274-4303"><a href="#cb274-4303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb274-4304"><a href="#cb274-4304" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb274-4305"><a href="#cb274-4305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb274-4306"><a href="#cb274-4306" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residualized ind60"</span>,</span>
+<span id="cb274-4307"><a href="#cb274-4307" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Residualized dem65"</span>,</span>
+<span id="cb274-4308"><a href="#cb274-4308" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Partial Regression Plot from SEM"</span></span>
+<span id="cb274-4309"><a href="#cb274-4309" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb274-4310"><a href="#cb274-4310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb274-4311"><a href="#cb274-4311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4312"><a href="#cb274-4312" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb274-4313"><a href="#cb274-4313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4316"><a href="#cb274-4316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb274-4317"><a href="#cb274-4317" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb274-4318"><a href="#cb274-4318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb274-4319"><a href="#cb274-4319" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb274-4320"><a href="#cb274-4320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
