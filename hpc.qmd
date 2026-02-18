@@ -98,6 +98,158 @@ cd /Users/itpetersen/Documents/Projects/Test/
 
 <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513442/Singularity+Containers>
 
+Steps:
+
+1. Install Windows Subsystem for Linux (WSL)
+    - In PowerShell (Admin):
+    ```bash
+    wsl --install
+    ```
+    Restart the computer.
+    It will install Ubuntu by default.
+1. Update Ubuntu
+    - Open Ubuntu
+    - Inside the Ubuntu terminal, run:
+    ```bash
+    sudo apt update
+    sudo apt upgrade -y
+    ```
+1. Install Apptainer inside WSL
+    - Inside the Ubuntu terminal, first install dependencies:
+    ```bash
+    sudo apt update
+    sudo apt install -y \
+    build-essential \
+    libseccomp-dev \
+    pkg-config \
+    squashfs-tools \
+    cryptsetup \
+    curl \
+    wget \
+    git \
+    uidmap \
+    golang-go
+    ```
+    - Now, install Apptainer:
+    ```bash
+    sudo apt install -y apptainer
+    ```
+    - Verify installation:
+    ```bash
+    apptainer --version
+    ```
+    If not available via apt (`E: Unable to locate package apptainer`), install from source (specify the version number for the latest release version available; see release versions [here](https://github.com/apptainer/apptainer/releases)):
+    ```bash
+    export VERSION=1.4.5
+    wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz
+    tar -xzf apptainer-${VERSION}.tar.gz
+    cd apptainer-${VERSION}
+    ```
+    If you installed from source, build Apptainer:
+    ```bash
+    ./mconfig
+    make -C builddir
+    sudo make -C builddir install
+    ```
+    - Verify installation:
+    ```bash
+    apptainer --version
+    ```
+1. Create your `R` Container Definition File
+    - Inside the Ubuntu terminal, run:
+    ```bash
+    nano r_argon.def
+    ```
+    - Paste this:
+    ```bash
+    Bootstrap: docker
+    From: rocker/r-ver:latest
+
+    %post
+        apt-get update && apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libgit2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libglpk-dev \
+            libgmp3-dev \
+            libmpfr-dev \
+            make \
+            g++ \
+            cmake \
+            git
+        
+        # Install core CRAN packages
+        R -e "install.packages(c( \
+            'tidyverse', \
+            'data.table', \
+            'rstan', \
+            'brms', \
+            'mirt', \
+            'lavaan', \
+            'semTools', \
+            'renv', \
+            'remotes' \
+        ), repos='https://cloud.r-project.org')"
+        
+        # Install cmdstanr from Stan R universe
+        R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev', 'https://cloud.r-project.org'))"
+        
+        # Install CmdStan
+        R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
+
+        # Enable threading for within-chain parallelization
+        mkdir -p /root/.R
+        echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
+        
+        # Install latest version of petersenlab package
+        R -e "remotes::install_github('DevPsyLab/petersenlab')"
+
+    %environment
+        export R_LIBS_USER=/usr/local/lib/R/site-library
+        export CMDSTAN=/opt/cmdstan/cmdstan-$(ls /opt/cmdstan)
+
+    %runscript
+        exec R "$@"
+    ```
+    - Press `Ctrl+O` to Save (i.e., "Write Out")
+    - Press Enter
+    - Press `Ctrl+X` to Exit
+1. Build the Container
+    - Inside the Ubuntu terminal, run:
+    ```bash
+    sudo apptainer build r_argon.sif r_argon.def
+    ```
+1. Test the Container Locally
+    - Inside the Ubuntu terminal, run:
+    ```bash
+    apptainer exec r_argon.sif R
+    ```
+    - Check `R` version:
+    ```R
+    version
+    ```
+    - Check `R` packages:
+    ```R
+    library("brms")
+    library("cmdstanr")
+    library("petersenlab")
+    ```
+    - Exit `R`
+    ```R
+    q()
+    ```
+1. Copy the Container to Argon
+1. Test Container on Argon
+1. Submit a Job Using the Container on Argon
+
 # Linux
 
 ## Initial run
