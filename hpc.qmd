@@ -138,14 +138,14 @@ Steps:
     ```bash
     apptainer --version
     ```
-    If not available via apt (`E: Unable to locate package apptainer`), install from source (specify the version number for the latest release version available; see release versions [here](https://github.com/apptainer/apptainer/releases)):
+    - If not available via apt (`E: Unable to locate package apptainer`), install from source (specify the version number for the latest release version available; see release versions [here](https://github.com/apptainer/apptainer/releases)):
     ```bash
     export VERSION=1.4.5
     wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz
     tar -xzf apptainer-${VERSION}.tar.gz
     cd apptainer-${VERSION}
     ```
-    If you installed from source, build Apptainer:
+    - If you installed from source, build Apptainer:
     ```bash
     ./mconfig
     make -C builddir
@@ -166,6 +166,9 @@ Steps:
     From: rocker/r-ver:latest
 
     %post
+        # -------------------------------
+        # Install system dependencies
+        # -------------------------------
         apt-get update && apt-get install -y \
             libcurl4-openssl-dev \
             libssl-dev \
@@ -184,40 +187,56 @@ Steps:
             make \
             g++ \
             cmake \
-            git
-        
-        # Install core CRAN packages
-        R -e "install.packages(c( \
-            'tidyverse', \
-            'data.table', \
-            'rstan', \
-            'brms', \
-            'mirt', \
-            'lavaan', \
-            'semTools', \
-            'renv', \
-            'remotes' \
-        ), repos='https://cloud.r-project.org')"
-        
-        # Install cmdstanr from Stan R universe
-        R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev', 'https://cloud.r-project.org'))"
-        
-        # Create directory for CmdStan
-        mkdir -p /opt/cmdstan
+            git \
+            sudo
 
-        # Install CmdStan into that directory
+        # -------------------------------
+        # Install core CRAN packages
+        # -------------------------------
+        R -e "install.packages(c(
+            'tidyverse',
+            'data.table',
+            'rstan',
+            'brms',
+            'mirt',
+            'lavaan',
+            'semTools',
+            'renv',
+            'remotes'
+        ), repos='https://cloud.r-project.org')"
+
+        # -------------------------------
+        # Install cmdstanr
+        # -------------------------------
+        R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev','https://cloud.r-project.org'))"
+
+        # -------------------------------
+        # Install latest CmdStan into /opt/cmdstan
+        # -------------------------------
+        mkdir -p /opt/cmdstan
         R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
 
+        # -------------------------------
+        # Create a symlink 'latest' to the installed CmdStan version
+        # -------------------------------
+        cd /opt/cmdstan
+        ln -s cmdstan-* latest
+
+        # -------------------------------
         # Enable threading for within-chain parallelization
+        # -------------------------------
         mkdir -p /root/.R
         echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
-        
-        # Install latest version of petersenlab package
+
+        # -------------------------------
+        # Install latest version of petersenlab package from GitHub
+        # -------------------------------
         R -e "remotes::install_github('DevPsyLab/petersenlab')"
+
 
     %environment
         export R_LIBS_USER=/usr/local/lib/R/site-library
-        export CMDSTAN=/opt/cmdstan/cmdstan-$(ls /opt/cmdstan)
+        export CMDSTAN=/opt/cmdstan/latest
 
     %runscript
         exec R "$@"
