@@ -202,7 +202,10 @@ Steps:
         # Install cmdstanr from Stan R universe
         R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev', 'https://cloud.r-project.org'))"
         
-        # Install CmdStan
+        # Create directory for CmdStan
+        mkdir -p /opt/cmdstan
+
+        # Install CmdStan into that directory
         R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
 
         # Enable threading for within-chain parallelization
