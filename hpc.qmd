@@ -166,9 +166,7 @@ Steps:
     From: rocker/r-ver:latest
 
     %post
-        # -------------------------------
         # Install system dependencies
-        # -------------------------------
         apt-get update && apt-get install -y \
             libcurl4-openssl-dev \
             libssl-dev \
@@ -190,9 +188,7 @@ Steps:
             git \
             sudo
 
-        # -------------------------------
         # Install core CRAN packages
-        # -------------------------------
         R -e "install.packages(c(
             'tidyverse',
             'data.table',
@@ -205,34 +201,23 @@ Steps:
             'remotes'
         ), repos='https://cloud.r-project.org')"
 
-        # -------------------------------
         # Install cmdstanr
-        # -------------------------------
         R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev','https://cloud.r-project.org'))"
 
-        # -------------------------------
         # Install latest CmdStan into /opt/cmdstan
-        # -------------------------------
         mkdir -p /opt/cmdstan
         R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
 
-        # -------------------------------
         # Create a symlink 'latest' to the installed CmdStan version
-        # -------------------------------
         cd /opt/cmdstan
         ln -s cmdstan-* latest
 
-        # -------------------------------
         # Enable threading for within-chain parallelization
-        # -------------------------------
         mkdir -p /root/.R
         echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
 
-        # -------------------------------
         # Install latest version of petersenlab package from GitHub
-        # -------------------------------
         R -e "remotes::install_github('DevPsyLab/petersenlab')"
-
 
     %environment
         export R_LIBS_USER=/usr/local/lib/R/site-library
