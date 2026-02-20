@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-b754b9fd3853d7e56faef54c29c5d52b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8ea10ca945d150d6d0725b19b9a8ba39.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9278de052701f0b3f1191ef96b26c196.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -854,6 +854,8 @@ git push origin master                               # sync the git repo and lar
 </section>
 <section id="sec-troubleshootingGit" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Troubleshooting</h1>
+<p>A troubleshooting guide for Git is located here:</p>
+<p><a href="https://ohshitgit.com" class="uri">https://ohshitgit.com</a> (archived at: <a href="https://perma.cc/7E6X-JQW2" class="uri">https://perma.cc/7E6X-JQW2</a>)</p>
 <section id="sec-authenticationFailed" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-authenticationFailed"><span class="header-section-number">4.1</span> Error: Authentication Failed</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -1709,145 +1711,149 @@ The dot on the end of the <code>git clone</code> command means “the current di
 <span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a><span class="fu"># Troubleshooting {#sec-troubleshootingGit}</span></span>
 <span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: Authentication Failed {#sec-authenticationFailed}</span></span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a>A troubleshooting guide for Git is located here:</span>
 <span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="al">![authentication failed](images/githubDesktopAuthenticationError.png)</span></span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://ohshitgit.com&gt;</span> (archived at: <span class="ot">&lt;https://perma.cc/7E6X-JQW2&gt;</span>)</span>
 <span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a>This error can occur for a variety of reasons.</span>
-<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a>One possibility is that your GitLab Personal Access Token (PAT) has expired.</span>
-<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a>To fix this:</span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: Authentication Failed {#sec-authenticationFailed}</span></span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a><span class="al">![authentication failed](images/githubDesktopAuthenticationError.png)</span></span>
 <span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a Personal Access Token (<span class="ot">&lt;https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html&gt;</span>, archived at <span class="ot">&lt;https://perma.cc/6ZH8-JNZC&gt;</span>; or <span class="ot">&lt;https://research-git.uiowa.edu/-/profile/personal_access_tokens&gt;</span>, archived at <span class="ot">&lt;https://perma.cc/7JPU-WDBS&gt;</span>) on the UI <span class="in">`GitLab`</span> instance (<span class="ot">&lt;https://research-git.uiowa.edu&gt;</span>) to access UI <span class="in">`GitLab`</span> repositories from <span class="in">`GitHub Desktop`</span>.</span>
-<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For application name, put "GitHub"</span>
-<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For expiration date, leave it blank (or set it for as late an expiration date as possible)</span>
-<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For scopes, select everything</span>
-<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>When cloning a repository from UI's <span class="in">`GitLab`</span> instance using <span class="in">`GitHub Desktop`</span>, <span class="in">`GitHub Desktop`</span> will ask for your username and password.</span>
-<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a>Enter your HawkID as your username and your UI <span class="in">`GitLab`</span> Personal Access Token as your password.</span>
-<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>If you do not receive a prompt to enter your username and password, try removing the saved GitHubcredentials from Windows Credential Manager:</span>
-<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://github.com/desktop/desktop/issues/8860#issuecomment-2211812646&gt;</span></span>
-<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## GitHub trying to connect to `git config` in another user's User folder</span></span>
-<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>To resolve, ensure that the <span class="in">`HOME`</span> environment variable is set to your user folder (assuming that it is not a shared computer)</span>
+<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a>This error can occur for a variety of reasons.</span>
+<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>One possibility is that your GitLab Personal Access Token (PAT) has expired.</span>
+<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a>To fix this:</span>
+<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a Personal Access Token (<span class="ot">&lt;https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html&gt;</span>, archived at <span class="ot">&lt;https://perma.cc/6ZH8-JNZC&gt;</span>; or <span class="ot">&lt;https://research-git.uiowa.edu/-/profile/personal_access_tokens&gt;</span>, archived at <span class="ot">&lt;https://perma.cc/7JPU-WDBS&gt;</span>) on the UI <span class="in">`GitLab`</span> instance (<span class="ot">&lt;https://research-git.uiowa.edu&gt;</span>) to access UI <span class="in">`GitLab`</span> repositories from <span class="in">`GitHub Desktop`</span>.</span>
+<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For application name, put "GitHub"</span>
+<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For expiration date, leave it blank (or set it for as late an expiration date as possible)</span>
+<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a><span class="ss">    -  </span>For scopes, select everything</span>
+<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>When cloning a repository from UI's <span class="in">`GitLab`</span> instance using <span class="in">`GitHub Desktop`</span>, <span class="in">`GitHub Desktop`</span> will ask for your username and password.</span>
+<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>Enter your HawkID as your username and your UI <span class="in">`GitLab`</span> Personal Access Token as your password.</span>
+<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a>If you do not receive a prompt to enter your username and password, try removing the saved GitHubcredentials from Windows Credential Manager:</span>
+<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://github.com/desktop/desktop/issues/8860#issuecomment-2211812646&gt;</span></span>
 <span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>To do so:</span>
-<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Type "Environment Variables" into the search bar of your Windows task bar</span>
-<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Open" under the result of "Edit the system environment variables"</span>
-<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Enter an admin user/password when prompted</span>
-<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Environment Variables" at the bottom right corner of the popup window that should open after entering admin credentials</span>
-<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Find the <span class="in">`HOME`</span> environment variable and click it to select (highlighted blue)</span>
-<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Edit" and update the path to match your Users folder</span>
-<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## `GitHub` shows all files as being changed even though the files haven't changed</span></span>
-<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a>Windows and Mac use different line endings (<span class="ot">&lt;https://github.com/Microsoft/WSL/issues/184&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/F8UX-YJP3&gt;</span>):</span>
+<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a><span class="fu">## GitHub trying to connect to `git config` in another user's User folder</span></span>
+<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>To resolve, ensure that the <span class="in">`HOME`</span> environment variable is set to your user folder (assuming that it is not a shared computer)</span>
+<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>To do so:</span>
+<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Type "Environment Variables" into the search bar of your Windows task bar</span>
+<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Open" under the result of "Edit the system environment variables"</span>
+<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Enter an admin user/password when prompted</span>
+<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Environment Variables" at the bottom right corner of the popup window that should open after entering admin credentials</span>
+<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Find the <span class="in">`HOME`</span> environment variable and click it to select (highlighted blue)</span>
+<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Click "Edit" and update the path to match your Users folder</span>
+<span id="cb14-269"><a href="#cb14-269" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-270"><a href="#cb14-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a><span class="in">git config --global core.autocrlf true</span></span>
-<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `You are not allowed to push code to protected branches on this project`</span></span>
-<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Make sure the owner of the repo unprotects the branch (<span class="ot">&lt;https://stackoverflow.com/questions/32246503/fix-gitlab-error-you-are-not-allowed-to-push-code-to-protected-branches-on-thi&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/98AF-N6BY&gt;</span>)</span>
-<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open the repo, click "Settings", "Repository", "Protected Branches"</span>
-<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Change "Allowed to merge" and "Allowed to push" to "Developers and Maintainers", and click "Unprotect"</span>
+<span id="cb14-271"><a href="#cb14-271" aria-hidden="true" tabindex="-1"></a><span class="fu">## `GitHub` shows all files as being changed even though the files haven't changed</span></span>
+<span id="cb14-272"><a href="#cb14-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-273"><a href="#cb14-273" aria-hidden="true" tabindex="-1"></a>Windows and Mac use different line endings (<span class="ot">&lt;https://github.com/Microsoft/WSL/issues/184&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/F8UX-YJP3&gt;</span>):</span>
+<span id="cb14-274"><a href="#cb14-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-275"><a href="#cb14-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-276"><a href="#cb14-276" aria-hidden="true" tabindex="-1"></a><span class="in">git config --global core.autocrlf true</span></span>
+<span id="cb14-277"><a href="#cb14-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-278"><a href="#cb14-278" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-279"><a href="#cb14-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `You are not allowed to push code to protected branches on this project`</span></span>
 <span id="cb14-280"><a href="#cb14-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-281"><a href="#cb14-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error creating commit</span></span>
-<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-284"><a href="#cb14-284" aria-hidden="true" tabindex="-1"></a><span class="in">git add -A</span></span>
-<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
-<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m "Message"` (where "Message" is the summary message of the commit)</span></span>
-<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a><span class="in">git push</span></span>
-<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
-<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo commit (but retain file changes)</span></span>
-<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-281"><a href="#cb14-281" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Make sure the owner of the repo unprotects the branch (<span class="ot">&lt;https://stackoverflow.com/questions/32246503/fix-gitlab-error-you-are-not-allowed-to-push-code-to-protected-branches-on-thi&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/98AF-N6BY&gt;</span>)</span>
+<span id="cb14-282"><a href="#cb14-282" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open the repo, click "Settings", "Repository", "Protected Branches"</span>
+<span id="cb14-283"><a href="#cb14-283" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Change "Allowed to merge" and "Allowed to push" to "Developers and Maintainers", and click "Unprotect"</span>
+<span id="cb14-284"><a href="#cb14-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-285"><a href="#cb14-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error creating commit</span></span>
+<span id="cb14-286"><a href="#cb14-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-287"><a href="#cb14-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-288"><a href="#cb14-288" aria-hidden="true" tabindex="-1"></a><span class="in">git add -A</span></span>
+<span id="cb14-289"><a href="#cb14-289" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
+<span id="cb14-290"><a href="#cb14-290" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m "Message"` (where "Message" is the summary message of the commit)</span></span>
+<span id="cb14-291"><a href="#cb14-291" aria-hidden="true" tabindex="-1"></a><span class="in">git push</span></span>
+<span id="cb14-292"><a href="#cb14-292" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
 <span id="cb14-293"><a href="#cb14-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a><span class="in">git reset --soft HEAD^</span></span>
-<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-294"><a href="#cb14-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-295"><a href="#cb14-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo commit (but retain file changes)</span></span>
 <span id="cb14-296"><a href="#cb14-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Sync failed`</span></span>
-<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-297"><a href="#cb14-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-298"><a href="#cb14-298" aria-hidden="true" tabindex="-1"></a><span class="in">git reset --soft HEAD^</span></span>
 <span id="cb14-299"><a href="#cb14-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
-<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a><span class="in">git push</span></span>
-<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Sync failed -- Syncing would overwrite your uncommitted changes`</span></span>
-<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-would-be-over-written-by-syncing&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/AP5S-G38B&gt;</span>):</span>
+<span id="cb14-300"><a href="#cb14-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-301"><a href="#cb14-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Sync failed`</span></span>
+<span id="cb14-302"><a href="#cb14-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-303"><a href="#cb14-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-304"><a href="#cb14-304" aria-hidden="true" tabindex="-1"></a><span class="in">git status</span></span>
+<span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a><span class="in">git push</span></span>
+<span id="cb14-306"><a href="#cb14-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-307"><a href="#cb14-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`git stash -u`</span></span>
-<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>(perform manual sync in <span class="in">`GitHub Desktop`</span>)</span>
-<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`git stash pop`</span></span>
-<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Pipeline has failed for master`</span></span>
-<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://docs.gitlab.com/ee/topics/autodevops/#at-the-project-level&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3MAQ-ZBFF&gt;</span>)</span>
-<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open the repo in <span class="in">`GitLab`</span></span>
-<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Go to your project's "Settings" &gt; "CI/CD" &gt; "Auto DevOps"</span>
-<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Disable (uncheck) the "Default to Auto DevOps pipeline"</span>
-<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Save changes"</span>
-<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a><span class="fu"># OLD</span></span>
-<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Repo on Local Directory (if Directory is empty)</span></span>
+<span id="cb14-308"><a href="#cb14-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Sync failed -- Syncing would overwrite your uncommitted changes`</span></span>
+<span id="cb14-309"><a href="#cb14-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-310"><a href="#cb14-310" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stackoverflow.com/questions/23084822/github-some-uncommited-changes-would-be-over-written-by-syncing&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/AP5S-G38B&gt;</span>):</span>
+<span id="cb14-311"><a href="#cb14-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-312"><a href="#cb14-312" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`git stash -u`</span></span>
+<span id="cb14-313"><a href="#cb14-313" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>(perform manual sync in <span class="in">`GitHub Desktop`</span>)</span>
+<span id="cb14-314"><a href="#cb14-314" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`git stash pop`</span></span>
+<span id="cb14-315"><a href="#cb14-315" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-316"><a href="#cb14-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error: `Pipeline has failed for master`</span></span>
+<span id="cb14-317"><a href="#cb14-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-318"><a href="#cb14-318" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://docs.gitlab.com/ee/topics/autodevops/#at-the-project-level&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3MAQ-ZBFF&gt;</span>)</span>
+<span id="cb14-319"><a href="#cb14-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-320"><a href="#cb14-320" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open the repo in <span class="in">`GitLab`</span></span>
+<span id="cb14-321"><a href="#cb14-321" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Go to your project's "Settings" &gt; "CI/CD" &gt; "Auto DevOps"</span>
+<span id="cb14-322"><a href="#cb14-322" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Disable (uncheck) the "Default to Auto DevOps pipeline"</span>
+<span id="cb14-323"><a href="#cb14-323" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Save changes"</span>
 <span id="cb14-324"><a href="#cb14-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-325"><a href="#cb14-325" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create Repo on GitHub</span>
-<span id="cb14-326"><a href="#cb14-326" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Don't add README yet</span>
-<span id="cb14-327"><a href="#cb14-327" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell, navigate to directory, and type:</span>
-<span id="cb14-328"><a href="#cb14-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-329"><a href="#cb14-329" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
-<span id="cb14-330"><a href="#cb14-330" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://github.com/DevPsyLab/petersenlab.git</span></span>
-<span id="cb14-331"><a href="#cb14-331" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
+<span id="cb14-325"><a href="#cb14-325" aria-hidden="true" tabindex="-1"></a><span class="fu"># OLD</span></span>
+<span id="cb14-326"><a href="#cb14-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-327"><a href="#cb14-327" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Repo on Local Directory (if Directory is empty)</span></span>
+<span id="cb14-328"><a href="#cb14-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-329"><a href="#cb14-329" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create Repo on GitHub</span>
+<span id="cb14-330"><a href="#cb14-330" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Don't add README yet</span>
+<span id="cb14-331"><a href="#cb14-331" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell, navigate to directory, and type:</span>
 <span id="cb14-332"><a href="#cb14-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-333"><a href="#cb14-333" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Drag and drop the folder with the repository into the GUI app</span>
-<span id="cb14-334"><a href="#cb14-334" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add .gitignore file with .Rhistory</span>
-<span id="cb14-335"><a href="#cb14-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-336"><a href="#cb14-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Repo on Local Directory (if Directory is *not* empty)</span></span>
-<span id="cb14-337"><a href="#cb14-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-338"><a href="#cb14-338" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create Repo on GitHub</span>
-<span id="cb14-339"><a href="#cb14-339" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Don't add README yet</span>
-<span id="cb14-340"><a href="#cb14-340" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell, navigate to directory, and type:</span>
-<span id="cb14-341"><a href="#cb14-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-342"><a href="#cb14-342" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
-<span id="cb14-343"><a href="#cb14-343" aria-hidden="true" tabindex="-1"></a><span class="in">git add .</span></span>
-<span id="cb14-344"><a href="#cb14-344" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m 'First commit'</span></span>
-<span id="cb14-345"><a href="#cb14-345" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://research-git.uiowa.edu/itpetersen/PetersenLab.git</span></span>
-<span id="cb14-346"><a href="#cb14-346" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
-<span id="cb14-347"><a href="#cb14-347" aria-hidden="true" tabindex="-1"></a><span class="in">git push -u origin master</span></span>
-<span id="cb14-348"><a href="#cb14-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Drag and drop the folder with the repository into the GUI app</span>
-<span id="cb14-350"><a href="#cb14-350" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add .gitignore file with .Rhistory</span>
-<span id="cb14-351"><a href="#cb14-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-352"><a href="#cb14-352" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating `R` Scripts Repo on Lab Server</span></span>
-<span id="cb14-353"><a href="#cb14-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-354"><a href="#cb14-354" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create <span class="in">`R`</span> Scripts Repo</span>
-<span id="cb14-355"><a href="#cb14-355" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`R`</span> Scripts folder and delete <span class="in">`.git`</span> folder</span>
-<span id="cb14-356"><a href="#cb14-356" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell and type:</span>
-<span id="cb14-357"><a href="#cb14-357" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-358"><a href="#cb14-358" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
-<span id="cb14-359"><a href="#cb14-359" aria-hidden="true" tabindex="-1"></a><span class="in">git add .</span></span>
-<span id="cb14-360"><a href="#cb14-360" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m 'First commit'</span></span>
-<span id="cb14-361"><a href="#cb14-361" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://research-git.uiowa.edu/PetersenLab/R-Scripts.git</span></span>
-<span id="cb14-362"><a href="#cb14-362" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
-<span id="cb14-363"><a href="#cb14-363" aria-hidden="true" tabindex="-1"></a><span class="in">git push -u origin master</span></span>
-<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-365"><a href="#cb14-365" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Move <span class="in">`R`</span> Scripts folder to another location</span>
-<span id="cb14-366"><a href="#cb14-366" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Clone repo into folder:</span>
-<span id="cb14-367"><a href="#cb14-367" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>open <span class="in">`Git`</span> Shell</span>
-<span id="cb14-368"><a href="#cb14-368" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>navigate to <span class="in">`Z:\TDS II\Data\R Scripts\`</span></span>
-<span id="cb14-369"><a href="#cb14-369" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb14-370"><a href="#cb14-370" aria-hidden="true" tabindex="-1"></a><span class="in">    git clone https://research-git.uiowa.edu/PetersenLab/R-Scripts.git .</span></span>
-<span id="cb14-371"><a href="#cb14-371" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb14-372"><a href="#cb14-372" aria-hidden="true" tabindex="-1"></a>    The dot on the end of the <span class="in">`git clone`</span> command means "the current directory"</span>
-<span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Drag and drop the folder with the repository into the GUI app</span>
-<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Add <span class="in">`.gitignore`</span> file with <span class="in">`.Rhistory`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb14-333"><a href="#cb14-333" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
+<span id="cb14-334"><a href="#cb14-334" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://github.com/DevPsyLab/petersenlab.git</span></span>
+<span id="cb14-335"><a href="#cb14-335" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
+<span id="cb14-336"><a href="#cb14-336" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-337"><a href="#cb14-337" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Drag and drop the folder with the repository into the GUI app</span>
+<span id="cb14-338"><a href="#cb14-338" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add .gitignore file with .Rhistory</span>
+<span id="cb14-339"><a href="#cb14-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-340"><a href="#cb14-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating Repo on Local Directory (if Directory is *not* empty)</span></span>
+<span id="cb14-341"><a href="#cb14-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-342"><a href="#cb14-342" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create Repo on GitHub</span>
+<span id="cb14-343"><a href="#cb14-343" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Don't add README yet</span>
+<span id="cb14-344"><a href="#cb14-344" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell, navigate to directory, and type:</span>
+<span id="cb14-345"><a href="#cb14-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-346"><a href="#cb14-346" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
+<span id="cb14-347"><a href="#cb14-347" aria-hidden="true" tabindex="-1"></a><span class="in">git add .</span></span>
+<span id="cb14-348"><a href="#cb14-348" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m 'First commit'</span></span>
+<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://research-git.uiowa.edu/itpetersen/PetersenLab.git</span></span>
+<span id="cb14-350"><a href="#cb14-350" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
+<span id="cb14-351"><a href="#cb14-351" aria-hidden="true" tabindex="-1"></a><span class="in">git push -u origin master</span></span>
+<span id="cb14-352"><a href="#cb14-352" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-353"><a href="#cb14-353" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Drag and drop the folder with the repository into the GUI app</span>
+<span id="cb14-354"><a href="#cb14-354" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Add .gitignore file with .Rhistory</span>
+<span id="cb14-355"><a href="#cb14-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-356"><a href="#cb14-356" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating `R` Scripts Repo on Lab Server</span></span>
+<span id="cb14-357"><a href="#cb14-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-358"><a href="#cb14-358" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create <span class="in">`R`</span> Scripts Repo</span>
+<span id="cb14-359"><a href="#cb14-359" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`R`</span> Scripts folder and delete <span class="in">`.git`</span> folder</span>
+<span id="cb14-360"><a href="#cb14-360" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Git`</span> Shell and type:</span>
+<span id="cb14-361"><a href="#cb14-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-362"><a href="#cb14-362" aria-hidden="true" tabindex="-1"></a><span class="in">git init</span></span>
+<span id="cb14-363"><a href="#cb14-363" aria-hidden="true" tabindex="-1"></a><span class="in">git add .</span></span>
+<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a><span class="in">git commit -m 'First commit'</span></span>
+<span id="cb14-365"><a href="#cb14-365" aria-hidden="true" tabindex="-1"></a><span class="in">git remote add origin https://research-git.uiowa.edu/PetersenLab/R-Scripts.git</span></span>
+<span id="cb14-366"><a href="#cb14-366" aria-hidden="true" tabindex="-1"></a><span class="in">git remote -v</span></span>
+<span id="cb14-367"><a href="#cb14-367" aria-hidden="true" tabindex="-1"></a><span class="in">git push -u origin master</span></span>
+<span id="cb14-368"><a href="#cb14-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-369"><a href="#cb14-369" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Move <span class="in">`R`</span> Scripts folder to another location</span>
+<span id="cb14-370"><a href="#cb14-370" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Clone repo into folder:</span>
+<span id="cb14-371"><a href="#cb14-371" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>open <span class="in">`Git`</span> Shell</span>
+<span id="cb14-372"><a href="#cb14-372" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>navigate to <span class="in">`Z:\TDS II\Data\R Scripts\`</span></span>
+<span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a><span class="in">    git clone https://research-git.uiowa.edu/PetersenLab/R-Scripts.git .</span></span>
+<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a>    The dot on the end of the <span class="in">`git clone`</span> command means "the current directory"</span>
+<span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Drag and drop the folder with the repository into the GUI app</span>
+<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Add <span class="in">`.gitignore`</span> file with <span class="in">`.Rhistory`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/git.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/git.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
