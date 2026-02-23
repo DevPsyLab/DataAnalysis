@@ -253,9 +253,39 @@ Steps:
     ```R
     q()
     ```
+1. Copy the Container to Your Computer
+    - Inside the Ubuntu terminal, run (updating your path):
+    ```bash
+    cp ~/apptainer-1.4.5/r_argon.sif "/mnt/e/Documents/OneDrive - University of Iowa/Research/Containers/"
+    ```
 1. Copy the Container to Argon
+    - Use WinSCP to transfer the `.sif` file to Argon: `/old_Users/itpetersen/Documents/Containers/`
 1. Test Container on Argon
+    - Inside the Ubuntu terminal, run:
+    ```bash
+    apptainer exec r_argon.sif R
+    ```
+    - Check `R` version:
+    ```R
+    version
+    ```
+    - Check `R` packages:
+    ```R
+    library("brms")
+    library("cmdstanr")
+    library("petersenlab")
+    ```
+    - Exit `R`
+    ```R
+    q()
+    ```
 1. Submit a Job Using the Container on Argon
+    - e.g.:
+    ```bash
+    # Run R inside your container
+    /usr/bin/apptainer exec /old_Users/itpetersen/Documents/Containers/r_argon.sif \
+        Rscript my_script.R
+    ```
 
 # Linux
 
@@ -336,6 +366,30 @@ module load r/4.2.2_gcc-9.5.0
 
 # Run the R script
 Rscript ./Analyses/factorScores.R
+```
+
+Using a container:
+
+```bash
+#!/bin/sh
+
+# Set working directory
+cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
+
+# Specify qsub options
+#$ -pe smp 4
+#$ -M isaac-t-petersen@uiowa.edu
+#$ -m eas
+#$ -l mf=512G
+#$ -l h_vmem=512G
+#$ -cwd
+#$ -q UI-HM
+#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+
+# Run the R script inside container
+/usr/bin/apptainer exec /old_Users/itpetersen/Documents/Containers/r_argon.sif \
+    Rscript ./Analyses/factorScores.R
 ```
 
 ### qsub options
