@@ -71,23 +71,22 @@ Mac OS Terminal:
 `ssh -p 40 itpetersen@argon.hpc.uiowa.edu` (off campus without VPN)
 
 # General Commands
-```
--  `pwd` print current working directory
--  `cd path/to/directory` sets working directory
--  `ls` print files in directory
--  `module load moduleName` loads modules required for analyses; necessary to complete prior to submitting jobs involving R
--  `module list` lists downloaded modules
--  `qsub` submit a job script to Argon processing
--  `R CMD BATCH` submit a single R script to Argon processing
+
+- `pwd` print current working directory
+- `cd path/to/directory` sets working directory
+- `ls` print files in directory
+- `module load moduleName` loads modules required for analyses; necessary to complete prior to submitting jobs involving R
+- `module list` lists downloaded modules
+- `qsub` submit a job script to Argon processing
+- `R CMD BATCH` submit a single R script to Argon processing
 Argon requires Linux-compatible file endings, which is problematic for files created outside Argon (using DOS or CRLF file endings). Use the following commands to check if your files are Argon compatible (i.e., Unix LF) and resolve incompatible file endings:
--   `file myfile.job | grep CRLF` checks if a file ending uses the incompatible CRLF format. Remember to check the ending of your file; this script assumes it is .job
--   `dos2unix myfile.job` converts CRLF file endings to Argon-compatible LF endings
--   `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change '*job' to change other file types
-```
+- `file myfile.job | grep CRLF` checks if a file ending uses the incompatible CRLF format. Remember to check the ending of your file; this script assumes it is .job
+- `dos2unix myfile.job` converts CRLF file endings to Argon-compatible LF endings
+- `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change '*job' to change other file types
 
 # Access Project Directories
 
-```
+```bash
 cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 cd /Users/itpetersen/Documents/Projects/EXT_pilot/
 cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/
@@ -241,17 +240,17 @@ Steps:
     apptainer exec r_argon.sif R
     ```
     - Check `R` version:
-    ```R
+    ```r
     version
     ```
     - Check `R` packages:
-    ```R
+    ```r
     library("brms")
     library("cmdstanr")
     library("petersenlab")
     ```
     - Exit `R`
-    ```R
+    ```r
     q()
     ```
 1. Copy the Container to Your Computer
@@ -267,17 +266,17 @@ Steps:
     apptainer exec r_argon.sif R
     ```
     - Check `R` version:
-    ```R
+    ```r
     version
     ```
     - Check `R` packages:
-    ```R
+    ```r
     library("brms")
     library("cmdstanr")
     library("petersenlab")
     ```
     - Exit `R`
-    ```R
+    ```r
     q()
     ```
 1. Submit a Job Using the Container on Argon
@@ -399,19 +398,20 @@ apptainer exec /Users/itpetersen/Documents/Containers/r_argon.sif \
 
 ### qsub options
 
-`-pe smp 4`: specify a parellel environment and number of cores to be used (`smp` = shared memory parallel environment)
--  The `OMP_NUM_THREADS` variable is set to '1' by default.
+`-pe smp 4`: specify a parallel environment and number of cores to be used (`smp` = shared memory parallel environment)
+
+- The `OMP_NUM_THREADS` variable is set to '1' by default.
 If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
 
 `-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs. This must be your University of Iowa email address.
 
 `-m eas`: Specify when to send an email message (; ; ; ; )
 
--  `b` = beginning of job
--  `e` = end of job
--  `a` = when job is aborted
--  `s` = when job is suspended
--  `n` = no mail is sent
+- `b` = beginning of job
+- `e` = end of job
+- `a` = when job is aborted
+- `s` = when job is suspended
+- `n` = no mail is sent
 
 `-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)
 
@@ -485,8 +485,8 @@ Job dependency (run `Job B` when `Job A` is finished):
 
 ## Job Time and Memory
 
--  Terminated jobs: `qacct -j JOB_ID`
--  Jobs in progress: `qstat -j JOB_ID | grep usage`
+- Terminated jobs: `qacct -j JOB_ID`
+- Jobs in progress: `qstat -j JOB_ID | grep usage`
 
 ## Cancel Job
 
@@ -523,7 +523,7 @@ If you want to compile a more recent version of `R` than is available in the sof
     - If using `packrat`, it is preferable to install packages by source, if possible, but you can remove `type = source` if you want to install binaries
     - Assuming that you do not have a personal library directory you will see
 
-    ```
+    ```r
     Warning in install.packages("package_name", repos = "http://cran.r-project.org") :
     lib = "/opt/R/3.0.2/lib64/R/library"' is not writable
 
@@ -597,7 +597,7 @@ If you want to control which packages are installed in a `renv` project, you can
 
 1. Create a `DESCRIPTION` file in the project directory with the following format:
 
-    ```
+    ```yaml
     Type: project
     Description: My project.
     Depends:
@@ -747,7 +747,7 @@ install.packages(verbose = 1, "tkrplot")
 
 ## Error Reading from Connection
 
-```
+```r
 Error in unserialize(node$con) : error reading from connection
 Calls: parlmice ... FUN -> recvData -> recvData.SOCK0node -> unserialize
 ```
