@@ -100,7 +100,7 @@ cd /Users/itpetersen/Documents/Projects/Test/
 
 Steps:
 
-1. Install Windows Subsystem for Linux (WSL)
+1. If you are Windows, install Windows Subsystem for Linux (WSL)
     - In PowerShell (Admin):
     ```bash
     wsl --install
@@ -138,23 +138,23 @@ Steps:
     ```bash
     apptainer --version
     ```
-    - If not available via apt (`E: Unable to locate package apptainer`), install from source (specify the version number for the latest release version available; see release versions [here](https://github.com/apptainer/apptainer/releases)):
-    ```bash
-    export VERSION=1.4.5
-    wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz
-    tar -xzf apptainer-${VERSION}.tar.gz
-    cd apptainer-${VERSION}
-    ```
-    - If you installed from source, build Apptainer:
-    ```bash
-    ./mconfig
-    make -C builddir
-    sudo make -C builddir install
-    ```
-    - Verify installation:
-    ```bash
-    apptainer --version
-    ```
+        - If not available via apt (`E: Unable to locate package apptainer`), install from source (specify the version number for the latest release version available; see release versions [here](https://github.com/apptainer/apptainer/releases)):
+        ```bash
+        export VERSION=1.4.5
+        wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz
+        tar -xzf apptainer-${VERSION}.tar.gz
+        cd apptainer-${VERSION}
+        ```
+        - If you installed from source, build Apptainer:
+        ```bash
+        ./mconfig
+        make -C builddir
+        sudo make -C builddir install
+        ```
+        - Verify installation:
+        ```bash
+        apptainer --version
+        ```
 1. Create your `R` Container Definition File
     - Inside the Ubuntu terminal, run:
     ```bash
@@ -188,7 +188,7 @@ Steps:
             git \
             sudo
 
-        # Install core CRAN packages
+        # Install core CRAN packages (specify the packages to install here)
         R -e "install.packages(c(
             'tidyverse',
             'data.table',
@@ -254,15 +254,16 @@ Steps:
     q()
     ```
 1. Copy the Container to Your Computer
-    - Inside the Ubuntu terminal, run (updating your path):
+    - Inside the Ubuntu terminal, run (updating your path; this is equivalent to: `E:/Documents/OneDrive - University of Iowa/Research/Containers/`):
     ```bash
     cp ~/apptainer-1.4.5/r_argon.sif "/mnt/e/Documents/OneDrive - University of Iowa/Research/Containers/"
     ```
 1. Copy the Container to Argon
-    - Use WinSCP to transfer the `.sif` file to Argon: `/old_Users/itpetersen/Documents/Containers/`
+    - Use WinSCP to transfer the `.sif` file to Argon (updating your path): `/old_Users/itpetersen/Documents/Containers/`
 1. Test Container on Argon
     - Inside the Ubuntu terminal, run:
     ```bash
+    cd /Users/itpetersen/Documents/Containers
     apptainer exec r_argon.sif R
     ```
     - Check `R` version:
@@ -283,9 +284,10 @@ Steps:
     - e.g.:
     ```bash
     # Run R inside your container
-    /usr/bin/apptainer exec /old_Users/itpetersen/Documents/Containers/r_argon.sif \
+    /usr/bin/apptainer exec /Users/itpetersen/Documents/Containers/r_argon.sif \
         Rscript my_script.R
     ```
+    For an example job script using a container, see @sec-jobScript.
 
 # Linux
 
@@ -341,7 +343,7 @@ cd path
 
 `module load stack/2022.2`
 
-## Job Script
+## Job Script {#sec-jobScript}
 
 ```bash
 #!/bin/sh
