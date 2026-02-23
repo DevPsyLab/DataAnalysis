@@ -361,6 +361,7 @@ cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 #$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
 
 # Load the environment modules
+module purge
 module load stack/2022.2
 module load r/4.2.2_gcc-9.5.0
 
@@ -387,8 +388,11 @@ cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 #$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
 #$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
 
+# Load the environment modules
+module purge
+
 # Run the R script inside container
-/usr/bin/apptainer exec /old_Users/itpetersen/Documents/Containers/r_argon.sif \
+apptainer exec /Users/itpetersen/Documents/Containers/r_argon.sif \
     Rscript ./Analyses/factorScores.R
 ```
 
