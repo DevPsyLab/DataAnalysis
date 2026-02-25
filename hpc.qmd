@@ -155,12 +155,149 @@ Steps:
     ```bash
     apptainer --version
     ```
+1. Go to your home directory:
+    ```bash
+    cd ~
+    ```
+1. View the files/folders in this directory:
+    ```bash
+    ls
+    ```
+1. Create a `containers` folder (if you haven't already created it):
+    ```bash
+    mkdir containers
+    ```
+1. Go to the `containers` folder:
+    ```bash
+    cd containers
+    ```
+1. If you want to install `Mplus` in the container:
+    - Copy the `Mplus` installer file for Linux into the build directory:
+    ```bash
+    cp "/mnt/c/Users/itpetersen/Downloads/MplusLinux64.bin" \
+       ~/containers/
+    ```
+    - Verify the `containers` folder has `MplusLinux64.bin`:
+    ```bash
+    lss
+    ```
+    - Generate the install properties file:
+    ```bash
+    ./MplusLinux64.bin -r ~/containers/mplus_install.properties
+    ```
+    This will launch the installer and record your choices to the properties file.
+    Go through the installation steps, and when done you'll have `mplus_install.properties` in your containers directory.
+    - Edit the install path in the install properties file to `/opt/mplus` throughout:
+    ```bash
+    nano mplus_install.properties
+    ```
+    Here are the contents of my ` mplus_install.properties` file:
+    ```bash
+    # Tue Feb 24 21:04:04 CST 2026
+    # Replay feature output
+    # ---------------------
+    # This file was built by the Replay feature of InstallAnywhere.
+    # It contains variables that were set by Panels, Consoles or Custom Code.
+    #Choose Install Set
+    #------------------
+    CHOSEN_FEATURE_LIST=Application,Examples
+    CHOSEN_INSTALL_FEATURE_LIST=Application,Examples
+    CHOSEN_INSTALL_SET=Typical
+    #Choose Install Folder
+    #---------------------
+    USER_INSTALL_DIR=/opt/mplus
+    #Install
+    #-------
+    -fileOverwrite_/opt/mplus/uninstall/uninstall_mplus.lax=Yes
+    -fileOverwrite_/opt/mplus/mplus=Yes
+    -fileOverwrite_/opt/mplus/Documentation/Getting_Started.pdf=Yes
+    -fileOverwrite_/opt/mplus/Documentation/Mplus_Users_Guide_v8.pdf=Yes
+    -fileOverwrite_/opt/mplus/Documentation/Version_8.1_Language_Addendum.pdf=Yes
+    -fileOverwrite_/opt/mplus/Documentation/Version_8.5_Language_Addendum.pdf=Yes
+    ```
 1. Create your `R` Container Definition File
     - Inside the Ubuntu terminal, run:
     ```bash
     nano r_argon.def
     ```
-    - Paste this:
+    - Paste this (for `Mplus` + `R` + `brms` + `cmdstanr` installation):
+    ```bash
+    Bootstrap: docker
+    From: rocker/r-ver:latest
+
+    %files
+        MplusLinux64.bin /opt/MplusLinux64.bin
+        mplus_install.properties /opt/mplus_install.properties
+
+    %post
+        # Install system dependencies
+        apt-get update && apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libgit2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libglpk-dev \
+            libgmp3-dev \
+            libmpfr-dev \
+            make \
+            g++ \
+            cmake \
+            git \
+            sudo
+
+        # Install Mplus
+        chmod +x /opt/MplusLinux64.bin
+        /opt/MplusLinux64.bin -i silent -f /opt/mplus_install.properties
+        chmod -R 755 /opt/mplus
+
+        # Install core CRAN packages
+        R -e "install.packages(c(
+            'tidyverse',
+            'data.table',
+            'rstan',
+            'brms',
+            'mirt',
+            'lavaan',
+            'semTools',
+            'MplusAutomation',
+            'renv',
+            'remotes'
+        ), repos='https://cloud.r-project.org')"
+
+        # Install cmdstanr
+        R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev','https://cloud.r-project.org'))"
+
+        # Install latest CmdStan into /opt/cmdstan
+        mkdir -p /opt/cmdstan
+        R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
+
+        # Create a symlink 'latest' to the installed CmdStan version
+        cd /opt/cmdstan
+        ln -s cmdstan-* latest
+
+        # Enable threading for within-chain parallelization
+        mkdir -p /root/.R
+        echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
+
+        # Install latest version of petersenlab package from GitHub
+        R -e "remotes::install_github('DevPsyLab/petersenlab')"
+
+    %environment
+        export R_LIBS_USER=/usr/local/lib/R/site-library
+        export CMDSTAN=/opt/cmdstan/latest
+        export PATH=/opt/mplus:$PATH
+
+    %runscript
+        exec R "$@"
+    ```
+    - Paste this (for `R` + `brms` + `cmdstanr` installation):
     ```bash
     Bootstrap: docker
     From: rocker/r-ver:latest
@@ -197,6 +334,7 @@ Steps:
             'mirt',
             'lavaan',
             'semTools',
+            'MplusAutomation',
             'renv',
             'remotes'
         ), repos='https://cloud.r-project.org')"
@@ -253,10 +391,14 @@ Steps:
     ```r
     q()
     ```
+    - If you attempted to install `Mplus`, verify the `Mplus` installation:
+    ```bash
+    apptainer exec r_argon.sif /opt/mplus/mplus
+    ```
 1. Copy the Container to Your Computer
     - Inside the Ubuntu terminal, run (updating your path; this is equivalent to: `E:/Documents/OneDrive - University of Iowa/Research/Containers/`):
     ```bash
-    cp ~/apptainer-1.4.5/r_argon.sif "/mnt/e/Documents/OneDrive - University of Iowa/Research/Containers/"
+    cp ~/containers/r_argon.sif "/mnt/e/Documents/OneDrive - University of Iowa/Research/Containers/"
     ```
 1. Copy the Container to Argon
     - Use WinSCP to transfer the `.sif` file to Argon (updating your path): `/old_Users/itpetersen/Documents/Containers/`
@@ -279,6 +421,10 @@ Steps:
     - Exit `R`
     ```r
     q()
+    ```
+    - If you attempted to install `Mplus`, verify the `Mplus` installation:
+    ```bash
+    apptainer exec r_argon.sif /opt/mplus/mplus
     ```
 1. Submit a Job Using the Container on Argon
     - e.g.:
