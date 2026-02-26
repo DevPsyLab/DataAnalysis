@@ -82,7 +82,7 @@ Mac OS Terminal:
 Argon requires Linux-compatible file endings, which is problematic for files created outside Argon (using DOS or CRLF file endings). Use the following commands to check if your files are Argon compatible (i.e., Unix LF) and resolve incompatible file endings:
 - `file myfile.job | grep CRLF` checks if a file ending uses the incompatible CRLF format. Remember to check the ending of your file; this script assumes it is .job
 - `dos2unix myfile.job` converts CRLF file endings to Argon-compatible LF endings
-- `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change '*job' to change other file types
+- `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change `*job` to change other file types
 
 # Access Project Directories
 
@@ -156,18 +156,22 @@ Steps:
     apptainer --version
     ```
 1. Go to your home directory:
+
     ```bash
     cd ~
     ```
 1. View the files/folders in this directory:
+
     ```bash
     ls
     ```
 1. Create a `containers` folder (if you haven't already created it):
+
     ```bash
     mkdir containers
     ```
 1. Go to the `containers` folder:
+
     ```bash
     cd containers
     ```
@@ -192,6 +196,7 @@ Steps:
     nano mplus_install.properties
     ```
     Here are the contents of my ` mplus_install.properties` file:
+    
     ```bash
     # Tue Feb 24 21:04:04 CST 2026
     # Replay feature output
