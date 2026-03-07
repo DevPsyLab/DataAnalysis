@@ -255,7 +255,8 @@ Steps:
             g++ \
             cmake \
             git \
-            sudo
+            sudo \
+            && rm -rf /var/lib/apt/lists/*
 
         # Install Mplus
         chmod +x /opt/MplusLinux64.bin
@@ -287,20 +288,18 @@ Steps:
         mkdir -p /opt/cmdstan
         R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
 
-        # Create a symlink 'latest' to the installed CmdStan version
-        cd /opt/cmdstan
-        ln -s cmdstan-* latest
-
         # Enable threading for within-chain parallelization
         mkdir -p /root/.R
-        echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
+        echo 'STAN_THREADS=true' >> /root/.Renviron
+        echo 'STAN_THREADS=true' >> /root/.R/Makevars
 
         # Install latest version of petersenlab package from GitHub
         R -e "remotes::install_github('DevPsyLab/petersenlab')"
 
     %environment
         export R_LIBS_USER=/usr/local/lib/R/site-library
-        export CMDSTAN=/opt/cmdstan/latest
+        export CMDSTAN=/opt/cmdstan
+        export STAN_THREADS=true
         export PATH=/opt/mplus:$PATH
 
     %runscript
@@ -332,7 +331,8 @@ Steps:
             g++ \
             cmake \
             git \
-            sudo
+            sudo \
+            && rm -rf /var/lib/apt/lists/*
 
         # Install core CRAN packages (specify the packages to install here)
         R -e "install.packages(c(
@@ -359,20 +359,18 @@ Steps:
         mkdir -p /opt/cmdstan
         R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
 
-        # Create a symlink 'latest' to the installed CmdStan version
-        cd /opt/cmdstan
-        ln -s cmdstan-* latest
-
         # Enable threading for within-chain parallelization
         mkdir -p /root/.R
-        echo 'CXXFLAGS += -DSTAN_THREADS' >> /root/.R/Makevars
+        echo 'STAN_THREADS=true' >> /root/.Renviron
+        echo 'STAN_THREADS=true' >> /root/.R/Makevars
 
         # Install latest version of petersenlab package from GitHub
         R -e "remotes::install_github('DevPsyLab/petersenlab')"
 
     %environment
         export R_LIBS_USER=/usr/local/lib/R/site-library
-        export CMDSTAN=/opt/cmdstan/latest
+        export CMDSTAN=/opt/cmdstan
+        export STAN_THREADS=true
 
     %runscript
         exec R "$@"
@@ -553,7 +551,8 @@ cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 module purge
 
 # Run the R script inside container
-apptainer exec /Users/itpetersen/Documents/Containers/r_argon.sif \
+apptainer exec --writable-tmpfs --cleanenv \
+    /Users/itpetersen/Documents/Containers/r_argon.sif \
     Rscript ./Analyses/factorScores.R
 ```
 
