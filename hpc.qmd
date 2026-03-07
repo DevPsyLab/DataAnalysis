@@ -51,16 +51,17 @@ If you are interested in dedicated hardware, contact [research-computing@uiowa.e
 
 `argon.hpc.uiowa.edu`
 
+Using [SecureCRT](https://its.uiowa.edu/securecrt) or [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) for an SSH connection:
+
+1. Download [SecureCRT](https://its.uiowa.edu/securecrt) from UIowa Informational Technology Services: <https://its.uiowa.edu/securecrt>
+1. In Hostname type `argon.hpc.uiowa.edu` and in username type HawkID
+1. Click connect
+
 ## Windows
 
 Windows Explorer:
 
 `\\data.hpc.uiowa.edu\argon_home` (username: itpetersen@uiowa.edu or hawkid@uiowa.edu)
-
-Using SecureCRT for an SSH connection:
-1. Download SecureCRT from UIowa Informational Technology Services: <https://its.uiowa.edu/securecrt>
-2. In Hostname type `argon.hpc.uiowa.edu` and in username type HawkID
-3. Click connect
 
 ## Mac
 
@@ -89,6 +90,7 @@ Argon requires Linux-compatible file endings, which is problematic for files cre
 ```bash
 cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 cd /Users/itpetersen/Documents/Projects/EXT_pilot/
+cd /Users/itpetersen/Documents/Projects/EXT_ParentReport/
 cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/
 cd /Users/itpetersen/Documents/Projects/SelfRegulation_IRT/
 cd /Users/itpetersen/Documents/Projects/Test/
@@ -450,6 +452,18 @@ Steps:
 
 ## Initial run
 
+### Load the Latest Stack
+
+`module load stack`
+
+### Stack 2022.2
+
+```bash
+module load stack/2022.2
+module load r/4.2.2_gcc-9.5.0
+cd path
+```
+
 ### Installing Linux Packages to Install `R` Packages
 
 ```bash
@@ -482,18 +496,6 @@ module load r-dbi/1.1.3_gcc-9.5.0
 
 ```
 
-### Load the Latest Stack
-
-`module load stack`
-
-### Stack 2022.2
-
-```bash
-module load stack/2022.2
-module load r/4.2.2_gcc-9.5.0
-cd path
-```
-
 ## Load Software Stacks
 
 <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List> (archived at <https://perma.cc/WJ4Q-GDUS>)
@@ -502,33 +504,7 @@ cd path
 
 ## Job Script {#sec-jobScript}
 
-```bash
-#!/bin/sh
-
-# Set working directory
-cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
-
-# Specify qsub options
-#$ -pe smp 4
-#$ -M isaac-t-petersen@uiowa.edu
-#$ -m eas
-#$ -l mf=512G
-#$ -l h_vmem=512G
-#$ -cwd
-#$ -q UI-HM
-#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
-#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
-
-# Load the environment modules
-module purge
-module load stack/2022.2
-module load r/4.2.2_gcc-9.5.0
-
-# Run the R script
-Rscript ./Analyses/factorScores.R
-```
-
-Using a container:
+### Using A Container
 
 ```bash
 #!/bin/sh
@@ -556,6 +532,34 @@ apptainer exec --writable-tmpfs --cleanenv \
     Rscript ./Analyses/factorScores.R
 ```
 
+### Using Software Stacks
+
+```bash
+#!/bin/sh
+
+# Set working directory
+cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
+
+# Specify qsub options
+#$ -pe smp 4
+#$ -M isaac-t-petersen@uiowa.edu
+#$ -m eas
+#$ -l mf=512G
+#$ -l h_vmem=512G
+#$ -cwd
+#$ -q UI-HM
+#$ -e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+#$ -o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/
+
+# Load the environment modules
+module purge
+module load stack/2022.2
+module load r/4.2.2_gcc-9.5.0
+
+# Run the R script
+Rscript ./Analyses/factorScores.R
+```
+
 ### qsub options
 
 `-pe smp 4`: specify a parallel environment and number of cores to be used (`smp` = shared memory parallel environment)
@@ -563,7 +567,8 @@ apptainer exec --writable-tmpfs --cleanenv \
 - The `OMP_NUM_THREADS` variable is set to '1' by default.
 If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
 
-`-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs. This must be your University of Iowa email address.
+`-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs.
+This must be your University of Iowa email address.
 
 `-m eas`: Specify when to send an email message (; ; ; ; )
 
@@ -573,7 +578,8 @@ If your code can take advantage of the threading then specify `OMP_NUM_THREADS` 
 - `s` = when job is suspended
 - `n` = no mail is sent
 
-`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)
+`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.
+It is not a limit.)
 
 `-l h_vmem=512G`: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.
 It is not a limit.)
@@ -669,6 +675,7 @@ But, there may be more recent version of `R` installed in the "Additional Softwa
 ## Compile `R`
 
 If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at <https://perma.cc/C6EX-EZL4>).
+However, we now compile the most recent version of `R` (and packages) using a [container](#sec-container).
 
 ## Install `R` packages
 
@@ -920,6 +927,19 @@ Try increasing the max memory available and decreasing the number of cores and/o
 <https://stackoverflow.com/questions/17015598/error-calling-serialize-r-function> (archived at <https://perma.cc/3Q75-DA2D>)
 
 <https://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/#Memory_load> (archived at <https://perma.cc/2JRF-8Y5F>)
+
+## Error: `$'\r': command not found`
+
+```bash
+/opt/sge/default/spool/argon-itf-bx47-36/job_scripts/5685660: line 2: $'\r': command not found
+```
+
+That often means your job script has Windows (CRLF) line endings instead of Unix (LF).
+You can fix the line endings with the following command:
+
+```bash
+dos2unix your_job_file.job
+```
 
 # Appendix {#sec-appendix}
 
