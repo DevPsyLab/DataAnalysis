@@ -24,6 +24,7 @@ library("lavaangui")
 library("lcsm")
 library("MBESS")
 library("tidyverse")
+library("ggforce")
 ```
 
 ## Options
@@ -63,7 +64,9 @@ longitudinalMI <- read.csv("./data/Bliese-Ployhart-2002-indicators-1.csv")
 
 <https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-semModelExample-sem>
 
-# Plot Observed Growth Curve
+# Plot Observed Growth Curves
+
+## Spaghetti Plot
 
 Transform data from wide to long format:
 
@@ -99,6 +102,62 @@ ggplot(
     y = "Score"
   ) +
   theme_classic()
+```
+
+## Faceted Plot
+
+```{r}
+facetedPlots <- Demo.growth_long |>
+  ggplot(
+    aes(
+      x = timepoint,
+      y = score,
+      group = id
+    )
+  ) +
+  geom_point() +
+  geom_smooth(
+    method = "lm"
+  ) +
+  coord_cartesian(
+    ylim = c(min(Demo.growth_long$score, na.rm = TRUE), max(Demo.growth_long$score, na.rm = TRUE))) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic() +
+  ggforce::facet_wrap_paginate(
+    ~ id,
+    ncol = 4,
+    nrow = 3)
+
+num_pages <- ggforce::n_pages(facetedPlots)
+```
+
+```{r}
+#| eval: false
+
+for(i in 1:num_pages){
+  print(facetedPlots + 
+    ggforce::facet_wrap_paginate(
+      ~ id,
+      ncol = 4,
+      nrow = 3,
+      page = i))
+}
+```
+
+```{r}
+#| echo: false
+
+for(i in 1:2){
+  print(facetedPlots + 
+    ggforce::facet_wrap_paginate(
+      ~ id,
+      ncol = 4,
+      nrow = 3,
+      page = i))
+}
 ```
 
 # Latent Growth Curve Model {#sec-lgcm}

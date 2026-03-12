@@ -24,6 +24,7 @@ library("mgcv")
 library("parallelly")
 library("performance")
 library("ggplot2")
+library("ggforce")
 ```
 
 ## Import Data
@@ -92,15 +93,9 @@ In contrast to the maximum likelihood estimation, REML can produce unbiased esti
 To compare whether an effect should be fixed or random, use REML.
 To simultaneously compare fixed and random effects, use ML.
 
-# Linear Mixed Models {#sec-linear}
+# Plot Observed Growth Curves
 
-The following models are models that are fit in a linear mixed modeling framework.
-
-## Growth Curve Models {#sec-gcm}
-
-### Linear Growth Curve Model {#sec-linearGCM}
-
-#### Plot Observed Growth Curves
+## Spaghetti Plot
 
 ```{r}
 ggplot(
@@ -116,6 +111,70 @@ ggplot(
   ) +
   theme_classic()
 ```
+
+## Faceted Plot
+
+```{r}
+facetedPlots <- mydata |>
+  ggplot(
+    aes(
+      x = ageYears,
+      y = math,
+      group = id
+    )
+  ) +
+  geom_point() +
+  geom_smooth(
+    method = "lm"
+  ) +
+  coord_cartesian(
+    ylim = c(min(mydata$math, na.rm = TRUE), max(mydata$math, na.rm = TRUE))) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score"
+  ) +
+  theme_classic() +
+  ggforce::facet_wrap_paginate(
+    ~ id,
+    ncol = 4,
+    nrow = 3)
+
+num_pages <- ggforce::n_pages(facetedPlots)
+```
+
+```{r}
+#| eval: false
+
+for(i in 1:num_pages){
+  print(facetedPlots + 
+    ggforce::facet_wrap_paginate(
+      ~ id,
+      ncol = 4,
+      nrow = 3,
+      page = i))
+}
+```
+
+```{r}
+#| echo: false
+
+for(i in 1:2){
+  print(facetedPlots + 
+    ggforce::facet_wrap_paginate(
+      ~ id,
+      ncol = 4,
+      nrow = 3,
+      page = i))
+}
+```
+
+# Linear Mixed Models {#sec-linear}
+
+The following models are models that are fit in a linear mixed modeling framework.
+
+## Growth Curve Models {#sec-gcm}
+
+### Linear Growth Curve Model {#sec-linearGCM}
 
 #### `lme4`
 
