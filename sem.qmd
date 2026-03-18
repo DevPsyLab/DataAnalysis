@@ -1340,7 +1340,7 @@ To generate the syntax for a latent change score model, we use the [lcsm](https:
 ## Model Syntax
 
 ```{r}
-bivariateLCSM_syntax <- specify_bi_lcsm(
+bivariateLCSM_syntax <- lcsm::specify_bi_lcsm(
   timepoints = 3,
   var_x = "x",
   model_x = list(
@@ -1353,8 +1353,10 @@ bivariateLCSM_syntax <- specify_bi_lcsm(
     beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
     phi = TRUE), # phi = autoregression of change scores
   coupling = list(
-    delta_lag_xy = TRUE,
-    delta_lag_yx = TRUE),
+    delta_lag_xy = TRUE, # level of x predicting change in y
+    delta_lag_yx = TRUE, # level of y predicting change in x
+    xi_lag_xy = TRUE,    # change in x predicting change in y
+    xi_lag_yx = TRUE),   # change in y predicting change in x
   change_letter_x = "g",
   change_letter_y = "j")
 
@@ -1364,7 +1366,7 @@ cat(bivariateLCSM_syntax)
 ## Fit the Model
 
 ```{r}
-bivariateLCSM_fit <- fit_bi_lcsm(
+bivariateLCSM_fit <- lcsm::fit_bi_lcsm(
   data = data_bi_lcsm,
   var_x = names(data_bi_lcsm)[2:4],
   var_y = names(data_bi_lcsm)[12:14],
@@ -1377,8 +1379,10 @@ bivariateLCSM_fit <- fit_bi_lcsm(
     beta = TRUE, # beta = proportional change factor (latent true score predicting its change score)
     phi = TRUE), # phi = autoregression of change scores
   coupling = list(
-    delta_lag_xy = TRUE,
-    xi_lag_yx = TRUE),
+    delta_lag_xy = TRUE, # level of x predicting change in y
+    delta_lag_yx = TRUE, # level of y predicting change in x
+    xi_lag_xy = TRUE,    # change in x predicting change in y
+    xi_lag_yx = TRUE),   # change in y predicting change in x
   fixed.x = FALSE
   )
 ```
@@ -1432,7 +1436,7 @@ semPaths(
   layout = "tree2",
   edge.label.cex = 1.5)
 
-plot_lcsm(
+lcsm::plot_lcsm(
   lavaan_object = bivariateLCSM_fit,
   lcsm = "bivariate",
   lavaan_syntax = bivariateLCSM_syntax,
@@ -1462,7 +1466,7 @@ lavaangui::plot_lavaan(bivariateLCSM_fit)
 ## Plot Trajectories
 
 ```{r}
-plot_trajectories(
+lcsm::plot_trajectories(
   data_bi_lcsm,
   id_var = "id",
   var_list = c(
@@ -1472,7 +1476,7 @@ plot_trajectories(
   ylab = "X Score",
   connect_missing = FALSE)
 
-  plot_trajectories(
+lcsm::plot_trajectories(
   data_bi_lcsm,
   id_var = "id",
   var_list = c(
