@@ -64,6 +64,88 @@ longitudinalMI <- read.csv("./data/Bliese-Ployhart-2002-indicators-1.csv")
 
 <https://isaactpetersen.github.io/Principles-Psychological-Assessment/structural-equation-modeling.html#sec-semModelExample-sem>
 
+# `lavaan` Syntax {#sec-lavaanSyntax}
+
+Adapted from <https://osf.io/2y67f/files/q2prk>
+
+- New lines should be included for each new "equation"
+- `=~` creates reflective latent variables (is measured by)
+    - `latent =~ variable1 + variable2` ...
+    - You name it `=~` names from the dataset
+    - Model is that latent variable influences the manifest variables
+- `<~` creates formative latent variables (is influenced by)
+    - `latent <~ variable1 + variable2`
+    - You name it `<~` names from the dataset
+    - Model is that latent variable is influenced by the manifest variables
+- `~` indicates regression
+    - `Y ~ X`
+    - Model is that `Y` is influenced by `X` (i.e., `X` predicts `Y`)
+    - Names need to be defined in dataset or previously defined latents
+- `~~` indicates covariance (i.e., unstandardized correlation; it is a correlation, i.e., standardized covariance, if the variables—or the coefficient—are standardized)
+    - Does not matter which order you write it in
+    - Names need to be defined in dataset or previously defined latents
+    - You can set specific variances by using:
+        - `variable ~~ NUMBER*variable`
+        For instance, you can standardize the variance for a variable by fixing its variance to 1:
+            - `variable ~~ 1*variable`
+    - `~ 1` indicates intercept
+        - `variable ~ 1`
+        - To center a variable, you can set its intercept to 0:
+            - `variable ~~ 0*1`
+
+Factor loadings for reflective latent factors:
+
+```r
+latent1 ~ x1 + x2 + x3
+latent2 ~ label1*x1 + label2*x2 + label3*x3 # parameter labels
+latent1 ~ NA*x1 + x2 + x3 # free factor loading of first indicator (it is set to 1 by default)
+```
+
+Factor loadings for formative latent factors:
+
+```r
+latent1 <~ x1 + x2 + x3
+latent2 <~ label1*x1 + label2*x2 + label3*x3 # parameter labels
+```
+
+Regression paths:
+
+```r
+y1 ~ x1 + x2
+y2 ~ label1*x1 + label2*x2 # parameter labels
+```
+
+Covariance paths:
+
+```r
+y1 ~~ y2
+x1 ~~ label1*x2 # parameter labels
+y1 + y2 ~~ x1 + x2
+```
+
+Variances:
+
+```r
+y1 ~~ y1
+y2 ~~ label1*y2  # parameter labels
+x1 ~~ 1*x1 # fix variance to 1
+```
+
+Intercepts:
+
+```r
+y1 ~~ 1
+y2 ~~ label1*1 # parameter labels
+x1 ~~ 0*1 # fix intercept to 0
+```
+
+Parameter labels for multiple groups (have as many labels as there are groups):
+
+```r
+latent1 ~ c(label1a, label1b)*x1 + c(label2a, label2b)*x2 + c(label3a, label3b)*x3 # allow parameters to differ across groups
+latent2 ~ c(label1, label1)*x1 + c(label2, label2)*x2 + c(label3, label3)*x3 # constrain parameters to be the same across groups
+```
+
 # Plot Observed Growth Curves
 
 ## Spaghetti Plot
