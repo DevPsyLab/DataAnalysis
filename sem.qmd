@@ -139,6 +139,16 @@ y2 ~~ label1*1 # parameter labels
 x1 ~~ 0*1 # fix intercept to 0
 ```
 
+Computed parameters:
+
+```r
+diff := loadingGroup1 - loadingGroup2 # testing whether there is a difference between two coefficients
+
+totalEffect := directEffect + indirectEffect # calculating the total effect from the sum of the direct and indirect effects
+totalEffectAbs := abs(directEffect) + abs(indirectEffect) # calculating the total effect from the sum of the (absolute value of the) direct and indirect effects
+Pm := abs(indirectEffect) / totalEffectAbs # proportion of the total effect that is mediated
+```
+
 Parameter labels for multiple groups (have as many labels as there are groups):
 
 ```r
