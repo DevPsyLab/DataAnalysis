@@ -422,7 +422,7 @@ Steps:
 1. Copy the Container to Argon
     - Use WinSCP to transfer the `.sif` file to Argon (updating your path): `/old_Users/itpetersen/Documents/Containers/`
 1. Test Container on Argon
-    - Inside the Ubuntu terminal, run:
+    - Inside the Ubuntu terminal, run (updating your path):
     ```bash
     cd /Users/itpetersen/Documents/Containers
     apptainer exec r_argon.sif R
@@ -444,6 +444,14 @@ Steps:
     - If you attempted to install `Mplus`, verify the `Mplus` installation:
     ```bash
     apptainer exec r_argon.sif /opt/mplus/mplus
+    ```
+1. Copy the `cmdstan` installation from the container to a writable location:
+    - Inside the Ubuntu terminal, run (updating your path):
+    ```bash
+    mkdir -p $HOME/cmdstan_cache
+    apptainer exec \
+    /Users/itpetersen/Documents/Containers/r_argon.sif \
+    cp -r /opt/cmdstan/. $HOME/cmdstan_cache/
     ```
 1. Submit a Job Using the Container on Argon
     - e.g.:
@@ -533,7 +541,9 @@ cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 module purge
 
 # Run the R script inside container
-apptainer exec --writable-tmpfs --cleanenv \
+apptainer exec \
+    --bind $HOME/cmdstan_cache:/opt/cmdstan \
+    --cleanenv \
     /Users/itpetersen/Documents/Containers/r_argon.sif \
     Rscript ./Analyses/factorScores.R
 ```
