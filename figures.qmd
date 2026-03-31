@@ -142,6 +142,7 @@ library("ggExtra")
 library("viridis")
 library("ggthemes")
 library("ggpubr")
+library("patchwork")
 ```
 
 ## Simulate Data
@@ -384,6 +385,52 @@ densityMarginal <- ggMarginal(scatterplot, type = "density", xparams = list(fill
 
 ```{r}
 print(densityMarginal, newpage = TRUE)
+```
+
+(Or we can create the marginal figures manually using the `patchwork` package):
+
+```{r}
+densX <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = predictor)) +
+  coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "#0099F8"
+  ) +
+  geom_density(
+    color = "#000000",
+    fill = "#F85700",
+    alpha = 0.6 # add transparency
+  ) +
+  theme_void()
+
+densY <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = outcome)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "#0099F8"
+  ) +
+  geom_density(
+    color = "#000000",
+    fill = "#F85700",
+    alpha = 0.6 # add transparency
+  ) +
+  theme_void() +
+  coord_flip() # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+
+densX + patchwork::plot_spacer() + scatterplot + densY + 
+  patchwork::plot_layout(
+    ncol = 2, 
+    nrow = 2, 
+    widths = c(4, 1),
+    heights = c(1, 4)
+  )
 ```
 
 ### Histogram
