@@ -16,13 +16,97 @@ title: "Figures in R"
 
 <http://www.cookbook-r.com/Graphs/>
 
+# Font {#sec-font}
+
+You can download the lab fonts for figures here[^1]: <https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3>
+
+```YAML
+---
+knitr:
+  opts_chunk: 
+    fig-showtext: true
+---
+```
+
+````markdown
+```{r}`r ''`
+library(showtext)
+
+font_add(
+  family = "Gotham",
+  regular = "fonts/Gotham-Book.otf",
+  bold = "fonts/Gotham-Bold.otf",
+  italic = "fonts/Gotham-BookItalic.otf",
+  bolditalic = "fonts/Gotham-BoldItalic.otf"
+)
+
+showtext_auto()
+showtext_opts(dpi = 300) # may not be necessary
+```
+````
+
+# `ggplot2` Themes for Publication and Presentation {#sec-ggplot2Themes}
+
+```{r}
+publication_theme <- theme_classic(base_size = 16) + 
+  theme(text = element_text(family = "Arial")) # "Gotham"
+
+publication_theme_bw <- theme_bw(base_size = 16) + 
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(family = "Arial")) # "Gotham"
+
+presentation_theme <- theme_classic(base_size = 30) + 
+  theme(text = element_text(family = "Arial")) # "Gotham"
+
+presentation_theme_bw <- theme_bw(base_size = 30) + 
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(family = "Arial")) # "Gotham"
+```
+
+# Saving Figures {#sec-savingFigures}
+
+## PDF
+
+```r
+ggsave(
+  filename = "figure.pdf",
+  plot = nameOfggplotObject,
+  device = cairo_pdf,
+  width = 9,
+  height = 6.5,
+  units = "in")
+```
+
+## SVG
+
+```r
+ggsave(
+  filename = "figure.svg",
+  plot = nameOfggplotObject,
+  width = 9,
+  height = 6.5,
+  units = "in")
+```
+
+## PNG
+
+```r
+ggsave(
+  filename = "figure.png",
+  plot = nameOfggplotObject,
+  width = 9,
+  height = 6.5,
+  units = "in",
+  dpi = 300)
+```
+
 # Petersen Lab Examples
 
 <https://research-git.uiowa.edu/PetersenLab/R-Plotting/-/tree/main/Analyses>
-
-# Font
-
-You can download the lab fonts for figures here[^1]: <https://drive.google.com/drive/u/0/folders/1fqlrnEe7NFnWZoIrsHmr8ulDS4nhs-H3>
 
 ## Preamble
 
