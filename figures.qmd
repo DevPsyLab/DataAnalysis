@@ -48,6 +48,8 @@ showtext_opts(dpi = 300) # may not be necessary
 # `ggplot2` Themes for Publication and Presentation {#sec-ggplot2Themes}
 
 ```{r}
+library("ggplot2")
+
 publication_theme <- theme_classic(base_size = 16) + 
   theme(text = element_text(family = "Arial")) # "Gotham"
 
@@ -65,6 +67,14 @@ presentation_theme_bw <- theme_bw(base_size = 30) +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     text = element_text(family = "Arial")) # "Gotham"
+```
+
+Usage:
+
+```r
+ggplot(df, aes(x = predictor, y = outcome)) +
+  geom_point() +
+  publication_theme
 ```
 
 # Saving Figures {#sec-savingFigures}
