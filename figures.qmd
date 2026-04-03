@@ -405,14 +405,8 @@ densX <- ggplot2::ggplot(
   aes(
     x = predictor)) +
   coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
-  geom_histogram(
-    aes(y = after_stat(density)),
-    color = "#000000",
-    fill = "#0099F8"
-  ) +
   geom_density(
-    color = "#000000",
-    fill = "#F85700",
+    fill = "gray",
     alpha = 0.6 # add transparency
   ) +
   theme_void()
@@ -421,14 +415,8 @@ densY <- ggplot2::ggplot(
   data = df,
   aes(
     x = outcome)) +
-  geom_histogram(
-    aes(y = after_stat(density)),
-    color = "#000000",
-    fill = "#0099F8"
-  ) +
   geom_density(
-    color = "#000000",
-    fill = "#F85700",
+    fill = "gray",
     alpha = 0.6 # add transparency
   ) +
   theme_void() +
@@ -453,6 +441,42 @@ histogramMarginal <- ggMarginal(scatterplot, type = "histogram", xparams = list(
 print(histogramMarginal, newpage = TRUE)
 ```
 
+(Or we can create the marginal figures manually using the `patchwork` package):
+
+```{r}
+histX <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = predictor)) +
+  coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "gray"
+  ) +
+  theme_void()
+
+histY <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = outcome)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "gray"
+  ) +
+  theme_void() +
+  coord_flip() # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+
+histX + patchwork::plot_spacer() + scatterplot + histY + 
+  patchwork::plot_layout(
+    ncol = 2, 
+    nrow = 2, 
+    widths = c(4, 1),
+    heights = c(1, 4)
+  )
+```
+
 ### Boxplot
 
 ```{r}
@@ -461,6 +485,38 @@ boxplotMarginal <- ggMarginal(scatterplot, type = "boxplot", xparams = list(fill
 
 ```{r}
 print(boxplotMarginal, newpage = TRUE)
+```
+
+(Or we can create the marginal figures manually using the `patchwork` package):
+
+```{r}
+boxX <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = predictor)) +
+  coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+  geom_boxplot(
+    fill = "gray"
+  ) +
+  theme_void()
+
+boxY <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = outcome)) +
+  geom_boxplot(
+    fill = "gray"
+  ) +
+  theme_void() +
+  coord_flip() # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+
+boxX + patchwork::plot_spacer() + scatterplot + boxY + 
+  patchwork::plot_layout(
+    ncol = 2, 
+    nrow = 2, 
+    widths = c(4, 1),
+    heights = c(1, 4)
+  )
 ```
 
 ### Violin Plot
@@ -473,6 +529,40 @@ violinMarginal <- ggMarginal(scatterplot, type = "violin", xparams = list(fill =
 print(violinMarginal, newpage = TRUE)
 ```
 
+(Or we can create the marginal figures manually using the `patchwork` package):
+
+```{r}
+violinX <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = "",
+    y = predictor)) +
+  geom_violin(
+    fill = "gray"
+  ) +
+  theme_void() +
+  coord_flip() # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+
+violinY <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = "",
+    y = outcome)) +
+  coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+  geom_violin(
+    fill = "gray"
+  ) +
+  theme_void()
+
+violinX + patchwork::plot_spacer() + scatterplot + violinY + 
+  patchwork::plot_layout(
+    ncol = 2, 
+    nrow = 2, 
+    widths = c(4, 1),
+    heights = c(1, 4)
+  )
+```
+
 ### Density Plot and Histogram
 
 ```{r}
@@ -481,6 +571,52 @@ densigramMarginal <- ggMarginal(scatterplot, type = "densigram", xparams = list(
 
 ```{r}
 print(densigramMarginal, newpage = TRUE)
+```
+
+(Or we can create the marginal figures manually using the `patchwork` package):
+
+```{r}
+densHistX <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = predictor)) +
+  coord_cartesian() + # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "#0099F8"
+  ) +
+  geom_density(
+    color = "#000000",
+    fill = "#F85700",
+    alpha = 0.6 # add transparency
+  ) +
+  theme_void()
+
+densHistY <- ggplot2::ggplot(
+  data = df,
+  aes(
+    x = outcome)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    color = "#000000",
+    fill = "#0099F8"
+  ) +
+  geom_density(
+    color = "#000000",
+    fill = "#F85700",
+    alpha = 0.6 # add transparency
+  ) +
+  theme_void() +
+  coord_flip() # expand = FALSE (if you want to remove the space between data and axis; if you use, would need to use expand = FALSE for all three plots)
+
+densHistX + patchwork::plot_spacer() + scatterplot + densHistY + 
+  patchwork::plot_layout(
+    ncol = 2, 
+    nrow = 2, 
+    widths = c(4, 1),
+    heights = c(1, 4)
+  )
 ```
 
 ## Ellipse
