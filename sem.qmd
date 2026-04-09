@@ -4132,8 +4132,12 @@ psych::describe(longitudinalMI)
 - Examine a correlation matrix for excessively low—or high—correlations:
 
 ```{r}
-cor(longitudinalMI, use = "pairwise.complete.obs")
+#| eval: false
 
+cor(longitudinalMI, use = "pairwise.complete.obs")
+```
+
+```{r}
 petersenlab::cor.table(longitudinalMI)
 ```
 
@@ -4164,6 +4168,8 @@ parameterEstimates(configuralInvariance_fit, standardized = TRUE)
 Examine the variance-covariance matrix of the model parameters:
 
 ```{r}
+#| eval: false
+
 lavInspect(configuralInvariance_fit, "vcov")
 cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
 ```
@@ -4171,6 +4177,8 @@ cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
 - Examine the model-implied variance-covariance matrix of the observed variables:
 
 ```{r}
+#| eval: false
+
 lavInspect(configuralInvariance_fit, "sigma.hat")
 cov2cor(lavInspect(configuralInvariance_fit, "sigma.hat"))
 ```
@@ -4185,7 +4193,12 @@ cov2cor(lavInspect(configuralInvariance_fit, "cov.lv"))
 - Check eigenvalues for negative and near-zero values:
 
 ```{r}
+#| eval: false
+
 eigen(lavInspect(configuralInvariance_fit, "vcov"))$values
+```
+
+```{r}
 eigen(lavInspect(configuralInvariance_fit, "sigma.hat"))$values
 eigen(lavInspect(configuralInvariance_fit, "cov.lv"))$values
 ```
@@ -4193,6 +4206,8 @@ eigen(lavInspect(configuralInvariance_fit, "cov.lv"))$values
 - Examine residuals for large values (i.e., local misfit):
 
 ```{r}
+#| eval: false
+
 residuals(configuralInvariance_fit, type = "raw")
 residuals(configuralInvariance_fit, type = "cor")
 residuals(configuralInvariance_fit, type = "standardized")
