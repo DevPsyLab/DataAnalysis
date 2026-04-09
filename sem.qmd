@@ -4114,6 +4114,100 @@ ggplot(
   )
 ```
 
+# Diagnostics {#sec-diagnostics}
+
+For troubleshooting warnings in SEM, follow the guidance here:
+<https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-pca.html#sec-troubleshooting-factorAnalysis>.
+
+Here is how to perform various concrete steps:
+
+- Examine descriptive statistics for expected *N*s, not too much missingness, not too little variability, no implausible values, etc.:
+
+```{r}
+psych::describe(longitudinalMI)
+```
+
+- Examine a correlation matrix for excessively low—or high—correlations:
+
+```{r}
+cor(longitudinalMI, use = "pairwise.complete.obs")
+
+petersenlab::cor.table(longitudinalMI)
+```
+
+- Examine histograms for outliers and oddly distributed variables:
+
+```{r}
+hist(longitudinalMI$JOBSAT11)
+```
+
+- Examine whether the model converged:
+
+```{r}
+lavInspect(configuralInvariance_fit, "converged")
+```
+
+- Examine degrees of freedom:
+
+```{r}
+fitMeasures(configuralInvariance_fit, "df")
+```
+
+- Examine the model parameters for standardized loadings or covariances > 1, variances < 0, etc.:
+
+```{r}
+parameterEstimates(configuralInvariance_fit, standardized = TRUE)
+```
+
+Examine the variance-covariance matrix of the model parameters:
+
+```{r}
+lavInspect(configuralInvariance_fit, "vcov")
+cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
+```
+
+- Examine the model-implied variance-covariance matrix of the observed variables:
+
+```{r}
+lavInspect(configuralInvariance_fit, "sigma.hat")
+cov2cor(lavInspect(configuralInvariance_fit, "sigma.hat"))
+```
+
+- Examine the model-implied variance-covariance matrix of the latent variables (for redundancy):
+
+```{r}
+lavInspect(configuralInvariance_fit, "cov.lv")
+cov2cor(lavInspect(configuralInvariance_fit, "cov.lv"))
+```
+
+- Check eigenvalues for negative and near-zero values:
+
+```{r}
+eigen(lavInspect(configuralInvariance_fit, "vcov"))$values
+eigen(lavInspect(configuralInvariance_fit, "sigma.hat"))$values
+eigen(lavInspect(configuralInvariance_fit, "cov.lv"))$values
+```
+
+- Examine residuals for large values (i.e., local misfit):
+
+```{r}
+residuals(configuralInvariance_fit, type = "raw")
+residuals(configuralInvariance_fit, type = "cor")
+residuals(configuralInvariance_fit, type = "standardized")
+```
+
+- Examine modification indices:
+
+```{r}
+modindices(configuralInvariance_fit, sort = TRUE)
+```
+
+- Examine fit indices:
+
+```{r}
+fitMeasures(configuralInvariance_fit)
+```
+
 # Session Info
 
 ```{r}
