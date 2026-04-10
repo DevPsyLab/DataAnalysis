@@ -696,6 +696,8 @@ splineGCM_re
 
 Per Hoffman ([here](https://www.cilvr.umd.edu/Conference2010/CILVRposts2010/Hoffman_post.pdf), archived at <https://perma.cc/6X8R-EX44>; and [here](https://www.lesahoffman.com/PSQF7375_AdvLong/PSQF7375_AdvLong_Lecture3_AltTime.pdf), archived at <https://perma.cc/25JY-JE8P>), use age at baseline (i.e., T1; or birth year) instead of mean age to lessen bias from attrition‐related missing data.
 
+#### Linear
+
 ```{r}
 acceleratedLongitudinalMixedModel_linear <- lmer(
   math ~ timeInStudy*sex*ageAtT1Centered + (1 + timeInStudy | id),
@@ -713,6 +715,113 @@ print(effectsize::standardize_parameters(
 ```
 
 ```{r}
+#mydata %>% 
+#  ungroup() %>% 
+#  filter(timepoint == 1) %>% 
+#  mutate( # if we had date of birth, we could compute birth cohort (e.g., birth year), #if we had time of measurement, we could compute period (e.g., year) at T1
+#    ageAtT1 = ageYears, # use age at baseline (T1) or birth year to reduce bias from #attrition-related missing data
+#    ageAtT1Centered = ageAtT1 - min(ageAtT1, na.rm = TRUE),
+#    ageAtT1CenteredSquared = ageAtT1Centered ^ 2) %>%
+#  select(id, ageAtT1, ageAtT1Centered, ageAtT1CenteredSquared)
+```
+
+##### Prototypical Growth Curve
+
+```{r}
+newData <- unique(mydata[,c("ageYears","ageAtT1","timeInStudy")])
+
+newData$ageAtT1Centered <- newData$ageAtT1 - min(mydata$ageAtT1, na.rm = TRUE)
+
+newData <- tidyr::expand_grid(
+  newData,
+  female = c(0, 1)
+)
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+newData$predictedValue <- predict( # predict.merMod
+  acceleratedLongitudinalMixedModel_linear,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  geom_smooth() + #for jagged line: geom_line()
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+##### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  acceleratedLongitudinalMixedModel_linear,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id,
+    color = sex)) +
+  geom_line(
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+##### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id)) +
+  geom_line( # individuals' trajectories
+    color = "gray",
+    alpha = 0.5
+  ) +
+  geom_smooth( # prototypical trajectory
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+#### Quadratic
+
+```{r}
 acceleratedLongitudinalMixedModel_quadratic <- lmer(
   math ~ timeInStudy*sex*ageAtT1Centered + timeInStudySquared*sex*ageAtT1Centered + ageAtT1CenteredSquared + (1 + timeInStudy | id),
   data = mydata,
@@ -726,6 +835,110 @@ print(effectsize::standardize_parameters(
   acceleratedLongitudinalMixedModel_quadratic,
   method = "refit"),
   digits = 2)
+```
+
+##### Prototypical Growth Curve
+
+```{r}
+newData <- unique(mydata[,c("ageYears","ageAtT1","timeInStudy")])
+
+newData$ageAtT1Centered <- newData$ageAtT1 - min(mydata$ageAtT1, na.rm = TRUE)
+newData$timeInStudySquared <- newData$timeInStudy ^ 2
+newData$ageAtT1CenteredSquared <- newData$ageAtT1Centered ^2
+
+newData <- tidyr::expand_grid(
+  newData,
+  female = c(0, 1)
+)
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+newData$predictedValue <- predict( # predict.merMod
+  acceleratedLongitudinalMixedModel_quadratic,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  geom_smooth() + #for jagged line: geom_line()
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+##### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  acceleratedLongitudinalMixedModel_quadratic,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id,
+    color = sex)) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.5,
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+##### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id)) +
+  geom_smooth( # individuals' trajectories
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    linewidth = 0.4,
+    color = "gray",
+    alpha = 0.5
+  ) +
+  geom_smooth( # prototypical trajectory
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
 ```
 
 # Generalized Linear Mixed Models {#sec-generalized}
