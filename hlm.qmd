@@ -692,7 +692,7 @@ splineGCM_re$id <- head(splineGCM_re$id)
 splineGCM_re
 ```
 
-### Accelerated Longitudinal Study: Account for Time in Study & Age at T1
+### Accelerated Longitudinal Study: Accounting for Age at T1 and Time in Study
 
 Per Hoffman ([here](https://www.cilvr.umd.edu/Conference2010/CILVRposts2010/Hoffman_post.pdf), archived at <https://perma.cc/6X8R-EX44>; and [here](https://www.lesahoffman.com/PSQF7375_AdvLong/PSQF7375_AdvLong_Lecture3_AltTime.pdf), archived at <https://perma.cc/25JY-JE8P>), use age at baseline (i.e., T1; or birth year) instead of mean age to lessen bias from attrition‐related missing data.
 
@@ -712,17 +712,6 @@ print(effectsize::standardize_parameters(
   acceleratedLongitudinalMixedModel_linear,
   method = "refit"),
   digits = 2)
-```
-
-```{r}
-#mydata %>% 
-#  ungroup() %>% 
-#  filter(timepoint == 1) %>% 
-#  mutate( # if we had date of birth, we could compute birth cohort (e.g., birth year), #if we had time of measurement, we could compute period (e.g., year) at T1
-#    ageAtT1 = ageYears, # use age at baseline (T1) or birth year to reduce bias from #attrition-related missing data
-#    ageAtT1Centered = ageAtT1 - min(ageAtT1, na.rm = TRUE),
-#    ageAtT1CenteredSquared = ageAtT1Centered ^ 2) %>%
-#  select(id, ageAtT1, ageAtT1Centered, ageAtT1CenteredSquared)
 ```
 
 ##### Prototypical Growth Curve
