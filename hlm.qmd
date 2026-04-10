@@ -87,7 +87,7 @@ mydata$ageYearsCenteredSquared <- mydata$ageYearsCentered ^ 2
 ageAtT1 <- mydata %>% 
   ungroup() %>% 
   filter(timepoint == 1) %>% 
-  mutate(
+  mutate( # if we had date of birth, we could compute birth cohort (e.g., birth year), if we had time of measurement, we could compute period (e.g., year) at T1
     ageAtT1 = ageYears, # use age at baseline (T1) or birth year to reduce bias from attrition-related missing data
     ageAtT1Centered = ageAtT1 - min(ageAtT1, na.rm = TRUE),
     ageAtT1CenteredSquared = ageAtT1Centered ^ 2) %>%
@@ -714,7 +714,7 @@ print(effectsize::standardize_parameters(
 
 ```{r}
 acceleratedLongitudinalMixedModel_quadratic <- lmer(
-  math ~ timeInStudy*sex*ageAtT1Centered + timeInStudySquared*sex*ageAtT1Centered + ageAtT1CenteredSquared + (1 + timeInStudy + timeInStudySquared | id),
+  math ~ timeInStudy*sex*ageAtT1Centered + timeInStudySquared*sex*ageAtT1Centered + ageAtT1CenteredSquared + (1 + timeInStudy | id),
   data = mydata,
   REML = FALSE, #for ML
   na.action = na.exclude,
