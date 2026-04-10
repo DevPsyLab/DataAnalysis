@@ -25,6 +25,7 @@ library("parallelly")
 library("performance")
 library("ggplot2")
 library("ggforce")
+library("tidyverse")
 ```
 
 ## Import Data
@@ -69,12 +70,40 @@ It can be helpful to center the age/time variable so that the intercept in a gro
 For instance, we can subtract the youngest participant age to set the intercepts to be the earliest age in the sample.
 
 ```{r}
+# Timepoint
+mydata <- mydata %>%
+  arrange(id, age) %>% 
+  group_by(id) %>%
+  mutate(timepoint = 1:n())
+
+# Age
 mydata$ageYears <- mydata$age / 12
 mydata$ageMonthsCentered <- mydata$age - min(mydata$age, na.rm = TRUE)
 
 mydata$ageYearsCentered <- mydata$ageMonthsCentered / 12
 mydata$ageYearsCenteredSquared <- mydata$ageYearsCentered ^ 2
 
+# Age at T1
+ageAtT1 <- mydata %>% 
+  ungroup() %>% 
+  filter(timepoint == 1) %>% 
+  mutate(
+    ageAtT1 = ageYears, # use age at baseline (T1) or birth year to reduce bias from attrition-related missing data
+    ageAtT1Centered = ageAtT1 - min(ageAtT1, na.rm = TRUE),
+    ageAtT1CenteredSquared = ageAtT1Centered ^ 2) %>%
+  select(id, ageAtT1, ageAtT1Centered, ageAtT1CenteredSquared)
+
+mydata <- left_join(
+  mydata,
+  ageAtT1,
+  by = c("id")
+)
+
+# Time in Study
+mydata$timeInStudy <- mydata$ageYears - mydata$ageAtT1
+mydata$timeInStudySquared <- mydata$timeInStudy ^ 2
+
+# Sex
 mydata$sex <- factor(
   mydata$female,
   levels = c(0, 1),
@@ -661,6 +690,42 @@ splineGCM_re <- ranef(splineGCM)
 
 splineGCM_re$id <- head(splineGCM_re$id)
 splineGCM_re
+```
+
+### Accelerated Longitudinal Study: Account for Time in Study & Age at T1
+
+Per Hoffman ([here](https://www.cilvr.umd.edu/Conference2010/CILVRposts2010/Hoffman_post.pdf), archived at <https://perma.cc/6X8R-EX44>; and [here](https://www.lesahoffman.com/PSQF7375_AdvLong/PSQF7375_AdvLong_Lecture3_AltTime.pdf), archived at <https://perma.cc/25JY-JE8P>), use age at baseline (i.e., T1; or birth year) instead of mean age to lessen bias from attrition‐related missing data.
+
+```{r}
+acceleratedLongitudinalMixedModel_linear <- lmer(
+  math ~ timeInStudy*sex*ageAtT1Centered + (1 + timeInStudy | id),
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(acceleratedLongitudinalMixedModel_linear)
+
+print(effectsize::standardize_parameters(
+  acceleratedLongitudinalMixedModel_linear,
+  method = "refit"),
+  digits = 2)
+```
+
+```{r}
+acceleratedLongitudinalMixedModel_quadratic <- lmer(
+  math ~ timeInStudy*sex*ageAtT1Centered + timeInStudySquared*sex*ageAtT1Centered + ageAtT1CenteredSquared + (1 + timeInStudy + timeInStudySquared | id),
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(acceleratedLongitudinalMixedModel_quadratic)
+
+print(effectsize::standardize_parameters(
+  acceleratedLongitudinalMixedModel_quadratic,
+  method = "refit"),
+  digits = 2)
 ```
 
 # Generalized Linear Mixed Models {#sec-generalized}
