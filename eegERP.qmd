@@ -29,6 +29,7 @@ title: "EEG and ERP Processing and Analysis"
     - You should have the following subfolders in your `MatLab` folder:
         - `EP_Toolkit`
         - `Fieldtrip-[version number]`
+1. Add GitLab repositories: [Oddball](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-ERP-Oddball) and [Fish-Shark](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-ERP-FishSharks)
 
 ## MATLAB Scripts to Manage HAPPE Files {#sec-matlabScripts}
 
@@ -37,21 +38,11 @@ These actions can be done manually as well, but the MATLAB scripts make the proc
 The scripts will also generate a "log" of all of the files processed through HAPPE to facilitate tracking of EEG data processing.
 The sections below detail the code used to perform these actions as well as the instructions for using the current scripts.
 
-Note: Before using the scripts/code detailed below, ensure that all filepaths used are in your MATLAB path collection.
-These may include:
-   
-   - The location where the automatic scripts are stored (for our lab, this is under `/Data Processing/6. MATLAB EEG Pipeline`)
-   - The location where the HAPPE pre-processing script is stored
-   - The location of the raw data (to be processed)
-   - The location(s) of any intermediate files for processing (e.g., the updated .mff files that contain accuracy information in FishShark)
-   - The location(s) for any files outputted by HAPPE and/or places you wish to use the script to move them to
-
-To add a file path, click on Home/Set Path/Add Folder in MATLAB.
-You don't need to specify the file name, just its containing folder.
+Note: The Oddball and Fish-Shark scripts include lines to add necessary file paths to your MATLAB path collection.
 
 ## Oddball Processing Pipeline 
 
-### Recommended Folder Strucure
+### Folder Strucure
 
 1. `1a - Files for HAPPE`
 1. `1b - Manual Processing`
@@ -66,56 +57,25 @@ You don't need to specify the file name, just its containing folder.
 The following section describes the MATLAB scripts used to manage HAPPE output files for the Oddball task data. If you are running HAPPE manually (i.e., without integrating these scripts), skip to the [Oddball HAPPE inputs](#sec-inputOddballHAPPE) section. 
 
 1. Open the `eegProccessingOddball.m` file (accessible via Git [here](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-DataProcessing/-/blob/master/6.%20MATLAB%20EEG%20Pipeline/eegProcessingOddball.m)) in MATLAB
-1. Update all thresholds and filepaths in script file (must be done BEFORE running the script)
-   - In the second section of our script file, we set our "threshold" for the minimum number of trials that need to be retained after pre-processing for a subject's data to be eligible for PCA.
-   Additional thresholds can also be set for things like number of channels retained, but these are not currently in use.
+1. Click "Run" on the MATLAB editor window with the script open.
+1. Input the requested information in the Command Window at the bottom of the MATLAB screen.
+
+   - All inputs are case sensitive.
+   - Do not put quotes around any inputs.
    
-   ```
-   % Set quality threshold parameters
-   trialCutoff = 10;
-   ```
-   - We also set environment variables with all of the filepaths that are relevant for managing HAPPE output files and tracking processed data.
-   The following paths should be checked and updated as necessary to reflect the organization of processing on your computer.
-      - `passPath` is the location you wish to have files that meet or exceed the above-defined thresholds to be saved
-      - `allPath` is the location you wish to have ALL files outputted from HAPPE saved to (regardless of whether threshold is met or not)
-      - `failPath` is the location you wish to have files that do not meet the above-defined thresholds to be copied to
-         - .mff files that do not meet threshold will be copied here as an indication that they should be processed manually to see if they meet threshold afterward
-      - `summPath` is the location you wish to save the file that lists all files processed through HAPPE in the current batch
-         - We currently use this to save the "processing log" to a location that all team members/computers have access to so it is easier to determine which files require processing when EEG data are not stored on a shared server
-      - `manPath` is the location you wish to save the file that lists all files that do not meet the above-defined thresholds
-         - We currently use this to save the "to process manually" list to a location that all team members/computers have access to so it is easier to determine which files require manual processing because the copied .mff file would not be acessible via our shared server
-    
-    ```
-    % Set paths for file sorting
-    passPath = 'V:\Processing-Repo\Folder Structure\3 - Files for PCA'; %location for .txt output files
-    allPath = 'V:\Processing-Repo\Folder Structure\2 - Processed Files'; %location for all processed files to end up
-    failPath = 'V:\Processing-Repo\Folder Structure\1b - Manual Processing'; %location to copy unsuccessful .mff to for manual process
-
-    % Set path for processing summary
-    summPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processed Data Logs';
-
-    % Set path for summary of files to process manually 
-    manPath = 'Z:\Shared Server\Study Folder\Data Processing\6. MATLAB EEG Pipeline\Processing To Do\Cases to Process Manually\Lists of Cases by Batch';
-    ```
-1. Run the HAPPE Pipeline
-   - This first section is designed to rely on user input.
-   Click "Run" on the MATLAB editor window with the file open to begin the process.
-   - A message will appear in the console prompting you to enter the filepath to the location of the HAPPE pre-processing file you wish to run
-   - Once the path is entered, MATLAB will run the file
-   - **Note: the filepath inputted should NOT be in quotes**
-
-   ```
-   % Set path to HAPPE pre-processing script
-   happeRun = input('Enter the full path to the HAPPE pre-processing file:\n> ','s') ;
-
-   % Call and run HAPPE pre-processing script
-   run(happeRun);
-   ```
-1. Enter HAPPE inputs
-   - See the following section for HAPPE user inputs for Oddball
+   1. SRS-ERP-Oddball Repository: the local path to the [Oddball processing repo](https://research-git.uiowa.edu/PetersenLab/SRS/SRS-ERP-Oddball)
+   1. HAPPE Pre-Processing File: the **full** file path to HAPPE_v4.m
+      - Within the HAPPE folder, this file is in the `1. pre-process` folder, so the full path should be similar to `Documents/GitHub/HAPPE/1. pre-process/HAPPE_v4.m`
+   1. HAPPE Threshold: "Hard" for hard threshold (preferred) or "Soft" for soft threshold
+      - **Case-sensitive**--first letter must be capitalized.
+      - Do not include quotation marks.
+      - The soft threshold is less strict with artifact removal, and the hard threshold is more strict.
+   1. Trial Cutoff: the minimum number of trials that need to be retained after processing for a particular recording to be eligible for PCA (default is 10)
+   
+1. Enter [HAPPE inputs](#sec-inputOddballHAPPE).
 
 After the HAPPE inputs are entered, no more user interaction is required for the script to do its job.
-The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files outputted by HAPPE and move them to the appropriate locations based on this evaluation. 
+The HAPPE pipeline will run, and the remaining MATLAB code in the script file will evaluate the files produced by HAPPE and move them to the appropriate locations based on this evaluation. 
 See [Oddball Post-HAPPE Steps](#sec-oddballPost) for a detailed explanation of the code used to accomplish this.
 
 ### HAPPE Inputs {#sec-inputOddballHAPPE}
