@@ -10052,6 +10052,8 @@ ecvi                               1.143      1.111      1.082      1.025</code>
 <a href="https://moshagen.github.io/semPower/"><code>semPower</code> <code>R</code> package</a> (based on <a href="https://doi.org/10.3758/s13428-023-02254-7">Moshagen &amp; Bader, 2024</a>), with basic functionality in a Shiny webapp: <a href="https://sempower.shinyapps.io/sempower/" class="uri">https://sempower.shinyapps.io/sempower/</a>
 </li>
 <li>
+<a href="https://cran.r-project.org/web/packages/powRICLPM/index.html"><code>powRICLPM</code> <code>R</code> package</a> for <a href="#sec-riclpm">random-intercept cross-lagged panel models</a> (based on <a href="https://doi.org/10.1080/10705511.2022.2122467">Mulder, 2023</a>; see vignettes <a href="https://jeroendmulder.github.io/powRICLPM/articles/start.html">here</a>)</li>
+<li>
 <a href="https://yilinandrewang.shinyapps.io/pwrSEM/" class="uri">https://yilinandrewang.shinyapps.io/pwrSEM/</a> (based on <a href="https://doi.org/10.1177/2515245920918253">Wang &amp; Rhemtulla, 2001</a>)</li>
 <li><a href="https://schoemanna.shinyapps.io/mc_power_med/" class="uri">https://schoemanna.shinyapps.io/mc_power_med/</a></li>
 <li>
@@ -14976,189 +14978,190 @@ loaded via a namespace (and not attached):
 <span id="cb308-4408"><a href="#cb308-4408" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb308-4409"><a href="#cb308-4409" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">`simsem` `R` package</span><span class="co">](https://cran.r-project.org/web/packages/simsem/index.html)</span> (see vignettes <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/simsem/simsem/wiki/Vignette)</span>)</span>
 <span id="cb308-4410"><a href="#cb308-4410" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">`semPower` `R` package</span><span class="co">](https://moshagen.github.io/semPower/)</span> (based on <span class="co">[</span><span class="ot">Moshagen &amp; Bader, 2024</span><span class="co">](https://doi.org/10.3758/s13428-023-02254-7)</span>), with basic functionality in a Shiny webapp: <span class="ot">&lt;https://sempower.shinyapps.io/sempower/&gt;</span></span>
-<span id="cb308-4411"><a href="#cb308-4411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://yilinandrewang.shinyapps.io/pwrSEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Wang &amp; Rhemtulla, 2001</span><span class="co">](https://doi.org/10.1177/2515245920918253)</span>)</span>
-<span id="cb308-4412"><a href="#cb308-4412" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://schoemanna.shinyapps.io/mc_power_med/&gt;</span></span>
-<span id="cb308-4413"><a href="#cb308-4413" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://sjak.shinyapps.io/power4SEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Jak et al., 2020</span><span class="co">](https://doi.org/10.3758/s13428-020-01479-0)</span>)</span>
-<span id="cb308-4414"><a href="#cb308-4414" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Basic webapps: <span class="ot">&lt;https://webpower.psychstat.org/wiki/models/index&gt;</span> and <span class="ot">&lt;https://www.danielsoper.com/statcalc/calculator.aspx?id=89&gt;</span></span>
-<span id="cb308-4415"><a href="#cb308-4415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4416"><a href="#cb308-4416" aria-hidden="true" tabindex="-1"></a><span class="fu"># Path Diagrams {#sec-pathDiagrams}</span></span>
-<span id="cb308-4417"><a href="#cb308-4417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4418"><a href="#cb308-4418" aria-hidden="true" tabindex="-1"></a>For a list of tools to create path diagrams, see <span class="co">[</span><span class="ot">here</span><span class="co">](figures.qmd#sec-pathDiagrams)</span>.</span>
-<span id="cb308-4419"><a href="#cb308-4419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4420"><a href="#cb308-4420" aria-hidden="true" tabindex="-1"></a><span class="fu"># Partial Regression Plot {#sec-partialRegressionPlot}</span></span>
-<span id="cb308-4421"><a href="#cb308-4421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4424"><a href="#cb308-4424" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4425"><a href="#cb308-4425" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate extra observed covariates</span></span>
-<span id="cb308-4426"><a href="#cb308-4426" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(PoliticalDemocracy)</span>
-<span id="cb308-4427"><a href="#cb308-4427" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb308-4428"><a href="#cb308-4428" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z2 <span class="ot">&lt;-</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x1 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x2 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x3 <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb308-4429"><a href="#cb308-4429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4430"><a href="#cb308-4430" aria-hidden="true" tabindex="-1"></a><span class="co"># model syntax</span></span>
-<span id="cb308-4431"><a href="#cb308-4431" aria-hidden="true" tabindex="-1"></a>myModel <span class="ot">&lt;-</span> <span class="st">' </span></span>
-<span id="cb308-4432"><a href="#cb308-4432" aria-hidden="true" tabindex="-1"></a><span class="st"> # latent variables </span></span>
-<span id="cb308-4433"><a href="#cb308-4433" aria-hidden="true" tabindex="-1"></a><span class="st">   ind60 =~ x1 + x2 + x3 </span></span>
-<span id="cb308-4434"><a href="#cb308-4434" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 =~ y1 + y2 + y3 + y4 </span></span>
-<span id="cb308-4435"><a href="#cb308-4435" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 =~ y5 + y6 + y7 + y8 </span></span>
-<span id="cb308-4436"><a href="#cb308-4436" aria-hidden="true" tabindex="-1"></a><span class="st"> # regressions</span></span>
-<span id="cb308-4437"><a href="#cb308-4437" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 ~ ind60 </span></span>
-<span id="cb308-4438"><a href="#cb308-4438" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 ~ ind60 + dem60 + z1 + z2</span></span>
-<span id="cb308-4439"><a href="#cb308-4439" aria-hidden="true" tabindex="-1"></a><span class="st"> # residual covariances </span></span>
-<span id="cb308-4440"><a href="#cb308-4440" aria-hidden="true" tabindex="-1"></a><span class="st">   y1 ~~ y5</span></span>
-<span id="cb308-4441"><a href="#cb308-4441" aria-hidden="true" tabindex="-1"></a><span class="st">   y2 ~~ y4 + y6 </span></span>
-<span id="cb308-4442"><a href="#cb308-4442" aria-hidden="true" tabindex="-1"></a><span class="st">   y3 ~~ y7 </span></span>
-<span id="cb308-4443"><a href="#cb308-4443" aria-hidden="true" tabindex="-1"></a><span class="st">   y4 ~~ y8</span></span>
-<span id="cb308-4444"><a href="#cb308-4444" aria-hidden="true" tabindex="-1"></a><span class="st">   y6 ~~ y8</span></span>
-<span id="cb308-4445"><a href="#cb308-4445" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb308-4446"><a href="#cb308-4446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4447"><a href="#cb308-4447" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
-<span id="cb308-4448"><a href="#cb308-4448" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
-<span id="cb308-4449"><a href="#cb308-4449" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> myModel,</span>
-<span id="cb308-4450"><a href="#cb308-4450" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> PoliticalDemocracy)</span>
-<span id="cb308-4451"><a href="#cb308-4451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4452"><a href="#cb308-4452" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the factor scores</span></span>
-<span id="cb308-4453"><a href="#cb308-4453" aria-hidden="true" tabindex="-1"></a>factorScores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lavaan<span class="sc">::</span><span class="fu">lavPredict</span>(fit))</span>
-<span id="cb308-4454"><a href="#cb308-4454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4455"><a href="#cb308-4455" aria-hidden="true" tabindex="-1"></a><span class="co"># merge the factor scores with the original data</span></span>
-<span id="cb308-4456"><a href="#cb308-4456" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(PoliticalDemocracy, factorScores)</span>
-<span id="cb308-4457"><a href="#cb308-4457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4458"><a href="#cb308-4458" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent Y (dem65) on covariates</span></span>
-<span id="cb308-4459"><a href="#cb308-4459" aria-hidden="true" tabindex="-1"></a>ry <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(dem65 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
-<span id="cb308-4460"><a href="#cb308-4460" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4461"><a href="#cb308-4461" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent X (ind60) on same covariates</span></span>
-<span id="cb308-4462"><a href="#cb308-4462" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(ind60 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
-<span id="cb308-4463"><a href="#cb308-4463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4464"><a href="#cb308-4464" aria-hidden="true" tabindex="-1"></a><span class="co"># create the partial regression plot</span></span>
-<span id="cb308-4465"><a href="#cb308-4465" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb308-4466"><a href="#cb308-4466" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">data.frame</span>(rx, ry),</span>
-<span id="cb308-4467"><a href="#cb308-4467" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(rx, ry)) <span class="sc">+</span></span>
-<span id="cb308-4468"><a href="#cb308-4468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb308-4469"><a href="#cb308-4469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
-<span id="cb308-4470"><a href="#cb308-4470" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb308-4471"><a href="#cb308-4471" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb308-4472"><a href="#cb308-4472" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residualized ind60"</span>,</span>
-<span id="cb308-4473"><a href="#cb308-4473" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Residualized dem65"</span>,</span>
-<span id="cb308-4474"><a href="#cb308-4474" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Partial Regression Plot from SEM"</span></span>
-<span id="cb308-4475"><a href="#cb308-4475" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb308-4476"><a href="#cb308-4476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4477"><a href="#cb308-4477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4478"><a href="#cb308-4478" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diagnostics {#sec-diagnostics}</span></span>
-<span id="cb308-4479"><a href="#cb308-4479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4480"><a href="#cb308-4480" aria-hidden="true" tabindex="-1"></a>For troubleshooting warnings in SEM, follow the guidance here:</span>
-<span id="cb308-4481"><a href="#cb308-4481" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-pca.html#sec-troubleshooting-factorAnalysis&gt;</span>.</span>
-<span id="cb308-4482"><a href="#cb308-4482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4483"><a href="#cb308-4483" aria-hidden="true" tabindex="-1"></a>For various aspects/diagnostics of the model fit object that you can extract, see the <span class="in">`lavaan::lavInspect()`</span> function.</span>
-<span id="cb308-4484"><a href="#cb308-4484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4485"><a href="#cb308-4485" aria-hidden="true" tabindex="-1"></a>Here is how to perform various concrete steps:</span>
-<span id="cb308-4486"><a href="#cb308-4486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4487"><a href="#cb308-4487" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine descriptive statistics for expected *N*s, not too much missingness, not too little variability, no implausible values, etc.:</span>
-<span id="cb308-4488"><a href="#cb308-4488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4491"><a href="#cb308-4491" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4492"><a href="#cb308-4492" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(longitudinalMI)</span>
-<span id="cb308-4493"><a href="#cb308-4493" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4494"><a href="#cb308-4494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4495"><a href="#cb308-4495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine a correlation matrix for excessively low—or high—correlations:</span>
-<span id="cb308-4496"><a href="#cb308-4496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4499"><a href="#cb308-4499" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4500"><a href="#cb308-4500" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb308-4501"><a href="#cb308-4501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4502"><a href="#cb308-4502" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(longitudinalMI, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span>
-<span id="cb308-4503"><a href="#cb308-4503" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4504"><a href="#cb308-4504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4507"><a href="#cb308-4507" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4508"><a href="#cb308-4508" aria-hidden="true" tabindex="-1"></a>petersenlab<span class="sc">::</span><span class="fu">cor.table</span>(longitudinalMI)</span>
-<span id="cb308-4509"><a href="#cb308-4509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4510"><a href="#cb308-4510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4511"><a href="#cb308-4511" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine histograms for outliers and oddly distributed variables:</span>
-<span id="cb308-4512"><a href="#cb308-4512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4515"><a href="#cb308-4515" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4516"><a href="#cb308-4516" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(longitudinalMI<span class="sc">$</span>JOBSAT11)</span>
-<span id="cb308-4517"><a href="#cb308-4517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4518"><a href="#cb308-4518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4519"><a href="#cb308-4519" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine whether the model converged:</span>
-<span id="cb308-4520"><a href="#cb308-4520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4523"><a href="#cb308-4523" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4524"><a href="#cb308-4524" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"converged"</span>)</span>
-<span id="cb308-4525"><a href="#cb308-4525" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4526"><a href="#cb308-4526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4527"><a href="#cb308-4527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine degrees of freedom:</span>
-<span id="cb308-4528"><a href="#cb308-4528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4531"><a href="#cb308-4531" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4532"><a href="#cb308-4532" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(configuralInvariance_fit, <span class="st">"df"</span>)</span>
-<span id="cb308-4533"><a href="#cb308-4533" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4534"><a href="#cb308-4534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4535"><a href="#cb308-4535" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model parameters for standardized loadings or covariances &gt; 1, variances &lt; 0, etc.:</span>
-<span id="cb308-4536"><a href="#cb308-4536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4539"><a href="#cb308-4539" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4540"><a href="#cb308-4540" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(configuralInvariance_fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb308-4541"><a href="#cb308-4541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4542"><a href="#cb308-4542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4543"><a href="#cb308-4543" aria-hidden="true" tabindex="-1"></a>Examine the variance-covariance matrix of the model parameters:</span>
-<span id="cb308-4544"><a href="#cb308-4544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4547"><a href="#cb308-4547" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4548"><a href="#cb308-4548" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb308-4549"><a href="#cb308-4549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4550"><a href="#cb308-4550" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>)</span>
-<span id="cb308-4551"><a href="#cb308-4551" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>))</span>
-<span id="cb308-4552"><a href="#cb308-4552" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4553"><a href="#cb308-4553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4554"><a href="#cb308-4554" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model-implied variance-covariance matrix of the observed variables:</span>
-<span id="cb308-4555"><a href="#cb308-4555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4558"><a href="#cb308-4558" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4559"><a href="#cb308-4559" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb308-4560"><a href="#cb308-4560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4561"><a href="#cb308-4561" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>)</span>
-<span id="cb308-4562"><a href="#cb308-4562" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>))</span>
-<span id="cb308-4563"><a href="#cb308-4563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4564"><a href="#cb308-4564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4565"><a href="#cb308-4565" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model-implied variance-covariance matrix of the latent variables (for redundancy):</span>
-<span id="cb308-4566"><a href="#cb308-4566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4569"><a href="#cb308-4569" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4570"><a href="#cb308-4570" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>)</span>
-<span id="cb308-4571"><a href="#cb308-4571" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>))</span>
-<span id="cb308-4572"><a href="#cb308-4572" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4573"><a href="#cb308-4573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4574"><a href="#cb308-4574" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check eigenvalues for negative and near-zero values:</span>
-<span id="cb308-4575"><a href="#cb308-4575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4578"><a href="#cb308-4578" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4579"><a href="#cb308-4579" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb308-4580"><a href="#cb308-4580" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4581"><a href="#cb308-4581" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>))<span class="sc">$</span>values</span>
-<span id="cb308-4582"><a href="#cb308-4582" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4583"><a href="#cb308-4583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4586"><a href="#cb308-4586" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4587"><a href="#cb308-4587" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>))<span class="sc">$</span>values</span>
-<span id="cb308-4588"><a href="#cb308-4588" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>))<span class="sc">$</span>values</span>
-<span id="cb308-4589"><a href="#cb308-4589" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4590"><a href="#cb308-4590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4591"><a href="#cb308-4591" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine residuals for large values (i.e., local misfit):</span>
-<span id="cb308-4592"><a href="#cb308-4592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4595"><a href="#cb308-4595" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4596"><a href="#cb308-4596" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb308-4597"><a href="#cb308-4597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4598"><a href="#cb308-4598" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"raw"</span>)</span>
-<span id="cb308-4599"><a href="#cb308-4599" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"cor"</span>)</span>
-<span id="cb308-4600"><a href="#cb308-4600" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"standardized"</span>)</span>
-<span id="cb308-4601"><a href="#cb308-4601" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4602"><a href="#cb308-4602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4603"><a href="#cb308-4603" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine modification indices:</span>
-<span id="cb308-4604"><a href="#cb308-4604" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4607"><a href="#cb308-4607" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4608"><a href="#cb308-4608" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(configuralInvariance_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb308-4609"><a href="#cb308-4609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4610"><a href="#cb308-4610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4611"><a href="#cb308-4611" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine fit indices:</span>
-<span id="cb308-4612"><a href="#cb308-4612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4615"><a href="#cb308-4615" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4616"><a href="#cb308-4616" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(configuralInvariance_fit)</span>
-<span id="cb308-4617"><a href="#cb308-4617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb308-4618"><a href="#cb308-4618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4619"><a href="#cb308-4619" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb308-4620"><a href="#cb308-4620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4623"><a href="#cb308-4623" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb308-4624"><a href="#cb308-4624" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb308-4625"><a href="#cb308-4625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-4626"><a href="#cb308-4626" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb308-4627"><a href="#cb308-4627" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4411"><a href="#cb308-4411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">`powRICLPM` `R` package</span><span class="co">](https://cran.r-project.org/web/packages/powRICLPM/index.html)</span> for <span class="co">[</span><span class="ot">random-intercept cross-lagged panel models</span><span class="co">](#sec-riclpm)</span> (based on <span class="co">[</span><span class="ot">Mulder, 2023</span><span class="co">](https://doi.org/10.1080/10705511.2022.2122467)</span>; see vignettes <span class="co">[</span><span class="ot">here</span><span class="co">](https://jeroendmulder.github.io/powRICLPM/articles/start.html)</span>)</span>
+<span id="cb308-4412"><a href="#cb308-4412" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://yilinandrewang.shinyapps.io/pwrSEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Wang &amp; Rhemtulla, 2001</span><span class="co">](https://doi.org/10.1177/2515245920918253)</span>)</span>
+<span id="cb308-4413"><a href="#cb308-4413" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://schoemanna.shinyapps.io/mc_power_med/&gt;</span></span>
+<span id="cb308-4414"><a href="#cb308-4414" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://sjak.shinyapps.io/power4SEM/&gt;</span> (based on <span class="co">[</span><span class="ot">Jak et al., 2020</span><span class="co">](https://doi.org/10.3758/s13428-020-01479-0)</span>)</span>
+<span id="cb308-4415"><a href="#cb308-4415" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Basic webapps: <span class="ot">&lt;https://webpower.psychstat.org/wiki/models/index&gt;</span> and <span class="ot">&lt;https://www.danielsoper.com/statcalc/calculator.aspx?id=89&gt;</span></span>
+<span id="cb308-4416"><a href="#cb308-4416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4417"><a href="#cb308-4417" aria-hidden="true" tabindex="-1"></a><span class="fu"># Path Diagrams {#sec-pathDiagrams}</span></span>
+<span id="cb308-4418"><a href="#cb308-4418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4419"><a href="#cb308-4419" aria-hidden="true" tabindex="-1"></a>For a list of tools to create path diagrams, see <span class="co">[</span><span class="ot">here</span><span class="co">](figures.qmd#sec-pathDiagrams)</span>.</span>
+<span id="cb308-4420"><a href="#cb308-4420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4421"><a href="#cb308-4421" aria-hidden="true" tabindex="-1"></a><span class="fu"># Partial Regression Plot {#sec-partialRegressionPlot}</span></span>
+<span id="cb308-4422"><a href="#cb308-4422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4425"><a href="#cb308-4425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4426"><a href="#cb308-4426" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate extra observed covariates</span></span>
+<span id="cb308-4427"><a href="#cb308-4427" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(PoliticalDemocracy)</span>
+<span id="cb308-4428"><a href="#cb308-4428" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb308-4429"><a href="#cb308-4429" aria-hidden="true" tabindex="-1"></a>PoliticalDemocracy<span class="sc">$</span>z2 <span class="ot">&lt;-</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x1 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x2 <span class="sc">+</span> <span class="fl">0.3</span><span class="sc">*</span>PoliticalDemocracy<span class="sc">$</span>x3 <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb308-4430"><a href="#cb308-4430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4431"><a href="#cb308-4431" aria-hidden="true" tabindex="-1"></a><span class="co"># model syntax</span></span>
+<span id="cb308-4432"><a href="#cb308-4432" aria-hidden="true" tabindex="-1"></a>myModel <span class="ot">&lt;-</span> <span class="st">' </span></span>
+<span id="cb308-4433"><a href="#cb308-4433" aria-hidden="true" tabindex="-1"></a><span class="st"> # latent variables </span></span>
+<span id="cb308-4434"><a href="#cb308-4434" aria-hidden="true" tabindex="-1"></a><span class="st">   ind60 =~ x1 + x2 + x3 </span></span>
+<span id="cb308-4435"><a href="#cb308-4435" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 =~ y1 + y2 + y3 + y4 </span></span>
+<span id="cb308-4436"><a href="#cb308-4436" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 =~ y5 + y6 + y7 + y8 </span></span>
+<span id="cb308-4437"><a href="#cb308-4437" aria-hidden="true" tabindex="-1"></a><span class="st"> # regressions</span></span>
+<span id="cb308-4438"><a href="#cb308-4438" aria-hidden="true" tabindex="-1"></a><span class="st">   dem60 ~ ind60 </span></span>
+<span id="cb308-4439"><a href="#cb308-4439" aria-hidden="true" tabindex="-1"></a><span class="st">   dem65 ~ ind60 + dem60 + z1 + z2</span></span>
+<span id="cb308-4440"><a href="#cb308-4440" aria-hidden="true" tabindex="-1"></a><span class="st"> # residual covariances </span></span>
+<span id="cb308-4441"><a href="#cb308-4441" aria-hidden="true" tabindex="-1"></a><span class="st">   y1 ~~ y5</span></span>
+<span id="cb308-4442"><a href="#cb308-4442" aria-hidden="true" tabindex="-1"></a><span class="st">   y2 ~~ y4 + y6 </span></span>
+<span id="cb308-4443"><a href="#cb308-4443" aria-hidden="true" tabindex="-1"></a><span class="st">   y3 ~~ y7 </span></span>
+<span id="cb308-4444"><a href="#cb308-4444" aria-hidden="true" tabindex="-1"></a><span class="st">   y4 ~~ y8</span></span>
+<span id="cb308-4445"><a href="#cb308-4445" aria-hidden="true" tabindex="-1"></a><span class="st">   y6 ~~ y8</span></span>
+<span id="cb308-4446"><a href="#cb308-4446" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb308-4447"><a href="#cb308-4447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4448"><a href="#cb308-4448" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
+<span id="cb308-4449"><a href="#cb308-4449" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
+<span id="cb308-4450"><a href="#cb308-4450" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> myModel,</span>
+<span id="cb308-4451"><a href="#cb308-4451" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> PoliticalDemocracy)</span>
+<span id="cb308-4452"><a href="#cb308-4452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4453"><a href="#cb308-4453" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the factor scores</span></span>
+<span id="cb308-4454"><a href="#cb308-4454" aria-hidden="true" tabindex="-1"></a>factorScores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lavaan<span class="sc">::</span><span class="fu">lavPredict</span>(fit))</span>
+<span id="cb308-4455"><a href="#cb308-4455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4456"><a href="#cb308-4456" aria-hidden="true" tabindex="-1"></a><span class="co"># merge the factor scores with the original data</span></span>
+<span id="cb308-4457"><a href="#cb308-4457" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(PoliticalDemocracy, factorScores)</span>
+<span id="cb308-4458"><a href="#cb308-4458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4459"><a href="#cb308-4459" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent Y (dem65) on covariates</span></span>
+<span id="cb308-4460"><a href="#cb308-4460" aria-hidden="true" tabindex="-1"></a>ry <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(dem65 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb308-4461"><a href="#cb308-4461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4462"><a href="#cb308-4462" aria-hidden="true" tabindex="-1"></a><span class="co"># residualize latent X (ind60) on same covariates</span></span>
+<span id="cb308-4463"><a href="#cb308-4463" aria-hidden="true" tabindex="-1"></a>rx <span class="ot">&lt;-</span> <span class="fu">resid</span>(<span class="fu">lm</span>(ind60 <span class="sc">~</span> dem60 <span class="sc">+</span> z1 <span class="sc">+</span> z2, <span class="at">data =</span> mydata))</span>
+<span id="cb308-4464"><a href="#cb308-4464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4465"><a href="#cb308-4465" aria-hidden="true" tabindex="-1"></a><span class="co"># create the partial regression plot</span></span>
+<span id="cb308-4466"><a href="#cb308-4466" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb308-4467"><a href="#cb308-4467" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">data.frame</span>(rx, ry),</span>
+<span id="cb308-4468"><a href="#cb308-4468" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(rx, ry)) <span class="sc">+</span></span>
+<span id="cb308-4469"><a href="#cb308-4469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb308-4470"><a href="#cb308-4470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb308-4471"><a href="#cb308-4471" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb308-4472"><a href="#cb308-4472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb308-4473"><a href="#cb308-4473" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residualized ind60"</span>,</span>
+<span id="cb308-4474"><a href="#cb308-4474" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Residualized dem65"</span>,</span>
+<span id="cb308-4475"><a href="#cb308-4475" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Partial Regression Plot from SEM"</span></span>
+<span id="cb308-4476"><a href="#cb308-4476" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb308-4477"><a href="#cb308-4477" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4478"><a href="#cb308-4478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4479"><a href="#cb308-4479" aria-hidden="true" tabindex="-1"></a><span class="fu"># Diagnostics {#sec-diagnostics}</span></span>
+<span id="cb308-4480"><a href="#cb308-4480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4481"><a href="#cb308-4481" aria-hidden="true" tabindex="-1"></a>For troubleshooting warnings in SEM, follow the guidance here:</span>
+<span id="cb308-4482"><a href="#cb308-4482" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://isaactpetersen.github.io/Principles-Psychological-Assessment/factor-analysis-pca.html#sec-troubleshooting-factorAnalysis&gt;</span>.</span>
+<span id="cb308-4483"><a href="#cb308-4483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4484"><a href="#cb308-4484" aria-hidden="true" tabindex="-1"></a>For various aspects/diagnostics of the model fit object that you can extract, see the <span class="in">`lavaan::lavInspect()`</span> function.</span>
+<span id="cb308-4485"><a href="#cb308-4485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4486"><a href="#cb308-4486" aria-hidden="true" tabindex="-1"></a>Here is how to perform various concrete steps:</span>
+<span id="cb308-4487"><a href="#cb308-4487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4488"><a href="#cb308-4488" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine descriptive statistics for expected *N*s, not too much missingness, not too little variability, no implausible values, etc.:</span>
+<span id="cb308-4489"><a href="#cb308-4489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4492"><a href="#cb308-4492" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4493"><a href="#cb308-4493" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(longitudinalMI)</span>
+<span id="cb308-4494"><a href="#cb308-4494" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4495"><a href="#cb308-4495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4496"><a href="#cb308-4496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine a correlation matrix for excessively low—or high—correlations:</span>
+<span id="cb308-4497"><a href="#cb308-4497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4500"><a href="#cb308-4500" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4501"><a href="#cb308-4501" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb308-4502"><a href="#cb308-4502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4503"><a href="#cb308-4503" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(longitudinalMI, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span>
+<span id="cb308-4504"><a href="#cb308-4504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4505"><a href="#cb308-4505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4508"><a href="#cb308-4508" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4509"><a href="#cb308-4509" aria-hidden="true" tabindex="-1"></a>petersenlab<span class="sc">::</span><span class="fu">cor.table</span>(longitudinalMI)</span>
+<span id="cb308-4510"><a href="#cb308-4510" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4511"><a href="#cb308-4511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4512"><a href="#cb308-4512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine histograms for outliers and oddly distributed variables:</span>
+<span id="cb308-4513"><a href="#cb308-4513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4516"><a href="#cb308-4516" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4517"><a href="#cb308-4517" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(longitudinalMI<span class="sc">$</span>JOBSAT11)</span>
+<span id="cb308-4518"><a href="#cb308-4518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4519"><a href="#cb308-4519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4520"><a href="#cb308-4520" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine whether the model converged:</span>
+<span id="cb308-4521"><a href="#cb308-4521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4524"><a href="#cb308-4524" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4525"><a href="#cb308-4525" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"converged"</span>)</span>
+<span id="cb308-4526"><a href="#cb308-4526" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4527"><a href="#cb308-4527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4528"><a href="#cb308-4528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine degrees of freedom:</span>
+<span id="cb308-4529"><a href="#cb308-4529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4532"><a href="#cb308-4532" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4533"><a href="#cb308-4533" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(configuralInvariance_fit, <span class="st">"df"</span>)</span>
+<span id="cb308-4534"><a href="#cb308-4534" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4535"><a href="#cb308-4535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4536"><a href="#cb308-4536" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model parameters for standardized loadings or covariances &gt; 1, variances &lt; 0, etc.:</span>
+<span id="cb308-4537"><a href="#cb308-4537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4540"><a href="#cb308-4540" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4541"><a href="#cb308-4541" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(configuralInvariance_fit, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb308-4542"><a href="#cb308-4542" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4543"><a href="#cb308-4543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4544"><a href="#cb308-4544" aria-hidden="true" tabindex="-1"></a>Examine the variance-covariance matrix of the model parameters:</span>
+<span id="cb308-4545"><a href="#cb308-4545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4548"><a href="#cb308-4548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4549"><a href="#cb308-4549" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb308-4550"><a href="#cb308-4550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4551"><a href="#cb308-4551" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>)</span>
+<span id="cb308-4552"><a href="#cb308-4552" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>))</span>
+<span id="cb308-4553"><a href="#cb308-4553" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4554"><a href="#cb308-4554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4555"><a href="#cb308-4555" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model-implied variance-covariance matrix of the observed variables:</span>
+<span id="cb308-4556"><a href="#cb308-4556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4559"><a href="#cb308-4559" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4560"><a href="#cb308-4560" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb308-4561"><a href="#cb308-4561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4562"><a href="#cb308-4562" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>)</span>
+<span id="cb308-4563"><a href="#cb308-4563" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>))</span>
+<span id="cb308-4564"><a href="#cb308-4564" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4565"><a href="#cb308-4565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4566"><a href="#cb308-4566" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine the model-implied variance-covariance matrix of the latent variables (for redundancy):</span>
+<span id="cb308-4567"><a href="#cb308-4567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4570"><a href="#cb308-4570" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4571"><a href="#cb308-4571" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>)</span>
+<span id="cb308-4572"><a href="#cb308-4572" aria-hidden="true" tabindex="-1"></a><span class="fu">cov2cor</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>))</span>
+<span id="cb308-4573"><a href="#cb308-4573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4574"><a href="#cb308-4574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4575"><a href="#cb308-4575" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check eigenvalues for negative and near-zero values:</span>
+<span id="cb308-4576"><a href="#cb308-4576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4579"><a href="#cb308-4579" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4580"><a href="#cb308-4580" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb308-4581"><a href="#cb308-4581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4582"><a href="#cb308-4582" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"vcov"</span>))<span class="sc">$</span>values</span>
+<span id="cb308-4583"><a href="#cb308-4583" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4584"><a href="#cb308-4584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4587"><a href="#cb308-4587" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4588"><a href="#cb308-4588" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"sigma.hat"</span>))<span class="sc">$</span>values</span>
+<span id="cb308-4589"><a href="#cb308-4589" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">lavInspect</span>(configuralInvariance_fit, <span class="st">"cov.lv"</span>))<span class="sc">$</span>values</span>
+<span id="cb308-4590"><a href="#cb308-4590" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4591"><a href="#cb308-4591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4592"><a href="#cb308-4592" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine residuals for large values (i.e., local misfit):</span>
+<span id="cb308-4593"><a href="#cb308-4593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4596"><a href="#cb308-4596" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4597"><a href="#cb308-4597" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb308-4598"><a href="#cb308-4598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4599"><a href="#cb308-4599" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"raw"</span>)</span>
+<span id="cb308-4600"><a href="#cb308-4600" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"cor"</span>)</span>
+<span id="cb308-4601"><a href="#cb308-4601" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(configuralInvariance_fit, <span class="at">type =</span> <span class="st">"standardized"</span>)</span>
+<span id="cb308-4602"><a href="#cb308-4602" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4603"><a href="#cb308-4603" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4604"><a href="#cb308-4604" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine modification indices:</span>
+<span id="cb308-4605"><a href="#cb308-4605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4608"><a href="#cb308-4608" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4609"><a href="#cb308-4609" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(configuralInvariance_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb308-4610"><a href="#cb308-4610" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4611"><a href="#cb308-4611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4612"><a href="#cb308-4612" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Examine fit indices:</span>
+<span id="cb308-4613"><a href="#cb308-4613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4616"><a href="#cb308-4616" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4617"><a href="#cb308-4617" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(configuralInvariance_fit)</span>
+<span id="cb308-4618"><a href="#cb308-4618" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb308-4619"><a href="#cb308-4619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4620"><a href="#cb308-4620" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb308-4621"><a href="#cb308-4621" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4624"><a href="#cb308-4624" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb308-4625"><a href="#cb308-4625" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb308-4626"><a href="#cb308-4626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4627"><a href="#cb308-4627" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb308-4628"><a href="#cb308-4628" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
