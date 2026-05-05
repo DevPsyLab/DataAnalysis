@@ -92,13 +92,17 @@ Adapted from <https://osf.io/2y67f/files/q2prk>
         - `variable ~ 1`
         - To center a variable, you can set its intercept to 0:
             - `variable ~~ 0*1`
+- `LABEL*variable` provides a user-specified label to the parameter
+    - any parameters that are given the same label will be fixed to be the same
+    - any parameters that are given different labels will be allowed to differ
 
 Factor loadings for reflective latent factors:
 
 ```r
 latent1 ~ x1 + x2 + x3
 latent2 ~ label1*x1 + label2*x2 + label3*x3 # parameter labels
-latent1 ~ NA*x1 + x2 + x3 # free factor loading of first indicator (it is set to 1 by default)
+latent3 ~ label1*x1 + label1*x2 # constrain two parameters (factor loadings) to be the same using a common parameter label
+latent4 ~ NA*x1 + x2 + x3 # free factor loading of first indicator (it is set to 1 by default)
 ```
 
 Factor loadings for formative latent factors:
@@ -106,7 +110,8 @@ Factor loadings for formative latent factors:
 ```r
 latent1 <~ x1 + x2 + x3
 latent2 <~ label1*x1 + label2*x2 + label3*x3 # parameter labels
-latent3 <~ 1*x4 # fix factor loading to 1
+latent3 <~ label1*x1 + label1*x2 # constrain two parameters (factor loadings) to be the same using a common parameter label
+latent4 <~ 1*x4 # fix factor loading to 1
 ```
 
 Regression paths:
@@ -114,7 +119,8 @@ Regression paths:
 ```r
 y1 ~ x1 + x2
 y2 ~ label1*x1 + label2*x2 # parameter labels
-y3 ~ 1*x1 # fix regression path to 1
+y3 ~ label1*x1 + label1*x2 # constrain two parameters (regression coefficients) to be the same using a common parameter label
+y4 ~ 1*x1 # fix regression path to 1
 ```
 
 Covariance paths:
@@ -122,6 +128,7 @@ Covariance paths:
 ```r
 y1 ~~ y2
 x1 ~~ label1*x2 # parameter labels
+x1 ~~ label1*x2; x3 ~~ label1*x4 # constrain two parameters (covariances) to be the same using a common parameter label
 y1 + y2 ~~ x1 + x2 # allow everything on the left side to be associated with everything on the right side
 x1 ~~ 0*x2 # fix covariance to 0 (uncorrelated)
 ```
@@ -131,6 +138,7 @@ Variances:
 ```r
 y1 ~~ y1
 y2 ~~ label1*y2  # parameter labels
+y2 ~~ label1*y2; y3 ~~ label1*y3 # constrain two parameters (variances) to be the same using a common parameter label
 x1 ~~ 1*x1 # fix variance to 1
 ```
 
@@ -139,6 +147,7 @@ Intercepts:
 ```r
 y1 ~~ 1
 y2 ~~ label1*1 # parameter labels
+y2 ~~ label1*1; y3 ~~ label1*1 # constrain two parameters (intercepts) to be the same using a common parameter label
 x1 ~~ 0*1 # fix intercept to 0
 ```
 
