@@ -168,6 +168,15 @@ latent1 ~ c(label1a, label1b)*x1 + c(label2a, label2b)*x2 + c(label3a, label3b)*
 latent2 ~ c(label1, label1)*x1 + c(label2, label2)*x2 + c(label3, label3)*x3 # constrain parameters to be the same across groups
 ```
 
+Constraints:
+
+```r
+b1 == 0
+b2 > 0
+b3 == (b1 + b2)^2
+b4 > exp(b2 + b3)
+```
+
 # Plot Observed Growth Curves
 
 ## Spaghetti Plot
