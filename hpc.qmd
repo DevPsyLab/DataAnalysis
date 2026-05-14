@@ -576,7 +576,7 @@ module load r/4.2.2_gcc-9.5.0
 Rscript ./Analyses/factorScores.R
 ```
 
-### qsub options
+### qsub options {#sec-qsubOptions}
 
 `-pe smp 4`: specify a parallel environment and number of slots (CPU cores) to be used (`smp` = shared memory parallel environment); increasing the number of slots increases the memory available for the job.
 If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the `mf` and `h_vmem` flags, below).
@@ -847,7 +847,35 @@ Makevars:
 
 `\\data.hpc.uiowa.edu\argon_home\.R\Makevars`
 
+
+
 # Troubleshooting
+
+## Running out of Memory {#sec-outOfMemory}
+
+May need to request more memory, either by requesting more slots (to ensure more memory; i.e., `-pe smp <SLOTS>`), by increasing how much memory is available for the node at the moment your job starts (i.e., `mf=<SIZE>`), and/or by increasing the hard limit for virtual memory (i.e., `h_vmem=<SIZE>`); see @sec-qsubOptions.
+
+To see how much memory was used by a killed job, run `qacct -j JOBID` ad look at: `maxvmem`.
+
+## `job [NUMBER] died through signal TERM (15)`
+
+May have run out of memory.
+See @sec-outOfMemory.
+
+## `job [NUMBER] died through signal KILL (9)`
+
+May have run out of memory.
+See @sec-outOfMemory.
+
+## Exit Status: 143
+
+May have run out of memory.
+See @sec-outOfMemory.
+
+## Exit Status: 137
+
+May have run out of memory.
+See @sec-outOfMemory.
 
 ## Having trouble installing packages?
 
