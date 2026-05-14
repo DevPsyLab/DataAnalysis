@@ -108,7 +108,32 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="styles.css">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="includes/custom.css">
 <link rel="stylesheet" href="font/css/roboto.css">
 </head>
@@ -1223,7 +1248,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> ./Analyses/factorScores.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="qsub-options" class="level3" data-number="8.3.3"><h3 data-number="8.3.3" class="anchored" data-anchor-id="qsub-options">
 <span class="header-section-number">8.3.3</span> qsub options</h3>
-<p><code>-pe smp 4</code>: specify a parallel environment and number of cores to be used (<code>smp</code> = shared memory parallel environment)</p>
+<p><code>-pe smp 4</code>: specify a parallel environment and number of slots (CPU cores) to be used (<code>smp</code> = shared memory parallel environment); increasing the number of slots increases the memory available for the job. If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the <code>mf</code> and <code>h_vmem</code> flags, below). You can estimate the memory available per slot by dividing a node’s total memory by its total core count. You can find the specific configurations for each node type on the wiki: <a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies" class="uri">https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies</a> For instance, if you are using the UI queue that has 512GB of memory spread across 128 cores, each core comes with 4GB of memory (i.e., <span class="math inline">\(512 / 128 = 4\)</span>). Thus, if your job needs 20GB of memory, you would need to request at least 5 cores (i.e., <span class="math inline">\(20 / 4 = 5\)</span>).</p>
 <ul>
 <li>The <code>OMP_NUM_THREADS</code> variable is set to ‘1’ by default. If your code can take advantage of the threading then specify <code>OMP_NUM_THREADS</code> to be equal to the number of job cores per node requested.</li>
 </ul>
@@ -1241,8 +1266,8 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <li>
 <code>n</code> = no mail is sent</li>
 </ul>
-<p><code>-l mf=512G</code>: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)</p>
-<p><code>-l h_vmem=512G</code>: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time. It is not a limit.)</p>
+<p><code>-l mf=512G</code>: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.) The <code>mem_free</code> flag tells the scheduler to find a node that has at least that much memory available at the moment your job starts. However, it does not reserve or lock that memory for your job’s exclusive use while it is running. To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., <code>-pe smp &lt;slots&gt;</code>).</p>
+<p><code>-l h_vmem=512G</code>: request the maximum quantity of virtual memory you expect to need; <code>h_vmem</code> is a hard limit. It acts as a ceiling. If your job exceeds this amount of memory, the system will terminate the process to protect the node’s stability. However, it does not reserve or lock that memory for your job’s exclusive use while it is running. To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., <code>-pe smp &lt;slots&gt;</code>).</p>
 <p><code>-cwd</code>: Determines whether the job will be executed from the current working directory. If not specified, the job will be run from your home directory.</p>
 <p><code>-q UI-HM</code>: specify queue</p>
 <p><code>-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/</code>: Name of a file or directory for standard error.</p>
@@ -2662,470 +2687,480 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb62-578"><a href="#cb62-578" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-579"><a href="#cb62-579" aria-hidden="true" tabindex="-1"></a><span class="fu">### qsub options</span></span>
 <span id="cb62-580"><a href="#cb62-580" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-581"><a href="#cb62-581" aria-hidden="true" tabindex="-1"></a><span class="in">`-pe smp 4`</span>: specify a parallel environment and number of cores to be used (<span class="in">`smp`</span> = shared memory parallel environment)</span>
-<span id="cb62-582"><a href="#cb62-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-583"><a href="#cb62-583" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The <span class="in">`OMP_NUM_THREADS`</span> variable is set to '1' by default.</span>
-<span id="cb62-584"><a href="#cb62-584" aria-hidden="true" tabindex="-1"></a>If your code can take advantage of the threading then specify <span class="in">`OMP_NUM_THREADS`</span> to be equal to the number of job cores per node requested.</span>
-<span id="cb62-585"><a href="#cb62-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-586"><a href="#cb62-586" aria-hidden="true" tabindex="-1"></a><span class="in">`-M isaac-t-petersen@uiowa.edu`</span>: Set the email address to receive email about jobs.</span>
-<span id="cb62-587"><a href="#cb62-587" aria-hidden="true" tabindex="-1"></a>This must be your University of Iowa email address.</span>
-<span id="cb62-588"><a href="#cb62-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-589"><a href="#cb62-589" aria-hidden="true" tabindex="-1"></a><span class="in">`-m eas`</span>: Specify when to send an email message (; ; ; ; )</span>
+<span id="cb62-581"><a href="#cb62-581" aria-hidden="true" tabindex="-1"></a><span class="in">`-pe smp 4`</span>: specify a parallel environment and number of slots (CPU cores) to be used (<span class="in">`smp`</span> = shared memory parallel environment); increasing the number of slots increases the memory available for the job.</span>
+<span id="cb62-582"><a href="#cb62-582" aria-hidden="true" tabindex="-1"></a>If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the <span class="in">`mf`</span> and <span class="in">`h_vmem`</span> flags, below).</span>
+<span id="cb62-583"><a href="#cb62-583" aria-hidden="true" tabindex="-1"></a>You can estimate the memory available per slot by dividing a node's total memory by its total core count.</span>
+<span id="cb62-584"><a href="#cb62-584" aria-hidden="true" tabindex="-1"></a>You can find the specific configurations for each node type on the wiki: <span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies&gt;</span></span>
+<span id="cb62-585"><a href="#cb62-585" aria-hidden="true" tabindex="-1"></a>For instance, if you are using the UI queue that has 512GB of memory spread across 128 cores, each core comes with 4GB of memory (i.e., $512 / 128 = 4$).</span>
+<span id="cb62-586"><a href="#cb62-586" aria-hidden="true" tabindex="-1"></a>Thus, if your job needs 20GB of memory, you would need to request at least 5 cores (i.e., $20 / 4 = 5$).</span>
+<span id="cb62-587"><a href="#cb62-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-588"><a href="#cb62-588" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The <span class="in">`OMP_NUM_THREADS`</span> variable is set to '1' by default.</span>
+<span id="cb62-589"><a href="#cb62-589" aria-hidden="true" tabindex="-1"></a>If your code can take advantage of the threading then specify <span class="in">`OMP_NUM_THREADS`</span> to be equal to the number of job cores per node requested.</span>
 <span id="cb62-590"><a href="#cb62-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-591"><a href="#cb62-591" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`b`</span> = beginning of job</span>
-<span id="cb62-592"><a href="#cb62-592" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`e`</span> = end of job</span>
-<span id="cb62-593"><a href="#cb62-593" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`a`</span> = when job is aborted</span>
-<span id="cb62-594"><a href="#cb62-594" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`s`</span> = when job is suspended</span>
-<span id="cb62-595"><a href="#cb62-595" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n`</span> = no mail is sent</span>
-<span id="cb62-596"><a href="#cb62-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-597"><a href="#cb62-597" aria-hidden="true" tabindex="-1"></a><span class="in">`-l mf=512G`</span>: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.</span>
-<span id="cb62-598"><a href="#cb62-598" aria-hidden="true" tabindex="-1"></a>It is not a limit.)</span>
-<span id="cb62-599"><a href="#cb62-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-600"><a href="#cb62-600" aria-hidden="true" tabindex="-1"></a><span class="in">`-l h_vmem=512G`</span>: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.</span>
-<span id="cb62-601"><a href="#cb62-601" aria-hidden="true" tabindex="-1"></a>It is not a limit.)</span>
-<span id="cb62-602"><a href="#cb62-602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-603"><a href="#cb62-603" aria-hidden="true" tabindex="-1"></a><span class="in">`-cwd`</span>: Determines whether the job will be executed from the current working directory.</span>
-<span id="cb62-604"><a href="#cb62-604" aria-hidden="true" tabindex="-1"></a>If not specified, the job will be run from your home directory.</span>
-<span id="cb62-605"><a href="#cb62-605" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-606"><a href="#cb62-606" aria-hidden="true" tabindex="-1"></a><span class="in">`-q UI-HM`</span>: specify queue</span>
-<span id="cb62-607"><a href="#cb62-607" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-608"><a href="#cb62-608" aria-hidden="true" tabindex="-1"></a><span class="in">`-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`</span>: Name of a file or directory for standard error.</span>
-<span id="cb62-609"><a href="#cb62-609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-610"><a href="#cb62-610" aria-hidden="true" tabindex="-1"></a><span class="in">`-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`</span>: Name of a file or directory for standard output.</span>
-<span id="cb62-611"><a href="#cb62-611" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-612"><a href="#cb62-612" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submit Job</span></span>
-<span id="cb62-613"><a href="#cb62-613" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-614"><a href="#cb62-614" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/2SS2-LEJR&gt;</span>)</span>
+<span id="cb62-591"><a href="#cb62-591" aria-hidden="true" tabindex="-1"></a><span class="in">`-M isaac-t-petersen@uiowa.edu`</span>: Set the email address to receive email about jobs.</span>
+<span id="cb62-592"><a href="#cb62-592" aria-hidden="true" tabindex="-1"></a>This must be your University of Iowa email address.</span>
+<span id="cb62-593"><a href="#cb62-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-594"><a href="#cb62-594" aria-hidden="true" tabindex="-1"></a><span class="in">`-m eas`</span>: Specify when to send an email message (; ; ; ; )</span>
+<span id="cb62-595"><a href="#cb62-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-596"><a href="#cb62-596" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`b`</span> = beginning of job</span>
+<span id="cb62-597"><a href="#cb62-597" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`e`</span> = end of job</span>
+<span id="cb62-598"><a href="#cb62-598" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`a`</span> = when job is aborted</span>
+<span id="cb62-599"><a href="#cb62-599" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`s`</span> = when job is suspended</span>
+<span id="cb62-600"><a href="#cb62-600" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`n`</span> = no mail is sent</span>
+<span id="cb62-601"><a href="#cb62-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-602"><a href="#cb62-602" aria-hidden="true" tabindex="-1"></a><span class="in">`-l mf=512G`</span>: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.)</span>
+<span id="cb62-603"><a href="#cb62-603" aria-hidden="true" tabindex="-1"></a>The <span class="in">`mem_free`</span> flag tells the scheduler to find a node that has at least that much memory available at the moment your job starts.</span>
+<span id="cb62-604"><a href="#cb62-604" aria-hidden="true" tabindex="-1"></a>However, it does not reserve or lock that memory for your job's exclusive use while it is running.</span>
+<span id="cb62-605"><a href="#cb62-605" aria-hidden="true" tabindex="-1"></a>To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., <span class="in">`-pe smp &lt;slots&gt;`</span>).</span>
+<span id="cb62-606"><a href="#cb62-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-607"><a href="#cb62-607" aria-hidden="true" tabindex="-1"></a><span class="in">`-l h_vmem=512G`</span>: request the maximum quantity of virtual memory you expect to need; <span class="in">`h_vmem`</span> is a hard limit.</span>
+<span id="cb62-608"><a href="#cb62-608" aria-hidden="true" tabindex="-1"></a>It acts as a ceiling.</span>
+<span id="cb62-609"><a href="#cb62-609" aria-hidden="true" tabindex="-1"></a>If your job exceeds this amount of memory, the system will terminate the process to protect the node's stability.</span>
+<span id="cb62-610"><a href="#cb62-610" aria-hidden="true" tabindex="-1"></a>However, it does not reserve or lock that memory for your job's exclusive use while it is running.</span>
+<span id="cb62-611"><a href="#cb62-611" aria-hidden="true" tabindex="-1"></a>To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., <span class="in">`-pe smp &lt;slots&gt;`</span>).</span>
+<span id="cb62-612"><a href="#cb62-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-613"><a href="#cb62-613" aria-hidden="true" tabindex="-1"></a><span class="in">`-cwd`</span>: Determines whether the job will be executed from the current working directory.</span>
+<span id="cb62-614"><a href="#cb62-614" aria-hidden="true" tabindex="-1"></a>If not specified, the job will be run from your home directory.</span>
 <span id="cb62-615"><a href="#cb62-615" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-616"><a href="#cb62-616" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/8H6G-2M2F&gt;</span>)</span>
+<span id="cb62-616"><a href="#cb62-616" aria-hidden="true" tabindex="-1"></a><span class="in">`-q UI-HM`</span>: specify queue</span>
 <span id="cb62-617"><a href="#cb62-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-618"><a href="#cb62-618" aria-hidden="true" tabindex="-1"></a><span class="in">`cd path/to/dataSet123`</span></span>
+<span id="cb62-618"><a href="#cb62-618" aria-hidden="true" tabindex="-1"></a><span class="in">`-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`</span>: Name of a file or directory for standard error.</span>
 <span id="cb62-619"><a href="#cb62-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-620"><a href="#cb62-620" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">cd /Users/itpetersen/Documents/Projects/Test/Jobs</span><span class="co">]</span></span>
+<span id="cb62-620"><a href="#cb62-620" aria-hidden="true" tabindex="-1"></a><span class="in">`-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`</span>: Name of a file or directory for standard output.</span>
 <span id="cb62-621"><a href="#cb62-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-622"><a href="#cb62-622" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub myscript.job`</span></span>
+<span id="cb62-622"><a href="#cb62-622" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submit Job</span></span>
 <span id="cb62-623"><a href="#cb62-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-624"><a href="#cb62-624" aria-hidden="true" tabindex="-1"></a>Job dependency (run <span class="in">`Job B`</span> when <span class="in">`Job A`</span> is finished):</span>
+<span id="cb62-624"><a href="#cb62-624" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/2SS2-LEJR&gt;</span>)</span>
 <span id="cb62-625"><a href="#cb62-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-626"><a href="#cb62-626" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub -hold_jid JOB_ID test_B.job`</span></span>
+<span id="cb62-626"><a href="#cb62-626" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/8H6G-2M2F&gt;</span>)</span>
 <span id="cb62-627"><a href="#cb62-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-628"><a href="#cb62-628" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bayesian IRT</span></span>
+<span id="cb62-628"><a href="#cb62-628" aria-hidden="true" tabindex="-1"></a><span class="in">`cd path/to/dataSet123`</span></span>
 <span id="cb62-629"><a href="#cb62-629" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-630"><a href="#cb62-630" aria-hidden="true" tabindex="-1"></a><span class="in">`cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs`</span></span>
+<span id="cb62-630"><a href="#cb62-630" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">cd /Users/itpetersen/Documents/Projects/Test/Jobs</span><span class="co">]</span></span>
 <span id="cb62-631"><a href="#cb62-631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-632"><a href="#cb62-632" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub bayesianIRT.job`</span></span>
+<span id="cb62-632"><a href="#cb62-632" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub myscript.job`</span></span>
 <span id="cb62-633"><a href="#cb62-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-634"><a href="#cb62-634" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub -hold_jid JOB_ID factorScores.job`</span></span>
+<span id="cb62-634"><a href="#cb62-634" aria-hidden="true" tabindex="-1"></a>Job dependency (run <span class="in">`Job B`</span> when <span class="in">`Job A`</span> is finished):</span>
 <span id="cb62-635"><a href="#cb62-635" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-636"><a href="#cb62-636" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple Imputation</span></span>
+<span id="cb62-636"><a href="#cb62-636" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub -hold_jid JOB_ID test_B.job`</span></span>
 <span id="cb62-637"><a href="#cb62-637" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-638"><a href="#cb62-638" aria-hidden="true" tabindex="-1"></a><span class="in">`cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs`</span></span>
+<span id="cb62-638"><a href="#cb62-638" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bayesian IRT</span></span>
 <span id="cb62-639"><a href="#cb62-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-640"><a href="#cb62-640" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub srs_selfRegulation.R`</span></span>
+<span id="cb62-640"><a href="#cb62-640" aria-hidden="true" tabindex="-1"></a><span class="in">`cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs`</span></span>
 <span id="cb62-641"><a href="#cb62-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-642"><a href="#cb62-642" aria-hidden="true" tabindex="-1"></a><span class="fu">## Queues</span></span>
+<span id="cb62-642"><a href="#cb62-642" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub bayesianIRT.job`</span></span>
 <span id="cb62-643"><a href="#cb62-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-644"><a href="#cb62-644" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/UUR7-XLBZ&gt;</span>)</span>
+<span id="cb62-644"><a href="#cb62-644" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub -hold_jid JOB_ID factorScores.job`</span></span>
 <span id="cb62-645"><a href="#cb62-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-646"><a href="#cb62-646" aria-hidden="true" tabindex="-1"></a><span class="in">`UI`</span></span>
+<span id="cb62-646"><a href="#cb62-646" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple Imputation</span></span>
 <span id="cb62-647"><a href="#cb62-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-648"><a href="#cb62-648" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-HM`</span></span>
+<span id="cb62-648"><a href="#cb62-648" aria-hidden="true" tabindex="-1"></a><span class="in">`cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs`</span></span>
 <span id="cb62-649"><a href="#cb62-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-650"><a href="#cb62-650" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-GPU-HM`</span></span>
+<span id="cb62-650"><a href="#cb62-650" aria-hidden="true" tabindex="-1"></a><span class="in">`qsub srs_selfRegulation.R`</span></span>
 <span id="cb62-651"><a href="#cb62-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-652"><a href="#cb62-652" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-DEVELOP`</span></span>
+<span id="cb62-652"><a href="#cb62-652" aria-hidden="true" tabindex="-1"></a><span class="fu">## Queues</span></span>
 <span id="cb62-653"><a href="#cb62-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-654"><a href="#cb62-654" aria-hidden="true" tabindex="-1"></a><span class="in">`all.q`</span></span>
+<span id="cb62-654"><a href="#cb62-654" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/UUR7-XLBZ&gt;</span>)</span>
 <span id="cb62-655"><a href="#cb62-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-656"><a href="#cb62-656" aria-hidden="true" tabindex="-1"></a><span class="fu">## Queue Status</span></span>
+<span id="cb62-656"><a href="#cb62-656" aria-hidden="true" tabindex="-1"></a><span class="in">`UI`</span></span>
 <span id="cb62-657"><a href="#cb62-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-658"><a href="#cb62-658" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c`</span></span>
+<span id="cb62-658"><a href="#cb62-658" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-HM`</span></span>
 <span id="cb62-659"><a href="#cb62-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-660"><a href="#cb62-660" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c -q QUEUE_NAME`</span></span>
+<span id="cb62-660"><a href="#cb62-660" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-GPU-HM`</span></span>
 <span id="cb62-661"><a href="#cb62-661" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-662"><a href="#cb62-662" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c -q UI`</span></span>
+<span id="cb62-662"><a href="#cb62-662" aria-hidden="true" tabindex="-1"></a><span class="in">`UI-DEVELOP`</span></span>
 <span id="cb62-663"><a href="#cb62-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-664"><a href="#cb62-664" aria-hidden="true" tabindex="-1"></a><span class="fu">## Job Status</span></span>
+<span id="cb62-664"><a href="#cb62-664" aria-hidden="true" tabindex="-1"></a><span class="in">`all.q`</span></span>
 <span id="cb62-665"><a href="#cb62-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-666"><a href="#cb62-666" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -u itpetersen`</span></span>
+<span id="cb62-666"><a href="#cb62-666" aria-hidden="true" tabindex="-1"></a><span class="fu">## Queue Status</span></span>
 <span id="cb62-667"><a href="#cb62-667" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-668"><a href="#cb62-668" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -j JOB_ID`</span></span>
+<span id="cb62-668"><a href="#cb62-668" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c`</span></span>
 <span id="cb62-669"><a href="#cb62-669" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-670"><a href="#cb62-670" aria-hidden="true" tabindex="-1"></a><span class="fu">## Job Time and Memory</span></span>
+<span id="cb62-670"><a href="#cb62-670" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c -q QUEUE_NAME`</span></span>
 <span id="cb62-671"><a href="#cb62-671" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-672"><a href="#cb62-672" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Terminated jobs: <span class="in">`qacct -j JOB_ID`</span></span>
-<span id="cb62-673"><a href="#cb62-673" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Jobs in progress: <span class="in">`qstat -j JOB_ID | grep usage`</span></span>
-<span id="cb62-674"><a href="#cb62-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-675"><a href="#cb62-675" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cancel Job</span></span>
-<span id="cb62-676"><a href="#cb62-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-677"><a href="#cb62-677" aria-hidden="true" tabindex="-1"></a><span class="in">`qdel JOB_ID`</span></span>
-<span id="cb62-678"><a href="#cb62-678" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-679"><a href="#cb62-679" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run `R` Script</span></span>
-<span id="cb62-680"><a href="#cb62-680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-681"><a href="#cb62-681" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-runRscript)</span></span>
-<span id="cb62-682"><a href="#cb62-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-683"><a href="#cb62-683" aria-hidden="true" tabindex="-1"></a><span class="fu"># R</span></span>
+<span id="cb62-672"><a href="#cb62-672" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -g c -q UI`</span></span>
+<span id="cb62-673"><a href="#cb62-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-674"><a href="#cb62-674" aria-hidden="true" tabindex="-1"></a><span class="fu">## Job Status</span></span>
+<span id="cb62-675"><a href="#cb62-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-676"><a href="#cb62-676" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -u itpetersen`</span></span>
+<span id="cb62-677"><a href="#cb62-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-678"><a href="#cb62-678" aria-hidden="true" tabindex="-1"></a><span class="in">`qstat -j JOB_ID`</span></span>
+<span id="cb62-679"><a href="#cb62-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-680"><a href="#cb62-680" aria-hidden="true" tabindex="-1"></a><span class="fu">## Job Time and Memory</span></span>
+<span id="cb62-681"><a href="#cb62-681" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-682"><a href="#cb62-682" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Terminated jobs: <span class="in">`qacct -j JOB_ID`</span></span>
+<span id="cb62-683"><a href="#cb62-683" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Jobs in progress: <span class="in">`qstat -j JOB_ID | grep usage`</span></span>
 <span id="cb62-684"><a href="#cb62-684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-685"><a href="#cb62-685" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/99JQ-43ZG&gt;</span>)</span>
+<span id="cb62-685"><a href="#cb62-685" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cancel Job</span></span>
 <span id="cb62-686"><a href="#cb62-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-687"><a href="#cb62-687" aria-hidden="true" tabindex="-1"></a><span class="fu">## Find which versions of `R` are installed</span></span>
+<span id="cb62-687"><a href="#cb62-687" aria-hidden="true" tabindex="-1"></a><span class="in">`qdel JOB_ID`</span></span>
 <span id="cb62-688"><a href="#cb62-688" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-689"><a href="#cb62-689" aria-hidden="true" tabindex="-1"></a><span class="in">`module spider R`</span></span>
+<span id="cb62-689"><a href="#cb62-689" aria-hidden="true" tabindex="-1"></a><span class="fu">## Run `R` Script</span></span>
 <span id="cb62-690"><a href="#cb62-690" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-691"><a href="#cb62-691" aria-hidden="true" tabindex="-1"></a>But, there may be more recent version of <span class="in">`R`</span> installed in the "Additional Software Stacks" (<span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/WJ4Q-GDUS&gt;</span>)</span>
+<span id="cb62-691"><a href="#cb62-691" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-runRscript)</span></span>
 <span id="cb62-692"><a href="#cb62-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-693"><a href="#cb62-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compile `R`</span></span>
+<span id="cb62-693"><a href="#cb62-693" aria-hidden="true" tabindex="-1"></a><span class="fu"># R</span></span>
 <span id="cb62-694"><a href="#cb62-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-695"><a href="#cb62-695" aria-hidden="true" tabindex="-1"></a>If you want to compile a more recent version of <span class="in">`R`</span> than is available in the software stacks, see <span class="co">[</span><span class="ot">here</span><span class="co">](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/)</span> (archived at <span class="ot">&lt;https://perma.cc/C6EX-EZL4&gt;</span>).</span>
-<span id="cb62-696"><a href="#cb62-696" aria-hidden="true" tabindex="-1"></a>However, we now compile the most recent version of <span class="in">`R`</span> (and packages) using a <span class="co">[</span><span class="ot">container</span><span class="co">](#sec-container)</span>.</span>
-<span id="cb62-697"><a href="#cb62-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-698"><a href="#cb62-698" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install `R` packages</span></span>
-<span id="cb62-699"><a href="#cb62-699" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-700"><a href="#cb62-700" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3SRR-2JE7&gt;</span>)</span>
-<span id="cb62-701"><a href="#cb62-701" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-702"><a href="#cb62-702" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>first load the <span class="in">`R`</span> environment module</span>
-<span id="cb62-703"><a href="#cb62-703" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`module load r/4.2.2_gcc-9.5.0`</span></span>
-<span id="cb62-704"><a href="#cb62-704" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>launch R</span>
-<span id="cb62-705"><a href="#cb62-705" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`R`</span></span>
-<span id="cb62-706"><a href="#cb62-706" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>then install the package, (the code below uses a generic <span class="in">`package_name`</span>):</span>
-<span id="cb62-707"><a href="#cb62-707" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`</span></span>
-<span id="cb62-708"><a href="#cb62-708" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>If using <span class="in">`packrat`</span>, it is preferable to install packages by source, if possible, but you can remove <span class="in">`type = source`</span> if you want to install binaries</span>
-<span id="cb62-709"><a href="#cb62-709" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Assuming that you do not have a personal library directory you will see</span>
-<span id="cb62-710"><a href="#cb62-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-711"><a href="#cb62-711" aria-hidden="true" tabindex="-1"></a>    <span class="in">```r</span></span>
-<span id="cb62-712"><a href="#cb62-712" aria-hidden="true" tabindex="-1"></a>    Warning <span class="cf">in</span> <span class="fu">install.packages</span>(<span class="st">"package_name"</span>, <span class="at">repos =</span> <span class="st">"http://cran.r-project.org"</span>) <span class="sc">:</span></span>
-<span id="cb62-713"><a href="#cb62-713" aria-hidden="true" tabindex="-1"></a>    lib <span class="ot">=</span> <span class="st">"/opt/R/3.0.2/lib64/R/library"' is not writable</span></span>
-<span id="cb62-714"><a href="#cb62-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-715"><a href="#cb62-715" aria-hidden="true" tabindex="-1"></a><span class="st">    Would you like to use a personal library instead?  (y/n)</span></span>
-<span id="cb62-716"><a href="#cb62-716" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-717"><a href="#cb62-717" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-718"><a href="#cb62-718" aria-hidden="true" tabindex="-1"></a><span class="st">1. Select `y`</span></span>
-<span id="cb62-719"><a href="#cb62-719" aria-hidden="true" tabindex="-1"></a><span class="st">1. Select `y` again when prompted to create the directory; your package should download and install into your personal library directory</span></span>
+<span id="cb62-695"><a href="#cb62-695" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/99JQ-43ZG&gt;</span>)</span>
+<span id="cb62-696"><a href="#cb62-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-697"><a href="#cb62-697" aria-hidden="true" tabindex="-1"></a><span class="fu">## Find which versions of `R` are installed</span></span>
+<span id="cb62-698"><a href="#cb62-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-699"><a href="#cb62-699" aria-hidden="true" tabindex="-1"></a><span class="in">`module spider R`</span></span>
+<span id="cb62-700"><a href="#cb62-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-701"><a href="#cb62-701" aria-hidden="true" tabindex="-1"></a>But, there may be more recent version of <span class="in">`R`</span> installed in the "Additional Software Stacks" (<span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List&gt;</span>; archived at <span class="ot">&lt;https://perma.cc/WJ4Q-GDUS&gt;</span>)</span>
+<span id="cb62-702"><a href="#cb62-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-703"><a href="#cb62-703" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compile `R`</span></span>
+<span id="cb62-704"><a href="#cb62-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-705"><a href="#cb62-705" aria-hidden="true" tabindex="-1"></a>If you want to compile a more recent version of <span class="in">`R`</span> than is available in the software stacks, see <span class="co">[</span><span class="ot">here</span><span class="co">](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/)</span> (archived at <span class="ot">&lt;https://perma.cc/C6EX-EZL4&gt;</span>).</span>
+<span id="cb62-706"><a href="#cb62-706" aria-hidden="true" tabindex="-1"></a>However, we now compile the most recent version of <span class="in">`R`</span> (and packages) using a <span class="co">[</span><span class="ot">container</span><span class="co">](#sec-container)</span>.</span>
+<span id="cb62-707"><a href="#cb62-707" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-708"><a href="#cb62-708" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install `R` packages</span></span>
+<span id="cb62-709"><a href="#cb62-709" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-710"><a href="#cb62-710" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3SRR-2JE7&gt;</span>)</span>
+<span id="cb62-711"><a href="#cb62-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-712"><a href="#cb62-712" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>first load the <span class="in">`R`</span> environment module</span>
+<span id="cb62-713"><a href="#cb62-713" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`module load r/4.2.2_gcc-9.5.0`</span></span>
+<span id="cb62-714"><a href="#cb62-714" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>launch R</span>
+<span id="cb62-715"><a href="#cb62-715" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`R`</span></span>
+<span id="cb62-716"><a href="#cb62-716" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>then install the package, (the code below uses a generic <span class="in">`package_name`</span>):</span>
+<span id="cb62-717"><a href="#cb62-717" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`</span></span>
+<span id="cb62-718"><a href="#cb62-718" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>If using <span class="in">`packrat`</span>, it is preferable to install packages by source, if possible, but you can remove <span class="in">`type = source`</span> if you want to install binaries</span>
+<span id="cb62-719"><a href="#cb62-719" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Assuming that you do not have a personal library directory you will see</span>
 <span id="cb62-720"><a href="#cb62-720" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-721"><a href="#cb62-721" aria-hidden="true" tabindex="-1"></a><span class="st">Example:</span></span>
-<span id="cb62-722"><a href="#cb62-722" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-725"><a href="#cb62-725" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-726"><a href="#cb62-726" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
+<span id="cb62-721"><a href="#cb62-721" aria-hidden="true" tabindex="-1"></a>    <span class="in">```r</span></span>
+<span id="cb62-722"><a href="#cb62-722" aria-hidden="true" tabindex="-1"></a>    Warning <span class="cf">in</span> <span class="fu">install.packages</span>(<span class="st">"package_name"</span>, <span class="at">repos =</span> <span class="st">"http://cran.r-project.org"</span>) <span class="sc">:</span></span>
+<span id="cb62-723"><a href="#cb62-723" aria-hidden="true" tabindex="-1"></a>    lib <span class="ot">=</span> <span class="st">"/opt/R/3.0.2/lib64/R/library"' is not writable</span></span>
+<span id="cb62-724"><a href="#cb62-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-725"><a href="#cb62-725" aria-hidden="true" tabindex="-1"></a><span class="st">    Would you like to use a personal library instead?  (y/n)</span></span>
+<span id="cb62-726"><a href="#cb62-726" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
 <span id="cb62-727"><a href="#cb62-727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-728"><a href="#cb62-728" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(c(</span></span>
-<span id="cb62-729"><a href="#cb62-729" aria-hidden="true" tabindex="-1"></a><span class="st">    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),</span></span>
-<span id="cb62-730"><a href="#cb62-730" aria-hidden="true" tabindex="-1"></a><span class="st">    repos = "http://cran.r-project.org",</span></span>
-<span id="cb62-731"><a href="#cb62-731" aria-hidden="true" tabindex="-1"></a><span class="st">    dependencies = TRUE,</span></span>
-<span id="cb62-732"><a href="#cb62-732" aria-hidden="true" tabindex="-1"></a><span class="st">    Ncpus = 40)</span></span>
-<span id="cb62-733"><a href="#cb62-733" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-734"><a href="#cb62-734" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-735"><a href="#cb62-735" aria-hidden="true" tabindex="-1"></a><span class="st">### Install `R` package locally from source</span></span>
-<span id="cb62-736"><a href="#cb62-736" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-737"><a href="#cb62-737" aria-hidden="true" tabindex="-1"></a><span class="st">`install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)`</span></span>
-<span id="cb62-738"><a href="#cb62-738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-739"><a href="#cb62-739" aria-hidden="true" tabindex="-1"></a><span class="st">Example:</span></span>
-<span id="cb62-740"><a href="#cb62-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-743"><a href="#cb62-743" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-744"><a href="#cb62-744" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
-<span id="cb62-745"><a href="#cb62-745" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-746"><a href="#cb62-746" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(c(</span></span>
-<span id="cb62-747"><a href="#cb62-747" aria-hidden="true" tabindex="-1"></a><span class="st">    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),</span></span>
-<span id="cb62-748"><a href="#cb62-748" aria-hidden="true" tabindex="-1"></a><span class="st">    repos = "http://cran.r-project.org",</span></span>
-<span id="cb62-749"><a href="#cb62-749" aria-hidden="true" tabindex="-1"></a><span class="st">    type = "source",</span></span>
-<span id="cb62-750"><a href="#cb62-750" aria-hidden="true" tabindex="-1"></a><span class="st">    dependencies = TRUE,</span></span>
-<span id="cb62-751"><a href="#cb62-751" aria-hidden="true" tabindex="-1"></a><span class="st">    Ncpus = 40)</span></span>
-<span id="cb62-752"><a href="#cb62-752" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-753"><a href="#cb62-753" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-754"><a href="#cb62-754" aria-hidden="true" tabindex="-1"></a><span class="st">### Managing packages for a project using `renv` {#sec-renv}</span></span>
+<span id="cb62-728"><a href="#cb62-728" aria-hidden="true" tabindex="-1"></a><span class="st">1. Select `y`</span></span>
+<span id="cb62-729"><a href="#cb62-729" aria-hidden="true" tabindex="-1"></a><span class="st">1. Select `y` again when prompted to create the directory; your package should download and install into your personal library directory</span></span>
+<span id="cb62-730"><a href="#cb62-730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-731"><a href="#cb62-731" aria-hidden="true" tabindex="-1"></a><span class="st">Example:</span></span>
+<span id="cb62-732"><a href="#cb62-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-735"><a href="#cb62-735" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-736"><a href="#cb62-736" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
+<span id="cb62-737"><a href="#cb62-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-738"><a href="#cb62-738" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(c(</span></span>
+<span id="cb62-739"><a href="#cb62-739" aria-hidden="true" tabindex="-1"></a><span class="st">    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),</span></span>
+<span id="cb62-740"><a href="#cb62-740" aria-hidden="true" tabindex="-1"></a><span class="st">    repos = "http://cran.r-project.org",</span></span>
+<span id="cb62-741"><a href="#cb62-741" aria-hidden="true" tabindex="-1"></a><span class="st">    dependencies = TRUE,</span></span>
+<span id="cb62-742"><a href="#cb62-742" aria-hidden="true" tabindex="-1"></a><span class="st">    Ncpus = 40)</span></span>
+<span id="cb62-743"><a href="#cb62-743" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-744"><a href="#cb62-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-745"><a href="#cb62-745" aria-hidden="true" tabindex="-1"></a><span class="st">### Install `R` package locally from source</span></span>
+<span id="cb62-746"><a href="#cb62-746" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-747"><a href="#cb62-747" aria-hidden="true" tabindex="-1"></a><span class="st">`install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)`</span></span>
+<span id="cb62-748"><a href="#cb62-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-749"><a href="#cb62-749" aria-hidden="true" tabindex="-1"></a><span class="st">Example:</span></span>
+<span id="cb62-750"><a href="#cb62-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-753"><a href="#cb62-753" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-754"><a href="#cb62-754" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
 <span id="cb62-755"><a href="#cb62-755" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-756"><a href="#cb62-756" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create a directory where you want you want to store the project.</span></span>
-<span id="cb62-757"><a href="#cb62-757" aria-hidden="true" tabindex="-1"></a><span class="st">1. `cd` to the above directory</span></span>
-<span id="cb62-758"><a href="#cb62-758" aria-hidden="true" tabindex="-1"></a><span class="st">1. Start R</span></span>
-<span id="cb62-759"><a href="#cb62-759" aria-hidden="true" tabindex="-1"></a><span class="st">1. Load the `renv` package: `library("renv")`</span></span>
-<span id="cb62-760"><a href="#cb62-760" aria-hidden="true" tabindex="-1"></a><span class="st">1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:</span></span>
-<span id="cb62-761"><a href="#cb62-761" aria-hidden="true" tabindex="-1"></a><span class="st">    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`</span></span>
-<span id="cb62-762"><a href="#cb62-762" aria-hidden="true" tabindex="-1"></a><span class="st">    - or `renv::init()` if you are in the intended working directory</span></span>
-<span id="cb62-763"><a href="#cb62-763" aria-hidden="true" tabindex="-1"></a><span class="st">1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!</span></span>
-<span id="cb62-764"><a href="#cb62-764" aria-hidden="true" tabindex="-1"></a><span class="st">1. From this point on you are working in a `renv` project.</span></span>
-<span id="cb62-765"><a href="#cb62-765" aria-hidden="true" tabindex="-1"></a><span class="st">Installed packages will go into a library within this project.</span></span>
-<span id="cb62-766"><a href="#cb62-766" aria-hidden="true" tabindex="-1"></a><span class="st">After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:</span></span>
-<span id="cb62-767"><a href="#cb62-767" aria-hidden="true" tabindex="-1"></a><span class="st">    - `renv::install("package_name")`</span></span>
-<span id="cb62-768"><a href="#cb62-768" aria-hidden="true" tabindex="-1"></a><span class="st">1. To restart a `renv` project, simply start `R` from the directory created in step (1).</span></span>
-<span id="cb62-769"><a href="#cb62-769" aria-hidden="true" tabindex="-1"></a><span class="st">The project will initialize automatically.</span></span>
-<span id="cb62-770"><a href="#cb62-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-771"><a href="#cb62-771" aria-hidden="true" tabindex="-1"></a><span class="st">To update version of `renv`: `renv::upgrade()`</span></span>
-<span id="cb62-772"><a href="#cb62-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-773"><a href="#cb62-773" aria-hidden="true" tabindex="-1"></a><span class="st">To install packages: `renv::install("package_name")`</span></span>
-<span id="cb62-774"><a href="#cb62-774" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-775"><a href="#cb62-775" aria-hidden="true" tabindex="-1"></a><span class="st">To update packages: `renv::update()`</span></span>
-<span id="cb62-776"><a href="#cb62-776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-777"><a href="#cb62-777" aria-hidden="true" tabindex="-1"></a><span class="st">To save the current state of your library: `renv::snapshot()`</span></span>
-<span id="cb62-778"><a href="#cb62-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-779"><a href="#cb62-779" aria-hidden="true" tabindex="-1"></a><span class="st">To restore the state of your library from the lock file: `renv::restore()`</span></span>
+<span id="cb62-756"><a href="#cb62-756" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(c(</span></span>
+<span id="cb62-757"><a href="#cb62-757" aria-hidden="true" tabindex="-1"></a><span class="st">    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),</span></span>
+<span id="cb62-758"><a href="#cb62-758" aria-hidden="true" tabindex="-1"></a><span class="st">    repos = "http://cran.r-project.org",</span></span>
+<span id="cb62-759"><a href="#cb62-759" aria-hidden="true" tabindex="-1"></a><span class="st">    type = "source",</span></span>
+<span id="cb62-760"><a href="#cb62-760" aria-hidden="true" tabindex="-1"></a><span class="st">    dependencies = TRUE,</span></span>
+<span id="cb62-761"><a href="#cb62-761" aria-hidden="true" tabindex="-1"></a><span class="st">    Ncpus = 40)</span></span>
+<span id="cb62-762"><a href="#cb62-762" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-763"><a href="#cb62-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-764"><a href="#cb62-764" aria-hidden="true" tabindex="-1"></a><span class="st">### Managing packages for a project using `renv` {#sec-renv}</span></span>
+<span id="cb62-765"><a href="#cb62-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-766"><a href="#cb62-766" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create a directory where you want you want to store the project.</span></span>
+<span id="cb62-767"><a href="#cb62-767" aria-hidden="true" tabindex="-1"></a><span class="st">1. `cd` to the above directory</span></span>
+<span id="cb62-768"><a href="#cb62-768" aria-hidden="true" tabindex="-1"></a><span class="st">1. Start R</span></span>
+<span id="cb62-769"><a href="#cb62-769" aria-hidden="true" tabindex="-1"></a><span class="st">1. Load the `renv` package: `library("renv")`</span></span>
+<span id="cb62-770"><a href="#cb62-770" aria-hidden="true" tabindex="-1"></a><span class="st">1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:</span></span>
+<span id="cb62-771"><a href="#cb62-771" aria-hidden="true" tabindex="-1"></a><span class="st">    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`</span></span>
+<span id="cb62-772"><a href="#cb62-772" aria-hidden="true" tabindex="-1"></a><span class="st">    - or `renv::init()` if you are in the intended working directory</span></span>
+<span id="cb62-773"><a href="#cb62-773" aria-hidden="true" tabindex="-1"></a><span class="st">1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!</span></span>
+<span id="cb62-774"><a href="#cb62-774" aria-hidden="true" tabindex="-1"></a><span class="st">1. From this point on you are working in a `renv` project.</span></span>
+<span id="cb62-775"><a href="#cb62-775" aria-hidden="true" tabindex="-1"></a><span class="st">Installed packages will go into a library within this project.</span></span>
+<span id="cb62-776"><a href="#cb62-776" aria-hidden="true" tabindex="-1"></a><span class="st">After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:</span></span>
+<span id="cb62-777"><a href="#cb62-777" aria-hidden="true" tabindex="-1"></a><span class="st">    - `renv::install("package_name")`</span></span>
+<span id="cb62-778"><a href="#cb62-778" aria-hidden="true" tabindex="-1"></a><span class="st">1. To restart a `renv` project, simply start `R` from the directory created in step (1).</span></span>
+<span id="cb62-779"><a href="#cb62-779" aria-hidden="true" tabindex="-1"></a><span class="st">The project will initialize automatically.</span></span>
 <span id="cb62-780"><a href="#cb62-780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-781"><a href="#cb62-781" aria-hidden="true" tabindex="-1"></a><span class="st">To disable `renv` on a project: `renv::deactivate()`</span></span>
+<span id="cb62-781"><a href="#cb62-781" aria-hidden="true" tabindex="-1"></a><span class="st">To update version of `renv`: `renv::upgrade()`</span></span>
 <span id="cb62-782"><a href="#cb62-782" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-783"><a href="#cb62-783" aria-hidden="true" tabindex="-1"></a><span class="st">#### To control which packages to install with `renv` using a `DESCRIPTION` file</span></span>
+<span id="cb62-783"><a href="#cb62-783" aria-hidden="true" tabindex="-1"></a><span class="st">To install packages: `renv::install("package_name")`</span></span>
 <span id="cb62-784"><a href="#cb62-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-785"><a href="#cb62-785" aria-hidden="true" tabindex="-1"></a><span class="st">If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:</span></span>
+<span id="cb62-785"><a href="#cb62-785" aria-hidden="true" tabindex="-1"></a><span class="st">To update packages: `renv::update()`</span></span>
 <span id="cb62-786"><a href="#cb62-786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-787"><a href="#cb62-787" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create a `DESCRIPTION` file in the project directory with the following format:</span></span>
+<span id="cb62-787"><a href="#cb62-787" aria-hidden="true" tabindex="-1"></a><span class="st">To save the current state of your library: `renv::snapshot()`</span></span>
 <span id="cb62-788"><a href="#cb62-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-789"><a href="#cb62-789" aria-hidden="true" tabindex="-1"></a><span class="st">    ```yaml</span></span>
-<span id="cb62-790"><a href="#cb62-790" aria-hidden="true" tabindex="-1"></a><span class="st">    Type: project</span></span>
-<span id="cb62-791"><a href="#cb62-791" aria-hidden="true" tabindex="-1"></a><span class="st">    Description: My project.</span></span>
-<span id="cb62-792"><a href="#cb62-792" aria-hidden="true" tabindex="-1"></a><span class="st">    Depends:</span></span>
-<span id="cb62-793"><a href="#cb62-793" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName1,</span></span>
-<span id="cb62-794"><a href="#cb62-794" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName2,</span></span>
-<span id="cb62-795"><a href="#cb62-795" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName3</span></span>
-<span id="cb62-796"><a href="#cb62-796" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-797"><a href="#cb62-797" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-798"><a href="#cb62-798" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: &lt;https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies&gt;</span></span>
-<span id="cb62-799"><a href="#cb62-799" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies</span></span>
-<span id="cb62-800"><a href="#cb62-800" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-801"><a href="#cb62-801" aria-hidden="true" tabindex="-1"></a><span class="st">### To install a new package for a project after `renv` has been initialized</span></span>
-<span id="cb62-802"><a href="#cb62-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-803"><a href="#cb62-803" aria-hidden="true" tabindex="-1"></a><span class="st">1. First, load the `R` environment module (see `Install R packages` section above)</span></span>
-<span id="cb62-804"><a href="#cb62-804" aria-hidden="true" tabindex="-1"></a><span class="st">1. cd to the directory of the `R` project</span></span>
-<span id="cb62-805"><a href="#cb62-805" aria-hidden="true" tabindex="-1"></a><span class="st">1. launch R</span></span>
-<span id="cb62-806"><a href="#cb62-806" aria-hidden="true" tabindex="-1"></a><span class="st">    - `R`</span></span>
-<span id="cb62-807"><a href="#cb62-807" aria-hidden="true" tabindex="-1"></a><span class="st">1. then install the package, (the code below uses a generic `package_name`):</span></span>
-<span id="cb62-808"><a href="#cb62-808" aria-hidden="true" tabindex="-1"></a><span class="st">    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
-<span id="cb62-809"><a href="#cb62-809" aria-hidden="true" tabindex="-1"></a><span class="st">    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
-<span id="cb62-810"><a href="#cb62-810" aria-hidden="true" tabindex="-1"></a><span class="st">1. `renv::snapshot()`</span></span>
-<span id="cb62-811"><a href="#cb62-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-812"><a href="#cb62-812" aria-hidden="true" tabindex="-1"></a><span class="st">## Update Packages</span></span>
-<span id="cb62-813"><a href="#cb62-813" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-816"><a href="#cb62-816" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-817"><a href="#cb62-817" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
-<span id="cb62-818"><a href="#cb62-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-819"><a href="#cb62-819" aria-hidden="true" tabindex="-1"></a><span class="st">update.packages(ask = FALSE)</span></span>
-<span id="cb62-820"><a href="#cb62-820" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-789"><a href="#cb62-789" aria-hidden="true" tabindex="-1"></a><span class="st">To restore the state of your library from the lock file: `renv::restore()`</span></span>
+<span id="cb62-790"><a href="#cb62-790" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-791"><a href="#cb62-791" aria-hidden="true" tabindex="-1"></a><span class="st">To disable `renv` on a project: `renv::deactivate()`</span></span>
+<span id="cb62-792"><a href="#cb62-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-793"><a href="#cb62-793" aria-hidden="true" tabindex="-1"></a><span class="st">#### To control which packages to install with `renv` using a `DESCRIPTION` file</span></span>
+<span id="cb62-794"><a href="#cb62-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-795"><a href="#cb62-795" aria-hidden="true" tabindex="-1"></a><span class="st">If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:</span></span>
+<span id="cb62-796"><a href="#cb62-796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-797"><a href="#cb62-797" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create a `DESCRIPTION` file in the project directory with the following format:</span></span>
+<span id="cb62-798"><a href="#cb62-798" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-799"><a href="#cb62-799" aria-hidden="true" tabindex="-1"></a><span class="st">    ```yaml</span></span>
+<span id="cb62-800"><a href="#cb62-800" aria-hidden="true" tabindex="-1"></a><span class="st">    Type: project</span></span>
+<span id="cb62-801"><a href="#cb62-801" aria-hidden="true" tabindex="-1"></a><span class="st">    Description: My project.</span></span>
+<span id="cb62-802"><a href="#cb62-802" aria-hidden="true" tabindex="-1"></a><span class="st">    Depends:</span></span>
+<span id="cb62-803"><a href="#cb62-803" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName1,</span></span>
+<span id="cb62-804"><a href="#cb62-804" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName2,</span></span>
+<span id="cb62-805"><a href="#cb62-805" aria-hidden="true" tabindex="-1"></a><span class="st">        packageName3</span></span>
+<span id="cb62-806"><a href="#cb62-806" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
+<span id="cb62-807"><a href="#cb62-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-808"><a href="#cb62-808" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: &lt;https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies&gt;</span></span>
+<span id="cb62-809"><a href="#cb62-809" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies</span></span>
+<span id="cb62-810"><a href="#cb62-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-811"><a href="#cb62-811" aria-hidden="true" tabindex="-1"></a><span class="st">### To install a new package for a project after `renv` has been initialized</span></span>
+<span id="cb62-812"><a href="#cb62-812" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-813"><a href="#cb62-813" aria-hidden="true" tabindex="-1"></a><span class="st">1. First, load the `R` environment module (see `Install R packages` section above)</span></span>
+<span id="cb62-814"><a href="#cb62-814" aria-hidden="true" tabindex="-1"></a><span class="st">1. cd to the directory of the `R` project</span></span>
+<span id="cb62-815"><a href="#cb62-815" aria-hidden="true" tabindex="-1"></a><span class="st">1. launch R</span></span>
+<span id="cb62-816"><a href="#cb62-816" aria-hidden="true" tabindex="-1"></a><span class="st">    - `R`</span></span>
+<span id="cb62-817"><a href="#cb62-817" aria-hidden="true" tabindex="-1"></a><span class="st">1. then install the package, (the code below uses a generic `package_name`):</span></span>
+<span id="cb62-818"><a href="#cb62-818" aria-hidden="true" tabindex="-1"></a><span class="st">    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb62-819"><a href="#cb62-819" aria-hidden="true" tabindex="-1"></a><span class="st">    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb62-820"><a href="#cb62-820" aria-hidden="true" tabindex="-1"></a><span class="st">1. `renv::snapshot()`</span></span>
 <span id="cb62-821"><a href="#cb62-821" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-822"><a href="#cb62-822" aria-hidden="true" tabindex="-1"></a><span class="st">## Run `R` Script {#sec-runRscript}</span></span>
+<span id="cb62-822"><a href="#cb62-822" aria-hidden="true" tabindex="-1"></a><span class="st">## Update Packages</span></span>
 <span id="cb62-823"><a href="#cb62-823" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-824"><a href="#cb62-824" aria-hidden="true" tabindex="-1"></a><span class="st">`module load r/4.0.5_gcc-9.3.0`</span></span>
-<span id="cb62-825"><a href="#cb62-825" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-826"><a href="#cb62-826" aria-hidden="true" tabindex="-1"></a><span class="st">`cd path/to/dataSet123`</span></span>
-<span id="cb62-827"><a href="#cb62-827" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-828"><a href="#cb62-828" aria-hidden="true" tabindex="-1"></a><span class="st">[cd /Users/itpetersen/Documents/Projects/Test/Analyses]</span></span>
-<span id="cb62-829"><a href="#cb62-829" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-830"><a href="#cb62-830" aria-hidden="true" tabindex="-1"></a><span class="st">`Rscript path/to/program.R`</span></span>
+<span id="cb62-826"><a href="#cb62-826" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-827"><a href="#cb62-827" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
+<span id="cb62-828"><a href="#cb62-828" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-829"><a href="#cb62-829" aria-hidden="true" tabindex="-1"></a><span class="st">update.packages(ask = FALSE)</span></span>
+<span id="cb62-830"><a href="#cb62-830" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-831"><a href="#cb62-831" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-832"><a href="#cb62-832" aria-hidden="true" tabindex="-1"></a><span class="st">[Rscript test.R]</span></span>
+<span id="cb62-832"><a href="#cb62-832" aria-hidden="true" tabindex="-1"></a><span class="st">## Run `R` Script {#sec-runRscript}</span></span>
 <span id="cb62-833"><a href="#cb62-833" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-834"><a href="#cb62-834" aria-hidden="true" tabindex="-1"></a><span class="st">## Quit R</span></span>
+<span id="cb62-834"><a href="#cb62-834" aria-hidden="true" tabindex="-1"></a><span class="st">`module load r/4.0.5_gcc-9.3.0`</span></span>
 <span id="cb62-835"><a href="#cb62-835" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-836"><a href="#cb62-836" aria-hidden="true" tabindex="-1"></a><span class="st">`q()`</span></span>
+<span id="cb62-836"><a href="#cb62-836" aria-hidden="true" tabindex="-1"></a><span class="st">`cd path/to/dataSet123`</span></span>
 <span id="cb62-837"><a href="#cb62-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-838"><a href="#cb62-838" aria-hidden="true" tabindex="-1"></a><span class="st"># Stan</span></span>
+<span id="cb62-838"><a href="#cb62-838" aria-hidden="true" tabindex="-1"></a><span class="st">[cd /Users/itpetersen/Documents/Projects/Test/Analyses]</span></span>
 <span id="cb62-839"><a href="#cb62-839" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-840"><a href="#cb62-840" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux&gt; (archived at &lt;https://perma.cc/89H9-L8S6&gt;)</span></span>
+<span id="cb62-840"><a href="#cb62-840" aria-hidden="true" tabindex="-1"></a><span class="st">`Rscript path/to/program.R`</span></span>
 <span id="cb62-841"><a href="#cb62-841" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-842"><a href="#cb62-842" aria-hidden="true" tabindex="-1"></a><span class="st">Makevars:</span></span>
+<span id="cb62-842"><a href="#cb62-842" aria-hidden="true" tabindex="-1"></a><span class="st">[Rscript test.R]</span></span>
 <span id="cb62-843"><a href="#cb62-843" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-844"><a href="#cb62-844" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="sc">\\</span><span class="st">data.hpc.uiowa.edu</span><span class="sc">\a</span><span class="st">rgon_home\.R\Makevars`</span></span>
+<span id="cb62-844"><a href="#cb62-844" aria-hidden="true" tabindex="-1"></a><span class="st">## Quit R</span></span>
 <span id="cb62-845"><a href="#cb62-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-846"><a href="#cb62-846" aria-hidden="true" tabindex="-1"></a><span class="st"># Troubleshooting</span></span>
+<span id="cb62-846"><a href="#cb62-846" aria-hidden="true" tabindex="-1"></a><span class="st">`q()`</span></span>
 <span id="cb62-847"><a href="#cb62-847" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-848"><a href="#cb62-848" aria-hidden="true" tabindex="-1"></a><span class="st">## Having trouble installing packages?</span></span>
+<span id="cb62-848"><a href="#cb62-848" aria-hidden="true" tabindex="-1"></a><span class="st"># Stan</span></span>
 <span id="cb62-849"><a href="#cb62-849" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-850"><a href="#cb62-850" aria-hidden="true" tabindex="-1"></a><span class="st">Sometimes Argon will fail to install packages in an R workspace.</span></span>
-<span id="cb62-851"><a href="#cb62-851" aria-hidden="true" tabindex="-1"></a><span class="st">We advise the following steps:</span></span>
-<span id="cb62-852"><a href="#cb62-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-853"><a href="#cb62-853" aria-hidden="true" tabindex="-1"></a><span class="st">1. Sometimes R provides an error stating something like "fatal error: modulename: No such file or directory".</span></span>
-<span id="cb62-854"><a href="#cb62-854" aria-hidden="true" tabindex="-1"></a><span class="st">In this instance, you may wish to exist R with q() and load all the modules that begin with the listed module name, as listed above in "Installing Linux Packages to Install R Packages".</span></span>
-<span id="cb62-855"><a href="#cb62-855" aria-hidden="true" tabindex="-1"></a><span class="st">Then reopen R and try to install the package again.</span></span>
-<span id="cb62-856"><a href="#cb62-856" aria-hidden="true" tabindex="-1"></a><span class="st">1. You can also try installing the package from binary using the RStudio Package Manager (RSPM):</span></span>
+<span id="cb62-850"><a href="#cb62-850" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux&gt; (archived at &lt;https://perma.cc/89H9-L8S6&gt;)</span></span>
+<span id="cb62-851"><a href="#cb62-851" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-852"><a href="#cb62-852" aria-hidden="true" tabindex="-1"></a><span class="st">Makevars:</span></span>
+<span id="cb62-853"><a href="#cb62-853" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-854"><a href="#cb62-854" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="sc">\\</span><span class="st">data.hpc.uiowa.edu</span><span class="sc">\a</span><span class="st">rgon_home\.R\Makevars`</span></span>
+<span id="cb62-855"><a href="#cb62-855" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-856"><a href="#cb62-856" aria-hidden="true" tabindex="-1"></a><span class="st"># Troubleshooting</span></span>
 <span id="cb62-857"><a href="#cb62-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-858"><a href="#cb62-858" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
-<span id="cb62-859"><a href="#cb62-859" aria-hidden="true" tabindex="-1"></a><span class="st">    remotes::install_github("cran4linux/rspm")</span></span>
-<span id="cb62-860"><a href="#cb62-860" aria-hidden="true" tabindex="-1"></a><span class="st">    rspm::enable()</span></span>
-<span id="cb62-861"><a href="#cb62-861" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages("PACKAGE_NAME")</span></span>
-<span id="cb62-862"><a href="#cb62-862" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-863"><a href="#cb62-863" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-864"><a href="#cb62-864" aria-hidden="true" tabindex="-1"></a><span class="st">1. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type '</span><span class="fu">install.packages</span>(<span class="st">"/Users/path/to/directory/package_name"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)<span class="st">'.</span></span>
-<span id="cb62-865"><a href="#cb62-865" aria-hidden="true" tabindex="-1"></a><span class="st">Note that you may need to download an older version of the package (e.g., from the [CRAN Archive](https://cran.r-project.org/src/contrib/Archive/)), such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version):</span></span>
-<span id="cb62-866"><a href="#cb62-866" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-867"><a href="#cb62-867" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
-<span id="cb62-868"><a href="#cb62-868" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages("http://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-60.0.1.tar.gz", repos = NULL, type = "source")</span></span>
-<span id="cb62-869"><a href="#cb62-869" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-870"><a href="#cb62-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-871"><a href="#cb62-871" aria-hidden="true" tabindex="-1"></a><span class="st">1. Check if you are installing the necessary modules within your job script: </span></span>
-<span id="cb62-872"><a href="#cb62-872" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-873"><a href="#cb62-873" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
-<span id="cb62-874"><a href="#cb62-874" aria-hidden="true" tabindex="-1"></a><span class="st">    module load stack/2022.2</span></span>
-<span id="cb62-875"><a href="#cb62-875" aria-hidden="true" tabindex="-1"></a><span class="st">    module load r/4.2.2_gcc-9.5.0</span></span>
-<span id="cb62-876"><a href="#cb62-876" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-877"><a href="#cb62-877" aria-hidden="true" tabindex="-1"></a><span class="st">1. Add a line to your R script to make sure it is accessing the same repository where you installed the packages manually:</span></span>
-<span id="cb62-878"><a href="#cb62-878" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-879"><a href="#cb62-879" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
-<span id="cb62-880"><a href="#cb62-880" aria-hidden="true" tabindex="-1"></a><span class="st">    .libPaths(c("/old_Users/HAWKID/Rlibs", </span></span>
-<span id="cb62-881"><a href="#cb62-881" aria-hidden="true" tabindex="-1"></a><span class="st">            "/cvmfs/argon.hpc.uiowa.edu/2022.2/apps/linux-centos7-broadwell/gcc-9.5.0/r-4.2.2-lv7yirk/rlib/R/library"))</span></span>
-<span id="cb62-882"><a href="#cb62-882" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
-<span id="cb62-883"><a href="#cb62-883" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-884"><a href="#cb62-884" aria-hidden="true" tabindex="-1"></a><span class="st">1. If the prior steps fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.</span></span>
-<span id="cb62-885"><a href="#cb62-885" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-886"><a href="#cb62-886" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-887"><a href="#cb62-887" aria-hidden="true" tabindex="-1"></a><span class="st">## Error When Installing Packages from Source</span></span>
+<span id="cb62-858"><a href="#cb62-858" aria-hidden="true" tabindex="-1"></a><span class="st">## Having trouble installing packages?</span></span>
+<span id="cb62-859"><a href="#cb62-859" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-860"><a href="#cb62-860" aria-hidden="true" tabindex="-1"></a><span class="st">Sometimes Argon will fail to install packages in an R workspace.</span></span>
+<span id="cb62-861"><a href="#cb62-861" aria-hidden="true" tabindex="-1"></a><span class="st">We advise the following steps:</span></span>
+<span id="cb62-862"><a href="#cb62-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-863"><a href="#cb62-863" aria-hidden="true" tabindex="-1"></a><span class="st">1. Sometimes R provides an error stating something like "fatal error: modulename: No such file or directory".</span></span>
+<span id="cb62-864"><a href="#cb62-864" aria-hidden="true" tabindex="-1"></a><span class="st">In this instance, you may wish to exist R with q() and load all the modules that begin with the listed module name, as listed above in "Installing Linux Packages to Install R Packages".</span></span>
+<span id="cb62-865"><a href="#cb62-865" aria-hidden="true" tabindex="-1"></a><span class="st">Then reopen R and try to install the package again.</span></span>
+<span id="cb62-866"><a href="#cb62-866" aria-hidden="true" tabindex="-1"></a><span class="st">1. You can also try installing the package from binary using the RStudio Package Manager (RSPM):</span></span>
+<span id="cb62-867"><a href="#cb62-867" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-868"><a href="#cb62-868" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
+<span id="cb62-869"><a href="#cb62-869" aria-hidden="true" tabindex="-1"></a><span class="st">    remotes::install_github("cran4linux/rspm")</span></span>
+<span id="cb62-870"><a href="#cb62-870" aria-hidden="true" tabindex="-1"></a><span class="st">    rspm::enable()</span></span>
+<span id="cb62-871"><a href="#cb62-871" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages("PACKAGE_NAME")</span></span>
+<span id="cb62-872"><a href="#cb62-872" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
+<span id="cb62-873"><a href="#cb62-873" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-874"><a href="#cb62-874" aria-hidden="true" tabindex="-1"></a><span class="st">1. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type '</span><span class="fu">install.packages</span>(<span class="st">"/Users/path/to/directory/package_name"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)<span class="st">'.</span></span>
+<span id="cb62-875"><a href="#cb62-875" aria-hidden="true" tabindex="-1"></a><span class="st">Note that you may need to download an older version of the package (e.g., from the [CRAN Archive](https://cran.r-project.org/src/contrib/Archive/)), such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version):</span></span>
+<span id="cb62-876"><a href="#cb62-876" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-877"><a href="#cb62-877" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
+<span id="cb62-878"><a href="#cb62-878" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages("http://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-60.0.1.tar.gz", repos = NULL, type = "source")</span></span>
+<span id="cb62-879"><a href="#cb62-879" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
+<span id="cb62-880"><a href="#cb62-880" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-881"><a href="#cb62-881" aria-hidden="true" tabindex="-1"></a><span class="st">1. Check if you are installing the necessary modules within your job script: </span></span>
+<span id="cb62-882"><a href="#cb62-882" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-883"><a href="#cb62-883" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
+<span id="cb62-884"><a href="#cb62-884" aria-hidden="true" tabindex="-1"></a><span class="st">    module load stack/2022.2</span></span>
+<span id="cb62-885"><a href="#cb62-885" aria-hidden="true" tabindex="-1"></a><span class="st">    module load r/4.2.2_gcc-9.5.0</span></span>
+<span id="cb62-886"><a href="#cb62-886" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
+<span id="cb62-887"><a href="#cb62-887" aria-hidden="true" tabindex="-1"></a><span class="st">1. Add a line to your R script to make sure it is accessing the same repository where you installed the packages manually:</span></span>
 <span id="cb62-888"><a href="#cb62-888" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-889"><a href="#cb62-889" aria-hidden="true" tabindex="-1"></a><span class="st">You may have to set environment variables in each module file to help the compiler find headers and libraries.</span></span>
-<span id="cb62-890"><a href="#cb62-890" aria-hidden="true" tabindex="-1"></a><span class="st">Note that if you run into any C++ code, you will need to set the `CPLUS_INCLUDE_PATH` variable.</span></span>
-<span id="cb62-891"><a href="#cb62-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-892"><a href="#cb62-892" aria-hidden="true" tabindex="-1"></a><span class="st">### `nloptr`</span></span>
+<span id="cb62-889"><a href="#cb62-889" aria-hidden="true" tabindex="-1"></a><span class="st">    ```r</span></span>
+<span id="cb62-890"><a href="#cb62-890" aria-hidden="true" tabindex="-1"></a><span class="st">    .libPaths(c("/old_Users/HAWKID/Rlibs", </span></span>
+<span id="cb62-891"><a href="#cb62-891" aria-hidden="true" tabindex="-1"></a><span class="st">            "/cvmfs/argon.hpc.uiowa.edu/2022.2/apps/linux-centos7-broadwell/gcc-9.5.0/r-4.2.2-lv7yirk/rlib/R/library"))</span></span>
+<span id="cb62-892"><a href="#cb62-892" aria-hidden="true" tabindex="-1"></a><span class="st">    ```</span></span>
 <span id="cb62-893"><a href="#cb62-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-894"><a href="#cb62-894" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run the following commands</span></span>
+<span id="cb62-894"><a href="#cb62-894" aria-hidden="true" tabindex="-1"></a><span class="st">1. If the prior steps fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.</span></span>
 <span id="cb62-895"><a href="#cb62-895" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-896"><a href="#cb62-896" aria-hidden="true" tabindex="-1"></a><span class="st">```bash</span></span>
-<span id="cb62-897"><a href="#cb62-897" aria-hidden="true" tabindex="-1"></a><span class="st">module load stack/2022.1</span></span>
-<span id="cb62-898"><a href="#cb62-898" aria-hidden="true" tabindex="-1"></a><span class="st">module load r/4.1.3_gcc-9.4.0</span></span>
-<span id="cb62-899"><a href="#cb62-899" aria-hidden="true" tabindex="-1"></a><span class="st">module load nlopt</span></span>
-<span id="cb62-900"><a href="#cb62-900" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-896"><a href="#cb62-896" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-897"><a href="#cb62-897" aria-hidden="true" tabindex="-1"></a><span class="st">## Error When Installing Packages from Source</span></span>
+<span id="cb62-898"><a href="#cb62-898" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-899"><a href="#cb62-899" aria-hidden="true" tabindex="-1"></a><span class="st">You may have to set environment variables in each module file to help the compiler find headers and libraries.</span></span>
+<span id="cb62-900"><a href="#cb62-900" aria-hidden="true" tabindex="-1"></a><span class="st">Note that if you run into any C++ code, you will need to set the `CPLUS_INCLUDE_PATH` variable.</span></span>
 <span id="cb62-901"><a href="#cb62-901" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-902"><a href="#cb62-902" aria-hidden="true" tabindex="-1"></a><span class="st">2. Set `LIBRARY_PATH` so linker can find library while launching `R` session (single line below):</span></span>
+<span id="cb62-902"><a href="#cb62-902" aria-hidden="true" tabindex="-1"></a><span class="st">### `nloptr`</span></span>
 <span id="cb62-903"><a href="#cb62-903" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-904"><a href="#cb62-904" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-905"><a href="#cb62-905" aria-hidden="true" tabindex="-1"></a><span class="st">LIBRARY_PATH=$ROOT_NLOPT/lib64:$LIBRARY_PATH R</span></span>
-<span id="cb62-906"><a href="#cb62-906" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-907"><a href="#cb62-907" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-908"><a href="#cb62-908" aria-hidden="true" tabindex="-1"></a><span class="st">3. In `R` console, install `nloptr` (two lines below)</span></span>
-<span id="cb62-909"><a href="#cb62-909" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-912"><a href="#cb62-912" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-913"><a href="#cb62-913" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
-<span id="cb62-914"><a href="#cb62-914" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-915"><a href="#cb62-915" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(verbose = 1, "nloptr")</span></span>
+<span id="cb62-904"><a href="#cb62-904" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run the following commands</span></span>
+<span id="cb62-905"><a href="#cb62-905" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-906"><a href="#cb62-906" aria-hidden="true" tabindex="-1"></a><span class="st">```bash</span></span>
+<span id="cb62-907"><a href="#cb62-907" aria-hidden="true" tabindex="-1"></a><span class="st">module load stack/2022.1</span></span>
+<span id="cb62-908"><a href="#cb62-908" aria-hidden="true" tabindex="-1"></a><span class="st">module load r/4.1.3_gcc-9.4.0</span></span>
+<span id="cb62-909"><a href="#cb62-909" aria-hidden="true" tabindex="-1"></a><span class="st">module load nlopt</span></span>
+<span id="cb62-910"><a href="#cb62-910" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-911"><a href="#cb62-911" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-912"><a href="#cb62-912" aria-hidden="true" tabindex="-1"></a><span class="st">2. Set `LIBRARY_PATH` so linker can find library while launching `R` session (single line below):</span></span>
+<span id="cb62-913"><a href="#cb62-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-914"><a href="#cb62-914" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-915"><a href="#cb62-915" aria-hidden="true" tabindex="-1"></a><span class="st">LIBRARY_PATH=$ROOT_NLOPT/lib64:$LIBRARY_PATH R</span></span>
 <span id="cb62-916"><a href="#cb62-916" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-917"><a href="#cb62-917" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-918"><a href="#cb62-918" aria-hidden="true" tabindex="-1"></a><span class="st">### `tkrplot`</span></span>
+<span id="cb62-918"><a href="#cb62-918" aria-hidden="true" tabindex="-1"></a><span class="st">3. In `R` console, install `nloptr` (two lines below)</span></span>
 <span id="cb62-919"><a href="#cb62-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-920"><a href="#cb62-920" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run the following commands</span></span>
-<span id="cb62-921"><a href="#cb62-921" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-922"><a href="#cb62-922" aria-hidden="true" tabindex="-1"></a><span class="st">```bash</span></span>
-<span id="cb62-923"><a href="#cb62-923" aria-hidden="true" tabindex="-1"></a><span class="st">module load stack/2022.1</span></span>
-<span id="cb62-924"><a href="#cb62-924" aria-hidden="true" tabindex="-1"></a><span class="st">module load r/4.1.3_gcc-9.4.0</span></span>
-<span id="cb62-925"><a href="#cb62-925" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-926"><a href="#cb62-926" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-927"><a href="#cb62-927" aria-hidden="true" tabindex="-1"></a><span class="st">2. Set LIBRARY_PATH so linker can find library while launching `R` session (single line below):</span></span>
-<span id="cb62-928"><a href="#cb62-928" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-929"><a href="#cb62-929" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-930"><a href="#cb62-930" aria-hidden="true" tabindex="-1"></a><span class="st">C_INCLUDE_PATH=$ROOT_XPROTO/include LIBRARY_PATH=$ROOT_LIBXEXT/lib:$ROOT_LIBXSCRNSAVER/lib R</span></span>
-<span id="cb62-931"><a href="#cb62-931" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-932"><a href="#cb62-932" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-933"><a href="#cb62-933" aria-hidden="true" tabindex="-1"></a><span class="st">3. In `R` console, install `tkrplot` (two lines below)</span></span>
-<span id="cb62-934"><a href="#cb62-934" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-937"><a href="#cb62-937" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb62-938"><a href="#cb62-938" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
-<span id="cb62-939"><a href="#cb62-939" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-940"><a href="#cb62-940" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(verbose = 1, "tkrplot")</span></span>
+<span id="cb62-922"><a href="#cb62-922" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-923"><a href="#cb62-923" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
+<span id="cb62-924"><a href="#cb62-924" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-925"><a href="#cb62-925" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(verbose = 1, "nloptr")</span></span>
+<span id="cb62-926"><a href="#cb62-926" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-927"><a href="#cb62-927" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-928"><a href="#cb62-928" aria-hidden="true" tabindex="-1"></a><span class="st">### `tkrplot`</span></span>
+<span id="cb62-929"><a href="#cb62-929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-930"><a href="#cb62-930" aria-hidden="true" tabindex="-1"></a><span class="st">1. Run the following commands</span></span>
+<span id="cb62-931"><a href="#cb62-931" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-932"><a href="#cb62-932" aria-hidden="true" tabindex="-1"></a><span class="st">```bash</span></span>
+<span id="cb62-933"><a href="#cb62-933" aria-hidden="true" tabindex="-1"></a><span class="st">module load stack/2022.1</span></span>
+<span id="cb62-934"><a href="#cb62-934" aria-hidden="true" tabindex="-1"></a><span class="st">module load r/4.1.3_gcc-9.4.0</span></span>
+<span id="cb62-935"><a href="#cb62-935" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-936"><a href="#cb62-936" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-937"><a href="#cb62-937" aria-hidden="true" tabindex="-1"></a><span class="st">2. Set LIBRARY_PATH so linker can find library while launching `R` session (single line below):</span></span>
+<span id="cb62-938"><a href="#cb62-938" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-939"><a href="#cb62-939" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-940"><a href="#cb62-940" aria-hidden="true" tabindex="-1"></a><span class="st">C_INCLUDE_PATH=$ROOT_XPROTO/include LIBRARY_PATH=$ROOT_LIBXEXT/lib:$ROOT_LIBXSCRNSAVER/lib R</span></span>
 <span id="cb62-941"><a href="#cb62-941" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-942"><a href="#cb62-942" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-943"><a href="#cb62-943" aria-hidden="true" tabindex="-1"></a><span class="st">## Error Reading from Connection</span></span>
+<span id="cb62-943"><a href="#cb62-943" aria-hidden="true" tabindex="-1"></a><span class="st">3. In `R` console, install `tkrplot` (two lines below)</span></span>
 <span id="cb62-944"><a href="#cb62-944" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-945"><a href="#cb62-945" aria-hidden="true" tabindex="-1"></a><span class="st">```r</span></span>
-<span id="cb62-946"><a href="#cb62-946" aria-hidden="true" tabindex="-1"></a><span class="st">Error in unserialize(node$con) : error reading from connection</span></span>
-<span id="cb62-947"><a href="#cb62-947" aria-hidden="true" tabindex="-1"></a><span class="st">Calls: parlmice ... FUN -&gt; recvData -&gt; recvData.SOCK0node -&gt; unserialize</span></span>
-<span id="cb62-948"><a href="#cb62-948" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-947"><a href="#cb62-947" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb62-948"><a href="#cb62-948" aria-hidden="true" tabindex="-1"></a><span class="st">#| eval: false</span></span>
 <span id="cb62-949"><a href="#cb62-949" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-950"><a href="#cb62-950" aria-hidden="true" tabindex="-1"></a><span class="st">There likely wasn'</span>t sufficient memory <span class="cf">for</span> a given core.</span>
-<span id="cb62-951"><a href="#cb62-951" aria-hidden="true" tabindex="-1"></a>Try increasing the max memory available and decreasing the number of cores and<span class="sc">/</span>or slots, so there is more memory available per core<span class="sc">:</span></span>
+<span id="cb62-950"><a href="#cb62-950" aria-hidden="true" tabindex="-1"></a><span class="st">install.packages(verbose = 1, "tkrplot")</span></span>
+<span id="cb62-951"><a href="#cb62-951" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-952"><a href="#cb62-952" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-953"><a href="#cb62-953" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>https<span class="sc">:</span><span class="er">//</span>stackoverflow.com<span class="sc">/</span>questions<span class="sc">/</span><span class="dv">46186375</span><span class="sc">/</span>r<span class="sc">-</span>parallel<span class="sc">-</span>error<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>unserializenodecon<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>hpc<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span>MF6V<span class="sc">-</span>NAVS<span class="sc">&gt;</span>)</span>
+<span id="cb62-953"><a href="#cb62-953" aria-hidden="true" tabindex="-1"></a><span class="st">## Error Reading from Connection</span></span>
 <span id="cb62-954"><a href="#cb62-954" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-955"><a href="#cb62-955" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>stackoverflow.com<span class="sc">/</span>questions<span class="sc">/</span><span class="dv">17015598</span><span class="sc">/</span>error<span class="sc">-</span>calling<span class="sc">-</span>serialize<span class="sc">-</span>r<span class="sc">-</span><span class="cf">function</span><span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span><span class="dv">3</span>Q75<span class="sc">-</span>DA2D<span class="sc">&gt;</span>)</span>
-<span id="cb62-956"><a href="#cb62-956" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-957"><a href="#cb62-957" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>gforge.se<span class="sc">/</span><span class="dv">2015</span><span class="sc">/</span><span class="dv">02</span><span class="sc">/</span>how<span class="sc">-</span>to<span class="sc">-</span>go<span class="sc">-</span>parallel<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>r<span class="sc">-</span>basics<span class="sc">-</span>tips<span class="sc">/</span><span class="co">#Memory_load&gt; (archived at &lt;https://perma.cc/2JRF-8Y5F&gt;)</span></span>
-<span id="cb62-958"><a href="#cb62-958" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-959"><a href="#cb62-959" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: `$'\r': command not found`</span></span>
-<span id="cb62-960"><a href="#cb62-960" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-961"><a href="#cb62-961" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-962"><a href="#cb62-962" aria-hidden="true" tabindex="-1"></a><span class="at">/opt/sge/default/spool/argon-itf-bx47-36/job_scripts/5685660: line 2: $'</span><span class="sc">\r</span><span class="at">': command not found</span></span>
-<span id="cb62-963"><a href="#cb62-963" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-955"><a href="#cb62-955" aria-hidden="true" tabindex="-1"></a><span class="st">```r</span></span>
+<span id="cb62-956"><a href="#cb62-956" aria-hidden="true" tabindex="-1"></a><span class="st">Error in unserialize(node$con) : error reading from connection</span></span>
+<span id="cb62-957"><a href="#cb62-957" aria-hidden="true" tabindex="-1"></a><span class="st">Calls: parlmice ... FUN -&gt; recvData -&gt; recvData.SOCK0node -&gt; unserialize</span></span>
+<span id="cb62-958"><a href="#cb62-958" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-959"><a href="#cb62-959" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-960"><a href="#cb62-960" aria-hidden="true" tabindex="-1"></a><span class="st">There likely wasn'</span>t sufficient memory <span class="cf">for</span> a given core.</span>
+<span id="cb62-961"><a href="#cb62-961" aria-hidden="true" tabindex="-1"></a>Try increasing the max memory available and decreasing the number of cores and<span class="sc">/</span>or slots, so there is more memory available per core<span class="sc">:</span></span>
+<span id="cb62-962"><a href="#cb62-962" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-963"><a href="#cb62-963" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>https<span class="sc">:</span><span class="er">//</span>stackoverflow.com<span class="sc">/</span>questions<span class="sc">/</span><span class="dv">46186375</span><span class="sc">/</span>r<span class="sc">-</span>parallel<span class="sc">-</span>error<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>unserializenodecon<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>hpc<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span>MF6V<span class="sc">-</span>NAVS<span class="sc">&gt;</span>)</span>
 <span id="cb62-964"><a href="#cb62-964" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-965"><a href="#cb62-965" aria-hidden="true" tabindex="-1"></a>That often means your job script has <span class="fu">Windows</span> (CRLF) line endings instead of <span class="fu">Unix</span> (LF).</span>
-<span id="cb62-966"><a href="#cb62-966" aria-hidden="true" tabindex="-1"></a>You can fix the line endings with the following command<span class="sc">:</span></span>
-<span id="cb62-967"><a href="#cb62-967" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-968"><a href="#cb62-968" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-969"><a href="#cb62-969" aria-hidden="true" tabindex="-1"></a><span class="at">dos2unix your_job_file.job</span></span>
-<span id="cb62-970"><a href="#cb62-970" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-971"><a href="#cb62-971" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-972"><a href="#cb62-972" aria-hidden="true" tabindex="-1"></a><span class="co"># Appendix {#sec-appendix}</span></span>
-<span id="cb62-973"><a href="#cb62-973" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-974"><a href="#cb62-974" aria-hidden="true" tabindex="-1"></a><span class="do">## Old Stacks</span></span>
-<span id="cb62-975"><a href="#cb62-975" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-976"><a href="#cb62-976" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2022.1</span></span>
+<span id="cb62-965"><a href="#cb62-965" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>stackoverflow.com<span class="sc">/</span>questions<span class="sc">/</span><span class="dv">17015598</span><span class="sc">/</span>error<span class="sc">-</span>calling<span class="sc">-</span>serialize<span class="sc">-</span>r<span class="sc">-</span><span class="cf">function</span><span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span><span class="dv">3</span>Q75<span class="sc">-</span>DA2D<span class="sc">&gt;</span>)</span>
+<span id="cb62-966"><a href="#cb62-966" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-967"><a href="#cb62-967" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>gforge.se<span class="sc">/</span><span class="dv">2015</span><span class="sc">/</span><span class="dv">02</span><span class="sc">/</span>how<span class="sc">-</span>to<span class="sc">-</span>go<span class="sc">-</span>parallel<span class="sc">-</span><span class="cf">in</span><span class="sc">-</span>r<span class="sc">-</span>basics<span class="sc">-</span>tips<span class="sc">/</span><span class="co">#Memory_load&gt; (archived at &lt;https://perma.cc/2JRF-8Y5F&gt;)</span></span>
+<span id="cb62-968"><a href="#cb62-968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-969"><a href="#cb62-969" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: `$'\r': command not found`</span></span>
+<span id="cb62-970"><a href="#cb62-970" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-971"><a href="#cb62-971" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
+<span id="cb62-972"><a href="#cb62-972" aria-hidden="true" tabindex="-1"></a><span class="at">/opt/sge/default/spool/argon-itf-bx47-36/job_scripts/5685660: line 2: $'</span><span class="sc">\r</span><span class="at">': command not found</span></span>
+<span id="cb62-973"><a href="#cb62-973" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-974"><a href="#cb62-974" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-975"><a href="#cb62-975" aria-hidden="true" tabindex="-1"></a>That often means your job script has <span class="fu">Windows</span> (CRLF) line endings instead of <span class="fu">Unix</span> (LF).</span>
+<span id="cb62-976"><a href="#cb62-976" aria-hidden="true" tabindex="-1"></a>You can fix the line endings with the following command<span class="sc">:</span></span>
 <span id="cb62-977"><a href="#cb62-977" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-978"><a href="#cb62-978" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-979"><a href="#cb62-979" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2022.1</span></span>
-<span id="cb62-980"><a href="#cb62-980" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.1.3_gcc-9.4.0</span></span>
-<span id="cb62-981"><a href="#cb62-981" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
-<span id="cb62-982"><a href="#cb62-982" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-979"><a href="#cb62-979" aria-hidden="true" tabindex="-1"></a><span class="at">dos2unix your_job_file.job</span></span>
+<span id="cb62-980"><a href="#cb62-980" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-981"><a href="#cb62-981" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-982"><a href="#cb62-982" aria-hidden="true" tabindex="-1"></a><span class="co"># Appendix {#sec-appendix}</span></span>
 <span id="cb62-983"><a href="#cb62-983" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-984"><a href="#cb62-984" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2021.1</span></span>
+<span id="cb62-984"><a href="#cb62-984" aria-hidden="true" tabindex="-1"></a><span class="do">## Old Stacks</span></span>
 <span id="cb62-985"><a href="#cb62-985" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-986"><a href="#cb62-986" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-987"><a href="#cb62-987" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2021.1</span></span>
-<span id="cb62-988"><a href="#cb62-988" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.0.5_gcc-9.3.0</span></span>
-<span id="cb62-989"><a href="#cb62-989" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
-<span id="cb62-990"><a href="#cb62-990" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-991"><a href="#cb62-991" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-992"><a href="#cb62-992" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2020.2</span></span>
+<span id="cb62-986"><a href="#cb62-986" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2022.1</span></span>
+<span id="cb62-987"><a href="#cb62-987" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-988"><a href="#cb62-988" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
+<span id="cb62-989"><a href="#cb62-989" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2022.1</span></span>
+<span id="cb62-990"><a href="#cb62-990" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.1.3_gcc-9.4.0</span></span>
+<span id="cb62-991"><a href="#cb62-991" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
+<span id="cb62-992"><a href="#cb62-992" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-993"><a href="#cb62-993" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-994"><a href="#cb62-994" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-995"><a href="#cb62-995" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2020.2</span></span>
-<span id="cb62-996"><a href="#cb62-996" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.0.2_gcc-8.4.0</span></span>
-<span id="cb62-997"><a href="#cb62-997" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
-<span id="cb62-998"><a href="#cb62-998" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-999"><a href="#cb62-999" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1000"><a href="#cb62-1000" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2020.1</span></span>
+<span id="cb62-994"><a href="#cb62-994" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2021.1</span></span>
+<span id="cb62-995"><a href="#cb62-995" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-996"><a href="#cb62-996" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
+<span id="cb62-997"><a href="#cb62-997" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2021.1</span></span>
+<span id="cb62-998"><a href="#cb62-998" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.0.5_gcc-9.3.0</span></span>
+<span id="cb62-999"><a href="#cb62-999" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
+<span id="cb62-1000"><a href="#cb62-1000" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-1001"><a href="#cb62-1001" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1002"><a href="#cb62-1002" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
-<span id="cb62-1003"><a href="#cb62-1003" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2020.1</span></span>
-<span id="cb62-1004"><a href="#cb62-1004" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/3.6.2_gcc-9.2.0</span></span>
-<span id="cb62-1005"><a href="#cb62-1005" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
-<span id="cb62-1006"><a href="#cb62-1006" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb62-1007"><a href="#cb62-1007" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1008"><a href="#cb62-1008" aria-hidden="true" tabindex="-1"></a><span class="do">## Managing packages for a project using `packrat`</span></span>
+<span id="cb62-1002"><a href="#cb62-1002" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2020.2</span></span>
+<span id="cb62-1003"><a href="#cb62-1003" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1004"><a href="#cb62-1004" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
+<span id="cb62-1005"><a href="#cb62-1005" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2020.2</span></span>
+<span id="cb62-1006"><a href="#cb62-1006" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/4.0.2_gcc-8.4.0</span></span>
+<span id="cb62-1007"><a href="#cb62-1007" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
+<span id="cb62-1008"><a href="#cb62-1008" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb62-1009"><a href="#cb62-1009" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1010"><a href="#cb62-1010" aria-hidden="true" tabindex="-1"></a>Please note<span class="sc">:</span> we now use [<span class="st">`</span><span class="at">renv</span><span class="st">`</span>](<span class="co">#sec-renv) rather than `packrat` for package management</span></span>
+<span id="cb62-1010"><a href="#cb62-1010" aria-hidden="true" tabindex="-1"></a><span class="do">### Stack 2020.1</span></span>
 <span id="cb62-1011"><a href="#cb62-1011" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1012"><a href="#cb62-1012" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>uiowa.atlassian.net<span class="sc">/</span>wiki<span class="sc">/</span>spaces<span class="sc">/</span>hpcdocs<span class="sc">/</span>pages<span class="sc">/</span><span class="dv">76514803</span><span class="sc">/</span>Adding<span class="sc">+</span>R<span class="sc">+</span>programs<span class="sc">+</span>to<span class="sc">+</span>a<span class="sc">+</span>personal<span class="sc">+</span>library<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span><span class="dv">3</span>SRR<span class="dv">-2</span>JE7<span class="sc">&gt;</span>)</span>
-<span id="cb62-1013"><a href="#cb62-1013" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1014"><a href="#cb62-1014" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Create a directory where you want you want to store the project.</span>
-<span id="cb62-1015"><a href="#cb62-1015" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">cd</span><span class="st">`</span> to the above directory</span>
-<span id="cb62-1016"><a href="#cb62-1016" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Start R</span>
-<span id="cb62-1017"><a href="#cb62-1017" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Load the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> package<span class="sc">:</span> <span class="st">`</span><span class="at">library("packrat")</span><span class="st">`</span></span>
-<span id="cb62-1018"><a href="#cb62-1018" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> At the <span class="st">`</span><span class="at">R</span><span class="st">`</span> prompt, initialize the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project on the local repository of <span class="st">`</span><span class="at">R</span><span class="st">`</span> packages with<span class="sc">:</span> <span class="st">`</span><span class="at">packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))</span><span class="st">`</span></span>
-<span id="cb62-1019"><a href="#cb62-1019" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You must restart your <span class="st">`</span><span class="at">R</span><span class="st">`</span> session <span class="cf">in</span> the given project directory after running init <span class="cf">in</span> order <span class="cf">for</span> the changes to take effect<span class="sc">!</span></span>
-<span id="cb62-1020"><a href="#cb62-1020" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> From this point on you are working <span class="cf">in</span> a <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project.</span>
-<span id="cb62-1021"><a href="#cb62-1021" aria-hidden="true" tabindex="-1"></a>Installed packages will go into a library within this project.</span>
-<span id="cb62-1022"><a href="#cb62-1022" aria-hidden="true" tabindex="-1"></a>After initializing the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project on the local repository of <span class="st">`</span><span class="at">R</span><span class="st">`</span> packages, packages from the local repository can be installed with <span class="st">`</span><span class="at">packrat::install_local()</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb62-1023"><a href="#cb62-1023" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">packrat::install_local("package_name")</span><span class="st">`</span></span>
-<span id="cb62-1024"><a href="#cb62-1024" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> To restart a packrat project simply start <span class="st">`</span><span class="at">R</span><span class="st">`</span> from the directory created <span class="cf">in</span> <span class="fu">step</span> (<span class="dv">1</span>). The project will initialize automatically.</span>
-<span id="cb62-1025"><a href="#cb62-1025" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1026"><a href="#cb62-1026" aria-hidden="true" tabindex="-1"></a>To save the current state of your library<span class="sc">:</span> <span class="st">`</span><span class="at">packrat::snapshot()</span><span class="st">`</span>; <span class="cf">if</span> that command fails due to an error when fetching sources, try <span class="st">`</span><span class="at">packrat::snapshot(snapshot.sources = FALSE)</span><span class="st">`</span> </span>
-<span id="cb62-1027"><a href="#cb62-1027" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1028"><a href="#cb62-1028" aria-hidden="true" tabindex="-1"></a>To disable <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> on a project<span class="sc">:</span> <span class="st">`</span><span class="at">disable(restart = FALSE)</span><span class="st">`</span></span>
-<span id="cb62-1029"><a href="#cb62-1029" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1030"><a href="#cb62-1030" aria-hidden="true" tabindex="-1"></a><span class="do">### To install a new package for a project after `packrat` has been initialized</span></span>
-<span id="cb62-1031"><a href="#cb62-1031" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1032"><a href="#cb62-1032" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> First, load the <span class="st">`</span><span class="at">R</span><span class="st">`</span> environment <span class="fu">module</span> (see <span class="st">`</span><span class="at">Install R packages</span><span class="st">`</span> section above)</span>
-<span id="cb62-1033"><a href="#cb62-1033" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> cd to the directory of the <span class="st">`</span><span class="at">R</span><span class="st">`</span> project</span>
-<span id="cb62-1034"><a href="#cb62-1034" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> launch R</span>
-<span id="cb62-1035"><a href="#cb62-1035" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">R</span><span class="st">`</span></span>
-<span id="cb62-1036"><a href="#cb62-1036" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> then install the package, (the code below uses a generic <span class="st">`</span><span class="at">package_name</span><span class="st">`</span>)<span class="sc">:</span></span>
-<span id="cb62-1037"><a href="#cb62-1037" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</span><span class="st">`</span></span>
-<span id="cb62-1038"><a href="#cb62-1038" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</span><span class="st">`</span></span>
-<span id="cb62-1039"><a href="#cb62-1039" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">packrat::snapshot()</span><span class="st">`</span>; <span class="cf">if</span> that command fails due to an error when fetching sources, try <span class="st">`</span><span class="at">packrat::snapshot(snapshot.sources = FALSE)</span><span class="st">`</span></span>
-<span id="cb62-1040"><a href="#cb62-1040" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1041"><a href="#cb62-1041" aria-hidden="true" tabindex="-1"></a><span class="do">### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)</span></span>
-<span id="cb62-1042"><a href="#cb62-1042" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1043"><a href="#cb62-1043" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">qlogin</span><span class="st">`</span> <span class="sc">--</span> <span class="cf">for</span> more info, see here<span class="sc">:</span> <span class="er">&lt;</span>https<span class="sc">:</span><span class="er">//</span>uiowa.atlassian.net<span class="sc">/</span>wiki<span class="sc">/</span>spaces<span class="sc">/</span>hpcdocs<span class="sc">/</span>pages<span class="sc">/</span><span class="dv">76513454</span><span class="sc">/</span>Qlogin<span class="sc">+</span><span class="cf">for</span><span class="sc">+</span>Interactive<span class="sc">+</span>Sessions<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span>Y3A9<span class="sc">-</span>WQ3W<span class="sc">&gt;</span>)</span>
-<span id="cb62-1044"><a href="#cb62-1044" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">module load stack/2020.2-base_arch</span><span class="st">`</span> <span class="sc">--</span> this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</span>
-<span id="cb62-1045"><a href="#cb62-1045" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">module load r</span><span class="st">`</span></span>
-<span id="cb62-1046"><a href="#cb62-1046" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> cd to the directory of the <span class="st">`</span><span class="at">R</span><span class="st">`</span> project</span>
-<span id="cb62-1047"><a href="#cb62-1047" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">R</span><span class="st">`</span></span>
-<span id="cb62-1048"><a href="#cb62-1048" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Create <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> <span class="fu">project</span> (see above)</span>
-<span id="cb62-1049"><a href="#cb62-1049" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Install packages</span>
-<span id="cb62-1050"><a href="#cb62-1050" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Take a package snapshot using <span class="st">`</span><span class="at">packrat</span><span class="st">`</span></span>
-<span id="cb62-1051"><a href="#cb62-1051" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">exit</span><span class="st">`</span> <span class="sc">--</span> to exit the qlogin session</span>
+<span id="cb62-1012"><a href="#cb62-1012" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">bash</span></span>
+<span id="cb62-1013"><a href="#cb62-1013" aria-hidden="true" tabindex="-1"></a><span class="at">module load stack/2020.1</span></span>
+<span id="cb62-1014"><a href="#cb62-1014" aria-hidden="true" tabindex="-1"></a><span class="at">module load r/3.6.2_gcc-9.2.0</span></span>
+<span id="cb62-1015"><a href="#cb62-1015" aria-hidden="true" tabindex="-1"></a><span class="at">cd path</span></span>
+<span id="cb62-1016"><a href="#cb62-1016" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb62-1017"><a href="#cb62-1017" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1018"><a href="#cb62-1018" aria-hidden="true" tabindex="-1"></a><span class="do">## Managing packages for a project using `packrat`</span></span>
+<span id="cb62-1019"><a href="#cb62-1019" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1020"><a href="#cb62-1020" aria-hidden="true" tabindex="-1"></a>Please note<span class="sc">:</span> we now use [<span class="st">`</span><span class="at">renv</span><span class="st">`</span>](<span class="co">#sec-renv) rather than `packrat` for package management</span></span>
+<span id="cb62-1021"><a href="#cb62-1021" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1022"><a href="#cb62-1022" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>uiowa.atlassian.net<span class="sc">/</span>wiki<span class="sc">/</span>spaces<span class="sc">/</span>hpcdocs<span class="sc">/</span>pages<span class="sc">/</span><span class="dv">76514803</span><span class="sc">/</span>Adding<span class="sc">+</span>R<span class="sc">+</span>programs<span class="sc">+</span>to<span class="sc">+</span>a<span class="sc">+</span>personal<span class="sc">+</span>library<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span><span class="dv">3</span>SRR<span class="dv">-2</span>JE7<span class="sc">&gt;</span>)</span>
+<span id="cb62-1023"><a href="#cb62-1023" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1024"><a href="#cb62-1024" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Create a directory where you want you want to store the project.</span>
+<span id="cb62-1025"><a href="#cb62-1025" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">cd</span><span class="st">`</span> to the above directory</span>
+<span id="cb62-1026"><a href="#cb62-1026" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Start R</span>
+<span id="cb62-1027"><a href="#cb62-1027" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Load the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> package<span class="sc">:</span> <span class="st">`</span><span class="at">library("packrat")</span><span class="st">`</span></span>
+<span id="cb62-1028"><a href="#cb62-1028" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> At the <span class="st">`</span><span class="at">R</span><span class="st">`</span> prompt, initialize the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project on the local repository of <span class="st">`</span><span class="at">R</span><span class="st">`</span> packages with<span class="sc">:</span> <span class="st">`</span><span class="at">packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))</span><span class="st">`</span></span>
+<span id="cb62-1029"><a href="#cb62-1029" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> You must restart your <span class="st">`</span><span class="at">R</span><span class="st">`</span> session <span class="cf">in</span> the given project directory after running init <span class="cf">in</span> order <span class="cf">for</span> the changes to take effect<span class="sc">!</span></span>
+<span id="cb62-1030"><a href="#cb62-1030" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> From this point on you are working <span class="cf">in</span> a <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project.</span>
+<span id="cb62-1031"><a href="#cb62-1031" aria-hidden="true" tabindex="-1"></a>Installed packages will go into a library within this project.</span>
+<span id="cb62-1032"><a href="#cb62-1032" aria-hidden="true" tabindex="-1"></a>After initializing the <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> project on the local repository of <span class="st">`</span><span class="at">R</span><span class="st">`</span> packages, packages from the local repository can be installed with <span class="st">`</span><span class="at">packrat::install_local()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb62-1033"><a href="#cb62-1033" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">packrat::install_local("package_name")</span><span class="st">`</span></span>
+<span id="cb62-1034"><a href="#cb62-1034" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> To restart a packrat project simply start <span class="st">`</span><span class="at">R</span><span class="st">`</span> from the directory created <span class="cf">in</span> <span class="fu">step</span> (<span class="dv">1</span>). The project will initialize automatically.</span>
+<span id="cb62-1035"><a href="#cb62-1035" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1036"><a href="#cb62-1036" aria-hidden="true" tabindex="-1"></a>To save the current state of your library<span class="sc">:</span> <span class="st">`</span><span class="at">packrat::snapshot()</span><span class="st">`</span>; <span class="cf">if</span> that command fails due to an error when fetching sources, try <span class="st">`</span><span class="at">packrat::snapshot(snapshot.sources = FALSE)</span><span class="st">`</span> </span>
+<span id="cb62-1037"><a href="#cb62-1037" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1038"><a href="#cb62-1038" aria-hidden="true" tabindex="-1"></a>To disable <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> on a project<span class="sc">:</span> <span class="st">`</span><span class="at">disable(restart = FALSE)</span><span class="st">`</span></span>
+<span id="cb62-1039"><a href="#cb62-1039" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1040"><a href="#cb62-1040" aria-hidden="true" tabindex="-1"></a><span class="do">### To install a new package for a project after `packrat` has been initialized</span></span>
+<span id="cb62-1041"><a href="#cb62-1041" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1042"><a href="#cb62-1042" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> First, load the <span class="st">`</span><span class="at">R</span><span class="st">`</span> environment <span class="fu">module</span> (see <span class="st">`</span><span class="at">Install R packages</span><span class="st">`</span> section above)</span>
+<span id="cb62-1043"><a href="#cb62-1043" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> cd to the directory of the <span class="st">`</span><span class="at">R</span><span class="st">`</span> project</span>
+<span id="cb62-1044"><a href="#cb62-1044" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> launch R</span>
+<span id="cb62-1045"><a href="#cb62-1045" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">R</span><span class="st">`</span></span>
+<span id="cb62-1046"><a href="#cb62-1046" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> then install the package, (the code below uses a generic <span class="st">`</span><span class="at">package_name</span><span class="st">`</span>)<span class="sc">:</span></span>
+<span id="cb62-1047"><a href="#cb62-1047" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</span><span class="st">`</span></span>
+<span id="cb62-1048"><a href="#cb62-1048" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> <span class="st">`</span><span class="at">install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</span><span class="st">`</span></span>
+<span id="cb62-1049"><a href="#cb62-1049" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">packrat::snapshot()</span><span class="st">`</span>; <span class="cf">if</span> that command fails due to an error when fetching sources, try <span class="st">`</span><span class="at">packrat::snapshot(snapshot.sources = FALSE)</span><span class="st">`</span></span>
+<span id="cb62-1050"><a href="#cb62-1050" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1051"><a href="#cb62-1051" aria-hidden="true" tabindex="-1"></a><span class="do">### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)</span></span>
 <span id="cb62-1052"><a href="#cb62-1052" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-1053"><a href="#cb62-1053" aria-hidden="true" tabindex="-1"></a>Note<span class="sc">:</span> Your <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> environment will then be linked to the proper <span class="st">`</span><span class="at">glpk</span><span class="st">`</span> library and will run on any Argon node.</span>
-<span id="cb62-1054"><a href="#cb62-1054" aria-hidden="true" tabindex="-1"></a>You do not need to use the <span class="st">`</span><span class="at">2020.2-base_arch</span><span class="st">`</span> module at run time, only build time.</span>
+<span id="cb62-1053"><a href="#cb62-1053" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">qlogin</span><span class="st">`</span> <span class="sc">--</span> <span class="cf">for</span> more info, see here<span class="sc">:</span> <span class="er">&lt;</span>https<span class="sc">:</span><span class="er">//</span>uiowa.atlassian.net<span class="sc">/</span>wiki<span class="sc">/</span>spaces<span class="sc">/</span>hpcdocs<span class="sc">/</span>pages<span class="sc">/</span><span class="dv">76513454</span><span class="sc">/</span>Qlogin<span class="sc">+</span><span class="cf">for</span><span class="sc">+</span>Interactive<span class="sc">+</span>Sessions<span class="sc">&gt;</span> (archived at <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>perma.cc<span class="sc">/</span>Y3A9<span class="sc">-</span>WQ3W<span class="sc">&gt;</span>)</span>
+<span id="cb62-1054"><a href="#cb62-1054" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">module load stack/2020.2-base_arch</span><span class="st">`</span> <span class="sc">--</span> this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</span>
+<span id="cb62-1055"><a href="#cb62-1055" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">module load r</span><span class="st">`</span></span>
+<span id="cb62-1056"><a href="#cb62-1056" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> cd to the directory of the <span class="st">`</span><span class="at">R</span><span class="st">`</span> project</span>
+<span id="cb62-1057"><a href="#cb62-1057" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">R</span><span class="st">`</span></span>
+<span id="cb62-1058"><a href="#cb62-1058" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Create <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> <span class="fu">project</span> (see above)</span>
+<span id="cb62-1059"><a href="#cb62-1059" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Install packages</span>
+<span id="cb62-1060"><a href="#cb62-1060" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> Take a package snapshot using <span class="st">`</span><span class="at">packrat</span><span class="st">`</span></span>
+<span id="cb62-1061"><a href="#cb62-1061" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> <span class="st">`</span><span class="at">exit</span><span class="st">`</span> <span class="sc">--</span> to exit the qlogin session</span>
+<span id="cb62-1062"><a href="#cb62-1062" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-1063"><a href="#cb62-1063" aria-hidden="true" tabindex="-1"></a>Note<span class="sc">:</span> Your <span class="st">`</span><span class="at">packrat</span><span class="st">`</span> environment will then be linked to the proper <span class="st">`</span><span class="at">glpk</span><span class="st">`</span> library and will run on any Argon node.</span>
+<span id="cb62-1064"><a href="#cb62-1064" aria-hidden="true" tabindex="-1"></a>You do not need to use the <span class="st">`</span><span class="at">2020.2-base_arch</span><span class="st">`</span> module at run time, only build time.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
