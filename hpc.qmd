@@ -578,7 +578,12 @@ Rscript ./Analyses/factorScores.R
 
 ### qsub options
 
-`-pe smp 4`: specify a parallel environment and number of cores to be used (`smp` = shared memory parallel environment)
+`-pe smp 4`: specify a parallel environment and number of slots (CPU cores) to be used (`smp` = shared memory parallel environment); increasing the number of slots increases the memory available for the job.
+If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the `mf` and `h_vmem` flags, below).
+You can estimate the memory available per slot by dividing a node's total memory by its total core count.
+You can find the specific configurations for each node type on the wiki: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies>
+For instance, if you are using the UI queue that has 512GB of memory spread across 128 cores, each core comes with 4GB of memory (i.e., $512 / 128 = 4$).
+Thus, if your job needs 20GB of memory, you would need to request at least 5 cores (i.e., $20 / 4 = 5$).
 
 - The `OMP_NUM_THREADS` variable is set to '1' by default.
 If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
@@ -594,11 +599,16 @@ This must be your University of Iowa email address.
 - `s` = when job is suspended
 - `n` = no mail is sent
 
-`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.
-It is not a limit.)
+`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.)
+The `mem_free` flag tells the scheduler to find a node that has at least that much memory available at the moment your job starts.
+However, it does not reserve or lock that memory for your job's exclusive use while it is running.
+To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
 
-`-l h_vmem=512G`: request a particular quantity of virtual memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.
-It is not a limit.)
+`-l h_vmem=512G`: request the maximum quantity of virtual memory you expect to need; `h_vmem` is a hard limit.
+It acts as a ceiling.
+If your job exceeds this amount of memory, the system will terminate the process to protect the node's stability.
+However, it does not reserve or lock that memory for your job's exclusive use while it is running.
+To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
 
 `-cwd`: Determines whether the job will be executed from the current working directory.
 If not specified, the job will be run from your home directory.
