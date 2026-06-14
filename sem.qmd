@@ -2005,9 +2005,141 @@ To generate an interactive/modifiable path diagram, you can use the following sy
 lavaangui::plot_lavaan(riclpm1_fit)
 ```
 
-# Latent Curve Model with Structured Residuals {#sec-lcm-sr}
+# Autoregressive Latent Trajectory (ALT) Model {#sec-alt}
 
-A latent curve model with structured residuals (LCM-SR) is also called an autoregressive latent trajectory model with structured residuals (ALT-SR).
+As noted by Curran and Hancock (2021) and in their [corresponding episode on Quantitude](https://quantitudepod.org/s7e20-co-development/), in an ALT model, the time-linked relations affect the underlying growth trajectories and vice versa, thus preventing the pure isolation of within-person and between-person effects.
+Thus, researchers advocate for the use of the [latent curve model with structured residuals](#sec-lcm-sr) (LCM-SR) to separate within-person and between-person effects.
+
+## Model Syntax
+
+```{r}
+alt_syntax <- '
+  # Intercept and slope
+  intercept_t =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope_t =~ 0*t1 + 1*t2 + 2*t3 + 3*t4
+  
+  intercept_c =~ 1*c1 + 1*c2 + 1*c3 + 1*c4
+  slope_c =~ 0*c1 + 1*c2 + 2*c3 + 3*c4
+  
+  # Autoregressive Paths
+  t4 ~ t3
+  t3 ~ t2
+  t2 ~ t1
+  
+  c4 ~ c3
+  c3 ~ c2
+  c2 ~ c1
+  
+  # Concurrent Covariances
+  t1 ~~ c1
+  t2 ~~ c2
+  t3 ~~ c3
+  t4 ~~ c4
+  
+  # Cross-Lagged Paths
+  t4 ~ c3
+  t3 ~ c2
+  t2 ~ c1
+  
+  c4 ~ t3
+  c3 ~ t2
+  c2 ~ t1
+'
+```
+
+## Fit the Model
+
+```{r}
+alt_fit <- sem(
+  alt_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+## Summary Output
+
+```{r}
+summary(
+  alt_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  alt_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+## Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  alt_fit,
+  type = "cor")
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  alt_fit,
+  sort. = TRUE)
+```
+
+## Internal Consistency Reliability
+
+```{r}
+compRelSEM(alt_fit)
+```
+
+## Path Diagram
+
+```{r}
+semPaths(
+  alt_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+
+lavaanPlot::lavaanPlot(
+  alt_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+
+lavaanPlot::lavaanPlot2(
+  alt_fit,
+  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(alt_fit)
+```
+
+# Latent Curve Model with Structured Residuals (LCM-SR) {#sec-lcm-sr}
+
+A latent curve model with structured residuals (LCM-SR) is an extension of the [autoregressive latent trajectory (ALT) model](#sec-alt).
+A LCM-SR model is also called an autoregressive latent trajectory model with structured residuals (ALT-SR).
+The LCM-SR separates stable between-person differences in developmental trajectories from within-person deviations around those trajectories.
+The latent intercept and slope factors represent between-person differences, whereas the autoregressive and cross-lagged relations among the structured residuals represent within-person processes.
 A LSM-SR model can also be estimated using [multilevel SEM](mplus.qmd#sec-msem-lcm-sr).
 
 ## Model Syntax
