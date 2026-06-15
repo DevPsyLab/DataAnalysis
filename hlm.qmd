@@ -1335,6 +1335,82 @@ To evaluate the extent to which a finding could driven by outliers, this could b
 - fitting mixed models using rank-based estimation (Bilgic & Susmann, 2013; Finch, 2017) or robust estimating equations (Koller, 2016)
 - estimating robust standard errors using a sandwich estimator (Wang & Merkle, 2018)
 
+# Compare Models
+
+For nested models:
+
+```{r}
+#| eval: false
+
+anova(
+  model1,
+  model2,
+  model3
+)
+```
+
+For non-nested models:
+
+```{r}
+#| eval: false
+
+performance::r2(model1)
+performance::r2(model2)
+performance::r2(model3)
+
+performance::model_performance(model1)
+performance::model_performance(model2)
+performance::model_performance(model3)
+
+AIC(
+  model1,
+  model2,
+  model3
+)
+
+BIC(
+  model1,
+  model2,
+  model3
+)
+
+bbmle::AICtab(
+  model1,
+  model2,
+  model3
+)
+
+bbmle::AICctab(
+  model1,
+  model2,
+  model3
+)
+
+bbmle::BICtab(
+  model1,
+  model2,
+  model3
+)
+
+AICcmodavg::aictab(
+  model1,
+  model2,
+  model3
+)
+
+AICcmodavg::bictab(
+  model1,
+  model2,
+  model3
+)
+
+MuMIn::AICc(
+  model1,
+  model2,
+  model3
+)
+```
+
 # Assumptions
 
 The within-group errors:

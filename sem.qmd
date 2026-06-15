@@ -4455,6 +4455,41 @@ round(cbind(
   strict = inspect(residualInvariance_fit, "fit.measures")), 3)
 ```
 
+# Compare Models
+
+For nested models:
+
+```{r}
+#| eval: false
+
+anova(
+  model1,
+  model2,
+  model3
+)
+
+round(cbind(
+  model1 = inspect(model1, "fit.measures"), 
+  model2 = inspect(model2, "fit.measures"),
+  model3 = inspect(model3, "fit.measures")), 3)
+```
+
+For non-nested models:
+
+```{r}
+#| eval: false
+
+round(cbind(
+  model1 = inspect(model1, "fit.measures"), 
+  model2 = inspect(model2, "fit.measures"),
+  model3 = inspect(model3, "fit.measures")), 3)
+
+nonnest2::vuongtest(
+  model1,
+  model2,
+  nested = TRUE)
+```
+
 # Bounded Estimation with Random Starts {#sec-boundedEstimationRandomStarts}
 
 For more info, see De Jonckere and Rosseel (2022, 2025).
