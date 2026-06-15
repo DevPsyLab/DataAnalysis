@@ -4,13 +4,14 @@ title: "Longitudinal Data Analysis"
 
 # Approaches for Modeling Longitudinal Data {#sec-approaches}
 
-- [Growth curve model](hlm.qmd#sec-gcm)
-- [Latent growth curve model](sem.qmd#sec-lgcm)
-- [Latent change score model](sem.qmd#sec-lcsm)
-- [Cross-lagged panel model](sem.qmd#sec-clpm)
-- [Autoregressive latent trajectory model](sem.qmd#sec-alt)
-- [Latent curve model with structured residuals](sem.qmd#sec-lcm-sr)
-- [Latent curve model with structured residuals with long data in multilevel SEM](mplus.qmd#sec-msem-lcm-sr)
+- [Growth curve model](hlm.qmd#sec-gcm) (GCM)
+- [Latent growth curve model](sem.qmd#sec-lgcm) (LGCM)
+- [Latent change score model](sem.qmd#sec-lcsm) (LCSM)
+- [Cross-lagged panel model](sem.qmd#sec-clpm) (CLPM)
+- [Random intercept cross-lagged panel model](sem.qmd#sec-riclpm) (RI-CLPM)
+- [Autoregressive latent trajectory (ALT) model](sem.qmd#sec-alt)
+- [Latent curve model with structured residuals](sem.qmd#sec-lcm-sr) (LCM-SR)
+- [Latent curve model with structured residuals with long data in multilevel SEM](mplus.qmd#sec-msem-lcm-sr) (LCM-SR)
 
 # Ensuring/Evaluating Whether Longitudinal Scores are on the Same Statistical Scale Across Time
 
@@ -29,9 +30,11 @@ There are a variety of ways to estimate nonlinear growth in a growth curve model
 - latent basis growth model
   - can specify the rate of change between T1 and T2 to be one; can allow the rate of change to freely vary between remaining timepoints
 - exponential growth model
+  - exponential asymptotic model: e.g., 3-parameter asymptotic exponential
 - logistic growth model
 - logarithmic growth model
   - e.g., "an exponential pattern of change—in which change appears to 'level off' over time—can be approximated through linear (and potentially quadratic) slopes for a natural-log-transformed" version of time in a [mixed-effects model](hlm.qmd) or by fixing the latent change factor loadings to these values in [SEM](sem.qmd) (Hoffman, 2025)
+    - i.e., `log(time + 1)`
 - generalized additive model
 - nonparametric growth model (e.g., kernel smoothing)
 - Gompertz growth model
