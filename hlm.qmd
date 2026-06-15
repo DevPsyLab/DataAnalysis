@@ -588,6 +588,148 @@ quadraticGCM_re$id <- head(quadraticGCM_re$id)
 quadraticGCM_re
 ```
 
+### Logarithmic Growth Curve Model {#sec-logGCM}
+
+“an exponential pattern of change—in which change appears to ‘level off’ over time—can be approximated through linear (and potentially quadratic) slopes for a natural-log-transformed” version of time (Hoffman, 2025).
+
+#### Fit Model
+
+```{r}
+logGCM <- lmer(
+  math ~ sex + log(ageYearsCentered + 1) + sex:log(ageYearsCentered + 1) + (1 + log(ageYearsCentered + 1) | id), # random intercepts and logarithmic slopes; sex as a fixed-effect predictor of the intercepts and slopes
+  data = mydata,
+  REML = FALSE, #for ML
+  na.action = na.exclude,
+  control = lmerControl(optimizer = "bobyqa"))
+
+summary(logGCM)
+
+print(effectsize::standardize_parameters(
+  logGCM,
+  method = "refit"),
+  digits = 2)
+
+performance::r2(logGCM)
+```
+
+#### Prototypical Growth Curve
+
+```{r}
+newData <- expand.grid(
+  female = c(0, 1),
+  ageYears = seq(from = min(mydata$ageYears, na.rm = TRUE), to = max(mydata$ageYears, na.rm = TRUE), length.out = 10000))
+
+newData$ageYearsCentered <- newData$ageYears - min(newData$ageYears)
+
+newData$sex <- NA
+newData$sex[which(newData$female == 0)] <- "male"
+newData$sex[which(newData$female == 1)] <- "female"
+newData$sex <- as.factor(newData$sex)
+
+newData$predictedValue <- predict( # predict.merMod
+  logGCM,
+  newdata = newData,
+  re.form = NA
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    color = sex)) +
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+mydata$predictedValue <- predict(
+  logGCM,
+  newdata = mydata,
+  re.form = NULL
+)
+
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id,
+    color = sex)) +
+  geom_line(
+    stat = "smooth",
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 0.5,
+    alpha = 0.4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot(
+  data = mydata,
+  mapping = aes(
+    x = ageYears,
+    y = predictedValue,
+    group = id)) +
+  geom_line( # individuals' trajectories
+    stat = "smooth",
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.4
+  ) +
+  geom_line( # prototypical trajectory
+    data = newData,
+    mapping = aes(
+      x = ageYears,
+      y = predictedValue,
+      group = sex,
+      color = sex),
+    linewidth = 2) +
+  labs(
+    x = "Age (years)",
+    y = "Math Score",
+    color = "Sex"
+  ) +
+  theme_classic()
+```
+
+#### Extract Random Effects
+
+```{r}
+#| output: false
+
+ranef(logGCM)
+```
+
+```{r}
+#| echo: false
+
+logGCM_re <- ranef(logGCM)
+
+logGCM_re$id <- head(logGCM_re$id)
+logGCM_re
+```
+
 ### Spline Growth Curve Model {#sec-splineGCM}
 
 #### Create Knot

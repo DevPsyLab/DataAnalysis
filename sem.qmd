@@ -1142,6 +1142,305 @@ ggplot() +
    theme_classic()
 ```
 
+## Logarithmic Growth Curve Model {#sec-logGCM}
+
+“an exponential pattern of change—in which change appears to ‘level off’ over time—can be approximated through linear (and potentially quadratic) slopes for a natural-log-transformed” version of time in a [mixed-effects model](hlm.qmd) or by fixing the latent change factor loadings to these values in SEM (Hoffman, 2025).
+
+### Model Syntax
+
+Can get the factor loadings via:
+
+```{r}
+log(0:3 + 1)
+```
+
+#### Abbreviated
+
+```{r}
+logGCM1_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 0.6931472*t2 + 1.0986123*t3 + 1.3862944*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+'
+```
+
+#### Full
+
+```{r}
+logGCM2_syntax <- '
+  # Intercept and slope
+  intercept =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
+  slope =~ 0*t1 + 0.6931472*t2 + 1.0986123*t3 + 1.3862944*t4
+
+  # Regression paths
+  intercept ~ x1 + x2
+  slope ~ x1 + x2
+  
+  # Time-varying covariates
+  t1 ~ c1
+  t2 ~ c2
+  t3 ~ c3
+  t4 ~ c4
+  
+  # Constrain observed intercepts to zero
+  t1 ~ 0*1
+  t2 ~ 0*1
+  t3 ~ 0*1
+  t4 ~ 0*1
+  
+  # Estimate mean of intercept and slope
+  intercept ~ 1
+  slope ~ 1
+'
+```
+
+### Fit the Model
+
+#### Abbreviated
+
+```{r}
+logGCM1_fit <- growth(
+  logGCM1_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  int.ov.free = FALSE,
+  int.lv.free = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+#### Full
+
+```{r}
+logGCM2_fit <- sem(
+  logGCM2_syntax,
+  data = Demo.growth,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  fixed.x = FALSE,
+  em.h1.iter.max = 100000)
+```
+
+### Summary Output
+
+#### Abbreviated
+
+```{r}
+summary(
+  logGCM1_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+#### Full
+
+```{r}
+summary(
+  logGCM2_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Estimates of Model Fit
+
+```{r}
+fitMeasures(
+  logGCM1_fit,
+  fit.measures = c(
+    "chisq", "df", "pvalue",
+    "chisq.scaled", "df.scaled", "pvalue.scaled",
+    "chisq.scaling.factor",
+    "baseline.chisq","baseline.df","baseline.pvalue",
+    "rmsea", "cfi", "tli", "srmr",
+    "rmsea.robust", "cfi.robust", "tli.robust"))
+```
+
+### Residuals of Observed vs. Model-Implied Correlation Matrix
+
+```{r}
+residuals(
+  logGCM1_fit,
+  type = "cor")
+```
+
+### Modification Indices
+
+```{r}
+modificationindices(
+  logGCM1_fit,
+  sort. = TRUE)
+```
+
+### Internal Consistency Reliability
+
+```{r}
+compRelSEM(logGCM1_fit)
+```
+
+### Path Diagram
+
+```{r}
+semPlot::semPaths(
+  logGCM1_fit,
+  what = "Std.all",
+  layout = "tree2",
+  edge.label.cex = 1.5)
+
+lavaanPlot::lavaanPlot(
+  logGCM1_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+
+lavaanPlot::lavaanPlot2(
+  logGCM1_fit,
+  #stand = TRUE, # currently throws error; uncomment out when fixed: https://github.com/alishinski/lavaanPlot/issues/52
+  coef_labels = TRUE)
+```
+
+To generate an interactive/modifiable path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(logGCM1_fit)
+```
+
+### Plot Trajectories
+
+#### Prototypical Growth Curve
+
+```{r}
+logGCM1_intercept <- coef(logGCM1_fit)["intercept~1"]
+logGCM1_slope <- coef(logGCM1_fit)["slope~1"]
+
+timepoints <- 4
+
+newData <- data.frame(
+  time = c(1, 4),
+  logLoading = c(0, 0.6931472, 1.0986123, 1.3862944)
+)
+
+newData$predictedValue <- NA
+newData$predictedValue <- logGCM1_intercept + (logGCM1_slope * newData$logLoading)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = time,
+    y = predictedValue)) +
+  geom_line(
+    stat = "smooth",
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 1,
+  ) +
+  coord_cartesian(
+    ylim = c(0, 5)) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+  theme_classic()
+```
+
+#### Individuals' Growth Curves
+
+```{r}
+person_factors <- as.data.frame(predict(logGCM1_fit))
+person_factors$id <- rownames(person_factors)
+
+linear_loadings <- c(0, 1, 2, 3)
+log_loadings <- c(0, 0.6931472, 1.0986123, 1.3862944)
+
+# Compute model-implied values for each person at each time point
+individual_trajectories <- person_factors %>%
+  rowwise() %>%
+  mutate(
+    t1 = intercept + (slope * log_loadings[1]),
+    t2 = intercept + (slope * log_loadings[2]),
+    t3 = intercept + (slope * log_loadings[3]),
+    t4 = intercept + (slope * log_loadings[4])
+  ) %>%
+  ungroup() %>%
+  select(id, t1, t2, t3, t4) %>%
+  pivot_longer(
+    cols = t1:t4,
+    names_to = "timepoint",
+    values_to = "value") %>%
+  mutate(
+    time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
+  )
+
+ggplot(
+  data = individual_trajectories,
+  mapping = aes(
+    x = time,
+    y = value,
+    group = factor(id))) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 0.5
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
+```
+
+#### Individuals' Trajectories Overlaid with Prototypical Trajectory
+
+```{r}
+ggplot() +
+  geom_smooth( # individuals' model-implied trajectories
+    data = individual_trajectories,
+    mapping = aes(
+      x = time,
+      y = value,
+      group = id),
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 0.5,
+    color = "gray",
+    alpha = 0.30
+  ) +
+  geom_smooth( # prototypical trajectory
+    data = newData,
+    mapping = aes(
+      x = time,
+      y = predictedValue),
+    method = "lm",
+    formula = y ~ log(x + 1),
+    se = FALSE,
+    linewidth = 2
+  ) +
+  labs(
+    x = "Timepoint",
+    y = "Score"
+  ) +
+   theme_classic()
+```
+
 ## Spline (Piecewise) Growth Curve Model {#sec-splineLGCM}
 
 ### Model Syntax
