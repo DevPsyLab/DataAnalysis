@@ -2,4 +2,420 @@
 title: "Developmental Scaling"
 ---
 
-To be added...
+# Preamble
+
+## Install Libraries
+
+```{r}
+#install.packages("remotes")
+#remotes::install_github("DevPsyLab/petersenlab")
+```
+
+## Load Libraries
+
+```{r}
+library("lavaan")
+library("semTools")
+library("semPlot")
+library("lavaanPlot")
+library("lavaangui")
+library("sirt")
+library("kableExtra")
+library("tidyverse")
+```
+
+## Import data
+
+```{r}
+mydata_wide <- read.csv("./data/Bliese-Ployhart-2002-indicators-4.csv")
+```
+
+## Data Processing
+
+```{r}
+mydata_wide$sad1 <- mydata_wide$JOBSAT11
+mydata_wide$sad2 <- mydata_wide$JOBSAT21
+mydata_wide$sad3 <- mydata_wide$JOBSAT31
+
+mydata_wide$down1 <- mydata_wide$JOBSAT12
+mydata_wide$down2 <- mydata_wide$JOBSAT22
+mydata_wide$down3 <- mydata_wide$JOBSAT32
+
+mydata_wide$depressed1 <- mydata_wide$JOBSAT13
+mydata_wide$depressed2 <- mydata_wide$JOBSAT23
+mydata_wide$depressed3 <- mydata_wide$JOBSAT33
+```
+
+# Approaches
+
+1. Partial strong longitudinal factorial invariance (paired with second-order growth functions—i.e., a second-order growth curve model)
+1. Alignment optimization (paired with second-order growth functions)
+1. Moderated nonlinear factor analysis (MNLFA) (paired with second-order growth functions)
+1. Item response theory (IRT) with anchor items (potentially with regularization/Bayesian penalty methods on the priors)
+    - separate calibration
+    - concurrent calibration
+
+# Partial Strong Longitudinal Factorial Invariance
+
+The example is adapted from the section on [longitudinal measurement invariance](#sec-longitudinalMI).
+
+Two primary options for identifying a latent factor include:
+
+1. standardizing the latent factor(s) at all timepoints (fixing their intercepts to zero and their variances to one)
+1. standardizing the latent factor(s) at T1 (fixing their intercepts to zero and their variances to one) and constraining the factor loadings and intercepts of one item to be equal across time
+
+(Option #2 may be preferable in alignment optimization.)
+
+## Standardizing the Latent Factors at All Timepoints
+
+## Standardizing the Latent Factors at T1 while Constraining Loadings and Intercepts of One Item Across Time
+
+# Alignment Optimization
+
+The example is adapted from the section on [longitudinal measurement invariance](#sec-longitudinalMI).
+Two primary options for identifying a latent factor include:
+
+1. standardizing the latent factor(s) at all timepoints (fixing their intercepts to zero and their variances to one)
+1. standardizing the latent factor(s) at T1 (fixing their intercepts to zero and their variances to one) and constraining the factor loadings and intercepts of one item to be equal across time
+
+(Option #1 may be preferable in alignment optimization.)
+
+## Standardizing the Latent Factors at All Timepoints
+
+### Configural Invariance With Correlated Residuals Within-Indicator Across Time
+
+1. Standardize the latent factor(s) at all timepoints (i.e., fix the mean to zero and the variance to one)
+1. **Allow within-indicator residuals to covary across time**
+
+#### Model Syntax
+
+```{r}
+configuralInvarianceStandardizeAllLatent_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load11*sad1 + load12*down1 + load13*depressed1
+  latent_t2 =~ NA*load21*sad2 + load22*down2 + load23*depressed2
+  latent_t3 =~ NA*load31*sad3 + load32*down3 + load33*depressed3
+  
+  # Factor Identification: Standardize Factors at T1 (using std.lv = TRUE)
+  
+  # Free Intercepts of Manifest Variables
+  sad1 ~ inta1*1
+  sad2 ~ inta2*1
+  sad3 ~ inta3*1
+  
+  down1 ~ intb1*1
+  down2 ~ intb2*1
+  down3 ~ intb3*1
+  
+  depressed1 ~ intc1*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc3*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+'
+```
+
+#### Fit Model
+
+```{r}
+configuralInvarianceStandardizeAllLatent_fit <- cfa(
+  configuralInvarianceStandardizeAllLatent_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+#### Model Summary
+
+```{r}
+summary(
+  configuralInvarianceStandardizeAllLatent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Longitudinal Alignment Optimization
+
+Adapted from Lai (2013; [code](https://github.com/marklhc/awc-growth-supp/blob/main/ex_MIDUS_growth.Rmd)):
+
+```{r}
+# Extract loadings and intercepts for alignment
+lam_mat <- lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$lambda
+nu_vec <- lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$nu
+
+# Put them into T x p matrices
+num_items <- 3
+num_waves <- 3
+lam_config <- crossprod(lam_mat, rep(1, num_waves) %x% diag(num_items))
+nu_config <- matrix(nu_vec, nrow = num_waves, ncol = num_items, byrow = TRUE)
+
+# Add indicator names
+colnames(lam_config) <- colnames(nu_config) <- c("sad", "down", "depressed")
+
+# Alignment optimization
+aligned_pars <- sirt::invariance.alignment(
+  lambda = lam_config,
+  nu = nu_config,
+  fixed = TRUE
+)
+```
+
+The aligned loadings and intercepts are below:
+
+```{r tab-aligned_pars, echo=FALSE}
+opts <- options(knitr.kable.NA = "")
+
+knitr::kable(
+  rbind(
+    "Loadings" = rep(NA, num_items),
+    `rownames<-`(aligned_pars$lambda.aligned,
+                 paste0("Time", 1:num_waves)),
+    "Intercepts" = rep(NA, num_items),
+    `rownames<-`(aligned_pars$nu.aligned,
+                 paste0("Time", 1:num_waves))
+  ),
+  format = "simple",
+  digits = 3L
+)
+
+aligned_pars$lambda.aligned
+aligned_pars$nu.aligned
+```
+
+#### Effect Size of Noninvariance ($d_{MACS}$)
+
+Lai (2023) suggests using a "50/30/20" rule of thumb for using $d_{MACS}$ to evaluate the appropriateness of the alignment optimization method:
+Alignment optimization within CFA "is trustworthy when (a) no more than 50% of items have one or more $d_{MACS}$ > .20 and (b) no more than 30% of the pairwise $d_{MACS}$ > .20.
+Lai (2023) suggests reporting the range of $d_{MACS}$ values, the proportion of $d_{MACS}$ > .20, and the proportion of items with at least one $d_{MACS}$ > .20.
+
+```{r}
+# Function for dMACS
+dmacs <- function(loadings, intercepts, pooled_item_sd,
+                  latent_mean = 0, latent_var = 1) {
+  dloading <- diff(loadings)
+  dintercept <- diff(intercepts)
+  integral <- dintercept^2 + 2 * dintercept * dloading * latent_mean +
+    dloading^2 * (latent_var + latent_mean^2)
+  sqrt(integral) / pooled_item_sd
+}
+
+# Use item SDs at first time point
+item_sds_wave1 <-
+  apply(
+    mydata_wide[c("sad1", "down1", "depressed1")],
+    2, sd
+  )
+
+dmacs_pairwise <- function(loading_mat, intercept_mat, pooled_item_sd,
+                           latent_mean = 0, latent_var = 1) {
+  ngroups <- nrow(loading_mat)
+  pairs <- combn(ngroups, 2)
+  out <- matrix(NA, nrow = ncol(pairs), ncol = ncol(loading_mat))
+  for (i in seq_len(ncol(pairs))) {
+    out[i, ] <- dmacs(loading_mat[pairs[, i], ],
+      intercepts = intercept_mat[pairs[, i], ],
+      pooled_item_sd,
+      latent_mean,
+      latent_var
+    )
+  }
+  rownames(out) <- apply(pairs, 2, paste, collapse = " vs ")
+  colnames(out) <- colnames(loading_mat)
+  out
+}
+
+# All pairwise dMACS
+dmacs_pairwise(aligned_pars$lambda.aligned,
+  intercept_mat = aligned_pars$nu.aligned,
+  pooled_item_sd = item_sds_wave1,
+  latent_mean = 0,
+  latent_var = 1
+)
+```
+
+### An Equivalent Configural Model with Aligned Loadings
+
+For the reference indicator (for which the loadings and intercepts are fixed), it is preferable to select an indicator with a strong factor loading (Lai, 2023).
+
+```{r}
+equivalentConfiguralModelAligned_syntax <- '
+  # Factor Loadings (Loadings of first indicator fixed to alignment solution)
+  latent_t1 =~ 0.9904750*load11*sad1 + load12*down1 + load13*depressed1
+  latent_t2 =~ 0.9880715*load21*sad2 + load22*down2 + load23*depressed2
+  latent_t3 =~ 0.9863225*load31*sad3 + load32*down3 + load33*depressed3
+  
+  # Intercepts of Manifest Variables (Intercepts of first indicator fixed to alignment solution)
+  sad1 ~ 3.319192*inta1*1
+  sad2 ~ 3.332276*inta2*1
+  sad3 ~ 3.345631*inta3*1
+  
+  down1 ~ intb1*1
+  down2 ~ intb2*1
+  down3 ~ intb3*1
+  
+  depressed1 ~ intc1*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc3*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+  
+  # Free latent means
+  latent_t1 + latent_t2 + latent_t3 ~ NA*1
+'
+
+equivalentConfiguralModelAligned_fit <- cfa(
+  equivalentConfiguralModelAligned_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+Compare model fit (they're equivalent):
+
+```{r}
+anova(
+  configuralInvarianceStandardizeAllLatent_fit,
+  equivalentConfiguralModelAligned_fit
+)
+```
+
+### Alignment-Within-CFA (AwC) Approach for Growth Modeling
+
+#### Model Syntax
+
+For the reference indicator (for which the loadings and intercepts are fixed), it is preferable to select an indicator with a strong factor loading (Lai, 2023).
+
+```{r}
+awcGrowthModel_syntax <- '
+  # Factor Loadings (Loadings of first indicator fixed to alignment solution)
+  latent_t1 =~ 0.9904750*load11*sad1 + load12*down1 + load13*depressed1
+  latent_t2 =~ 0.9880715*load21*sad2 + load22*down2 + load23*depressed2
+  latent_t3 =~ 0.9863225*load31*sad3 + load32*down3 + load33*depressed3
+  
+  # Intercepts of Manifest Variables (Intercepts of first indicator fixed to alignment solution)
+  sad1 ~ 3.319192*inta1*1
+  sad2 ~ 3.332276*inta2*1
+  sad3 ~ 3.345631*inta3*1
+  
+  down1 ~ intb1*1
+  down2 ~ intb2*1
+  down3 ~ intb3*1
+  
+  depressed1 ~ intc1*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc3*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+  
+  # Linear Growth Model
+  i =~ 1*latent_t1 + 1*latent_t2 + 1*latent_t3
+  s =~ 0*latent_t1 + 1*latent_t2 + 2*latent_t3
+  
+  # Variance-covariances of intercepts and slopes
+  i ~~ i
+  s ~~ s
+  i ~~ s
+  
+  # Means of level and slope
+  i ~ 1
+  s ~ 1
+  
+  # Fixed disturbances of latent outcomes to zero
+  latent_t1 ~ 0*1
+  latent_t2 ~ 0*1
+  latent_t3 ~ 0*1
+'
+```
+
+#### Fit Model
+
+```{r}
+awcGrowthModel_fit <- cfa(
+  awcGrowthModel_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+#### Model Summary
+
+```{r}
+summary(
+  configuralInvarianceStandardizeAllLatent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+Parameter estimates:
+
+```{r}
+lavaan::parameterEstimates(awcGrowthModel_fit) %>%
+  subset(
+    lhs %in% c("i", "s") & substr(rhs, 1, 6) != "latent",
+    -label
+  ) %>%
+  knitr::kable(format = "simple", digits = 3L)
+```
+
+## Standardizing the Latent Factors at T1 while Constraining Loadings and Intercepts of One Item Across Time
+
+### Configural Invariance With Correlated Residuals Within-Indicator Across Time
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's factor loading to be the same across time
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+1. **Allow within-indicator residuals to covary across time**
+
+# Moderated Nonlinear Factor Analysis (MNLFA)
+
+# Item Response Theory (IRT) with Anchor Items
+
+It can be potentially helpful to consider regularization/Bayesian penalty methods (e.g., using priors such as Horseshoe, Lasso, or Spike-and-slab).
+
+## Separate Calibration
+
+## Concurrent Calibration
