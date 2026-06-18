@@ -48,14 +48,14 @@ mydata_wide$depressed3 <- mydata_wide$JOBSAT33
 
 # Approaches
 
-1. Partial strong longitudinal factorial invariance (paired with second-order growth functions—i.e., a second-order growth curve model)
-1. Alignment optimization (paired with second-order growth functions)
-1. Moderated nonlinear factor analysis (MNLFA) (paired with second-order growth functions)
-1. Item response theory (IRT) with anchor items (potentially with regularization/Bayesian penalty methods on the priors)
-    - separate calibration
-    - concurrent calibration
+1. [Partial strong longitudinal factorial invariance](#sec-partialStrongInvariance) (paired with second-order growth functions—i.e., a second-order growth curve model)
+1. [Alignment optimization](#sec-alignment) (paired with second-order growth functions)
+1. [Moderated nonlinear factor analysis](#sec-mnlfa) (MNLFA) (paired with second-order growth functions)
+1. [Item response theory (IRT) with anchor items](#sec-irt) (potentially with regularization/Bayesian penalty methods on the priors)
+    - [separate calibration](#sec-irtSeparateCalibration)
+    - [concurrent calibration](#sec-irtConcurrentCalibration)
 
-# Partial Strong Longitudinal Factorial Invariance
+# Partial Strong Longitudinal Factorial Invariance {#sec-partialStrongInvariance}
 
 The example is adapted from the section on [longitudinal measurement invariance](#sec-longitudinalMI).
 
@@ -473,7 +473,7 @@ lavaan::parameterEstimates(partialStrongInvarianceGrowthCurve_fit) %>%
   knitr::kable(format = "simple", digits = 3L)
 ```
 
-# Alignment Optimization
+# Alignment Optimization {#sec-alignment}
 
 The example is adapted from the section on [longitudinal measurement invariance](#sec-longitudinalMI).
 Two primary options for identifying a latent factor include:
@@ -813,12 +813,14 @@ lavaan::parameterEstimates(awcGrowthModel_fit) %>%
 1. For each latent construct, constrain the first indicator's intercept to be the same across time
 1. **Allow within-indicator residuals to covary across time**
 
-# Moderated Nonlinear Factor Analysis (MNLFA)
+# Moderated Nonlinear Factor Analysis (MNLFA) {#sec-mnlfa}
 
-# Item Response Theory (IRT) with Anchor Items
+# Item Response Theory (IRT) with Anchor Items {#sec-irt}
 
 It can be potentially helpful to consider regularization/Bayesian penalty methods (e.g., using priors such as Horseshoe, Lasso, or Spike-and-slab).
 
-## Separate Calibration
+For examples of IRT models, see [here](irt.qmd).
 
-## Concurrent Calibration
+## Separate Calibration {#sec-irtSeparateCalibration}
+
+## Concurrent Calibration {#sec-irtConcurrentCalibration}
