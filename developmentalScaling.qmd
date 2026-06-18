@@ -70,6 +70,409 @@ Two primary options for identifying a latent factor include:
 
 ## Standardizing the Latent Factors at T1 while Constraining Loadings and Intercepts of One Item Across Time
 
+### Configural Invariance With Correlated Residuals Within-Indicator Across Time
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's factor loading to be the same across time
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+1. Allow within-indicator residuals to covary across time
+
+```{r}
+configuralInvarianceStandardizeT1Latent_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load1*sad1 + load12*down1 + load13*depressed1
+  latent_t2 =~ NA*load1*sad2 + load22*down2 + load23*depressed2
+  latent_t3 =~ NA*load1*sad3 + load32*down3 + load33*depressed3
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  latent_t1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  latent_t1 ~~ 1*latent_t1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  latent_t2 ~ 1
+  latent_t3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  latent_t2 ~~ latent_t2
+  latent_t3 ~~ latent_t3
+  
+  # Fix Intercepts of Indicator 1 Across Time
+  sad1 ~ inta*1
+  sad2 ~ inta*1
+  sad3 ~ inta*1
+  
+  # Free Intercepts of Remaining Manifest Variables
+  down1 ~ intb1*1
+  down2 ~ intb2*1
+  down3 ~ intb3*1
+  
+  depressed1 ~ intc1*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc3*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+'
+
+configuralInvarianceStandardizeT1Latent_fit <- cfa(
+  configuralInvarianceStandardizeT1Latent_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+
+summary(
+  configuralInvarianceStandardizeT1Latent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+### Metric ("Weak Factorial") Invariance
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. For each latent construct, constrain the first indicator's intercept to be the same across time
+1. Allow within-indicator residuals to covary across time
+1. **For each indicator, constrain its factor loading to be the same across time**
+
+```{r}
+metricInvarianceStandardizeT1Latent_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load1*sad1 + load2*down1 + load3*depressed1
+  latent_t2 =~ NA*load1*sad2 + load2*down2 + load3*depressed2
+  latent_t3 =~ NA*load1*sad3 + load2*down3 + load3*depressed3
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  latent_t1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  latent_t1 ~~ 1*latent_t1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  latent_t2 ~ 1
+  latent_t3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  latent_t2 ~~ latent_t2
+  latent_t3 ~~ latent_t3
+  
+  # Fix Intercepts of Indicator 1 Across Time
+  sad1 ~ inta*1
+  sad2 ~ inta*1
+  sad3 ~ inta*1
+  
+  # Free Intercepts of Remaining Manifest Variables
+  down1 ~ intb1*1
+  down2 ~ intb2*1
+  down3 ~ intb3*1
+  
+  depressed1 ~ intc1*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc3*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+'
+
+metricInvarianceStandardizeT1Latent_fit <- cfa(
+  metricInvarianceStandardizeT1Latent_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+
+summary(
+  metricInvarianceStandardizeT1Latent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+
+anova(
+  configuralInvarianceStandardizeT1Latent_fit,
+  metricInvarianceStandardizeT1Latent_fit
+)
+```
+
+### Scalar ("Strong Factorial") Invariance
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. Allow within-indicator residuals to covary across time
+1. For each indicator, constrain its factor loading to be the same across time
+1. **For each indicator, constrain its intercept to be the same across time**
+
+```{r}
+scalarInvarianceStandardizeT1Latent_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load1*sad1 + load2*down1 + load3*depressed1
+  latent_t2 =~ NA*load1*sad2 + load2*down2 + load3*depressed2
+  latent_t3 =~ NA*load1*sad3 + load2*down3 + load3*depressed3
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  latent_t1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  latent_t1 ~~ 1*latent_t1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  latent_t2 ~ 1
+  latent_t3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  latent_t2 ~~ latent_t2
+  latent_t3 ~~ latent_t3
+  
+  # Fix Intercepts Across Time
+  sad1 ~ inta*1
+  sad2 ~ inta*1
+  sad3 ~ inta*1
+  
+  down1 ~ intb*1
+  down2 ~ intb*1
+  down3 ~ intb*1
+  
+  depressed1 ~ intc*1
+  depressed2 ~ intc*1
+  depressed3 ~ intc*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+'
+
+scalarInvarianceStandardizeT1Latent_fit <- cfa(
+  scalarInvarianceStandardizeT1Latent_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+
+summary(
+  scalarInvarianceStandardizeT1Latent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+
+anova(
+  scalarInvarianceStandardizeT1Latent_fit,
+  metricInvarianceStandardizeT1Latent_fit
+)
+```
+
+### Partial Strong Factorial Invariance
+
+1. Standardize the latent factor(s) at T1 (i.e., fix the mean to zero and the variance to one)
+1. Allow within-indicator residuals to covary across time
+1. For some indicators (i.e., the indicators with invariant factor loadings, called "anchor items"), constrain its factor loading to be the same across time
+1. For some indicators (i.e., the indicators with invariant intercepts, called "anchor items"), constrain its intercept to be the same across time
+
+```{r}
+partialStrongInvarianceStandardizeT1Latent_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load1*sad1 + load2*down1 + load3*depressed1
+  latent_t2 =~ NA*load1*sad2 + load2*down2 + load3*depressed2
+  latent_t3 =~ NA*load1*sad3 + load2*down3 + load33*depressed3
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  latent_t1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  latent_t1 ~~ 1*latent_t1
+  
+  # Freely Estimate Factor Means at T2 and T3 (relative to T1)
+  latent_t2 ~ 1
+  latent_t3 ~ 1
+  
+  # Freely Estimate Factor Variances at T2 and T3 (relative to T1)
+  latent_t2 ~~ latent_t2
+  latent_t3 ~~ latent_t3
+  
+  # Fix Some Intercepts Across Time
+  sad1 ~ inta*1
+  sad2 ~ inta*1
+  sad3 ~ inta*1
+  
+  down1 ~ intb*1
+  down2 ~ intb2*1
+  down3 ~ intb*1
+  
+  depressed1 ~ intc*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+'
+
+partialStrongInvarianceStandardizeT1Latent_fit <- cfa(
+  partialStrongInvarianceStandardizeT1Latent_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+
+summary(
+  partialStrongInvarianceStandardizeT1Latent_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+
+anova(
+  configuralInvarianceStandardizeT1Latent_fit,
+  partialStrongInvarianceStandardizeT1Latent_fit
+)
+```
+
+### Partial Strong Factorial Invariance With Second-Order Growth Curve
+
+#### Model Syntax
+
+```{r}
+partialStrongInvarianceGrowthCurve_syntax <- '
+  # Factor Loadings
+  latent_t1 =~ NA*load1*sad1 + load2*down1 + load3*depressed1
+  latent_t2 =~ NA*load1*sad2 + load2*down2 + load3*depressed2
+  latent_t3 =~ NA*load1*sad3 + load2*down3 + load33*depressed3
+  
+  # Factor Identification: Standardize Factors at T1
+  
+  ## Fix Factor Means at T1 to Zero
+  latent_t1 ~ 0*1
+  
+  ## Fix Factor Variances at T1 to One
+  latent_t1 ~~ 1*latent_t1
+  
+  # Fix Some Intercepts Across Time
+  sad1 ~ inta*1
+  sad2 ~ inta*1
+  sad3 ~ inta*1
+  
+  down1 ~ intb*1
+  down2 ~ intb2*1
+  down3 ~ intb*1
+  
+  depressed1 ~ intc*1
+  depressed2 ~ intc2*1
+  depressed3 ~ intc*1
+  
+  # Residual Covariances Within Indicator Across Time
+  sad1 ~~ sad2
+  sad2 ~~ sad3
+  sad3 ~~ sad3
+  
+  down1 ~~ depressed2
+  down2 ~~ depressed3
+  down3 ~~ depressed3
+  
+  depressed1 ~~ depressed2
+  depressed2 ~~ depressed3
+  depressed3 ~~ depressed3
+  
+  # Linear Growth Model
+  i =~ 1*latent_t1 + 1*latent_t2 + 1*latent_t3
+  s =~ 0*latent_t1 + 1*latent_t2 + 2*latent_t3
+  
+  # Variance-covariances of intercepts and slopes
+  i ~~ i
+  s ~~ s
+  i ~~ s
+  
+  # Means of level and slope
+  i ~ 1
+  s ~ 1
+'
+```
+
+#### Fit Model
+
+```{r}
+partialStrongInvarianceGrowthCurve_fit <- cfa(
+  partialStrongInvarianceGrowthCurve_syntax,
+  data = mydata_wide,
+  missing = "ML",
+  estimator = "MLR",
+  meanstructure = TRUE,
+  #std.lv = TRUE,
+  fixed.x = FALSE)
+```
+
+#### Model Summary
+
+```{r}
+summary(
+  partialStrongInvarianceGrowthCurve_fit,
+  fit.measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+Parameter estimates:
+
+```{r}
+lavaan::parameterEstimates(partialStrongInvarianceGrowthCurve_fit) %>%
+  subset(
+    lhs %in% c("i", "s") & substr(rhs, 1, 6) != "latent",
+    -label
+  ) %>%
+  knitr::kable(format = "simple", digits = 3L)
+```
+
 # Alignment Optimization
 
 The example is adapted from the section on [longitudinal measurement invariance](#sec-longitudinalMI).
@@ -85,7 +488,7 @@ Two primary options for identifying a latent factor include:
 ### Configural Invariance With Correlated Residuals Within-Indicator Across Time
 
 1. Standardize the latent factor(s) at all timepoints (i.e., fix the mean to zero and the variance to one)
-1. **Allow within-indicator residuals to covary across time**
+1. Allow within-indicator residuals to covary across time
 
 #### Model Syntax
 
@@ -96,7 +499,7 @@ configuralInvarianceStandardizeAllLatent_syntax <- '
   latent_t2 =~ NA*load21*sad2 + load22*down2 + load23*depressed2
   latent_t3 =~ NA*load31*sad3 + load32*down3 + load33*depressed3
   
-  # Factor Identification: Standardize Factors at T1 (using std.lv = TRUE)
+  # Factor Identification: Standardize Factors at All Timepoints (using std.lv = TRUE)
   
   # Free Intercepts of Manifest Variables
   sad1 ~ inta1*1
