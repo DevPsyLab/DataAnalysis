@@ -469,8 +469,7 @@ lavaan::parameterEstimates(partialStrongInvarianceGrowthCurve_fit) %>%
   subset(
     lhs %in% c("i", "s") & substr(rhs, 1, 6) != "latent",
     -label
-  ) %>%
-  knitr::kable(format = "simple", digits = 3L)
+  )
 ```
 
 # Alignment Optimization {#sec-alignment}
@@ -580,21 +579,25 @@ aligned_pars <- sirt::invariance.alignment(
 
 The aligned loadings and intercepts are below:
 
-```{r tab-aligned_pars, echo=FALSE}
-opts <- options(knitr.kable.NA = "")
-
-knitr::kable(
-  rbind(
-    "Loadings" = rep(NA, num_items),
-    `rownames<-`(aligned_pars$lambda.aligned,
-                 paste0("Time", 1:num_waves)),
-    "Intercepts" = rep(NA, num_items),
-    `rownames<-`(aligned_pars$nu.aligned,
-                 paste0("Time", 1:num_waves))
-  ),
-  format = "simple",
-  digits = 3L
+```{r}
+alignedParameters <- rbind(
+  "Loadings" = rep(NA, num_items),
+  `rownames<-`(aligned_pars$lambda.aligned,
+               paste0("Time", 1:num_waves)),
+  "Intercepts" = rep(NA, num_items),
+  `rownames<-`(aligned_pars$nu.aligned,
+               paste0("Time", 1:num_waves))
 )
+
+#opts <- options(knitr.kable.NA = "")
+#
+#knitr::kable(
+#  alignedParameters,
+#  format = "simple",
+#  digits = 3L
+#)
+
+print(alignedParameters, na.print = "")
 
 aligned_pars$lambda.aligned
 aligned_pars$nu.aligned
