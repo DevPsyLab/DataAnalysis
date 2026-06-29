@@ -48,7 +48,7 @@ Examples of Restricted data include data protected by state or federal privacy r
 
 ## Fees
 
-At present there are no fees for the use of the Argon cluster or IDAS for low-priority usage.
+At present, there are no fees for the use of the Argon cluster or IDAS for low-priority usage.
 For large users, or those who want access to dedicated resources, the option of purchasing or renting supplemental system hardware may be available.
 If you are interested in dedicated hardware, contact [research-computing@uiowa.edu](mailto:research-computing@uiowa.edu).
 
@@ -57,15 +57,17 @@ If you are interested in dedicated hardware, contact [research-computing@uiowa.e
 SSH, or **S**ecure **SH**ell, is a tool that allows users to access and operate remote servers (i.e., other computers).
 You do not need to download or install anything to use SSH.
 Users can implement SSH via the terminal or via an emulator software, such as SecureCRT or PuTTY.
+
 Emulators allow users to enter commands into the terminal and often include GUIs that show the file structure of the remote server.
 This can be helpful for users who have not used Linux, which operates via command line input and does not have an equivalent to Windows File Explorer or Mac Finder.
+
 With SSH access, you can view and edit files as well as run scripts and submit jobs.
 
 ## Using the Terminal
 
 1. Open Command Prompt (Windows) or Terminal (MacOS)
 1. If you are on campus and/or using the VPN, enter `ssh hawkid@argon.hpc.uiowa.edu`
-   If you are off campus and not using the VPN, enter `ssh -p 40 hawkid@argon.hpc.uiowa.edu`
+    - If you are off campus and not using the VPN, enter `ssh -p 40 hawkid@argon.hpc.uiowa.edu`
 1. Enter your HawkID password when prompted
     - Note: The individual characters of your password will not appear as you type--this is not a bug!
 1. Complete the two-factor authentication
@@ -74,10 +76,10 @@ With SSH access, you can view and edit files as well as run scripts and submit j
 
 SecureCRT is the University's choice of emulator, and it has several customizable settings for more advanced users.
 
-1. Download [SecureCRT](https://its.uiowa.edu/securecrt) from UIowa Informational Technology Services: <https://its.uiowa.edu/securecrt>
+1. Download SecureCRT from UIowa Informational Technology Services: <https://its.uiowa.edu/securecrt>
 1. Enter `argon.hpc.uiowa.edu` as the Hostname and your HawkID as the Username
     - Do not modify any other fields/settings
-1. Click Connect
+1. Click 'Connect'
 1. Enter your HawkID password when prompted
 1. Complete the two-factor authentication
 
@@ -86,18 +88,18 @@ SecureCRT is the University's choice of emulator, and it has several customizabl
 PuTTY is another popular emulator that is more lightweight but less customizable than SecureCRT.
 It is not available through ITS, but it is free to download from the creators.
 
-1. Download [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)
+1. Download PuTTY: <https://www.chiark.greenend.org.uk/~sgtatham/putty/>
 1. Enter `argon.hpc.uiowa.edu` as the Host Name
-1. Click Connect
+1. Click 'Connect'
     - The first time you connect, click Accept on the pop-up alert
-1. Enter your HawkID after the `login as:` prompt
+1. Enter your HawkID after the `login as` prompt
 1. Enter your HawkID password when prompted
 1. Complete the two-factor authentication
 
 ## After Log-In
 
 After logging in, the terminal or emulator will take a moment to connect to Argon.
-Once a connection is established, you will see `(base) [hawkid@argon-itf-login-# ~]$` as the final line of text.
+Once a connection is established, you will see `[hawkid@argon-itf-login-# ~]$` as the final line of text.
 
 # Map Argon Drive to Local Computer
 
@@ -118,35 +120,74 @@ You won't be able to submit jobs, but it makes editing and moving files much mor
 1. In the menus along the top, select 'Go' then 'Connect to Server...'
 1. Enter `smb://IOWA;<hawkid>:*@data.hpc.uiowa.edu/argon_home` as the Server Address
 1. Click 'Connect'
+1. Log in using your HawkID username and password if prompted
 
 # Argon Navigation
 
 ## Quick Reference
 
+Below is a list of common commands with a brief explanation of what each does.
+More detailed information for each command is located in the corresponding section of the page.
+
+Accessing Argon
 - `ssh hawkid@argon.hpc.uiowa.edu` logs in to Argon
-- `exit` closes out of whichever node/environment/connection you are in
+
+[Nodes](#sec-nodes)
 - `qlogin` requests a computing node
-- `pwd` shows the path to the current folder
-- `cd insert/file/path` brings you to the provided file path
+- `exit` closes out of whichever node/environment/connection you are in
+
+[File Systems](#sec-file-systems)
+- `pwd` shows the path to the current folder (the working directory)
+- `cd insert/file/path` brings you to the provided file path (sets the working directory)
     - `cd ~` returns to home directory (your Argon folder)
     - `cd ..` returns to the folder "above" the current folder (i.e., the folder that the current folder is in)
     - `cd /Shared/lss_itpetersen/Lab` goes to the lab drive
 - `ls` lists the files and folders in your current folder
+- `nano filename.extension` opens or creates a file
+- `dos2unix filename.extension` converts CRLF (Windows) line endings to LF (Linux) line endings
+- `rm filename.extension` deletes the specified file
+- `cp filename.extension newFileOrFolder` copies the contents of the specified file into the provided location (folder or file)
+- `mv filename.extension new/folder/path` moves the specified file to the provided location
+    - `mv filename.extension newFileName.extension` renames the specified file to the new name
+
+[Modules](#sec-modules)
+- `module load moduleName` loads the specifed module
+- `module list` lists the modules loaded in the current session/environment
+- `module avail` lists the modules available to use
+    - Narrow the search by specifying a search term (e.g., `module avail R` to show `R` modules)
+
+[Containers](#sec-containers)
+- `apptainer build container.sif defFile.def` builds a container named 'container.sif' based on the definition file named 'defFile.def'
+- `apptainer run container.sif` runs the default command in the specified container
+    - `apptainer run --app appName container.sif` runs the specified app's default command in the specified container
+- `apptainer exec container.sif commandName commandArguments` runs the specified command (with any provided arguments) in the specified container
+
+Jobs
+- `qsub jobFile.job` submits the specified job file to the queue
+- `qstat -u hawkid` lists the active jobs associated with the specified HawkID, including job numbers
+- `qdel jobNumber` cancels the job associated with the specified job number
+
+Commands
 - `man insertCommandName` opens instructions for the provided command
 - `sudo insertCommandName` runs the provided command with administrative privileges
+    - `sudo apt update && sudo apt install -y dos2unix` installs the `dos2unix` package
     - If you are not logged in as an administrator, you may be prompted for an admin login
+- `apt update` retrieves a list of installed packages that need upgrades
+- `apt install packageName` installs the specified package(s)
+    - `apt install -y packageName` installs the package(s) non-interactively (i.e., assuming 'yes' responses to any prompts)
+    - `apt install --no-install-recommends packageName` installs the package(s) with required dependencies only (default installation installs required and recommended packages)
 
-## Nodes
+## Nodes {#sec-nodes}
 
 After logging in, you are assigned to a *log-in node*.
 There are limited log-in nodes, and they are shared by all Argon users.
 You can create, edit, and delete files, and you can submit jobs for processing, but you should not do any actual computing from the log-in node.
-To do more intensive work, you will need to request a *computing node* by entering `qlogin` in the terminal or emulator.
+To do more intensive work, you will need to request a *computing node* by entering `qlogin` into the terminal or emulator.
 
 You can think of the login nodes as the host stand at a restaurant--you go there when you first arrive (log in) and ask for a table (computing node), and the host (queue manager) seats you when one is available.
 However, it would be rude and inconvenient to order your food and eat it (run a bunch of scripts) at the host stand.
 
-## File Systems
+## File Systems {#sec-file-systems}
 
 To interact with files in Argon, you must be able to navigate through the file directory.
 On Windows and MacOS, File Explorer and Finder allow users to locate the files they need.
@@ -176,6 +217,30 @@ There are a few commands that are helpful for moving through folders:
         - `ls -R` lists contents of current folder and all subfolders
         - `ls /file/path` lists the contents of the specified folder
 
+In addition to navigating directories, there are a number of commands that are helpful for interacting with files:
+
+- `nano filename.extension` opens the specified file if it exists or creates the specified file if it does not
+- `dos2unix filename.extension` converts CRLF (Windows) line endings to LF (Linux) line endings
+    - Windows and Linux use different characters to represent a line break, resulting in `\r: command not found` errors when running Windows files on Linux
+    - The `dos2unix` command replaces the Windows line break character (`\r\n`) with the Linux line break character (`\n`)
+    - `file filename.extension | grep CRLF` checks for the CRLF character and returns a list of instances if found or nothing if not found
+    - `find ~/folder/path -name '*extension' -exec dos2unix "{}" \;` runs the `dos2unix` command on all files with the provided extension found in the provided directory
+- `rm filename.extension` removes the specified file
+    - `rm -rf folder/path/*` removes all files/folders in the specified folder
+        - Use with caution - the `f` argument means it will be deleting without confirming
+- `cp fileOrFolder fileOrFolder` copies the contents of the first argument to the location of the second argument
+    - `cp filename.extension newFile.extension` copies the contents of the first file to the second file
+        - Use with caution - if the second file already exists, the content will be overwritten
+    - `cp filename.extension folder/path/` copies the specified file into the specified folder
+    - `cp -r folder/path new/folder/path` copies the first folder and all of its contents into the second folder
+    - `cp filename1.extension filename2.extension new/folder/path` copies all listed files into the provided folder
+- `mv fileOrFolder new/folder/path` moves the specified file or folder to the specified location
+    - `mv filename.extension newFile.extension` renames the specified file to the name specified in the second argument
+        - Use with caution - if the second file already exists, the content will be overwritten
+    - `mv filename.extension new/folder/path` moves the specified file to the specified location
+    - `mv -r folder/path new/folder/path` moves the first folder and all of its contents into the second folder
+    - `mv filename1.extension filename2.extension new/folder/path` moves the specified files into the provided folder
+
 ### Accessing the Lab Drive
 
 After accessing Argon using SSH, enter `cd /Shared/lss_itpetersen/Lab` in the terminal or emulator.
@@ -192,7 +257,56 @@ cd /Users/itpetersen/Documents/Projects/SelfRegulation_IRT/
 cd /Users/itpetersen/Documents/Projects/Test/
 ```
 
-# Using a Container {#sec-container}
+## Software
+
+To run scripts in Argon, you will need to use either a container or a module.
+Modules and containers have similar functions: they include software packages and dependencies and allow users to run scripts with those softwares.
+
+As an example of why this might be helpful, consider a script that runs in `R`.
+Two different users might have different operating systems (Windows, MacOS, or Linux), different versions of `R`, different packages installed, or different versions of the required packages installed.
+One user might not have `R` installed at all.
+With a set of modules or a container, the user does not have to figure out which software and software versions are necessary to run a certain script--all they need is the script and the module(s)/container.
+These tools are also helpful for reproducibility.
+Because the they is stable (i.e., the software and operating system do not update unless the creator modifies it), the results of a given script will be the same each time it is run with that module/container.
+
+The key difference for practical use is that the Argon modules are created and maintained by ITS, while containers are created and maintained by users.
+Because modules are "built in", they are easier to access.
+However, they have a specific set of software available to use, and they cannot be modified.
+
+### Modules {#sec-modules}
+
+Argon opens with the default module stack (the 2021.1 stack) already loaded.
+However, there is a more recent stack (the 2022.2 stack) that has more current versions of the software in it (see the [software list](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513504/2022.2+stack#Software-List)).
+There are several commands for interacting with environment modules:
+
+- `module avail` lists all of the installed modules in the environment, regardless of whether you have them loaded
+    - `module avail searchString` lists all of the installed modules that include the search string in the name
+- `module list` lists all of the modules loaded in the current environment
+- `module load moduleName` loads the specified module (must include version number)
+    - Note that `R` packages must be loaded in addition to base `R`
+- `module unload moduleName` "unloads" the specified module
+    - This command is helpful when multiple versions of a given software are loaded into the environment--any extra versions should be unloaded
+- `module save environmentName` saves the current set of loaded modules under the provided name so you can load them later
+- `module restore environmentName` loads the set of modules saved under the provided name
+
+### Containers {#sec-containers}
+
+Argon does not include any containers by default, so users must [create them](#sec-create-container).
+After creating your container, there are several commands you can use to interact with it:
+
+- `apptainer build container.sif sourceInfo` creates a container called 'container.sif' using the provided source
+    - The `sourceInfo` argument can be a definition file (e.g., `defFile.def`), a link to a docker image (e.g., `docker://mathworks/matlab-deps:latest`), or one of the other options from the Apptainer documentation
+    - `apptainer build --sandbox container/ sourceInfo` creates a "sandbox" container that you can edit (useful for troubleshooting builds)
+        - This creates a directory rather than a `.sif` file
+    - `apptainer build container.sif sandboxContainer` converts the specified sandboxContainer directory into a `.sif` file
+- `apptainer exec container.sif commandName commandArguments` will run the specified command (with arguments, if included) using the specified container file
+- `apptainer run container.sif` runs the default command(s) in the specified container
+    - `apptainer run --app appName container.sif` runs the default command(s) for the specified app in the specified container
+- `apptainer shell container.sif` opens a shell within the specified container, allowing you to run commands inside the container like you would within the terminal
+    - Since container files are not editable, you will not be able to install or update any software
+- `apptainer help commandName` displays information about the provided Apptainer sub-command (syntax, options, etc.)
+
+# Building Containers {#sec-create-container}
 
 Link to ITS documentation: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513442/Singularity+Containers>
 
@@ -200,16 +314,9 @@ Link to Apptainer documentation: <https://apptainer.org/documentation/>
 
 ## Overview
 
-Because the default Argon workspace only has a limited set of software/apps available (the 'stack'), many users prefer to use a container.
+Because the default Argon workspace only has the modules provided by ITS (the "stack"), many users prefer to use a container.
 A container essentially operates like its own computer, with its own operating system and any files or programs the creator wants to include.
 However, unlike an actual computer, a container is stored as a file that can be shared (and used) across several different computers.
-
-As an example of why this might be helpful, consider a script that runs in `R`.
-Two different users might have different operating systems (Windows, MacOS, or Linux), different versions of `R`, different packages installed, or different versions of the required packages installed.
-One user might not have `R` installed at all.
-With a container, the user does not have to figure out which software and software versions are necessary to run a certain script--all they need is the script and the container.
-Containers are also helpful for reproducibility.
-Because the container is stable (i.e., the software and operating system do not update unless the creator modifies it), the results of a given script will be the same each time it is run in that container.
 
 The University recommends using Apptainer, formerly known as Singularity, to create and manage containers.
 
@@ -223,17 +330,21 @@ Because none of the lab computers run on Linux, you will need to install a Linux
 
 1. Install a Linux subsystem with Ubuntu
     - Note: If a Linux subsystem is already installed, open the subsystem as an administrator and proceed to the next step
+
     <details>
     <summary>Windows</summary>
+
     1. Open PowerShell as an administrator
     1. Enter `bash wsl --install`
     1. When the installation is complete, restart your computer
     1. Your computer will install Ubuntu (a flavor/type of Linux) during the restart
     1. Open Ubuntu as an administrator
+
     </details>
     
     <details>
     <summary>MacOS (Not Recommended)</summary>
+
     1. Download the latest [Ubuntu server](https://ubuntu.com/download/server/arm)
     1. Download [UTM](https://docs.getutm.app/installation/macos/)
         1. Use the 'Download from GitHub' option--the App Store version is identical, but costs $10
@@ -249,7 +360,8 @@ Because none of the lab computers run on Linux, you will need to install a Linux
             1. Scroll all the way to the bottom, then click 'System Report...'
             1. The number of CPU cores is listed next to 'Total Number of Cores'
         - In general, you should allocate no more than 75% of your total CPU cores and no more than 50% of your total RAM
-    1. When prompted for the Boot Image, make sure 'Boot from ISO image' is selected, then click 'Browse' and locate the Ubuntu installation file
+    1. When prompted for the Boot Image, make sure 'Boot from ISO image' is selected
+    1. Click 'Browse' and select the Ubuntu installation file
     1. Specify the maximum amount of storage space to allocate to the subsystem
         - To see how much storage space your computer has:
             1. Open System Settings
@@ -260,7 +372,9 @@ Because none of the lab computers run on Linux, you will need to install a Linux
     1. Click the Play icon to enter the subsystem
     1. Select the 'Try or Install Ubuntu' option
     1. Complete the installation prompts, using the up and down arrow keys to move between options and the enter key to select the highlighted option
-        <details><summary>Installation Prompts</summary>
+
+        <details>
+        <summary>Installation Prompts</summary>
 
         - Language: English (or whichever you prefer)
         - Keyboard Layout: English (US)
@@ -281,18 +395,23 @@ Because none of the lab computers run on Linux, you will need to install a Linux
         - Upgrade to Ubuntu Pro: Skip for now
         - SSH Configuration: (do not enable)
         - Featured server snaps: (select none)
+
         </details>
+
     1. When the installation is complete, select 'Reboot Now'
     1. After rebooting (on the screen with the 'Please remove the installation medium...' prompt), manually quit the VM by clicking the Power icon in the top left corner
     1. Click the Play icon to restart the VM
     1. Select the 'Boot from next volume' option
     1. Log in with the username and password created during installation
+
     </details>
+
 1. Update Ubuntu
     1. Enter `sudo apt update` to check for updates
     1. Enter `sudo apt upgrade -y` to install the updates identified in the previous step
 1. Install Apptainer
     1. Run the following code to install dependencies:
+
         ```bash
         sudo apt update
         sudo apt install -y \
@@ -301,39 +420,53 @@ Because none of the lab computers run on Linux, you will need to install a Linux
         fuse2fs \
         gocryptfs
         ```
+
     1. Run the following code to download and install Apptainer:
+
         ```bash
         sudo add-apt-repository -y ppa:apptainer/ppa
         sudo apt update
         sudo apt install -y apptainer
         ```
-        - If Apptainer is not available via apt (`E: Unable to locate package apptainer`), install it from source
-            <details><summary>Source Installation</summary>
+
+        - If Apptainer is not available via apt (`E: Unable to locate package apptainer`), install it from source.
+
+            <details>
+            <summary>Source Installation</summary>
 
             1. Get the most current version number from [GitHub](https://github.com/apptainer/apptainer/releases) (do not need to download--just need version number)
             1. Define a variable to hold version info (insert version number in place of #s):
+
                 ```bash
                 export VERSION=#.#.#
                 ```
+
             1. Download the source code:
+
                 ```bash
                 wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz
                 tar -xzf apptainer-${VERSION}.tar.gz
                 cd apptainer-${VERSION}
                 ```
+
             1. Build Apptainer:
                 ```bash
                 ./mconfig
                 make -C builddir
                 sudo make -C builddir install
                 ```
+
             </details>
+
     1. Verify installation:
+
         ```bash
         apptainer --version
         ```
+
 1. Go to your home directory (`cd ~`)
 1. Create a `containers` folder if one does not exist:
+
     ```bash
     mkdir containers
     ```
@@ -351,19 +484,27 @@ To build a container with a program that is not included here, see the Apptainer
 1. Go to the `containers` folder (`cd containers`)
 1. If installing `MPlus`:
     1. Copy the `MPlus` installer into your `containers` folder:
+
         ```bash
         cd path/to/installer/MplusLinux64.bin ~/containers/
         ```
+
     1. Run the installer to generate a properties file:
+
         ```bash
         ./MplusLinux64.bin -r ~/containers/mplus_install.properties
         ```
+
     1. Open the properties file:
+
         ```bash
         nano mplus_install.properties
         ```
+
     1. Under the "Choose Install Folder" and "Install" headings, update the installation path to `/opt/mplus`
-        <details><summary>Example Properties File</summary>
+
+        <details>
+        <summary>Example Properties File</summary>
         
         ```bash
         # Tue Feb 24 21:04:04 CST 2026
@@ -388,31 +529,41 @@ To build a container with a program that is not included here, see the Apptainer
         -fileOverwrite_/opt/mplus/Documentation/Version_8.1_Language_Addendum.pdf=Yes
         -fileOverwrite_/opt/mplus/Documentation/Version_8.5_Language_Addendum.pdf=Yes
         ```
+
         </details>
+
     1. Press `Ctrl+O` then `Enter` to save ("write out") the file
     1. Press `Ctrl+X` to close the file
 1. If installing `MATLAB`:
     1. Copy the dependencies file into your `containers` folder:
+
         ```bash
         wget -q -O https://raw.githubusercontent.com/mathworks-ref-arch/container-images/refs/heads/main/matlab-deps/r2026a/ubuntu24.04/base-dependencies.txt
         ```
+
 1. Create or download the definition file
-    1. To download an existing definition file (see [GitLab](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles) for options, or ):
+    1. To download an existing definition file (see [GitLab](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles) for options):
         1. Enter the following code into the terminal:
+
             ```bash
             wget -q -O argon_container.def https://link.to.definition.file
             ```
+
         1. Log in with your HawkID credentials when prompted
     1. To create a definition file from scratch:
         1. Create a new file:
+
             ```bash
             nano argon_container.def
             ```
+
         1. Add the definition file header:
+
             ```bash
             Bootstrap: docker
             From: ubuntu:24.04
             ```
+
             Other common base images:
               - `anaconda/miniconda:latest` for a container with `miniconda` (helpful for `Python` environments)
               - `mathworks/matlab` for `MATLAB` only
@@ -420,13 +571,15 @@ To build a container with a program that is not included here, see the Apptainer
                   - Note: The definition file below uses r2u, which automatically installs Linux dependencies for R packages.
                   The base `R` image at `rocker/r-ver` does not include r2u, so you will have to add it in the definition file or manually install the Linux dependencies.
         1. Add remaining parameters.
+
             The script below includes parameters for `R` (with `brms`), `CmdStan`, `MPlus`, `MATLAB`, and `Python`/`MNE`.
-            Paste the entire script into the definition file.
+            Paste the entire script into the definition file (right click to paste into the terminal).
             To install only a subset of the software, simply remove the section(s) associated with the unwanted software.
             Note that `MPlus` has a subsection in the `R` section in addition to its standalone section.
             Also note `CmdStan` does not have a standalone app section--it is installed as a subsection of the `R` installation.
               
-            <details><summary>All Software</summary>
+            <details>
+            <summary>All Software</summary>
             
               ```bash
               %environment
@@ -608,6 +761,8 @@ To build a container with a program that is not included here, see the Apptainer
                   #######
                   # Mplus
                   #######
+
+                  # install R package
                   R -e "install.packages(
                     'MplusAutomation',
                     repos = 'https://cloud.r-project.org'
@@ -720,106 +875,119 @@ To build a container with a program that is not included here, see the Apptainer
               USE_SERVER
               EOF
               ```
+
             </details>
+
         1. Press `Ctrl+O` then `Enter` to save the file
         1. Press 'Ctrl+X' to close the file
 1. Build the container:
+
     ```bash
     sudo apptainer build argon_container.sif argon_container.def
     ```
+
     You may be prompted to enter your (admin login) password.
     It will take a few minutes to build, and a lot of text will appear in the terminal.
 1. Test the container.
+
     If you used a definition file without an app structure (i.e., no `%appinstall` sections in the definition file), use `apptainer exec argon_container.sif path/to/software/exec_file` instead of `apptainer run --app app_name argon_container.sif` to start the program.
     1. `Python`/`MNE`
         1. Start the `Python` app within the container:
+
             ```bash
             apptainer run --app python argon_container.sif
             ```
+
             If the app is working, you should see the `Python` start-up message, followed by `>>>` in the final line.
         1. Verify the `MNE` installation:
+
             ```python
             import mne; mne.sys_info()
             ```
+
             You should see a printout of the system information, including a list of installed libraries.
         1. Enter `exit()` to leave the container.
     1. `R`
         1. Start the `R` app within the container:
+
             ```bash
             apptainer run --app R argon_container.sif
             ```
+
             If the app is working, you should see the `R` start-up message, followed by `>` in the final line.
             Containers with `r2u` may show a warning about D-Bus services--this will not affect functionality.
+            Containers run without `sudo` or admin access may show a warning about the `brms` package needing admin permissions--this will not affect functionality.
         1. Check `R` version:
+
             ```r
             version
             ```
+
             You should see a printout of the version information.
         1. Check package installations:
+
             ```r
             installed.packages()
             ```
+
             Ensure that all desired packages have been installed.
         1. Enter `q()` to leave the container.
     1. `MPlus`
         1. Start the `MPlus` app within the container:
+
             ```bash
             apptainer run --app mplus argon_container.sif
             ```
+
     1. `MATLAB`
         1. Start the `MATLAB` app within the container:
+
             ```bash
             apptainer run --app matlab argon_container.sif
             ```
+
             If the app is working, you should see the `MATLAB` start-up message, followed by `>` in the final line.
             Because `MATLAB` verifies its license via network connection, you must be connected to UIowa Wi-Fi (or be using the VPN) for it to work.
         1. Check `MATLAB` version:
-            ```bash
+
+            ```Matlab
             ver
             ```
+
             You should see a printout of the version information, including installed products.
         1. Enter `exit` to leave the container.
 1. Copy the container to your computer:
+
     ```bash
     cp ~/containers/r_argon.sif "/mnt/c/Users/hawkid/path/to/folder/"
     ```
+
     The `/mnt/c` path is equivalent to your computer's `C:` drive, so the rest of the file path should be defined from there.
 1. If your admin login is different from your HawkID, restart the terminal (or emulator) to run it as a regular user.
 1. Copy the container to Argon, either by using the terminal or by manually moving it in File Explorer/Finder.
 1. Test the container on Argon, using the same steps described above.
 1. If you installed `CmdStan`, copy the executable files to a writable location:
+
     ```bash
     mkdir -p $HOME/cmdstan_cache
     apptainer exec /Users/hawkid/path/to/container/argon_container.sif \
       cp -r /opt/cmdstan/. $HOME/cmdstan_cache
     ```
+
 1. To submit a job using the container, use the `apptainer exec` command:
+
     ```bash
     # run an R script using a container built with %app sections
     /usr/bin/apptainer exec --app R /Users/hawkid/container_path/argon_container.sif my_script.R
     
     # run a MATLAB script using a container built without %app sections
     /usr/bin/apptainer exec /Users/hawkid/container_path/argon_container.sif \
-    matlab -nodesktop -nojvm -nosplash my_script.mat
+      matlab -nodesktop -nojvm -nosplash my_script.mat
     ```
-    ```
+
     For an example job script using a container, see @sec-jobScript.
 
 # Linux
-
-## General Commands
-
-- `pwd` print current working directory
-- `cd path/to/directory` sets working directory
-- `ls` print files in directory
-- `module load moduleName` loads modules required for analyses; necessary to complete prior to submitting jobs involving R
-- `module list` lists downloaded modules
-- `qsub` submit a job script to Argon processing
-- `R CMD BATCH` submit a single R script to Argon processing
-Argon requires Linux-compatible file endings, which is problematic for files created outside Argon (using DOS or CRLF file endings). Use the following commands to check if your files are Argon compatible (i.e., Unix LF) and resolve incompatible file endings:
-- `file myfile.job | grep CRLF` checks if a file ending uses the incompatible CRLF format. Remember to check the ending of your file; this script assumes it is .job
-- `dos2unix myfile.job` converts CRLF file endings to Argon-compatible LF endings
-- `find ~/DirectoryName -name '*job' -exec dos2unix "{}" \;` converts all files in a directory that end with .job to LF format; change `*job` to change other file types
 
 ## Initial run
 
@@ -1355,168 +1523,6 @@ dos2unix your_job_file.job
 ```
 
 # Appendix {#sec-appendix}
-
-## Apptainer Definition Files {#sec-apptainerdefs}
-
-### MPlus + R + brms + CmdStan
-
-```bash
-Bootstrap: docker
-From: rocker/r-ver:latest
-
-%files
-    MplusLinux64.bin /opt/MplusLinux64.bin
-    mplus_install.properties /opt/mplus_install.properties
-
-%post
-    # Install system dependencies
-    apt-get update && apt-get install -y \
-        libcurl4-openssl-dev \
-        libssl-dev \
-        libxml2-dev \
-        libgit2-dev \
-        libfontconfig1-dev \
-        libfreetype6-dev \
-        libharfbuzz-dev \
-        libfribidi-dev \
-        libpng-dev \
-        libtiff5-dev \
-        libjpeg-dev \
-        libglpk-dev \
-        libgmp3-dev \
-        libmpfr-dev \
-        make \
-        g++ \
-        cmake \
-        git \
-        sudo \
-        && rm -rf /var/lib/apt/lists/*
-
-    # Install Mplus
-    chmod +x /opt/MplusLinux64.bin
-    /opt/MplusLinux64.bin -i silent -f /opt/mplus_install.properties
-    chmod -R 755 /opt/mplus
-
-    # Install core CRAN packages
-    R -e "install.packages(c(
-        'tidyverse',
-        'data.table',
-        'rstan',
-        'brms',
-        'bayesplot',
-        'mgcv',
-        'lme4',
-        'mirt',
-        'lavaan',
-        'semTools',
-        'MplusAutomation',
-        'SimDesign',
-        'fitdistrplus',
-        'sn',
-        'parallelly',
-        'renv',
-        'remotes'
-    ), repos='https://cloud.r-project.org')"
-
-    # Install cmdstanr
-    R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev','https://cloud.r-project.org'))"
-
-    # Install latest CmdStan into /opt/cmdstan
-    mkdir -p /opt/cmdstan
-    R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
-
-    # Enable threading for within-chain parallelization
-    mkdir -p /root/.R
-    echo 'STAN_THREADS=true' >> /root/.Renviron
-    echo 'STAN_THREADS=true' >> /root/.R/Makevars
-
-    # Install latest version of petersenlab package from GitHub
-    R -e "remotes::install_github('DevPsyLab/petersenlab')"
-
-%environment
-    export R_LIBS_USER=/usr/local/lib/R/site-library
-    export CMDSTAN=/opt/cmdstan
-    export STAN_THREADS=true
-    export PATH=/opt/mplus:$PATH
-
-%runscript
-    exec R "$@"
-```
-
-### R + brms + CmdStan
-
-```bash
-Bootstrap: docker
-From: rocker/r-ver:latest
-
-%post
-    # Install system dependencies
-    apt-get update && apt-get install -y \
-        libcurl4-openssl-dev \
-        libssl-dev \
-        libxml2-dev \
-        libgit2-dev \
-        libfontconfig1-dev \
-        libfreetype6-dev \
-        libharfbuzz-dev \
-        libfribidi-dev \
-        libpng-dev \
-        libtiff5-dev \
-        libjpeg-dev \
-        libglpk-dev \
-        libgmp3-dev \
-        libmpfr-dev \
-        make \
-        g++ \
-        cmake \
-        git \
-        sudo \
-        && rm -rf /var/lib/apt/lists/*
-
-    # Install core CRAN packages (specify the packages to install here)
-    R -e "install.packages(c(
-        'tidyverse',
-        'data.table',
-        'rstan',
-        'brms',
-        'bayesplot',
-        'mgcv',
-        'lme4',
-        'mirt',
-        'lavaan',
-        'semTools',
-        'MplusAutomation',
-        'SimDesign',
-        'fitdistrplus',
-        'sn',
-        'parallelly',
-        'renv',
-        'remotes'
-    ), repos='https://cloud.r-project.org')"
-
-    # Install cmdstanr
-    R -e "install.packages('cmdstanr', repos = c('https://stan-dev.r-universe.dev','https://cloud.r-project.org'))"
-
-    # Install latest CmdStan into /opt/cmdstan
-    mkdir -p /opt/cmdstan
-    R -e "cmdstanr::install_cmdstan(cores = 2, dir='/opt/cmdstan')"
-
-    # Enable threading for within-chain parallelization
-    mkdir -p /root/.R
-    echo 'STAN_THREADS=true' >> /root/.Renviron
-    echo 'STAN_THREADS=true' >> /root/.R/Makevars
-
-    # Install latest version of petersenlab package from GitHub
-    R -e "remotes::install_github('DevPsyLab/petersenlab')"
-
-%environment
-    export R_LIBS_USER=/usr/local/lib/R/site-library
-    export CMDSTAN=/opt/cmdstan
-    export STAN_THREADS=true
-
-%runscript
-    exec R "$@"
-```
     
 ## Old Stacks
 
