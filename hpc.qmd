@@ -130,13 +130,16 @@ Below is a list of common commands with a brief explanation of what each does.
 More detailed information for each command is located in the corresponding section of the page.
 
 Accessing Argon
+
 - `ssh hawkid@argon.hpc.uiowa.edu` logs in to Argon
 
 [Nodes](#sec-nodes)
+
 - `qlogin` requests a computing node
 - `exit` closes out of whichever node/environment/connection you are in
 
 [File Systems](#sec-file-systems)
+
 - `pwd` shows the path to the current folder (the working directory)
 - `cd insert/file/path` brings you to the provided file path (sets the working directory)
     - `cd ~` returns to home directory (your Argon folder)
@@ -151,23 +154,27 @@ Accessing Argon
     - `mv filename.extension newFileName.extension` renames the specified file to the new name
 
 [Modules](#sec-modules)
+
 - `module load moduleName` loads the specifed module
 - `module list` lists the modules loaded in the current session/environment
 - `module avail` lists the modules available to use
     - Narrow the search by specifying a search term (e.g., `module avail R` to show `R` modules)
 
 [Containers](#sec-containers)
+
 - `apptainer build container.sif defFile.def` builds a container named 'container.sif' based on the definition file named 'defFile.def'
 - `apptainer run container.sif` runs the default command in the specified container
     - `apptainer run --app appName container.sif` runs the specified app's default command in the specified container
 - `apptainer exec container.sif commandName commandArguments` runs the specified command (with any provided arguments) in the specified container
 
 Jobs
+
 - `qsub jobFile.job` submits the specified job file to the queue
 - `qstat -u hawkid` lists the active jobs associated with the specified HawkID, including job numbers
 - `qdel jobNumber` cancels the job associated with the specified job number
 
 Commands
+
 - `man insertCommandName` opens instructions for the provided command
 - `sudo insertCommandName` runs the provided command with administrative privileges
     - `sudo apt update && sudo apt install -y dos2unix` installs the `dos2unix` package
@@ -194,7 +201,7 @@ On Windows and MacOS, File Explorer and Finder allow users to locate the files t
 In Argon (and other Linux-based systems), users navigate through directories (folders) using the command line.
 There are a few commands that are helpful for moving through folders:
 
-- `pwd` shows the full file path to the current folder.
+- `pwd` shows the full file path to the current folder
     - When you first log in to Argon, you will be in your home directory, `/Users/hawkid`
     - The home directory can be abbreviated to `~`
 - `cd insert/file/path` allows you to move to different folders
@@ -276,13 +283,15 @@ However, they have a specific set of software available to use, and they cannot 
 ### Modules {#sec-modules}
 
 Argon opens with the default module stack (the 2021.1 stack) already loaded.
-However, there is a more recent stack (the 2022.2 stack) that has more current versions of the software in it (see the [software list](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513504/2022.2+stack#Software-List)).
+However, there is a more recent stack (the 2022.2 stack) that has more current versions of the software in it (see the [software list](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List), archived at <https://perma.cc/WJ4Q-GDUS>).
 There are several commands for interacting with environment modules:
 
 - `module avail` lists all of the installed modules in the environment, regardless of whether you have them loaded
     - `module avail searchString` lists all of the installed modules that include the search string in the name
 - `module list` lists all of the modules loaded in the current environment
 - `module load moduleName` loads the specified module (must include version number)
+    - `module load stack/2022.2` loads the current software stack
+    - `module load r/4.2.2_gcc-9.5.0` loads `R`
     - Note that `R` packages must be loaded in addition to base `R`
 - `module unload moduleName` "unloads" the specified module
     - This command is helpful when multiple versions of a given software are loaded into the environment--any extra versions should be unloaded
@@ -986,62 +995,55 @@ To build a container with a program that is not included here, see the Apptainer
     ```
 
     For an example job script using a container, see @sec-jobScript.
+    
+# Jobs
 
-# Linux
+In order to "run" scripts from a log-in node, you will need to create a job script.
+A job script contains all of the commands that you would ordinarily run individually in the terminal to run a script, along with some parameters that tell Argon where and how to run the commands.
+At minimum, a job script should contain a shell specification and at least one program, script, or command to execute.
+However, there are several additional parameters you can include to control how the script is run.
 
-## Initial run
+Basic Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission>
 
-### Load the Latest Stack
+Advanced Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission>
 
-`module load stack`
+## Writing Job Scripts {#sec-writingJobScripts}
 
-### Stack 2022.2
+1. Specify the shell:
+    
+    ```bash
+    #!/bin/sh
+    ```
+    
+    This line indicates which shell (CLI language) to use when running the rest of the job script.
+    In this case, `sh` sets the shell to the system's default shell.
 
-```bash
-module load stack/2022.2
-module load r/4.2.2_gcc-9.5.0
-cd path
-```
+1. Add `qsub` options (optional)
+    
+    The next few lines contain settings for the `qsub` command, which is the command used for submitting job scripts.
+    You can also specify these options in the command line, but that can lead to lengthy inputs.
+    Below are options commonly used in the DevPsy job scripts.
+    
+    | Option  | Description |
+    | ------- | ----------------------------------------  |
+    | -cwd  | execute the job from the current working directory |
+    | -e [path] | file name or path  | file or folder for saving error messages |
+    | -j [y|n]  | whether the error messages should be saved in the same file as outputs (y) or not (n) |
+    | -l mf=[nG|nM] | number (n) of gigabytes (G) or megabytes (M) of free memory needed at startup  |
+    | -l h_vmem=[nG|nM] | number (n) of gigabytes (G) or megabytes (M) of virtual memory needed across entire job |
+    | -M [email]  | email to send job notifications to  |
+    | -m [b|e|a|s|n]  | when to send job notifications (b = beginning of job; e = end of job; a = job aborted; s = job suspended; n = no notifications); multiple values allowed (e.g., -m eas)  |
+    | -N [name] | job name  |
+    | -o [path] | file or folder for saving non-error output messages |
+    | -pe smp [cores] | number of cores to use for parallel computing*  |
+    | -q [UI|UI-HM] | which job queue to use  |
+    | -t n-m[:s]  | indicates an array job; includes the index of the first (n) and last (m) task with an optional parameter for step size (s; defaults to 1)  |
+    | -tc [n] | number of jobs in an array job to run simultaneously  |
+    | -wd [path]  | execute the job from the specified folder |
+    
+    *We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
 
-### Installing Linux Packages to Install `R` Packages
-
-```bash
-module load stack/2022.2
-module load r/4.2.2_gcc-9.5.0
-module load geos/3.9.1_gcc-9.5.0
-module load gdal/2.4.4_gcc-9.5.0
-module load proj/5.2.0_gcc-9.5.0
-module load gsl/2.7.1_gcc-9.5.0
-module load nlopt/2.7.0_gcc-9.5.0
-module load jags/4.3.0_gcc-9.5.0-dev
-module load zlib/1.2.13_gcc-9.5.0-dev
-module load cmake/3.25.0_gcc-9.5.0
-module load glpk/4.65_gcc-9.5.0-dev
-module load libxml2/2.10.3_gcc-9.5.0
-module load r-nloptr
-module load r-zlibbioc/1.44.0_gcc-9.5.0
-module load r-data-table/1.14.4_gcc-9.5.0
-module load r-stringi/1.7.8_gcc-9.5.0
-module load r-selectr/0.4-2_gcc-9.5.0
-module load r-generics/0.1.3_gcc-9.5.0
-module load r-fansi/1.0.3_gcc-9.5.0
-module load r-utf8/1.2.2_gcc-9.5.0
-module load r-pkgconfig/2.0.3_gcc-9.5.0
-module load r-gtable/0.3.1_gcc-9.5.0
-module load r-scales/1.2.1_gcc-9.5.0
-module load r-tzdb/0.3.0_gcc-9.5.0
-module load r-timechange/0.1.1_gcc-9.5.0
-module load r-dbi/1.1.3_gcc-9.5.0
-
-```
-
-## Load Software Stacks
-
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List> (archived at <https://perma.cc/WJ4Q-GDUS>)
-
-`module load stack/2022.2`
-
-## Job Script {#sec-jobScript}
+## Example Job Scripts {#sec-jobScript}
 
 ### Using A Container
 
@@ -1100,49 +1102,6 @@ module load r/4.2.2_gcc-9.5.0
 # Run the R script
 Rscript ./Analyses/factorScores.R
 ```
-
-### qsub options {#sec-qsubOptions}
-
-`-pe smp 4`: specify a parallel environment and number of slots (CPU cores) to be used (`smp` = shared memory parallel environment); increasing the number of slots increases the memory available for the job.
-If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the `mf` and `h_vmem` flags, below).
-You can estimate the memory available per slot by dividing a node's total memory by its total core count.
-You can find the specific configurations for each node type on the wiki: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies>
-For instance, if you are using the UI queue that has 512GB of memory spread across 128 cores, each core comes with 4GB of memory (i.e., $512 / 128 = 4$).
-Thus, if your job needs 20GB of memory, you would need to request at least 5 cores (i.e., $20 / 4 = 5$).
-
-- The `OMP_NUM_THREADS` variable is set to '1' by default.
-If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
-
-`-M isaac-t-petersen@uiowa.edu`: Set the email address to receive email about jobs.
-This must be your University of Iowa email address.
-
-`-m eas`: Specify when to send an email message (; ; ; ; )
-
-- `b` = beginning of job
-- `e` = end of job
-- `a` = when job is aborted
-- `s` = when job is suspended
-- `n` = no mail is sent
-
-`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.)
-The `mem_free` flag tells the scheduler to find a node that has at least that much memory available at the moment your job starts.
-However, it does not reserve or lock that memory for your job's exclusive use while it is running.
-To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
-
-`-l h_vmem=512G`: request the maximum quantity of virtual memory you expect to need; `h_vmem` is a hard limit.
-It acts as a ceiling.
-If your job exceeds this amount of memory, the system will terminate the process to protect the node's stability.
-However, it does not reserve or lock that memory for your job's exclusive use while it is running.
-To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
-
-`-cwd`: Determines whether the job will be executed from the current working directory.
-If not specified, the job will be run from your home directory.
-
-`-q UI-HM`: specify queue
-
-`-e /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`: Name of a file or directory for standard error.
-
-`-o /Users/itpetersen/Documents/Projects/Bayesian_IRT/Output/`: Name of a file or directory for standard output.
 
 ## Submit Job
 
@@ -1378,7 +1337,7 @@ Makevars:
 
 ## Running out of Memory {#sec-outOfMemory}
 
-May need to request more memory, either by requesting more slots (to ensure more memory; i.e., `-pe smp <SLOTS>`), by increasing how much memory is available for the node at the moment your job starts (i.e., `mf=<SIZE>`), and/or by increasing the hard limit for virtual memory (i.e., `h_vmem=<SIZE>`); see @sec-qsubOptions.
+May need to request more memory, either by requesting more slots (to ensure more memory; i.e., `-pe smp <SLOTS>`), by increasing how much memory is available for the node at the moment your job starts (i.e., `mf=<SIZE>`), and/or by increasing the hard limit for virtual memory (i.e., `h_vmem=<SIZE>`); see @sec-writingJobScripts.
 
 To see how much memory was used by a killed job, run `qacct -j JOBID` and look at: `maxvmem`.
 
