@@ -709,6 +709,17 @@ mydata2 <- data.frame(
 mydata2
 ```
 
+```{r}
+#| code-fold: true
+
+mydata3 <- data.frame(
+  ID = c(1:5, 1047:1051),
+  dog = sample(0:1, 10, replace = TRUE)
+)
+
+mydata3
+```
+
 # Recode Variables {#sec-recodeVars}
 
 Here is an example of recoding a variable:
@@ -967,6 +978,19 @@ crossJoinData <- cross_join(
 
 crossJoinData
 dim(crossJoinData)
+```
+
+## Merging Three or More Objects
+
+```{r}
+dfsToMerge <- list(mydata, mydata2, mydata3)
+
+mergedData <- purrr::reduce(
+  dfsToMerge,
+  left_join, # could change to full_join (or whichever join is preferred)
+  by = "ID")
+
+mergedData
 ```
 
 # Long to Wide {#sec-longToWide}
