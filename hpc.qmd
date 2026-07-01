@@ -157,8 +157,7 @@ Accessing Argon
 
 - `module load moduleName` loads the specifed module
 - `module list` lists the modules loaded in the current session/environment
-- `module avail` lists the modules available to use
-    - Narrow the search by specifying a search term (e.g., `module avail R` to show `R` modules)
+- `module avail optionalSearchTerm` lists the modules available to use, narrowing down to modules matching the search term if provided
 
 [Containers](#sec-containers)
 
@@ -167,22 +166,17 @@ Accessing Argon
     - `apptainer run --app appName container.sif` runs the specified app's default command in the specified container
 - `apptainer exec container.sif commandName commandArguments` runs the specified command (with any provided arguments) in the specified container
 
-Jobs
+[Jobs](#sec-jobs)
 
 - `qsub jobFile.job` submits the specified job file to the queue
 - `qstat -u hawkid` lists the active jobs associated with the specified HawkID, including job numbers
 - `qdel jobNumber` cancels the job associated with the specified job number
 
-Commands
+Miscellaneous
 
-- `man insertCommandName` opens instructions for the provided command
-- `sudo insertCommandName` runs the provided command with administrative privileges
-    - `sudo apt update && sudo apt install -y dos2unix` installs the `dos2unix` package
-    - If you are not logged in as an administrator, you may be prompted for an admin login
-- `apt update` retrieves a list of installed packages that need upgrades
-- `apt install packageName` installs the specified package(s)
-    - `apt install -y packageName` installs the package(s) non-interactively (i.e., assuming 'yes' responses to any prompts)
-    - `apt install --no-install-recommends packageName` installs the package(s) with required dependencies only (default installation installs required and recommended packages)
+- `Rscript path/to/script.R` runs the specified `R` script (if an `R` module is loaded)
+    - `Rscript path/to/script.R outputFile.txt` runs the specified `R` script and saves the console output to the specified output file
+    - See the [HPC documentation](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC) (archived at <https://perma.cc/99JQ-43ZG>) for more information
 
 ## Nodes {#sec-nodes}
 
@@ -223,6 +217,8 @@ There are a few commands that are helpful for moving through folders:
         - `ls -l` lists folder contents with permissions, owner, size, and modification date
         - `ls -R` lists contents of current folder and all subfolders
         - `ls /file/path` lists the contents of the specified folder
+- `mkdir folder/path` creates the specified folder in the specified location
+    - `mkdir -p folder/path` creates the specified folder in the specified location, creates any parent folders along the path if needed, and does not throw an error if the folder already exists
 
 In addition to navigating directories, there are a number of commands that are helpful for interacting with files:
 
@@ -232,18 +228,19 @@ In addition to navigating directories, there are a number of commands that are h
     - The `dos2unix` command replaces the Windows line break character (`\r\n`) with the Linux line break character (`\n`)
     - `file filename.extension | grep CRLF` checks for the CRLF character and returns a list of instances if found or nothing if not found
     - `find ~/folder/path -name '*extension' -exec dos2unix "{}" \;` runs the `dos2unix` command on all files with the provided extension found in the provided directory
+    - `sudo apt update && sudo apt install -y dos2unix` installs the `dos2unix` package (you may be prompted for your password)
 - `rm filename.extension` removes the specified file
     - `rm -rf folder/path/*` removes all files/folders in the specified folder
-        - Use with caution - the `f` argument means it will be deleting without confirming
+        - Use with caution--the `f` argument means it will be deleting without confirming
 - `cp fileOrFolder fileOrFolder` copies the contents of the first argument to the location of the second argument
     - `cp filename.extension newFile.extension` copies the contents of the first file to the second file
-        - Use with caution - if the second file already exists, the content will be overwritten
+        - Use with caution--if the second file already exists, the content will be overwritten
     - `cp filename.extension folder/path/` copies the specified file into the specified folder
     - `cp -r folder/path new/folder/path` copies the first folder and all of its contents into the second folder
     - `cp filename1.extension filename2.extension new/folder/path` copies all listed files into the provided folder
 - `mv fileOrFolder new/folder/path` moves the specified file or folder to the specified location
     - `mv filename.extension newFile.extension` renames the specified file to the name specified in the second argument
-        - Use with caution - if the second file already exists, the content will be overwritten
+        - Use with caution--if the second file already exists, the content will be overwritten
     - `mv filename.extension new/folder/path` moves the specified file to the specified location
     - `mv -r folder/path new/folder/path` moves the first folder and all of its contents into the second folder
     - `mv filename1.extension filename2.extension new/folder/path` moves the specified files into the provided folder
@@ -264,7 +261,93 @@ cd /Users/itpetersen/Documents/Projects/SelfRegulation_IRT/
 cd /Users/itpetersen/Documents/Projects/Test/
 ```
 
-## Software
+
+## Bash Scripting {#sec-bashScripting}
+
+In order to use Argon, it is necessary to know some basic `bash` scripting.
+`bash` is a shell, which is a type of scripting language used to interact with operating systems.
+The commands described in the preceding sections are all `bash` commands, but there are a handful of additional commands that are helpful for setting up containers and job scripts.
+
+### Keyboard Shortcuts
+
+- `Ctrl` + `C` cancels/interrupts commands
+- `Ctrl` + `Shift` + `C` or right clicking copies highlighted text
+- `Ctrl` + `Shift` + `V` or right clicking pastes text
+
+### Syntax & Symbols
+
+- Folder paths and file names with spaces should be entered in quotation marks (`"`)
+- When creating variables, do not include spaces around the equal sign (e.g., use `varName=value` rather than `varName = value`)
+- When referencing variables, use `${varName}`
+    - If inserting variables into a string, use 
+- `#` at the start of a line indicates comments
+- `;` separates commands written on the same line
+    - Note: Unless you have very short commands, it is generally preferable to just put the commands on separate lines
+- `\` continues a command onto the next line
+- `|` passes the results of one command into the next command
+- `${varName}` indicates a variable
+    - `"${varName}"` (in double quotes) will insert the value of the variable
+    - `'${varName}'` (in single quotes) will keep variable name
+    - As an example, run the following commands in Argon:
+    
+      ```bash
+      test_var="I love Argon!"
+      echo "${test_var}"
+      echo '${test_var}'
+      ```
+    
+    - `${varName[n]}` selects the nth value from the `varName` list
+- `$(function)` inserts the result of the specified function
+    - If the function has multiple results (and you want all of them), use `($(function))`
+- `./execFile` runs the specified executable file/program
+
+### Advanced Package Tool Commands
+
+The Advanced Package Tool, or `apt`, is used to install, update, and otherwise manage packages in Debian-based Linux systems, including Argon.
+Although you likely will not use these commands in a job script, they are common in definition files.
+Outside of definition files, these commands should be run with `sudo` (see @sec-usefulCommands).
+
+- `apt update` retrieves a list of installed packages that need upgrades
+- `apt install packageName` installs the specified package(s)
+    - `apt install -y packageName` installs the package(s) non-interactively (i.e., assuming 'yes' responses to any prompts)
+    - `apt install --no-install-recommends packageName` installs the package(s) with required dependencies only (default installation installs required and recommended packages)
+- `apt list --installed` lists all installed packages
+- `apt-get clean` clears temporary files from the package installation folder
+    - `apt-get clean -y` clears files non-interactively
+- `apt-get autoremove` removes unnecessary packages
+    - `apt-get autoremove -y` removes unnecessary packages non-interactively
+
+### Other Useful Commands {#sec-usefulCommands}
+
+- `man insertCommandName` opens instructions for the provided command
+- `sudo insertCommandName` runs the provided command with administrative privileges
+    - If you are not logged in as an administrator, you may be prompted for an admin login
+- `echo "text and/or variable(s)"` prints (or "echoes") the specified information, either directly into the terminal or (more commonly) through a pipe operator (`|`) into another command
+    - `echo "${input_variable}" | program programScript.ext` passes the value of `input_variable` into the specified program to use when running the specified script
+- `cat items to combine` prints the specified items sequentially
+    - `cat items to combine > fileName.extension` creates a file containing the combined contents of the specified items
+        - Use with caution--if the specified file already exists, the contents will be overwritten
+    - `cat items to add >> fileName.extension` adds the specified items to the end of the specified file
+    - `cat > fileName.extension <<EOF text to add EOF` adds the specified text to the end of the specified file
+        - Since this command adds anything between the two `EOF` indicators, it is typically used for adding multiple lines
+- `chmod mode fileOrFolder` updates permissions for the specified file or folder to the specified mode
+    - The `mode` parameter is very flexible, but for simplicity, only the octal notation is described here
+    - Octal permissions are specified by three numbers, representing owner, group, and general permissions, respectively
+    - Octal Permission Numbers:
+        - 0 - no access
+        - 1 - execute only
+        - 2 - write only
+        - 3 - write and execute
+        - 4 - read only
+        - 5 - read and execute
+        - 6 - read and write
+        - 7 - read, write, and execute
+    - Enter `man chmod` for more detailed `mode` information, or see [this](https://askubuntu.com/questions/518259/understanding-chmod-symbolic-notation-and-use-of-octal) AskUbuntu thread for an explanation of how different modes are used
+- `wget https://link.to.file` downloads the contents of the specified link
+    - `wget -O fileName.exteions https://link.to.file` saves the contents of the link to the provided file name (rather than the linked file's original name)
+    - `wget --user="siteUsername" --ask-password https://link.to.file` downloads the contents of the specified link from a password-protected source (e.g., GitHub) and prompts for your password when needed
+
+# Software
 
 To run scripts in Argon, you will need to use either a container or a module.
 Modules and containers have similar functions: they include software packages and dependencies and allow users to run scripts with those softwares.
@@ -280,7 +363,7 @@ The key difference for practical use is that the Argon modules are created and m
 Because modules are "built in", they are easier to access.
 However, they have a specific set of software available to use, and they cannot be modified.
 
-### Modules {#sec-modules}
+## Modules {#sec-modules}
 
 Argon opens with the default module stack (the 2021.1 stack) already loaded.
 However, there is a more recent stack (the 2022.2 stack) that has more current versions of the software in it (see the [software list](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List), archived at <https://perma.cc/WJ4Q-GDUS>).
@@ -288,6 +371,7 @@ There are several commands for interacting with environment modules:
 
 - `module avail` lists all of the installed modules in the environment, regardless of whether you have them loaded
     - `module avail searchString` lists all of the installed modules that include the search string in the name
+    - `module spider searchString` lists all of the available modules (even incompatible ones or ones that can't be loaded) that include the search string in the name
 - `module list` lists all of the modules loaded in the current environment
 - `module load moduleName` loads the specified module (must include version number)
     - `module load stack/2022.2` loads the current software stack
@@ -298,7 +382,149 @@ There are several commands for interacting with environment modules:
 - `module save environmentName` saves the current set of loaded modules under the provided name so you can load them later
 - `module restore environmentName` loads the set of modules saved under the provided name
 
-### Containers {#sec-containers}
+### R in Argon
+
+If you need `R` packages that aren't available in the software stack, or if you need to use the current `R` version, using a container is recommended.
+Alternatively, see below for instructions on installing different `R` versions without a container.
+
+#### Compile Other Versions
+
+If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at <https://perma.cc/C6EX-EZL4>).
+However, we now compile the most recent version of `R` (and packages) using a [container](#sec-containers).
+
+#### Install Packages
+
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library> (archived at <https://perma.cc/3SRR-2JE7>)
+
+1. In Argon, load the `R` environment module:
+
+    ```bash
+    module load r/4.2.2_gcc-9.5.0
+    ```
+    
+1. Load compiler modules (not strictly necessary, since not all packages require them, but many do):
+
+    ```bash
+    module load cmake/3.25.0_intel-2021.7.1
+    module load ncurses/6.3_gcc-9.5.0
+    module load openssl/1.1.1s_gcc-9.5.0
+    ```
+    
+1. Launch R:
+
+    ```bash
+    R
+    ```
+    
+1. Install the package(s)
+
+    - From CRAN:
+
+        ```r
+        install.packages(
+          c("package1", "package2"),
+          repos = "https://cloud.r-project.org",
+          dependencies = TRUE,
+          type = "source",
+          Ncpus = 40
+        )
+        ```
+
+    - From local source:
+    
+        ```r
+        install.packages(
+          "path/to/source/file",
+          repos = NULL,
+          dependencies = TRUE,
+          type = "source",
+          Ncpus = 40
+        )
+        ```
+        
+    - If you have not installed other packages before, you will see the following message:
+
+        ```r
+        Warning in install.packages("package_name", repos = "http://cran.r-project.org") :
+        'lib = "/opt/R/3.0.2/lib64/R/library"' is not writable
+    
+        Would you like to use a personal library instead?  (yes/No/cancel)
+        ```
+
+        1. Enter `y` to use a personal library
+        1. Enter `y` to create a folder for the personal library
+        1. Installation will take several minutes, because all dependencies will be installed
+1. After installing packages, you should periodically update them using `update.packages(ask = FALSE)`
+
+#### Manage Packages with `renv` {#sec-renv}
+
+The `renv` package allows you to create separate environments for each project you are working on.
+These environments are analogous to [containers](@sec-containers) in that they contain all of the necessary scripts and packages to recreate a given project.
+However, unlike containers, environments created using `renv` are specific to `R`.
+If you are using a container for your project, you probably do not need to use `renv`, which is why we have it in the Modules section.
+
+`renv` Documentation: <https://rstudio.github.io/renv/index.html>
+
+##### Creating an Environment
+
+1. Create a directory where you want you want to store the project.
+1. `cd` to the above directory
+1. Start R
+1. Load the `renv` package: `library("renv")`
+1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:
+    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
+    - or `renv::init()` if you are in the intended working directory
+1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!
+1. From this point on you are working in a `renv` project.
+Installed packages will go into a library within this project.
+After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:
+    - `renv::install("package_name")`
+1. To restart a `renv` project, simply start `R` from the directory created in step (1).
+The project will initialize automatically.
+
+To update version of `renv`: `renv::upgrade()`
+
+To install packages: `renv::install("package_name")`
+
+To update packages: `renv::update()`
+
+To save the current state of your library: `renv::snapshot()`
+
+To restore the state of your library from the lock file: `renv::restore()`
+
+To disable `renv` on a project: `renv::deactivate()`
+
+##### To control which packages to install with `renv` using a `DESCRIPTION` file
+
+If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
+
+1. Create a `DESCRIPTION` file in the project directory with the following format:
+
+    ```yaml
+    Type: project
+    Description: My project.
+    Depends:
+        packageName1,
+        packageName2,
+        packageName3
+    ```
+
+1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: <https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies>
+1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
+
+##### To install a new package for a project after `renv` has been initialized
+
+1. First, load the `R` environment module (see `Install R packages` section above)
+1. cd to the directory of the `R` project
+1. launch R
+    - `R`
+1. then install the package, (the code below uses a generic `package_name`):
+    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
+1. `renv::snapshot()`
+
+
+## Containers {#sec-containers}
 
 Argon does not include any containers by default, so users must [create them](#sec-create-container).
 After creating your container, there are several commands you can use to interact with it:
@@ -579,7 +805,7 @@ To build a container with a program that is not included here, see the Apptainer
               - `rocker/r-ver:latest` for `R`, `CmdStan`, and/or `MPlus`
                   - Note: The definition file below uses r2u, which automatically installs Linux dependencies for R packages.
                   The base `R` image at `rocker/r-ver` does not include r2u, so you will have to add it in the definition file or manually install the Linux dependencies.
-        1. Add remaining parameters.
+        1. Add remaining parameters
 
             The script below includes parameters for `R` (with `brms`), `CmdStan`, `MPlus`, `MATLAB`, and `Python`/`MNE`.
             Paste the entire script into the definition file (right click to paste into the terminal).
@@ -897,7 +1123,7 @@ To build a container with a program that is not included here, see the Apptainer
 
     You may be prompted to enter your (admin login) password.
     It will take a few minutes to build, and a lot of text will appear in the terminal.
-1. Test the container.
+1. Test the container
 
     If you used a definition file without an app structure (i.e., no `%appinstall` sections in the definition file), use `apptainer exec argon_container.sif path/to/software/exec_file` instead of `apptainer run --app app_name argon_container.sif` to start the program.
     1. `Python`/`MNE`
@@ -996,7 +1222,7 @@ To build a container with a program that is not included here, see the Apptainer
 
     For an example job script using a container, see @sec-jobScript.
     
-# Jobs
+# Jobs {#sec-jobs}
 
 In order to "run" scripts from a log-in node, you will need to create a job script.
 A job script contains all of the commands that you would ordinarily run individually in the terminal to run a script, along with some parameters that tell Argon where and how to run the commands.
@@ -1007,7 +1233,39 @@ Basic Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/765
 
 Advanced Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission>
 
+## Job Commands
+
+Below are a variety of common commands for submitting and tracking jobs.
+
+- `qsub jobScript.job` submits a job script to run
+    - `qsub -hold_jid JOB_ID jobScript.job` submits `jobScript.job` to run *after* job `JOB_ID` is finished
+- `qstat` shows the status of available queues and jobs
+    - `qstat -u hawkid` shows jobs submitted by the specified HawkID
+    - `qstat -g c -q QUEUE_NAME` shows the status of the specified queue
+    - `qstat -j JOB_ID` shows detailed satus info for the specified job (if still running)
+    - Status Abbreviations:
+        - `d` - deleted
+        - `E` - error
+        - `h` - held by user
+        - `r`, `t` - running or transferring to run status
+        - `R` - restarted
+        - `s`  `S` - job (s) or queue (S) suspended
+        - `T` - queue threshold exceeded (suspended)
+        - `w` - waiting in queue
+- `qacct` summarizes job and user info that meet the specified parameters
+    - `qacct -j JOB_ID` shows info for the specified job (after running)
+    - `qacct -o hawkid -j -d n` shows info on the specified user's jobs for the past `n` days
+- `qdel JOB_ID` deletes the specified job
+    - `qdel -u hawkid` deletes all jobs submitted by the specified user
+
 ## Writing Job Scripts {#sec-writingJobScripts}
+
+1. Log in to Argon
+1. Create the job script:
+
+    ```bash
+    nano jobScript.job
+    ```
 
 1. Specify the shell:
     
@@ -1017,31 +1275,58 @@ Advanced Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/
     
     This line indicates which shell (CLI language) to use when running the rest of the job script.
     In this case, `sh` sets the shell to the system's default shell.
+    Regardless of which shell you specify, this line must start with `#!`.
 
 1. Add `qsub` options (optional)
     
     The next few lines contain settings for the `qsub` command, which is the command used for submitting job scripts.
     You can also specify these options in the command line, but that can lead to lengthy inputs.
+    When specifying `qsub` options in your job script, each one must have `#$` at the start of the line.
     Below are options commonly used in the DevPsy job scripts.
     
     | Option  | Description |
     | ------- | ----------------------------------------  |
     | -cwd  | execute the job from the current working directory |
     | -e [path] | file name or path  | file or folder for saving error messages |
-    | -j [y|n]  | whether the error messages should be saved in the same file as outputs (y) or not (n) |
-    | -l mf=[nG|nM] | number (n) of gigabytes (G) or megabytes (M) of free memory needed at startup  |
-    | -l h_vmem=[nG|nM] | number (n) of gigabytes (G) or megabytes (M) of virtual memory needed across entire job |
+    | -j [y\|n]  | whether the error messages should be saved in the same file as outputs (y) or not (n) |
+    | -l mf=[nG\|nM] | number (n) of gigabytes (G) or megabytes (M) of free memory needed at startup  |
+    | -l h_vmem=[nG\|nM] | number (n) of gigabytes (G) or megabytes (M) of virtual memory needed across entire job |
     | -M [email]  | email to send job notifications to  |
-    | -m [b|e|a|s|n]  | when to send job notifications (b = beginning of job; e = end of job; a = job aborted; s = job suspended; n = no notifications); multiple values allowed (e.g., -m eas)  |
+    | -m [b\|e\|a\|s\|n]  | when to send job notifications (b = beginning of job; e = end of job; a = job aborted; s = job suspended; n = no notifications); multiple values allowed (e.g., -m eas)  |
     | -N [name] | job name  |
     | -o [path] | file or folder for saving non-error output messages |
     | -pe smp [cores] | number of cores to use for parallel computing*  |
-    | -q [UI|UI-HM] | which job queue to use  |
+    | -q [UI\|UI-HM\|UI-MPI\|UI-GPU\|UI-DEVELOP\|all.q] | which job queue to use**  |
     | -t n-m[:s]  | indicates an array job; includes the index of the first (n) and last (m) task with an optional parameter for step size (s; defaults to 1)  |
     | -tc [n] | number of jobs in an array job to run simultaneously  |
     | -wd [path]  | execute the job from the specified folder |
     
     *We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
+    
+    **The `UI` (default) and `UI-HM` (high-memory) queues are the most used by DevPsy.
+    `UI-MPI` is for jobs that can use multiple nodes simultaneously, and `UI-GPU` is for jobs that can use a GPU accelerator.
+    `UI-DEVELOP` is recommend for test runs and debugging.
+    The `all.q` queue is the lowest priority queue, so jobs running on it will "give up" resources if needed for jobs in higher-priority queues.
+    
+1. Specify the working directory (optional)
+
+    Argon defaults to running the job script from your home directory (`/Users/hawkid`).
+    However, if you would like to run the job from a different directory, you can either use the `-wd` option described in the previous step or manually specify the working directory in the body of the job script:
+    
+    ```bash
+    # set working directory
+    cd /Users/hawkid/path/to/working/directory/
+    ```
+    
+1. Write the job script
+
+    The remainder of the job script is extremely flexible, because it is whatever set of commands you would use to run your script "live" in the terminal.
+    Typically, job scripts start by defining any variables needed for the rest of the script and loading necessary modules.
+    After that, the commands specify which scripts/programs to run and when.
+    See @sec-jobScript for examples of a variety of job scripts, and see @sec-bashScripting for common `bash` commands used in job scripts.
+    
+1. Press `Ctrl+O` then `Enter` to save the file
+1. Press 'Ctrl+X' to close the file
 
 ## Example Job Scripts {#sec-jobScript}
 
@@ -1103,225 +1388,40 @@ module load r/4.2.2_gcc-9.5.0
 Rscript ./Analyses/factorScores.R
 ```
 
-## Submit Job
+### Array Job with Variables
 
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission> (archived at <https://perma.cc/2SS2-LEJR>)
+```bash
+#!/bin/bash
 
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission> (archived at <https://perma.cc/8H6G-2M2F>)
+# set job parameters
+#$ -N tf_visualization
+#$ -o /Users/mschumer/logs/$JOB_NAME_output.txt
+#$ -e /Users/mschumer/logs/$JOB_NAME_errors.txt
+#$ -q UI
+#$ -l mf=36G
+#$ -l h_vmem=36G
+#$ -t 1-535
+#$ -tc 16
+#$ -pe smp 16
 
-`cd path/to/dataSet123`
+# activate mne environment
+conda activate /Users/mschumer/anaconda3/envs/mne
 
-[cd /Users/itpetersen/Documents/Projects/Test/Jobs]
+# get list of subjects
+cd /Shared/lss_PetersenLabEEGVideo/EEG/Oddball/2_TFData/1_preprocessed
+subjects=($(ls))
+cd /Users/mschumer
 
-`qsub myscript.job`
+# select subject using current idx
+sub=${subjects[${SGE_TASK_ID}-1]}
 
-Job dependency (run `Job B` when `Job A` is finished):
+# set values for input and output paths
+input_path=/Shared/lss_PetersenLabEEGVideo/EEG/Oddball/2_TFData/1_preprocessed
+output_path=/Shared/lss_PetersenLabEEGVideo/EEG/Oddball/2_TFData/3_tf_processed
 
-`qsub -hold_jid JOB_ID test_B.job`
-
-### Bayesian IRT
-
-`cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/Jobs`
-
-`qsub bayesianIRT.job`
-
-`qsub -hold_jid JOB_ID factorScores.job`
-
-### Multiple Imputation
-
-`cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/Jobs`
-
-`qsub srs_selfRegulation.R`
-
-## Queues
-
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies> (archived at <https://perma.cc/UUR7-XLBZ>)
-
-`UI`
-
-`UI-HM`
-
-`UI-GPU-HM`
-
-`UI-DEVELOP`
-
-`all.q`
-
-## Queue Status
-
-`qstat -g c`
-
-`qstat -g c -q QUEUE_NAME`
-
-`qstat -g c -q UI`
-
-## Job Status
-
-`qstat -u itpetersen`
-
-`qstat -j JOB_ID`
-
-## Job Time and Memory
-
-- Terminated jobs: `qacct -j JOB_ID`
-- Jobs in progress: `qstat -j JOB_ID | grep usage`
-
-## Cancel Job
-
-`qdel JOB_ID`
-
-## Run `R` Script
-
-See [here](#sec-runRscript)
-
-# R
-
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC> (archived at <https://perma.cc/99JQ-43ZG>)
-
-## Find which versions of `R` are installed
-
-`module spider R`
-
-But, there may be more recent version of `R` installed in the "Additional Software Stacks" (<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List>; archived at <https://perma.cc/WJ4Q-GDUS>)
-
-## Compile `R`
-
-If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at <https://perma.cc/C6EX-EZL4>).
-However, we now compile the most recent version of `R` (and packages) using a [container](#sec-container).
-
-## Install `R` packages
-
-<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library> (archived at <https://perma.cc/3SRR-2JE7>)
-
-1. first load the `R` environment module
-    - `module load r/4.2.2_gcc-9.5.0`
-1. launch R
-    - `R`
-1. then install the package, (the code below uses a generic `package_name`):
-    - `install.packages("package_name", repos = "http://cran.r-project.org", dependencies = TRUE, type = "source", Ncpus = 40)`
-    - If using `packrat`, it is preferable to install packages by source, if possible, but you can remove `type = source` if you want to install binaries
-    - Assuming that you do not have a personal library directory you will see
-
-    ```r
-    Warning in install.packages("package_name", repos = "http://cran.r-project.org") :
-    lib = "/opt/R/3.0.2/lib64/R/library"' is not writable
-
-    Would you like to use a personal library instead?  (y/n)
-    ```
-
-1. Select `y`
-1. Select `y` again when prompted to create the directory; your package should download and install into your personal library directory
-
-Example:
-
-```{r}
-#| eval: false
-
-install.packages(c(
-    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
-    repos = "http://cran.r-project.org",
-    dependencies = TRUE,
-    Ncpus = 40)
+# run script
+echo "${input_path} ${output_path} ${sub}" | python /Users/mschumer/tf_analysis.py
 ```
-
-### Install `R` package locally from source
-
-`install.packages(path_to_file, repos = NULL, type = "source", Ncpus = 40)`
-
-Example:
-
-```{r}
-#| eval: false
-
-install.packages(c(
-    "renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags"),
-    repos = "http://cran.r-project.org",
-    type = "source",
-    dependencies = TRUE,
-    Ncpus = 40)
-```
-
-### Managing packages for a project using `renv` {#sec-renv}
-
-1. Create a directory where you want you want to store the project.
-1. `cd` to the above directory
-1. Start R
-1. Load the `renv` package: `library("renv")`
-1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:
-    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
-    - or `renv::init()` if you are in the intended working directory
-1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!
-1. From this point on you are working in a `renv` project.
-Installed packages will go into a library within this project.
-After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:
-    - `renv::install("package_name")`
-1. To restart a `renv` project, simply start `R` from the directory created in step (1).
-The project will initialize automatically.
-
-To update version of `renv`: `renv::upgrade()`
-
-To install packages: `renv::install("package_name")`
-
-To update packages: `renv::update()`
-
-To save the current state of your library: `renv::snapshot()`
-
-To restore the state of your library from the lock file: `renv::restore()`
-
-To disable `renv` on a project: `renv::deactivate()`
-
-#### To control which packages to install with `renv` using a `DESCRIPTION` file
-
-If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
-
-1. Create a `DESCRIPTION` file in the project directory with the following format:
-
-    ```yaml
-    Type: project
-    Description: My project.
-    Depends:
-        packageName1,
-        packageName2,
-        packageName3
-    ```
-
-1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: <https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies>
-1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
-
-### To install a new package for a project after `renv` has been initialized
-
-1. First, load the `R` environment module (see `Install R packages` section above)
-1. cd to the directory of the `R` project
-1. launch R
-    - `R`
-1. then install the package, (the code below uses a generic `package_name`):
-    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-1. `renv::snapshot()`
-
-## Update Packages
-
-```{r}
-#| eval: false
-
-update.packages(ask = FALSE)
-```
-
-## Run `R` Script {#sec-runRscript}
-
-`module load r/4.0.5_gcc-9.3.0`
-
-`cd path/to/dataSet123`
-
-[cd /Users/itpetersen/Documents/Projects/Test/Analyses]
-
-`Rscript path/to/program.R`
-
-[Rscript test.R]
-
-## Quit R
-
-`q()`
 
 # Stan
 
@@ -1331,8 +1431,6 @@ Makevars:
 
 `\\data.hpc.uiowa.edu\argon_home\.R\Makevars`
 
-
-
 # Troubleshooting
 
 ## Running out of Memory {#sec-outOfMemory}
@@ -1341,27 +1439,30 @@ May need to request more memory, either by requesting more slots (to ensure more
 
 To see how much memory was used by a killed job, run `qacct -j JOBID` and look at: `maxvmem`.
 
-## `job [NUMBER] died through signal TERM (15)`
+This error can generate the following error messages:
 
-May have run out of memory.
-See @sec-outOfMemory.
+- `job JOB_ID died through signal TERM (15)`
+- `job [NUMBER] died through signal KILL (9)`
+- `Exit Status: 143`
+- `Exit Status: 137`
 
-## `job [NUMBER] died through signal KILL (9)`
+## Having trouble installing `R` packages?
 
-May have run out of memory.
-See @sec-outOfMemory.
+### Containers {#sec-installPackagesContainers}
 
-## Exit Status: 143
+Unless you built a sandbox container, you will not be able to install packages, because container files are not editable.
+To add new packages, you need to create a new container using an updated definition file with all desired packages.
+Alternatively, you can create a sandbox container based on your current container, add the desired packages, and convert the sandbox container to a static build:
 
-May have run out of memory.
-See @sec-outOfMemory.
+```bash
+apptainer build --sandbox newContainer/ oldContainer.sif
+apptainer exec --writable newContainer R -e "install.packages(c('package1', 'package2'), repos = 'https://cloud.r-project.org')"
+apptainer build newContainer.sif newContainer/
+```
 
-## Exit Status: 137
+For transparency, it is preferable to create a new container from an updated definition file, which ensures all container build info is available.
 
-May have run out of memory.
-See @sec-outOfMemory.
-
-## Having trouble installing packages?
+### Modules
 
 Sometimes Argon will fail to install packages in an R workspace.
 We advise the following steps:
@@ -1398,7 +1499,6 @@ Note that you may need to download an older version of the package (e.g., from t
     ```
 
 1. If the prior steps fail, email research-computing@uiowa.edu with the error, asking for help to figure out how to install the packages.
-
 
 ## Error When Installing Packages from Source
 
