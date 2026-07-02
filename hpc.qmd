@@ -282,7 +282,7 @@ The commands described in the preceding sections are all `bash` commands, but th
     - If inserting variables into a string, use 
 - `#` at the start of a line indicates comments
 - `;` separates commands written on the same line
-    - Note: Unless you have very short commands, it is generally preferable to just put the commands on separate lines
+    - Note: Unless you have very short commands, it is recommended to just put the commands on separate lines
 - `\` continues a command onto the next line
 - `|` passes the results of one command into the next command
 - `${varName}` indicates a variable
@@ -350,7 +350,7 @@ Outside of definition files, these commands should be run with `sudo` (see @sec-
 # Software
 
 To run scripts in Argon, you will need to use either a container or a module.
-Modules and containers have similar functions: they include software packages and dependencies and allow users to run scripts with those softwares.
+Modules and containers have similar functions: they include software packages and dependencies and allow users to run scripts with that software.
 
 As an example of why this might be helpful, consider a script that runs in `R`.
 Two different users might have different operating systems (Windows, MacOS, or Linux), different versions of `R`, different packages installed, or different versions of the required packages installed.
@@ -455,74 +455,7 @@ However, we now compile the most recent version of `R` (and packages) using a [c
         1. Enter `y` to create a folder for the personal library
         1. Installation will take several minutes, because all dependencies will be installed
 1. After installing packages, you should periodically update them using `update.packages(ask = FALSE)`
-
-#### Manage Packages with `renv` {#sec-renv}
-
-The `renv` package allows you to create separate environments for each project you are working on.
-These environments are analogous to [containers](@sec-containers) in that they contain all of the necessary scripts and packages to recreate a given project.
-However, unlike containers, environments created using `renv` are specific to `R`.
-If you are using a container for your project, you probably do not need to use `renv`, which is why we have it in the Modules section.
-
-`renv` Documentation: <https://rstudio.github.io/renv/index.html>
-
-##### Creating an Environment
-
-1. Create a directory where you want you want to store the project.
-1. `cd` to the above directory
-1. Start R
-1. Load the `renv` package: `library("renv")`
-1. At the `R` prompt, initialize the `renv` project on the local repository of `R` packages with:
-    - `renv::init(project = "/Users/itpetersen/Documents/Projects/SelfRegulation_IRT/")`
-    - or `renv::init()` if you are in the intended working directory
-1. You must restart your `R` session in the given project directory after running init in order for the changes to take effect!
-1. From this point on you are working in a `renv` project.
-Installed packages will go into a library within this project.
-After initializing the `renv` project on the local repository of `R` packages, packages from the local repository can be installed with `renv::install()`:
-    - `renv::install("package_name")`
-1. To restart a `renv` project, simply start `R` from the directory created in step (1).
-The project will initialize automatically.
-
-To update version of `renv`: `renv::upgrade()`
-
-To install packages: `renv::install("package_name")`
-
-To update packages: `renv::update()`
-
-To save the current state of your library: `renv::snapshot()`
-
-To restore the state of your library from the lock file: `renv::restore()`
-
-To disable `renv` on a project: `renv::deactivate()`
-
-##### To control which packages to install with `renv` using a `DESCRIPTION` file
-
-If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
-
-1. Create a `DESCRIPTION` file in the project directory with the following format:
-
-    ```yaml
-    Type: project
-    Description: My project.
-    Depends:
-        packageName1,
-        packageName2,
-        packageName3
-    ```
-
-1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: <https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies>
-1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
-
-##### To install a new package for a project after `renv` has been initialized
-
-1. First, load the `R` environment module (see `Install R packages` section above)
-1. cd to the directory of the `R` project
-1. launch R
-    - `R`
-1. then install the package, (the code below uses a generic `package_name`):
-    - `install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-    - `install.packages(c("renv","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
-1. `renv::snapshot()`
-
+1. For instructions on using `renv` to manage packages, see the documentation [here](R.qmd#sec-renv)
 
 ## Containers {#sec-containers}
 
@@ -664,7 +597,7 @@ Because none of the lab computers run on Linux, you will need to install a Linux
         sudo apt install -y apptainer
         ```
 
-        - If Apptainer is not available via apt (`E: Unable to locate package apptainer`), install it from source.
+        - If Apptainer is not available via apt (`E: Unable to locate package apptainer`), install it from source
 
             <details>
             <summary>Source Installation</summary>
@@ -1141,7 +1074,7 @@ To build a container with a program that is not included here, see the Apptainer
             ```
 
             You should see a printout of the system information, including a list of installed libraries.
-        1. Enter `exit()` to leave the container.
+        1. Enter `exit()` to leave the container
     1. `R`
         1. Start the `R` app within the container:
 
@@ -1166,14 +1099,15 @@ To build a container with a program that is not included here, see the Apptainer
             ```
 
             Ensure that all desired packages have been installed.
-        1. Enter `q()` to leave the container.
+        1. Enter `q()` to leave the container
     1. `MPlus`
         1. Start the `MPlus` app within the container:
 
             ```bash
             apptainer run --app mplus argon_container.sif
             ```
-
+            
+        1. Enter `exit` to leave the container
     1. `MATLAB`
         1. Start the `MATLAB` app within the container:
 
@@ -1190,7 +1124,7 @@ To build a container with a program that is not included here, see the Apptainer
             ```
 
             You should see a printout of the version information, including installed products.
-        1. Enter `exit` to leave the container.
+        1. Enter `exit` to leave the container
 1. Copy the container to your computer:
 
     ```bash
@@ -1198,9 +1132,9 @@ To build a container with a program that is not included here, see the Apptainer
     ```
 
     The `/mnt/c` path is equivalent to your computer's `C:` drive, so the rest of the file path should be defined from there.
-1. If your admin login is different from your HawkID, restart the terminal (or emulator) to run it as a regular user.
-1. Copy the container to Argon, either by using the terminal or by manually moving it in File Explorer/Finder.
-1. Test the container on Argon, using the same steps described above.
+1. If your admin login is different from your HawkID, restart the terminal (or emulator) to run it as a regular user
+1. Copy the container to Argon, either by using the terminal or by manually moving it in File Explorer/Finder
+1. Test the container on Argon, using the same steps described above
 1. If you installed `CmdStan`, copy the executable files to a writable location:
 
     ```bash
@@ -1295,15 +1229,15 @@ Below are a variety of common commands for submitting and tracking jobs.
     | -m [b\|e\|a\|s\|n]  | when to send job notifications (b = beginning of job; e = end of job; a = job aborted; s = job suspended; n = no notifications); multiple values allowed (e.g., -m eas)  |
     | -N [name] | job name  |
     | -o [path] | file or folder for saving non-error output messages |
-    | -pe smp [cores] | number of cores to use for parallel computing*  |
-    | -q [UI\|UI-HM\|UI-MPI\|UI-GPU\|UI-DEVELOP\|all.q] | which job queue to use**  |
+    | -pe smp [cores] | number of cores to use for parallel computing[^1]  |
+    | -q [UI\|UI-HM\|UI-MPI\|UI-GPU\|UI-DEVELOP\|all.q] | which job queue to use[^2]  |
     | -t n-m[:s]  | indicates an array job; includes the index of the first (n) and last (m) task with an optional parameter for step size (s; defaults to 1)  |
     | -tc [n] | number of jobs in an array job to run simultaneously  |
     | -wd [path]  | execute the job from the specified folder |
     
-    *We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
+    [^1]: We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
     
-    **The `UI` (default) and `UI-HM` (high-memory) queues are the most used by DevPsy.
+    [^2]: The `UI` (default) and `UI-HM` (high-memory) queues are the most used by DevPsy.
     `UI-MPI` is for jobs that can use multiple nodes simultaneously, and `UI-GPU` is for jobs that can use a GPU accelerator.
     `UI-DEVELOP` is recommend for test runs and debugging.
     The `all.q` queue is the lowest priority queue, so jobs running on it will "give up" resources if needed for jobs in higher-priority queues.
@@ -1425,11 +1359,9 @@ echo "${input_path} ${output_path} ${sub}" | python /Users/mschumer/tf_analysis.
 
 # Stan
 
-<https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux> (archived at <https://perma.cc/89H9-L8S6>)
+For instructions on how to install `Stan`, see the documentation: <https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux> (archived at <https://perma.cc/89H9-L8S6>)
 
-Makevars:
-
-`\\data.hpc.uiowa.edu\argon_home\.R\Makevars`
+If your version of `Stan` requires `Makevars`, save it under `\\data.hpc.uiowa.edu\argon_home\.R\Makevars`.
 
 # Troubleshooting
 
