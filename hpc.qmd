@@ -654,54 +654,27 @@ To build a container with a program that is not included here, see the Apptainer
     1. Copy the `MPlus` installer into your `containers` folder:
 
         ```bash
-        cd path/to/installer/MplusLinux64.bin ~/containers/
+        cp path/to/installer/MplusLinux64.bin ~/containers/
         ```
-
+        
+        Note: `/mnt/c` is equivalent to the `C:` drive of your main computer
+        
     1. Run the installer to generate a properties file:
 
         ```bash
-        ./MplusLinux64.bin -r ~/containers/mplus_install.properties
+        sudo ./MplusLinux64.bin -r ~/containers/mplus_install.properties
         ```
-
-    1. Open the properties file:
-
-        ```bash
-        nano mplus_install.properties
-        ```
-
-    1. Under the "Choose Install Folder" and "Install" headings, update the installation path to `/opt/mplus`
-
-        <details>
-        <summary>Example Properties File</summary>
         
+        1. Agree to the terms of the license agreement
+        1. Choose a minimal install (option `2`)
+        1. Enter `/opt/mplus` as the installation path
+    1. Uninstall `MPlus` from your VM (optional):
+    
         ```bash
-        # Tue Feb 24 21:04:04 CST 2026
-        # Replay feature output
-        # ---------------------
-        # This file was built by the Replay feature of InstallAnywhere.
-        # It contains variables that were set by Panels, Consoles or Custom Code.
-        #Choose Install Set
-        #------------------
-        CHOSEN_FEATURE_LIST=Application,Examples
-        CHOSEN_INSTALL_FEATURE_LIST=Application,Examples
-        CHOSEN_INSTALL_SET=Typical
-        #Choose Install Folder
-        #---------------------
-        USER_INSTALL_DIR=/opt/mplus
-        #Install
-        #-------
-        -fileOverwrite_/opt/mplus/uninstall/uninstall_mplus.lax=Yes
-        -fileOverwrite_/opt/mplus/mplus=Yes
-        -fileOverwrite_/opt/mplus/Documentation/Getting_Started.pdf=Yes
-        -fileOverwrite_/opt/mplus/Documentation/Mplus_Users_Guide_v8.pdf=Yes
-        -fileOverwrite_/opt/mplus/Documentation/Version_8.1_Language_Addendum.pdf=Yes
-        -fileOverwrite_/opt/mplus/Documentation/Version_8.5_Language_Addendum.pdf=Yes
+        cd /opt/mplus/uninstall
+        sudo ./uninstall_mplus
         ```
-
-        </details>
-
-    1. Press `Ctrl+O` then `Enter` to save ("write out") the file
-    1. Press `Ctrl+X` to close the file
+        
 1. If installing `MATLAB`:
     1. Copy the dependencies file into your `containers` folder:
 
@@ -711,13 +684,13 @@ To build a container with a program that is not included here, see the Apptainer
 
 1. Create or download the definition file
     1. To download an existing definition file (see [GitLab](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles) for options):
-        1. Enter the following code into the terminal:
+        1. Copy the definition file into your containers folder:
 
             ```bash
-            wget -q -O argon_container.def https://link.to.definition.file
+            cp path/to/def/file.def ~/containers
             ```
-
-        1. Log in with your HawkID credentials when prompted
+            
+            Note: You must have the HPC repository cloned to your local computer for this to work.
     1. To create a definition file from scratch:
         1. Create a new file:
 
@@ -799,7 +772,7 @@ To build a container with a program that is not included here, see the Apptainer
               
               %apprun python
               
-                  exec python "$@"
+                  exec python3 "$@"
 
               %appinstall python
               
@@ -878,7 +851,7 @@ To build a container with a program that is not included here, see the Apptainer
                     python3-apt
                     
                   # install bspm
-                  sudo Rscript --vanilla -e "install.packages(
+                  Rscript -e "install.packages(
                     'bspm',
                     repos = 'https://cloud.r-project.org'
                   )"
@@ -1009,7 +982,7 @@ To build a container with a program that is not included here, see the Apptainer
                   # define variables needed for setup
                   export MATLAB_RELEASE=R2026a
                   export MATLAB_PRODUCT_LIST="MATLAB Wavelet_Toolbox Signal_Processing_Toolbox Statistics_and_Machine_Learning_Toolbox Optimization_Toolbox Parallel_Computing_Toolbox"
-                  export MATLAB_INSTALL_LOCATION="/opt/matlab/${MATLAB_RELEASE}
+                  export MATLAB_INSTALL_LOCATION=/opt/matlab/${MATLAB_RELEASE}
                   
                   # add those variables to apptainer environment
                   # do not change the line indentation - it will cause an error
@@ -1101,13 +1074,13 @@ To build a container with a program that is not included here, see the Apptainer
             Ensure that all desired packages have been installed.
         1. Enter `q()` to leave the container
     1. `MPlus`
-        1. Start the `MPlus` app within the container:
+        1. Check the `MPlus` installation:
 
             ```bash
-            apptainer run --app mplus argon_container.sif
+            apptainer exec argon_container.sif mplus "-version"
             ```
             
-        1. Enter `exit` to leave the container
+            If the app is working, you should see the `MPlus` version and installation type printed in the terminal.
     1. `MATLAB`
         1. Start the `MATLAB` app within the container:
 
