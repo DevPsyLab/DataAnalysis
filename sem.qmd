@@ -348,10 +348,11 @@ lgcm1_fit <- growth(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = FALSE,
-  int.lv.free = TRUE,
+  int_ov_free = FALSE,
+  int_lv_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000)
+)
 ```
 
 #### Full
@@ -364,7 +365,8 @@ lgcm2_fit <- sem(
   estimator = "MLR",
   meanstructure = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000)
+)
 ```
 
 ### Summary Output
@@ -614,10 +616,11 @@ lbgcm1_fit <- growth(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = FALSE,
-  int.lv.free = TRUE,
+  int_ov_free = FALSE,
+  int_lv_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000)
+)
 ```
 
 #### Full
@@ -630,7 +633,8 @@ lbgcm2_fit <- sem(
   estimator = "MLR",
   meanstructure = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000)
+)
 ```
 
 ### Summary Output
@@ -912,10 +916,10 @@ quadraticGCM1_fit <- growth(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = FALSE,
-  int.lv.free = TRUE,
+  int_ov_free = FALSE,
+  int_lv_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 #### Full
@@ -928,7 +932,7 @@ quadraticGCM2_fit <- sem(
   estimator = "MLR",
   meanstructure = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ### Summary Output
@@ -1215,10 +1219,10 @@ logGCM1_fit <- growth(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = FALSE,
-  int.lv.free = TRUE,
+  int_ov_free = FALSE,
+  int_lv_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 #### Full
@@ -1231,7 +1235,7 @@ logGCM2_fit <- sem(
   estimator = "MLR",
   meanstructure = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ### Summary Output
@@ -1525,10 +1529,10 @@ splineGCM1_fit <- growth(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = FALSE,
-  int.lv.free = TRUE,
+  int_ov_free = FALSE,
+  int_lv_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 #### Full
@@ -1541,7 +1545,7 @@ splineGCM2_fit <- sem(
   estimator = "MLR",
   meanstructure = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ### Summary Output
@@ -1946,7 +1950,7 @@ clpm_fit <- sem(
   meanstructure = TRUE,
   std_lv = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ## Summary Output
@@ -2204,9 +2208,9 @@ riclpm1_fit <- lavaan(
   missing = "ML",
   estimator = "MLR",
   meanstructure = TRUE,
-  int.ov.free = TRUE,
+  int_ov_free = TRUE,
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ### Full
@@ -2218,7 +2222,7 @@ riclpm2_fit <- sem(
   missing = "ML",
   estimator = "MLR",
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ## Summary Output
@@ -2359,7 +2363,7 @@ alt_fit <- sem(
   missing = "ML",
   estimator = "MLR",
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ## Summary Output
@@ -2585,7 +2589,7 @@ lcmsr_fit <- sem(
   missing = "ML",
   estimator = "MLR",
   fixed_x = FALSE,
-  em.h1.iter.max = 100000)
+  em_h1_args = list(max_iter = 100000))
 ```
 
 ## Summary Output
@@ -2735,7 +2739,7 @@ Adjusted bootstrap percentile (BCa) method, but with no correction for accelerat
 ```{r}
 mediationFit_estimates_bca <- parameterEstimates(
   mediationFit,
-  boot.ci.type = "bca.simple",
+  boot_ci_type = "bca.simple",
   standardized = TRUE)
 
 mediationFit_estimates <- mediationFit_estimates_bca
@@ -2748,7 +2752,7 @@ mediationFit_estimates_bca
 ```{r}
 mediationFit_estimates_perc <- parameterEstimates(
   mediationFit,
-  boot.ci.type = "perc",
+  boot_ci_type = "perc",
   standardized = TRUE)
 
 mediationFit_estimates_perc
