@@ -4465,10 +4465,10 @@ anova(
 )
 
 round(cbind(
-  configural = inspect(configuralInvarianceCorrelatedResiduals_fit, "fit_measures"), 
-  weak = inspect(metricInvariance_fit, "fit_measures"),
-  strong = inspect(scalarInvariance_fit, "fit_measures"),
-  strict = inspect(residualInvariance_fit, "fit_measures")), 3)
+  configural = inspect(configuralInvarianceCorrelatedResiduals_fit, "fit.measures"), # note: fit.measures may be deprecated in future versions in favor of snake_case (fit_measures)
+  weak = inspect(metricInvariance_fit, "fit.measures"),
+  strong = inspect(scalarInvariance_fit, "fit.measures"),
+  strict = inspect(residualInvariance_fit, "fit.measures")), 3)
 ```
 
 # Compare Models
@@ -4485,9 +4485,9 @@ anova(
 )
 
 round(cbind(
-  model1 = inspect(model1, "fit_measures"), 
-  model2 = inspect(model2, "fit_measures"),
-  model3 = inspect(model3, "fit_measures")), 3)
+  model1 = inspect(model1, "fit.measures"), # note: fit.measures may be deprecated in future versions in favor of snake_case (fit_measures)
+  model2 = inspect(model2, "fit.measures"),
+  model3 = inspect(model3, "fit.measures")), 3)
 ```
 
 For non-nested models:
@@ -4496,9 +4496,9 @@ For non-nested models:
 #| eval: false
 
 round(cbind(
-  model1 = inspect(model1, "fit_measures"), 
-  model2 = inspect(model2, "fit_measures"),
-  model3 = inspect(model3, "fit_measures")), 3)
+  model1 = inspect(model1, "fit.measures"), # note: fit.measures may be deprecated in future versions in favor of snake_case (fit_measures)
+  model2 = inspect(model2, "fit.measures"),
+  model3 = inspect(model3, "fit.measures")), 3)
 
 nonnest2::vuongtest(
   model1,
@@ -4701,14 +4701,14 @@ cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
 ```{r}
 #| eval: false
 
-lavInspect(configuralInvariance_fit, "sigma.hat")
+lavInspect(configuralInvariance_fit, "sigma.hat") # note: sigma.hat may be deprecated in future versions in favor of snake_case (sigma_hat)
 cov2cor(lavInspect(configuralInvariance_fit, "sigma.hat"))
 ```
 
 - Examine the model-implied variance-covariance matrix of the latent variables (for redundancy):
 
 ```{r}
-lavInspect(configuralInvariance_fit, "cov.lv")
+lavInspect(configuralInvariance_fit, "cov.lv") # note: cov.lv may be deprecated in future versions in favor of snake_case (cov_lv)
 cov2cor(lavInspect(configuralInvariance_fit, "cov.lv"))
 ```
 
@@ -4721,8 +4721,8 @@ eigen(lavInspect(configuralInvariance_fit, "vcov"))$values
 ```
 
 ```{r}
-eigen(lavInspect(configuralInvariance_fit, "sigma.hat"))$values
-eigen(lavInspect(configuralInvariance_fit, "cov.lv"))$values
+eigen(lavInspect(configuralInvariance_fit, "sigma.hat"))$values # note: sigma.hat may be deprecated in future versions in favor of snake_case (sigma_hat)
+eigen(lavInspect(configuralInvariance_fit, "cov.lv"))$values # note: cov.lv may be deprecated in future versions in favor of snake_case (cov_lv)
 ```
 
 - Examine residuals for large values (i.e., local misfit):
