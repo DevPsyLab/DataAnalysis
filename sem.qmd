@@ -1802,8 +1802,8 @@ bivariateLCSM_fit <- lcsm::fit_bi_lcsm(
     delta_lag_xy = TRUE, # level of x predicting change in y
     delta_lag_yx = TRUE, # level of y predicting change in x
     xi_lag_xy = TRUE,    # change in x predicting change in y
-    xi_lag_yx = TRUE),   # change in y predicting change in x
-  fixed_x = FALSE
+    xi_lag_yx = TRUE)#,   # change in y predicting change in x
+  #fixed_x = FALSE
   )
 ```
 
@@ -2848,17 +2848,17 @@ RsquaredMed1
 betaYMgivenX <- mediationFit_estimates |> 
   filter(label == "b") |> 
   select(std.all) |> 
-  as.numeric
+  as.numeric()
 
 betaYXgivenM <- mediationFit_estimates |> 
   filter(label == "direct") |> 
   select(std.all) |> 
-  as.numeric
+  as.numeric()
 
 betaMX <- mediationFit_estimates |> 
   filter(label == "a") |> 
   select(std.all) |> 
-  as.numeric
+  as.numeric()
 
 betaYX <- as.numeric(cor.test(
   ~ X + Y,
