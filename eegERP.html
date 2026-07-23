@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-33269adcf1721b81efc5ea7fcfe7f0ee.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b6360f73894c71fd47cbaefd81ae0db4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b67021de98b9439df80d7b08f9270ad3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -2128,7 +2128,7 @@ writetable(manualList, manPathFull);</code></pre>
 <li>
 <p>“Clean” the list of component file names by removing the file extension (in this case, <code>.txt</code>).</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">componentNames</span> <span class="op">&lt;-</span> <span class="va">oddballFiles</span> <span class="op">%&gt;%</span> <span class="fu">str_remove</span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">componentNames</span> <span class="op">&lt;-</span> <span class="va">oddballFiles</span> <span class="op">|&gt;</span> <span class="fu">str_remove</span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </li>
@@ -2145,7 +2145,7 @@ writetable(manualList, manPathFull);</code></pre>
 <li>
 <p>At this stage, the ERP component data are nested within a list of separate data objects. We must therefore merge them into a single dataframe object.</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddballDataMerged</span> <span class="op">&lt;-</span> <span class="va">oddballData</span> <span class="op">%&gt;%</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddballDataMerged</span> <span class="op">&lt;-</span> <span class="va">oddballData</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">reduce</span><span class="op">(</span><span class="va">full_join</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -2161,11 +2161,11 @@ writetable(manualList, manPathFull);</code></pre>
 <li>Convert all values to numeric</li>
 </ul>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddballDataClean</span> <span class="op">&lt;-</span> <span class="va">oddballDataMerged</span> <span class="op">%&gt;%</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddballDataClean</span> <span class="op">&lt;-</span> <span class="va">oddballDataMerged</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu">mutate</span><span class="op">(</span>tcid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">ID</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span>          wave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">ID</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>   <span class="fu">select</span><span class="op">(</span><span class="va">tcid</span>, <span class="va">wave</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">ID</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>          wave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">ID</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>   <span class="fu">select</span><span class="op">(</span><span class="va">tcid</span>, <span class="va">wave</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">ID</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>   <span class="fu">type_convert</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -2233,8 +2233,8 @@ writetable(manualList, manPathFull);</code></pre>
 <span><span class="va">obFrq_sub</span><span class="op">$</span><span class="va">amplitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="va">obFrq_sub</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Remove raw values and add condition labels</span></span>
-<span><span class="va">obTgt_amps</span> <span class="op">&lt;-</span> <span class="va">obTgt_sub</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>condition <span class="op">=</span> <span class="st">"Target"</span><span class="op">)</span></span>
-<span><span class="va">obFrq_amps</span> <span class="op">&lt;-</span> <span class="va">obFrq_sub</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>condition <span class="op">=</span> <span class="st">"Frequent"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="va">obTgt_amps</span> <span class="op">&lt;-</span> <span class="va">obTgt_sub</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span>condition <span class="op">=</span> <span class="st">"Target"</span><span class="op">)</span></span>
+<span><span class="va">obFrq_amps</span> <span class="op">&lt;-</span> <span class="va">obFrq_sub</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span>condition <span class="op">=</span> <span class="st">"Frequent"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </li>
@@ -2259,8 +2259,8 @@ writetable(manualList, manPathFull);</code></pre>
 <li>
 <p>Combine all conditions into a single data object to be used for plotting</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddball</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">obTgtTimes</span>, <span class="va">obFrqTimes</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>           <span class="fu">select</span><span class="op">(</span><span class="va">time</span>, <span class="va">condition</span>, <span class="va">amplitude</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oddball</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">obTgtTimes</span>, <span class="va">obFrqTimes</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu">select</span><span class="op">(</span><span class="va">time</span>, <span class="va">condition</span>, <span class="va">amplitude</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>           <span class="fu">arrange</span><span class="op">(</span><span class="va">time</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -5024,7 +5024,7 @@ writetable(manualList, manPathFull);</code></pre>
 <span id="cb70-1211"><a href="#cb70-1211" aria-hidden="true" tabindex="-1"></a>      <span class="in">```{r}</span></span>
 <span id="cb70-1212"><a href="#cb70-1212" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb70-1213"><a href="#cb70-1213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-1214"><a href="#cb70-1214" aria-hidden="true" tabindex="-1"></a>      componentNames <span class="ot">&lt;-</span> oddballFiles <span class="sc">%&gt;%</span> <span class="fu">str_remove</span>(<span class="st">".txt"</span>)</span>
+<span id="cb70-1214"><a href="#cb70-1214" aria-hidden="true" tabindex="-1"></a>      componentNames <span class="ot">&lt;-</span> oddballFiles <span class="sc">|&gt;</span> <span class="fu">str_remove</span>(<span class="st">".txt"</span>)</span>
 <span id="cb70-1215"><a href="#cb70-1215" aria-hidden="true" tabindex="-1"></a>      <span class="in">```</span></span>
 <span id="cb70-1216"><a href="#cb70-1216" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-1217"><a href="#cb70-1217" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Give <span class="in">`ID`</span> variable a proper name.</span>
@@ -5043,7 +5043,7 @@ writetable(manualList, manPathFull);</code></pre>
 <span id="cb70-1230"><a href="#cb70-1230" aria-hidden="true" tabindex="-1"></a>       <span class="in">```{r}</span></span>
 <span id="cb70-1231"><a href="#cb70-1231" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb70-1232"><a href="#cb70-1232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-1233"><a href="#cb70-1233" aria-hidden="true" tabindex="-1"></a>       oddballDataMerged <span class="ot">&lt;-</span> oddballData <span class="sc">%&gt;%</span></span>
+<span id="cb70-1233"><a href="#cb70-1233" aria-hidden="true" tabindex="-1"></a>       oddballDataMerged <span class="ot">&lt;-</span> oddballData <span class="sc">|&gt;</span></span>
 <span id="cb70-1234"><a href="#cb70-1234" aria-hidden="true" tabindex="-1"></a>          <span class="fu">reduce</span>(full_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span>))</span>
 <span id="cb70-1235"><a href="#cb70-1235" aria-hidden="true" tabindex="-1"></a>       <span class="in">```</span></span>
 <span id="cb70-1236"><a href="#cb70-1236" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Organize the combined data.</span>
@@ -5057,11 +5057,11 @@ writetable(manualList, manPathFull);</code></pre>
 <span id="cb70-1244"><a href="#cb70-1244" aria-hidden="true" tabindex="-1"></a>       <span class="in">```{r}</span></span>
 <span id="cb70-1245"><a href="#cb70-1245" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb70-1246"><a href="#cb70-1246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-1247"><a href="#cb70-1247" aria-hidden="true" tabindex="-1"></a>       oddballDataClean <span class="ot">&lt;-</span> oddballDataMerged <span class="sc">%&gt;%</span></span>
+<span id="cb70-1247"><a href="#cb70-1247" aria-hidden="true" tabindex="-1"></a>       oddballDataClean <span class="ot">&lt;-</span> oddballDataMerged <span class="sc">|&gt;</span></span>
 <span id="cb70-1248"><a href="#cb70-1248" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">tcid =</span> <span class="fu">substr</span>(ID, <span class="dv">1</span>, <span class="dv">4</span>),</span>
-<span id="cb70-1249"><a href="#cb70-1249" aria-hidden="true" tabindex="-1"></a>                 <span class="at">wave =</span> <span class="fu">substr</span>(ID, <span class="dv">6</span>, <span class="dv">7</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb70-1250"><a href="#cb70-1250" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(tcid, wave, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb70-1251"><a href="#cb70-1251" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-1249"><a href="#cb70-1249" aria-hidden="true" tabindex="-1"></a>                 <span class="at">wave =</span> <span class="fu">substr</span>(ID, <span class="dv">6</span>, <span class="dv">7</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb70-1250"><a href="#cb70-1250" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(tcid, wave, <span class="fu">everything</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb70-1251"><a href="#cb70-1251" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">|&gt;</span> </span>
 <span id="cb70-1252"><a href="#cb70-1252" aria-hidden="true" tabindex="-1"></a>          <span class="fu">type_convert</span>()</span>
 <span id="cb70-1253"><a href="#cb70-1253" aria-hidden="true" tabindex="-1"></a>       <span class="in">```</span></span>
 <span id="cb70-1254"><a href="#cb70-1254" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Update column names of merged data according to the list of PCA component files.</span>
@@ -5119,8 +5119,8 @@ writetable(manualList, manPathFull);</code></pre>
 <span id="cb70-1306"><a href="#cb70-1306" aria-hidden="true" tabindex="-1"></a>   obFrq_sub<span class="sc">$</span>amplitude <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(obFrq_sub)</span>
 <span id="cb70-1307"><a href="#cb70-1307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-1308"><a href="#cb70-1308" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Remove raw values and add condition labels</span></span>
-<span id="cb70-1309"><a href="#cb70-1309" aria-hidden="true" tabindex="-1"></a>   obTgt_amps <span class="ot">&lt;-</span> obTgt_sub <span class="sc">%&gt;%</span> <span class="fu">select</span>(amplitude) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="st">"Target"</span>)</span>
-<span id="cb70-1310"><a href="#cb70-1310" aria-hidden="true" tabindex="-1"></a>   obFrq_amps <span class="ot">&lt;-</span> obFrq_sub <span class="sc">%&gt;%</span> <span class="fu">select</span>(amplitude) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="st">"Frequent"</span>)</span>
+<span id="cb70-1309"><a href="#cb70-1309" aria-hidden="true" tabindex="-1"></a>   obTgt_amps <span class="ot">&lt;-</span> obTgt_sub <span class="sc">|&gt;</span> <span class="fu">select</span>(amplitude) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="st">"Target"</span>)</span>
+<span id="cb70-1310"><a href="#cb70-1310" aria-hidden="true" tabindex="-1"></a>   obFrq_amps <span class="ot">&lt;-</span> obFrq_sub <span class="sc">|&gt;</span> <span class="fu">select</span>(amplitude) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="st">"Frequent"</span>)</span>
 <span id="cb70-1311"><a href="#cb70-1311" aria-hidden="true" tabindex="-1"></a>   <span class="in">```</span></span>
 <span id="cb70-1312"><a href="#cb70-1312" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-1313"><a href="#cb70-1313" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add timing-related information to the data</span>
@@ -5142,8 +5142,8 @@ writetable(manualList, manPathFull);</code></pre>
 <span id="cb70-1329"><a href="#cb70-1329" aria-hidden="true" tabindex="-1"></a>   <span class="in">```{r}</span></span>
 <span id="cb70-1330"><a href="#cb70-1330" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb70-1331"><a href="#cb70-1331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-1332"><a href="#cb70-1332" aria-hidden="true" tabindex="-1"></a>   oddball <span class="ot">&lt;-</span> <span class="fu">rbind</span>(obTgtTimes, obFrqTimes) <span class="sc">%&gt;%</span> </span>
-<span id="cb70-1333"><a href="#cb70-1333" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(time, condition, amplitude) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-1332"><a href="#cb70-1332" aria-hidden="true" tabindex="-1"></a>   oddball <span class="ot">&lt;-</span> <span class="fu">rbind</span>(obTgtTimes, obFrqTimes) <span class="sc">|&gt;</span> </span>
+<span id="cb70-1333"><a href="#cb70-1333" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(time, condition, amplitude) <span class="sc">|&gt;</span> </span>
 <span id="cb70-1334"><a href="#cb70-1334" aria-hidden="true" tabindex="-1"></a>              <span class="fu">arrange</span>(time)</span>
 <span id="cb70-1335"><a href="#cb70-1335" aria-hidden="true" tabindex="-1"></a>   <span class="in">```</span></span>
 <span id="cb70-1336"><a href="#cb70-1336" aria-hidden="true" tabindex="-1"></a></span>
