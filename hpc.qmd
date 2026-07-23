@@ -618,6 +618,7 @@ Because none of the lab computers run on Linux, you will need to install a Linux
                 ```
 
             1. Build Apptainer:
+
                 ```bash
                 ./mconfig
                 make -C builddir
@@ -631,6 +632,26 @@ Because none of the lab computers run on Linux, you will need to install a Linux
         ```bash
         apptainer --version
         ```
+
+    1. If Apptainer was already installed (i.e., you did not just install it) and you want to upgrade the Apptainer installation, run the following code to upgrade Apptainer:
+
+        ```bash
+        sudo add-apt-repository -y ppa:apptainer/ppa
+        sudo apt update
+        sudo apt install --only-upgrade -y apptainer
+        apptainer --version
+        ```
+
+        - If you had previously installed the old Apptainer version from source, you may have to remove it:
+
+            <details>
+            <summary>Remove Source Installation</summary>
+
+            ```bash
+            sudo rm /usr/local/bin/apptainer
+            ```
+
+            </details>
 
 1. Go to your home directory (`cd ~`)
 1. Create a `containers` folder if one does not exist:
@@ -676,18 +697,20 @@ To build a container with a program that is not included here, see the Apptainer
         ```
         
 1. If installing `MATLAB`:
-    1. Copy the dependencies file into your `containers` folder:
+    1. Copy the dependencies file into your `containers` folder (get the dependencies path for the latest released version from here: <https://github.com/mathworks-ref-arch/container-images/tree/main/matlab-deps>; make sure to specify the correct architecture—i.e., AMD or ARM):
 
         ```bash
-        wget -q -O https://raw.githubusercontent.com/mathworks-ref-arch/container-images/refs/heads/main/matlab-deps/r2026a/ubuntu24.04/base-dependencies.txt
+        wget -q -O base-dependencies.txt https://raw.githubusercontent.com/mathworks-ref-arch/container-images/refs/heads/main/matlab-deps/r2026a/ubuntu24.04/base-dependencies.txt
         ```
 
 1. Create or download the definition file
-    1. To download an existing definition file (see [GitLab](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles) for options):
+    1. To download an existing definition file (see [GitLab](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles) for options—make sure to update the version numbers for MATLAB, Python, and the Ubuntu OS as necessary):
         1. Copy the definition file into your containers folder:
 
             ```bash
-            cp path/to/def/file.def ~/containers
+            cp /mnt/path/to/def/file.def ~/containers
+            # For example:
+            # cp /mnt/c/Users/USERNAME/Downloads/file.def ~/containers
             ```
             
             Note: You must have the HPC repository cloned to your local computer for this to work.
