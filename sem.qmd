@@ -186,12 +186,12 @@ Transform data from wide to long format:
 ```{r}
 Demo.growth$id <- 1:nrow(Demo.growth)
 
-Demo.growth_long <- Demo.growth %>% 
+Demo.growth_long <- Demo.growth |> 
   pivot_longer(
     cols = c(t1,t2,t3,t4),
     names_to = "variable",
     values_to = "value",
-    names_pattern = "t(.)") %>% 
+    names_pattern = "t(.)") |> 
   rename(
     timepoint = variable,
     score = value
@@ -502,7 +502,7 @@ newData1$t4 <- newData1$intercept + (timepoints - 1)*newData1$slope
 
 newData2 <- pivot_longer(
   newData1,
-  cols = c(t1, t4)) %>% 
+  cols = c(t1, t4)) |> 
   select(-intercept, -slope)
 
 newData2$time <- NA
@@ -770,20 +770,20 @@ person_factors$id <- rownames(person_factors)
 slope_loadings <- c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 1)
 
 # Compute model-implied values for each person at each time point
-individual_trajectories <- person_factors %>%
-  rowwise() %>%
+individual_trajectories <- person_factors |>
+  rowwise() |>
   mutate(
     t1 = intercept + slope * slope_loadings[1],
     t2 = intercept + slope * slope_loadings[2],
     t3 = intercept + slope * slope_loadings[3],
     t4 = intercept + slope * slope_loadings[4]
-  ) %>%
-  ungroup() %>%
-  select(id, t1, t2, t3, t4) %>%
+  ) |>
+  ungroup() |>
+  select(id, t1, t2, t3, t4) |>
   pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
-    values_to = "value") %>%
+    values_to = "value") |>
   mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
@@ -1074,20 +1074,20 @@ linear_loadings <- c(0, 1, 2, 3)
 quadratic_loadings <- c(0, 1, 4, 9)
 
 # Compute model-implied values for each person at each time point
-individual_trajectories <- person_factors %>%
-  rowwise() %>%
+individual_trajectories <- person_factors |>
+  rowwise() |>
   mutate(
     t1 = intercept + (linear * linear_loadings[1]) + (quadratic * quadratic_loadings[1]),
     t2 = intercept + (linear * linear_loadings[2]) + (quadratic * quadratic_loadings[2]),
     t3 = intercept + (linear * linear_loadings[3]) + (quadratic * quadratic_loadings[3]),
     t4 = intercept + (linear * linear_loadings[4]) + (quadratic * quadratic_loadings[4])
-  ) %>%
-  ungroup() %>%
-  select(id, t1, t2, t3, t4) %>%
+  ) |>
+  ungroup() |>
+  select(id, t1, t2, t3, t4) |>
   pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
-    values_to = "value") %>%
+    values_to = "value") |>
   mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
@@ -1374,20 +1374,20 @@ linear_loadings <- c(0, 1, 2, 3)
 log_loadings <- c(0, 0.6931472, 1.0986123, 1.3862944)
 
 # Compute model-implied values for each person at each time point
-individual_trajectories <- person_factors %>%
-  rowwise() %>%
+individual_trajectories <- person_factors |>
+  rowwise() |>
   mutate(
     t1 = intercept + (slope * log_loadings[1]),
     t2 = intercept + (slope * log_loadings[2]),
     t3 = intercept + (slope * log_loadings[3]),
     t4 = intercept + (slope * log_loadings[4])
-  ) %>%
-  ungroup() %>%
-  select(id, t1, t2, t3, t4) %>%
+  ) |>
+  ungroup() |>
+  select(id, t1, t2, t3, t4) |>
   pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
-    values_to = "value") %>%
+    values_to = "value") |>
   mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
@@ -1684,20 +1684,20 @@ slope_loadings <- c(0, 1, 2, 3)
 knot_loadings <- c(0, 0, 1, 1)
 
 # Compute model-implied values for each person at each time point
-individual_trajectories <- person_factors %>%
-  rowwise() %>%
+individual_trajectories <- person_factors |>
+  rowwise() |>
   mutate(
     t1 = intercept + (slope * slope_loadings[1]) + (knot * knot_loadings[1]),
     t2 = intercept + (slope * slope_loadings[2]) + (knot * knot_loadings[2]),
     t3 = intercept + (slope * slope_loadings[3]) + (knot * knot_loadings[3]),
     t4 = intercept + (slope * slope_loadings[4]) + (knot * knot_loadings[4])
-  ) %>%
-  ungroup() %>%
-  select(id, t1, t2, t3, t4) %>%
+  ) |>
+  ungroup() |>
+  select(id, t1, t2, t3, t4) |>
   pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
-    values_to = "value") %>%
+    values_to = "value") |>
   mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
@@ -2765,14 +2765,14 @@ mediationFit_estimates_perc
 Bias-Corrected Bootstrap:
 
 ```{r}
-mediationFit_estimates_bca %>% 
+mediationFit_estimates_bca |> 
   filter(label == "indirect")
 ```
 
 Percentile Bootstrap:
 
 ```{r}
-mediationFit_estimates_perc %>% 
+mediationFit_estimates_perc |> 
   filter(label == "indirect")
 ```
 
@@ -2785,9 +2785,9 @@ $$
 $$
 
 ```{r}
-mediationFit_indirect <- mediationFit_estimates %>% 
-  filter(label == "indirect") %>% 
-  select(std.all) %>% 
+mediationFit_indirect <- mediationFit_estimates |> 
+  filter(label == "indirect") |> 
+  select(std.all) |> 
   as.numeric
 
 mediationFit_indirect
@@ -2802,9 +2802,9 @@ $$
 Effect size: Proportion mediated (*P*<sub>*M*</sub>); i.e., the proportion of the total effect that is mediated; calculated by the magnitude of the indirect effect divided by the magnitude of the total effect:
 
 ```{r}
-mediationFit_total <- mediationFit_estimates %>% 
-  filter(label == "totalAbs") %>% 
-  select(std.all) %>% 
+mediationFit_total <- mediationFit_estimates |> 
+  filter(label == "totalAbs") |> 
+  select(std.all) |> 
   as.numeric
 
 mediationFit_pm <- abs(mediationFit_indirect) / abs(mediationFit_total)
@@ -2845,19 +2845,19 @@ RsquaredYmx <- summary(lm(
 RsquaredMed1 <- (rMY^2) - (RsquaredYmx - (rXY^2))
 RsquaredMed1
 
-betaYMgivenX <- mediationFit_estimates %>% 
-  filter(label == "b") %>% 
-  select(std.all) %>% 
+betaYMgivenX <- mediationFit_estimates |> 
+  filter(label == "b") |> 
+  select(std.all) |> 
   as.numeric
 
-betaYXgivenM <- mediationFit_estimates %>% 
-  filter(label == "direct") %>% 
-  select(std.all) %>% 
+betaYXgivenM <- mediationFit_estimates |> 
+  filter(label == "direct") |> 
+  select(std.all) |> 
   as.numeric
 
-betaMX <- mediationFit_estimates %>% 
-  filter(label == "a") %>% 
-  select(std.all) %>% 
+betaMX <- mediationFit_estimates |> 
+  filter(label == "a") |> 
+  select(std.all) |> 
   as.numeric
 
 betaYX <- as.numeric(cor.test(
@@ -3131,7 +3131,7 @@ Illiteracy_centered_sd <- sd(states$Illiteracy_centered, na.rm = TRUE)
 Murder_centered_mean <- mean(states$Murder_centered, na.rm = TRUE)
 Murder_centered_sd <- sd(states$Murder_centered, na.rm = TRUE)
 
-modelImpliedPredictedData <- modelImpliedPredictedData %>%
+modelImpliedPredictedData <- modelImpliedPredictedData |>
   mutate(
     Illiteracy = case_when(
       Illiteracy_factor == "Low" ~ Illiteracy_mean - Illiteracy_sd,
@@ -3167,7 +3167,7 @@ modelImpliedPredictedData$Income_rescaled <- lavPredictY(
   moderationFit,
   newdata = modelImpliedPredictedData,
   ynames = "Income_rescaled"
-) %>% 
+) |> 
   as.vector()
 
 # Verify Computation Manually
@@ -3181,7 +3181,7 @@ b_Murder_centered <- moderationFit_parameters[which(moderationFit_parameters$lhs
 b_interaction <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "interaction"), "est"]
 b_HS.Grad <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "HS.Grad"), "est"]
 
-modelImpliedPredictedData <- modelImpliedPredictedData %>%
+modelImpliedPredictedData <- modelImpliedPredictedData |>
   mutate(
     Income_rescaled_calculatedManually = intercept + (b_Illiteracy_centered * Illiteracy_centered) + (b_Murder_centered * Murder_centered) + (b_interaction * interaction) + (b_HS.Grad * HS.Grad))
 
@@ -3355,32 +3355,32 @@ max(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
 
 ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
   geom_ribbon(
-    data = plot_data %>% filter(significant_slope == FALSE),
+    data = plot_data |> filter(significant_slope == FALSE),
     aes(ymin = lower_ci, ymax = upper_ci),
     fill = "#F8766D",
     alpha = 0.2) + 
   geom_ribbon(
-    data = plot_data %>% filter(significantRegionNumber == 1),
+    data = plot_data |> filter(significantRegionNumber == 1),
     aes(ymin = lower_ci, ymax = upper_ci),
     fill = "#00BFC4",
     alpha = 0.2) + 
   geom_ribbon(
-    data = plot_data %>% filter(significantRegionNumber == 2),
+    data = plot_data |> filter(significantRegionNumber == 2),
     aes(ymin = lower_ci, ymax = upper_ci),
     fill = "#00BFC4",
     alpha = 0.2) +
   geom_line(
-    data = plot_data %>% filter(significant_slope == FALSE),
+    data = plot_data |> filter(significant_slope == FALSE),
     aes(x = Murder, y = predicted_slopes),
     color = "#F8766D",
     linewidth = 2) +
   geom_line(
-    data = plot_data %>% filter(significantRegionNumber == 1),
+    data = plot_data |> filter(significantRegionNumber == 1),
     aes(x = Murder, y = predicted_slopes),
     color = "#00BFC4",
     linewidth = 2) +
   geom_line(
-    data = plot_data %>% filter(significantRegionNumber == 2),
+    data = plot_data |> filter(significantRegionNumber == 2),
     aes(x = Murder, y = predicted_slopes),
     color = "#00BFC4",
     linewidth = 2) +

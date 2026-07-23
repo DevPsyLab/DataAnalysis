@@ -96,7 +96,7 @@ multipleRegressionModelNoMissing <- lm(
 
 multipleRegressionModelNoMissing <- lm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit)
+  data = mydata |> select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) |> na.omit)
 ```
 
 ## Linear regression model on correlation/covariance matrix (for pairwise deletion)
@@ -349,12 +349,12 @@ print(effectsize::standardize_parameters(bayesianLogisticRegression, method = "b
 ```{r}
 model1 <- lm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
-  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+  data = mydata |> select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) |> na.omit,
   na.action = na.exclude)
 
 model2 <- lm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
-  data = mydata %>% select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) %>% na.omit,
+  data = mydata |> select(bpi_antisocialT2Sum, bpi_antisocialT1Sum, bpi_anxiousDepressedSum) |> na.omit,
   na.action = na.exclude)
 
 summary(model2)$adj.r.squared

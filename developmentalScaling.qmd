@@ -465,7 +465,7 @@ summary(
 Parameter estimates:
 
 ```{r}
-lavaan::parameterEstimates(partialStrongInvarianceGrowthCurve_fit) %>%
+lavaan::parameterEstimates(partialStrongInvarianceGrowthCurve_fit) |>
   subset(
     lhs %in% c("i", "s") & substr(rhs, 1, 6) != "latent",
     -label
@@ -799,11 +799,11 @@ summary(
 Parameter estimates:
 
 ```{r}
-lavaan::parameterEstimates(awcGrowthModel_fit) %>%
+lavaan::parameterEstimates(awcGrowthModel_fit) |>
   subset(
     lhs %in% c("i", "s") & substr(rhs, 1, 6) != "latent",
     -label
-  ) %>%
+  ) |>
   knitr::kable(format = "simple", digits = 3L)
 ```
 

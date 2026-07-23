@@ -40,7 +40,7 @@ library("MplusAutomation")
 data(Oxboys, package = "nlme")
 
 Oxboys_addNA <- data.frame(Oxboys)
-Oxboys_addNA <- Oxboys_addNA %>% 
+Oxboys_addNA <- Oxboys_addNA |> 
   rename(id = Subject)
 
 Oxboys_addNA$id <- as.integer(Oxboys_addNA$id)
@@ -434,7 +434,7 @@ mi_mice_long$newVar <- mi_mice_long$age * mi_mice_long$height
 ```{r}
 #| eval: false
 
-mi_jomo <- mi_jomo %>% 
+mi_jomo <- mi_jomo |> 
   rename(height = dataToImpute...level1Vars.)
 
 mi_jomo$newVar <- mi_jomo$age * mi_jomo$height

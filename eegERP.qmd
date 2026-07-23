@@ -1211,7 +1211,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
       ```{r}
 #| eval: false
 
-      componentNames <- oddballFiles %>% str_remove(".txt")
+      componentNames <- oddballFiles |> str_remove(".txt")
       ```
 
     1. Give `ID` variable a proper name.
@@ -1230,7 +1230,7 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        ```{r}
 #| eval: false
 
-       oddballDataMerged <- oddballData %>%
+       oddballDataMerged <- oddballData |>
           reduce(full_join, by = c("ID"))
        ```
     1. Organize the combined data.
@@ -1244,11 +1244,11 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
        ```{r}
 #| eval: false
 
-       oddballDataClean <- oddballDataMerged %>%
+       oddballDataClean <- oddballDataMerged |>
           mutate(tcid = substr(ID, 1, 4),
-                 wave = substr(ID, 6, 7)) %>%
-          select(tcid, wave, everything()) %>%
-          select(-ID) %>% 
+                 wave = substr(ID, 6, 7)) |>
+          select(tcid, wave, everything()) |>
+          select(-ID) |> 
           type_convert()
        ```
     1. Update column names of merged data according to the list of PCA component files.
@@ -1306,8 +1306,8 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    obFrq_sub$amplitude <- rowMeans(obFrq_sub)
 
    # Remove raw values and add condition labels
-   obTgt_amps <- obTgt_sub %>% select(amplitude) %>% mutate(condition = "Target")
-   obFrq_amps <- obFrq_sub %>% select(amplitude) %>% mutate(condition = "Frequent")
+   obTgt_amps <- obTgt_sub |> select(amplitude) |> mutate(condition = "Target")
+   obFrq_amps <- obFrq_sub |> select(amplitude) |> mutate(condition = "Frequent")
    ```
 
 1. Add timing-related information to the data
@@ -1329,8 +1329,8 @@ Comparable scripts have also been created for FishShark and Stop Signal tasks.
    ```{r}
 #| eval: false
 
-   oddball <- rbind(obTgtTimes, obFrqTimes) %>% 
-              select(time, condition, amplitude) %>% 
+   oddball <- rbind(obTgtTimes, obFrqTimes) |> 
+              select(time, condition, amplitude) |> 
               arrange(time)
    ```
 

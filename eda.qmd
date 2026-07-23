@@ -94,7 +94,7 @@ length(unique(mydata$ID))
     - Here are the proportion of missing data in each variable:
     
 ```{r}
-map(mydata, ~mean(is.na(.))) %>% t %>% t
+map(mydata, ~mean(is.na(.))) |> t |> t
 ```
 
 ## Distribution
@@ -103,9 +103,9 @@ map(mydata, ~mean(is.na(.))) %>% t %>% t
     - Examine the frequencies of categorical variables:
 
 ```{r}
-mydata %>% 
-  select(categorical1, categorical2) %>%
-  sapply(function(x) table(x, useNA = "always")) %>% 
+mydata |> 
+  select(categorical1, categorical2) |>
+  sapply(function(x) table(x, useNA = "always")) |> 
   t()
 ```
 
@@ -117,9 +117,9 @@ mydata %>%
 round(colMeans(mydata, na.rm = TRUE), 2)
 round(apply(mydata, 2, function(x) mean(x, na.rm = TRUE)), 2)
 
-mydata %>% 
+mydata |> 
   summarise(across(everything(),
-                   .fns = list(mean = ~ mean(., na.rm = TRUE)))) %>% 
+                   .fns = list(mean = ~ mean(., na.rm = TRUE)))) |> 
   round(., 2)
 ```
 
@@ -128,9 +128,9 @@ mydata %>%
 ```{r}
 round(apply(mydata, 2, function(x) median(x, na.rm = TRUE)), 2)
 
-mydata %>% 
+mydata |> 
   summarise(across(everything(),
-                   .fns = list(median = ~ median(., na.rm = TRUE)))) %>% 
+                   .fns = list(median = ~ median(., na.rm = TRUE)))) |> 
   round(., 2)
 ```
 
@@ -139,25 +139,25 @@ mydata %>%
 ```{r}
 round(apply(mydata, 2, function(x) Mode(x, multipleModes = "mean")), 2)
 
-mydata %>% 
+mydata |> 
   summarise(across(everything(),
-                   .fns = list(mode = ~ Mode(., multipleModes = "mean")))) %>% 
+                   .fns = list(mode = ~ Mode(., multipleModes = "mean")))) |> 
   round(., 2)
 ```
 
 Compute all of these measures of central tendency:
 
 ```{r}
-mydata %>% 
+mydata |> 
   summarise(across(everything(),
                    .fns = list(mean = ~ mean(., na.rm = TRUE),
                                median = ~ median(., na.rm = TRUE),
                                mode = ~ Mode(., multipleModes = "mean")),
-                   .names = "{.col}.{.fn}")) %>% 
-  round(., 2) %>% 
+                   .names = "{.col}.{.fn}")) |> 
+  round(., 2) |> 
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "\\.") %>% 
+               names_sep = "\\.") |> 
   pivot_wider(names_from = index,
               values_from = value)
 ```
@@ -172,18 +172,18 @@ mydata %>%
 Compute all of these measures of dispersion:
 
 ```{r}
-mydata %>% 
+mydata |> 
   summarise(across(everything(),
                    .fns = list(SD = ~ sd(., na.rm = TRUE),
                                min = ~ min(., na.rm = TRUE),
                                max = ~ max(., na.rm = TRUE),
                                skewness = ~ skew(., na.rm = TRUE),
                                kurtosis = ~ kurtosi(., na.rm = TRUE)),
-                   .names = "{.col}.{.fn}")) %>% 
-  round(., 2) %>% 
+                   .names = "{.col}.{.fn}")) |> 
+  round(., 2) |> 
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "\\.") %>% 
+               names_sep = "\\.") |> 
   pivot_wider(names_from = index,
               values_from = value)
 ```
@@ -197,7 +197,7 @@ Add summary statistics to the bottom of correlation matrices in papers:
 ```{r}
 cor.table(mydata, type = "manuscript")
 
-summaryTable <- mydata %>% 
+summaryTable <- mydata |> 
   summarise(across(everything(),
                    .fns = list(n = ~ length(na.omit(.)),
                                missingness = ~ mean(is.na(.)) * 100,
@@ -207,17 +207,17 @@ summaryTable <- mydata %>%
                                max = ~ max(., na.rm = TRUE),
                                skewness = ~ skew(., na.rm = TRUE),
                                kurtosis = ~ kurtosi(., na.rm = TRUE)),
-                   .names = "{.col}.{.fn}")) %>%  
+                   .names = "{.col}.{.fn}")) |>  
   pivot_longer(cols = everything(),
                names_to = c("variable","index"),
-               names_sep = "\\.") %>% 
+               names_sep = "\\.") |> 
   pivot_wider(names_from = index,
               values_from = value)
 
-summaryTableTransposed <- summaryTable[-1] %>% 
-  t() %>% 
-  as.data.frame() %>% 
-  setNames(summaryTable$variable) %>% 
+summaryTableTransposed <- summaryTable[-1] |> 
+  t() |> 
+  as.data.frame() |> 
+  setNames(summaryTable$variable) |> 
   round(., digits = 2)
 
 summaryTableTransposed
@@ -424,9 +424,9 @@ shapiro.test(na.omit(mydata$outcome)) #subset to keep only the first 5000 rows: 
 ### Test of multivariate normality
 
 ```{r}
-mydata %>% 
-  na.omit %>% 
-  t %>% 
+mydata |> 
+  na.omit |> 
+  t |> 
   mshapiro.test
 ```
 

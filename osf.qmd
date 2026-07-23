@@ -60,12 +60,12 @@ mydata$anonymizedID <- anonymize(c(
   .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
 
 # Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
-mydata <- mydata %>%
-  select(anonymizedID, everything()) %>%
+mydata <- mydata |>
+  select(anonymizedID, everything()) |>
   arrange(anonymizedID)
 
 # Remove the Original ID Column
-mydata <- mydata %>%
+mydata <- mydata |>
   select(-ID)
 ```
 
@@ -79,15 +79,15 @@ mydata$anonymizedID <- anonymize(c(
   .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
 
 # Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
-mydata <- mydata %>%
-  select(anonymizedID, everything()) %>%
+mydata <- mydata |>
+  select(anonymizedID, everything()) |>
   arrange(anonymizedID)
 
 # Print the Data
 mydata
 
 # Remove the Original ID Column
-mydata <- mydata %>%
+mydata <- mydata |>
   select(-ID)
 ```
 

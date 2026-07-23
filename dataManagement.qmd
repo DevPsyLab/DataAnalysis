@@ -540,26 +540,26 @@ mydata[,names(mydata) %ni% dropVars]
 ### Tidyverse
 
 ```{r}
-mydata %>%
+mydata |>
   select(survived, age, prediction)
 
-mydata %>%
+mydata |>
   select(survived:prediction)
 
-mydata %>%
+mydata |>
   select(all_of(subsetVars))
 ```
 
 Or, to drop columns:
 
 ```{r}
-mydata %>%
+mydata |>
   select(-sibsp, -parch)
 
-mydata %>%
+mydata |>
   select(-c(sibsp:parch))
 
-mydata %>%
+mydata |>
   select(-all_of(dropVars))
 ```
 
@@ -580,13 +580,13 @@ mydata[which(mydata$survived == 1),]
 ### Tidyverse
 
 ```{r}
-mydata %>%
+mydata |>
   filter(survived == 1)
 
-mydata %>%
+mydata |>
   filter(survived == 1, parch <= 1)
 
-mydata %>%
+mydata |>
   filter(survived == 1 | parch <= 1)
 ```
 
@@ -605,8 +605,8 @@ mydata[which(mydata$survived == 1), subsetVars]
 ### Tidyverse
 
 ```{r}
-mydata %>%
-  filter(survived == 1) %>%
+mydata |>
+  filter(survived == 1) |>
   select(all_of(subsetVars))
 ```
 
@@ -634,10 +634,10 @@ head(mydata$age)
 # Sort Data {#sec-sortData}
 
 ```{r}
-mydata %>% 
+mydata |> 
   arrange(survived, age) #sort by survived (ascending) then by age (ascending)
 
-mydata %>% 
+mydata |> 
   arrange(survived, -age) #sort by survived (ascending) then by age (descending)
 ```
 
@@ -735,7 +735,7 @@ mydata$oldVar2[which(mydata$sex == "female")] <- 0
 Recode multiple variables:
 
 ```{r}
-mydata %>%
+mydata |>
   mutate(across(c(
     survived:pclass),
     ~ case_match(
@@ -743,7 +743,7 @@ mydata %>%
       0 ~ "No",
       1 ~ "Yes")))
 
-mydata %>%
+mydata |>
   mutate(across(c(
     survived:pclass),
     ~ case_match(
@@ -755,7 +755,7 @@ mydata %>%
 # Rename Variables {#sec-renameVars}
 
 ```{r}
-mydata <- mydata %>% 
+mydata <- mydata |> 
   rename(
     newVar1 = oldVar1,
     newVar2 = oldVar2)
@@ -769,7 +769,7 @@ Using a vector of variable names:
 varNamesFrom <- c("oldVar1","oldVar2")
 varNamesTo <- c("newVar1","newVar2")
 
-mydata <- mydata %>% 
+mydata <- mydata |> 
   rename_with(~ varNamesTo, all_of(varNamesFrom))
 ```
 
@@ -787,19 +787,19 @@ mydata$characterVar <- as.character(mydata$sex)
 Multiple variables:
 
 ```{r}
-mydata %>%
+mydata |>
   mutate(across(c(
     age,
     parch,
     prediction),
     as.numeric))
 
-mydata %>%
+mydata |>
   mutate(across(
     age:parch,
     as.numeric))
 
-mydata %>%
+mydata |>
   mutate(across(where(is.factor), as.character))
 ```
 
@@ -1004,7 +1004,7 @@ fish_encounters
 Data widened by a variable (`station`), using `tidyverse`: 
 
 ```{r}
-fish_encounters %>% 
+fish_encounters |> 
   pivot_wider(
     names_from = station,
     values_from = seen)
@@ -1021,7 +1021,7 @@ mtcars
 Data in long form, transformed from wide form using `tidyverse`:
 
 ```{r}
-mtcars %>% 
+mtcars |> 
   pivot_longer(
     cols = everything(),
     names_to = "variable",
@@ -1047,19 +1047,19 @@ idWaveCoder <-
 idWaveCoder$positiveAffect <- rnorm(nrow(idWaveCoder))
 idWaveCoder$negativeAffect <- rnorm(nrow(idWaveCoder))
 
-idWaveCoder %>% 
+idWaveCoder |> 
   arrange(id, wave, coder)
 ```
 
 Average data across coders:
 
 ```{r}
-idWave <- idWaveCoder %>% 
-  group_by(id, wave) %>% 
+idWave <- idWaveCoder |> 
+  group_by(id, wave) |> 
   summarise(
     across(everything(),
       ~ mean(.x, na.rm = TRUE)),
-    .groups = "drop") %>% 
+    .groups = "drop") |> 
   select(-coder)
 
 idWave
