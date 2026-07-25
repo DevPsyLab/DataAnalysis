@@ -35,14 +35,19 @@ X <- rnorm(sampleSize)
 M <- 0.5*X + rnorm(sampleSize)
 Y <- 0.7*M + rnorm(sampleSize)
 
+nonlinear_interaction <- 1.5 * sin(X) * M
+Y2 <- 0.7 * M + nonlinear_interaction + rnorm(sampleSize, sd = 1)
+
 X[sample(1:length(X), size = 10)] <- NA
 M[sample(1:length(M), size = 10)] <- NA
 Y[sample(1:length(Y), size = 10)] <- NA
+Y2[sample(1:length(Y2), size = 10)] <- NA
 
 mydata <- data.frame(
   id = id,
   X = X,
   Y = Y,
+  Y2 = Y2,
   M = M)
 ```
 
@@ -247,6 +252,19 @@ hypothesis(
 mediation(bayesianMediationModel)
 ```
 
+# Multilevel Moderation
+
+```{r}
+bayesianModerationSyntax <-
+  bf(Y2 ~ s(X) + s(M) + t2(X, M) + (1 | id))
+
+bayesianModerationModel <- brm(
+  bayesianModerationSyntax,
+  data  = mydata,
+  seed  = 52242
+)
+
+summary(bayesianModerationModel)
 # Setting Priors
 
 ## Parameters for Which to Set Priors

@@ -1334,6 +1334,32 @@ nonlinearModel <- nlme(
 summary(nonlinearModel)
 ```
 
+# Moderated Multilevel Models
+
+[Simonsohn (2024)](https://doi.org/10.1177/25152459231207787)
+
+```{r}
+moderatedMultilevelModel <- mgcv::gam(
+  math ~
+    s(timeInStudy) +
+    s(ageAtT1Centered) +
+    ti(timeInStudy, ageAtT1Centered) +
+    s(id, bs = "re") +
+    s(id, by = timeInStudy, bs = "re"),
+  data = mydata
+)
+
+summary(moderatedMultilevelModel)
+
+print(effectsize::standardize_parameters(
+  moderatedMultilevelModel,
+  method = "refit"),
+  digits = 2)
+
+performance::model_performance(moderatedMultilevelModel)
+performance::r2(moderatedMultilevelModel)
+```
+
 # Cross-Lagged Models
 
 Multilevel cross-lagged models can be estimated using [multilevel structural equation modeling](mplus.qmd#sec-msem-lcm-sr).
