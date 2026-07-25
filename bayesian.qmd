@@ -135,6 +135,27 @@ variables(fit_sleep3)
 coef(fit_sleep3)
 ```
 
+## Standardized Coefficients
+
+```{r}
+print(effectsize::standardize_parameters(
+  fit_sleep3,
+  method = "posthoc"),
+  digits = 2)
+```
+
+## Model Fit
+
+```{r}
+performance::model_performance(fit_sleep3)
+```
+
+## R-Squared
+
+```{r}
+performance::r2(fit_sleep3)
+```
+
 ## Plots
 
 ### Trace Plots
@@ -242,6 +263,14 @@ bayesianMediationModel <- brm(
 
 summary(bayesianMediationModel)
 
+print(effectsize::standardize_parameters(
+  bayesianMediationModel,
+  method = "posthoc"),
+  digits = 2)
+
+performance::model_performance(bayesianMediationModel)
+performance::r2(bayesianMediationModel)
+
 hypothesis(
   bayesianMediationModel,
   "b_M_X * b_Y_M = 0", # indirect effect = a path * b path
@@ -265,6 +294,16 @@ bayesianModerationModel <- brm(
 )
 
 summary(bayesianModerationModel)
+
+print(effectsize::standardize_parameters(
+  bayesianModerationModel,
+  method = "posthoc"),
+  digits = 2)
+
+performance::model_performance(bayesianModerationModel)
+performance::r2(bayesianModerationModel)
+```
+
 # Setting Priors
 
 ## Parameters for Which to Set Priors
@@ -384,6 +423,14 @@ bayesianRegressionModel <- brm(
 )
 
 summary(bayesianRegressionModel)
+
+print(effectsize::standardize_parameters(
+  bayesianRegressionModel,
+  method = "posthoc"),
+  digits = 2)
+
+performance::model_performance(bayesianRegressionModel)
+performance::r2(bayesianRegressionModel)
 
 hypothesis(
   bayesianRegressionModel,
