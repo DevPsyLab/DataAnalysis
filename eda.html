@@ -795,9 +795,16 @@ window.Quarto = {
 </li>
 </ul>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(mydata, <span class="sc">~</span><span class="fu">mean</span>(<span class="fu">is.na</span>(.))) <span class="sc">|&gt;</span> t <span class="sc">|&gt;</span> t</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-error">
-<pre><code>Error in t: The pipe operator requires a function call as RHS (&lt;input&gt;:1:33)</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>                  [,1]
+ID                0   
+predictor         0.01
+outcome           0.01
+predictorOverplot 0.01
+outcomeOverplot   0.01
+categorical1      0.03
+categorical2      0.07</code></pre>
 </div>
 </div>
 </section><section id="distribution" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="distribution">
@@ -1347,11 +1354,11 @@ W = 0.9971, p-value = 0.06998</code></pre>
 <span class="header-section-number">6.1.2</span> Test of multivariate normality</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  na.omit <span class="sc">|&gt;</span> </span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  t <span class="sc">|&gt;</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  mshapiro.test</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-error">
-<pre><code>Error in na.omit: The pipe operator requires a function call as RHS (&lt;input&gt;:2:3)</code></pre>
+<pre><code>Error in mshapiro.test: The pipe operator requires a function call as RHS (&lt;input&gt;:4:3)</code></pre>
 </div>
 </div>
 </section></section><section id="tests-of-systematic-missingness-i.e.-whether-missingness-on-a-variable-depends-on-other-variables" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="tests-of-systematic-missingness-i.e.-whether-missingness-on-a-variable-depends-on-other-variables">
@@ -2197,7 +2204,7 @@ loaded via a namespace (and not attached):
 <span id="cb90-104"><a href="#cb90-104" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Here are the proportion of missing data in each variable:</span>
 <span id="cb90-105"><a href="#cb90-105" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb90-108"><a href="#cb90-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-109"><a href="#cb90-109" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(mydata, <span class="sc">~</span><span class="fu">mean</span>(<span class="fu">is.na</span>(.))) <span class="sc">|&gt;</span> t <span class="sc">|&gt;</span> t</span>
+<span id="cb90-109"><a href="#cb90-109" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(mydata, <span class="sc">~</span><span class="fu">mean</span>(<span class="fu">is.na</span>(.))) <span class="sc">|&gt;</span> <span class="fu">t</span>() <span class="sc">|&gt;</span> <span class="fu">t</span>()</span>
 <span id="cb90-110"><a href="#cb90-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb90-111"><a href="#cb90-111" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb90-112"><a href="#cb90-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution</span></span>
@@ -2528,8 +2535,8 @@ loaded via a namespace (and not attached):
 <span id="cb90-495"><a href="#cb90-495" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb90-498"><a href="#cb90-498" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb90-499"><a href="#cb90-499" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span> </span>
-<span id="cb90-500"><a href="#cb90-500" aria-hidden="true" tabindex="-1"></a>  na.omit <span class="sc">|&gt;</span> </span>
-<span id="cb90-501"><a href="#cb90-501" aria-hidden="true" tabindex="-1"></a>  t <span class="sc">|&gt;</span> </span>
+<span id="cb90-500"><a href="#cb90-500" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb90-501"><a href="#cb90-501" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb90-502"><a href="#cb90-502" aria-hidden="true" tabindex="-1"></a>  mshapiro.test</span>
 <span id="cb90-503"><a href="#cb90-503" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb90-504"><a href="#cb90-504" aria-hidden="true" tabindex="-1"></a></span>
