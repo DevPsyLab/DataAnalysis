@@ -390,7 +390,7 @@ states$Illiteracy_centered <- scale(states$Illiteracy, scale = FALSE)
 states$Murder_centered <- scale(states$Murder, scale = FALSE)
 ```
 
-## Model
+## Linear Model
 
 ```{r}
 interactionModel <- lm(
@@ -401,7 +401,7 @@ summary(interactionModel)
 print(effectsize::standardize_parameters(interactionModel), digits = 2)
 ```
 
-## Plots
+### Plots
 
 ```{r}
 interactions::interact_plot(
@@ -428,7 +428,7 @@ interactions::johnson_neyman(
   alpha = .05)
 ```
 
-## Simple Slopes Analysis
+### Simple Slopes Analysis
 
 ```{r}
 interactions::sim_slopes(
@@ -445,7 +445,7 @@ interactions::sim_slopes(
   johnson_neyman = FALSE)
 ```
 
-## Johnson-Neyman intervals
+### Johnson-Neyman intervals
 
 Indicates all the values of the moderator for which the slope of the predictor is statistically significant.
 
@@ -463,6 +463,19 @@ interactions::probe_interaction(
   cond.int = TRUE,
   interval = TRUE,
   jnplot = TRUE)
+```
+
+## Nonlinear (GAM) Model
+
+[Simonsohn (2024)](https://doi.org/10.1177/25152459231207787)
+
+```{r}
+interactionModel_nonlinear <- mgcv::gam(
+  Income ~ s(Illiteracy_centered) + s(Murder_centered) + ti(Illiteracy_centered, Murder_centered),
+  data = states)
+
+summary(interactionModel_nonlinear)
+print(effectsize::standardize_parameters(interactionModel_nonlinear), digits = 2)
 ```
 
 # Comparing Correlations {#sec-compareCorrelations}
