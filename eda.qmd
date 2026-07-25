@@ -94,7 +94,7 @@ length(unique(mydata$ID))
     - Here are the proportion of missing data in each variable:
     
 ```{r}
-map(mydata, ~mean(is.na(.))) |> t |> t
+map(mydata, ~mean(is.na(.))) |> t() |> t()
 ```
 
 ## Distribution
@@ -425,8 +425,8 @@ shapiro.test(na.omit(mydata$outcome)) #subset to keep only the first 5000 rows: 
 
 ```{r}
 mydata |> 
-  na.omit |> 
-  t |> 
+  na.omit() |> 
+  t() |> 
   mshapiro.test
 ```
 
