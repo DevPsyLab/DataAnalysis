@@ -59,12 +59,20 @@ mydata <- read.csv("./data/cnlsy.csv") #https://osf.io/8syp5/download
 # Data Preparation
 
 ```{r}
+set.seed(52242)
+
 mydata$countVariable <- as.integer(mydata$bpi_antisocialT2Sum)
 mydata$orderedVariable <- factor(mydata$countVariable, ordered = TRUE)
+
+mydata$sexFactor <- factor(mydata$sex)
 
 mydata$female <- NA
 mydata$female[which(mydata$sex == "male")] <- 0
 mydata$female[which(mydata$sex == "female")] <- 1
+
+mydata$outcome <- NA
+mydata$outcome[which(mydata$sex == "male")] <- 3 + mydata$bpi_antisocialT1Sum[which(mydata$sex == "male")]^2 + rnorm(nrow(mydata[which(mydata$sex == "male"),]))
+mydata$outcome[which(mydata$sex == "female")] <- 1 + mydata$bpi_antisocialT1Sum[which(mydata$sex == "female")]^3 + rnorm(nrow(mydata[which(mydata$sex == "female"),]))
 ```
 
 # Overview of Multiple Regression
@@ -469,14 +477,88 @@ interactions::probe_interaction(
 
 [Simonsohn (2024)](https://doi.org/10.1177/25152459231207787)
 
+### Continuous Predictors
+
 ```{r}
-interactionModel_nonlinear <- mgcv::gam(
+interactionModel1_nonlinear <- mgcv::gam(
   Income ~ s(Illiteracy_centered) + s(Murder_centered) + ti(Illiteracy_centered, Murder_centered),
   data = states)
 
-summary(interactionModel_nonlinear)
-print(effectsize::standardize_parameters(interactionModel_nonlinear), digits = 2)
+summary(interactionModel1_nonlinear)
+print(effectsize::standardize_parameters(interactionModel1_nonlinear), digits = 2)
 ```
+
+#### Plots
+
+```{r}
+newdata <- expand.grid(
+  Illiteracy_centered = seq(from = min(states$Illiteracy_centered, na.rm = TRUE), to = max(states$Illiteracy_centered, na.rm = TRUE), length.out = 1000),
+  Murder_category = c("Lo","Hi")
+)
+
+newdata$Murder_categoryLabel <- NA
+newdata$Murder_categoryLabel[which(newdata$Murder_category == "Lo")] <- "Low Murder Rate"
+newdata$Murder_categoryLabel[which(newdata$Murder_category == "Hi")] <- "High Murder Rate"
+
+newdata$Murder_centered <- NA
+newdata$Murder_centered[which(newdata$Murder_category == "Lo")] <- mean(states$Murder_centered, na.rm = TRUE) - sd(states$Murder_centered, na.rm = TRUE)
+newdata$Murder_centered[which(newdata$Murder_category == "Hi")] <- mean(states$Murder_centered, na.rm = TRUE) + sd(states$Murder_centered, na.rm = TRUE)
+
+newdata$Income <- predict(
+  interactionModel1_nonlinear,
+  newdata = newdata
+)
+
+ggplot(
+  data = newdata,
+  mapping = aes(
+    x = Illiteracy_centered,
+    y = Income,
+    group = Murder_categoryLabel,
+    color = Murder_categoryLabel
+  )
+) +
+  geom_line()
+```
+
+### Categorical Predictor
+
+```{r}
+interactionModel2_nonlinear <- mgcv::gam(
+  outcome ~ sexFactor + s(bpi_antisocialT1Sum) + s(bpi_antisocialT1Sum, by = sexFactor),
+  data = mydata)
+
+summary(interactionModel2_nonlinear)
+print(effectsize::standardize_parameters(interactionModel2_nonlinear), digits = 2)
+```
+
+#### Plots
+
+```{r}
+newdata <- expand.grid(
+  bpi_antisocialT1Sum = seq(from = min(mydata$bpi_antisocialT1Sum, na.rm = TRUE), to = max(mydata$bpi_antisocialT1Sum, na.rm = TRUE), length.out = 1000),
+  sex = c("male","female")
+)
+
+newdata$sexFactor <- factor(newdata$sex)
+
+newdata$outcome <- predict(
+  interactionModel2_nonlinear,
+  newdata = newdata
+)
+
+ggplot(
+  data = newdata,
+  mapping = aes(
+    x = bpi_antisocialT1Sum,
+    y = outcome,
+    group = sexFactor,
+    color = sexFactor
+  )
+) +
+  geom_line()
+```
+
 
 # Comparing Correlations {#sec-compareCorrelations}
 
