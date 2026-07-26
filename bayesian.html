@@ -647,7 +647,8 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstan/">"rstan"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/paul-buerkner/brms">"brms"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/bayestestR/">"bayestestR"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/amices/mice">"mice"</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/amices/mice">"mice"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/easystats/">"easystats"</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section><section id="simulate-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="simulate-data">
@@ -703,43 +704,59 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
  [10] as.data.frame           as.matrix               as.mcmc                
  [13] autocor                 bayes_factor            bayes_R2               
  [16] bayesfactor_models      bayesfactor_parameters  bayesfactor_restricted 
- [19] bci                     bridge_sampler          check_prior            
- [22] ci                      coef                    conditional_effects    
- [25] conditional_smooths     control_params          default_prior          
- [28] describe_posterior      describe_prior          diagnostic_draws       
- [31] diagnostic_posterior    effective_sample        equivalence_test       
- [34] estimate_density        eti                     expose_functions       
- [37] family                  fitted                  fixef                  
- [40] formula                 getCall                 hdi                    
- [43] hypothesis              inits                   kfold                  
- [46] log_lik                 log_posterior           logLik                 
- [49] loo_compare             loo_epred               loo_linpred            
- [52] loo_model_weights       loo_moment_match        loo_predict            
- [55] loo_predictive_interval loo_R2                  loo_subsample          
- [58] loo                     LOO                     map_estimate           
- [61] marginal_effects        marginal_smooths        mcmc_plot              
- [64] mcse                    mediation               model_to_priors        
- [67] model_weights           model.frame             nchains                
- [70] ndraws                  neff_ratio              ngrps                  
- [73] niterations             nobs                    nsamples               
- [76] nuts_params             nvariables              p_direction            
- [79] p_map                   p_rope                  p_significance         
- [82] pairs                   parnames                plot                   
- [85] point_estimate          post_prob               posterior_average      
- [88] posterior_epred         posterior_interval      posterior_linpred      
- [91] posterior_predict       posterior_samples       posterior_smooths      
- [94] posterior_summary       pp_average              pp_check               
- [97] pp_mixture              predict                 predictive_error       
-[100] predictive_interval     prepare_predictions     print                  
-[103] prior_draws             prior_summary           psis                   
-[106] ranef                   reloo                   residuals              
-[109] restructure             rhat                    rope                   
-[112] sexit_thresholds        si                      simulate_prior         
-[115] spi                     stancode                standata               
-[118] stanplot                summary                 unupdate               
-[121] update                  VarCorr                 variables              
-[124] vcov                    waic                    WAIC                   
-[127] weighted_posteriors    
+ [19] bci                     bridge_sampler          check_model            
+ [22] check_predictions       check_prior             check_priors           
+ [25] ci                      clean_parameters        coef                   
+ [28] conditional_effects     conditional_smooths     control_params         
+ [31] default_prior           describe_posterior      describe_prior         
+ [34] diagnostic_draws        diagnostic_posterior    effective_sample       
+ [37] equivalence_test        estimate_density        estimate_grouplevel    
+ [40] eta_squared_posterior   eti                     expose_functions       
+ [43] family                  find_algorithm          find_auxiliary         
+ [46] find_formula            find_parameters         find_predictors        
+ [49] find_response           find_weights            fitted                 
+ [52] fixef                   formula                 get_data               
+ [55] get_dispersion          get_mixed_info          get_modelmatrix        
+ [58] get_parameters          get_predicted           get_priors             
+ [61] get_residuals           get_simulated           get_varcov             
+ [64] get_variance            get_weights             getCall                
+ [67] hdi                     hypothesis              inits                  
+ [70] kfold                   link_function           link_inverse           
+ [73] log_lik                 log_posterior           logLik                 
+ [76] loo_compare             loo_epred               loo_linpred            
+ [79] loo_model_weights       loo_moment_match        loo_predict            
+ [82] loo_predictive_interval loo_R2                  loo_subsample          
+ [85] loo                     LOO                     map_estimate           
+ [88] marginal_effects        marginal_smooths        mcmc_plot              
+ [91] mcse                    mediation               model_info             
+ [94] model_parameters        model_performance       model_to_priors        
+ [97] model_weights           model.frame             n_parameters           
+[100] nchains                 ndraws                  neff_ratio             
+[103] ngrps                   niterations             nobs                   
+[106] nsamples                nuts_params             nvariables             
+[109] p_direction             p_map                   p_rope                 
+[112] p_significance          p_value                 pairs                  
+[115] parnames                performance_logloss     plot                   
+[118] point_estimate          post_prob               posterior_average      
+[121] posterior_epred         posterior_interval      posterior_linpred      
+[124] posterior_predict       posterior_samples       posterior_smooths      
+[127] posterior_summary       pp_average              pp_check               
+[130] pp_mixture              predict                 predictive_error       
+[133] predictive_interval     prepare_predictions     print                  
+[136] prior_draws             prior_summary           psis                   
+[139] r2_loo_posterior        r2_posterior            r2                     
+[142] ranef                   reloo                   report_effectsize      
+[145] report_info             report_intercept        report_model           
+[148] report_parameters       report_performance      report_priors          
+[151] report_random           report_statistics       report_table           
+[154] report_text             report                  residuals              
+[157] restructure             rhat                    rope                   
+[160] sexit_thresholds        si                      simulate_prior         
+[163] spi                     stancode                standard_error         
+[166] standardize             standata                stanplot               
+[169] summary                 unupdate                update                 
+[172] VarCorr                 variables               vcov                   
+[175] waic                    WAIC                    weighted_posteriors    
 see '?methods' for accessing help and source code</code></pre>
 </div>
 </div>
@@ -1609,14 +1626,21 @@ attr(,"robust")
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/hypothesis.brmsfit.html">hypothesis</a></span><span class="op">(</span></span>
 <span>  <span class="va">fit_imp</span>,</span>
-<span>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
 <span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">52242</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-error">
-<pre><code>Error in `eval_hypothesis()`:
-! Some parameters cannot be found in the model: 
-'bsp_M_miX', 'bsp_Y_miM'</code></pre>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Hypothesis Tests for class :
+         Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob
+1 (b_M_X*b_Y_M) = 0     0.36      0.03      0.3     0.41         NA        NA
+  Star
+1    *
+---
+'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
+'*': For one-sided hypotheses, the posterior probability exceeds 95%;
+for two-sided hypotheses, the value tested against lies outside the 95%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
 </section><section id="imputation-on-the-fly-during-model-fitting" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="imputation-on-the-fly-during-model-fitting">
@@ -1780,44 +1804,46 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] future_1.75.0       mice_3.19.0         bayestestR_0.18.1  
-[4] brms_2.23.0         Rcpp_1.1.2          rstan_2.32.7       
-[7] StanHeaders_2.32.10 lme4_2.0-6          Matrix_1.7-5       
+ [1] future_1.75.0       see_0.14.1          report_0.6.4       
+ [4] parameters_0.29.2   performance_0.17.1  modelbased_0.16.0  
+ [7] insight_1.5.2       effectsize_1.0.3    datawizard_1.3.1   
+[10] correlation_0.8.8   easystats_0.7.6     mice_3.19.0        
+[13] bayestestR_0.18.1   brms_2.23.0         Rcpp_1.1.2         
+[16] rstan_2.32.7        StanHeaders_2.32.10 lme4_2.0-6         
+[19] Matrix_1.7-5       
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.1     dplyr_1.2.1          farver_2.1.2        
- [4] loo_2.10.1           S7_0.2.2             fastmap_1.2.0       
- [7] tensorA_0.36.2.1     digest_0.6.39        rpart_4.1.27        
-[10] lifecycle_1.0.5      survival_3.8-6       processx_3.9.0      
-[13] magrittr_2.0.5       posterior_1.7.0      compiler_4.6.1      
-[16] rlang_1.3.0          tools_4.6.1          yaml_2.3.12         
-[19] knitr_1.51           labeling_0.4.3       bridgesampling_1.2-1
-[22] htmlwidgets_1.6.4    pkgbuild_1.4.8       plyr_1.8.9          
-[25] RColorBrewer_1.1-3   abind_1.4-8          withr_3.0.3         
-[28] purrr_1.2.2          datawizard_1.3.1     nnet_7.3-20         
-[31] grid_4.6.1           stats4_4.6.1         jomo_2.7-6          
-[34] inline_0.3.21        ggplot2_4.0.3        globals_0.19.1      
-[37] scales_1.4.0         iterators_1.0.14     MASS_7.3-65         
-[40] insight_1.5.2        cli_3.6.6            mvtnorm_1.4-2       
-[43] rmarkdown_2.31       reformulas_0.4.4     generics_0.1.4      
-[46] otel_0.2.0           RcppParallel_6.0.0   future.apply_1.20.2 
-[49] performance_0.17.1   reshape2_1.4.5       parameters_0.29.2   
-[52] minqa_1.2.8          stringr_1.6.0        splines_4.6.1       
-[55] bayesplot_1.15.0     parallel_4.6.1       effectsize_1.0.3    
-[58] matrixStats_1.5.0    vctrs_0.7.3          boot_1.3-32         
-[61] glmnet_5.0           jsonlite_2.0.0       callr_3.8.0         
-[64] mitml_0.4-5          listenv_1.0.0        foreach_1.5.2       
-[67] tidyr_1.3.2          parallelly_1.48.0    glue_1.8.1          
-[70] nloptr_2.2.1         pan_2.0              ps_1.9.3            
-[73] codetools_0.2-20     distributional_0.8.1 stringi_1.8.7       
-[76] gtable_0.3.6         shape_1.4.6.1        QuickJSR_1.10.0     
-[79] tibble_3.3.1         pillar_1.11.1        htmltools_0.5.9     
-[82] Brobdingnag_1.2-9    R6_2.6.1             Rdpack_2.6.6        
-[85] evaluate_1.0.5       lattice_0.22-9       rbibutils_2.4.1     
-[88] backports_1.5.1      broom_1.0.13         rstantools_2.6.0    
-[91] coda_0.19-4.1        gridExtra_2.3.1      nlme_3.1-169        
-[94] checkmate_2.3.4      mgcv_1.9-4           xfun_0.60           
-[97] pkgconfig_2.0.3     </code></pre>
+ [1] Rdpack_2.6.6         gridExtra_2.3.1      inline_0.3.21       
+ [4] rlang_1.3.0          magrittr_2.0.5       otel_0.2.0          
+ [7] matrixStats_1.5.0    compiler_4.6.1       mgcv_1.9-4          
+[10] loo_2.10.1           callr_3.8.0          vctrs_0.7.3         
+[13] reshape2_1.4.5       stringr_1.6.0        pkgconfig_2.0.3     
+[16] shape_1.4.6.1        fastmap_1.2.0        backports_1.5.1     
+[19] labeling_0.4.3       rmarkdown_2.31       ps_1.9.3            
+[22] nloptr_2.2.1         purrr_1.2.2          xfun_0.60           
+[25] glmnet_5.0           jomo_2.7-6           jsonlite_2.0.0      
+[28] pan_2.0              broom_1.0.13         parallel_4.6.1      
+[31] R6_2.6.1             stringi_1.8.7        RColorBrewer_1.1-3  
+[34] parallelly_1.48.0    boot_1.3-32          rpart_4.1.27        
+[37] iterators_1.0.14     knitr_1.51           future.apply_1.20.2 
+[40] bayesplot_1.15.0     splines_4.6.1        nnet_7.3-20         
+[43] tidyselect_1.2.1     rstudioapi_0.19.0    abind_1.4-8         
+[46] yaml_2.3.12          codetools_0.2-20     processx_3.9.0      
+[49] listenv_1.0.0        pkgbuild_1.4.8       lattice_0.22-9      
+[52] tibble_3.3.1         plyr_1.8.9           withr_3.0.3         
+[55] bridgesampling_1.2-1 S7_0.2.2             posterior_1.7.0     
+[58] coda_0.19-4.1        evaluate_1.0.5       survival_3.8-6      
+[61] RcppParallel_6.0.0   pillar_1.11.1        tensorA_0.36.2.1    
+[64] checkmate_2.3.4      foreach_1.5.2        stats4_4.6.1        
+[67] reformulas_0.4.4     distributional_0.8.1 generics_0.1.4      
+[70] ggplot2_4.0.3        rstantools_2.6.0     scales_1.4.0        
+[73] minqa_1.2.8          globals_0.19.1       glue_1.8.1          
+[76] tools_4.6.1          mvtnorm_1.4-2        grid_4.6.1          
+[79] tidyr_1.3.2          rbibutils_2.4.1      QuickJSR_1.10.0     
+[82] nlme_3.1-169         cli_3.6.6            Brobdingnag_1.2-9   
+[85] dplyr_1.2.1          gtable_0.3.6         digest_0.6.39       
+[88] htmlwidgets_1.6.4    farver_2.1.2         htmltools_0.5.9     
+[91] lifecycle_1.0.5      mitml_0.4-5          MASS_7.3-65         </code></pre>
 </div>
 </div>
 
@@ -2316,483 +2342,484 @@ loaded via a namespace (and not attached):
 <span id="cb90-25"><a href="#cb90-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"brms"</span>)</span>
 <span id="cb90-26"><a href="#cb90-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"bayestestR"</span>)</span>
 <span id="cb90-27"><a href="#cb90-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"mice"</span>)</span>
-<span id="cb90-28"><a href="#cb90-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-29"><a href="#cb90-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-30"><a href="#cb90-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulate Data</span></span>
-<span id="cb90-31"><a href="#cb90-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-34"><a href="#cb90-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-35"><a href="#cb90-35" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">52242</span>)</span>
-<span id="cb90-36"><a href="#cb90-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-37"><a href="#cb90-37" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb90-38"><a href="#cb90-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-39"><a href="#cb90-39" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">each =</span> <span class="dv">10</span>)</span>
-<span id="cb90-40"><a href="#cb90-40" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(sampleSize)</span>
-<span id="cb90-41"><a href="#cb90-41" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fl">0.5</span><span class="sc">*</span>X <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize)</span>
-<span id="cb90-42"><a href="#cb90-42" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fl">0.7</span><span class="sc">*</span>M <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize)</span>
-<span id="cb90-43"><a href="#cb90-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-44"><a href="#cb90-44" aria-hidden="true" tabindex="-1"></a>nonlinear_interaction <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">sin</span>(X) <span class="sc">*</span> M</span>
-<span id="cb90-45"><a href="#cb90-45" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">*</span> M <span class="sc">+</span> nonlinear_interaction <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb90-46"><a href="#cb90-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-47"><a href="#cb90-47" aria-hidden="true" tabindex="-1"></a>X[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(X), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb90-48"><a href="#cb90-48" aria-hidden="true" tabindex="-1"></a>M[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(M), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb90-49"><a href="#cb90-49" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Y), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb90-50"><a href="#cb90-50" aria-hidden="true" tabindex="-1"></a>Y2[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Y2), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb90-51"><a href="#cb90-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-52"><a href="#cb90-52" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb90-53"><a href="#cb90-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> id,</span>
-<span id="cb90-54"><a href="#cb90-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X,</span>
-<span id="cb90-55"><a href="#cb90-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y,</span>
-<span id="cb90-56"><a href="#cb90-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y2 =</span> Y2,</span>
-<span id="cb90-57"><a href="#cb90-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">M =</span> M)</span>
-<span id="cb90-58"><a href="#cb90-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-59"><a href="#cb90-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-60"><a href="#cb90-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load Data</span></span>
-<span id="cb90-61"><a href="#cb90-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-64"><a href="#cb90-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-65"><a href="#cb90-65" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sleepstudy"</span>, <span class="at">package =</span> <span class="st">"lme4"</span>)</span>
-<span id="cb90-66"><a href="#cb90-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-67"><a href="#cb90-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-68"><a href="#cb90-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prepare Data</span></span>
-<span id="cb90-69"><a href="#cb90-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-72"><a href="#cb90-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-73"><a href="#cb90-73" aria-hidden="true" tabindex="-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">make_conditions</span>(sleepstudy, <span class="st">"Subject"</span>)</span>
-<span id="cb90-74"><a href="#cb90-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-75"><a href="#cb90-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-76"><a href="#cb90-76" aria-hidden="true" tabindex="-1"></a><span class="fu"># brms</span></span>
-<span id="cb90-77"><a href="#cb90-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-78"><a href="#cb90-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-Processing Methods</span></span>
-<span id="cb90-79"><a href="#cb90-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-82"><a href="#cb90-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-83"><a href="#cb90-83" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">"brmsfit"</span>)</span>
-<span id="cb90-84"><a href="#cb90-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-85"><a href="#cb90-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-86"><a href="#cb90-86" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Models</span></span>
-<span id="cb90-87"><a href="#cb90-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-88"><a href="#cb90-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Models</span></span>
-<span id="cb90-89"><a href="#cb90-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-90"><a href="#cb90-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Complete Pooling</span></span>
-<span id="cb90-91"><a href="#cb90-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-94"><a href="#cb90-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-95"><a href="#cb90-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-96"><a href="#cb90-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-97"><a href="#cb90-97" aria-hidden="true" tabindex="-1"></a>fit_sleep1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-98"><a href="#cb90-98" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days,</span>
-<span id="cb90-99"><a href="#cb90-99" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-100"><a href="#cb90-100" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span>)</span>
-<span id="cb90-101"><a href="#cb90-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-102"><a href="#cb90-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-103"><a href="#cb90-103" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random Intercepts</span></span>
-<span id="cb90-104"><a href="#cb90-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-107"><a href="#cb90-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-108"><a href="#cb90-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-109"><a href="#cb90-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-110"><a href="#cb90-110" aria-hidden="true" tabindex="-1"></a>fit_sleep2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-111"><a href="#cb90-111" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Subject), </span>
-<span id="cb90-112"><a href="#cb90-112" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-113"><a href="#cb90-113" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span>)</span>
-<span id="cb90-114"><a href="#cb90-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-115"><a href="#cb90-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-116"><a href="#cb90-116" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random Intercepts and Slopes</span></span>
-<span id="cb90-117"><a href="#cb90-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-120"><a href="#cb90-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-121"><a href="#cb90-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-122"><a href="#cb90-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-123"><a href="#cb90-123" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-124"><a href="#cb90-124" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb90-125"><a href="#cb90-125" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-126"><a href="#cb90-126" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-127"><a href="#cb90-127" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-128"><a href="#cb90-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-129"><a href="#cb90-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-130"><a href="#cb90-130" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize Results</span></span>
-<span id="cb90-131"><a href="#cb90-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-132"><a href="#cb90-132" aria-hidden="true" tabindex="-1"></a>For convergence, <span class="in">`Rhat`</span> values should not be above 1.00.</span>
-<span id="cb90-133"><a href="#cb90-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-136"><a href="#cb90-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-137"><a href="#cb90-137" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_sleep3)</span>
-<span id="cb90-138"><a href="#cb90-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-139"><a href="#cb90-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-140"><a href="#cb90-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Priors</span></span>
-<span id="cb90-141"><a href="#cb90-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-144"><a href="#cb90-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-145"><a href="#cb90-145" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(fit_sleep3)</span>
-<span id="cb90-146"><a href="#cb90-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-147"><a href="#cb90-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-148"><a href="#cb90-148" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Parameters</span></span>
-<span id="cb90-149"><a href="#cb90-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-152"><a href="#cb90-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-153"><a href="#cb90-153" aria-hidden="true" tabindex="-1"></a><span class="fu">variables</span>(fit_sleep3)</span>
-<span id="cb90-154"><a href="#cb90-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-155"><a href="#cb90-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-156"><a href="#cb90-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Coefficients</span></span>
-<span id="cb90-157"><a href="#cb90-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-160"><a href="#cb90-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-161"><a href="#cb90-161" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_sleep3)</span>
-<span id="cb90-162"><a href="#cb90-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-163"><a href="#cb90-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-164"><a href="#cb90-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Standardized Coefficients</span></span>
-<span id="cb90-165"><a href="#cb90-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-168"><a href="#cb90-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-169"><a href="#cb90-169" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
-<span id="cb90-170"><a href="#cb90-170" aria-hidden="true" tabindex="-1"></a>  fit_sleep3,</span>
-<span id="cb90-171"><a href="#cb90-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
-<span id="cb90-172"><a href="#cb90-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb90-173"><a href="#cb90-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-174"><a href="#cb90-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-175"><a href="#cb90-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Fit</span></span>
-<span id="cb90-176"><a href="#cb90-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-179"><a href="#cb90-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-180"><a href="#cb90-180" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(fit_sleep3)</span>
-<span id="cb90-181"><a href="#cb90-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-182"><a href="#cb90-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-183"><a href="#cb90-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## R-Squared</span></span>
-<span id="cb90-184"><a href="#cb90-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-187"><a href="#cb90-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-188"><a href="#cb90-188" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_sleep3)</span>
-<span id="cb90-189"><a href="#cb90-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-190"><a href="#cb90-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-191"><a href="#cb90-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plots</span></span>
-<span id="cb90-192"><a href="#cb90-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-193"><a href="#cb90-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Trace Plots</span></span>
-<span id="cb90-194"><a href="#cb90-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-197"><a href="#cb90-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-198"><a href="#cb90-198" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_sleep3, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb90-199"><a href="#cb90-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-200"><a href="#cb90-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-201"><a href="#cb90-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualize Predictions</span></span>
-<span id="cb90-202"><a href="#cb90-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-203"><a href="#cb90-203" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sample-Level</span></span>
-<span id="cb90-204"><a href="#cb90-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-207"><a href="#cb90-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-208"><a href="#cb90-208" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">conditional_effects</span>(fit_sleep1), <span class="at">points =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb90-209"><a href="#cb90-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-210"><a href="#cb90-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-211"><a href="#cb90-211" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Person-Level</span></span>
-<span id="cb90-212"><a href="#cb90-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-215"><a href="#cb90-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-216"><a href="#cb90-216" aria-hidden="true" tabindex="-1"></a><span class="co"># re_formula = NULL ensures that group-level effects are included</span></span>
-<span id="cb90-217"><a href="#cb90-217" aria-hidden="true" tabindex="-1"></a>ce2 <span class="ot">&lt;-</span> <span class="fu">conditional_effects</span>(</span>
-<span id="cb90-218"><a href="#cb90-218" aria-hidden="true" tabindex="-1"></a>  fit_sleep3,</span>
-<span id="cb90-219"><a href="#cb90-219" aria-hidden="true" tabindex="-1"></a>  <span class="at">conditions =</span> conditions,</span>
-<span id="cb90-220"><a href="#cb90-220" aria-hidden="true" tabindex="-1"></a>  <span class="at">re_formula =</span> <span class="cn">NULL</span>)</span>
-<span id="cb90-221"><a href="#cb90-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-222"><a href="#cb90-222" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ce2, <span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">points =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb90-223"><a href="#cb90-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-224"><a href="#cb90-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-225"><a href="#cb90-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Check Model Fit</span></span>
-<span id="cb90-226"><a href="#cb90-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-227"><a href="#cb90-227" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Posterior Predictive Check</span></span>
-<span id="cb90-228"><a href="#cb90-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-229"><a href="#cb90-229" aria-hidden="true" tabindex="-1"></a>Evaluate how closely the posterior predictions match the observed values.</span>
-<span id="cb90-230"><a href="#cb90-230" aria-hidden="true" tabindex="-1"></a>If they do not match the general pattern of the observed values, a different response distribution may be necessary.</span>
-<span id="cb90-231"><a href="#cb90-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-234"><a href="#cb90-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-235"><a href="#cb90-235" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3)</span>
-<span id="cb90-236"><a href="#cb90-236" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3, <span class="at">type =</span> <span class="st">"dens_overlay"</span>)</span>
-<span id="cb90-237"><a href="#cb90-237" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3, <span class="st">"error_scatter_avg"</span>)</span>
-<span id="cb90-238"><a href="#cb90-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-239"><a href="#cb90-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-240"><a href="#cb90-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitted Values</span></span>
-<span id="cb90-241"><a href="#cb90-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-244"><a href="#cb90-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-245"><a href="#cb90-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-246"><a href="#cb90-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-247"><a href="#cb90-247" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_sleep3)</span>
-<span id="cb90-248"><a href="#cb90-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-249"><a href="#cb90-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-252"><a href="#cb90-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-253"><a href="#cb90-253" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb90-254"><a href="#cb90-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-255"><a href="#cb90-255" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">fitted</span>(fit_sleep3))</span>
-<span id="cb90-256"><a href="#cb90-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-257"><a href="#cb90-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-258"><a href="#cb90-258" aria-hidden="true" tabindex="-1"></a><span class="fu">## Residuals</span></span>
-<span id="cb90-259"><a href="#cb90-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-262"><a href="#cb90-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-263"><a href="#cb90-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-264"><a href="#cb90-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-265"><a href="#cb90-265" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(fit_sleep3)</span>
-<span id="cb90-266"><a href="#cb90-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-267"><a href="#cb90-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-270"><a href="#cb90-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-271"><a href="#cb90-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb90-272"><a href="#cb90-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-273"><a href="#cb90-273" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_sleep3))</span>
-<span id="cb90-274"><a href="#cb90-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-275"><a href="#cb90-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-276"><a href="#cb90-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compare Models</span></span>
-<span id="cb90-277"><a href="#cb90-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-278"><a href="#cb90-278" aria-hidden="true" tabindex="-1"></a><span class="in">`elpd`</span> values: higher is better</span>
-<span id="cb90-279"><a href="#cb90-279" aria-hidden="true" tabindex="-1"></a><span class="in">`looic`</span> values: lower is better</span>
-<span id="cb90-280"><a href="#cb90-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-281"><a href="#cb90-281" aria-hidden="true" tabindex="-1"></a><span class="in">`elpd_diff`</span> values that are greater than ~2 standard errors of the <span class="in">`elpd_diff`</span> values indicate a significantly better model (i.e., if <span class="in">`elpd_diff`</span> value is greater than 2 times the <span class="in">`se_diff`</span> value).</span>
-<span id="cb90-282"><a href="#cb90-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-285"><a href="#cb90-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-286"><a href="#cb90-286" aria-hidden="true" tabindex="-1"></a><span class="fu">loo</span>(fit_sleep1, fit_sleep2, fit_sleep3)</span>
-<span id="cb90-287"><a href="#cb90-287" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loo</span>(fit_sleep1, fit_sleep2, fit_sleep3), <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb90-288"><a href="#cb90-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-289"><a href="#cb90-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-290"><a href="#cb90-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compute Model Weights</span></span>
-<span id="cb90-291"><a href="#cb90-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-294"><a href="#cb90-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-295"><a href="#cb90-295" aria-hidden="true" tabindex="-1"></a><span class="fu">model_weights</span>(fit_sleep1, fit_sleep2, fit_sleep3, <span class="at">weights =</span> <span class="st">"loo"</span>)</span>
-<span id="cb90-296"><a href="#cb90-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-297"><a href="#cb90-297" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">model_weights</span>(fit_sleep1, fit_sleep2, fit_sleep3, <span class="at">weights =</span> <span class="st">"loo"</span>))</span>
-<span id="cb90-298"><a href="#cb90-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-299"><a href="#cb90-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-300"><a href="#cb90-300" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Mediation {#sec-multilevelMediation}</span></span>
-<span id="cb90-301"><a href="#cb90-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-302"><a href="#cb90-302" aria-hidden="true" tabindex="-1"></a>The syntax below estimates random intercepts (which allows each participant to have a different intercept) to account for nested data within the same participant.</span>
-<span id="cb90-303"><a href="#cb90-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-306"><a href="#cb90-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-307"><a href="#cb90-307" aria-hidden="true" tabindex="-1"></a>bayesianMediationSyntax <span class="ot">&lt;-</span></span>
-<span id="cb90-308"><a href="#cb90-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">~</span> X <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb90-309"><a href="#cb90-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">~</span> X <span class="sc">+</span> M <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb90-310"><a href="#cb90-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between M and Y</span></span>
-<span id="cb90-311"><a href="#cb90-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-312"><a href="#cb90-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-315"><a href="#cb90-315" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-316"><a href="#cb90-316" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-317"><a href="#cb90-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-318"><a href="#cb90-318" aria-hidden="true" tabindex="-1"></a>bayesianMediationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-319"><a href="#cb90-319" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
-<span id="cb90-320"><a href="#cb90-320" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
-<span id="cb90-321"><a href="#cb90-321" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-322"><a href="#cb90-322" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-323"><a href="#cb90-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-324"><a href="#cb90-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-327"><a href="#cb90-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-328"><a href="#cb90-328" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianMediationModel)</span>
-<span id="cb90-329"><a href="#cb90-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-330"><a href="#cb90-330" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
-<span id="cb90-331"><a href="#cb90-331" aria-hidden="true" tabindex="-1"></a><span class="co">#  bayesianMediationModel,</span></span>
-<span id="cb90-332"><a href="#cb90-332" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
-<span id="cb90-333"><a href="#cb90-333" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
-<span id="cb90-334"><a href="#cb90-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-335"><a href="#cb90-335" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(bayesianMediationModel) # errors out perhaps due to joint model</span></span>
-<span id="cb90-336"><a href="#cb90-336" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianMediationModel)</span>
-<span id="cb90-337"><a href="#cb90-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-338"><a href="#cb90-338" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
-<span id="cb90-339"><a href="#cb90-339" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
-<span id="cb90-340"><a href="#cb90-340" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
-<span id="cb90-341"><a href="#cb90-341" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
-<span id="cb90-342"><a href="#cb90-342" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span>  <span class="dv">52242</span></span>
-<span id="cb90-343"><a href="#cb90-343" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-344"><a href="#cb90-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-345"><a href="#cb90-345" aria-hidden="true" tabindex="-1"></a><span class="fu">mediation</span>(bayesianMediationModel)</span>
-<span id="cb90-346"><a href="#cb90-346" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-347"><a href="#cb90-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-348"><a href="#cb90-348" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Moderation {#sec-multilevelModeration}</span></span>
-<span id="cb90-349"><a href="#cb90-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-352"><a href="#cb90-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-353"><a href="#cb90-353" aria-hidden="true" tabindex="-1"></a>bayesianModerationSyntax <span class="ot">&lt;-</span></span>
-<span id="cb90-354"><a href="#cb90-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y2 <span class="sc">~</span> <span class="fu">s</span>(X) <span class="sc">+</span> <span class="fu">s</span>(M) <span class="sc">+</span> <span class="fu">t2</span>(X, M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id))</span>
-<span id="cb90-355"><a href="#cb90-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-356"><a href="#cb90-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-28"><a href="#cb90-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"easystats"</span>)</span>
+<span id="cb90-29"><a href="#cb90-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-30"><a href="#cb90-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-31"><a href="#cb90-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulate Data</span></span>
+<span id="cb90-32"><a href="#cb90-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-35"><a href="#cb90-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-36"><a href="#cb90-36" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">52242</span>)</span>
+<span id="cb90-37"><a href="#cb90-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-38"><a href="#cb90-38" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb90-39"><a href="#cb90-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-40"><a href="#cb90-40" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">each =</span> <span class="dv">10</span>)</span>
+<span id="cb90-41"><a href="#cb90-41" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(sampleSize)</span>
+<span id="cb90-42"><a href="#cb90-42" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fl">0.5</span><span class="sc">*</span>X <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize)</span>
+<span id="cb90-43"><a href="#cb90-43" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fl">0.7</span><span class="sc">*</span>M <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize)</span>
+<span id="cb90-44"><a href="#cb90-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-45"><a href="#cb90-45" aria-hidden="true" tabindex="-1"></a>nonlinear_interaction <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">sin</span>(X) <span class="sc">*</span> M</span>
+<span id="cb90-46"><a href="#cb90-46" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">*</span> M <span class="sc">+</span> nonlinear_interaction <span class="sc">+</span> <span class="fu">rnorm</span>(sampleSize, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb90-47"><a href="#cb90-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-48"><a href="#cb90-48" aria-hidden="true" tabindex="-1"></a>X[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(X), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb90-49"><a href="#cb90-49" aria-hidden="true" tabindex="-1"></a>M[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(M), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb90-50"><a href="#cb90-50" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Y), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb90-51"><a href="#cb90-51" aria-hidden="true" tabindex="-1"></a>Y2[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Y2), <span class="at">size =</span> <span class="dv">10</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb90-52"><a href="#cb90-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-53"><a href="#cb90-53" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb90-54"><a href="#cb90-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> id,</span>
+<span id="cb90-55"><a href="#cb90-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X,</span>
+<span id="cb90-56"><a href="#cb90-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y,</span>
+<span id="cb90-57"><a href="#cb90-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y2 =</span> Y2,</span>
+<span id="cb90-58"><a href="#cb90-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">M =</span> M)</span>
+<span id="cb90-59"><a href="#cb90-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-60"><a href="#cb90-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-61"><a href="#cb90-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load Data</span></span>
+<span id="cb90-62"><a href="#cb90-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-65"><a href="#cb90-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-66"><a href="#cb90-66" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sleepstudy"</span>, <span class="at">package =</span> <span class="st">"lme4"</span>)</span>
+<span id="cb90-67"><a href="#cb90-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-68"><a href="#cb90-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-69"><a href="#cb90-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prepare Data</span></span>
+<span id="cb90-70"><a href="#cb90-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-73"><a href="#cb90-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-74"><a href="#cb90-74" aria-hidden="true" tabindex="-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">make_conditions</span>(sleepstudy, <span class="st">"Subject"</span>)</span>
+<span id="cb90-75"><a href="#cb90-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-76"><a href="#cb90-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-77"><a href="#cb90-77" aria-hidden="true" tabindex="-1"></a><span class="fu"># brms</span></span>
+<span id="cb90-78"><a href="#cb90-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-79"><a href="#cb90-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-Processing Methods</span></span>
+<span id="cb90-80"><a href="#cb90-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-83"><a href="#cb90-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-84"><a href="#cb90-84" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">"brmsfit"</span>)</span>
+<span id="cb90-85"><a href="#cb90-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-86"><a href="#cb90-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-87"><a href="#cb90-87" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Models</span></span>
+<span id="cb90-88"><a href="#cb90-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-89"><a href="#cb90-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Models</span></span>
+<span id="cb90-90"><a href="#cb90-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-91"><a href="#cb90-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Complete Pooling</span></span>
+<span id="cb90-92"><a href="#cb90-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-95"><a href="#cb90-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-96"><a href="#cb90-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-97"><a href="#cb90-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-98"><a href="#cb90-98" aria-hidden="true" tabindex="-1"></a>fit_sleep1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-99"><a href="#cb90-99" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days,</span>
+<span id="cb90-100"><a href="#cb90-100" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-101"><a href="#cb90-101" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span>)</span>
+<span id="cb90-102"><a href="#cb90-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-103"><a href="#cb90-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-104"><a href="#cb90-104" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random Intercepts</span></span>
+<span id="cb90-105"><a href="#cb90-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-108"><a href="#cb90-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-109"><a href="#cb90-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-110"><a href="#cb90-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-111"><a href="#cb90-111" aria-hidden="true" tabindex="-1"></a>fit_sleep2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-112"><a href="#cb90-112" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Subject), </span>
+<span id="cb90-113"><a href="#cb90-113" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-114"><a href="#cb90-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span>)</span>
+<span id="cb90-115"><a href="#cb90-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-116"><a href="#cb90-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-117"><a href="#cb90-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random Intercepts and Slopes</span></span>
+<span id="cb90-118"><a href="#cb90-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-121"><a href="#cb90-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-122"><a href="#cb90-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-123"><a href="#cb90-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-124"><a href="#cb90-124" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-125"><a href="#cb90-125" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb90-126"><a href="#cb90-126" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-127"><a href="#cb90-127" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-128"><a href="#cb90-128" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-129"><a href="#cb90-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-130"><a href="#cb90-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-131"><a href="#cb90-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summarize Results</span></span>
+<span id="cb90-132"><a href="#cb90-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-133"><a href="#cb90-133" aria-hidden="true" tabindex="-1"></a>For convergence, <span class="in">`Rhat`</span> values should not be above 1.00.</span>
+<span id="cb90-134"><a href="#cb90-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-137"><a href="#cb90-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-138"><a href="#cb90-138" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_sleep3)</span>
+<span id="cb90-139"><a href="#cb90-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-140"><a href="#cb90-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-141"><a href="#cb90-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Priors</span></span>
+<span id="cb90-142"><a href="#cb90-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-145"><a href="#cb90-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-146"><a href="#cb90-146" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(fit_sleep3)</span>
+<span id="cb90-147"><a href="#cb90-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-148"><a href="#cb90-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-149"><a href="#cb90-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Parameters</span></span>
+<span id="cb90-150"><a href="#cb90-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-153"><a href="#cb90-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-154"><a href="#cb90-154" aria-hidden="true" tabindex="-1"></a><span class="fu">variables</span>(fit_sleep3)</span>
+<span id="cb90-155"><a href="#cb90-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-156"><a href="#cb90-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-157"><a href="#cb90-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Coefficients</span></span>
+<span id="cb90-158"><a href="#cb90-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-161"><a href="#cb90-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-162"><a href="#cb90-162" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_sleep3)</span>
+<span id="cb90-163"><a href="#cb90-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-164"><a href="#cb90-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-165"><a href="#cb90-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## Standardized Coefficients</span></span>
+<span id="cb90-166"><a href="#cb90-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-169"><a href="#cb90-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-170"><a href="#cb90-170" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
+<span id="cb90-171"><a href="#cb90-171" aria-hidden="true" tabindex="-1"></a>  fit_sleep3,</span>
+<span id="cb90-172"><a href="#cb90-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
+<span id="cb90-173"><a href="#cb90-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb90-174"><a href="#cb90-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-175"><a href="#cb90-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-176"><a href="#cb90-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model Fit</span></span>
+<span id="cb90-177"><a href="#cb90-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-180"><a href="#cb90-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-181"><a href="#cb90-181" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(fit_sleep3)</span>
+<span id="cb90-182"><a href="#cb90-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-183"><a href="#cb90-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-184"><a href="#cb90-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## R-Squared</span></span>
+<span id="cb90-185"><a href="#cb90-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-188"><a href="#cb90-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-189"><a href="#cb90-189" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_sleep3)</span>
+<span id="cb90-190"><a href="#cb90-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-191"><a href="#cb90-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-192"><a href="#cb90-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plots</span></span>
+<span id="cb90-193"><a href="#cb90-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-194"><a href="#cb90-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Trace Plots</span></span>
+<span id="cb90-195"><a href="#cb90-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-198"><a href="#cb90-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-199"><a href="#cb90-199" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_sleep3, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb90-200"><a href="#cb90-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-201"><a href="#cb90-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-202"><a href="#cb90-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualize Predictions</span></span>
+<span id="cb90-203"><a href="#cb90-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-204"><a href="#cb90-204" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sample-Level</span></span>
+<span id="cb90-205"><a href="#cb90-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-208"><a href="#cb90-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-209"><a href="#cb90-209" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">conditional_effects</span>(fit_sleep1), <span class="at">points =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-210"><a href="#cb90-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-211"><a href="#cb90-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-212"><a href="#cb90-212" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Person-Level</span></span>
+<span id="cb90-213"><a href="#cb90-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-216"><a href="#cb90-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-217"><a href="#cb90-217" aria-hidden="true" tabindex="-1"></a><span class="co"># re_formula = NULL ensures that group-level effects are included</span></span>
+<span id="cb90-218"><a href="#cb90-218" aria-hidden="true" tabindex="-1"></a>ce2 <span class="ot">&lt;-</span> <span class="fu">conditional_effects</span>(</span>
+<span id="cb90-219"><a href="#cb90-219" aria-hidden="true" tabindex="-1"></a>  fit_sleep3,</span>
+<span id="cb90-220"><a href="#cb90-220" aria-hidden="true" tabindex="-1"></a>  <span class="at">conditions =</span> conditions,</span>
+<span id="cb90-221"><a href="#cb90-221" aria-hidden="true" tabindex="-1"></a>  <span class="at">re_formula =</span> <span class="cn">NULL</span>)</span>
+<span id="cb90-222"><a href="#cb90-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-223"><a href="#cb90-223" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ce2, <span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">points =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-224"><a href="#cb90-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-225"><a href="#cb90-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-226"><a href="#cb90-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Check Model Fit</span></span>
+<span id="cb90-227"><a href="#cb90-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-228"><a href="#cb90-228" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Posterior Predictive Check</span></span>
+<span id="cb90-229"><a href="#cb90-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-230"><a href="#cb90-230" aria-hidden="true" tabindex="-1"></a>Evaluate how closely the posterior predictions match the observed values.</span>
+<span id="cb90-231"><a href="#cb90-231" aria-hidden="true" tabindex="-1"></a>If they do not match the general pattern of the observed values, a different response distribution may be necessary.</span>
+<span id="cb90-232"><a href="#cb90-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-235"><a href="#cb90-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-236"><a href="#cb90-236" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3)</span>
+<span id="cb90-237"><a href="#cb90-237" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3, <span class="at">type =</span> <span class="st">"dens_overlay"</span>)</span>
+<span id="cb90-238"><a href="#cb90-238" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_sleep3, <span class="st">"error_scatter_avg"</span>)</span>
+<span id="cb90-239"><a href="#cb90-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-240"><a href="#cb90-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-241"><a href="#cb90-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitted Values</span></span>
+<span id="cb90-242"><a href="#cb90-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-245"><a href="#cb90-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-246"><a href="#cb90-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-247"><a href="#cb90-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-248"><a href="#cb90-248" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_sleep3)</span>
+<span id="cb90-249"><a href="#cb90-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-250"><a href="#cb90-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-253"><a href="#cb90-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-254"><a href="#cb90-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb90-255"><a href="#cb90-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-256"><a href="#cb90-256" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">fitted</span>(fit_sleep3))</span>
+<span id="cb90-257"><a href="#cb90-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-258"><a href="#cb90-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-259"><a href="#cb90-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Residuals</span></span>
+<span id="cb90-260"><a href="#cb90-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-263"><a href="#cb90-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-264"><a href="#cb90-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-265"><a href="#cb90-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-266"><a href="#cb90-266" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(fit_sleep3)</span>
+<span id="cb90-267"><a href="#cb90-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-268"><a href="#cb90-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-271"><a href="#cb90-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-272"><a href="#cb90-272" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb90-273"><a href="#cb90-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-274"><a href="#cb90-274" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_sleep3))</span>
+<span id="cb90-275"><a href="#cb90-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-276"><a href="#cb90-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-277"><a href="#cb90-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compare Models</span></span>
+<span id="cb90-278"><a href="#cb90-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-279"><a href="#cb90-279" aria-hidden="true" tabindex="-1"></a><span class="in">`elpd`</span> values: higher is better</span>
+<span id="cb90-280"><a href="#cb90-280" aria-hidden="true" tabindex="-1"></a><span class="in">`looic`</span> values: lower is better</span>
+<span id="cb90-281"><a href="#cb90-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-282"><a href="#cb90-282" aria-hidden="true" tabindex="-1"></a><span class="in">`elpd_diff`</span> values that are greater than ~2 standard errors of the <span class="in">`elpd_diff`</span> values indicate a significantly better model (i.e., if <span class="in">`elpd_diff`</span> value is greater than 2 times the <span class="in">`se_diff`</span> value).</span>
+<span id="cb90-283"><a href="#cb90-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-286"><a href="#cb90-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-287"><a href="#cb90-287" aria-hidden="true" tabindex="-1"></a><span class="fu">loo</span>(fit_sleep1, fit_sleep2, fit_sleep3)</span>
+<span id="cb90-288"><a href="#cb90-288" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loo</span>(fit_sleep1, fit_sleep2, fit_sleep3), <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb90-289"><a href="#cb90-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-290"><a href="#cb90-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-291"><a href="#cb90-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compute Model Weights</span></span>
+<span id="cb90-292"><a href="#cb90-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-295"><a href="#cb90-295" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-296"><a href="#cb90-296" aria-hidden="true" tabindex="-1"></a><span class="fu">model_weights</span>(fit_sleep1, fit_sleep2, fit_sleep3, <span class="at">weights =</span> <span class="st">"loo"</span>)</span>
+<span id="cb90-297"><a href="#cb90-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-298"><a href="#cb90-298" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">model_weights</span>(fit_sleep1, fit_sleep2, fit_sleep3, <span class="at">weights =</span> <span class="st">"loo"</span>))</span>
+<span id="cb90-299"><a href="#cb90-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-300"><a href="#cb90-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-301"><a href="#cb90-301" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Mediation {#sec-multilevelMediation}</span></span>
+<span id="cb90-302"><a href="#cb90-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-303"><a href="#cb90-303" aria-hidden="true" tabindex="-1"></a>The syntax below estimates random intercepts (which allows each participant to have a different intercept) to account for nested data within the same participant.</span>
+<span id="cb90-304"><a href="#cb90-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-307"><a href="#cb90-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-308"><a href="#cb90-308" aria-hidden="true" tabindex="-1"></a>bayesianMediationSyntax <span class="ot">&lt;-</span></span>
+<span id="cb90-309"><a href="#cb90-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">~</span> X <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb90-310"><a href="#cb90-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">~</span> X <span class="sc">+</span> M <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb90-311"><a href="#cb90-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between M and Y</span></span>
+<span id="cb90-312"><a href="#cb90-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-313"><a href="#cb90-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-316"><a href="#cb90-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-317"><a href="#cb90-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-318"><a href="#cb90-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-319"><a href="#cb90-319" aria-hidden="true" tabindex="-1"></a>bayesianMediationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-320"><a href="#cb90-320" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
+<span id="cb90-321"><a href="#cb90-321" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
+<span id="cb90-322"><a href="#cb90-322" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-323"><a href="#cb90-323" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-324"><a href="#cb90-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-325"><a href="#cb90-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-328"><a href="#cb90-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-329"><a href="#cb90-329" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianMediationModel)</span>
+<span id="cb90-330"><a href="#cb90-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-331"><a href="#cb90-331" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
+<span id="cb90-332"><a href="#cb90-332" aria-hidden="true" tabindex="-1"></a><span class="co">#  bayesianMediationModel,</span></span>
+<span id="cb90-333"><a href="#cb90-333" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
+<span id="cb90-334"><a href="#cb90-334" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
+<span id="cb90-335"><a href="#cb90-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-336"><a href="#cb90-336" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(bayesianMediationModel) # errors out perhaps due to joint model</span></span>
+<span id="cb90-337"><a href="#cb90-337" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianMediationModel)</span>
+<span id="cb90-338"><a href="#cb90-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-339"><a href="#cb90-339" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
+<span id="cb90-340"><a href="#cb90-340" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
+<span id="cb90-341"><a href="#cb90-341" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span id="cb90-342"><a href="#cb90-342" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
+<span id="cb90-343"><a href="#cb90-343" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span>  <span class="dv">52242</span></span>
+<span id="cb90-344"><a href="#cb90-344" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-345"><a href="#cb90-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-346"><a href="#cb90-346" aria-hidden="true" tabindex="-1"></a><span class="fu">mediation</span>(bayesianMediationModel)</span>
+<span id="cb90-347"><a href="#cb90-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-348"><a href="#cb90-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-349"><a href="#cb90-349" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Moderation {#sec-multilevelModeration}</span></span>
+<span id="cb90-350"><a href="#cb90-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-353"><a href="#cb90-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-354"><a href="#cb90-354" aria-hidden="true" tabindex="-1"></a>bayesianModerationSyntax <span class="ot">&lt;-</span></span>
+<span id="cb90-355"><a href="#cb90-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y2 <span class="sc">~</span> <span class="fu">s</span>(X) <span class="sc">+</span> <span class="fu">s</span>(M) <span class="sc">+</span> <span class="fu">t2</span>(X, M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id))</span>
+<span id="cb90-356"><a href="#cb90-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb90-357"><a href="#cb90-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-360"><a href="#cb90-360" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-361"><a href="#cb90-361" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-362"><a href="#cb90-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-363"><a href="#cb90-363" aria-hidden="true" tabindex="-1"></a>bayesianModerationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-364"><a href="#cb90-364" aria-hidden="true" tabindex="-1"></a>  bayesianModerationSyntax,</span>
-<span id="cb90-365"><a href="#cb90-365" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
-<span id="cb90-366"><a href="#cb90-366" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-367"><a href="#cb90-367" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-368"><a href="#cb90-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-369"><a href="#cb90-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-372"><a href="#cb90-372" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-373"><a href="#cb90-373" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianModerationModel)</span>
-<span id="cb90-374"><a href="#cb90-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-375"><a href="#cb90-375" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
-<span id="cb90-376"><a href="#cb90-376" aria-hidden="true" tabindex="-1"></a>  bayesianModerationModel,</span>
-<span id="cb90-377"><a href="#cb90-377" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
-<span id="cb90-378"><a href="#cb90-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb90-379"><a href="#cb90-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-380"><a href="#cb90-380" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianModerationModel)</span>
-<span id="cb90-381"><a href="#cb90-381" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianModerationModel)</span>
-<span id="cb90-382"><a href="#cb90-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-383"><a href="#cb90-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-384"><a href="#cb90-384" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Priors</span></span>
-<span id="cb90-385"><a href="#cb90-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-386"><a href="#cb90-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameters for Which to Set Priors</span></span>
-<span id="cb90-387"><a href="#cb90-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-390"><a href="#cb90-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-391"><a href="#cb90-391" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(</span>
-<span id="cb90-392"><a href="#cb90-392" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb90-393"><a href="#cb90-393" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy)</span>
-<span id="cb90-394"><a href="#cb90-394" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-395"><a href="#cb90-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-396"><a href="#cb90-396" aria-hidden="true" tabindex="-1"></a><span class="fu">## Define Priors</span></span>
-<span id="cb90-397"><a href="#cb90-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-400"><a href="#cb90-400" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-401"><a href="#cb90-401" aria-hidden="true" tabindex="-1"></a>bprior <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb90-402"><a href="#cb90-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"normal(5, 5)"</span>, <span class="at">coef =</span> <span class="st">"Days"</span>),</span>
-<span id="cb90-403"><a href="#cb90-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"cauchy(0, 10)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>),</span>
-<span id="cb90-404"><a href="#cb90-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"lkj(2)"</span>, <span class="at">class =</span> <span class="st">"cor"</span>))</span>
-<span id="cb90-405"><a href="#cb90-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-406"><a href="#cb90-406" aria-hidden="true" tabindex="-1"></a>bprior</span>
-<span id="cb90-407"><a href="#cb90-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-408"><a href="#cb90-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-409"><a href="#cb90-409" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Model</span></span>
-<span id="cb90-410"><a href="#cb90-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-411"><a href="#cb90-411" aria-hidden="true" tabindex="-1"></a>Fit the model with these priors, and sample from these priors:</span>
-<span id="cb90-412"><a href="#cb90-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-415"><a href="#cb90-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-416"><a href="#cb90-416" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-417"><a href="#cb90-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-418"><a href="#cb90-418" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-419"><a href="#cb90-419" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb90-420"><a href="#cb90-420" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-421"><a href="#cb90-421" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
-<span id="cb90-422"><a href="#cb90-422" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb90-423"><a href="#cb90-423" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-424"><a href="#cb90-424" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-425"><a href="#cb90-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-426"><a href="#cb90-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-427"><a href="#cb90-427" aria-hidden="true" tabindex="-1"></a><span class="fu"># Evaluate a Hypothesis</span></span>
-<span id="cb90-428"><a href="#cb90-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-431"><a href="#cb90-431" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-432"><a href="#cb90-432" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the ratio of P(Days &gt; 7) / P(Days &lt;= 7)</span></span>
-<span id="cb90-433"><a href="#cb90-433" aria-hidden="true" tabindex="-1"></a>(hyp1 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days &lt; 7"</span>))</span>
-<span id="cb90-434"><a href="#cb90-434" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp1)</span>
-<span id="cb90-435"><a href="#cb90-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-436"><a href="#cb90-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-439"><a href="#cb90-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-440"><a href="#cb90-440" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the Bayes Factor of the posterior</span></span>
-<span id="cb90-441"><a href="#cb90-441" aria-hidden="true" tabindex="-1"></a><span class="co"># vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)</span></span>
-<span id="cb90-442"><a href="#cb90-442" aria-hidden="true" tabindex="-1"></a>(hyp2 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days = 10"</span>))</span>
-<span id="cb90-443"><a href="#cb90-443" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp2)</span>
-<span id="cb90-444"><a href="#cb90-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-445"><a href="#cb90-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-446"><a href="#cb90-446" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parallel Processing</span></span>
-<span id="cb90-447"><a href="#cb90-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-448"><a href="#cb90-448" aria-hidden="true" tabindex="-1"></a><span class="fu">## Between-Chain Parallelization</span></span>
-<span id="cb90-449"><a href="#cb90-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-452"><a href="#cb90-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-453"><a href="#cb90-453" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-454"><a href="#cb90-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-455"><a href="#cb90-455" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-456"><a href="#cb90-456" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb90-457"><a href="#cb90-457" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-458"><a href="#cb90-458" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> <span class="dv">4</span>, <span class="co"># between-chain parallelization</span></span>
-<span id="cb90-459"><a href="#cb90-459" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-460"><a href="#cb90-460" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-461"><a href="#cb90-461" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-462"><a href="#cb90-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-463"><a href="#cb90-463" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Chain Parallelization</span></span>
-<span id="cb90-464"><a href="#cb90-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-465"><a href="#cb90-465" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_threading.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/NCG3-KV4G&gt;</span>)</span>
-<span id="cb90-466"><a href="#cb90-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-469"><a href="#cb90-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-470"><a href="#cb90-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-471"><a href="#cb90-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-472"><a href="#cb90-472" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-473"><a href="#cb90-473" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb90-474"><a href="#cb90-474" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb90-475"><a href="#cb90-475" aria-hidden="true" tabindex="-1"></a>  <span class="at">threads =</span> <span class="fu">threading</span>(<span class="dv">4</span>), <span class="co"># within-chain parallelization (threads per chain)</span></span>
-<span id="cb90-476"><a href="#cb90-476" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb90-477"><a href="#cb90-477" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-478"><a href="#cb90-478" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-479"><a href="#cb90-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-480"><a href="#cb90-480" aria-hidden="true" tabindex="-1"></a><span class="fu"># Missing Data Handling</span></span>
-<span id="cb90-481"><a href="#cb90-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-482"><a href="#cb90-482" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiply Imputed Datasets from `mice`</span></span>
-<span id="cb90-483"><a href="#cb90-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-486"><a href="#cb90-486" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-487"><a href="#cb90-487" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb90-488"><a href="#cb90-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-489"><a href="#cb90-489" aria-hidden="true" tabindex="-1"></a>?brm_multiple</span>
-<span id="cb90-490"><a href="#cb90-490" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-491"><a href="#cb90-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-494"><a href="#cb90-494" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-495"><a href="#cb90-495" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">mice</span>(</span>
-<span id="cb90-496"><a href="#cb90-496" aria-hidden="true" tabindex="-1"></a>  mydata,</span>
-<span id="cb90-497"><a href="#cb90-497" aria-hidden="true" tabindex="-1"></a>  <span class="at">m =</span> <span class="dv">5</span>,</span>
-<span id="cb90-498"><a href="#cb90-498" aria-hidden="true" tabindex="-1"></a>  <span class="at">print =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb90-499"><a href="#cb90-499" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-500"><a href="#cb90-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-503"><a href="#cb90-503" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-504"><a href="#cb90-504" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-505"><a href="#cb90-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-506"><a href="#cb90-506" aria-hidden="true" tabindex="-1"></a>fit_imp <span class="ot">&lt;-</span> <span class="fu">brm_multiple</span>(</span>
-<span id="cb90-507"><a href="#cb90-507" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
-<span id="cb90-508"><a href="#cb90-508" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> imp,</span>
-<span id="cb90-509"><a href="#cb90-509" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>)</span>
-<span id="cb90-510"><a href="#cb90-510" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-511"><a href="#cb90-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-514"><a href="#cb90-514" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-515"><a href="#cb90-515" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_imp)</span>
-<span id="cb90-516"><a href="#cb90-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-517"><a href="#cb90-517" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
-<span id="cb90-518"><a href="#cb90-518" aria-hidden="true" tabindex="-1"></a><span class="co">#  fit_imp,</span></span>
-<span id="cb90-519"><a href="#cb90-519" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
-<span id="cb90-520"><a href="#cb90-520" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
-<span id="cb90-521"><a href="#cb90-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-522"><a href="#cb90-522" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(fit_imp) # errors out perhaps due to joint model</span></span>
-<span id="cb90-523"><a href="#cb90-523" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_imp)</span>
-<span id="cb90-524"><a href="#cb90-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-525"><a href="#cb90-525" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
-<span id="cb90-526"><a href="#cb90-526" aria-hidden="true" tabindex="-1"></a>  fit_imp,</span>
-<span id="cb90-527"><a href="#cb90-527" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
-<span id="cb90-528"><a href="#cb90-528" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
-<span id="cb90-529"><a href="#cb90-529" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
-<span id="cb90-530"><a href="#cb90-530" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-531"><a href="#cb90-531" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-532"><a href="#cb90-532" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-533"><a href="#cb90-533" aria-hidden="true" tabindex="-1"></a><span class="fu">## Imputation on the Fly During Model Fitting</span></span>
-<span id="cb90-534"><a href="#cb90-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-535"><a href="#cb90-535" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_missings.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/4Y9L-USQR&gt;</span>)</span>
-<span id="cb90-536"><a href="#cb90-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-539"><a href="#cb90-539" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-540"><a href="#cb90-540" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb90-541"><a href="#cb90-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-542"><a href="#cb90-542" aria-hidden="true" tabindex="-1"></a>?mi</span>
-<span id="cb90-543"><a href="#cb90-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-544"><a href="#cb90-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-547"><a href="#cb90-547" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-548"><a href="#cb90-548" aria-hidden="true" tabindex="-1"></a>bayesianRegressionImputationSyntax <span class="ot">&lt;-</span></span>
-<span id="cb90-549"><a href="#cb90-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(X <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb90-550"><a href="#cb90-550" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb90-551"><a href="#cb90-551" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> <span class="fu">mi</span>(M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb90-552"><a href="#cb90-552" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between X, M, and Y</span></span>
-<span id="cb90-553"><a href="#cb90-553" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-554"><a href="#cb90-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-557"><a href="#cb90-557" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-558"><a href="#cb90-558" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb90-559"><a href="#cb90-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-560"><a href="#cb90-560" aria-hidden="true" tabindex="-1"></a>bayesianRegressionModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb90-561"><a href="#cb90-561" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionImputationSyntax,</span>
-<span id="cb90-562"><a href="#cb90-562" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
-<span id="cb90-563"><a href="#cb90-563" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
-<span id="cb90-564"><a href="#cb90-564" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-565"><a href="#cb90-565" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-566"><a href="#cb90-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-569"><a href="#cb90-569" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-570"><a href="#cb90-570" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianRegressionModel)</span>
-<span id="cb90-571"><a href="#cb90-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-572"><a href="#cb90-572" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
-<span id="cb90-573"><a href="#cb90-573" aria-hidden="true" tabindex="-1"></a><span class="co">#  bayesianRegressionModel,</span></span>
-<span id="cb90-574"><a href="#cb90-574" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
-<span id="cb90-575"><a href="#cb90-575" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
-<span id="cb90-576"><a href="#cb90-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-577"><a href="#cb90-577" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(bayesianRegressionModel) # errors out perhaps due to joint model</span></span>
-<span id="cb90-578"><a href="#cb90-578" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianRegressionModel)</span>
-<span id="cb90-579"><a href="#cb90-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-580"><a href="#cb90-580" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
-<span id="cb90-581"><a href="#cb90-581" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
-<span id="cb90-582"><a href="#cb90-582" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
-<span id="cb90-583"><a href="#cb90-583" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
-<span id="cb90-584"><a href="#cb90-584" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
-<span id="cb90-585"><a href="#cb90-585" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb90-586"><a href="#cb90-586" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb90-587"><a href="#cb90-587" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-588"><a href="#cb90-588" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb90-589"><a href="#cb90-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-592"><a href="#cb90-592" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb90-593"><a href="#cb90-593" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb90-594"><a href="#cb90-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-595"><a href="#cb90-595" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb90-596"><a href="#cb90-596" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-358"><a href="#cb90-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-361"><a href="#cb90-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-362"><a href="#cb90-362" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-363"><a href="#cb90-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-364"><a href="#cb90-364" aria-hidden="true" tabindex="-1"></a>bayesianModerationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-365"><a href="#cb90-365" aria-hidden="true" tabindex="-1"></a>  bayesianModerationSyntax,</span>
+<span id="cb90-366"><a href="#cb90-366" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
+<span id="cb90-367"><a href="#cb90-367" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-368"><a href="#cb90-368" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-369"><a href="#cb90-369" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-370"><a href="#cb90-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-373"><a href="#cb90-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-374"><a href="#cb90-374" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianModerationModel)</span>
+<span id="cb90-375"><a href="#cb90-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-376"><a href="#cb90-376" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
+<span id="cb90-377"><a href="#cb90-377" aria-hidden="true" tabindex="-1"></a>  bayesianModerationModel,</span>
+<span id="cb90-378"><a href="#cb90-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
+<span id="cb90-379"><a href="#cb90-379" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb90-380"><a href="#cb90-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-381"><a href="#cb90-381" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianModerationModel)</span>
+<span id="cb90-382"><a href="#cb90-382" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianModerationModel)</span>
+<span id="cb90-383"><a href="#cb90-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-384"><a href="#cb90-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-385"><a href="#cb90-385" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Priors</span></span>
+<span id="cb90-386"><a href="#cb90-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-387"><a href="#cb90-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameters for Which to Set Priors</span></span>
+<span id="cb90-388"><a href="#cb90-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-391"><a href="#cb90-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-392"><a href="#cb90-392" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(</span>
+<span id="cb90-393"><a href="#cb90-393" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb90-394"><a href="#cb90-394" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy)</span>
+<span id="cb90-395"><a href="#cb90-395" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-396"><a href="#cb90-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-397"><a href="#cb90-397" aria-hidden="true" tabindex="-1"></a><span class="fu">## Define Priors</span></span>
+<span id="cb90-398"><a href="#cb90-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-401"><a href="#cb90-401" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-402"><a href="#cb90-402" aria-hidden="true" tabindex="-1"></a>bprior <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb90-403"><a href="#cb90-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"normal(5, 5)"</span>, <span class="at">coef =</span> <span class="st">"Days"</span>),</span>
+<span id="cb90-404"><a href="#cb90-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"cauchy(0, 10)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>),</span>
+<span id="cb90-405"><a href="#cb90-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"lkj(2)"</span>, <span class="at">class =</span> <span class="st">"cor"</span>))</span>
+<span id="cb90-406"><a href="#cb90-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-407"><a href="#cb90-407" aria-hidden="true" tabindex="-1"></a>bprior</span>
+<span id="cb90-408"><a href="#cb90-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-409"><a href="#cb90-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-410"><a href="#cb90-410" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Model</span></span>
+<span id="cb90-411"><a href="#cb90-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-412"><a href="#cb90-412" aria-hidden="true" tabindex="-1"></a>Fit the model with these priors, and sample from these priors:</span>
+<span id="cb90-413"><a href="#cb90-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-416"><a href="#cb90-416" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-417"><a href="#cb90-417" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-418"><a href="#cb90-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-419"><a href="#cb90-419" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-420"><a href="#cb90-420" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb90-421"><a href="#cb90-421" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-422"><a href="#cb90-422" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
+<span id="cb90-423"><a href="#cb90-423" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb90-424"><a href="#cb90-424" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-425"><a href="#cb90-425" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-426"><a href="#cb90-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-427"><a href="#cb90-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-428"><a href="#cb90-428" aria-hidden="true" tabindex="-1"></a><span class="fu"># Evaluate a Hypothesis</span></span>
+<span id="cb90-429"><a href="#cb90-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-432"><a href="#cb90-432" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-433"><a href="#cb90-433" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the ratio of P(Days &gt; 7) / P(Days &lt;= 7)</span></span>
+<span id="cb90-434"><a href="#cb90-434" aria-hidden="true" tabindex="-1"></a>(hyp1 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days &lt; 7"</span>))</span>
+<span id="cb90-435"><a href="#cb90-435" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp1)</span>
+<span id="cb90-436"><a href="#cb90-436" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-437"><a href="#cb90-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-440"><a href="#cb90-440" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-441"><a href="#cb90-441" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the Bayes Factor of the posterior</span></span>
+<span id="cb90-442"><a href="#cb90-442" aria-hidden="true" tabindex="-1"></a><span class="co"># vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)</span></span>
+<span id="cb90-443"><a href="#cb90-443" aria-hidden="true" tabindex="-1"></a>(hyp2 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days = 10"</span>))</span>
+<span id="cb90-444"><a href="#cb90-444" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp2)</span>
+<span id="cb90-445"><a href="#cb90-445" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-446"><a href="#cb90-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-447"><a href="#cb90-447" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parallel Processing</span></span>
+<span id="cb90-448"><a href="#cb90-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-449"><a href="#cb90-449" aria-hidden="true" tabindex="-1"></a><span class="fu">## Between-Chain Parallelization</span></span>
+<span id="cb90-450"><a href="#cb90-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-453"><a href="#cb90-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-454"><a href="#cb90-454" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-455"><a href="#cb90-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-456"><a href="#cb90-456" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-457"><a href="#cb90-457" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb90-458"><a href="#cb90-458" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-459"><a href="#cb90-459" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> <span class="dv">4</span>, <span class="co"># between-chain parallelization</span></span>
+<span id="cb90-460"><a href="#cb90-460" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-461"><a href="#cb90-461" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-462"><a href="#cb90-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-463"><a href="#cb90-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-464"><a href="#cb90-464" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Chain Parallelization</span></span>
+<span id="cb90-465"><a href="#cb90-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-466"><a href="#cb90-466" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_threading.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/NCG3-KV4G&gt;</span>)</span>
+<span id="cb90-467"><a href="#cb90-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-470"><a href="#cb90-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-471"><a href="#cb90-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-472"><a href="#cb90-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-473"><a href="#cb90-473" aria-hidden="true" tabindex="-1"></a>fit_sleep3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-474"><a href="#cb90-474" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb90-475"><a href="#cb90-475" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb90-476"><a href="#cb90-476" aria-hidden="true" tabindex="-1"></a>  <span class="at">threads =</span> <span class="fu">threading</span>(<span class="dv">4</span>), <span class="co"># within-chain parallelization (threads per chain)</span></span>
+<span id="cb90-477"><a href="#cb90-477" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb90-478"><a href="#cb90-478" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-479"><a href="#cb90-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-480"><a href="#cb90-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-481"><a href="#cb90-481" aria-hidden="true" tabindex="-1"></a><span class="fu"># Missing Data Handling</span></span>
+<span id="cb90-482"><a href="#cb90-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-483"><a href="#cb90-483" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiply Imputed Datasets from `mice`</span></span>
+<span id="cb90-484"><a href="#cb90-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-487"><a href="#cb90-487" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-488"><a href="#cb90-488" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb90-489"><a href="#cb90-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-490"><a href="#cb90-490" aria-hidden="true" tabindex="-1"></a>?brm_multiple</span>
+<span id="cb90-491"><a href="#cb90-491" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-492"><a href="#cb90-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-495"><a href="#cb90-495" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-496"><a href="#cb90-496" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">mice</span>(</span>
+<span id="cb90-497"><a href="#cb90-497" aria-hidden="true" tabindex="-1"></a>  mydata,</span>
+<span id="cb90-498"><a href="#cb90-498" aria-hidden="true" tabindex="-1"></a>  <span class="at">m =</span> <span class="dv">5</span>,</span>
+<span id="cb90-499"><a href="#cb90-499" aria-hidden="true" tabindex="-1"></a>  <span class="at">print =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb90-500"><a href="#cb90-500" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-501"><a href="#cb90-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-504"><a href="#cb90-504" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-505"><a href="#cb90-505" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-506"><a href="#cb90-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-507"><a href="#cb90-507" aria-hidden="true" tabindex="-1"></a>fit_imp <span class="ot">&lt;-</span> <span class="fu">brm_multiple</span>(</span>
+<span id="cb90-508"><a href="#cb90-508" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
+<span id="cb90-509"><a href="#cb90-509" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> imp,</span>
+<span id="cb90-510"><a href="#cb90-510" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>)</span>
+<span id="cb90-511"><a href="#cb90-511" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-512"><a href="#cb90-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-515"><a href="#cb90-515" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-516"><a href="#cb90-516" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_imp)</span>
+<span id="cb90-517"><a href="#cb90-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-518"><a href="#cb90-518" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
+<span id="cb90-519"><a href="#cb90-519" aria-hidden="true" tabindex="-1"></a><span class="co">#  fit_imp,</span></span>
+<span id="cb90-520"><a href="#cb90-520" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
+<span id="cb90-521"><a href="#cb90-521" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
+<span id="cb90-522"><a href="#cb90-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-523"><a href="#cb90-523" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(fit_imp) # errors out perhaps due to joint model</span></span>
+<span id="cb90-524"><a href="#cb90-524" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(fit_imp)</span>
+<span id="cb90-525"><a href="#cb90-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-526"><a href="#cb90-526" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
+<span id="cb90-527"><a href="#cb90-527" aria-hidden="true" tabindex="-1"></a>  fit_imp,</span>
+<span id="cb90-528"><a href="#cb90-528" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span id="cb90-529"><a href="#cb90-529" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
+<span id="cb90-530"><a href="#cb90-530" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
+<span id="cb90-531"><a href="#cb90-531" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-532"><a href="#cb90-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-533"><a href="#cb90-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-534"><a href="#cb90-534" aria-hidden="true" tabindex="-1"></a><span class="fu">## Imputation on the Fly During Model Fitting</span></span>
+<span id="cb90-535"><a href="#cb90-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-536"><a href="#cb90-536" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_missings.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/4Y9L-USQR&gt;</span>)</span>
+<span id="cb90-537"><a href="#cb90-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-540"><a href="#cb90-540" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-541"><a href="#cb90-541" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb90-542"><a href="#cb90-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-543"><a href="#cb90-543" aria-hidden="true" tabindex="-1"></a>?mi</span>
+<span id="cb90-544"><a href="#cb90-544" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-545"><a href="#cb90-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-548"><a href="#cb90-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-549"><a href="#cb90-549" aria-hidden="true" tabindex="-1"></a>bayesianRegressionImputationSyntax <span class="ot">&lt;-</span></span>
+<span id="cb90-550"><a href="#cb90-550" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(X <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb90-551"><a href="#cb90-551" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb90-552"><a href="#cb90-552" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> <span class="fu">mi</span>(M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb90-553"><a href="#cb90-553" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between X, M, and Y</span></span>
+<span id="cb90-554"><a href="#cb90-554" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-555"><a href="#cb90-555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-558"><a href="#cb90-558" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-559"><a href="#cb90-559" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb90-560"><a href="#cb90-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-561"><a href="#cb90-561" aria-hidden="true" tabindex="-1"></a>bayesianRegressionModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb90-562"><a href="#cb90-562" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionImputationSyntax,</span>
+<span id="cb90-563"><a href="#cb90-563" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
+<span id="cb90-564"><a href="#cb90-564" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
+<span id="cb90-565"><a href="#cb90-565" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-566"><a href="#cb90-566" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-567"><a href="#cb90-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-570"><a href="#cb90-570" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-571"><a href="#cb90-571" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianRegressionModel)</span>
+<span id="cb90-572"><a href="#cb90-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-573"><a href="#cb90-573" aria-hidden="true" tabindex="-1"></a><span class="co">#print(effectsize::standardize_parameters( # errors out perhaps due to joint model</span></span>
+<span id="cb90-574"><a href="#cb90-574" aria-hidden="true" tabindex="-1"></a><span class="co">#  bayesianRegressionModel,</span></span>
+<span id="cb90-575"><a href="#cb90-575" aria-hidden="true" tabindex="-1"></a><span class="co">#  method = "posthoc"),</span></span>
+<span id="cb90-576"><a href="#cb90-576" aria-hidden="true" tabindex="-1"></a><span class="co">#  digits = 2)</span></span>
+<span id="cb90-577"><a href="#cb90-577" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-578"><a href="#cb90-578" aria-hidden="true" tabindex="-1"></a><span class="co">#performance::model_performance(bayesianRegressionModel) # errors out perhaps due to joint model</span></span>
+<span id="cb90-579"><a href="#cb90-579" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianRegressionModel)</span>
+<span id="cb90-580"><a href="#cb90-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-581"><a href="#cb90-581" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
+<span id="cb90-582"><a href="#cb90-582" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
+<span id="cb90-583"><a href="#cb90-583" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span id="cb90-584"><a href="#cb90-584" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
+<span id="cb90-585"><a href="#cb90-585" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
+<span id="cb90-586"><a href="#cb90-586" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-587"><a href="#cb90-587" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb90-588"><a href="#cb90-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-589"><a href="#cb90-589" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb90-590"><a href="#cb90-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-593"><a href="#cb90-593" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb90-594"><a href="#cb90-594" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb90-595"><a href="#cb90-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-596"><a href="#cb90-596" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb90-597"><a href="#cb90-597" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
