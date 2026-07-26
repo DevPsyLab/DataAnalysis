@@ -22,6 +22,8 @@ library("lavaangui")
 library("sirt")
 library("mirt")
 library("plink")
+library("rstan")
+library("brms")
 library("kableExtra")
 library("tidyverse")
 ```
@@ -53,7 +55,17 @@ mydata_wide$depressed3 <- mydata_wide$JOBSAT33
 ```{r}
 set.seed(52242)
 
-# ---- GRM response generator -------------------------------------------------
+N   <- 1200
+rho <- 0.6                                 # person-level stability across time
+Sigma <- rho ^ abs(outer(1:3, 1:3, "-"))   # AR(1) correlation: 1, rho, rho^2
+mu <- c(-0.5, 0, 0.5)                      # increasing growth trend
+
+theta_mat <- MASS::mvrnorm(N, mu = mu, Sigma = Sigma)
+theta1_true <- theta_mat[, 1]
+theta2_true <- theta_mat[, 2]
+theta3_true <- theta_mat[, 3]
+
+# simulate GRM responses
 # theta : vector of person abilities
 # a     : item discrimination (scalar)
 # b     : vector of category thresholds, increasing (length = n categories - 1)
@@ -72,7 +84,6 @@ sim_grm_item <- function(theta, a, b) {
 n_cat    <- 4     # every item has 4 ordered categories (3 thresholds)
 n_unique <- 8     # unique ("age-specific") items at each timepoint
 n_common <- 6     # common ("anchor") items linking each ADJACENT pair of timepoints
-N        <- 1200  # independent sample size at each timepoint
 
 # true item parameters: a ~ U(0.8, 2), three increasing thresholds
 make_params <- function(n_items) {
@@ -105,34 +116,44 @@ gen_data <- function(theta, names, params_list) {
   out
 }
 
-# true theta distributions -- shifted upward across timepoints
-theta1_true <- rnorm(N, -0.5, 1)
-theta2_true <- rnorm(N,  0.0, 1)
-theta3_true <- rnorm(N,  0.5, 1)
-
-dat1 <- gen_data(theta1_true, item_names_T1, list(U1, C12))
-dat2 <- gen_data(theta2_true, item_names_T2, list(C12, U2, C23))
-dat3 <- gen_data(theta3_true, item_names_T3, list(C23, U3))
-
-dat1 <- as.data.frame(dat1); dat2 <- as.data.frame(dat2); dat3 <- as.data.frame(dat3)
+dat1 <- cbind(id = 1:N, as.data.frame(gen_data(theta1_true, item_names_T1, list(U1, C12))))
+dat2 <- cbind(id = 1:N, as.data.frame(gen_data(theta2_true, item_names_T2, list(C12, U2, C23))))
+dat3 <- cbind(id = 1:N, as.data.frame(gen_data(theta3_true, item_names_T3, list(C23, U3))))
 
 # prepare data for concurrent calibration
-all_items <- union(union(colnames(dat1), colnames(dat2)), colnames(dat3))
+all_items <- union(union(item_names_T1, item_names_T2), item_names_T3)
 
 make_wide <- function(dat, all_items) {
+  item_cols <- setdiff(colnames(dat), "id")
   out <- matrix(NA_integer_, nrow(dat), length(all_items), dimnames = list(NULL, all_items))
-  out[, colnames(dat)] <- as.matrix(dat)
+  out[, item_cols] <- as.matrix(dat[, item_cols])
   as.data.frame(out)
 }
-
-dat_concurrent <- rbind(
-  make_wide(dat1, all_items),
-  make_wide(dat2, all_items),
-  make_wide(dat3, all_items))
 
 group <- factor(
   rep(c("T1", "T2", "T3"), each = N),
   levels = c("T1", "T2", "T3"))
+id_stack <- c(dat1$id, dat2$id, dat3$id)   # same 1:N repeated 3x, in block order
+
+dat_concurrent <- data.frame(
+  id = id_stack,
+  timepoint = group,
+  rbind(make_wide(dat1, all_items), make_wide(dat2, all_items), make_wide(dat3, all_items))
+)
+
+# transform data to long format for Bayesian item response modeling
+dat_long <- dat_concurrent |>
+  pivot_longer(
+    cols = all_of(all_items),
+    names_to = "item",
+    values_to = "response"
+  ) |>
+  filter(!is.na(response)) |>
+  mutate(
+    item = factor(item),
+    response = factor(response, ordered = TRUE)
+  ) |>
+  arrange(id, timepoint, item)
 ```
 
 # Approaches
@@ -920,9 +941,9 @@ For examples of IRT models, see [here](irt.qmd).
 ```{r}
 #| output: false
 
-fit1 <- mirt::mirt(dat1, 1, itemtype = "graded", SE = TRUE)
-fit2 <- mirt::mirt(dat2, 1, itemtype = "graded", SE = TRUE)
-fit3 <- mirt::mirt(dat3, 1, itemtype = "graded", SE = TRUE)
+fit1 <- mirt::mirt(dat1[item_names_T1], 1, itemtype = "graded", SE = TRUE)
+fit2 <- mirt::mirt(dat2[item_names_T2], 1, itemtype = "graded", SE = TRUE)
+fit3 <- mirt::mirt(dat3[item_names_T3], 1, itemtype = "graded", SE = TRUE)
 ```
 
 ```{r}
@@ -935,9 +956,9 @@ th3_sep <- mirt::fscores(fit3, method = "EAP")
 cfs1 <- mirt::coef(fit1, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
 cfs2 <- mirt::coef(fit2, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
 cfs3 <- mirt::coef(fit3, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
-rownames(cfs1) <- colnames(dat1)
-rownames(cfs2) <- colnames(dat2)
-rownames(cfs3) <- colnames(dat3)
+rownames(cfs1) <- item_names_T1
+rownames(cfs2) <- item_names_T2
+rownames(cfs3) <- item_names_T3
 
 # build the plink irt.pars object
 common_names_12 <- paste0("C12_", 1:n_common)
@@ -946,7 +967,6 @@ common_names_23 <- paste0("C23_", 1:n_common)
 common12 <- cbind(
   match(common_names_12, rownames(cfs1)),
   match(common_names_12, rownames(cfs2)))
-
 common23 <- cbind(
   match(common_names_23, rownames(cfs2)),
   match(common_names_23, rownames(cfs3)))
@@ -968,7 +988,8 @@ link_out <- plink::plink(
   plinkIRTpars,
   rescale = "SL",
   base.grp = 2,
-  ability = list(th1_sep, th2_sep, th3_sep))
+  ability = list(th1_sep, th2_sep, th3_sep)
+)
 
 summary(link_out, descrip = TRUE)             # linking constants + common-item drift diagnostics
 constants <- plink::link.con(link_out)        # A, B for each transformation
@@ -991,6 +1012,7 @@ th3_linked <- theta_linked[[3]]
 # they are 100% missing outside their own timepoint and so contribute nothing
 # to the other groups' likelihood. Latent means/variances are freed for all
 # but the reference group (T1), which is fixed at N(0,1) for identification.
+
 anchor_items <- union(common_names_12, common_names_23)
 ```
 
@@ -998,9 +1020,9 @@ anchor_items <- union(common_names_12, common_names_23)
 #| output: false
 
 fit_concurrent <- mirt::multipleGroup(
-  dat_concurrent,
+  dat_concurrent[all_items],
   model = 1,
-  group = group,
+  group = dat_concurrent$timepoint,
   itemtype = "graded",
   invariance = c(anchor_items, "free_means", "free_var"),
   SE = TRUE
@@ -1009,12 +1031,12 @@ fit_concurrent <- mirt::multipleGroup(
 
 ```{r}
 # growth in the latent trait, directly comparable across timepoints
-coef(fit_concurrent, simplify = TRUE)  # inspect per-group means/variances
+mirt::coef(fit_concurrent, simplify = TRUE) # inspect per-group means/variances
 
-theta_concurrent <- fscores(fit_concurrent, method = "EAP")
-th1_conc <- theta_concurrent[group == "T1"]
-th2_conc <- theta_concurrent[group == "T2"]
-th3_conc <- theta_concurrent[group == "T3"]
+theta_concurrent <- mirt::fscores(fit_concurrent, method = "EAP")
+th1_conc <- theta_concurrent[dat_concurrent$timepoint == "T1"]
+th2_conc <- theta_concurrent[dat_concurrent$timepoint == "T2"]
+th3_conc <- theta_concurrent[dat_concurrent$timepoint == "T3"]
 ```
 
 Compare results from separate vs concurrent calibration against truth:
