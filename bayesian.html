@@ -587,7 +587,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   </ul>
 </li>
   <li><a href="#sec-multilevelMediation" id="toc-sec-multilevelMediation" class="nav-link" data-scroll-target="#sec-multilevelMediation"><span class="header-section-number">4</span> Multilevel Mediation</a></li>
-  <li><a href="#multilevel-moderation" id="toc-multilevel-moderation" class="nav-link" data-scroll-target="#multilevel-moderation"><span class="header-section-number">5</span> Multilevel Moderation</a></li>
+  <li><a href="#sec-multilevelModeration" id="toc-sec-multilevelModeration" class="nav-link" data-scroll-target="#sec-multilevelModeration"><span class="header-section-number">5</span> Multilevel Moderation</a></li>
   <li>
 <a href="#setting-priors" id="toc-setting-priors" class="nav-link" data-scroll-target="#setting-priors"><span class="header-section-number">6</span> Setting Priors</a>
   <ul>
@@ -1198,115 +1198,18 @@ Model comparisons:
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bayesianMediationSyntax</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html">bf</a></span><span class="op">(</span><span class="va">M</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span><span class="va">i</span><span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html">bf</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span> <span class="op">+</span> <span class="va">M</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span><span class="va">i</span><span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula-helpers.html">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># don't add a residual correlation between M and Y</span></span>
-<span></span>
-<span><span class="va">bayesianMediationModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula-helpers.html">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># don't add a residual correlation between M and Y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bayesianMediationModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
 <span>  <span class="va">bayesianMediationSyntax</span>,</span>
 <span>  data  <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  seed  <span class="op">=</span> <span class="fl">52242</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
-Chain 1: 
-Chain 1: Gradient evaluation took 0.000149 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.49 seconds.
-Chain 1: Adjust your expectations accordingly!
-Chain 1: 
-Chain 1: 
-Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 1: 
-Chain 1:  Elapsed Time: 11.14 seconds (Warm-up)
-Chain 1:                8.171 seconds (Sampling)
-Chain 1:                19.311 seconds (Total)
-Chain 1: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
-Chain 2: 
-Chain 2: Gradient evaluation took 0.000265 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.65 seconds.
-Chain 2: Adjust your expectations accordingly!
-Chain 2: 
-Chain 2: 
-Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 2: 
-Chain 2:  Elapsed Time: 11.901 seconds (Warm-up)
-Chain 2:                8.275 seconds (Sampling)
-Chain 2:                20.176 seconds (Total)
-Chain 2: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
-Chain 3: 
-Chain 3: Gradient evaluation took 0.000263 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.63 seconds.
-Chain 3: Adjust your expectations accordingly!
-Chain 3: 
-Chain 3: 
-Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 3: 
-Chain 3:  Elapsed Time: 10.492 seconds (Warm-up)
-Chain 3:                6.506 seconds (Sampling)
-Chain 3:                16.998 seconds (Total)
-Chain 3: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
-Chain 4: 
-Chain 4: Gradient evaluation took 0.000157 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.57 seconds.
-Chain 4: Adjust your expectations accordingly!
-Chain 4: 
-Chain 4: 
-Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 4: 
-Chain 4:  Elapsed Time: 7.783 seconds (Warm-up)
-Chain 4:                4.008 seconds (Sampling)
-Chain 4:                11.791 seconds (Total)
-Chain 4: </code></pre>
+</details>
 </div>
+<div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bayesianMediationModel</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> Family: MV(gaussian, gaussian) 
@@ -1413,119 +1316,22 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 </div>
 </div>
 </div>
-</section><section id="multilevel-moderation" class="level1" data-number="5"><h1 data-number="5">
+</section><section id="sec-multilevelModeration" class="level1" data-number="5"><h1 data-number="5">
 <span class="header-section-number">5</span> Multilevel Moderation</h1>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bayesianModerationSyntax</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html">bf</a></span><span class="op">(</span><span class="va">Y2</span> <span class="op">~</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">s</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">s</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">t2</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">M</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">bayesianModerationModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html">bf</a></span><span class="op">(</span><span class="va">Y2</span> <span class="op">~</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">s</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">s</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/s.html">t2</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">M</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bayesianModerationModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
 <span>  <span class="va">bayesianModerationSyntax</span>,</span>
 <span>  data  <span class="op">=</span> <span class="va">mydata</span>,</span>
 <span>  seed  <span class="op">=</span> <span class="fl">52242</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
-Chain 1: 
-Chain 1: Gradient evaluation took 0.000278 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.78 seconds.
-Chain 1: Adjust your expectations accordingly!
-Chain 1: 
-Chain 1: 
-Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 1: 
-Chain 1:  Elapsed Time: 265.481 seconds (Warm-up)
-Chain 1:                313.156 seconds (Sampling)
-Chain 1:                578.637 seconds (Total)
-Chain 1: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
-Chain 2: 
-Chain 2: Gradient evaluation took 0.000256 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.56 seconds.
-Chain 2: Adjust your expectations accordingly!
-Chain 2: 
-Chain 2: 
-Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 2: 
-Chain 2:  Elapsed Time: 183.071 seconds (Warm-up)
-Chain 2:                214.575 seconds (Sampling)
-Chain 2:                397.646 seconds (Total)
-Chain 2: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
-Chain 3: 
-Chain 3: Gradient evaluation took 0.000206 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.06 seconds.
-Chain 3: Adjust your expectations accordingly!
-Chain 3: 
-Chain 3: 
-Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 3: 
-Chain 3:  Elapsed Time: 173.219 seconds (Warm-up)
-Chain 3:                212.315 seconds (Sampling)
-Chain 3:                385.534 seconds (Total)
-Chain 3: 
-
-SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
-Chain 4: 
-Chain 4: Gradient evaluation took 0.000208 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 2.08 seconds.
-Chain 4: Adjust your expectations accordingly!
-Chain 4: 
-Chain 4: 
-Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-Chain 4: 
-Chain 4:  Elapsed Time: 169.007 seconds (Warm-up)
-Chain 4:                212.577 seconds (Sampling)
-Chain 4:                381.584 seconds (Total)
-Chain 4: </code></pre>
+</details>
 </div>
+<div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bayesianModerationModel</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
@@ -1662,7 +1468,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">hyp1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><a href="bayesian_files/figure-html/unnamed-chunk-32-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="bayesian_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></a></p>
+<figure class="figure"><p><a href="bayesian_files/figure-html/unnamed-chunk-36-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="bayesian_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1686,7 +1492,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">hyp2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><a href="bayesian_files/figure-html/unnamed-chunk-33-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="bayesian_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></a></p>
+<figure class="figure"><p><a href="bayesian_files/figure-html/unnamed-chunk-37-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="bayesian_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1732,8 +1538,8 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000217 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.17 seconds.
+Chain 1: Gradient evaluation took 0.000224 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1750,15 +1556,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 4.943 seconds (Warm-up)
-Chain 1:                3.659 seconds (Sampling)
-Chain 1:                8.602 seconds (Total)
+Chain 1:  Elapsed Time: 4.83 seconds (Warm-up)
+Chain 1:                3.611 seconds (Sampling)
+Chain 1:                8.441 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000147 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.47 seconds.
+Chain 2: Gradient evaluation took 0.000115 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.15 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1775,15 +1581,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 4.958 seconds (Warm-up)
-Chain 2:                2.12 seconds (Sampling)
-Chain 2:                7.078 seconds (Total)
+Chain 2:  Elapsed Time: 4.831 seconds (Warm-up)
+Chain 2:                2.073 seconds (Sampling)
+Chain 2:                6.904 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000153 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.53 seconds.
+Chain 1: Gradient evaluation took 0.000124 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1800,15 +1606,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 5.36 seconds (Warm-up)
-Chain 1:                3.675 seconds (Sampling)
-Chain 1:                9.035 seconds (Total)
+Chain 1:  Elapsed Time: 5.215 seconds (Warm-up)
+Chain 1:                3.592 seconds (Sampling)
+Chain 1:                8.807 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000116 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.16 seconds.
+Chain 2: Gradient evaluation took 0.000115 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.15 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1825,15 +1631,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 5.404 seconds (Warm-up)
-Chain 2:                1.859 seconds (Sampling)
-Chain 2:                7.263 seconds (Total)
+Chain 2:  Elapsed Time: 5.312 seconds (Warm-up)
+Chain 2:                1.83 seconds (Sampling)
+Chain 2:                7.142 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000141 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.41 seconds.
+Chain 1: Gradient evaluation took 0.000122 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.22 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1850,15 +1656,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 5.099 seconds (Warm-up)
-Chain 1:                3.681 seconds (Sampling)
-Chain 1:                8.78 seconds (Total)
+Chain 1:  Elapsed Time: 4.974 seconds (Warm-up)
+Chain 1:                3.594 seconds (Sampling)
+Chain 1:                8.568 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000117 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.17 seconds.
+Chain 2: Gradient evaluation took 0.000112 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.12 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1875,15 +1681,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 4.786 seconds (Warm-up)
-Chain 2:                3.735 seconds (Sampling)
-Chain 2:                8.521 seconds (Total)
+Chain 2:  Elapsed Time: 4.609 seconds (Warm-up)
+Chain 2:                3.614 seconds (Sampling)
+Chain 2:                8.223 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.00015 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.5 seconds.
+Chain 1: Gradient evaluation took 0.000123 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.23 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1900,15 +1706,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 5.136 seconds (Warm-up)
-Chain 1:                3.68 seconds (Sampling)
-Chain 1:                8.816 seconds (Total)
+Chain 1:  Elapsed Time: 5.038 seconds (Warm-up)
+Chain 1:                3.61 seconds (Sampling)
+Chain 1:                8.648 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000136 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.36 seconds.
+Chain 2: Gradient evaluation took 0.000113 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.13 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1925,15 +1731,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 4.999 seconds (Warm-up)
-Chain 2:                3.678 seconds (Sampling)
-Chain 2:                8.677 seconds (Total)
+Chain 2:  Elapsed Time: 4.887 seconds (Warm-up)
+Chain 2:                3.608 seconds (Sampling)
+Chain 2:                8.495 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.00017 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.7 seconds.
+Chain 1: Gradient evaluation took 0.000122 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.22 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -1950,15 +1756,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 5.266 seconds (Warm-up)
-Chain 1:                3.678 seconds (Sampling)
-Chain 1:                8.944 seconds (Total)
+Chain 1:  Elapsed Time: 5.131 seconds (Warm-up)
+Chain 1:                3.597 seconds (Sampling)
+Chain 1:                8.728 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000117 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.17 seconds.
+Chain 2: Gradient evaluation took 0.000113 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.13 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -1975,9 +1781,9 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 5.324 seconds (Warm-up)
-Chain 2:                2.596 seconds (Sampling)
-Chain 2:                7.92 seconds (Total)
+Chain 2:  Elapsed Time: 5.176 seconds (Warm-up)
+Chain 2:                2.53 seconds (Sampling)
+Chain 2:                7.706 seconds (Total)
 Chain 2: </code></pre>
 </div>
 </div>
@@ -2004,8 +1810,8 @@ Chain 2: </code></pre>
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 0.000518 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.18 seconds.
+Chain 1: Gradient evaluation took 0.000589 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.89 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2022,15 +1828,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 19.378 seconds (Warm-up)
-Chain 1:                13.521 seconds (Sampling)
-Chain 1:                32.899 seconds (Total)
+Chain 1:  Elapsed Time: 19.115 seconds (Warm-up)
+Chain 1:                13.293 seconds (Sampling)
+Chain 1:                32.408 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 0.000429 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.29 seconds.
+Chain 2: Gradient evaluation took 0.000409 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.09 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -2047,15 +1853,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 21.069 seconds (Warm-up)
-Chain 2:                13.496 seconds (Sampling)
-Chain 2:                34.565 seconds (Total)
+Chain 2:  Elapsed Time: 20.782 seconds (Warm-up)
+Chain 2:                13.294 seconds (Sampling)
+Chain 2:                34.076 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 0.000434 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 4.34 seconds.
+Chain 3: Gradient evaluation took 0.000417 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 4.17 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -2072,15 +1878,15 @@ Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 21.649 seconds (Warm-up)
-Chain 3:                13.52 seconds (Sampling)
-Chain 3:                35.169 seconds (Total)
+Chain 3:  Elapsed Time: 21.37 seconds (Warm-up)
+Chain 3:                13.327 seconds (Sampling)
+Chain 3:                34.697 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 0.00043 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 4.3 seconds.
+Chain 4: Gradient evaluation took 0.000412 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 4.12 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -2097,9 +1903,9 @@ Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 19.668 seconds (Warm-up)
-Chain 4:                13.505 seconds (Sampling)
-Chain 4:                33.173 seconds (Total)
+Chain 4:  Elapsed Time: 19.445 seconds (Warm-up)
+Chain 4:                13.295 seconds (Sampling)
+Chain 4:                32.74 seconds (Total)
 Chain 4: </code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bayesianRegressionModel</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3018,199 +2824,212 @@ loaded via a namespace (and not attached):
 <span id="cb92-308"><a href="#cb92-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">~</span> X <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
 <span id="cb92-309"><a href="#cb92-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">~</span> X <span class="sc">+</span> M <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
 <span id="cb92-310"><a href="#cb92-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between M and Y</span></span>
-<span id="cb92-311"><a href="#cb92-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-312"><a href="#cb92-312" aria-hidden="true" tabindex="-1"></a>bayesianMediationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb92-313"><a href="#cb92-313" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
-<span id="cb92-314"><a href="#cb92-314" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
-<span id="cb92-315"><a href="#cb92-315" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb92-316"><a href="#cb92-316" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-311"><a href="#cb92-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-312"><a href="#cb92-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-315"><a href="#cb92-315" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-316"><a href="#cb92-316" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb92-317"><a href="#cb92-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-318"><a href="#cb92-318" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianMediationModel)</span>
-<span id="cb92-319"><a href="#cb92-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-320"><a href="#cb92-320" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
-<span id="cb92-321"><a href="#cb92-321" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
-<span id="cb92-322"><a href="#cb92-322" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
-<span id="cb92-323"><a href="#cb92-323" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb92-318"><a href="#cb92-318" aria-hidden="true" tabindex="-1"></a>bayesianMediationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb92-319"><a href="#cb92-319" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
+<span id="cb92-320"><a href="#cb92-320" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
+<span id="cb92-321"><a href="#cb92-321" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb92-322"><a href="#cb92-322" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-323"><a href="#cb92-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb92-324"><a href="#cb92-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-325"><a href="#cb92-325" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianMediationModel)</span>
-<span id="cb92-326"><a href="#cb92-326" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianMediationModel)</span>
-<span id="cb92-327"><a href="#cb92-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-328"><a href="#cb92-328" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
-<span id="cb92-329"><a href="#cb92-329" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
-<span id="cb92-330"><a href="#cb92-330" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
-<span id="cb92-331"><a href="#cb92-331" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
-<span id="cb92-332"><a href="#cb92-332" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span>  <span class="dv">52242</span></span>
-<span id="cb92-333"><a href="#cb92-333" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-327"><a href="#cb92-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-328"><a href="#cb92-328" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianMediationModel)</span>
+<span id="cb92-329"><a href="#cb92-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-330"><a href="#cb92-330" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
+<span id="cb92-331"><a href="#cb92-331" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
+<span id="cb92-332"><a href="#cb92-332" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
+<span id="cb92-333"><a href="#cb92-333" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
 <span id="cb92-334"><a href="#cb92-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-335"><a href="#cb92-335" aria-hidden="true" tabindex="-1"></a><span class="fu">mediation</span>(bayesianMediationModel)</span>
-<span id="cb92-336"><a href="#cb92-336" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-335"><a href="#cb92-335" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianMediationModel)</span>
+<span id="cb92-336"><a href="#cb92-336" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianMediationModel)</span>
 <span id="cb92-337"><a href="#cb92-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-338"><a href="#cb92-338" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Moderation</span></span>
-<span id="cb92-339"><a href="#cb92-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-342"><a href="#cb92-342" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-343"><a href="#cb92-343" aria-hidden="true" tabindex="-1"></a>bayesianModerationSyntax <span class="ot">&lt;-</span></span>
-<span id="cb92-344"><a href="#cb92-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y2 <span class="sc">~</span> <span class="fu">s</span>(X) <span class="sc">+</span> <span class="fu">s</span>(M) <span class="sc">+</span> <span class="fu">t2</span>(X, M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id))</span>
-<span id="cb92-345"><a href="#cb92-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-346"><a href="#cb92-346" aria-hidden="true" tabindex="-1"></a>bayesianModerationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb92-347"><a href="#cb92-347" aria-hidden="true" tabindex="-1"></a>  bayesianModerationSyntax,</span>
-<span id="cb92-348"><a href="#cb92-348" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
-<span id="cb92-349"><a href="#cb92-349" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb92-350"><a href="#cb92-350" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb92-351"><a href="#cb92-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-352"><a href="#cb92-352" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianModerationModel)</span>
-<span id="cb92-353"><a href="#cb92-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-354"><a href="#cb92-354" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
-<span id="cb92-355"><a href="#cb92-355" aria-hidden="true" tabindex="-1"></a>  bayesianModerationModel,</span>
-<span id="cb92-356"><a href="#cb92-356" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
-<span id="cb92-357"><a href="#cb92-357" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb92-358"><a href="#cb92-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-359"><a href="#cb92-359" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianModerationModel)</span>
-<span id="cb92-360"><a href="#cb92-360" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianModerationModel)</span>
-<span id="cb92-361"><a href="#cb92-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-338"><a href="#cb92-338" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
+<span id="cb92-339"><a href="#cb92-339" aria-hidden="true" tabindex="-1"></a>  bayesianMediationModel,</span>
+<span id="cb92-340"><a href="#cb92-340" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b_M_X * b_Y_M = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span id="cb92-341"><a href="#cb92-341" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
+<span id="cb92-342"><a href="#cb92-342" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span>  <span class="dv">52242</span></span>
+<span id="cb92-343"><a href="#cb92-343" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-344"><a href="#cb92-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-345"><a href="#cb92-345" aria-hidden="true" tabindex="-1"></a><span class="fu">mediation</span>(bayesianMediationModel)</span>
+<span id="cb92-346"><a href="#cb92-346" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-347"><a href="#cb92-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-348"><a href="#cb92-348" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Moderation {#sec-multilevelModeration}</span></span>
+<span id="cb92-349"><a href="#cb92-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-352"><a href="#cb92-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-353"><a href="#cb92-353" aria-hidden="true" tabindex="-1"></a>bayesianModerationSyntax <span class="ot">&lt;-</span></span>
+<span id="cb92-354"><a href="#cb92-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y2 <span class="sc">~</span> <span class="fu">s</span>(X) <span class="sc">+</span> <span class="fu">s</span>(M) <span class="sc">+</span> <span class="fu">t2</span>(X, M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id))</span>
+<span id="cb92-355"><a href="#cb92-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-356"><a href="#cb92-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-357"><a href="#cb92-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-360"><a href="#cb92-360" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-361"><a href="#cb92-361" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb92-362"><a href="#cb92-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-363"><a href="#cb92-363" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Priors</span></span>
-<span id="cb92-364"><a href="#cb92-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-365"><a href="#cb92-365" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameters for Which to Set Priors</span></span>
-<span id="cb92-366"><a href="#cb92-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-369"><a href="#cb92-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-370"><a href="#cb92-370" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(</span>
-<span id="cb92-371"><a href="#cb92-371" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb92-372"><a href="#cb92-372" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy)</span>
-<span id="cb92-373"><a href="#cb92-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-363"><a href="#cb92-363" aria-hidden="true" tabindex="-1"></a>bayesianModerationModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb92-364"><a href="#cb92-364" aria-hidden="true" tabindex="-1"></a>  bayesianModerationSyntax,</span>
+<span id="cb92-365"><a href="#cb92-365" aria-hidden="true" tabindex="-1"></a>  <span class="at">data  =</span> mydata,</span>
+<span id="cb92-366"><a href="#cb92-366" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb92-367"><a href="#cb92-367" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-368"><a href="#cb92-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-369"><a href="#cb92-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-372"><a href="#cb92-372" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-373"><a href="#cb92-373" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianModerationModel)</span>
 <span id="cb92-374"><a href="#cb92-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-375"><a href="#cb92-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Define Priors</span></span>
-<span id="cb92-376"><a href="#cb92-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-379"><a href="#cb92-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-380"><a href="#cb92-380" aria-hidden="true" tabindex="-1"></a>bprior <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb92-381"><a href="#cb92-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"normal(5, 5)"</span>, <span class="at">coef =</span> <span class="st">"Days"</span>),</span>
-<span id="cb92-382"><a href="#cb92-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"cauchy(0, 10)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>),</span>
-<span id="cb92-383"><a href="#cb92-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"lkj(2)"</span>, <span class="at">class =</span> <span class="st">"cor"</span>))</span>
-<span id="cb92-384"><a href="#cb92-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-385"><a href="#cb92-385" aria-hidden="true" tabindex="-1"></a>bprior</span>
-<span id="cb92-386"><a href="#cb92-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-375"><a href="#cb92-375" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
+<span id="cb92-376"><a href="#cb92-376" aria-hidden="true" tabindex="-1"></a>  bayesianModerationModel,</span>
+<span id="cb92-377"><a href="#cb92-377" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
+<span id="cb92-378"><a href="#cb92-378" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb92-379"><a href="#cb92-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-380"><a href="#cb92-380" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianModerationModel)</span>
+<span id="cb92-381"><a href="#cb92-381" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianModerationModel)</span>
+<span id="cb92-382"><a href="#cb92-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-383"><a href="#cb92-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-384"><a href="#cb92-384" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Priors</span></span>
+<span id="cb92-385"><a href="#cb92-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-386"><a href="#cb92-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameters for Which to Set Priors</span></span>
 <span id="cb92-387"><a href="#cb92-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-388"><a href="#cb92-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Model</span></span>
-<span id="cb92-389"><a href="#cb92-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-390"><a href="#cb92-390" aria-hidden="true" tabindex="-1"></a>Fit the model with these priors, and sample from these priors:</span>
-<span id="cb92-391"><a href="#cb92-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-394"><a href="#cb92-394" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-395"><a href="#cb92-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb92-396"><a href="#cb92-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-397"><a href="#cb92-397" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb92-398"><a href="#cb92-398" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb92-399"><a href="#cb92-399" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb92-400"><a href="#cb92-400" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
-<span id="cb92-401"><a href="#cb92-401" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb92-402"><a href="#cb92-402" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb92-403"><a href="#cb92-403" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb92-404"><a href="#cb92-404" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-390"><a href="#cb92-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-391"><a href="#cb92-391" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(</span>
+<span id="cb92-392"><a href="#cb92-392" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb92-393"><a href="#cb92-393" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy)</span>
+<span id="cb92-394"><a href="#cb92-394" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-395"><a href="#cb92-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-396"><a href="#cb92-396" aria-hidden="true" tabindex="-1"></a><span class="fu">## Define Priors</span></span>
+<span id="cb92-397"><a href="#cb92-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-400"><a href="#cb92-400" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-401"><a href="#cb92-401" aria-hidden="true" tabindex="-1"></a>bprior <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb92-402"><a href="#cb92-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"normal(5, 5)"</span>, <span class="at">coef =</span> <span class="st">"Days"</span>),</span>
+<span id="cb92-403"><a href="#cb92-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"cauchy(0, 10)"</span>, <span class="at">class =</span> <span class="st">"sd"</span>),</span>
+<span id="cb92-404"><a href="#cb92-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_prior</span>(<span class="st">"lkj(2)"</span>, <span class="at">class =</span> <span class="st">"cor"</span>))</span>
 <span id="cb92-405"><a href="#cb92-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-406"><a href="#cb92-406" aria-hidden="true" tabindex="-1"></a><span class="fu"># Evaluate a Hypothesis</span></span>
-<span id="cb92-407"><a href="#cb92-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-410"><a href="#cb92-410" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-411"><a href="#cb92-411" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the ratio of P(Days &gt; 7) / P(Days &lt;= 7)</span></span>
-<span id="cb92-412"><a href="#cb92-412" aria-hidden="true" tabindex="-1"></a>(hyp1 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days &lt; 7"</span>))</span>
-<span id="cb92-413"><a href="#cb92-413" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp1)</span>
-<span id="cb92-414"><a href="#cb92-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-415"><a href="#cb92-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-418"><a href="#cb92-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-419"><a href="#cb92-419" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the Bayes Factor of the posterior</span></span>
-<span id="cb92-420"><a href="#cb92-420" aria-hidden="true" tabindex="-1"></a><span class="co"># vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)</span></span>
-<span id="cb92-421"><a href="#cb92-421" aria-hidden="true" tabindex="-1"></a>(hyp2 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days = 10"</span>))</span>
-<span id="cb92-422"><a href="#cb92-422" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp2)</span>
-<span id="cb92-423"><a href="#cb92-423" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-424"><a href="#cb92-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-425"><a href="#cb92-425" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parallel Processing</span></span>
+<span id="cb92-406"><a href="#cb92-406" aria-hidden="true" tabindex="-1"></a>bprior</span>
+<span id="cb92-407"><a href="#cb92-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-408"><a href="#cb92-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-409"><a href="#cb92-409" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit the Model</span></span>
+<span id="cb92-410"><a href="#cb92-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-411"><a href="#cb92-411" aria-hidden="true" tabindex="-1"></a>Fit the model with these priors, and sample from these priors:</span>
+<span id="cb92-412"><a href="#cb92-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-415"><a href="#cb92-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-416"><a href="#cb92-416" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb92-417"><a href="#cb92-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-418"><a href="#cb92-418" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb92-419"><a href="#cb92-419" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb92-420"><a href="#cb92-420" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb92-421"><a href="#cb92-421" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
+<span id="cb92-422"><a href="#cb92-422" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb92-423"><a href="#cb92-423" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb92-424"><a href="#cb92-424" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-425"><a href="#cb92-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb92-426"><a href="#cb92-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-427"><a href="#cb92-427" aria-hidden="true" tabindex="-1"></a><span class="fu">## Between-Chain Parallelization</span></span>
+<span id="cb92-427"><a href="#cb92-427" aria-hidden="true" tabindex="-1"></a><span class="fu"># Evaluate a Hypothesis</span></span>
 <span id="cb92-428"><a href="#cb92-428" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb92-431"><a href="#cb92-431" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-432"><a href="#cb92-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb92-433"><a href="#cb92-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-434"><a href="#cb92-434" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb92-435"><a href="#cb92-435" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
-<span id="cb92-436"><a href="#cb92-436" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
-<span id="cb92-437"><a href="#cb92-437" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
-<span id="cb92-438"><a href="#cb92-438" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb92-439"><a href="#cb92-439" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb92-440"><a href="#cb92-440" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
-<span id="cb92-441"><a href="#cb92-441" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb92-442"><a href="#cb92-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-443"><a href="#cb92-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-444"><a href="#cb92-444" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Chain Parallelization</span></span>
+<span id="cb92-432"><a href="#cb92-432" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the ratio of P(Days &gt; 7) / P(Days &lt;= 7)</span></span>
+<span id="cb92-433"><a href="#cb92-433" aria-hidden="true" tabindex="-1"></a>(hyp1 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days &lt; 7"</span>))</span>
+<span id="cb92-434"><a href="#cb92-434" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp1)</span>
+<span id="cb92-435"><a href="#cb92-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-436"><a href="#cb92-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-439"><a href="#cb92-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-440"><a href="#cb92-440" aria-hidden="true" tabindex="-1"></a><span class="co"># Evid.Ratio is the Bayes Factor of the posterior</span></span>
+<span id="cb92-441"><a href="#cb92-441" aria-hidden="true" tabindex="-1"></a><span class="co"># vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)</span></span>
+<span id="cb92-442"><a href="#cb92-442" aria-hidden="true" tabindex="-1"></a>(hyp2 <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(fit_sleep4, <span class="st">"Days = 10"</span>))</span>
+<span id="cb92-443"><a href="#cb92-443" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hyp2)</span>
+<span id="cb92-444"><a href="#cb92-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb92-445"><a href="#cb92-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-446"><a href="#cb92-446" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_threading.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/NCG3-KV4G&gt;</span>)</span>
+<span id="cb92-446"><a href="#cb92-446" aria-hidden="true" tabindex="-1"></a><span class="fu"># Parallel Processing</span></span>
 <span id="cb92-447"><a href="#cb92-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-448"><a href="#cb92-448" aria-hidden="true" tabindex="-1"></a><span class="fu"># Missing Data Handling</span></span>
+<span id="cb92-448"><a href="#cb92-448" aria-hidden="true" tabindex="-1"></a><span class="fu">## Between-Chain Parallelization</span></span>
 <span id="cb92-449"><a href="#cb92-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-450"><a href="#cb92-450" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiply Imputed Datasets from `mice`</span></span>
-<span id="cb92-451"><a href="#cb92-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-454"><a href="#cb92-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-455"><a href="#cb92-455" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb92-456"><a href="#cb92-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-457"><a href="#cb92-457" aria-hidden="true" tabindex="-1"></a>?brm_multiple</span>
-<span id="cb92-458"><a href="#cb92-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-459"><a href="#cb92-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-462"><a href="#cb92-462" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-463"><a href="#cb92-463" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">mice</span>(</span>
-<span id="cb92-464"><a href="#cb92-464" aria-hidden="true" tabindex="-1"></a>  mydata,</span>
-<span id="cb92-465"><a href="#cb92-465" aria-hidden="true" tabindex="-1"></a>  <span class="at">m =</span> <span class="dv">5</span>,</span>
-<span id="cb92-466"><a href="#cb92-466" aria-hidden="true" tabindex="-1"></a>  <span class="at">print =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb92-467"><a href="#cb92-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-468"><a href="#cb92-468" aria-hidden="true" tabindex="-1"></a>fit_imp <span class="ot">&lt;-</span> <span class="fu">brm_multiple</span>(</span>
-<span id="cb92-469"><a href="#cb92-469" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
-<span id="cb92-470"><a href="#cb92-470" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> imp,</span>
-<span id="cb92-471"><a href="#cb92-471" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>)</span>
-<span id="cb92-472"><a href="#cb92-472" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-473"><a href="#cb92-473" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-474"><a href="#cb92-474" aria-hidden="true" tabindex="-1"></a><span class="fu">## Imputation on the Fly During Model Fitting</span></span>
-<span id="cb92-475"><a href="#cb92-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-476"><a href="#cb92-476" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_missings.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/4Y9L-USQR&gt;</span>)</span>
+<span id="cb92-452"><a href="#cb92-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-453"><a href="#cb92-453" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb92-454"><a href="#cb92-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-455"><a href="#cb92-455" aria-hidden="true" tabindex="-1"></a>fit_sleep4 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb92-456"><a href="#cb92-456" aria-hidden="true" tabindex="-1"></a>  Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), </span>
+<span id="cb92-457"><a href="#cb92-457" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sleepstudy,</span>
+<span id="cb92-458"><a href="#cb92-458" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> bprior, </span>
+<span id="cb92-459"><a href="#cb92-459" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb92-460"><a href="#cb92-460" aria-hidden="true" tabindex="-1"></a>  <span class="at">cores =</span> <span class="dv">4</span>,</span>
+<span id="cb92-461"><a href="#cb92-461" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed  =</span> <span class="dv">52242</span></span>
+<span id="cb92-462"><a href="#cb92-462" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-463"><a href="#cb92-463" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-464"><a href="#cb92-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-465"><a href="#cb92-465" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Chain Parallelization</span></span>
+<span id="cb92-466"><a href="#cb92-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-467"><a href="#cb92-467" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_threading.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/NCG3-KV4G&gt;</span>)</span>
+<span id="cb92-468"><a href="#cb92-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-469"><a href="#cb92-469" aria-hidden="true" tabindex="-1"></a><span class="fu"># Missing Data Handling</span></span>
+<span id="cb92-470"><a href="#cb92-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-471"><a href="#cb92-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiply Imputed Datasets from `mice`</span></span>
+<span id="cb92-472"><a href="#cb92-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-475"><a href="#cb92-475" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-476"><a href="#cb92-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb92-477"><a href="#cb92-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-480"><a href="#cb92-480" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-481"><a href="#cb92-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb92-482"><a href="#cb92-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-483"><a href="#cb92-483" aria-hidden="true" tabindex="-1"></a>?mi</span>
-<span id="cb92-484"><a href="#cb92-484" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-485"><a href="#cb92-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-488"><a href="#cb92-488" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-489"><a href="#cb92-489" aria-hidden="true" tabindex="-1"></a>bayesianRegressionImputationSyntax <span class="ot">&lt;-</span></span>
-<span id="cb92-490"><a href="#cb92-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(X <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb92-491"><a href="#cb92-491" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb92-492"><a href="#cb92-492" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> <span class="fu">mi</span>(M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
-<span id="cb92-493"><a href="#cb92-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between X, M, and Y</span></span>
+<span id="cb92-478"><a href="#cb92-478" aria-hidden="true" tabindex="-1"></a>?brm_multiple</span>
+<span id="cb92-479"><a href="#cb92-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-480"><a href="#cb92-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-483"><a href="#cb92-483" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-484"><a href="#cb92-484" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> mice<span class="sc">::</span><span class="fu">mice</span>(</span>
+<span id="cb92-485"><a href="#cb92-485" aria-hidden="true" tabindex="-1"></a>  mydata,</span>
+<span id="cb92-486"><a href="#cb92-486" aria-hidden="true" tabindex="-1"></a>  <span class="at">m =</span> <span class="dv">5</span>,</span>
+<span id="cb92-487"><a href="#cb92-487" aria-hidden="true" tabindex="-1"></a>  <span class="at">print =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb92-488"><a href="#cb92-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-489"><a href="#cb92-489" aria-hidden="true" tabindex="-1"></a>fit_imp <span class="ot">&lt;-</span> <span class="fu">brm_multiple</span>(</span>
+<span id="cb92-490"><a href="#cb92-490" aria-hidden="true" tabindex="-1"></a>  bayesianMediationSyntax,</span>
+<span id="cb92-491"><a href="#cb92-491" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> imp,</span>
+<span id="cb92-492"><a href="#cb92-492" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>)</span>
+<span id="cb92-493"><a href="#cb92-493" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb92-494"><a href="#cb92-494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-495"><a href="#cb92-495" aria-hidden="true" tabindex="-1"></a>bayesianRegressionModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb92-496"><a href="#cb92-496" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionImputationSyntax,</span>
-<span id="cb92-497"><a href="#cb92-497" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
-<span id="cb92-498"><a href="#cb92-498" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
-<span id="cb92-499"><a href="#cb92-499" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb92-500"><a href="#cb92-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-501"><a href="#cb92-501" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianRegressionModel)</span>
-<span id="cb92-502"><a href="#cb92-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-503"><a href="#cb92-503" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
-<span id="cb92-504"><a href="#cb92-504" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
-<span id="cb92-505"><a href="#cb92-505" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
-<span id="cb92-506"><a href="#cb92-506" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb92-507"><a href="#cb92-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-508"><a href="#cb92-508" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianRegressionModel)</span>
-<span id="cb92-509"><a href="#cb92-509" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianRegressionModel)</span>
-<span id="cb92-510"><a href="#cb92-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-511"><a href="#cb92-511" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
-<span id="cb92-512"><a href="#cb92-512" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
-<span id="cb92-513"><a href="#cb92-513" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
-<span id="cb92-514"><a href="#cb92-514" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
-<span id="cb92-515"><a href="#cb92-515" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
-<span id="cb92-516"><a href="#cb92-516" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb92-517"><a href="#cb92-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb92-518"><a href="#cb92-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-519"><a href="#cb92-519" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb92-520"><a href="#cb92-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-523"><a href="#cb92-523" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb92-524"><a href="#cb92-524" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb92-525"><a href="#cb92-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-526"><a href="#cb92-526" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb92-527"><a href="#cb92-527" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-495"><a href="#cb92-495" aria-hidden="true" tabindex="-1"></a><span class="fu">## Imputation on the Fly During Model Fitting</span></span>
+<span id="cb92-496"><a href="#cb92-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-497"><a href="#cb92-497" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://paul-buerkner.github.io/brms/articles/brms_missings.html&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/4Y9L-USQR&gt;</span>)</span>
+<span id="cb92-498"><a href="#cb92-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-501"><a href="#cb92-501" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-502"><a href="#cb92-502" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb92-503"><a href="#cb92-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-504"><a href="#cb92-504" aria-hidden="true" tabindex="-1"></a>?mi</span>
+<span id="cb92-505"><a href="#cb92-505" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-506"><a href="#cb92-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-509"><a href="#cb92-509" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-510"><a href="#cb92-510" aria-hidden="true" tabindex="-1"></a>bayesianRegressionImputationSyntax <span class="ot">&lt;-</span></span>
+<span id="cb92-511"><a href="#cb92-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(X <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb92-512"><a href="#cb92-512" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(M <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb92-513"><a href="#cb92-513" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bf</span>(Y <span class="sc">|</span> <span class="fu">mi</span>() <span class="sc">~</span> <span class="fu">mi</span>(X) <span class="sc">+</span> <span class="fu">mi</span>(M) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>i<span class="sc">|</span> id)) <span class="sc">+</span></span>
+<span id="cb92-514"><a href="#cb92-514" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_rescor</span>(<span class="cn">FALSE</span>) <span class="co"># don't add a residual correlation between X, M, and Y</span></span>
+<span id="cb92-515"><a href="#cb92-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-516"><a href="#cb92-516" aria-hidden="true" tabindex="-1"></a>bayesianRegressionModel <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb92-517"><a href="#cb92-517" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionImputationSyntax,</span>
+<span id="cb92-518"><a href="#cb92-518" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mydata,</span>
+<span id="cb92-519"><a href="#cb92-519" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
+<span id="cb92-520"><a href="#cb92-520" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-521"><a href="#cb92-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-522"><a href="#cb92-522" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bayesianRegressionModel)</span>
+<span id="cb92-523"><a href="#cb92-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-524"><a href="#cb92-524" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(</span>
+<span id="cb92-525"><a href="#cb92-525" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
+<span id="cb92-526"><a href="#cb92-526" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"posthoc"</span>),</span>
+<span id="cb92-527"><a href="#cb92-527" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb92-528"><a href="#cb92-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-529"><a href="#cb92-529" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">model_performance</span>(bayesianRegressionModel)</span>
+<span id="cb92-530"><a href="#cb92-530" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(bayesianRegressionModel)</span>
+<span id="cb92-531"><a href="#cb92-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-532"><a href="#cb92-532" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(</span>
+<span id="cb92-533"><a href="#cb92-533" aria-hidden="true" tabindex="-1"></a>  bayesianRegressionModel,</span>
+<span id="cb92-534"><a href="#cb92-534" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bsp_M_miX * bsp_Y_miM = 0"</span>, <span class="co"># indirect effect = a path * b path</span></span>
+<span id="cb92-535"><a href="#cb92-535" aria-hidden="true" tabindex="-1"></a>  <span class="at">class =</span> <span class="cn">NULL</span>,</span>
+<span id="cb92-536"><a href="#cb92-536" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">52242</span></span>
+<span id="cb92-537"><a href="#cb92-537" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-538"><a href="#cb92-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb92-539"><a href="#cb92-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-540"><a href="#cb92-540" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb92-541"><a href="#cb92-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-544"><a href="#cb92-544" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb92-545"><a href="#cb92-545" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb92-546"><a href="#cb92-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-547"><a href="#cb92-547" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb92-548"><a href="#cb92-548" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
