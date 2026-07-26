@@ -405,6 +405,10 @@ imp <- mice::mice(
   mydata,
   m = 5,
   print = FALSE)
+```
+
+```{r}
+#| output: false
 
 fit_imp <- brm_multiple(
   bayesianMediationSyntax,
@@ -428,13 +432,19 @@ bayesianRegressionImputationSyntax <-
   bf(M | mi() ~ mi(X) + (1 |i| id)) +
   bf(Y | mi() ~ mi(X) + mi(M) + (1 |i| id)) +
   set_rescor(FALSE) # don't add a residual correlation between X, M, and Y
+```
+
+```{r}
+#| output: false
 
 bayesianRegressionModel <- brm(
   bayesianRegressionImputationSyntax,
   data = mydata,
   seed = 52242
 )
+```
 
+```{r}
 summary(bayesianRegressionModel)
 
 print(effectsize::standardize_parameters(
