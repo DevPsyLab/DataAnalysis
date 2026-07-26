@@ -24,6 +24,7 @@ library("mirt")
 library("plink")
 library("rstan")
 library("brms")
+library("parallelly")
 library("easystats")
 library("kableExtra")
 library("tidyverse")
@@ -1066,3 +1067,79 @@ cat("recovered mean growth T1->T3 (true = 1.0):\n",
 ```
 
 ### Bayesian
+
+```{r}
+formula_grm <- brms::bf(
+  response ~ beta + exp(alpha) * theta,
+  theta ~ 0 + timeCentered + (1 + timeCentered | idFactor),   # person parameter
+  beta ~ 1 + timeCentered + (1 + timeCentered | itemFactor),  # item parameter: easiness
+  alpha ~ 1 + timeCentered + (1 + timeCentered | itemFactor), # item parameter: discrimination
+  nl = TRUE
+)
+
+modelPriors <- c(
+  prior(constant(1), class = "sd", group = "idFactor", nlpar = "theta")
+)
+
+# Parallel Processing
+rstan_options(auto_write = TRUE)
+
+fallback <- parallel::detectCores()
+NSLOTS <- as.integer(Sys.getenv("NSLOTS"))
+if(is.na(NSLOTS)) NSLOTS <- fallback
+options(mc.cores = NSLOTS)
+
+print("Slots:")
+print(as.integer(Sys.getenv("NSLOTS")))
+
+print("Cores:")
+print(parallel::detectCores())
+print(parallelly::availableCores())
+```
+
+```{r}
+#| eval: false
+
+fit_grm <- brms::brm(
+  formula = formula_grm,
+  data = dat_long,
+  family = brmsfamily("cumulative", "logit"),
+  prior = modelPriors,
+  iter = 2000, # takes a long time to fit
+  cores = 4,
+  threads = threading(parallelly::availableCores()),
+  seed = 52242,
+  silent = 0
+)
+```
+
+```{r}
+#| include: false
+#| eval: false
+
+save(
+  fit_grm,
+  "fit_grm.rdata"
+)
+```
+
+```{r}
+#| include: false
+#| eval: false
+
+load("fit_grm.rdata")
+```
+
+```{r}
+#| eval: false
+
+summary(fit_grm)
+
+print(effectsize::standardize_parameters(
+  fit_grm,
+  method = "posthoc"),
+  digits = 2)
+
+performance::model_performance(fit_grm)
+performance::r2(fit_grm)
+```
