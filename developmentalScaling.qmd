@@ -24,6 +24,7 @@ library("mirt")
 library("plink")
 library("rstan")
 library("brms")
+library("easystats")
 library("kableExtra")
 library("tidyverse")
 ```
@@ -154,6 +155,16 @@ dat_long <- dat_concurrent |>
     response = factor(response, ordered = TRUE)
   ) |>
   arrange(id, timepoint, item)
+
+dat_long$time <- NA
+dat_long$time[which(dat_long$timepoint == "T1")] <- 1
+dat_long$time[which(dat_long$timepoint == "T2")] <- 2
+dat_long$time[which(dat_long$timepoint == "T3")] <- 3
+
+dat_long$timeCentered <- dat_long$time - 2
+
+dat_long$idFactor <- factor(dat_long$id)
+dat_long$itemFactor <- factor(dat_long$item)
 ```
 
 # Approaches
