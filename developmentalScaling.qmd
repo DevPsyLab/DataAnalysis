@@ -20,11 +20,13 @@ library("semPlot")
 library("lavaanPlot")
 library("lavaangui")
 library("sirt")
+library("mirt")
+library("plink")
 library("kableExtra")
 library("tidyverse")
 ```
 
-## Import data
+## Import Data
 
 ```{r}
 mydata_wide <- read.csv("./data/Bliese-Ployhart-2002-indicators-4.csv")
@@ -44,6 +46,93 @@ mydata_wide$down3 <- mydata_wide$JOBSAT32
 mydata_wide$depressed1 <- mydata_wide$JOBSAT13
 mydata_wide$depressed2 <- mydata_wide$JOBSAT23
 mydata_wide$depressed3 <- mydata_wide$JOBSAT33
+```
+
+## Simulate Data
+
+```{r}
+set.seed(52242)
+
+# ---- GRM response generator -------------------------------------------------
+# theta : vector of person abilities
+# a     : item discrimination (scalar)
+# b     : vector of category thresholds, increasing (length = n categories - 1)
+# returns integer responses coded 0 .. (n categories - 1)
+sim_grm_item <- function(theta, a, b) {
+  K <- length(b) + 1
+  n <- length(theta)
+  cumP <- matrix(NA_real_, n, K + 1)
+  cumP[, 1] <- 1                                          # P(Y >= 0) = 1
+  for (k in 1:(K - 1)) cumP[, k + 1] <- 1 / (1 + exp(-a * (theta - b[k])))
+  cumP[, K + 1] <- 0                                       # P(Y >= K) = 0
+  catP <- cumP[, 1:K] - cumP[, 2:(K + 1)]                  # category probabilities
+  apply(catP, 1, function(p) sample.int(K, size = 1, prob = pmax(p, 1e-8))) - 1L
+}
+
+n_cat    <- 4     # every item has 4 ordered categories (3 thresholds)
+n_unique <- 8     # unique ("age-specific") items at each timepoint
+n_common <- 6     # common ("anchor") items linking each ADJACENT pair of timepoints
+N        <- 1200  # independent sample size at each timepoint
+
+# true item parameters: a ~ U(0.8, 2), three increasing thresholds
+make_params <- function(n_items) {
+  a   <- round(runif(n_items, 0.8, 2.0), 2)
+  b1  <- round(rnorm(n_items, -1.0, 0.5), 2)
+  gap <- matrix(round(runif(n_items * 2, 0.5, 1.2), 2), n_items, 2)
+  b   <- cbind(b1, b1 + gap[, 1], b1 + gap[, 1] + gap[, 2])
+  list(a = a, b = b)
+}
+
+U1  <- make_params(n_unique)   # unique to T1
+U2  <- make_params(n_unique)   # unique to T2
+U3  <- make_params(n_unique)   # unique to T3
+C12 <- make_params(n_common)   # anchor items shared by T1 & T2 (SAME true params both times)
+C23 <- make_params(n_common)   # anchor items shared by T2 & T3
+
+item_names_T1 <- c(paste0("U1_",  1:n_unique), paste0("C12_", 1:n_common))
+item_names_T2 <- c(paste0("C12_", 1:n_common), paste0("U2_",  1:n_unique), paste0("C23_", 1:n_common))
+item_names_T3 <- c(paste0("C23_", 1:n_common), paste0("U3_",  1:n_unique))
+
+gen_data <- function(theta, names, params_list) {
+  out <- matrix(NA_integer_, length(theta), length(names), dimnames = list(NULL, names))
+  idx <- 1
+  for (p in params_list) {
+    for (j in seq_along(p$a)) {
+      out[, idx] <- sim_grm_item(theta, p$a[j], p$b[j, ])
+      idx <- idx + 1
+    }
+  }
+  out
+}
+
+# true theta distributions -- shifted upward across timepoints
+theta1_true <- rnorm(N, -0.5, 1)
+theta2_true <- rnorm(N,  0.0, 1)
+theta3_true <- rnorm(N,  0.5, 1)
+
+dat1 <- gen_data(theta1_true, item_names_T1, list(U1, C12))
+dat2 <- gen_data(theta2_true, item_names_T2, list(C12, U2, C23))
+dat3 <- gen_data(theta3_true, item_names_T3, list(C23, U3))
+
+dat1 <- as.data.frame(dat1); dat2 <- as.data.frame(dat2); dat3 <- as.data.frame(dat3)
+
+# prepare data for concurrent calibration
+all_items <- union(union(colnames(dat1), colnames(dat2)), colnames(dat3))
+
+make_wide <- function(dat, all_items) {
+  out <- matrix(NA_integer_, nrow(dat), length(all_items), dimnames = list(NULL, all_items))
+  out[, colnames(dat)] <- as.matrix(dat)
+  as.data.frame(out)
+}
+
+dat_concurrent <- rbind(
+  make_wide(dat1, all_items),
+  make_wide(dat2, all_items),
+  make_wide(dat3, all_items))
+
+group <- factor(
+  rep(c("T1", "T2", "T3"), each = N),
+  levels = c("T1", "T2", "T3"))
 ```
 
 # Approaches
@@ -826,4 +915,121 @@ For examples of IRT models, see [here](irt.qmd).
 
 ## Separate Calibration {#sec-irtSeparateCalibration}
 
+### Frequentist
+
+```{r}
+#| output: false
+
+fit1 <- mirt::mirt(dat1, 1, itemtype = "graded", SE = TRUE)
+fit2 <- mirt::mirt(dat2, 1, itemtype = "graded", SE = TRUE)
+fit3 <- mirt::mirt(dat3, 1, itemtype = "graded", SE = TRUE)
+```
+
+```{r}
+# EAP theta estimates on each timepoint's OWN (arbitrary N(0,1)) metric
+th1_sep <- mirt::fscores(fit1, method = "EAP")
+th2_sep <- mirt::fscores(fit2, method = "EAP")
+th3_sep <- mirt::fscores(fit3, method = "EAP")
+
+# pull item parameters in plink's expected format: a, b1, b2, b3
+cfs1 <- mirt::coef(fit1, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
+cfs2 <- mirt::coef(fit2, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
+cfs3 <- mirt::coef(fit3, IRTpars = TRUE, simplify = TRUE)$items[, c("a", "b1", "b2", "b3")]
+rownames(cfs1) <- colnames(dat1)
+rownames(cfs2) <- colnames(dat2)
+rownames(cfs3) <- colnames(dat3)
+
+# build the plink irt.pars object
+common_names_12 <- paste0("C12_", 1:n_common)
+common_names_23 <- paste0("C23_", 1:n_common)
+
+common12 <- cbind(
+  match(common_names_12, rownames(cfs1)),
+  match(common_names_12, rownames(cfs2)))
+
+common23 <- cbind(
+  match(common_names_23, rownames(cfs2)),
+  match(common_names_23, rownames(cfs3)))
+
+pm1 <- plink::as.poly.mod(nrow(cfs1), "grm", 1:nrow(cfs1))
+pm2 <- plink::as.poly.mod(nrow(cfs2), "grm", 1:nrow(cfs2))
+pm3 <- plink::as.poly.mod(nrow(cfs3), "grm", 1:nrow(cfs3))
+
+plinkIRTpars <- plink::as.irt.pars(
+  x        = list(cfs1, cfs2, cfs3),
+  common   = list(common12, common23),
+  cat      = list(rep(n_cat, nrow(cfs1)), rep(n_cat, nrow(cfs2)), rep(n_cat, nrow(cfs3))),
+  poly.mod = list(pm1, pm2, pm3),
+  grp.names = c("T1", "T2", "T3")
+)
+
+# Stocking-Lord chain linking, T1 <-> T2 <-> T3, rescaled onto T2 (base.grp = 2)
+link_out <- plink::plink(
+  plinkIRTpars,
+  rescale = "SL",
+  base.grp = 2,
+  ability = list(th1_sep, th2_sep, th3_sep))
+
+summary(link_out, descrip = TRUE)             # linking constants + common-item drift diagnostics
+constants <- plink::link.con(link_out)        # A, B for each transformation
+theta_linked <- plink::link.ability(link_out) # list: theta1, theta2, theta3 all on the T2 metric
+
+th1_linked <- theta_linked[[1]]
+th2_linked <- theta_linked[[2]]          # unchanged (T2 is the base)
+th3_linked <- theta_linked[[3]]
+```
+
+### Bayesian
+
 ## Concurrent Calibration {#sec-irtConcurrentCalibration}
+
+### Frequentist
+
+```{r}
+# Anchor items are constrained equal across the groups that share them;
+# unique items are freely (and separately) estimated group-by-group because
+# they are 100% missing outside their own timepoint and so contribute nothing
+# to the other groups' likelihood. Latent means/variances are freed for all
+# but the reference group (T1), which is fixed at N(0,1) for identification.
+anchor_items <- union(common_names_12, common_names_23)
+```
+
+```{r}
+#| output: false
+
+fit_concurrent <- mirt::multipleGroup(
+  dat_concurrent,
+  model = 1,
+  group = group,
+  itemtype = "graded",
+  invariance = c(anchor_items, "free_means", "free_var"),
+  SE = TRUE
+)
+```
+
+```{r}
+# growth in the latent trait, directly comparable across timepoints
+coef(fit_concurrent, simplify = TRUE)  # inspect per-group means/variances
+
+theta_concurrent <- fscores(fit_concurrent, method = "EAP")
+th1_conc <- theta_concurrent[group == "T1"]
+th2_conc <- theta_concurrent[group == "T2"]
+th3_conc <- theta_concurrent[group == "T3"]
+```
+
+Compare results from separate vs concurrent calibration against truth:
+
+```{r}
+cat("correlation with true theta (T1): separate calibration =",
+    round(cor(th1_linked, theta1_true), 3),
+    " | concurrent calibration =", round(cor(th1_conc, theta1_true), 3), "\n")
+cat("correlation with true theta (T3): separate calibration =",
+    round(cor(th3_linked, theta3_true), 3),
+    " | concurrent calibration =", round(cor(th3_conc, theta3_true), 3), "\n")
+
+cat("recovered mean growth T1->T3 (true = 1.0):\n",
+    " separate calibration:", round(mean(th3_linked) - mean(th1_linked), 3), "\n",
+    " concurrent calibration:", round(mean(th3_conc) - mean(th1_conc),  3))
+```
+
+### Bayesian
