@@ -269,12 +269,12 @@ bayesianMediationModel <- brm(
 ```{r}
 summary(bayesianMediationModel)
 
-print(effectsize::standardize_parameters(
-  bayesianMediationModel,
-  method = "posthoc"),
-  digits = 2)
+#print(effectsize::standardize_parameters( # errors out perhaps due to joint model
+#  bayesianMediationModel,
+#  method = "posthoc"),
+#  digits = 2)
 
-performance::model_performance(bayesianMediationModel)
+#performance::model_performance(bayesianMediationModel) # errors out perhaps due to joint model
 performance::r2(bayesianMediationModel)
 
 hypothesis(
@@ -376,12 +376,10 @@ plot(hyp2)
 ```{r}
 #| output: false
 
-fit_sleep4 <- brm(
+fit_sleep3 <- brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
-  prior = bprior, 
-  sample_prior = TRUE,
-  cores = 4,
+  cores = 4, # between-chain parallelization
   seed  = 52242
 )
 ```
@@ -389,6 +387,17 @@ fit_sleep4 <- brm(
 ## Within-Chain Parallelization
 
 <https://paul-buerkner.github.io/brms/articles/brms_threading.html> (archived at <https://perma.cc/NCG3-KV4G>)
+
+```{r}
+#| output: false
+
+fit_sleep3 <- brm(
+  Reaction ~ 1 + Days + (1 + Days | Subject), 
+  data = sleepstudy,
+  threads = threading(4), # within-chain parallelization (threads per chain)
+  seed  = 52242
+)
+```
 
 # Missing Data Handling
 
@@ -414,6 +423,25 @@ fit_imp <- brm_multiple(
   bayesianMediationSyntax,
   data = imp,
   chains = 2)
+```
+
+```{r}
+summary(fit_imp)
+
+#print(effectsize::standardize_parameters( # errors out perhaps due to joint model
+#  fit_imp,
+#  method = "posthoc"),
+#  digits = 2)
+
+#performance::model_performance(fit_imp) # errors out perhaps due to joint model
+performance::r2(fit_imp)
+
+hypothesis(
+  fit_imp,
+  "bsp_M_miX * bsp_Y_miM = 0", # indirect effect = a path * b path
+  class = NULL,
+  seed = 52242
+)
 ```
 
 ## Imputation on the Fly During Model Fitting
@@ -447,12 +475,12 @@ bayesianRegressionModel <- brm(
 ```{r}
 summary(bayesianRegressionModel)
 
-print(effectsize::standardize_parameters(
-  bayesianRegressionModel,
-  method = "posthoc"),
-  digits = 2)
+#print(effectsize::standardize_parameters( # errors out perhaps due to joint model
+#  bayesianRegressionModel,
+#  method = "posthoc"),
+#  digits = 2)
 
-performance::model_performance(bayesianRegressionModel)
+#performance::model_performance(bayesianRegressionModel) # errors out perhaps due to joint model
 performance::r2(bayesianRegressionModel)
 
 hypothesis(
