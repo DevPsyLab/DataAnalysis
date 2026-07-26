@@ -254,13 +254,19 @@ bayesianMediationSyntax <-
   bf(M ~ X + (1 |i| id)) +
   bf(Y ~ X + M + (1 |i| id)) +
   set_rescor(FALSE) # don't add a residual correlation between M and Y
+```
+
+```{r}
+#| output: false
 
 bayesianMediationModel <- brm(
   bayesianMediationSyntax,
   data  = mydata,
   seed  = 52242
 )
+```
 
+```{r}
 summary(bayesianMediationModel)
 
 print(effectsize::standardize_parameters(
@@ -286,13 +292,20 @@ mediation(bayesianMediationModel)
 ```{r}
 bayesianModerationSyntax <-
   bf(Y2 ~ s(X) + s(M) + t2(X, M) + (1 | id))
+```
+
+
+```{r}
+#| output: false
 
 bayesianModerationModel <- brm(
   bayesianModerationSyntax,
   data  = mydata,
   seed  = 52242
 )
+```
 
+```{r}
 summary(bayesianModerationModel)
 
 print(effectsize::standardize_parameters(
