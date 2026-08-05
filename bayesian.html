@@ -1363,29 +1363,29 @@ Formula: Y2 ~ s(X) + s(M) + t2(X, M) + (1 | id)
 
 Smoothing Spline Hyperparameters:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sds(sX_1)       1.65      1.16     0.20     4.84 1.24       14       38
-sds(sM_1)       0.64      0.67     0.01     2.27 1.49        8       13
-sds(t2XM_1)     1.55      1.25     0.12     4.79 1.22       15       71
-sds(t2XM_2)     1.66      1.29     0.12     4.77 1.12       23       95
-sds(t2XM_3)    32.97      9.09    18.49    57.70 1.31       11       19
+sds(sX_1)       1.15      0.87     0.08     3.10 1.23       13       28
+sds(sM_1)       1.29      1.19     0.07     4.21 1.92        6       28
+sds(t2XM_1)     1.35      0.85     0.27     3.46 1.11       40       39
+sds(t2XM_2)     1.65      1.17     0.22     4.84 1.12       26       40
+sds(t2XM_3)    37.04     16.38    17.75    80.71 2.02        5       20
 
 Multilevel Hyperparameters:
 ~id (Number of levels: 100) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.17      0.06     0.06     0.28 1.35        9       12
+sd(Intercept)     0.14      0.06     0.05     0.28 1.73        6       19
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     0.02      0.46    -0.67     1.17 1.53        7       12
-sX_1      -1244.86   1903.69 -5453.95  1415.59 2.08        5       12
-sM_1       -405.74   1583.39 -3656.27  1897.55 2.06        5       15
-t2XM_1      -57.93    201.10  -478.76   228.67 2.07        5       15
-t2XM_2      147.79    221.74  -165.05   630.96 2.09        5       12
-t2XM_3        6.13      8.55    -6.93    24.11 2.05        5       20
+Intercept    -0.24      0.23    -0.64     0.17 1.51        8       39
+sX_1       -227.76   1191.74 -3127.55  1764.82 1.95        6       11
+sM_1       -265.81   2753.49 -5668.39  3210.32 2.95        5       43
+t2XM_1      -35.56    347.50  -716.40   405.46 2.97        5       41
+t2XM_2       28.46    131.10  -194.64   358.81 1.88        6       11
+t2XM_3        1.77      7.69    -8.57    16.77 2.45        5       14
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     1.02      0.02     0.98     1.06 1.16       24      115
+sigma     1.03      0.03     0.98     1.09 1.47        8       28
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1401,18 +1401,18 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 Component   |   Parameter | Std. Median |              95% CI
 -------------------------------------------------------------
 conditional | (Intercept) |        0.00 | [   -0.00,    0.00]
-conditional |        sX_1 |     -341.64 | [-3282.84,  852.07]
-conditional |        sM_1 |      -67.42 | [-2200.78, 1142.17]
-conditional |      t2XM_1 |      -10.18 | [ -288.18,  137.64]
-conditional |      t2XM_2 |       38.62 | [  -99.34,  379.78]
-conditional |      t2XM_3 |        3.22 | [   -4.17,   14.51]
-sigma       |       sigma |        0.62 | [    0.59,    0.64]</code></pre>
+conditional |        sX_1 |      -94.82 | [-1882.53, 1062.28]
+conditional |        sM_1 |        1.92 | [-3411.92, 1932.35]
+conditional |      t2XM_1 |        0.99 | [ -431.21,  244.06]
+conditional |      t2XM_2 |       12.34 | [ -117.16,  215.97]
+conditional |      t2XM_3 |       -0.06 | [   -5.16,   10.09]
+sigma       |       sigma |        0.62 | [    0.59,    0.66]</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html">model_performance</a></span><span class="op">(</span><span class="va">bayesianModerationModel</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["ELPD"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ELPD_SE"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["LOOIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LOOIC_SE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["WAIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["R2"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["R2_marginal"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["R2_adjusted"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["R2_adjusted_marginal"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["RMSE"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Sigma"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"-1412.621","2":"20.89506","3":"2825.242","4":"41.79012","5":"2824.498","6":"0.6267794","7":"0.6163508","8":"0.6081049","9":"0.6070011","10":"0.9977775","11":"1.02184","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["ELPD"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ELPD_SE"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["LOOIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LOOIC_SE"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["WAIC"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["R2"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["R2_marginal"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["R2_adjusted"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["R2_adjusted_marginal"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["RMSE"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Sigma"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"-1413.723","2":"20.55776","3":"2827.445","4":"41.11552","5":"2826.971","6":"0.623937","7":"0.6160631","8":"0.6069748","9":"0.6055646","10":"1.004243","11":"1.033866","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1420,8 +1420,8 @@ sigma       |       sigma |        0.62 | [    0.59,    0.64]</code></pre>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># Bayesian R2 with Compatibility Interval
 
-  Conditional R2: 0.627 (95% CI [0.601, 0.650])
-     Marginal R2: 0.616 (95% CI [0.593, 0.640])</code></pre>
+  Conditional R2: 0.624 (95% CI [0.597, 0.650])
+     Marginal R2: 0.616 (95% CI [0.589, 0.638])</code></pre>
 </div>
 </div>
 </section><section id="setting-priors" class="level1" data-number="6"><h1 data-number="6">
@@ -1833,7 +1833,7 @@ loaded via a namespace (and not attached):
 [22] nloptr_2.2.1         purrr_1.2.2          xfun_0.60           
 [25] glmnet_5.0           jomo_2.7-6           jsonlite_2.0.0      
 [28] pan_2.0              broom_1.0.13         parallel_4.6.1      
-[31] R6_2.6.1             stringi_1.8.7        RColorBrewer_1.1-3  
+[31] R6_2.6.1             stringi_1.8.9        RColorBrewer_1.1-3  
 [34] parallelly_1.48.0    boot_1.3-32          rpart_4.1.27        
 [37] iterators_1.0.14     knitr_1.51           future.apply_1.20.2 
 [40] bayesplot_1.15.0     splines_4.6.1        nnet_7.3-20         
