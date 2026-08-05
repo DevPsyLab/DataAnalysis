@@ -34,12 +34,14 @@ library("tidyverse")
 #| eval: false
 
 mydata <- read.csv("https://osf.io/cqn3d/download")
+mydata_long <- read.csv("./data/mydata_long.csv")
 ```
 
 ```{r}
 #| include: false
 
 mydata <- read.csv("./data/nlsy_math_long.csv") #https://osf.io/cqn3d/download
+mydata_long <- read.csv("./data/mydata_long.csv")
 ```
 
 ## Simulate Data
@@ -1332,6 +1334,188 @@ nonlinearModel <- nlme(
   random = Asym ~ 1)
 
 summary(nonlinearModel)
+```
+
+# Disaggregation of Within-Person and Between-Person Effects {#sec-disaggregatingWithinBetween}
+
+## Pre-Model Computations
+
+```{r}
+#| code-fold: true
+
+mydata_long$sexFactor <- factor(mydata_long$sex) # create a factor variable for sex
+
+mydata_long$ageCentered <- mydata_long$age - min(mydata_long$age, na.rm = TRUE) # shift age so that intercepts represent the earliest age in the sample
+
+mydata_long$ageCenteredSquared <- mydata_long$ageCentered ^ 2
+```
+
+```{r}
+mydata_long <- mydata_long |>
+  group_by(ID) |>
+  mutate(
+    sleep_personMean = mean(sleep, na.rm = TRUE),
+    sleep_personMeanCentered = sleep - sleep_personMean
+  ) |>
+  ungroup()
+```
+
+## Fit the Model
+
+In disaggregating within- and between-person effects, this model fits:
+
+1. random intercepts and random linear slopes for subjects,
+1. `sex` and `sleep_personMean` as time-invariant fixed-effect predictors of the intercepts and slopes, and
+1. `sleep_personMeanCentered` as a time-varying fixed-effect predictor of depression.
+
+```{r}
+withinBetweenPersonSleepModel_basic <- lmerTest::lmer(
+  depression ~ sleep_personMean + sexFactor +              # time-invariant predictors of the intercepts
+    sleep_personMeanCentered + ageCentered +               # time-varying predictors
+    sleep_personMean:ageCentered + sexFactor:ageCentered + # time-invariant predictors of the slopes
+    (1 + ageCentered | ID),
+  data = mydata_long,
+  na.action = na.exclude)
+```
+
+We can also extend the model to a quadratic model (or to any other functional form of change).
+
+In disaggregating within- and between-person effects, this model fits:
+
+1. random intercepts and random linear slopes and fixed quadratic slopes for subjects,
+1. `sex` and `sleep_personMean` (and their interaction) as time-invariant fixed-effect predictors of the intercepts and slopes, and
+1. `sleep_personMeanCentered` as a time-varying fixed-effect predictor of depression, with effects allowed to vary over age and by sex, including two‐ and three‐way interactions with age and sex.
+
+The `*` symbol (unlike the `:` symbol) estimates all lower-order main effects and interactions, to simplify the syntax.
+
+```{r}
+withinBetweenPersonSleepModel <- lmerTest::lmer(
+  depression ~ sexFactor*sleep_personMean*ageCentered + 
+    sexFactor*sleep_personMean*ageCenteredSquared + 
+    sexFactor*sleep_personMeanCentered*ageCentered + 
+    sexFactor*sleep_personMeanCentered*ageCenteredSquared + 
+    (1 + ageCentered | ID), # model fails to converge with a random effect for ageCenteredSquared
+  data = mydata_long,
+  na.action = na.exclude)
+```
+
+## Model Summary
+
+```{r}
+summary(withinBetweenPersonSleepModel)
+
+print(effectsize::standardize_parameters(
+  withinBetweenPersonSleepModel,
+  method = "refit"),
+  digits = 2)
+
+performance::r2(withinBetweenPersonSleepModel)
+```
+
+## Plots
+
+### Between-Person Effect of Sleep
+
+```{r}
+#| fig-cap: "Between-Person Association Between Sleep and Depression"
+
+newData <- expand.grid(
+  sexFactor = c("female", "male"),
+  age = seq(
+    from = min(mydata_long$age, na.rm = TRUE),
+    to = max(mydata_long$age, na.rm = TRUE),
+    length.out = 10000
+  ),
+  sleepFactor = c("low sleep", "high sleep")
+)
+
+newData$ageCentered <- newData$age - min(newData$age)
+newData$ageCenteredSquared <- newData$ageCentered ^ 2
+
+newData$sleep_personMean <- NA
+newData$sleep_personMean[which(newData$sleepFactor == "low sleep" & newData$sexFactor == "female")] <- mean(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "female")], na.rm = TRUE) - sd(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "female")], na.rm = TRUE)
+
+newData$sleep_personMean[which(newData$sleepFactor == "low sleep" & newData$sexFactor == "male")] <- mean(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "male")], na.rm = TRUE) - sd(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "male")], na.rm = TRUE)
+
+newData$sleep_personMean[which(newData$sleepFactor == "high sleep" & newData$sexFactor == "female")] <- mean(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "female")], na.rm = TRUE) + sd(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "female")], na.rm = TRUE)
+
+newData$sleep_personMean[which(newData$sleepFactor == "high sleep" & newData$sexFactor == "male")] <- mean(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "male")], na.rm = TRUE) + sd(mydata_long$sleep_personMean[which(mydata_long$sexFactor == "male")], na.rm = TRUE)
+
+newData$sleep_personMeanCentered <- 0
+
+newData$modelImpliedDepression <- predict( # predict.merMod
+  withinBetweenPersonSleepModel,
+  newdata = newData,
+  re.form = NA # include no random effects
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = age,
+    y = modelImpliedDepression,
+    color = sexFactor,
+    linetype = sleepFactor)) +
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Depression Symptoms",
+    color = "Sex",
+    linetype = "Sleep"
+  ) +
+  theme_classic()
+```
+
+### Within-Person Effect of Sleep
+
+```{r}
+#| fig-cap: "Within-Person Association Between Sleep and Depression"
+
+newData <- expand.grid(
+  sexFactor = c("female", "male"),
+  age = seq(
+    from = min(mydata_long$age, na.rm = TRUE),
+    to = max(mydata_long$age, na.rm = TRUE),
+    length.out = 10000
+  ),
+  sleepFactor = c("low sleep", "high sleep")
+)
+
+newData$ageCentered <- newData$age - min(newData$age)
+newData$ageCenteredSquared <- newData$ageCentered ^ 2
+
+newData$sleep_personMean <- mean(mydata_long$sleep_personMean, na.rm = TRUE)
+
+newData$sleep_personMeanCentered <- NA
+newData$sleep_personMeanCentered[which(newData$sleepFactor == "low sleep" & newData$sexFactor == "female")] <- mean(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "female")], na.rm = TRUE) - sd(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "female")], na.rm = TRUE)
+
+newData$sleep_personMeanCentered[which(newData$sleepFactor == "low sleep" & newData$sexFactor == "male")] <- mean(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "male")], na.rm = TRUE) - sd(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "male")], na.rm = TRUE)
+
+newData$sleep_personMeanCentered[which(newData$sleepFactor == "high sleep" & newData$sexFactor == "female")] <- mean(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "female")], na.rm = TRUE) + sd(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "female")], na.rm = TRUE)
+
+newData$sleep_personMeanCentered[which(newData$sleepFactor == "high sleep" & newData$sexFactor == "male")] <- mean(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "male")], na.rm = TRUE) + sd(mydata_long$sleep_personMeanCentered[which(mydata_long$sexFactor == "male")], na.rm = TRUE)
+
+newData$modelImpliedDepression <- predict( # predict.merMod
+  withinBetweenPersonSleepModel,
+  newdata = newData,
+  re.form = NA # include no random effects
+)
+
+ggplot(
+  data = newData,
+  mapping = aes(
+    x = age,
+    y = modelImpliedDepression,
+    color = sexFactor,
+    linetype = sleepFactor)) +
+  geom_line() +
+  labs(
+    x = "Age (years)",
+    y = "Depression Symptoms",
+    color = "Sex",
+    linetype = "Sleep"
+  ) +
+  theme_classic()
 ```
 
 # Moderated Multilevel Models {#sec-moderation}
