@@ -53,6 +53,7 @@ mydata <- data.frame(
 # Import data
 
 ```{r}
+mydata_long <- read.csv("./data/mydata_long.csv")
 longitudinalMI <- read.csv("./data/Bliese-Ployhart-2002-indicators-1.csv")
 ```
 
@@ -4469,6 +4470,113 @@ round(cbind(
   weak = inspect(metricInvariance_fit, "fit.measures"),
   strong = inspect(scalarInvariance_fit, "fit.measures"),
   strict = inspect(residualInvariance_fit, "fit.measures")), 3)
+```
+
+# Multilevel SEM {#sec-multilevelSEM}
+
+## Pre-Model Computation
+
+```{r}
+#| code-fold: true
+
+mydata_long$sexFactor <- factor(mydata_long$sex)
+
+mydata_long <- mydata_long |>
+  group_by(ID) |>
+  mutate(
+    # Compute person mean and mean-centered variables
+    ses_personMean = mean(ses, na.rm = TRUE),
+    ses_personMeanCentered = ses - ses_personMean,
+    sleep_personMean = mean(sleep, na.rm = TRUE),
+    sleep_personMeanCentered = sleep - sleep_personMean,
+    depression_personMean = mean(depression, na.rm = TRUE),
+    depression_personMeanCentered = depression - depression_personMean,
+    anxiety_personMean = mean(anxiety, na.rm = TRUE),
+    anxiety_personMeanCentered = anxiety - anxiety_personMean,
+    
+    # Compute interaction terms
+    sexEffectCodeXses = sexEffectCode * ses,
+    sexEffectCodeXsleep = sexEffectCode * sleep,
+    sexEffectCodeXdepression = sexEffectCode * depression,
+    sexEffectCodeXanxiety = sexEffectCode * anxiety,
+    sexEffectCodeXsleep_personMean = sexEffectCode * sleep_personMean,
+    sexEffectCodeXsleep_personMeanCentered = sexEffectCode * sleep_personMeanCentered
+  ) |>
+  ungroup()
+
+# Convert data from long to wide (widen data by timepoint)
+mydata_wide <- mydata_long |>
+  select(-age) |>
+  tidyr::pivot_wider(
+    names_from  = timepoint, # widen by timepoint
+    values_from = c( # widen time-varying variables
+      ses, ses_personMeanCentered, sleep, sleep_personMeanCentered, depression,
+      depression_personMeanCentered, anxiety, anxiety_personMeanCentered, 
+      sexEffectCodeXses, sexEffectCodeXsleep, sexEffectCodeXdepression, sexEffectCodeXanxiety,
+      sexEffectCodeXsleep_personMeanCentered)
+  )
+```
+
+## Model Syntax
+
+This multilevel structural equation model disaggregates within- and between-person effects to examine associations with depression.
+At the within-person level, we examine deviations in sleep, anxiety, and SES from a person's usual (average) levels in predicting concurrent deviations in depression, allowing the within-person association between sleep and depression to differ between boys and girls.
+At the between-person level, we examine person-level averages across time of sleep, anxiety, and SES, along with sex, in predicting overall differences in depression across individuals, allowing the between-person association between sleep and depression to differ between boys and girls.
+
+```{r}
+multilevelSEM_syntax <- '
+    level: 1
+        depression ~ sleep_personMeanCentered + anxiety_personMeanCentered + ses_personMeanCentered + sexEffectCodeXsleep_personMeanCentered
+    level: 2
+        depression ~ sleep_personMean + anxiety_personMean + ses_personMean + sexEffectCode + sexEffectCodeXsleep_personMean
+'
+```
+
+## Fit Model
+
+```{r}
+multilevelSEM_fit <- lavaan::sem(
+  multilevelSEM_syntax,
+  data = mydata_long,
+  cluster = "ID",
+  missing = "ML", # FIML
+  estimator = "MLR")
+```
+
+## Model Summary
+
+```{r}
+summary(
+  multilevelSEM_fit,
+  fit_measures = TRUE,
+  standardized = TRUE,
+  rsquare = TRUE)
+```
+
+## Modification Indices
+
+```{r}
+modificationindices(
+  multilevelSEM_fit,
+  sort = TRUE)
+```
+
+## Path Diagram
+
+```{r}
+lavaanPlot::lavaanPlot(
+  multilevelSEM_fit,
+  coefs = TRUE,
+  #covs = TRUE,
+  stand = TRUE)
+```
+
+To create an interactive path diagram, you can use the following syntax:
+
+```{r}
+#| eval: false
+
+lavaangui::plot_lavaan(multilevelSEM_fit)
 ```
 
 # Compare Models
