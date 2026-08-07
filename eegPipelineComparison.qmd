@@ -1,0 +1,263 @@
+---
+title: "EEG Processing Pipeline Comparison"
+---
+
+NOTE: This page is under construction and is not complete.
+
+# Pipeline Comparison Overview
+
+# Initial Set-Up
+
+1. Install `MATLAB` (admin login needed)
+1. Sign in to the [UIowa `MATLAB` portal](https://www.mathworks.com/academia/tah-portal/the-university-of-iowa-837756.html) using your HawkID (hawkid@uiowa.edu) and password
+1. Click the "Install `MATLAB`" button in the upper right corner of the screen
+1. In the new tab that opens, click the "Download for (OS)" button in the middle of the screen (`MATLAB` will automatically detect the installer version needed for your computer)
+1. Open the installer file, wait for the installation files to be extracted, then sign in with an admin login when prompted
+1. Once the installer is open, sign in using your HawkID (hawkid@uiowa.edu) and password
+1. Agree to the terms of the license agreement
+1. Use the default license option and destination folder
+1. On the Products page, ensure the following products are selected:
+- MATLAB
+- Optimization Toolbox
+- Parallel Computing Toolbox
+- Signal Processing Toolbox
+- Statistics and Machine Learning Toolbox
+- Wavelet Toolbox
+1. Choose whether to add a desktop shortcut and/or sending user experience data to MathWorks
+1. Click "Begin Install"
+1. Once the installation is finished, open `MATLAB` and log in using your HawkID (hawkid@uiowa.edu) and password
+1. From the "Home" toolbar along the top, open Settings
+1. In the menu along the left side of the Settings window, select "General" then "Java Runtime Environment"
+1. Set the Java Heap Size to 3456 (double the default value of 1728), then click "OK"
+- NOTE: The range of the heap size depends on your computer's processing capacity.
+There is not a specific minimum or maximum, but setting the heap size to a value that is too large or too small can slow your computer down.
+If your computer's default is different from the one specified above, start by doubling the heap size and make adjustments from there depending on your computer's performance.
+1. Install `R` and `RStudio` using the instructions [here](R.qmd#sec-setup)
+1. Clone the EEG Pipeline Comparison [GitLab repository](https://research-git.uiowa.edu/PetersenLab/SRS/srs-eeg-pipelinecomparison) to your computer
+1. If you plan to use Argon/HPC for processing, also copy the EEG Pipeline Comparison repository into your Argon home directory
+
+# Running the Pipeline Comparison
+
+1. Open `MATLAB`
+1. Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository and open the `processing.m` file
+1. In the toolbar along the top, go to the "Editor" pane, then click "Run"
+1. Response to the prompts that appear in the Command Window using the documentation below
+
+## Parameters
+
+### Processing Info
+
+NOTE: These inputs cannot be modified after entry.
+If you select the wrong option, press "Ctrl+C" to stop the script.
+
+1. **Processing data using Argon/HPC?**
+Indicate whether you would (**y**) or would not (**n**) like to process the data using Argon.
+If you would like to use Argon, you must have an Argon account and have your Argon home directory mapped to your computer (see the [HPC documentation](hpc.qmd) for more information).
+1. **Use parallel pool for initial processing?**
+Indicate whether you would like to run the initial processing steps in parallel (i.e., multiple data files simultaneously; **y**) or in series (i.e., one file at a time; **n**).
+Parallel processing can be faster, but if you are processing the data on your computer rather than on Argon, it can cause your computer to run slowly, since most of its processing power will be dedicated to the EEG processing.
+Additionally, because file sizes are much larger for the initial processing steps, longer data files (like the ones produced for the Stop-Signal task) can cause `MATLAB` to freeze or can fail to load if using parallel processing on your computer.
+1. **Use parallel pool for pipeline processing?**
+Indicate whether you would like to run the pipeline-specific processing steps in parallel (**y**) or in series (**n**).
+The file sizes for this step are much smaller, even for longer tasks, so it is more feasible to run pipeline-specific processing in parallel on your computer.
+However, much of your computer's processing power would still be dedicated to the EEG processing, so your computer will likely slow down (albeit to a lesser degree).
+1. **Enter the path to the folder containing the raw dataset**
+Enter the complete file path for the raw data that you would like to process.
+If `MATLAB` cannot locate the folder, it will prompt you to re-enter the file path.
+1. **Where is the raw data saved?**
+Indicate whether the raw data folder is saved locally (i.e., on your computer), in the PetersenLabEEGVideo drive, or in your Argon home directory.
+If you chose to process the data using Argon, you cannot process data that is saved locally, and that option will not be visible.
+1. **Select processing mode**
+Indicate whether you would like to process all of the files in the raw data folder (**all**) or only the files that have not yet been processed (**new**).
+The **new** option assumes that you will be processing the unprocessed files using the same parameters used to process other files.
+
+<details>
+<summary>If processing new files</summary>
+
+1. **Enter the path to the existing output folder**
+Enter the complete file path to the main output folder with the data that is already processed.
+The main output folder is the one that contains the `0_input_parameters` folder.
+If `MATLAB` cannot locate the folder, or if the folder exists but does not contain a folder called `0_input_parameters`, it will prompt you to re-enter the file path.
+1. **List of processed files not found**
+This prompt will only appear if `MATLAB` cannot locate `processed_files_all.mat` within the main output folder.
+When this happens, you can either specify a different list of processed files (**file**) or process all of the files in the raw data folder (**all**).
+Depending on how many files have already been processed, it may be faster to close out of the script, manually create a list of the processed files, and restart.
+1. **Enter the complete path to the list of processed files, including the file extension**
+This prompt will only appear if you selected **file** in the previous step.
+Enter the complete file path (including file name and extension) for a list of processed files.
+The list does not have to be named `processed_files_all`, but it must have a `.mat` file extension.
+If `MATLAB` cannot locate the file, or if the file does not have a `.mat` extension, it will prompt you to re-enter the file path.
+
+</details>
+
+1. **Where should processed data be saved?** or **Where is (original output folder)?**
+Indicate whether the data should be (or are) saved locally (i.e., on your computer), in the PetersenLabEEGVideo drive, or in your Argon home directory.
+If you chose to process the data using Argon, you cannot process data that is saved locally, and that option will not be visible unless you chose to only process new files (see next step).
+
+NOTE: Saving data to PetersenLabEEGVideo is **strongly** discouraged unless you have already discussed it with the LC or Dr. P.
+The storage space is extremely limited, and EEG data takes up a lot of space.
+1. **Argon cannot access local directories**
+This prompt will only appear if you chose to process data using Argon, are only processing new data files, and indicated that the existing processed data are saved locally.
+Indicate whether you would like to process and save the new files using Argon (**argon**) or using your computer (**local**).
+If you select **argon**, you will have to manually move the newly processed files to the main output directly, and combine the QC files, error logs, and processed files lists manually when processing is complete.
+1. **Enter the local path to your Argon home directory**
+This prompt will only appear if you are processing data using Argon, if your raw data are in Argon, or if you chose to save outputs in Argon.
+Enter the "base" file path for your Argon home directory.
+On Windows, this path is typically one letter followed by a colon (e.g., `X:`).
+If `MATLAB` cannot locate the folder, it will prompt you to re-enter it.
+If you indicated that you are using data stored in Argon, but the Argon folder you provided is not found in the file path for that data, the script will stop running with an error.
+1. **Enter the local path to PetersenLabEEGVideo**
+This prompt will only appear if your raw data are in LSS or if you chose to save outputs in LSS.
+Enter the "base" file path for the PetersenLabEEGVideo drive.
+On Windows, this path is typically one letter followed by a colon (e.g., `Y:`).
+If `MATLAB` cannot locate the folder, it will prompt you to re-enter it.
+If you indicated that you are using data stored in PetersenLabEEGVideo, but the LSS folder you provided is not found in the file path for that data, the script will stop running with an error.
+
+### Parameter Set-Up
+
+NOTE: These inputs cannot be modified after entry.
+If you select the wrong option, press "Ctrl+C" to stop the script.
+
+1. **Load pre-existing set of input parameters?**
+This prompt will only appear if you chose to process all data in the raw data folder.
+If you are only processing new files, `MATLAB` assumes that you will load the parameter file used with the existing processed files.
+Pre-existing parameters must be saved as a `.mat` file and include all of the fields required by the processing script.
+To avoid processing errors, it is strongly recommended that you use a parameter file generated by the pipeline comparison script.
+
+#### Pre-Existing Parameters
+
+1. **Enter the path to the parameter file**
+This prompt will only appear if you chose to load a pre-existing parameter file.
+If you are only processing new data files, `MATLAB` will search the original output folder for a parameter file and only display this prompt if it does not find one.
+Enter the complete path to the parameter file you would like to use, including the file name and extension.
+If `MATLAB` cannot locate the file, it will prompt you to re-enter it.
+1. **Change an existing parameter?**
+`MATLAB` will display the parameters from the loaded parameter file.
+If there is an error at this step, the parameter file you specified is likely from an older version of the pipeline comparison script and is missing necessary parameters.
+You will need to manually re-enter the parameters.
+If you confirm the parameters, `MATLAB` will proceed to the next processing step.
+If not, you will be directed to the parameter change menu.
+1. **Run pipeline comparison after processing?**
+This prompt will only appear if your parameter file has multiple pipelines selected.
+This option will generate a few additional files to use in the `generalizability.Rmd` script (see below).
+
+#### New Parameter File
+
+1. **Select pipeline**
+This prompt will only appear if you chose to save data in LSS or Argon.
+Because these locations have much more limited storage space, the script defaults to running only one pipeline at a time.
+Enter the pipeline you would like to use.
+1. **Run all pipelines?**
+This prompt will only appear if you chose to save data locally.
+This option includes APICE, HAPPE, MADE, NEAR, and RELAX-Jr.
+If you are running multiple pipelines, verify that your computer has enough space to store all of the data.
+For reference, folder sizes for each task for one pipeline are shown below.
+The initial output is only generated once, regardless of how many pipelines are used.
+The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison
+
+| ----- | ----- | ----- | ----- | ----- |
+| Task  | Files | Initial Output  | HAPPE Output  | Total |
+| ----- | ----- | ----- | ----- | ----- |
+| Oddball | 569 | 269 GB  | 118 GB  | 391 GB  |
+| Fish-Sharks | 566 | 362 GB  | 49.2 GB | 412 GB  |
+| Stop-Signal | 546 | 567 GB  | 114 GB  | 682 GB  |
+| ----- | ----- | ----- | ----- | ----- |
+
+1. **Enter the pipeline(s) you would like to run**
+This prompt will only appear if you chose not to run all pipelines.
+Enter at least one pipeline to use for processing.
+If you are running multiple pipelines, verify that your computer has enough space to store all of the data.
+See the table above for approximate folder sizes.
+
+### Initial Processing
+
+Before showing the next set of prompts, the script sets several parameters based on the lab's EEG equipment.
+These include the raw data format, cap layout, electrode coordinate file, and channel labels.
+In the (extremely unlikely) event that you need to change any of these, you must do so manually by editing the `parameters.m` file.
+
+1. **Channels of interest?**
+Indicate whether you would like to include all available channels (**all**) or only a subset of channels (**coi**).
+If you are confident about the channel(s) you expect to see results in, choosing a subset of channels can help save space and decrease processing time.
+However, if you are unsure about the specificity of your results or you plan to do exploratory analysis, including all channels is recommended.
+1. **Enter channels to exclude**
+This prompt will only appear if you chose to include a subset of channels to process.
+Enter the channels that you would like to REMOVE from processing, using the "E#" label format.
+1. **Data type**
+Indicate whether you are processing baseline/resting-state (**rest**) or task-related (**task**) data.
+This question does NOT determine whether data will be segmented.
+
+<details>
+<summary>Task-Related Data</summary>
+
+The following prompts will only appear if you are processing task-related EEG data.
+
+1. **Performing event-related potential (ERP) analysis?**
+Indicate whether you will be using the processed data to examine ERPs.
+ERP processing can be strongly affected by certain filtering and data cleaning procedures, and this setting influences which options will be available to you later.
+1. **Which task are you analyzing?**
+Indicate which task your data is from.
+If you select one of the existing tasks, the onset tag and condition parameters will be set automatically.
+If not, you will receive additional prompts for onset tag and condition information.
+Additionally, accuracy coding for Fish-Sharks and Stop-Signal are built in to the processing script, but accuracy coding for other tasks must be completed before running the pipeline.
+
+<details>
+<summary>Other Tasks</summary>
+
+1. **Enter the onset tags**
+Enter the tags used to label the trials in the EEG task.
+If you are not sure what tags were used, see the [Appendix](#sec-onset-tags).
+When entering tags, include any plus signs, but do not include quotation marks.
+1. **Do multiple onset tags belong to a single condition?**
+Indicate whether any of the task onset tags belong to a larger category.
+For example, in the Fish-Sharks task, we have onset tags for correct Go trials, incorrect Go trials, correct No-Go trials, and incorrect No-Go trials.
+We then include Go and No-Go as conditions.
+1. **Enter each condition followed by its corresponding onset tags**
+This prompt will only appear if you indicated that your task has conditions.
+The condition name can be whatever makes sense, but the onset tags must include all of the tags provided above, and no additional onset tags.
+Additionally, each condition must contain at least two onset tags.
+
+</details>
+
+# Appendix
+
+## Check Onset Tags (#sec-onset-tags)
+
+1. Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository
+1. Add the necessary folders to the `MATLAB` path:
+
+    ```matlab
+    % add pipeline_scripts to path
+    addpath(genpath([pwd filesep 'pipeline_scripts']));
+    
+    % temporary variable to cut down on text
+    eeglabDir = ['HAPPE' filesep 'packages' filesep 'eeglab2024.0'];
+    
+    % pipeline paths
+    addpath('HAPPE', ['HAPPE' filesep 'packages'], ...
+    ['HAPPE' filesep 'packages' filesep 'eeglab2024.0'], ...
+    genpath([eeglabDir filesep 'functions']));
+    rmpath(genpath([eeglabDir filesep 'functions' filesep 'octavefunc']));
+    pluginDir = strcat(eeglabDir, filesep, 'plugins', filesep, ...
+    {dir([eeglabDir filesep 'plugins']).name}, '; ');
+    addpath([pluginDir{:}]);
+    ```
+    
+1. Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data
+1. Load a raw data file:
+
+    ```matlab
+    EEG = pop_loadset('name_of_file.mff', 'code');
+    ```
+    
+1. Once the file loads, double click on the `EEG` variable in the Workspace to open the structure
+1. In the `EEG` structure, locate the `events` field, then double click on it to open
+1. The `code` column will show the onset tags for the entire task
+    - NOTE: There are often several onset tags for a given trial (e.g., `bgin`, `TRSP`, `resp`).
+    Only include the onset tags that are relevant to the comparison(s) you are making.
+    These tags often (but not always) end in '+' and are usually added by the software used to run the task.
+
+
+
+
+
+
