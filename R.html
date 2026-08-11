@@ -640,7 +640,19 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#warning-packagename-package-in-filepath-library-will-not-be-updated" id="toc-warning-packagename-package-in-filepath-library-will-not-be-updated" class="nav-link" data-scroll-target="#warning-packagename-package-in-filepath-library-will-not-be-updated"><span class="header-section-number">22.3</span> Warning: <code>PACKAGENAME</code> package in <code>FILEPATH</code> library will not be updated</a></li>
   </ul>
 </li>
-  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">23</span> Session Info</a></li>
+  <li>
+<a href="#sec-appendix" id="toc-sec-appendix" class="nav-link" data-scroll-target="#sec-appendix"><span class="header-section-number">23</span> Appendix</a>
+  <ul>
+<li>
+<a href="#sec-packrat" id="toc-sec-packrat" class="nav-link" data-scroll-target="#sec-packrat"><span class="header-section-number">23.1</span> Managing packages for a project using <code>packrat</code></a>
+  <ul>
+<li><a href="#to-install-a-new-package-for-a-project-after-packrat-has-been-initialized" id="toc-to-install-a-new-package-for-a-project-after-packrat-has-been-initialized" class="nav-link" data-scroll-target="#to-install-a-new-package-for-a-project-after-packrat-has-been-initialized"><span class="header-section-number">23.1.1</span> To install a new package for a project after <code>packrat</code> has been initialized</a></li>
+  <li><a href="#build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages" id="toc-build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages" class="nav-link" data-scroll-target="#build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages"><span class="header-section-number">23.1.2</span> Build <code>packrat</code> environment on a compute node (only if necessary if package load fails due to issues building packages)</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">24</span> Session Info</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/R.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/R.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -1592,8 +1604,72 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <li>close <code>R</code>
 </li>
 <li>if the package was part of the base <code>R</code> installation, move the installed package folder <code>C:\R\Packages\PACKAGENAME\</code> to the <code>library</code> directory of the <code>R</code> installation (e.g., <code>C:\R\R-4.3.1\library\PACKAGENAME\</code>)</li>
-</ul></section></section><section id="session-info" class="level1" data-number="23"><h1 data-number="23">
-<span class="header-section-number">23</span> Session Info</h1>
+</ul></section></section><section id="sec-appendix" class="level1" data-number="23"><h1 data-number="23">
+<span class="header-section-number">23</span> Appendix</h1>
+<section id="sec-packrat" class="level2" data-number="23.1"><h2 data-number="23.1" class="anchored" data-anchor-id="sec-packrat">
+<span class="header-section-number">23.1</span> Managing packages for a project using <code>packrat</code>
+</h2>
+<p>Please note: we now use <a href="#sec-renv"><code>renv</code></a> rather than <code>packrat</code> for package management</p>
+<p><a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library" class="uri">https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library</a> (archived at <a href="https://perma.cc/3SRR-2JE7" class="uri">https://perma.cc/3SRR-2JE7</a>)</p>
+<ol type="1">
+<li>Create a directory where you want you want to store the project.</li>
+<li>
+<code>cd</code> to the above directory</li>
+<li>Start R</li>
+<li>Load the <code>packrat</code> package: <code><a href="https://github.com/rstudio/packrat">library("packrat")</a></code>
+</li>
+<li>At the <code>R</code> prompt, initialize the <code>packrat</code> project on the local repository of <code>R</code> packages with: <code>packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))</code>
+</li>
+<li>You must restart your <code>R</code> session in the given project directory after running init in order for the changes to take effect!</li>
+<li>From this point on you are working in a <code>packrat</code> project. Installed packages will go into a library within this project. After initializing the <code>packrat</code> project on the local repository of <code>R</code> packages, packages from the local repository can be installed with <code>packrat::install_local()</code>:
+<ul>
+<li><code>packrat::install_local("package_name")</code></li>
+</ul>
+</li>
+<li>To restart a packrat project simply start <code>R</code> from the directory created in step (1). The project will initialize automatically.</li>
+</ol>
+<p>To save the current state of your library: <code>packrat::snapshot()</code>; if that command fails due to an error when fetching sources, try <code>packrat::snapshot(snapshot.sources = FALSE)</code></p>
+<p>To disable <code>packrat</code> on a project: <code>disable(restart = FALSE)</code></p>
+<section id="to-install-a-new-package-for-a-project-after-packrat-has-been-initialized" class="level3" data-number="23.1.1"><h3 data-number="23.1.1" class="anchored" data-anchor-id="to-install-a-new-package-for-a-project-after-packrat-has-been-initialized">
+<span class="header-section-number">23.1.1</span> To install a new package for a project after <code>packrat</code> has been initialized</h3>
+<ol type="1">
+<li>First, load the <code>R</code> environment module (see <code>Install R packages</code> section above)</li>
+<li>cd to the directory of the <code>R</code> project</li>
+<li>launch R
+<ul>
+<li><code>R</code></li>
+</ul>
+</li>
+<li>then install the package, (the code below uses a generic <code>package_name</code>):
+<ul>
+<li><code>install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</code></li>
+<li><code>install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)</code></li>
+</ul>
+</li>
+<li>
+<code>packrat::snapshot()</code>; if that command fails due to an error when fetching sources, try <code>packrat::snapshot(snapshot.sources = FALSE)</code>
+</li>
+</ol></section><section id="build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages" class="level3" data-number="23.1.2"><h3 data-number="23.1.2" class="anchored" data-anchor-id="build-packrat-environment-on-a-compute-node-only-if-necessary-if-package-load-fails-due-to-issues-building-packages">
+<span class="header-section-number">23.1.2</span> Build <code>packrat</code> environment on a compute node (only if necessary if package load fails due to issues building packages)</h3>
+<p>This is relevant if building a <code>packrat</code> on <a href="./hpc.html">Argon/HPC</a>.</p>
+<ol type="1">
+<li>
+<code>qlogin</code> – for more info, see here: <a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions" class="uri">https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions</a> (archived at <a href="https://perma.cc/Y3A9-WQ3W" class="uri">https://perma.cc/Y3A9-WQ3W</a>)</li>
+<li>
+<code>module load stack/2020.2-base_arch</code> – this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</li>
+<li><code>module load r</code></li>
+<li>cd to the directory of the <code>R</code> project</li>
+<li><code>R</code></li>
+<li>Create <code>packrat</code> project (see above)</li>
+<li>Install packages</li>
+<li>Take a package snapshot using <code>packrat</code>
+</li>
+<li>
+<code>exit</code> – to exit the qlogin session</li>
+</ol>
+<p>Note: Your <code>packrat</code> environment will then be linked to the proper <code>glpk</code> library and will run on any Argon node. You do not need to use the <code>2020.2-base_arch</code> module at run time, only build time.</p>
+</section></section></section><section id="session-info" class="level1" data-number="24"><h1 data-number="24">
+<span class="header-section-number">24</span> Session Info</h1>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
@@ -3048,13 +3124,65 @@ loaded via a namespace (and not attached):
 <span id="cb39-981"><a href="#cb39-981" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>close <span class="in">`R`</span></span>
 <span id="cb39-982"><a href="#cb39-982" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>if the package was part of the base <span class="in">`R`</span> installation, move the installed package folder <span class="in">`C:\R\Packages\PACKAGENAME\`</span> to the <span class="in">`library`</span> directory of the <span class="in">`R`</span> installation (e.g., <span class="in">`C:\R\R-4.3.1\library\PACKAGENAME\`</span>)</span>
 <span id="cb39-983"><a href="#cb39-983" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-984"><a href="#cb39-984" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb39-984"><a href="#cb39-984" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix {#sec-appendix}</span></span>
 <span id="cb39-985"><a href="#cb39-985" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-988"><a href="#cb39-988" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-989"><a href="#cb39-989" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb39-990"><a href="#cb39-990" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-991"><a href="#cb39-991" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb39-992"><a href="#cb39-992" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-986"><a href="#cb39-986" aria-hidden="true" tabindex="-1"></a><span class="fu">## Managing packages for a project using `packrat` {#sec-packrat}</span></span>
+<span id="cb39-987"><a href="#cb39-987" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-988"><a href="#cb39-988" aria-hidden="true" tabindex="-1"></a>Please note: we now use <span class="co">[</span><span class="ot">`renv`</span><span class="co">](#sec-renv)</span> rather than <span class="in">`packrat`</span> for package management</span>
+<span id="cb39-989"><a href="#cb39-989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-990"><a href="#cb39-990" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3SRR-2JE7&gt;</span>)</span>
+<span id="cb39-991"><a href="#cb39-991" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-992"><a href="#cb39-992" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a directory where you want you want to store the project.</span>
+<span id="cb39-993"><a href="#cb39-993" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`cd`</span> to the above directory</span>
+<span id="cb39-994"><a href="#cb39-994" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Start R</span>
+<span id="cb39-995"><a href="#cb39-995" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load the <span class="in">`packrat`</span> package: <span class="in">`library("packrat")`</span></span>
+<span id="cb39-996"><a href="#cb39-996" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>At the <span class="in">`R`</span> prompt, initialize the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages with: <span class="in">`packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`</span></span>
+<span id="cb39-997"><a href="#cb39-997" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>You must restart your <span class="in">`R`</span> session in the given project directory after running init in order for the changes to take effect!</span>
+<span id="cb39-998"><a href="#cb39-998" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>From this point on you are working in a <span class="in">`packrat`</span> project.</span>
+<span id="cb39-999"><a href="#cb39-999" aria-hidden="true" tabindex="-1"></a>Installed packages will go into a library within this project.</span>
+<span id="cb39-1000"><a href="#cb39-1000" aria-hidden="true" tabindex="-1"></a>After initializing the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages, packages from the local repository can be installed with <span class="in">`packrat::install_local()`</span>:</span>
+<span id="cb39-1001"><a href="#cb39-1001" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`packrat::install_local("package_name")`</span></span>
+<span id="cb39-1002"><a href="#cb39-1002" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>To restart a packrat project simply start <span class="in">`R`</span> from the directory created in step (1). The project will initialize automatically.</span>
+<span id="cb39-1003"><a href="#cb39-1003" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1004"><a href="#cb39-1004" aria-hidden="true" tabindex="-1"></a>To save the current state of your library: <span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span> </span>
+<span id="cb39-1005"><a href="#cb39-1005" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1006"><a href="#cb39-1006" aria-hidden="true" tabindex="-1"></a>To disable <span class="in">`packrat`</span> on a project: <span class="in">`disable(restart = FALSE)`</span></span>
+<span id="cb39-1007"><a href="#cb39-1007" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1008"><a href="#cb39-1008" aria-hidden="true" tabindex="-1"></a><span class="fu">### To install a new package for a project after `packrat` has been initialized</span></span>
+<span id="cb39-1009"><a href="#cb39-1009" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1010"><a href="#cb39-1010" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>First, load the <span class="in">`R`</span> environment module (see <span class="in">`Install R packages`</span> section above)</span>
+<span id="cb39-1011"><a href="#cb39-1011" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
+<span id="cb39-1012"><a href="#cb39-1012" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>launch R</span>
+<span id="cb39-1013"><a href="#cb39-1013" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`R`</span></span>
+<span id="cb39-1014"><a href="#cb39-1014" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>then install the package, (the code below uses a generic <span class="in">`package_name`</span>):</span>
+<span id="cb39-1015"><a href="#cb39-1015" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb39-1016"><a href="#cb39-1016" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb39-1017"><a href="#cb39-1017" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span></span>
+<span id="cb39-1018"><a href="#cb39-1018" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1019"><a href="#cb39-1019" aria-hidden="true" tabindex="-1"></a><span class="fu">### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)</span></span>
+<span id="cb39-1020"><a href="#cb39-1020" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1021"><a href="#cb39-1021" aria-hidden="true" tabindex="-1"></a>This is relevant if building a <span class="in">`packrat`</span> on <span class="co">[</span><span class="ot">Argon/HPC</span><span class="co">](hpc.qmd)</span>.</span>
+<span id="cb39-1022"><a href="#cb39-1022" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1023"><a href="#cb39-1023" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`qlogin`</span> -- for more info, see here: <span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Y3A9-WQ3W&gt;</span>)</span>
+<span id="cb39-1024"><a href="#cb39-1024" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load stack/2020.2-base_arch`</span> -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</span>
+<span id="cb39-1025"><a href="#cb39-1025" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load r`</span></span>
+<span id="cb39-1026"><a href="#cb39-1026" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
+<span id="cb39-1027"><a href="#cb39-1027" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`R`</span></span>
+<span id="cb39-1028"><a href="#cb39-1028" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create <span class="in">`packrat`</span> project (see above)</span>
+<span id="cb39-1029"><a href="#cb39-1029" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install packages</span>
+<span id="cb39-1030"><a href="#cb39-1030" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a package snapshot using <span class="in">`packrat`</span></span>
+<span id="cb39-1031"><a href="#cb39-1031" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`exit`</span> -- to exit the qlogin session</span>
+<span id="cb39-1032"><a href="#cb39-1032" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1033"><a href="#cb39-1033" aria-hidden="true" tabindex="-1"></a>Note: Your <span class="in">`packrat`</span> environment will then be linked to the proper <span class="in">`glpk`</span> library and will run on any Argon node.</span>
+<span id="cb39-1034"><a href="#cb39-1034" aria-hidden="true" tabindex="-1"></a>You do not need to use the <span class="in">`2020.2-base_arch`</span> module at run time, only build time.</span>
+<span id="cb39-1035"><a href="#cb39-1035" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1036"><a href="#cb39-1036" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb39-1037"><a href="#cb39-1037" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1040"><a href="#cb39-1040" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-1041"><a href="#cb39-1041" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb39-1042"><a href="#cb39-1042" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1043"><a href="#cb39-1043" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb39-1044"><a href="#cb39-1044" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
