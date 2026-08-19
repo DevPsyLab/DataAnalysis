@@ -94,9 +94,10 @@ Note: many of these initial setup steps described below are not necessary for ge
 1. Make sure you are logged onto a computer that can access the lab server (either a lab computer, or a computer you can VPN into the lab server), and that you have admin access to install and uninstall software
 1. Install `R` (<https://www.r-project.org>) into a directory that contains no spaces; On PC, change the location from the default `C:/Program Files/R/[R-VERSION]` (which contains a space) to `C:/R/[R-VERSION]` ([which does not contain any spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installing-R-under-Windows); archived at <https://perma.cc/6VMX-3LYX>—this is because [some packages that require compilation to install cannot read filepaths with spaces](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation); archived at <https://perma.cc/XA3V-JTPY>); may have to right click and "Run As Administrator"
     - If `R` was already installed in a directory that contains spaces (e.g., `C:/Program Files/R/[R-VERSION]`), uninstall `R` before installing it in a directory that doesn't contain spaces
-1. Install `RStudio` Desktop (<https://www.rstudio.com/products/rstudio/download/>) in the main program files directory; may have to right click and "Run As Administrator".
-`RStudio` is the best available graphical user interface for R.
-1. Set the executables for `R` and `RStudio` to always run with administrator permissions.
+1. In the main program files directory, install one of the following graphical use interfaces (GUIs) to `R` (you may have to right click and "Run As Administrator"):
+    - `RStudio` Desktop (<https://www.rstudio.com/products/rstudio/download/>)
+    - `Positron` (<https://positron.posit.co>)
+1. Set the executables for `R` and `RStudio`/`Positron` to always run with administrator permissions.
     - If on Windows, open File Explorer and find the main executable of `R` (`C:/R/[R-VERSION]/bin/R.exe`) and `RStudio` (`C:/Program Files/RStudio/bin/RStudio.exe`).
     Right-click it to open the contextual menu.
     Then, click or tap on "Properties".
@@ -109,7 +110,9 @@ Note: many of these initial setup steps described below are not necessary for ge
 1. The `Rprofile.site` file in the `etc` folder of the `R` installation directory is the code that is run for ***every user*** at the beginning each time you load R.  We will update the default `Rprofile.site` file with the lab's `Rprofile.site` file so `R` installs packages in the correct location, sets the default package repository, updates packages, and gives you a fortune cookie.
 To do this, perform the following steps:
     - Rename the `Rprofile.site` file in the `R` installation directory (`C:/R/R-[InsertVersionNumber]/etc/Rprofile.site`) to be `Rprofile_BACKUP.site`
-    - Download the lab's `Rprofile.site` file located in this repository at the following location (<https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site>), and paste it into the `R` installation directory (PC: `C:/R/R-[InsertVersionNumber]/etc/Rprofile.site`; Mac: `/Library/Frameworks/R.framework/Versions/[InsertVersionNumber]/Resources/etc/Rprofile.site`)
+    - Download the lab's `Rprofile.site` file located in this repository at the following location (<https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/Rprofile.site>), and paste it into the `R` installation directory
+        - PC: `C:/R/R-[InsertVersionNumber]/etc/Rprofile.site`
+        - Mac: `/Library/Frameworks/R.framework/Versions/[InsertVersionNumber]/Resources/etc/Rprofile.site`
 1. The `.Rprofile` file in the user's `Documents` folder is the code that is run for ***the particular user*** at the beginning each time you load R.
 We will update the default `.Rprofile` file (if there is one) with the lab's `.Rprofile` file so `R` knows which computer you are using and which path to use (relative to where your `R` projects are located).
 To do this, perform the following steps:
@@ -130,18 +133,18 @@ To do this, perform the following steps:
     You may have to show hidden files in order to see the file (PC: see Windows Explorer settings; Mac: Command+Shift+Dot).
     - Make sure to show filename extensions in your file explorer window, and make sure the file is named `.Rprofile` (not `.Rprofile.Rprofile`).
     Make sure there is a period at the beginning of the filename.
-1. Run `RStudio`.
+1. Run `RStudio`/`Positron`.
 If the `Rprofile.site` and `.Rprofile` files are correctly set up, they should pre-populate your `path` location when you open R.
 If the contents of the `Global Environment` in `RStudio` are empty, your `Rprofile.site` and/or `.Rprofile` files are not set up correctly.
     - If you get this error (`Error: could not find function "install.packages"`), run the following line manually and then restart `RStudio` after the package finishes installing: `install.packages("fortunes")`
-1. For [reproducibility purposes](#sec-dontSaveWorkspace), prevent `R`/`RStudio` from saving your workspaces automatically using the following steps:
+1. For [reproducibility purposes](#sec-dontSaveWorkspace), prevent `R`/`RStudio`/`Positron` from saving your workspaces automatically using the following steps:
     - With RStudio running, choose `Tools → Global Options` from the menus.
     - In the Options dialog, change the value for `Save workspace to .RData on exit` to `Never`.
     - Click `OK`.
 1. Install the `petersenlab` `R` package using the following steps:
     - Install the `remotes` package using the following command: `install.packages("remotes")`
     - Install the `petersenlab` package using the following command: `remotes::install_github("DevPsyLab/petersenlab")`
-1. Request an [API token](https://redcap.icts.uiowa.edu/redcap/api/help/?content=tokens) for the following REDCap project(s); note: please check with Dr. P before requesting an API token.
+1. Request an [API token](https://redcap.icts.uiowa.edu/redcap/api/help/?content=tokens) for the following REDCap project(s); note: please check with Dr. Petersen before requesting an API token.
 In general, RAs should not have an API token.
     - [School Readiness Study](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=4941)
     - [School Readiness Study Screening](https://redcap.icts.uiowa.edu/redcap/redcap_v12.4.1/index.php?pid=4958)
@@ -164,13 +167,13 @@ In general, RAs should not have an API token.
     The default location is: `file.path(path, "GitHub/R/Data/REDCap Encryption Key.RData")`, so if `path` is set as `"C:/User/YourName"`, the file would be saved in: `C:/User/YourName/GitHub/R/Data/REDCap Encryption Key.RData`.
     The recommended location for `GitHub` repos is to create a folder titled `GitHub` in your `Documents` folder, and to put repos in the `GitHub` folder; it is *NOT* recommended to put `git` repos in a OneDrive folder because [`git` files tend not to play nice with syncing services](https://stackoverflow.com/questions/19305033/why-is-putting-git-repositories-inside-of-a-dropbox-folder-not-recommended) (archived at <https://perma.cc/XZ6F-43G3>; e.g., OneDrive, Dropbox)
 1. Add the SRS Data Processing repo from the lab drive to your `GitHub Desktop` App (`//lc-rs-store24.hpc.uiowa.edu/lss_itpetersen/Lab/Studies/School Readiness Study/Data Processing`)
-    - For instructions, see the section on "[How to add a pre-existing repo from the lab drive (RDSS/network share) to your computer](https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/GitLab/GitLab%20Instructions.md#how-to-add-a-pre-existing-repo-from-the-lab-drive-rdssnetwork-share-to-your-computer)" here: <https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/GitLab/GitLab%20Instructions.md>
-1. Open `RStudio` by using "Run as Administrator" (always open `RStudio` as an administrator so it has write access to the program files directory);
+    - For instructions, see the section on "[How to add a pre-existing repo from the lab drive (LSS/RDSS/network share) to your computer](git.qmd#sec-preExistingRepoLabDrive)" here: <https://research-git.uiowa.edu/petersenlab/R-InitialSetup/blob/master/GitLab/GitLab%20Instructions.md>
+1. Open `RStudio`/`Positron` by using "Run as Administrator" (always open it as an administrator so it has write access to the program files directory);
 1. Open the `Export Data.R` script in R:
 <https://research-git.uiowa.edu/petersenlab/srs/SRS-DataProcessing/blob/master/1.%20Export%20Data/Export%20Data.R>
 `\\lc-rs-store24.hpc.uiowa.edu\lss_itpetersen\Lab\Studies\School Readiness Study\Data Processing\1. Export Data\Export Data.R`
 1. Ensure your HawkID and location of your encryption key in the script are correct, and then run the script to verify that you can export data from REDCap
-1. For antialiased plots in `RStudio`, change the Graphics backend to `Cairo`:
+1. For antialiased plots in `RStudio`/`Positron`, change the Graphics backend to `Cairo`:
 `Tools → Global Options → Graphics`
 
 # Lab Package {#sec-petersenlab}

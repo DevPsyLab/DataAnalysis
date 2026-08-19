@@ -218,6 +218,74 @@ Additionally, each condition must contain at least two onset tags.
 
 </details>
 
+</details>
+
+1. **Resample data?**
+Indicate whether you would like to downsample the data.
+The lab's equipment samples data at 1000Hz, which means it records 1000 measurements per channel per second during a task.
+If you are processing a very long data set, or if you are not segmenting the data later, downsampling the data can be helpful for reducing file sizes.
+For more complicated analysis, especially analysis involving high-frequency signals, keeping the original sampling frequency is typically recommended.
+1. **Select sample frequency**
+This prompt will only appear if you indicated that you would like to resample the data.
+Indicate the new frequency you would like the data to have.
+The **1000** option is a holdover from the `HAPPE` pipeline parameter file--because the lab's data is already at this frequency, selecting this option will not affect the data.
+1. **Filtering method**
+Indicate whether you would like to use high-pass, low-pass, band-pass, or no filter on the data.
+Because we process child EEG, performing some amount of filtering is strongly recommended.
+A high-pass filter will remove lower frequencies, a low-pass filter will remove higher frequencies, and a band-pass filter will remove both.
+1. **Filter type**
+This prompt will only appear if you selected a filtering option.
+The **FIR** (**F**inite **I**mpulse **R**esponse) option is generally preferred for EEG processing since it preserves the "true" signal and is stable over time.
+However, it requires more computational power to run, though the lab's tasks are short enough that this generally doesn't cause problems.
+The **IIR** (**I**nfinite **I**mpulse **R**esponse) option requires less computational power, but since it relies on its own output, it can distort signal and/or become unstable over time.
+1. **Enter low-pass filter**
+This prompt will only appear if you selected the low-pass or band-pass filtering option.
+Input the highest frequency you would like to keep in your data.
+The vast majority of analysis will only involve frequencies below 50Hz, which greatly reduces signals from skin conductance, muscle movements, and electrical line noise.
+Because time-frequency analysis is essentially a structured set of filters, there are few recommendations for low-pass cutoffs.
+However, ERP analysis is quite sensitive to filter settings, so the low-pass filter cutoff can depend on the ERP of interest (see [Zhang et al., 2024](https://onlinelibrary.wiley.com/doi/10.1111/psyp.14530)).
+1. **Enter high-pass filter**
+This prompt will only appear if you selected the high-pass or band-pass filtering option.
+Input the lowest frequency you would like to keep in your data.
+If you plan to apply ICA to the data, this value should be at least 1Hz.
+As with the low-pass filter, there are few cutoff recommendations for time-frequency analysis, but ERP can be greatly affected by the cutoff value.
+Additionally, most ERP high-pass filter cutoffs fall well below the 1Hz cutoff recommended for ICA, so use caution if applying ICA for ERP analysis.
+
+<details>
+<summary>Line Noise Reduction</summary>
+
+The following prompts will only appear if you selected a low-pass frequency cutoff greater than or equal to 60Hz, or if you did not enable low-pass filtering.
+"Line noise" refers to the artifact caused by electrical frequencies in the wires (or "lines") near the EEG equipment.
+These frequencies cause a very large spike in signal strength at the line noise frequency, which is 60Hz in the Unites States and 50Hz in most other places.
+They can also cause signal spikes at harmonic frequencies (i.e., multiples of the line noise frequency) if the noise is very strong.
+
+1. **Line noise reduction method?**
+Indicate which line noise reduction method to apply to the data.
+The notch (FIR) and Butterworth (IIR) filters operate as reverse bandpass filters--they keep frequencies below the lower cutoff and above the higher cutoff.
+The strengths and limitations of FIR and IIR filters in this context are the same as the strengths and limitations described above.
+Both the standard notch filter and the IIR filter are relatively quick to apply, but they both leave a gap in the signal at the line noise frequency, and they can lead to edge artifacts on either side of the line noise frequency.
+The CleanLine and ZapLine options aim to remove the line noise artifact while preserving the true EEG signal at the line noise frequency, with the trade-off of requiring much more processing power (and processing time).
+CleanLine operates primarily in the time domain--it assumes that the line noise signal varies over time, so the regression model it uses to identify and remove that signal also varies over time.
+As a result, it applies this non-stationary model to each channel individually (i.e., it is univariate).
+ZapLine, on the other hand, operates primarily in the spatio-spectral domain, meaning it assumes that the relationships among the electrodes are consistent over time and applies the same model to all channels collectively (i.e., it is multivariate).
+ZapLine's stationarity assumption is often violated in "real-world" data, but CleanLine takes significantly longer to run.
+Some researchers recommend using CleanLine and ZapLine in a complementary fashion (e.g., [Miyakoshi et al., 2021](https://pmc.ncbi.nlm.nih.gov/articles/PMC7873913/)), but this has not been implemented in our code (yet).
+1. **Enter lower cutoff**
+This prompt will only appear if you selected the notch or Butterworth option.
+Input the lower cutoff for the line noise filter (typically 1-2Hz below the line noise frequency).
+1. **Enter higher cutoff**
+This prompt will only appear if you selected the notch or Butterworth option.
+Input the higher cutoff for the line noise filter (typically 1-2Hz above the line noise frequency).
+1. **Are there additional frequencies to reduce?**
+This prompt will only appear if you selected the CleanLine option.
+As mentioned above, very strong line noise can cause additional artifacts at harmonic frequencies.
+Unless you know there are harmonic artifacts in your data, providing additional frequencies is typically unnecessary and will increase processing time.
+1. **Enter the frequencies to pass through noise reduction**
+This prompt will only appear if you selected the CleanLine option and indicated that there are additional frequencies to reduce.
+Input the harmonic frequencies to add to the CleanLine reduction.
+These frequencies will often be multiples of the line noise frequency (e.g., 120Hz), but can also be "partial" multiples (e.g., 30Hz, 90Hz) if the line noise is particularly strong.
+If you are using this option, visual data inspection to identify harmonics is recommended.
+
 # Appendix
 
 ## Check Onset Tags (#sec-onset-tags)
