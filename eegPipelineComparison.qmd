@@ -286,6 +286,42 @@ Input the harmonic frequencies to add to the CleanLine reduction.
 These frequencies will often be multiples of the line noise frequency (e.g., 120Hz), but can also be "partial" multiples (e.g., 30Hz, 90Hz) if the line noise is particularly strong.
 If you are using this option, visual data inspection to identify harmonics is recommended.
 
+### Bad Channel Detection
+
+The prompts for this section vary considerably depending on the pipeline(s) select earlier in the script.
+Pipeline-specific prompts are preceded by the pipeline name and only appear if that pipeline was selected.
+
+1. **Perform bad channel rejection?**
+Indicate whether you would like to *reject* bad channels identified during pre-processing.
+If you choose not to reject bad channels, `MATLAB` will identify bad channels using the default settings and keep them in the data set.
+This can be helpful in cases where you are analyzing a small subset of channels and for analyses that require all data files to have the same channels present.
+If you choose not to reject bad channels, proceed to [Data Cleaning](#sec-data-cleaning).
+1. **HAPPE: Run bad channel rejection before or after wavelet thresholding?**
+Indicate whether bad channels should be removed before or after wavelet thresholding.
+Because wavelet thresholding "flattens" the data amplitude, the bad channel identification parameters differ based on when they are applied.
+Additionally, because wavelet thresholding is a data cleaning step, more channels tend to be rejected if bad channel rejection is applied beforehand.
+1. **APICE: Use custom thresholds?**
+Indicate whether you would like to adjust any of the default APICE parameters for bad channel/artifact detection.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+ Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+1. **NEAR: Use all bad channel detection methods?**
+Indicate whether you would like to use all three of NEAR's bad channel detection methods (flat signals, local outlier factor, and periodogram analysis).
+"Flat signals" include channels identified as having no signal for 5s or more.
+The local outlier factor (LOF) algorithm evaluates signal based on the distances between electrodes and their neighbors and is calculated by comparing how "reachable" a given channel is to how "reachable" its neighbors are.
+If a channel is less reachable than its neighbors, it is considered a potential outlier and removed (for a more detailed explanation, see [Kumaravel et al., 2022](https://doi.org/10.1016/j.dcn.2022.101068)).
+Periodogram analysis is based on findings that motion-related artifacts tend to manifest as increased power in the beta frequency range with concomitant decreased power in the delta and alpha ranges ([Georgieva et al., 2020](https://doi.org/10.3389/fnins.2020.00352)).
+The creators of the NEAR pipeline note that the bad channels identified by periodogram are also identified by the flat signal and LOF methods, so it may not be necessary to implement.
+All three of these methods run using the default settings recommended by the NEAR authors, which are specified in the `parameters.m` script.
+1. **NEAR: Enter bad channel detection methods**
+This prompt will only appear if you chose not to use all bad channel detection methods for NEAR.
+Input the bad channel detection methods you would like to use for the data.
+
+NOTE: RELAX-Jr's bad channel detection is built in to its data cleaning procedures.
+Bad channels are identified using the default settings recommended by the RELAX-Jr authors, which are specified in the `parameters.m` script.
+
+### Data Cleaning (#sec-data-cleaning)
+
 # Appendix
 
 ## Check Onset Tags (#sec-onset-tags)
