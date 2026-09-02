@@ -883,6 +883,8 @@ MODEL: ! A = construct 1; B = construct 2
     A WITH B (ResCov);      ! L1 WP covariance for concurrent B->A
     A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B->A
     B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A->B
+    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A
+    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B
 
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
