@@ -1354,6 +1354,8 @@ MODEL: ! A = construct 1; B = construct 2
     A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A
     A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A
     B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B
+    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A
+    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B
 
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
@@ -1410,7 +1412,7 @@ attached base packages:
 loaded via a namespace (and not attached):
  [1] htmlwidgets_1.6.4 compiler_4.6.1    fastmap_1.2.0     cli_3.6.6        
  [5] tools_4.6.1       htmltools_0.5.9   otel_0.2.0        yaml_2.3.12      
- [9] rmarkdown_2.31    knitr_1.51        jsonlite_2.0.0    xfun_0.60        
+ [9] rmarkdown_2.32    knitr_1.51        jsonlite_2.0.0    xfun_0.60        
 [13] digest_0.6.39     rlang_1.3.0       evaluate_1.0.5   </code></pre>
 </div>
 </div>
@@ -2775,46 +2777,48 @@ loaded via a namespace (and not attached):
 <span id="cb52-887"><a href="#cb52-887" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
 <span id="cb52-888"><a href="#cb52-888" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
 <span id="cb52-889"><a href="#cb52-889" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
-<span id="cb52-890"><a href="#cb52-890" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-891"><a href="#cb52-891" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
-<span id="cb52-892"><a href="#cb52-892" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
-<span id="cb52-893"><a href="#cb52-893" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb52-894"><a href="#cb52-894" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
-<span id="cb52-895"><a href="#cb52-895" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
-<span id="cb52-896"><a href="#cb52-896" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
-<span id="cb52-897"><a href="#cb52-897" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
-<span id="cb52-898"><a href="#cb52-898" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
-<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-900"><a href="#cb52-900" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
-<span id="cb52-901"><a href="#cb52-901" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
-<span id="cb52-902"><a href="#cb52-902" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
-<span id="cb52-903"><a href="#cb52-903" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
-<span id="cb52-904"><a href="#cb52-904" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
-<span id="cb52-905"><a href="#cb52-905" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-906"><a href="#cb52-906" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb52-907"><a href="#cb52-907" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
-<span id="cb52-908"><a href="#cb52-908" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
-<span id="cb52-909"><a href="#cb52-909" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
-<span id="cb52-910"><a href="#cb52-910" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
-<span id="cb52-911"><a href="#cb52-911" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-912"><a href="#cb52-912" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb52-913"><a href="#cb52-913" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
-<span id="cb52-914"><a href="#cb52-914" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb52-915"><a href="#cb52-915" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-916"><a href="#cb52-916" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
+<span id="cb52-890"><a href="#cb52-890" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A</span></span>
+<span id="cb52-891"><a href="#cb52-891" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B</span></span>
+<span id="cb52-892"><a href="#cb52-892" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-893"><a href="#cb52-893" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
+<span id="cb52-894"><a href="#cb52-894" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
+<span id="cb52-895"><a href="#cb52-895" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
+<span id="cb52-896"><a href="#cb52-896" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
+<span id="cb52-897"><a href="#cb52-897" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
+<span id="cb52-898"><a href="#cb52-898" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
+<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
+<span id="cb52-900"><a href="#cb52-900" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
+<span id="cb52-901"><a href="#cb52-901" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-902"><a href="#cb52-902" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
+<span id="cb52-903"><a href="#cb52-903" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
+<span id="cb52-904"><a href="#cb52-904" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
+<span id="cb52-905"><a href="#cb52-905" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
+<span id="cb52-906"><a href="#cb52-906" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
+<span id="cb52-907"><a href="#cb52-907" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-908"><a href="#cb52-908" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb52-909"><a href="#cb52-909" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
+<span id="cb52-910"><a href="#cb52-910" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
+<span id="cb52-911"><a href="#cb52-911" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
+<span id="cb52-912"><a href="#cb52-912" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
+<span id="cb52-913"><a href="#cb52-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-914"><a href="#cb52-914" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb52-915"><a href="#cb52-915" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
+<span id="cb52-916"><a href="#cb52-916" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb52-917"><a href="#cb52-917" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-918"><a href="#cb52-918" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish between (a) time in study versus (b) age at baseline (as a moderator)</span>
-<span id="cb52-919"><a href="#cb52-919" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects)</span>
-<span id="cb52-920"><a href="#cb52-920" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-921"><a href="#cb52-921" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb52-918"><a href="#cb52-918" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
+<span id="cb52-919"><a href="#cb52-919" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-920"><a href="#cb52-920" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish between (a) time in study versus (b) age at baseline (as a moderator)</span>
+<span id="cb52-921"><a href="#cb52-921" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects)</span>
 <span id="cb52-922"><a href="#cb52-922" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-925"><a href="#cb52-925" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb52-926"><a href="#cb52-926" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb52-927"><a href="#cb52-927" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-928"><a href="#cb52-928" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb52-929"><a href="#cb52-929" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb52-930"><a href="#cb52-930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-931"><a href="#cb52-931" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>Ask Dr. Petersen to give you access.</span>
+<span id="cb52-923"><a href="#cb52-923" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb52-924"><a href="#cb52-924" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-927"><a href="#cb52-927" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb52-928"><a href="#cb52-928" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb52-929"><a href="#cb52-929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-930"><a href="#cb52-930" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb52-931"><a href="#cb52-931" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb52-932"><a href="#cb52-932" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-933"><a href="#cb52-933" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>Ask Dr. Petersen to give you access.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
