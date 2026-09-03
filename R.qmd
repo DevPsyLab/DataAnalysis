@@ -678,19 +678,34 @@ roxygen2::roxygenise()
 # 4. Update package version (or can do this manually)
 usethis::use_version()
 
-# 5. Then, build the package: Ctrl-Shift-B
-devtools::build()
-
-# 6. Then, check the package: Ctrl-Shift-E
-devtools::check()
-
-# 7. (Optional) If you want the PDF version of the manual:
-devtools::build_manual()
+# 5. Generate the PDF version of the manual and place it in the `/man/figures/` folder of the package:
+#devtools::build_manual(path = "./man/figures/manual.pdf")
 ```
 
-8. Then, run [`R CMD check`](#sec-rCmdCheck)
+5. Generate the PDF version of the manual and place it in the `/man/figures/` folder of the package using the following code in the terminal (similar to `devtools::build_manual(path = "./man/figures/")`, but can name the file `manual.pdf`):
 
-9. Then, install the package:
+    ```bash
+    cd ./petersenlab
+    R.exe CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
+    ```
+
+6. Either manually or using the terminal, delete the created folder whose name begins with ".Rd2pdf..."—e.g.:
+
+    ```bash
+    rm .Rd2pdf39632 -Recurse -Force
+    ```
+
+```
+# 7. Then, build the package: Ctrl-Shift-B
+devtools::build()
+
+# 8. Then, check the package: Ctrl-Shift-E
+devtools::check()
+```
+
+9. Then, run [`R CMD check`](#sec-rCmdCheck)
+
+10. Then, install the package:
 
 ```{r}
 #| eval: false
@@ -723,10 +738,10 @@ install.packages("NAME_OF_PACKAGE")
 ```{r}
 #| eval: false
 
-devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
+devtools::build() # or: devtools::build(pkg = "E:/Documents/GitHub/petersenlab")
 ```
 
-1. Open terminal in RStudio
+1. Open terminal in RStudio/Positron
     - After the package source (`.tar.gz` file) is built, open a terminal window directly in RStudio by clicking on the "Terminal" tab at the bottom of RStudio
 1. Run `R CMD check --as-cran`
     - In the terminal window, navigate to the directory where your package source (`.tar.gz` file) is located (commonly up one directory):
@@ -735,10 +750,10 @@ devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
     cd ..
     ```
 
-    Then, run `R CMD check --as-cran` followed by the name of your package tarball (making sure to update the package version in the filename). For example:
+    Then, run `R.exe CMD check --as-cran` followed by the name of your package tarball (making sure to update the package version in the filename). For example:
 
     ```bash
-    R CMD check --as-cran petersenlab_1.0.0.tar.gz
+    R.exe CMD check --as-cran petersenlab_1.0.0.tar.gz
     ```
 
 ### Troubleshooting
@@ -749,7 +764,7 @@ devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
 
     ```bash
     cd ./petersenlab
-    R CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
+    R.exe CMD Rd2pdf . --output=man/figures/manual.pdf --force --no-preview --no-clean
     ```
 
 1. Then, delete the created folder whose name begins with ".Rd2pdf..."
