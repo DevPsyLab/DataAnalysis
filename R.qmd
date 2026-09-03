@@ -660,7 +660,7 @@ Before updating a package locally, make sure that it is available in the Posit P
 
 ### Updating the Package
 
-1. To update the package, run the following in `R`:
+To update the package, run the following in `R`:
 
 ```{r}
 #| eval: false
@@ -677,15 +677,20 @@ roxygen2::roxygenise()
 
 # 4. Update package version (or can do this manually)
 usethis::use_version()
+
+# 5. Then, build the package: Ctrl-Shift-B
+devtools::build()
+
+# 6. Then, check the package: Ctrl-Shift-E
+devtools::check()
+
+# 7. (Optional) If you want the PDF version of the manual:
+devtools::build_manual()
 ```
 
-1. Then, build the package: Ctrl-Shift-B
+8. Then, run [`R CMD check`](#sec-rCmdCheck)
 
-1. Then, check the package: Ctrl-Shift-E
-
-1. Then, run [`R CMD check`](#sec-rCmdCheck)
-
-1. Then, install the package:
+9. Then, install the package:
 
 ```{r}
 #| eval: false
