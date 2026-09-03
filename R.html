@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-3419ea62b3ca2d77d3d547f86109e84e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dd177194d8ceb705dd46248952ffb06d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bbd84f0e2d53fa7270638be2227deaec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -1337,9 +1337,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <p><a href="https://packagemanager.posit.co" class="uri">https://packagemanager.posit.co</a></p>
 <section id="updating-the-package" class="level3" data-number="21.1.1"><h3 data-number="21.1.1" class="anchored" data-anchor-id="updating-the-package">
 <span class="header-section-number">21.1.1</span> Updating the Package</h3>
-<ol type="1">
-<li>To update the package, run the following in <code>R</code>:</li>
-</ol>
+<p>To update the package, run the following in <code>R</code>:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 1. Update packages in package environment</span></span>
 <span><span class="fu">renv</span><span class="fu">::</span><span class="fu">upgrade</span><span class="op">(</span><span class="op">)</span></span>
@@ -1352,12 +1350,19 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span><span class="fu">roxygen2</span><span class="fu">::</span><span class="fu">roxygenise</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 4. Update package version (or can do this manually)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_version</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_version</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 5. Then, build the package: Ctrl-Shift-B</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">build</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 6. Then, check the package: Ctrl-Shift-E</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 7. (Optional) If you want the PDF version of the manual:</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">build_manual</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<ol type="1">
-<li><p>Then, build the package: Ctrl-Shift-B</p></li>
-<li><p>Then, check the package: Ctrl-Shift-E</p></li>
+<ol start="8" type="1">
 <li><p>Then, run <a href="#sec-rCmdCheck"><code>R CMD check</code></a></p></li>
 <li><p>Then, install the package:</p></li>
 </ol>
@@ -2847,7 +2852,7 @@ loaded via a namespace (and not attached):
 <span id="cb39-670"><a href="#cb39-670" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-671"><a href="#cb39-671" aria-hidden="true" tabindex="-1"></a><span class="fu">### Updating the Package</span></span>
 <span id="cb39-672"><a href="#cb39-672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-673"><a href="#cb39-673" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>To update the package, run the following in <span class="in">`R`</span>:</span>
+<span id="cb39-673"><a href="#cb39-673" aria-hidden="true" tabindex="-1"></a>To update the package, run the following in <span class="in">`R`</span>:</span>
 <span id="cb39-674"><a href="#cb39-674" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-677"><a href="#cb39-677" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb39-678"><a href="#cb39-678" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
@@ -2864,338 +2869,343 @@ loaded via a namespace (and not attached):
 <span id="cb39-689"><a href="#cb39-689" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-690"><a href="#cb39-690" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Update package version (or can do this manually)</span></span>
 <span id="cb39-691"><a href="#cb39-691" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_version</span>()</span>
-<span id="cb39-692"><a href="#cb39-692" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-693"><a href="#cb39-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-694"><a href="#cb39-694" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, build the package: Ctrl-Shift-B</span>
+<span id="cb39-692"><a href="#cb39-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-693"><a href="#cb39-693" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Then, build the package: Ctrl-Shift-B</span></span>
+<span id="cb39-694"><a href="#cb39-694" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>()</span>
 <span id="cb39-695"><a href="#cb39-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-696"><a href="#cb39-696" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, check the package: Ctrl-Shift-E</span>
-<span id="cb39-697"><a href="#cb39-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-698"><a href="#cb39-698" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, run <span class="co">[</span><span class="ot">`R CMD check`</span><span class="co">](#sec-rCmdCheck)</span></span>
-<span id="cb39-699"><a href="#cb39-699" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-700"><a href="#cb39-700" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, install the package:</span>
-<span id="cb39-701"><a href="#cb39-701" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-704"><a href="#cb39-704" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-705"><a href="#cb39-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-696"><a href="#cb39-696" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Then, check the package: Ctrl-Shift-E</span></span>
+<span id="cb39-697"><a href="#cb39-697" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span>
+<span id="cb39-698"><a href="#cb39-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-699"><a href="#cb39-699" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. (Optional) If you want the PDF version of the manual:</span></span>
+<span id="cb39-700"><a href="#cb39-700" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build_manual</span>()</span>
+<span id="cb39-701"><a href="#cb39-701" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-702"><a href="#cb39-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-703"><a href="#cb39-703" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>Then, run <span class="co">[</span><span class="ot">`R CMD check`</span><span class="co">](#sec-rCmdCheck)</span></span>
+<span id="cb39-704"><a href="#cb39-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-705"><a href="#cb39-705" aria-hidden="true" tabindex="-1"></a><span class="ss">9. </span>Then, install the package:</span>
 <span id="cb39-706"><a href="#cb39-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-707"><a href="#cb39-707" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"C:/R/Packages/petersenlab"</span>) <span class="co">#PC</span></span>
-<span id="cb39-708"><a href="#cb39-708" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"/Library/Frameworks/R.framework/Packages/petersenlab"</span>) <span class="co">#Mac</span></span>
-<span id="cb39-709"><a href="#cb39-709" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-710"><a href="#cb39-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-711"><a href="#cb39-711" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installing Packages</span></span>
-<span id="cb39-712"><a href="#cb39-712" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-713"><a href="#cb39-713" aria-hidden="true" tabindex="-1"></a>To install new packages in the package environment, run the following in <span class="in">`R`</span>:</span>
-<span id="cb39-714"><a href="#cb39-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-717"><a href="#cb39-717" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-718"><a href="#cb39-718" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-709"><a href="#cb39-709" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-710"><a href="#cb39-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-711"><a href="#cb39-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-712"><a href="#cb39-712" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"C:/R/Packages/petersenlab"</span>) <span class="co">#PC</span></span>
+<span id="cb39-713"><a href="#cb39-713" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"/Library/Frameworks/R.framework/Packages/petersenlab"</span>) <span class="co">#Mac</span></span>
+<span id="cb39-714"><a href="#cb39-714" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-715"><a href="#cb39-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-716"><a href="#cb39-716" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installing Packages</span></span>
+<span id="cb39-717"><a href="#cb39-717" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-718"><a href="#cb39-718" aria-hidden="true" tabindex="-1"></a>To install new packages in the package environment, run the following in <span class="in">`R`</span>:</span>
 <span id="cb39-719"><a href="#cb39-719" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-720"><a href="#cb39-720" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"NAME_OF_PACKAGE"</span>)</span>
-<span id="cb39-721"><a href="#cb39-721" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-722"><a href="#cb39-722" aria-hidden="true" tabindex="-1"></a>or:</span>
-<span id="cb39-725"><a href="#cb39-725" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-726"><a href="#cb39-726" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb39-727"><a href="#cb39-727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-728"><a href="#cb39-728" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"NAME_OF_PACKAGE"</span>)</span>
-<span id="cb39-729"><a href="#cb39-729" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-730"><a href="#cb39-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-731"><a href="#cb39-731" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R CMD check` {#sec-rCmdCheck}</span></span>
+<span id="cb39-722"><a href="#cb39-722" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-723"><a href="#cb39-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-724"><a href="#cb39-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-725"><a href="#cb39-725" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"NAME_OF_PACKAGE"</span>)</span>
+<span id="cb39-726"><a href="#cb39-726" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-727"><a href="#cb39-727" aria-hidden="true" tabindex="-1"></a>or:</span>
+<span id="cb39-730"><a href="#cb39-730" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-731"><a href="#cb39-731" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-732"><a href="#cb39-732" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-733"><a href="#cb39-733" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Build the source package (<span class="in">`.tar.gz`</span> file)</span>
-<span id="cb39-734"><a href="#cb39-734" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Click on the "Build" tab in the top-right pane of RStudio, and then click "Build Source Package", or run the following code in the <span class="in">`R`</span> console:</span>
+<span id="cb39-733"><a href="#cb39-733" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"NAME_OF_PACKAGE"</span>)</span>
+<span id="cb39-734"><a href="#cb39-734" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-735"><a href="#cb39-735" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-738"><a href="#cb39-738" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-739"><a href="#cb39-739" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-736"><a href="#cb39-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R CMD check` {#sec-rCmdCheck}</span></span>
+<span id="cb39-737"><a href="#cb39-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-738"><a href="#cb39-738" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Build the source package (<span class="in">`.tar.gz`</span> file)</span>
+<span id="cb39-739"><a href="#cb39-739" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Click on the "Build" tab in the top-right pane of RStudio, and then click "Build Source Package", or run the following code in the <span class="in">`R`</span> console:</span>
 <span id="cb39-740"><a href="#cb39-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-741"><a href="#cb39-741" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab"</span>)</span>
-<span id="cb39-742"><a href="#cb39-742" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-743"><a href="#cb39-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-744"><a href="#cb39-744" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open terminal in RStudio</span>
-<span id="cb39-745"><a href="#cb39-745" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>After the package source (<span class="in">`.tar.gz`</span> file) is built, open a terminal window directly in RStudio by clicking on the "Terminal" tab at the bottom of RStudio</span>
-<span id="cb39-746"><a href="#cb39-746" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run <span class="in">`R CMD check --as-cran`</span></span>
-<span id="cb39-747"><a href="#cb39-747" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>In the terminal window, navigate to the directory where your package source (<span class="in">`.tar.gz`</span> file) is located (commonly up one directory):</span>
+<span id="cb39-743"><a href="#cb39-743" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-744"><a href="#cb39-744" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-745"><a href="#cb39-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-746"><a href="#cb39-746" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab"</span>)</span>
+<span id="cb39-747"><a href="#cb39-747" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-748"><a href="#cb39-748" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-749"><a href="#cb39-749" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
-<span id="cb39-750"><a href="#cb39-750" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ..</span>
-<span id="cb39-751"><a href="#cb39-751" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb39-752"><a href="#cb39-752" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-753"><a href="#cb39-753" aria-hidden="true" tabindex="-1"></a><span class="in">    Then, run `R CMD check --as-cran` followed by the name of your package tarball (making sure to update the package version in the filename). For example:</span></span>
-<span id="cb39-754"><a href="#cb39-754" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-755"><a href="#cb39-755" aria-hidden="true" tabindex="-1"></a><span class="in">    ```bash</span></span>
-<span id="cb39-756"><a href="#cb39-756" aria-hidden="true" tabindex="-1"></a><span class="in">    R CMD check --as-cran petersenlab_1.0.0.tar.gz</span></span>
-<span id="cb39-757"><a href="#cb39-757" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb39-758"><a href="#cb39-758" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-759"><a href="#cb39-759" aria-hidden="true" tabindex="-1"></a><span class="fu">### Troubleshooting</span></span>
-<span id="cb39-760"><a href="#cb39-760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-761"><a href="#cb39-761" aria-hidden="true" tabindex="-1"></a><span class="fu">#### If errors compiling the PDF manual</span></span>
-<span id="cb39-762"><a href="#cb39-762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-763"><a href="#cb39-763" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the terminal:</span>
-<span id="cb39-764"><a href="#cb39-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-765"><a href="#cb39-765" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
-<span id="cb39-766"><a href="#cb39-766" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ./petersenlab</span>
-<span id="cb39-767"><a href="#cb39-767" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> CMD Rd2pdf . <span class="at">--output</span><span class="op">=</span>man/figures/manual.pdf <span class="at">--force</span> <span class="at">--no-preview</span> <span class="at">--no-clean</span></span>
-<span id="cb39-768"><a href="#cb39-768" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb39-749"><a href="#cb39-749" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open terminal in RStudio</span>
+<span id="cb39-750"><a href="#cb39-750" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>After the package source (<span class="in">`.tar.gz`</span> file) is built, open a terminal window directly in RStudio by clicking on the "Terminal" tab at the bottom of RStudio</span>
+<span id="cb39-751"><a href="#cb39-751" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run <span class="in">`R CMD check --as-cran`</span></span>
+<span id="cb39-752"><a href="#cb39-752" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>In the terminal window, navigate to the directory where your package source (<span class="in">`.tar.gz`</span> file) is located (commonly up one directory):</span>
+<span id="cb39-753"><a href="#cb39-753" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-754"><a href="#cb39-754" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
+<span id="cb39-755"><a href="#cb39-755" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ..</span>
+<span id="cb39-756"><a href="#cb39-756" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb39-757"><a href="#cb39-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-758"><a href="#cb39-758" aria-hidden="true" tabindex="-1"></a><span class="in">    Then, run `R CMD check --as-cran` followed by the name of your package tarball (making sure to update the package version in the filename). For example:</span></span>
+<span id="cb39-759"><a href="#cb39-759" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-760"><a href="#cb39-760" aria-hidden="true" tabindex="-1"></a><span class="in">    ```bash</span></span>
+<span id="cb39-761"><a href="#cb39-761" aria-hidden="true" tabindex="-1"></a><span class="in">    R CMD check --as-cran petersenlab_1.0.0.tar.gz</span></span>
+<span id="cb39-762"><a href="#cb39-762" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb39-763"><a href="#cb39-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-764"><a href="#cb39-764" aria-hidden="true" tabindex="-1"></a><span class="fu">### Troubleshooting</span></span>
+<span id="cb39-765"><a href="#cb39-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-766"><a href="#cb39-766" aria-hidden="true" tabindex="-1"></a><span class="fu">#### If errors compiling the PDF manual</span></span>
+<span id="cb39-767"><a href="#cb39-767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-768"><a href="#cb39-768" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the terminal:</span>
 <span id="cb39-769"><a href="#cb39-769" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-770"><a href="#cb39-770" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, delete the created folder whose name begins with ".Rd2pdf..."</span>
-<span id="cb39-771"><a href="#cb39-771" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-772"><a href="#cb39-772" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the R Console, build the source package in <span class="in">`R`</span> (or using the instructions described <span class="co">[</span><span class="ot">above</span><span class="co">](#sec-rCmdCheck)</span>):</span>
-<span id="cb39-773"><a href="#cb39-773" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-776"><a href="#cb39-776" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-777"><a href="#cb39-777" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-770"><a href="#cb39-770" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
+<span id="cb39-771"><a href="#cb39-771" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ./petersenlab</span>
+<span id="cb39-772"><a href="#cb39-772" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> CMD Rd2pdf . <span class="at">--output</span><span class="op">=</span>man/figures/manual.pdf <span class="at">--force</span> <span class="at">--no-preview</span> <span class="at">--no-clean</span></span>
+<span id="cb39-773"><a href="#cb39-773" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb39-774"><a href="#cb39-774" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-775"><a href="#cb39-775" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Then, delete the created folder whose name begins with ".Rd2pdf..."</span>
+<span id="cb39-776"><a href="#cb39-776" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-777"><a href="#cb39-777" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the R Console, build the source package in <span class="in">`R`</span> (or using the instructions described <span class="co">[</span><span class="ot">above</span><span class="co">](#sec-rCmdCheck)</span>):</span>
 <span id="cb39-778"><a href="#cb39-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-779"><a href="#cb39-779" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab"</span>)</span>
-<span id="cb39-780"><a href="#cb39-780" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-781"><a href="#cb39-781" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-782"><a href="#cb39-782" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the terminal (making sure to update the package version in the filename):</span>
+<span id="cb39-781"><a href="#cb39-781" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-782"><a href="#cb39-782" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-783"><a href="#cb39-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-784"><a href="#cb39-784" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
-<span id="cb39-785"><a href="#cb39-785" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ..</span>
-<span id="cb39-786"><a href="#cb39-786" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> CMD check <span class="at">--as-cran</span> petersenlab_1.0.0.tar.gz</span>
-<span id="cb39-787"><a href="#cb39-787" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb39-784"><a href="#cb39-784" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab"</span>)</span>
+<span id="cb39-785"><a href="#cb39-785" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-786"><a href="#cb39-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-787"><a href="#cb39-787" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the terminal (making sure to update the package version in the filename):</span>
 <span id="cb39-788"><a href="#cb39-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-789"><a href="#cb39-789" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `no visible binding for global variable`; `Undefined global functions or variables`</span></span>
-<span id="cb39-790"><a href="#cb39-790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-791"><a href="#cb39-791" aria-hidden="true" tabindex="-1"></a>For example:</span>
-<span id="cb39-792"><a href="#cb39-792" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb39-793"><a href="#cb39-793" aria-hidden="true" tabindex="-1"></a>no visible binding <span class="cf">for</span> global variable</span>
-<span id="cb39-794"><a href="#cb39-794" aria-hidden="true" tabindex="-1"></a>    <span class="st">'moderatorVal_centered'</span></span>
-<span id="cb39-795"><a href="#cb39-795" aria-hidden="true" tabindex="-1"></a>  Undefined global functions or variables<span class="sc">:</span></span>
-<span id="cb39-796"><a href="#cb39-796" aria-hidden="true" tabindex="-1"></a>    moderatorVal_centered predictorVal_centered</span>
-<span id="cb39-797"><a href="#cb39-797" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-798"><a href="#cb39-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-799"><a href="#cb39-799" aria-hidden="true" tabindex="-1"></a>Solution: set each variable to <span class="in">`NULL`</span> in the package function before it is mentioned.</span>
-<span id="cb39-800"><a href="#cb39-800" aria-hidden="true" tabindex="-1"></a>For example:</span>
-<span id="cb39-801"><a href="#cb39-801" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-802"><a href="#cb39-802" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb39-803"><a href="#cb39-803" aria-hidden="true" tabindex="-1"></a>predictorVal_centered <span class="ot">&lt;-</span> moderatorVal_centered <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb39-804"><a href="#cb39-804" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-805"><a href="#cb39-805" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-806"><a href="#cb39-806" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R CMD check` via GitHub Actions</span></span>
-<span id="cb39-807"><a href="#cb39-807" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-810"><a href="#cb39-810" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-811"><a href="#cb39-811" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-789"><a href="#cb39-789" aria-hidden="true" tabindex="-1"></a>    <span class="in">```bash</span></span>
+<span id="cb39-790"><a href="#cb39-790" aria-hidden="true" tabindex="-1"></a>    <span class="bu">cd</span> ..</span>
+<span id="cb39-791"><a href="#cb39-791" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> CMD check <span class="at">--as-cran</span> petersenlab_1.0.0.tar.gz</span>
+<span id="cb39-792"><a href="#cb39-792" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb39-793"><a href="#cb39-793" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-794"><a href="#cb39-794" aria-hidden="true" tabindex="-1"></a><span class="fu">#### `no visible binding for global variable`; `Undefined global functions or variables`</span></span>
+<span id="cb39-795"><a href="#cb39-795" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-796"><a href="#cb39-796" aria-hidden="true" tabindex="-1"></a>For example:</span>
+<span id="cb39-797"><a href="#cb39-797" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb39-798"><a href="#cb39-798" aria-hidden="true" tabindex="-1"></a>no visible binding <span class="cf">for</span> global variable</span>
+<span id="cb39-799"><a href="#cb39-799" aria-hidden="true" tabindex="-1"></a>    <span class="st">'moderatorVal_centered'</span></span>
+<span id="cb39-800"><a href="#cb39-800" aria-hidden="true" tabindex="-1"></a>  Undefined global functions or variables<span class="sc">:</span></span>
+<span id="cb39-801"><a href="#cb39-801" aria-hidden="true" tabindex="-1"></a>    moderatorVal_centered predictorVal_centered</span>
+<span id="cb39-802"><a href="#cb39-802" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-803"><a href="#cb39-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-804"><a href="#cb39-804" aria-hidden="true" tabindex="-1"></a>Solution: set each variable to <span class="in">`NULL`</span> in the package function before it is mentioned.</span>
+<span id="cb39-805"><a href="#cb39-805" aria-hidden="true" tabindex="-1"></a>For example:</span>
+<span id="cb39-806"><a href="#cb39-806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-807"><a href="#cb39-807" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb39-808"><a href="#cb39-808" aria-hidden="true" tabindex="-1"></a>predictorVal_centered <span class="ot">&lt;-</span> moderatorVal_centered <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb39-809"><a href="#cb39-809" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-810"><a href="#cb39-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-811"><a href="#cb39-811" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R CMD check` via GitHub Actions</span></span>
 <span id="cb39-812"><a href="#cb39-812" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-813"><a href="#cb39-813" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github_action</span>(<span class="st">"check-standard"</span>)</span>
-<span id="cb39-814"><a href="#cb39-814" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-815"><a href="#cb39-815" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-816"><a href="#cb39-816" aria-hidden="true" tabindex="-1"></a><span class="fu">## Useful keyboard shortcuts for package authoring:</span></span>
+<span id="cb39-815"><a href="#cb39-815" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-816"><a href="#cb39-816" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-817"><a href="#cb39-817" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-818"><a href="#cb39-818" aria-hidden="true" tabindex="-1"></a> Install Package:           'Ctrl + Shift + B'</span>
-<span id="cb39-819"><a href="#cb39-819" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb39-820"><a href="#cb39-820" aria-hidden="true" tabindex="-1"></a> Check Package:             'Ctrl + Shift + E'</span>
-<span id="cb39-821"><a href="#cb39-821" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb39-822"><a href="#cb39-822" aria-hidden="true" tabindex="-1"></a> Test Package:              'Ctrl + Shift + T'</span>
-<span id="cb39-823"><a href="#cb39-823" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-826"><a href="#cb39-826" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-827"><a href="#cb39-827" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-818"><a href="#cb39-818" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github_action</span>(<span class="st">"check-standard"</span>)</span>
+<span id="cb39-819"><a href="#cb39-819" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-820"><a href="#cb39-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-821"><a href="#cb39-821" aria-hidden="true" tabindex="-1"></a><span class="fu">## Useful keyboard shortcuts for package authoring:</span></span>
+<span id="cb39-822"><a href="#cb39-822" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-823"><a href="#cb39-823" aria-hidden="true" tabindex="-1"></a> Install Package:           'Ctrl + Shift + B'</span>
+<span id="cb39-824"><a href="#cb39-824" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb39-825"><a href="#cb39-825" aria-hidden="true" tabindex="-1"></a> Check Package:             'Ctrl + Shift + E'</span>
+<span id="cb39-826"><a href="#cb39-826" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb39-827"><a href="#cb39-827" aria-hidden="true" tabindex="-1"></a> Test Package:              'Ctrl + Shift + T'</span>
 <span id="cb39-828"><a href="#cb39-828" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-829"><a href="#cb39-829" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"C:/R/Packages/petersenlab"</span>)</span>
-<span id="cb39-830"><a href="#cb39-830" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span>
-<span id="cb39-831"><a href="#cb39-831" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>()</span>
-<span id="cb39-832"><a href="#cb39-832" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-831"><a href="#cb39-831" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-832"><a href="#cb39-832" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-833"><a href="#cb39-833" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-834"><a href="#cb39-834" aria-hidden="true" tabindex="-1"></a><span class="fu">## `pkgdown`</span></span>
-<span id="cb39-835"><a href="#cb39-835" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-836"><a href="#cb39-836" aria-hidden="true" tabindex="-1"></a>Run once to configure your package to use pkgdown:</span>
-<span id="cb39-837"><a href="#cb39-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-840"><a href="#cb39-840" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-841"><a href="#cb39-841" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-834"><a href="#cb39-834" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>(<span class="st">"C:/R/Packages/petersenlab"</span>)</span>
+<span id="cb39-835"><a href="#cb39-835" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span>
+<span id="cb39-836"><a href="#cb39-836" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">install</span>()</span>
+<span id="cb39-837"><a href="#cb39-837" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-838"><a href="#cb39-838" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-839"><a href="#cb39-839" aria-hidden="true" tabindex="-1"></a><span class="fu">## `pkgdown`</span></span>
+<span id="cb39-840"><a href="#cb39-840" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-841"><a href="#cb39-841" aria-hidden="true" tabindex="-1"></a>Run once to configure your package to use pkgdown:</span>
 <span id="cb39-842"><a href="#cb39-842" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-843"><a href="#cb39-843" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
-<span id="cb39-844"><a href="#cb39-844" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-845"><a href="#cb39-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-846"><a href="#cb39-846" aria-hidden="true" tabindex="-1"></a>Then use <span class="in">`pkgdown`</span> to build your website:</span>
+<span id="cb39-845"><a href="#cb39-845" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-846"><a href="#cb39-846" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-847"><a href="#cb39-847" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-850"><a href="#cb39-850" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-851"><a href="#cb39-851" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-848"><a href="#cb39-848" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
+<span id="cb39-849"><a href="#cb39-849" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-850"><a href="#cb39-850" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-851"><a href="#cb39-851" aria-hidden="true" tabindex="-1"></a>Then use <span class="in">`pkgdown`</span> to build your website:</span>
 <span id="cb39-852"><a href="#cb39-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-853"><a href="#cb39-853" aria-hidden="true" tabindex="-1"></a>pkgdown<span class="sc">::</span><span class="fu">build_site</span>()</span>
-<span id="cb39-854"><a href="#cb39-854" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-855"><a href="#cb39-855" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-856"><a href="#cb39-856" aria-hidden="true" tabindex="-1"></a><span class="fu">## Steps to Add Functions</span></span>
+<span id="cb39-855"><a href="#cb39-855" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-856"><a href="#cb39-856" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb39-857"><a href="#cb39-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-858"><a href="#cb39-858" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add <span class="in">`.R`</span> file with the function</span>
-<span id="cb39-859"><a href="#cb39-859" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the function to the <span class="in">`_pkgdown.yml`</span> file</span>
-<span id="cb39-860"><a href="#cb39-860" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update version number</span>
-<span id="cb39-861"><a href="#cb39-861" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::upgrade()`</span></span>
-<span id="cb39-862"><a href="#cb39-862" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::update()`</span></span>
-<span id="cb39-863"><a href="#cb39-863" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::snapshot()`</span></span>
-<span id="cb39-864"><a href="#cb39-864" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`roxygen2::roxygenise()`</span></span>
-<span id="cb39-865"><a href="#cb39-865" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install Package: 'Ctrl + Shift + B'</span>
-<span id="cb39-866"><a href="#cb39-866" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Check Package: 'Ctrl + Shift + E'</span>
-<span id="cb39-867"><a href="#cb39-867" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`R CMD check`</span></span>
-<span id="cb39-868"><a href="#cb39-868" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Commit and push changes</span>
-<span id="cb39-869"><a href="#cb39-869" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update release version in GitHub</span>
-<span id="cb39-870"><a href="#cb39-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-871"><a href="#cb39-871" aria-hidden="true" tabindex="-1"></a><span class="fu">## Add sub-packages</span></span>
-<span id="cb39-872"><a href="#cb39-872" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-875"><a href="#cb39-875" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-876"><a href="#cb39-876" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-858"><a href="#cb39-858" aria-hidden="true" tabindex="-1"></a>pkgdown<span class="sc">::</span><span class="fu">build_site</span>()</span>
+<span id="cb39-859"><a href="#cb39-859" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-860"><a href="#cb39-860" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-861"><a href="#cb39-861" aria-hidden="true" tabindex="-1"></a><span class="fu">## Steps to Add Functions</span></span>
+<span id="cb39-862"><a href="#cb39-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-863"><a href="#cb39-863" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add <span class="in">`.R`</span> file with the function</span>
+<span id="cb39-864"><a href="#cb39-864" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the function to the <span class="in">`_pkgdown.yml`</span> file</span>
+<span id="cb39-865"><a href="#cb39-865" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update version number</span>
+<span id="cb39-866"><a href="#cb39-866" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::upgrade()`</span></span>
+<span id="cb39-867"><a href="#cb39-867" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::update()`</span></span>
+<span id="cb39-868"><a href="#cb39-868" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`renv::snapshot()`</span></span>
+<span id="cb39-869"><a href="#cb39-869" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`roxygen2::roxygenise()`</span></span>
+<span id="cb39-870"><a href="#cb39-870" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install Package: 'Ctrl + Shift + B'</span>
+<span id="cb39-871"><a href="#cb39-871" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Check Package: 'Ctrl + Shift + E'</span>
+<span id="cb39-872"><a href="#cb39-872" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`R CMD check`</span></span>
+<span id="cb39-873"><a href="#cb39-873" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Commit and push changes</span>
+<span id="cb39-874"><a href="#cb39-874" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update release version in GitHub</span>
+<span id="cb39-875"><a href="#cb39-875" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-876"><a href="#cb39-876" aria-hidden="true" tabindex="-1"></a><span class="fu">## Add sub-packages</span></span>
 <span id="cb39-877"><a href="#cb39-877" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-878"><a href="#cb39-878" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1"</span>)</span>
-<span id="cb39-879"><a href="#cb39-879" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2"</span>)</span>
-<span id="cb39-880"><a href="#cb39-880" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-881"><a href="#cb39-881" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1_0.1.0.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">source =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-882"><a href="#cb39-882" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">source =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-883"><a href="#cb39-883" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-884"><a href="#cb39-884" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>)</span>
-<span id="cb39-885"><a href="#cb39-885" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>)</span>
-<span id="cb39-886"><a href="#cb39-886" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-887"><a href="#cb39-887" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-888"><a href="#cb39-888" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submit Package to CRAN</span></span>
-<span id="cb39-889"><a href="#cb39-889" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-890"><a href="#cb39-890" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://cran.r-project.org/submit.html&gt;</span></span>
-<span id="cb39-891"><a href="#cb39-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-892"><a href="#cb39-892" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
-<span id="cb39-893"><a href="#cb39-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-894"><a href="#cb39-894" aria-hidden="true" tabindex="-1"></a>Official documentation for CRAN:</span>
-<span id="cb39-895"><a href="#cb39-895" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-896"><a href="#cb39-896" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://cran.r-project.org/doc/manuals/R-exts.html&gt;</span></span>
-<span id="cb39-897"><a href="#cb39-897" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-898"><a href="#cb39-898" aria-hidden="true" tabindex="-1"></a>Unofficial documentation:</span>
-<span id="cb39-899"><a href="#cb39-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-900"><a href="#cb39-900" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://rpubs.com/YaRrr/rpackageintro&gt;</span></span>
-<span id="cb39-901"><a href="#cb39-901" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://r-pkgs.org&gt;</span></span>
-<span id="cb39-902"><a href="#cb39-902" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf&gt;</span></span>
-<span id="cb39-903"><a href="#cb39-903" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://portal.stats.ox.ac.uk/userdata/ruth/APTS2012/Rcourse10.pdf&gt;</span></span>
-<span id="cb39-904"><a href="#cb39-904" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://web.mit.edu/insong/www/pdf/rpackage_instructions.pdf&gt;</span></span>
-<span id="cb39-905"><a href="#cb39-905" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/&gt;</span></span>
-<span id="cb39-906"><a href="#cb39-906" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-907"><a href="#cb39-907" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Package Development Tasks</span></span>
-<span id="cb39-908"><a href="#cb39-908" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-909"><a href="#cb39-909" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://usethis.r-lib.org/index.html&gt;</span></span>
-<span id="cb39-910"><a href="#cb39-910" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-911"><a href="#cb39-911" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Documentation</span></span>
-<span id="cb39-912"><a href="#cb39-912" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-913"><a href="#cb39-913" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://github.com/r-lib/roxygen2#roxygen2&gt;</span></span>
-<span id="cb39-914"><a href="#cb39-914" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/&gt;</span></span>
+<span id="cb39-880"><a href="#cb39-880" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-881"><a href="#cb39-881" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-882"><a href="#cb39-882" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-883"><a href="#cb39-883" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1"</span>)</span>
+<span id="cb39-884"><a href="#cb39-884" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build</span>(<span class="at">pkg =</span> <span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2"</span>)</span>
+<span id="cb39-885"><a href="#cb39-885" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-886"><a href="#cb39-886" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage1_0.1.0.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">source =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-887"><a href="#cb39-887" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">source =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-888"><a href="#cb39-888" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-889"><a href="#cb39-889" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>)</span>
+<span id="cb39-890"><a href="#cb39-890" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">"D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz"</span>)</span>
+<span id="cb39-891"><a href="#cb39-891" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-892"><a href="#cb39-892" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-893"><a href="#cb39-893" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submit Package to CRAN</span></span>
+<span id="cb39-894"><a href="#cb39-894" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-895"><a href="#cb39-895" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://cran.r-project.org/submit.html&gt;</span></span>
+<span id="cb39-896"><a href="#cb39-896" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-897"><a href="#cb39-897" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb39-898"><a href="#cb39-898" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-899"><a href="#cb39-899" aria-hidden="true" tabindex="-1"></a>Official documentation for CRAN:</span>
+<span id="cb39-900"><a href="#cb39-900" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-901"><a href="#cb39-901" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://cran.r-project.org/doc/manuals/R-exts.html&gt;</span></span>
+<span id="cb39-902"><a href="#cb39-902" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-903"><a href="#cb39-903" aria-hidden="true" tabindex="-1"></a>Unofficial documentation:</span>
+<span id="cb39-904"><a href="#cb39-904" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-905"><a href="#cb39-905" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://rpubs.com/YaRrr/rpackageintro&gt;</span></span>
+<span id="cb39-906"><a href="#cb39-906" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://r-pkgs.org&gt;</span></span>
+<span id="cb39-907"><a href="#cb39-907" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf&gt;</span></span>
+<span id="cb39-908"><a href="#cb39-908" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://portal.stats.ox.ac.uk/userdata/ruth/APTS2012/Rcourse10.pdf&gt;</span></span>
+<span id="cb39-909"><a href="#cb39-909" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://web.mit.edu/insong/www/pdf/rpackage_instructions.pdf&gt;</span></span>
+<span id="cb39-910"><a href="#cb39-910" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/&gt;</span></span>
+<span id="cb39-911"><a href="#cb39-911" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-912"><a href="#cb39-912" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Package Development Tasks</span></span>
+<span id="cb39-913"><a href="#cb39-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-914"><a href="#cb39-914" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://usethis.r-lib.org/index.html&gt;</span></span>
 <span id="cb39-915"><a href="#cb39-915" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-916"><a href="#cb39-916" aria-hidden="true" tabindex="-1"></a><span class="fu">### Creating Vignettes</span></span>
+<span id="cb39-916"><a href="#cb39-916" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Documentation</span></span>
 <span id="cb39-917"><a href="#cb39-917" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-918"><a href="#cb39-918" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://bookdown.org/yihui/rmarkdown-cookbook/package-vignette.html&gt;</span></span>
-<span id="cb39-919"><a href="#cb39-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-920"><a href="#cb39-920" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Licensing</span></span>
-<span id="cb39-921"><a href="#cb39-921" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-922"><a href="#cb39-922" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://usethis.r-lib.org/reference/licenses.html&gt;</span></span>
-<span id="cb39-923"><a href="#cb39-923" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-924"><a href="#cb39-924" aria-hidden="true" tabindex="-1"></a><span class="fu"># Troubleshooting {#sec-troubleshootingR}</span></span>
-<span id="cb39-925"><a href="#cb39-925" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-926"><a href="#cb39-926" aria-hidden="true" tabindex="-1"></a>To troubleshoot <span class="in">`R`</span> issues, be resourceful.</span>
-<span id="cb39-927"><a href="#cb39-927" aria-hidden="true" tabindex="-1"></a>Try googling the error message or issue you are experiencing.</span>
-<span id="cb39-928"><a href="#cb39-928" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-questions)</span> for a list of places you can pose <span class="in">`R`</span>-related questions for help.</span>
-<span id="cb39-929"><a href="#cb39-929" aria-hidden="true" tabindex="-1"></a>In addition, particular errors/warnings/issues are included below:</span>
+<span id="cb39-918"><a href="#cb39-918" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://github.com/r-lib/roxygen2#roxygen2&gt;</span></span>
+<span id="cb39-919"><a href="#cb39-919" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/&gt;</span></span>
+<span id="cb39-920"><a href="#cb39-920" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-921"><a href="#cb39-921" aria-hidden="true" tabindex="-1"></a><span class="fu">### Creating Vignettes</span></span>
+<span id="cb39-922"><a href="#cb39-922" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-923"><a href="#cb39-923" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://bookdown.org/yihui/rmarkdown-cookbook/package-vignette.html&gt;</span></span>
+<span id="cb39-924"><a href="#cb39-924" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-925"><a href="#cb39-925" aria-hidden="true" tabindex="-1"></a><span class="fu">### For Licensing</span></span>
+<span id="cb39-926"><a href="#cb39-926" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-927"><a href="#cb39-927" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="ot">&lt;https://usethis.r-lib.org/reference/licenses.html&gt;</span></span>
+<span id="cb39-928"><a href="#cb39-928" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-929"><a href="#cb39-929" aria-hidden="true" tabindex="-1"></a><span class="fu"># Troubleshooting {#sec-troubleshootingR}</span></span>
 <span id="cb39-930"><a href="#cb39-930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-931"><a href="#cb39-931" aria-hidden="true" tabindex="-1"></a><span class="fu">## General Troubleshooting Tips</span></span>
-<span id="cb39-932"><a href="#cb39-932" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-933"><a href="#cb39-933" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Run code line-by-line to identify the source of the error**</span>
-<span id="cb39-934"><a href="#cb39-934" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>If you are using RStudio, a red line will often appear on the lefthand side of the screen to indicate the particular line(s) of code that result in an error</span>
-<span id="cb39-935"><a href="#cb39-935" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>It may be useful to clear your working environment in R before trying to diagnose an error to be sure that you are not experiencing any interference from existing objects in the environment</span>
-<span id="cb39-936"><a href="#cb39-936" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Running code line-by-line is particularly useful because it allows you to inspect the data at each step of its processing</span>
-<span id="cb39-937"><a href="#cb39-937" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Data issues are commonly the culprit of code errors (see below)</span>
-<span id="cb39-938"><a href="#cb39-938" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Check for typos**</span>
-<span id="cb39-939"><a href="#cb39-939" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Are all brackets/parentheses/etc. closed? </span>
-<span id="cb39-940"><a href="#cb39-940" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Does the object/variable that you are referring to exist? (*If the object does not exisit, you will likely get an error message indicating `[object name] not found`*)</span>
-<span id="cb39-941"><a href="#cb39-941" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Has it been defined somewhere prior in the code? </span>
-<span id="cb39-942"><a href="#cb39-942" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Does it depend on something else to be created? </span>
-<span id="cb39-943"><a href="#cb39-943" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Is its name spelled correctly? </span>
-<span id="cb39-944"><a href="#cb39-944" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Highlighting the object or variable in question and using <span class="in">`CTRL-F`</span> to search for it is a good way to check these things</span>
-<span id="cb39-945"><a href="#cb39-945" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Did you spell the function you want to use correctly?</span>
-<span id="cb39-946"><a href="#cb39-946" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Do you have commas separating items within a list/function/etc.?</span>
-<span id="cb39-947"><a href="#cb39-947" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Does your working environment have what it needs?**</span>
-<span id="cb39-948"><a href="#cb39-948" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Are all necessary packages/libraries installed? </span>
-<span id="cb39-949"><a href="#cb39-949" aria-hidden="true" tabindex="-1"></a>    Do any require an update?</span>
-<span id="cb39-950"><a href="#cb39-950" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Are all expected objects (dataframes, lists, environment variables, etc) present? </span>
-<span id="cb39-951"><a href="#cb39-951" aria-hidden="true" tabindex="-1"></a>    Are they correct? </span>
-<span id="cb39-952"><a href="#cb39-952" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Investigate the structure of your data**</span>
-<span id="cb39-953"><a href="#cb39-953" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Errors such as <span class="in">`non-numeric argument to binary operator`</span> indicate that the function you are trying to use is expecting to recieve numeric data as an input but one or more of the inputs are not numeric</span>
-<span id="cb39-954"><a href="#cb39-954" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>The function <span class="in">`class(data$variable)`</span> (replace "data" and "variable" with whatever you are trying to invesitgate) is useful for determining how R is interpreting your data.</span>
-<span id="cb39-955"><a href="#cb39-955" aria-hidden="true" tabindex="-1"></a>      Often, data that look like numbers can end up being stored as a character (text) variable.</span>
-<span id="cb39-956"><a href="#cb39-956" aria-hidden="true" tabindex="-1"></a>      This can be due to import/export processes or due to an issue with data entry. </span>
-<span id="cb39-957"><a href="#cb39-957" aria-hidden="true" tabindex="-1"></a><span class="ss">         - </span>For example, when <span class="in">`00`</span> is entered instead of <span class="in">`0`</span> in a numeric field R is likely to interpret the variable as a character instead of a number when importing the data</span>
-<span id="cb39-958"><a href="#cb39-958" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Check to make sure that all expected rows/columns are present and that they look the way you expect them to</span>
-<span id="cb39-959"><a href="#cb39-959" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>If your dataset has been created by joining/merging multiple dataframes, any duplicate columns not accounted for when joining may have a suffix appended to distinguish them (i.e., <span class="in">`variable.x`</span> or <span class="in">`variable.y`</span>)</span>
-<span id="cb39-960"><a href="#cb39-960" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>To resolve this, either call the appended variable in subsequent manipulations (<span class="in">`variable.x`</span> instead of <span class="in">`variable`</span>) or deal with the duplicated columns before/during the joining process (e.g., include duplicate columns in the <span class="in">`by`</span> argument of joining function or remove the redundant column from one of the datasets to be joined)</span>
-<span id="cb39-961"><a href="#cb39-961" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>If you have been creating/computing variables in your dataset, ensure that they are being computed as expected</span>
-<span id="cb39-962"><a href="#cb39-962" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>Check for <span class="in">`NA`</span> (missing) or <span class="in">`NaN`</span> (not a number) values.</span>
-<span id="cb39-963"><a href="#cb39-963" aria-hidden="true" tabindex="-1"></a>       Such values may not be an issue or error in all cases, but if you are not expecting that as a result of your computations, this might suggest an issue with the code and/or data structure</span>
-<span id="cb39-964"><a href="#cb39-964" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>Check whether the computed values are reasonable </span>
-<span id="cb39-965"><a href="#cb39-965" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-966"><a href="#cb39-966" aria-hidden="true" tabindex="-1"></a><span class="fu">## A single error preventing a Wiki site from rendering</span></span>
-<span id="cb39-967"><a href="#cb39-967" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-968"><a href="#cb39-968" aria-hidden="true" tabindex="-1"></a>Code can be wrapped in <span class="in">`try()`</span> statements so that if an error occurs, the script will simply "skip" to the next line of code.</span>
-<span id="cb39-969"><a href="#cb39-969" aria-hidden="true" tabindex="-1"></a>These <span class="in">`try()`</span> statements are particularly useful when rendering a site; if they are not used, a single error will halt the entire process. <span class="in">`try()`</span> statements allow the code to continue running in spite of a line or two erroring out.</span>
+<span id="cb39-931"><a href="#cb39-931" aria-hidden="true" tabindex="-1"></a>To troubleshoot <span class="in">`R`</span> issues, be resourceful.</span>
+<span id="cb39-932"><a href="#cb39-932" aria-hidden="true" tabindex="-1"></a>Try googling the error message or issue you are experiencing.</span>
+<span id="cb39-933"><a href="#cb39-933" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-questions)</span> for a list of places you can pose <span class="in">`R`</span>-related questions for help.</span>
+<span id="cb39-934"><a href="#cb39-934" aria-hidden="true" tabindex="-1"></a>In addition, particular errors/warnings/issues are included below:</span>
+<span id="cb39-935"><a href="#cb39-935" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-936"><a href="#cb39-936" aria-hidden="true" tabindex="-1"></a><span class="fu">## General Troubleshooting Tips</span></span>
+<span id="cb39-937"><a href="#cb39-937" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-938"><a href="#cb39-938" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Run code line-by-line to identify the source of the error**</span>
+<span id="cb39-939"><a href="#cb39-939" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>If you are using RStudio, a red line will often appear on the lefthand side of the screen to indicate the particular line(s) of code that result in an error</span>
+<span id="cb39-940"><a href="#cb39-940" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>It may be useful to clear your working environment in R before trying to diagnose an error to be sure that you are not experiencing any interference from existing objects in the environment</span>
+<span id="cb39-941"><a href="#cb39-941" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Running code line-by-line is particularly useful because it allows you to inspect the data at each step of its processing</span>
+<span id="cb39-942"><a href="#cb39-942" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Data issues are commonly the culprit of code errors (see below)</span>
+<span id="cb39-943"><a href="#cb39-943" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Check for typos**</span>
+<span id="cb39-944"><a href="#cb39-944" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Are all brackets/parentheses/etc. closed? </span>
+<span id="cb39-945"><a href="#cb39-945" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Does the object/variable that you are referring to exist? (*If the object does not exisit, you will likely get an error message indicating `[object name] not found`*)</span>
+<span id="cb39-946"><a href="#cb39-946" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Has it been defined somewhere prior in the code? </span>
+<span id="cb39-947"><a href="#cb39-947" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Does it depend on something else to be created? </span>
+<span id="cb39-948"><a href="#cb39-948" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Is its name spelled correctly? </span>
+<span id="cb39-949"><a href="#cb39-949" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Highlighting the object or variable in question and using <span class="in">`CTRL-F`</span> to search for it is a good way to check these things</span>
+<span id="cb39-950"><a href="#cb39-950" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Did you spell the function you want to use correctly?</span>
+<span id="cb39-951"><a href="#cb39-951" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Do you have commas separating items within a list/function/etc.?</span>
+<span id="cb39-952"><a href="#cb39-952" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Does your working environment have what it needs?**</span>
+<span id="cb39-953"><a href="#cb39-953" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Are all necessary packages/libraries installed? </span>
+<span id="cb39-954"><a href="#cb39-954" aria-hidden="true" tabindex="-1"></a>    Do any require an update?</span>
+<span id="cb39-955"><a href="#cb39-955" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Are all expected objects (dataframes, lists, environment variables, etc) present? </span>
+<span id="cb39-956"><a href="#cb39-956" aria-hidden="true" tabindex="-1"></a>    Are they correct? </span>
+<span id="cb39-957"><a href="#cb39-957" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Investigate the structure of your data**</span>
+<span id="cb39-958"><a href="#cb39-958" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Errors such as <span class="in">`non-numeric argument to binary operator`</span> indicate that the function you are trying to use is expecting to recieve numeric data as an input but one or more of the inputs are not numeric</span>
+<span id="cb39-959"><a href="#cb39-959" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>The function <span class="in">`class(data$variable)`</span> (replace "data" and "variable" with whatever you are trying to invesitgate) is useful for determining how R is interpreting your data.</span>
+<span id="cb39-960"><a href="#cb39-960" aria-hidden="true" tabindex="-1"></a>      Often, data that look like numbers can end up being stored as a character (text) variable.</span>
+<span id="cb39-961"><a href="#cb39-961" aria-hidden="true" tabindex="-1"></a>      This can be due to import/export processes or due to an issue with data entry. </span>
+<span id="cb39-962"><a href="#cb39-962" aria-hidden="true" tabindex="-1"></a><span class="ss">         - </span>For example, when <span class="in">`00`</span> is entered instead of <span class="in">`0`</span> in a numeric field R is likely to interpret the variable as a character instead of a number when importing the data</span>
+<span id="cb39-963"><a href="#cb39-963" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Check to make sure that all expected rows/columns are present and that they look the way you expect them to</span>
+<span id="cb39-964"><a href="#cb39-964" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>If your dataset has been created by joining/merging multiple dataframes, any duplicate columns not accounted for when joining may have a suffix appended to distinguish them (i.e., <span class="in">`variable.x`</span> or <span class="in">`variable.y`</span>)</span>
+<span id="cb39-965"><a href="#cb39-965" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>To resolve this, either call the appended variable in subsequent manipulations (<span class="in">`variable.x`</span> instead of <span class="in">`variable`</span>) or deal with the duplicated columns before/during the joining process (e.g., include duplicate columns in the <span class="in">`by`</span> argument of joining function or remove the redundant column from one of the datasets to be joined)</span>
+<span id="cb39-966"><a href="#cb39-966" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>If you have been creating/computing variables in your dataset, ensure that they are being computed as expected</span>
+<span id="cb39-967"><a href="#cb39-967" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>Check for <span class="in">`NA`</span> (missing) or <span class="in">`NaN`</span> (not a number) values.</span>
+<span id="cb39-968"><a href="#cb39-968" aria-hidden="true" tabindex="-1"></a>       Such values may not be an issue or error in all cases, but if you are not expecting that as a result of your computations, this might suggest an issue with the code and/or data structure</span>
+<span id="cb39-969"><a href="#cb39-969" aria-hidden="true" tabindex="-1"></a><span class="ss">       - </span>Check whether the computed values are reasonable </span>
 <span id="cb39-970"><a href="#cb39-970" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-971"><a href="#cb39-971" aria-hidden="true" tabindex="-1"></a>If you have already incorporated <span class="in">`try()`</span> statements and are still experiencing fatal errors in code, check to make sure that the smallest possible "unit" of code is wrapped in <span class="in">`try()`</span> statements, rather than large sections of code. </span>
-<span id="cb39-972"><a href="#cb39-972" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-try)</span> for more information.</span>
-<span id="cb39-973"><a href="#cb39-973" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-974"><a href="#cb39-974" aria-hidden="true" tabindex="-1"></a><span class="fu">## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated</span></span>
+<span id="cb39-971"><a href="#cb39-971" aria-hidden="true" tabindex="-1"></a><span class="fu">## A single error preventing a Wiki site from rendering</span></span>
+<span id="cb39-972"><a href="#cb39-972" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-973"><a href="#cb39-973" aria-hidden="true" tabindex="-1"></a>Code can be wrapped in <span class="in">`try()`</span> statements so that if an error occurs, the script will simply "skip" to the next line of code.</span>
+<span id="cb39-974"><a href="#cb39-974" aria-hidden="true" tabindex="-1"></a>These <span class="in">`try()`</span> statements are particularly useful when rendering a site; if they are not used, a single error will halt the entire process. <span class="in">`try()`</span> statements allow the code to continue running in spite of a line or two erroring out.</span>
 <span id="cb39-975"><a href="#cb39-975" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-976"><a href="#cb39-976" aria-hidden="true" tabindex="-1"></a>This warning might indicate that it cannot update the package because it is part of the base <span class="in">`R`</span> installation.</span>
-<span id="cb39-977"><a href="#cb39-977" aria-hidden="true" tabindex="-1"></a>To fix this:</span>
+<span id="cb39-976"><a href="#cb39-976" aria-hidden="true" tabindex="-1"></a>If you have already incorporated <span class="in">`try()`</span> statements and are still experiencing fatal errors in code, check to make sure that the smallest possible "unit" of code is wrapped in <span class="in">`try()`</span> statements, rather than large sections of code. </span>
+<span id="cb39-977"><a href="#cb39-977" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-try)</span> for more information.</span>
 <span id="cb39-978"><a href="#cb39-978" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-979"><a href="#cb39-979" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>find and delete the package that is part of the base <span class="in">`R`</span> installation in the <span class="in">`library`</span> directory of the <span class="in">`R`</span> installation (e.g., <span class="in">`C:\R\R-4.3.1\library\PACKAGENAME\`</span>)</span>
-<span id="cb39-980"><a href="#cb39-980" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make sure the package is also not in any other package installation locations (e.g., <span class="in">`C:\R\Packages\PACKAGENAME\`</span>); if it is, delete it from there as well</span>
-<span id="cb39-981"><a href="#cb39-981" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>then, after deleting the package from these locations, restart <span class="in">`R`</span> and run <span class="in">`install.packages("PACKAGENAME")`</span> to reinstall the package</span>
-<span id="cb39-982"><a href="#cb39-982" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>close <span class="in">`R`</span></span>
-<span id="cb39-983"><a href="#cb39-983" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>if the package was part of the base <span class="in">`R`</span> installation, move the installed package folder <span class="in">`C:\R\Packages\PACKAGENAME\`</span> to the <span class="in">`library`</span> directory of the <span class="in">`R`</span> installation (e.g., <span class="in">`C:\R\R-4.3.1\library\PACKAGENAME\`</span>)</span>
-<span id="cb39-984"><a href="#cb39-984" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-985"><a href="#cb39-985" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix {#sec-appendix}</span></span>
-<span id="cb39-986"><a href="#cb39-986" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-987"><a href="#cb39-987" aria-hidden="true" tabindex="-1"></a><span class="fu">## Managing packages for a project using `packrat` {#sec-packrat}</span></span>
-<span id="cb39-988"><a href="#cb39-988" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-989"><a href="#cb39-989" aria-hidden="true" tabindex="-1"></a>Please note: we now use <span class="co">[</span><span class="ot">`renv`</span><span class="co">](#sec-renv)</span> rather than <span class="in">`packrat`</span> for package management</span>
-<span id="cb39-990"><a href="#cb39-990" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-991"><a href="#cb39-991" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3SRR-2JE7&gt;</span>)</span>
-<span id="cb39-992"><a href="#cb39-992" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-993"><a href="#cb39-993" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a directory where you want you want to store the project.</span>
-<span id="cb39-994"><a href="#cb39-994" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`cd`</span> to the above directory</span>
-<span id="cb39-995"><a href="#cb39-995" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Start R</span>
-<span id="cb39-996"><a href="#cb39-996" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load the <span class="in">`packrat`</span> package: <span class="in">`library("packrat")`</span></span>
-<span id="cb39-997"><a href="#cb39-997" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>At the <span class="in">`R`</span> prompt, initialize the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages with: <span class="in">`packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`</span></span>
-<span id="cb39-998"><a href="#cb39-998" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>You must restart your <span class="in">`R`</span> session in the given project directory after running init in order for the changes to take effect!</span>
-<span id="cb39-999"><a href="#cb39-999" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>From this point on you are working in a <span class="in">`packrat`</span> project.</span>
-<span id="cb39-1000"><a href="#cb39-1000" aria-hidden="true" tabindex="-1"></a>Installed packages will go into a library within this project.</span>
-<span id="cb39-1001"><a href="#cb39-1001" aria-hidden="true" tabindex="-1"></a>After initializing the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages, packages from the local repository can be installed with <span class="in">`packrat::install_local()`</span>:</span>
-<span id="cb39-1002"><a href="#cb39-1002" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`packrat::install_local("package_name")`</span></span>
-<span id="cb39-1003"><a href="#cb39-1003" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>To restart a packrat project simply start <span class="in">`R`</span> from the directory created in step (1). The project will initialize automatically.</span>
-<span id="cb39-1004"><a href="#cb39-1004" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1005"><a href="#cb39-1005" aria-hidden="true" tabindex="-1"></a>To save the current state of your library: <span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span> </span>
-<span id="cb39-1006"><a href="#cb39-1006" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1007"><a href="#cb39-1007" aria-hidden="true" tabindex="-1"></a>To disable <span class="in">`packrat`</span> on a project: <span class="in">`disable(restart = FALSE)`</span></span>
-<span id="cb39-1008"><a href="#cb39-1008" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1009"><a href="#cb39-1009" aria-hidden="true" tabindex="-1"></a><span class="fu">### To install a new package for a project after `packrat` has been initialized</span></span>
-<span id="cb39-1010"><a href="#cb39-1010" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1011"><a href="#cb39-1011" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>First, load the <span class="in">`R`</span> environment module (see <span class="in">`Install R packages`</span> section above)</span>
-<span id="cb39-1012"><a href="#cb39-1012" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
-<span id="cb39-1013"><a href="#cb39-1013" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>launch R</span>
-<span id="cb39-1014"><a href="#cb39-1014" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`R`</span></span>
-<span id="cb39-1015"><a href="#cb39-1015" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>then install the package, (the code below uses a generic <span class="in">`package_name`</span>):</span>
-<span id="cb39-1016"><a href="#cb39-1016" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
-<span id="cb39-1017"><a href="#cb39-1017" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
-<span id="cb39-1018"><a href="#cb39-1018" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span></span>
-<span id="cb39-1019"><a href="#cb39-1019" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1020"><a href="#cb39-1020" aria-hidden="true" tabindex="-1"></a><span class="fu">### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)</span></span>
-<span id="cb39-1021"><a href="#cb39-1021" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1022"><a href="#cb39-1022" aria-hidden="true" tabindex="-1"></a>This is relevant if building a <span class="in">`packrat`</span> on <span class="co">[</span><span class="ot">Argon/HPC</span><span class="co">](hpc.qmd)</span>.</span>
-<span id="cb39-1023"><a href="#cb39-1023" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1024"><a href="#cb39-1024" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`qlogin`</span> -- for more info, see here: <span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Y3A9-WQ3W&gt;</span>)</span>
-<span id="cb39-1025"><a href="#cb39-1025" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load stack/2020.2-base_arch`</span> -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</span>
-<span id="cb39-1026"><a href="#cb39-1026" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load r`</span></span>
-<span id="cb39-1027"><a href="#cb39-1027" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
-<span id="cb39-1028"><a href="#cb39-1028" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`R`</span></span>
-<span id="cb39-1029"><a href="#cb39-1029" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create <span class="in">`packrat`</span> project (see above)</span>
-<span id="cb39-1030"><a href="#cb39-1030" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install packages</span>
-<span id="cb39-1031"><a href="#cb39-1031" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a package snapshot using <span class="in">`packrat`</span></span>
-<span id="cb39-1032"><a href="#cb39-1032" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`exit`</span> -- to exit the qlogin session</span>
-<span id="cb39-1033"><a href="#cb39-1033" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1034"><a href="#cb39-1034" aria-hidden="true" tabindex="-1"></a>Note: Your <span class="in">`packrat`</span> environment will then be linked to the proper <span class="in">`glpk`</span> library and will run on any Argon node.</span>
-<span id="cb39-1035"><a href="#cb39-1035" aria-hidden="true" tabindex="-1"></a>You do not need to use the <span class="in">`2020.2-base_arch`</span> module at run time, only build time.</span>
-<span id="cb39-1036"><a href="#cb39-1036" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1037"><a href="#cb39-1037" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb39-979"><a href="#cb39-979" aria-hidden="true" tabindex="-1"></a><span class="fu">## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated</span></span>
+<span id="cb39-980"><a href="#cb39-980" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-981"><a href="#cb39-981" aria-hidden="true" tabindex="-1"></a>This warning might indicate that it cannot update the package because it is part of the base <span class="in">`R`</span> installation.</span>
+<span id="cb39-982"><a href="#cb39-982" aria-hidden="true" tabindex="-1"></a>To fix this:</span>
+<span id="cb39-983"><a href="#cb39-983" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-984"><a href="#cb39-984" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>find and delete the package that is part of the base <span class="in">`R`</span> installation in the <span class="in">`library`</span> directory of the <span class="in">`R`</span> installation (e.g., <span class="in">`C:\R\R-4.3.1\library\PACKAGENAME\`</span>)</span>
+<span id="cb39-985"><a href="#cb39-985" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>make sure the package is also not in any other package installation locations (e.g., <span class="in">`C:\R\Packages\PACKAGENAME\`</span>); if it is, delete it from there as well</span>
+<span id="cb39-986"><a href="#cb39-986" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>then, after deleting the package from these locations, restart <span class="in">`R`</span> and run <span class="in">`install.packages("PACKAGENAME")`</span> to reinstall the package</span>
+<span id="cb39-987"><a href="#cb39-987" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>close <span class="in">`R`</span></span>
+<span id="cb39-988"><a href="#cb39-988" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>if the package was part of the base <span class="in">`R`</span> installation, move the installed package folder <span class="in">`C:\R\Packages\PACKAGENAME\`</span> to the <span class="in">`library`</span> directory of the <span class="in">`R`</span> installation (e.g., <span class="in">`C:\R\R-4.3.1\library\PACKAGENAME\`</span>)</span>
+<span id="cb39-989"><a href="#cb39-989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-990"><a href="#cb39-990" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix {#sec-appendix}</span></span>
+<span id="cb39-991"><a href="#cb39-991" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-992"><a href="#cb39-992" aria-hidden="true" tabindex="-1"></a><span class="fu">## Managing packages for a project using `packrat` {#sec-packrat}</span></span>
+<span id="cb39-993"><a href="#cb39-993" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-994"><a href="#cb39-994" aria-hidden="true" tabindex="-1"></a>Please note: we now use <span class="co">[</span><span class="ot">`renv`</span><span class="co">](#sec-renv)</span> rather than <span class="in">`packrat`</span> for package management</span>
+<span id="cb39-995"><a href="#cb39-995" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-996"><a href="#cb39-996" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/3SRR-2JE7&gt;</span>)</span>
+<span id="cb39-997"><a href="#cb39-997" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-998"><a href="#cb39-998" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a directory where you want you want to store the project.</span>
+<span id="cb39-999"><a href="#cb39-999" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`cd`</span> to the above directory</span>
+<span id="cb39-1000"><a href="#cb39-1000" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Start R</span>
+<span id="cb39-1001"><a href="#cb39-1001" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load the <span class="in">`packrat`</span> package: <span class="in">`library("packrat")`</span></span>
+<span id="cb39-1002"><a href="#cb39-1002" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>At the <span class="in">`R`</span> prompt, initialize the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages with: <span class="in">`packrat::init(project = "/Users/itpetersen/Documents/Projects/INSERT_PROJECT_NAME/", options = list(local.repos = "/Users/itpetersen/R/x86_64-pc-linux-gnu-library/4.0"))`</span></span>
+<span id="cb39-1003"><a href="#cb39-1003" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>You must restart your <span class="in">`R`</span> session in the given project directory after running init in order for the changes to take effect!</span>
+<span id="cb39-1004"><a href="#cb39-1004" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>From this point on you are working in a <span class="in">`packrat`</span> project.</span>
+<span id="cb39-1005"><a href="#cb39-1005" aria-hidden="true" tabindex="-1"></a>Installed packages will go into a library within this project.</span>
+<span id="cb39-1006"><a href="#cb39-1006" aria-hidden="true" tabindex="-1"></a>After initializing the <span class="in">`packrat`</span> project on the local repository of <span class="in">`R`</span> packages, packages from the local repository can be installed with <span class="in">`packrat::install_local()`</span>:</span>
+<span id="cb39-1007"><a href="#cb39-1007" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`packrat::install_local("package_name")`</span></span>
+<span id="cb39-1008"><a href="#cb39-1008" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>To restart a packrat project simply start <span class="in">`R`</span> from the directory created in step (1). The project will initialize automatically.</span>
+<span id="cb39-1009"><a href="#cb39-1009" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1010"><a href="#cb39-1010" aria-hidden="true" tabindex="-1"></a>To save the current state of your library: <span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span> </span>
+<span id="cb39-1011"><a href="#cb39-1011" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1012"><a href="#cb39-1012" aria-hidden="true" tabindex="-1"></a>To disable <span class="in">`packrat`</span> on a project: <span class="in">`disable(restart = FALSE)`</span></span>
+<span id="cb39-1013"><a href="#cb39-1013" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1014"><a href="#cb39-1014" aria-hidden="true" tabindex="-1"></a><span class="fu">### To install a new package for a project after `packrat` has been initialized</span></span>
+<span id="cb39-1015"><a href="#cb39-1015" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1016"><a href="#cb39-1016" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>First, load the <span class="in">`R`</span> environment module (see <span class="in">`Install R packages`</span> section above)</span>
+<span id="cb39-1017"><a href="#cb39-1017" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
+<span id="cb39-1018"><a href="#cb39-1018" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>launch R</span>
+<span id="cb39-1019"><a href="#cb39-1019" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`R`</span></span>
+<span id="cb39-1020"><a href="#cb39-1020" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>then install the package, (the code below uses a generic <span class="in">`package_name`</span>):</span>
+<span id="cb39-1021"><a href="#cb39-1021" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages("package_name", repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb39-1022"><a href="#cb39-1022" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`</span></span>
+<span id="cb39-1023"><a href="#cb39-1023" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`packrat::snapshot()`</span>; if that command fails due to an error when fetching sources, try <span class="in">`packrat::snapshot(snapshot.sources = FALSE)`</span></span>
+<span id="cb39-1024"><a href="#cb39-1024" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1025"><a href="#cb39-1025" aria-hidden="true" tabindex="-1"></a><span class="fu">### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)</span></span>
+<span id="cb39-1026"><a href="#cb39-1026" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1027"><a href="#cb39-1027" aria-hidden="true" tabindex="-1"></a>This is relevant if building a <span class="in">`packrat`</span> on <span class="co">[</span><span class="ot">Argon/HPC</span><span class="co">](hpc.qmd)</span>.</span>
+<span id="cb39-1028"><a href="#cb39-1028" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1029"><a href="#cb39-1029" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`qlogin`</span> -- for more info, see here: <span class="ot">&lt;https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513454/Qlogin+for+Interactive+Sessions&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Y3A9-WQ3W&gt;</span>)</span>
+<span id="cb39-1030"><a href="#cb39-1030" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load stack/2020.2-base_arch`</span> -- this will ensure that the modules point to the lowest common multiarchitecture on Argon and will run on all nodes</span>
+<span id="cb39-1031"><a href="#cb39-1031" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`module load r`</span></span>
+<span id="cb39-1032"><a href="#cb39-1032" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>cd to the directory of the <span class="in">`R`</span> project</span>
+<span id="cb39-1033"><a href="#cb39-1033" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`R`</span></span>
+<span id="cb39-1034"><a href="#cb39-1034" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create <span class="in">`packrat`</span> project (see above)</span>
+<span id="cb39-1035"><a href="#cb39-1035" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Install packages</span>
+<span id="cb39-1036"><a href="#cb39-1036" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a package snapshot using <span class="in">`packrat`</span></span>
+<span id="cb39-1037"><a href="#cb39-1037" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`exit`</span> -- to exit the qlogin session</span>
 <span id="cb39-1038"><a href="#cb39-1038" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1041"><a href="#cb39-1041" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb39-1042"><a href="#cb39-1042" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb39-1039"><a href="#cb39-1039" aria-hidden="true" tabindex="-1"></a>Note: Your <span class="in">`packrat`</span> environment will then be linked to the proper <span class="in">`glpk`</span> library and will run on any Argon node.</span>
+<span id="cb39-1040"><a href="#cb39-1040" aria-hidden="true" tabindex="-1"></a>You do not need to use the <span class="in">`2020.2-base_arch`</span> module at run time, only build time.</span>
+<span id="cb39-1041"><a href="#cb39-1041" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1042"><a href="#cb39-1042" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
 <span id="cb39-1043"><a href="#cb39-1043" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-1044"><a href="#cb39-1044" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb39-1045"><a href="#cb39-1045" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-1046"><a href="#cb39-1046" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-1047"><a href="#cb39-1047" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb39-1048"><a href="#cb39-1048" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-1049"><a href="#cb39-1049" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb39-1050"><a href="#cb39-1050" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
