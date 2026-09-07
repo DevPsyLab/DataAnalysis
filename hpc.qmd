@@ -161,7 +161,7 @@ Accessing Argon
 
 [Containers](#sec-containers)
 
-- `apptainer build container.sif defFile.def` builds a container named 'container.sif' based on the definition file named 'defFile.def'
+- `apptainer build container.sif defFile.def` builds a container named `container.sif` based on the definition file named `defFile.def`
 - `apptainer run container.sif` runs the default command in the specified container
     - `apptainer run --app appName container.sif` runs the specified app's default command in the specified container
 - `apptainer exec container.sif commandName commandArguments` runs the specified command (with any provided arguments) in the specified container
@@ -664,7 +664,7 @@ Because none of the lab computers run on Linux, you will need to install a Linux
 
 Definition files contain the necessary information for installing the container software (e.g., versions, packages).
 Because the user (i.e., you) specifies the content of the definition file, there is a lot of flexibility when it comes to what to include and how to structure them.
-However, there are a handful of necessary components for a definition file, which you can read about [here](https://apptainer.org/docs/user/latest/definition_files.html#definition-files).
+However, there are a handful of necessary components for a definition file, which you can read about [here](https://apptainer.org/docs/user/latest/definition_files.html#definition-files) (archived at <https://perma.cc/D8YM-AHF8>).
 
 There are a number of pre-written definition files for `R` (with or without `brms` and `CmdStan`), `MPlus`, `MATLAB`, and `Python`/`MNE`, which you can view or download [here](https://research-git.uiowa.edu/PetersenLab/HPC/-/tree/master/Argon/Containers/DefinitionFiles).
 There are also instructions below for creating a definition file from scratch.
@@ -916,6 +916,7 @@ To build a container with a program that is not included here, see the Apptainer
                   # install packages via remotes
                   R -e "remotes::install_github('DevPsyLab/petersenlab')"
                   R -e "remotes::install_github('craddm/eegUtils')"
+                  R -e "remotes::install_github('Jinsong-Chen/LAWBL')"
                   
                   # clean up package manager
                   apt-get clean -y
@@ -1406,7 +1407,7 @@ Then reopen R and try to install the package again.
     install.packages("PACKAGE_NAME")
     ```
 
-1. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type 'install.packages("/Users/path/to/directory/package_name", repos = NULL, type = "source")'.
+1. If that does not work, you can try downloading the .tar file directly from the CRAN repository. Then copy the file into your Argon folder and type `install.packages("/Users/path/to/directory/package_name", repos = NULL, type = "source")`.
 Note that you may need to download an older version of the package (e.g., from the [CRAN Archive](https://cran.r-project.org/src/contrib/Archive/)), such that it is compatible with the version of R you are running on Argon (which it typically not the most recent R version):
 
     ```r
