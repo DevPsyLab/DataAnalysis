@@ -711,6 +711,7 @@ To build a container with a program that is not included here, see the Apptainer
             cp /mnt/path/to/def/file.def ~/containers
             # For example:
             # cp /mnt/c/Users/USERNAME/Downloads/file.def ~/containers
+            # cp /mnt/e/Documents/GitHub/HPC/Argon/Containers/DefinitionFiles/all_softwares.def ~/containers
             ```
             
             Note: You must have the HPC repository cloned to your local computer for this to work.
@@ -1044,7 +1045,7 @@ To build a container with a program that is not included here, see the Apptainer
             </details>
 
         1. Press `Ctrl+O` then `Enter` to save the file
-        1. Press 'Ctrl+X' to close the file
+        1. Press `Ctrl+X` to close the file
 1. Build the container:
 
     ```bash
@@ -1125,7 +1126,9 @@ To build a container with a program that is not included here, see the Apptainer
 1. Copy the container to your computer:
 
     ```bash
-    cp ~/containers/r_argon.sif "/mnt/c/Users/hawkid/path/to/folder/"
+    cp ~/containers/argon_container.sif "/mnt/c/Users/hawkid/path/to/folder/"
+    # For example:
+    # cp ~/containers/argon_container.sif "/mnt/e/Documents/OneDrive - University of Iowa/Research/Containers/"
     ```
 
     The `/mnt/c` path is equivalent to your computer's `C:` drive, so the rest of the file path should be defined from there.
@@ -1138,6 +1141,9 @@ To build a container with a program that is not included here, see the Apptainer
     mkdir -p $HOME/cmdstan_cache
     apptainer exec /Users/hawkid/path/to/container/argon_container.sif \
       cp -r /opt/cmdstan/. $HOME/cmdstan_cache
+    # for example:
+    # apptainer exec /Users/itpetersen/Documents/Containers/argon_container.sif \
+    #   cp -r /opt/cmdstan/. $HOME/cmdstan_cache
     ```
 
 1. To submit a job using the container, use the `apptainer exec` command:
@@ -1287,7 +1293,7 @@ module purge
 apptainer exec \
     --bind $HOME/cmdstan_cache:/opt/cmdstan \
     --cleanenv \
-    /Users/itpetersen/Documents/Containers/r_argon.sif \
+    /Users/itpetersen/Documents/Containers/argon_container.sif \
     Rscript ./Analyses/factorScores.R
 ```
 
