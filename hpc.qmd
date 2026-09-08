@@ -108,6 +108,12 @@ You won't be able to submit jobs, but it makes editing and moving files much mor
 
 ## Windows
 
+Windows Explorer:
+
+`\\data.hpc.uiowa.edu\argon_home` (username: itpetersen@uiowa.edu or hawkid@uiowa.edu)
+
+Or:
+
 1. Open File Explorer
 1. In the sidebar on the left, right click 'This PC', then select 'Map Network Drive'
 1. Enter `\\data.hpc.uiowa.edu\argon_home` as the Folder
@@ -115,6 +121,14 @@ You won't be able to submit jobs, but it makes editing and moving files much mor
 1. Click 'Finish'
 
 ## Mac
+
+Mac OS Terminal:
+
+`ssh itpetersen@argon.hpc.uiowa.edu` (on campus)
+
+`ssh -p 40 itpetersen@argon.hpc.uiowa.edu` (off campus without VPN)
+
+Or:
 
 1. Open Finder
 1. In the menus along the top, select 'Go' then 'Connect to Server...'
@@ -168,9 +182,11 @@ Accessing Argon
 
 [Jobs](#sec-jobs)
 
-- `qsub jobFile.job` submits the specified job file to the queue
+- `qsub jobFile.job` submits the specified job file to the [queue](#sec-queues)
 - `qstat -u hawkid` lists the active jobs associated with the specified HawkID, including job numbers
 - `qdel jobNumber` cancels the job associated with the specified job number
+
+[Queues](#sec-queues)
 
 Miscellaneous
 
@@ -252,6 +268,7 @@ After accessing Argon using SSH, enter `cd /Shared/lss_itpetersen/Lab` in the te
 ### Project Directories
 
 Like the Lab drive, it is recommended that you store the materials for each project in its own folder:
+
 ```bash
 cd /Users/itpetersen/Documents/Projects/Bayesian_IRT/
 cd /Users/itpetersen/Documents/Projects/EXT_pilot/
@@ -260,7 +277,6 @@ cd /Users/itpetersen/Documents/Projects/Multiple_Imputation/
 cd /Users/itpetersen/Documents/Projects/SelfRegulation_IRT/
 cd /Users/itpetersen/Documents/Projects/Test/
 ```
-
 
 ## Bash Scripting {#sec-bashScripting}
 
@@ -382,17 +398,27 @@ There are several commands for interacting with environment modules:
 - `module save environmentName` saves the current set of loaded modules under the provided name so you can load them later
 - `module restore environmentName` loads the set of modules saved under the provided name
 
-### R in Argon
+## R
 
 If you need `R` packages that aren't available in the software stack, or if you need to use the current `R` version, using a container is recommended.
 Alternatively, see below for instructions on installing different `R` versions without a container.
 
-#### Compile Other Versions
+See below for instructions on running `R` scripts on Argon:
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514707/R+Programs+in+Batch+mode+for+HPC> (archived at <https://perma.cc/99JQ-43ZG>)
+
+### Find which versions of `R` are installed
+
+`module spider R`
+
+But, there may be more recent version of `R` installed in the "Additional Software Stacks" (<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513440/Argon+Software+List>; archived at <https://perma.cc/WJ4Q-GDUS>).
+However, we now run the most recent version of `R` (and packages) using a [container](#sec-containers).
+
+### Compile Another Version of `R`
 
 If you want to compile a more recent version of `R` than is available in the software stacks, see [here](https://brandonlebeau.org/2022/06/02/compile-hpc-iowa/) (archived at <https://perma.cc/C6EX-EZL4>).
 However, we now compile the most recent version of `R` (and packages) using a [container](#sec-containers).
 
-#### Install Packages
+### Install Packages
 
 <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514803/Adding+R+programs+to+a+personal+library> (archived at <https://perma.cc/3SRR-2JE7>)
 
@@ -456,6 +482,16 @@ However, we now compile the most recent version of `R` (and packages) using a [c
         1. Installation will take several minutes, because all dependencies will be installed
 1. After installing packages, you should periodically update them using `update.packages(ask = FALSE)`
 1. For instructions on using `renv` to manage packages, see the documentation [here](R.qmd#sec-renv)
+
+### Quit R
+
+`q()`
+
+## Stan
+
+For instructions on how to install `Stan`, see the documentation: <https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux> (archived at <https://perma.cc/89H9-L8S6>)
+
+If your version of `Stan` requires `Makevars`, save it under `\\data.hpc.uiowa.edu\argon_home\.R\Makevars`.
 
 ## Containers {#sec-containers}
 
@@ -1166,9 +1202,9 @@ A job script contains all of the commands that you would ordinarily run individu
 At minimum, a job script should contain a shell specification and at least one program, script, or command to execute.
 However, there are several additional parameters you can include to control how the script is run.
 
-Basic Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission>
+Basic Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513450/Basic+Job+Submission> (archived at <https://perma.cc/2SS2-LEJR>)
 
-Advanced Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission>
+Advanced Job Submission: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission> (archived at <https://perma.cc/8H6G-2M2F>)
 
 ## Job Commands
 
@@ -1176,19 +1212,20 @@ Below are a variety of common commands for submitting and tracking jobs.
 
 - `qsub jobScript.job` submits a job script to run
     - `qsub -hold_jid JOB_ID jobScript.job` submits `jobScript.job` to run *after* job `JOB_ID` is finished
-- `qstat` shows the status of available queues and jobs
+- `qstat` shows the status of available [queues](#sec-queues) and jobs
     - `qstat -u hawkid` shows jobs submitted by the specified HawkID
-    - `qstat -g c -q QUEUE_NAME` shows the status of the specified queue
-    - `qstat -j JOB_ID` shows detailed satus info for the specified job (if still running)
+    - `qstat -g c -q QUEUE_NAME` shows the status of the specified [queue](#sec-queues)
+    - `qstat -j JOB_ID` shows detailed status info for the specified job (if still running)
+        - `qstat -j JOB_ID | grep usage`
     - Status Abbreviations:
         - `d` - deleted
         - `E` - error
         - `h` - held by user
         - `r`, `t` - running or transferring to run status
         - `R` - restarted
-        - `s`  `S` - job (s) or queue (S) suspended
-        - `T` - queue threshold exceeded (suspended)
-        - `w` - waiting in queue
+        - `s`  `S` - job (s) or [queue](#sec-queues) (S) suspended
+        - `T` - [queue](#sec-queues) threshold exceeded (suspended)
+        - `w` - waiting in [queue](#sec-queues)
 - `qacct` summarizes job and user info that meet the specified parameters
     - `qacct -j JOB_ID` shows info for the specified job (after running)
     - `qacct -o hawkid -j -d n` shows info on the specified user's jobs for the past `n` days
@@ -1219,31 +1256,7 @@ Below are a variety of common commands for submitting and tracking jobs.
     The next few lines contain settings for the `qsub` command, which is the command used for submitting job scripts.
     You can also specify these options in the command line, but that can lead to lengthy inputs.
     When specifying `qsub` options in your job script, each one must have `#$` at the start of the line.
-    Below are options commonly used in the DevPsy job scripts.
-    
-    | Option  | Description |
-    | ------- | ----------------------------------------  |
-    | -cwd  | execute the job from the current working directory |
-    | -e [path] | file name or path  | file or folder for saving error messages |
-    | -j [y\|n]  | whether the error messages should be saved in the same file as outputs (y) or not (n) |
-    | -l mf=[nG\|nM] | number (n) of gigabytes (G) or megabytes (M) of free memory needed at startup  |
-    | -l h_vmem=[nG\|nM] | number (n) of gigabytes (G) or megabytes (M) of virtual memory needed across entire job |
-    | -M [email]  | email to send job notifications to  |
-    | -m [b\|e\|a\|s\|n]  | when to send job notifications (b = beginning of job; e = end of job; a = job aborted; s = job suspended; n = no notifications); multiple values allowed (e.g., -m eas)  |
-    | -N [name] | job name  |
-    | -o [path] | file or folder for saving non-error output messages |
-    | -pe smp [cores] | number of cores to use for parallel computing[^1]  |
-    | -q [UI\|UI-HM\|UI-MPI\|UI-GPU\|UI-DEVELOP\|all.q] | which job queue to use[^2]  |
-    | -t n-m[:s]  | indicates an array job; includes the index of the first (n) and last (m) task with an optional parameter for step size (s; defaults to 1)  |
-    | -tc [n] | number of jobs in an array job to run simultaneously  |
-    | -wd [path]  | execute the job from the specified folder |
-    
-    [^1]: We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
-    
-    [^2]: The `UI` (default) and `UI-HM` (high-memory) queues are the most used by DevPsy.
-    `UI-MPI` is for jobs that can use multiple nodes simultaneously, and `UI-GPU` is for jobs that can use a GPU accelerator.
-    `UI-DEVELOP` is recommend for test runs and debugging.
-    The `all.q` queue is the lowest priority queue, so jobs running on it will "give up" resources if needed for jobs in higher-priority queues.
+    A list of `qsub` options is provided in @sec-qsubOptions.
     
 1. Specify the working directory (optional)
 
@@ -1263,7 +1276,52 @@ Below are a variety of common commands for submitting and tracking jobs.
     See @sec-jobScript for examples of a variety of job scripts, and see @sec-bashScripting for common `bash` commands used in job scripts.
     
 1. Press `Ctrl+O` then `Enter` to save the file
-1. Press 'Ctrl+X' to close the file
+1. Press `Ctrl+X` to close the file
+
+## `qsub` options {#sec-qsubOptions}
+
+Below are options commonly used in the DevPsy job scripts.
+    
+| Option  | Description |
+| ------- | ----------------------------------------  |
+| `-cwd`  | execute the job from the current working directory; if not specified, the job will be run from your home directory. |
+| `-e [path]` | file name or path  | file or folder for saving error messages |
+| `-j [y\|n]`  | whether the error messages should be saved in the same file as outputs (`y`) or not (`n`) |
+| `-l mf=[nG\|nM]` | number (`n`) of gigabytes (`G`) or megabytes (`M`) of free memory needed at startup (e.g., `256G`) |
+| `-l h_vmem=[nG\|nM]` | number (`n`) of gigabytes (`G`) or megabytes (`M`) of virtual memory needed across entire job (e.g., `256G`) |
+| `-M [email]`  | email to send job notifications to  |
+| `-m [b\|e\|a\|s\|n]`  | when to send job notifications (`b` = beginning of job; `e` = end of job; `a` = job aborted; `s` = job suspended; `n` = no notifications); multiple values allowed (e.g., `-m eas`)  |
+| `-N [name]` | job name  |
+| `-o [path]` | file or folder for saving non-error output messages |
+| `-pe smp [cores]` | number of slots (CPU cores) to use[^1]  |
+| `OMP_NUM_THREADS=[n]` | number of OpenMP threads to use per MPI process (default = 1) |
+| `-q [UI\|UI-HM\|UI-MPI\|UI-GPU\|UI-DEVELOP\|all.q]` | which job [queue](#sec-queues) to use[^2]  |
+| `-t n-m[:s]`  | indicates an array job; includes the index of the first (`n`) and last (`m`) task with an optional parameter for step size (s; defaults to 1)  |
+| `-tc [n]` | number of jobs in an array job to run simultaneously  |
+| `-wd [path]`  | execute the job from the specified folder |
+    
+[^1]: We typically use the `smp` parallel computing environment, but other options are listed on the [Advanced Job Submission](https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513452/Advanced+Job+Submission) documentation page and can be substituted for `smp`.
+
+`-pe smp 4`: specify number of slots (CPU cores) to be used (`smp` = shared memory parallel environment); increasing the number of slots increases the memory available for the job.
+If your job gets killed due to insufficient memory, you should increase the number of slots requested (and, as needed, the `mf` and `h_vmem` flags, below).
+You can estimate the memory available per slot by dividing a node's total memory by its total core count.
+You can find the specific configurations for each node type on the wiki: <https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies> (archived at <https://perma.cc/UUR7-XLBZ>).
+For instance, if you are using the UI [queue](#sec-queues) that has 512GB of memory spread across 128 cores, each core comes with 4GB of memory (i.e., $512 / 128 = 4$).
+Thus, if your job needs 20GB of memory, you would need to request at least 5 cores (i.e., $20 / 4 = 5$).
+
+- The `OMP_NUM_THREADS` variable is set to '1' by default.
+If your code can take advantage of the threading then specify `OMP_NUM_THREADS` to be equal to the number of job cores per node requested.
+
+`-l mf=512G`: request a particular quantity of memory you expect to use (to be available for your computation to start; the request is only applicable at scheduling time.)
+The `mem_free` flag tells the scheduler to find a node that has at least that much memory available at the moment your job starts.
+However, it does not reserve or lock that memory for your job's exclusive use while it is running.
+To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
+
+`-l h_vmem=512G`: request the maximum quantity of virtual memory you expect to need; `h_vmem` is a hard limit.
+It acts as a ceiling.
+If your job exceeds this amount of memory, the system will terminate the process to protect the node's stability.
+However, it does not reserve or lock that memory for your job's exclusive use while it is running.
+To ensure your job has a guaranteed memory allocation, you should increase the number of slots requested (see above: i.e., `-pe smp <slots>`).
 
 ## Example Job Scripts {#sec-jobScript}
 
@@ -1360,17 +1418,31 @@ output_path=/Shared/lss_PetersenLabEEGVideo/EEG/Oddball/2_TFData/3_tf_processed
 echo "${input_path} ${output_path} ${sub}" | python /Users/mschumer/tf_analysis.py
 ```
 
-# Stan
+# Queues {#sec-queues}
 
-For instructions on how to install `Stan`, see the documentation: <https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux> (archived at <https://perma.cc/89H9-L8S6>)
+<https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76513468/Queues+and+Policies> (archived at <https://perma.cc/UUR7-XLBZ>)
 
-If your version of `Stan` requires `Makevars`, save it under `\\data.hpc.uiowa.edu\argon_home\.R\Makevars`.
+`UI` (default)
+
+`UI-HM`: for jobs requiring high memory
+
+`UI-GPU`: for jobs that can use a GPU accelerator
+
+`UI-GPU-HM`: for jobs that can use a GPU accelerator and that require high memory
+
+`UI-DEVELOP`: recommended for test runs and debugging
+
+`UI-MPI`: for jobs that can use multiple nodes simultaneously
+
+`all.q`: the lowest priority queue, so jobs running on it will "give up" resources if needed for jobs in higher-priority queues
+
+The `UI` and `UI-HM` queues are the most used by DevPsy.
 
 # Troubleshooting
 
 ## Running out of Memory {#sec-outOfMemory}
 
-May need to request more memory, either by requesting more slots (to ensure more memory; i.e., `-pe smp <SLOTS>`), by increasing how much memory is available for the node at the moment your job starts (i.e., `mf=<SIZE>`), and/or by increasing the hard limit for virtual memory (i.e., `h_vmem=<SIZE>`); see @sec-writingJobScripts.
+May need to request more memory, either by requesting more slots (to ensure more memory; i.e., `-pe smp <SLOTS>`), by increasing how much memory is available for the node at the moment your job starts (i.e., `mf=<SIZE>`), and/or by increasing the hard limit for virtual memory (i.e., `h_vmem=<SIZE>`); see @sec-qsubOptions.
 
 To see how much memory was used by a killed job, run `qacct -j JOBID` and look at: `maxvmem`.
 
