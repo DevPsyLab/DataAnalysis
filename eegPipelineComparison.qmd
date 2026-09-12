@@ -72,7 +72,9 @@ Indicate whether you would like to process all of the files in the raw data fold
 The **new** option assumes that you will be processing the unprocessed files using the same parameters used to process other files.
 
 <details>
-<summary>If processing new files</summary>
+<summary>New Files</summary>
+
+These prompts will only appear if you chose to process only new data files.
 
 1. **Enter the path to the existing output folder**
 Enter the complete file path to the main output folder with the data that is already processed.
@@ -303,7 +305,7 @@ Additionally, because wavelet thresholding is a data cleaning step, more channel
 1. **APICE: Use custom thresholds?**
 Indicate whether you would like to adjust any of the default APICE parameters for bad channel/artifact detection.
 If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
- Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
 `MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
 1. **NEAR: Use all bad channel detection methods?**
 Indicate whether you would like to use all three of NEAR's bad channel detection methods (flat signals, local outlier factor, and periodogram analysis).
@@ -321,6 +323,37 @@ NOTE: RELAX-Jr's bad channel detection is built in to its data cleaning procedur
 Bad channels are identified using the default settings recommended by the RELAX-Jr authors, which are specified in the `parameters.m` script.
 
 ### Data Cleaning (#sec-data-cleaning)
+
+The prompts for this section vary considerably depending on the pipeline(s) select earlier in the script.
+Pipeline-specific prompts are preceded by the pipeline name and only appear if that pipeline was selected.
+
+1. **HAPPE: Use ECGone to reduce excess ECG artifact?**
+1. **Use ICA for artifact reduction?**
+This prompt will only appear if you are *not* doing ERP processing.
+Indicate whether you would like to use ICA to remove "stereotyped" artifacts (i.e., artifacts that look similar every time they occur, such as blinks, eye movements, or jaw clenching).
+However, child EEG data is often much noisier than adult EEG data, and many of the artifacts are non-stereotyped.
+As a result, ICA can be less reliable with child EEG data.
+ICA tends to work best with longer recordings and data that have been high-pass filtered to 1 Hz or higher.
+If you selected a high-pass filter below 1 Hz (or no high-pass filter), `MATLAB` will print a warning, but will still apply ICA to your data.
+All pipelines except for NEAR have the option to conduct ICA.
+
+<details>
+<summary>ICA</summary>
+
+These prompts will only appear if you chose to apply ICA.
+
+1. **ICA method?**
+Indicate whether you would like to use the FastICA or the InfoMax algorithm for the ICA.
+The FastICA algorithm, as the name implies, runs faster (typically 1-3 minutes per data file), but the results are less stable for data with lots of channels.
+The InfoMax algorithm takes longer (roughly 3-5 minutes per data file), but the decompositions are more stable when the recording has a sufficient number of samples.
+For a more detailed comparison, see the [EEGLab documentation](https://eeglab.org/tutorials/ConceptsGuide/ICA_background.html) and [Delorme et al., 2012](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030135).
+1. **APICE: Use custom parameters?**
+Indicate whether you would like to adjust any of the default APICE parameters for wICA.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+
+</details>
 
 # Appendix
 
