@@ -336,6 +336,8 @@ However, the script seems to primarily rely on the `MATLAB` function `findpeaks`
 <details>
 <summary>ECGone</summary>
 
+These prompts will only appear if you chose to apply ECGone.
+
 1. **Does the data contain a dedicated ECG channel?**
 Indicate whether your data has a specific channel for recording ECG signal.
 If you are processing data collected with the DevPsy Lab equipment, there is not a dedicated ECG channel.
@@ -359,6 +361,25 @@ This value should be less than the duration of a single heartbeat.
 
 </details>
 
+1. **RELAX-Jr: Use MWF for data cleaning?**
+Indicate whether you would like to use multi-channel Wiener filtering (MWF) for data cleaning.
+The creators of RELAX-Jr recommend using either MWF or wICA, but not both, which could lead to "over-cleaning".
+1. **RELAX-Jr: Clean all artifact types?**
+This prompt will only appear if you chose to run MWF.
+Indicate whether you would like to run all rounds of MWF to remove muscle, blink, and eye movement artifacts in the RELAX-Jr pipeline.
+RELAX-Jr was validated using MWF for all three artifact types simultaneously, but not separately.
+For more details on each option, see [Bailey et al., 2023](https://doi.org/10.1016/j.clinph.2023.01.017), [Hill et al., 2024](https://doi.org/10.1002/hbm.70034), and the [RELAX-Jr Wiki](https://github.com/aronthill/RELAX-Jr/wiki).
+Also note that many of the RELAX-Jr functions have additional documentation written into the `MATLAB` scripts, located [here](https://github.com/aronthill/RELAX-Jr).
+1. **RELAX-Jr: Enter artifacts to reduce**
+This prompt will only appear if you chose to run MWF, but chose *not* to clean all artifact types.
+Indicate which rounds of MWF to complete on the data.
+See previous step for links to documentation.
+1. **RELAX-Jr: Enter the delay period for MWF**
+This prompt will only appear if you chose to run MWF.
+Enter the delay period between the temporal and spatial filters for MWF.
+Because MWF applies both a temporal and a spatial filter simultaneously, it adds a delay before and after each point when constructing the filter to account for correlations within the data.
+Larger delays lead to better cleaning, but also much longer processing times.
+The suggested value in the MWF scripts is between 8 and 12 ms.
 1. **HAPPE: Thresholds for wavelet processing?**
 This prompt will only appear if you are doing ERP processing.
 Indicate whether you would like to use "hard" or "soft" thresholds for the wavelet thresholding.
@@ -386,14 +407,34 @@ For a more detailed comparison, see the [EEGLab documentation](https://eeglab.or
 1. **HAPPE: Use ICA for HAPPE anyway?**
 Indicate whether you would like to use ICA in addition to wavelet thresholding for the HAPPE pipeline.
 Because HAPPE already implements wavelet thresholding, the majority of artifacts are removed prior to the ICA step, making it somewhat redundant.
+To avoid over-cleaning, applying both wavelet thresholding and ICA is not recommended unless the data are particularly noisy.
 The response for this prompt does not affect ICA for any other pipelines.
 1. **APICE: Use custom parameters?**
 Indicate whether you would like to adjust any of the default APICE parameters for wICA.
 If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
 Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
 `MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+1. **RELAX-Jr: Use ICA in addition to MWF?**
+This prompt will only appear if you chose to use MWF for data cleaning.
+RELAX-Jr was tested using MWF only, ICA only, and both, and performed well with all three combinations.
+However, using both MWF and ICA substantially increases processing time, and (in less artifact-laden data) can lead to over-cleaning.
+1. **RELAX-Jr: Use wICA or ICA subtract?**
+Choose which ICA method to apply to the data.
+The creators of RELAX-Jr note that ICA by subtraction is "non-optimal" (see [GitHub](https://github.com/aronthill/RELAX-Jr/blob/main/RELAXJr_SET_PARAMETERS_AND_RUN.m#L208)).
 
 </details>
+
+1. **NEAR: Enter threshold for artifact identification**
+Enter the maximum threshold for artifact removal when applying the ASR algorithm.
+Lower values are more strict (i.e., reject more data).
+The NEAR creators recommend a value between 20 and 30.
+1. **NEAR: Run ASR in correction mode or rejection mode?**
+Indicate whether you would like to correct artifacts identified by ASR or remove artifacts identified by ASR.
+Both the NEAR creators and the EEGLAB developers recommend rejecting artifacts rather than correcting, as the effects of correction are "not clearly understood" (see [EEGLAB](https://eeglab.org/tutorials/06_RejectArtifacts/cleanrawdata.html) and [Kumaravel et al., 2022](https://doi.org/10.1016/j.dcn.2022.101068)).
+1. **NEAR: Perform additional artifact rejection after ASR processing?**
+This prompt will only appear if you chose to run ASR in rejection mode.
+Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing.
+This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.
 
 # Appendix
 
