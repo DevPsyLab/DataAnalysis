@@ -328,6 +328,42 @@ The prompts for this section vary considerably depending on the pipeline(s) sele
 Pipeline-specific prompts are preceded by the pipeline name and only appear if that pipeline was selected.
 
 1. **HAPPE: Use ECGone to reduce excess ECG artifact?**
+Indicate whether you would like to use ECGone to reduce ECG (i.e., heart rate and breathing) artifacts in the data.
+This algorithm requires either a dedicated ECG channel or channel(s) where you know that ECG artifacts are present.
+The documentation for this feature is somewhat limited, so errors that arise may be challenging to resolve.
+However, the script seems to primarily rely on the `MATLAB` function `findpeaks`, which has documentation [here](https://www.mathworks.com/help/signal/ref/findpeaks.html).
+
+<details>
+<summary>ECGone</summary>
+
+1. **Does the data contain a dedicated ECG channel?**
+Indicate whether your data has a specific channel for recording ECG signal.
+If you are processing data collected with the DevPsy Lab equipment, there is not a dedicated ECG channel.
+1. **Enter ECG channel name**
+This prompt will only appear if you indicated that the data has a dedicated ECG channel.
+Enter the name of the ECG channel.
+1. **Enter channels with ECG artifact**
+This prompt will only appear if you indicated that the data does *not* have a dedicated ECG channel.
+Enter the name(s) of the channel(s) that have significant ECG artifact.
+The channel(s) will be used to create an ECG signal template, and `MATLAB` will remove that template signal from the rest of the data.
+Because these channels are used to build a representation of the ECG signal, you should only input channels that have very strong ECG signal in most/all recordings.
+The channel(s) are used across all participants, so visual inspection of several (if not all) recordings is strongly recommended when selecting the channel(s).
+1. **Enter threshold for determining if proxy contains significant ECG artifacts**
+This prompt will only appear if you indicated that the data does *not* have a dedicated ECG channel.
+Indicate the minimum "peakiness" threshold for determining whether the data contains sufficient ECG signal to apply the ECGone algorithm.
+After identifying peaks, the algorithm subtracts the median value of the data from each peak, then divides those values by the median of the data.
+If the median of the transformed data is below the threshold set in this step, the data does not have enough ECG signal to run the algorithm.
+1. **Enter window creation length**
+Enter the minimum length of time between peaks for identifying heart rate signal.
+This value should be less than the duration of a single heartbeat.
+
+</details>
+
+1. **HAPPE: Thresholds for wavelet processing?**
+This prompt will only appear if you are doing ERP processing.
+Indicate whether you would like to use "hard" or "soft" thresholds for the wavelet thresholding.
+The soft threshold is recommended for cleaner data to help preserve ERP amplitudes.
+The hard threshold is recommended for data with heavier artifacts to ensure data are sufficiently clean.
 1. **Use ICA for artifact reduction?**
 This prompt will only appear if you are *not* doing ERP processing.
 Indicate whether you would like to use ICA to remove "stereotyped" artifacts (i.e., artifacts that look similar every time they occur, such as blinks, eye movements, or jaw clenching).
@@ -347,6 +383,10 @@ Indicate whether you would like to use the FastICA or the InfoMax algorithm for 
 The FastICA algorithm, as the name implies, runs faster (typically 1-3 minutes per data file), but the results are less stable for data with lots of channels.
 The InfoMax algorithm takes longer (roughly 3-5 minutes per data file), but the decompositions are more stable when the recording has a sufficient number of samples.
 For a more detailed comparison, see the [EEGLab documentation](https://eeglab.org/tutorials/ConceptsGuide/ICA_background.html) and [Delorme et al., 2012](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030135).
+1. **HAPPE: Use ICA for HAPPE anyway?**
+Indicate whether you would like to use ICA in addition to wavelet thresholding for the HAPPE pipeline.
+Because HAPPE already implements wavelet thresholding, the majority of artifacts are removed prior to the ICA step, making it somewhat redundant.
+The response for this prompt does not affect ICA for any other pipelines.
 1. **APICE: Use custom parameters?**
 Indicate whether you would like to adjust any of the default APICE parameters for wICA.
 If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
