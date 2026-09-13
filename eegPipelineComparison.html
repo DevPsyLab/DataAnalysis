@@ -775,7 +775,22 @@ Line Noise Reduction
 <h3 data-number="3.1.5" class="anchored" data-anchor-id="data-cleaning-sec-data-cleaning"><span class="header-section-number">3.1.5</span> Data Cleaning (#sec-data-cleaning)</h3>
 <p>The prompts for this section vary considerably depending on the pipeline(s) select earlier in the script. Pipeline-specific prompts are preceded by the pipeline name and only appear if that pipeline was selected.</p>
 <ol type="1">
-<li><strong>HAPPE: Use ECGone to reduce excess ECG artifact?</strong></li>
+<li><strong>HAPPE: Use ECGone to reduce excess ECG artifact?</strong> Indicate whether you would like to use ECGone to reduce ECG (i.e., heart rate and breathing) artifacts in the data. This algorithm requires either a dedicated ECG channel or channel(s) where you know that ECG artifacts are present. The documentation for this feature is somewhat limited, so errors that arise may be challenging to resolve. However, the script seems to primarily rely on the <code>MATLAB</code> function <code>findpeaks</code>, which has documentation <a href="https://www.mathworks.com/help/signal/ref/findpeaks.html">here</a>.</li>
+</ol>
+<details>
+<summary>
+ECGone
+</summary>
+<ol type="1">
+<li><strong>Does the data contain a dedicated ECG channel?</strong> Indicate whether your data has a specific channel for recording ECG signal. If you are processing data collected with the DevPsy Lab equipment, there is not a dedicated ECG channel.</li>
+<li><strong>Enter ECG channel name</strong> This prompt will only appear if you indicated that the data has a dedicated ECG channel. Enter the name of the ECG channel.</li>
+<li><strong>Enter channels with ECG artifact</strong> This prompt will only appear if you indicated that the data does <em>not</em> have a dedicated ECG channel. Enter the name(s) of the channel(s) that have significant ECG artifact. The channel(s) will be used to create an ECG signal template, and <code>MATLAB</code> will remove that template signal from the rest of the data. Because these channels are used to build a representation of the ECG signal, you should only input channels that have very strong ECG signal in most/all recordings. The channel(s) are used across all participants, so visual inspection of several (if not all) recordings is strongly recommended when selecting the channel(s).</li>
+<li><strong>Enter threshold for determining if proxy contains significant ECG artifacts</strong> This prompt will only appear if you indicated that the data does <em>not</em> have a dedicated ECG channel. Indicate the minimum “peakiness” threshold for determining whether the data contains sufficient ECG signal to apply the ECGone algorithm. After identifying peaks, the algorithm subtracts the median value of the data from each peak, then divides those values by the median of the data. If the median of the transformed data is below the threshold set in this step, the data does not have enough ECG signal to run the algorithm.</li>
+<li><strong>Enter window creation length</strong> Enter the minimum length of time between peaks for identifying heart rate signal. This value should be less than the duration of a single heartbeat.</li>
+</ol>
+</details>
+<ol type="1">
+<li><strong>HAPPE: Thresholds for wavelet processing?</strong> This prompt will only appear if you are doing ERP processing. Indicate whether you would like to use “hard” or “soft” thresholds for the wavelet thresholding. The soft threshold is recommended for cleaner data to help preserve ERP amplitudes. The hard threshold is recommended for data with heavier artifacts to ensure data are sufficiently clean.</li>
 <li><strong>Use ICA for artifact reduction?</strong> This prompt will only appear if you are <em>not</em> doing ERP processing. Indicate whether you would like to use ICA to remove “stereotyped” artifacts (i.e., artifacts that look similar every time they occur, such as blinks, eye movements, or jaw clenching). However, child EEG data is often much noisier than adult EEG data, and many of the artifacts are non-stereotyped. As a result, ICA can be less reliable with child EEG data. ICA tends to work best with longer recordings and data that have been high-pass filtered to 1 Hz or higher. If you selected a high-pass filter below 1 Hz (or no high-pass filter), <code>MATLAB</code> will print a warning, but will still apply ICA to your data. All pipelines except for NEAR have the option to conduct ICA.</li>
 </ol>
 <details>
@@ -785,6 +800,7 @@ ICA
 <p>These prompts will only appear if you chose to apply ICA.</p>
 <ol type="1">
 <li><strong>ICA method?</strong> Indicate whether you would like to use the FastICA or the InfoMax algorithm for the ICA. The FastICA algorithm, as the name implies, runs faster (typically 1-3 minutes per data file), but the results are less stable for data with lots of channels. The InfoMax algorithm takes longer (roughly 3-5 minutes per data file), but the decompositions are more stable when the recording has a sufficient number of samples. For a more detailed comparison, see the <a href="https://eeglab.org/tutorials/ConceptsGuide/ICA_background.html">EEGLab documentation</a> and <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030135">Delorme et al., 2012</a>.</li>
+<li><strong>HAPPE: Use ICA for HAPPE anyway?</strong> Indicate whether you would like to use ICA in addition to wavelet thresholding for the HAPPE pipeline. Because HAPPE already implements wavelet thresholding, the majority of artifacts are removed prior to the ICA step, making it somewhat redundant. The response for this prompt does not affect ICA for any other pipelines.</li>
 <li><strong>APICE: Use custom parameters?</strong> Indicate whether you would like to adjust any of the default APICE parameters for wICA. If you choose to use custom parameters, you will need to modify the files directly–the script will not prompt you for them. Refer to <a href="https://doi.org/10.1016/j.dcn.2022.101077">Flo et al., 2022</a> for documentation on the various parameters. <code>MATLAB</code> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</li>
 </ol>
 </details>
@@ -1637,75 +1653,115 @@ ICA
 <span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>Pipeline-specific prompts are preceded by the pipeline name and only appear if that pipeline was selected.</span>
 <span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Use ECGone to reduce excess ECG artifact?**</span>
-<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Use ICA for artifact reduction?**</span>
-<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are *not* doing ERP processing.</span>
-<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use ICA to remove "stereotyped" artifacts (i.e., artifacts that look similar every time they occur, such as blinks, eye movements, or jaw clenching).</span>
-<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>However, child EEG data is often much noisier than adult EEG data, and many of the artifacts are non-stereotyped.</span>
-<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>As a result, ICA can be less reliable with child EEG data.</span>
-<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>ICA tends to work best with longer recordings and data that have been high-pass filtered to 1 Hz or higher.</span>
-<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>If you selected a high-pass filter below 1 Hz (or no high-pass filter), <span class="in">`MATLAB`</span> will print a warning, but will still apply ICA to your data.</span>
-<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>All pipelines except for NEAR have the option to conduct ICA.</span>
-<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>ICA<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>These prompts will only appear if you chose to apply ICA.</span>
-<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**ICA method?**</span>
-<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use the FastICA or the InfoMax algorithm for the ICA.</span>
-<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>The FastICA algorithm, as the name implies, runs faster (typically 1-3 minutes per data file), but the results are less stable for data with lots of channels.</span>
-<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>The InfoMax algorithm takes longer (roughly 3-5 minutes per data file), but the decompositions are more stable when the recording has a sufficient number of samples.</span>
-<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a>For a more detailed comparison, see the <span class="co">[</span><span class="ot">EEGLab documentation</span><span class="co">](https://eeglab.org/tutorials/ConceptsGuide/ICA_background.html)</span> and <span class="co">[</span><span class="ot">Delorme et al., 2012</span><span class="co">](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030135)</span>.</span>
-<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
-<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for wICA.</span>
-<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
-<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
-<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
-<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use ECGone to reduce ECG (i.e., heart rate and breathing) artifacts in the data.</span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>This algorithm requires either a dedicated ECG channel or channel(s) where you know that ECG artifacts are present.</span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>The documentation for this feature is somewhat limited, so errors that arise may be challenging to resolve.</span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>However, the script seems to primarily rely on the <span class="in">`MATLAB`</span> function <span class="in">`findpeaks`</span>, which has documentation <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.mathworks.com/help/signal/ref/findpeaks.html)</span>.</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>ECGone<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Does the data contain a dedicated ECG channel?**</span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>Indicate whether your data has a specific channel for recording ECG signal.</span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>If you are processing data collected with the DevPsy Lab equipment, there is not a dedicated ECG channel.</span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter ECG channel name**</span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you indicated that the data has a dedicated ECG channel.</span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>Enter the name of the ECG channel.</span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter channels with ECG artifact**</span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you indicated that the data does *not* have a dedicated ECG channel.</span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>Enter the name(s) of the channel(s) that have significant ECG artifact.</span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>The channel(s) will be used to create an ECG signal template, and <span class="in">`MATLAB`</span> will remove that template signal from the rest of the data.</span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a>Because these channels are used to build a representation of the ECG signal, you should only input channels that have very strong ECG signal in most/all recordings.</span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>The channel(s) are used across all participants, so visual inspection of several (if not all) recordings is strongly recommended when selecting the channel(s).</span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter threshold for determining if proxy contains significant ECG artifacts**</span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you indicated that the data does *not* have a dedicated ECG channel.</span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>Indicate the minimum "peakiness" threshold for determining whether the data contains sufficient ECG signal to apply the ECGone algorithm.</span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>After identifying peaks, the algorithm subtracts the median value of the data from each peak, then divides those values by the median of the data.</span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a>If the median of the transformed data is below the threshold set in this step, the data does not have enough ECG signal to run the algorithm.</span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter window creation length**</span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>Enter the minimum length of time between peaks for identifying heart rate signal.</span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>This value should be less than the duration of a single heartbeat.</span>
 <span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Thresholds for wavelet processing?**</span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are doing ERP processing.</span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use "hard" or "soft" thresholds for the wavelet thresholding.</span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>The soft threshold is recommended for cleaner data to help preserve ERP amplitudes.</span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>The hard threshold is recommended for data with heavier artifacts to ensure data are sufficiently clean.</span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Use ICA for artifact reduction?**</span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are *not* doing ERP processing.</span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use ICA to remove "stereotyped" artifacts (i.e., artifacts that look similar every time they occur, such as blinks, eye movements, or jaw clenching).</span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a>However, child EEG data is often much noisier than adult EEG data, and many of the artifacts are non-stereotyped.</span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>As a result, ICA can be less reliable with child EEG data.</span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a>ICA tends to work best with longer recordings and data that have been high-pass filtered to 1 Hz or higher.</span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>If you selected a high-pass filter below 1 Hz (or no high-pass filter), <span class="in">`MATLAB`</span> will print a warning, but will still apply ICA to your data.</span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a>All pipelines except for NEAR have the option to conduct ICA.</span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>ICA<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>These prompts will only appear if you chose to apply ICA.</span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**ICA method?**</span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use the FastICA or the InfoMax algorithm for the ICA.</span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a>The FastICA algorithm, as the name implies, runs faster (typically 1-3 minutes per data file), but the results are less stable for data with lots of channels.</span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a>The InfoMax algorithm takes longer (roughly 3-5 minutes per data file), but the decompositions are more stable when the recording has a sufficient number of samples.</span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a>For a more detailed comparison, see the <span class="co">[</span><span class="ot">EEGLab documentation</span><span class="co">](https://eeglab.org/tutorials/ConceptsGuide/ICA_background.html)</span> and <span class="co">[</span><span class="ot">Delorme et al., 2012</span><span class="co">](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030135)</span>.</span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Use ICA for HAPPE anyway?**</span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use ICA in addition to wavelet thresholding for the HAPPE pipeline.</span>
+<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a>Because HAPPE already implements wavelet thresholding, the majority of artifacts are removed prior to the ICA step, making it somewhat redundant.</span>
+<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a>The response for this prompt does not affect ICA for any other pipelines.</span>
+<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
+<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for wICA.</span>
+<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
+<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
+<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
 <span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-429"><a href="#cb3-429" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-430"><a href="#cb3-430" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-431"><a href="#cb3-431" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
