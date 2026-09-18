@@ -436,6 +436,30 @@ This prompt will only appear if you chose to run ASR in rejection mode.
 Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing.
 This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.
 
+## Channel Interpolation
+
+1. **Interpolate bad channels?**
+Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).
+Interpolation estimates the signal for a given channel based on the signal in nearby channels.
+A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels.
+However, interpolated data is only as good as the data informing it.
+If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable.
+If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., > 10%) is recommended.
+1. **APICE: Enter channel-level interpolation methods**
+This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.
+Indicate which interpolation methods you would like to use on the data.
+According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp).
+If PCA is selected, APICE only applies it to sections of the data that are identified as "bad".
+The **spline1** option applies spherical spline interpolation to sections of the data that are identified as "bad", and the **spline2** option applies spherical spline interpolation to channels that are "bad" for the entire recording.
+Of note, the **pca** and **spline1** algorithms are applied prior to ICA (if enabled), and the **spline2** algorithm is applied afterward.
+All three options can be used in any combination.
+1. **APICE: Use custom parameters?**
+This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.
+Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+
 # Appendix
 
 ## Check Onset Tags (#sec-onset-tags)
