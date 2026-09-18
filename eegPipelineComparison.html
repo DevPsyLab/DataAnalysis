@@ -569,6 +569,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#bad-channel-detection" id="toc-bad-channel-detection" class="nav-link" data-scroll-target="#bad-channel-detection"><span class="header-section-number">3.1.4</span> Bad Channel Detection</a></li>
   <li><a href="#data-cleaning-sec-data-cleaning" id="toc-data-cleaning-sec-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning-sec-data-cleaning"><span class="header-section-number">3.1.5</span> Data Cleaning (#sec-data-cleaning)</a></li>
   </ul></li>
+  <li><a href="#channel-interpolation" id="toc-channel-interpolation" class="nav-link" data-scroll-target="#channel-interpolation"><span class="header-section-number">3.2</span> Channel Interpolation</a></li>
   </ul></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">4</span> Appendix</a>
   <ul>
@@ -817,6 +818,14 @@ ICA
 <li><strong>NEAR: Perform additional artifact rejection after ASR processing?</strong> This prompt will only appear if you chose to run ASR in rejection mode. Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing. This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.</li>
 </ol>
 </section>
+</section>
+<section id="channel-interpolation" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="channel-interpolation"><span class="header-section-number">3.2</span> Channel Interpolation</h2>
+<ol type="1">
+<li><strong>Interpolate bad channels?</strong> Indicate whether you would like to interpolate channels identified by the bad channel detection step(s). Interpolation estimates the signal for a given channel based on the signal in nearby channels. A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels. However, interpolated data is only as good as the data informing it. If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable. If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., &gt; 10%) is recommended.</li>
+<li><strong>APICE: Enter channel-level interpolation methods</strong> This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline. Indicate which interpolation methods you would like to use on the data. According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp). If PCA is selected, APICE only applies it to sections of the data that are identified as “bad”. The <strong>spline1</strong> option applies spherical spline interpolation to sections of the data that are identified as “bad”, and the <strong>spline2</strong> option applies spherical spline interpolation to channels that are “bad” for the entire recording. Of note, the <strong>pca</strong> and <strong>spline1</strong> algorithms are applied prior to ICA (if enabled), and the <strong>spline2</strong> algorithm is applied afterward. All three options can be used in any combination.</li>
+<li><strong>APICE: Use custom parameters?</strong> This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline. Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation. If you choose to use custom parameters, you will need to modify the files directly–the script will not prompt you for them. Refer to <a href="https://doi.org/10.1016/j.dcn.2022.101077">Flo et al., 2022</a> for documentation on the various parameters. <code>MATLAB</code> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</li>
+</ol>
 </section>
 </section>
 <section id="appendix" class="level1" data-number="4">
@@ -1773,48 +1782,72 @@ ICA
 <span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing.</span>
 <span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a>This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.</span>
 <span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="fu">## Channel Interpolation</span></span>
 <span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
-<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Interpolate bad channels?**</span>
+<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).</span>
+<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a>Interpolation estimates the signal for a given channel based on the signal in nearby channels.</span>
+<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a>A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels.</span>
+<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a>However, interpolated data is only as good as the data informing it.</span>
+<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a>If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable.</span>
+<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., &gt; 10%) is recommended.</span>
+<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Enter channel-level interpolation methods**</span>
+<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
+<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>Indicate which interpolation methods you would like to use on the data.</span>
+<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp).</span>
+<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>If PCA is selected, APICE only applies it to sections of the data that are identified as "bad".</span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>The **spline1** option applies spherical spline interpolation to sections of the data that are identified as "bad", and the **spline2** option applies spherical spline interpolation to channels that are "bad" for the entire recording.</span>
+<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>Of note, the **pca** and **spline1** algorithms are applied prior to ICA (if enabled), and the **spline2** algorithm is applied afterward.</span>
+<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>All three options can be used in any combination.</span>
+<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
+<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
+<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation.</span>
+<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
+<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
+<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
+<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-492"><a href="#cb3-492" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
