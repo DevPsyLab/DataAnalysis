@@ -1329,12 +1329,23 @@ mydata$predictedValue <- predict(
 )
 
 gamMethod <- function(formula, data, weights = NULL, ...) { # from here: https://stackoverflow.com/a/76762792/2029527 (archived at https://perma.cc/85C6-FKJ4)
-  if (nrow(data) < 4) {
+  if (nrow(data) < 4) { # linear if fewer than 4 timepoints
     lm(formula, data = data, ...)
-  } else {
+  } else { # gam smooth if 4+ timepoints
     mgcv::gam(y ~ s(x, bs = "cs", k = 3), data = data, ...)
   }
 }
+
+# or could do something like:
+#gamMethod <- function(formula, data, weights, ...) {
+#  if(nrow(data) >= 4){ # gam smooth if 4+ timepoints
+#    mgcv::gam(y ~ s(x, bs = "cs", k = 3), data = data, ...)
+#  } else if(nrow(data) == 3){ # quadratic if 3 timepoints
+#    lm(y ~ x + I(x^2), data = data, ...)
+#  } else{ # linear if fewer than 3 timepoints
+#    lm(y ~ x, data = data, ...)
+#  }
+#}
 
 ggplot(
   data = mydata,
