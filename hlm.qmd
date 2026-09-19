@@ -1246,7 +1246,7 @@ performance::model_performance(gammModel)
 performance::r2(gammModel)
 
 gammModel_standardized <- mgcv::gamm(
-  math ~ s(scale(ageYearsCentered), by = sex),               # fixed effects
+  scale(math) ~ s(scale(ageYearsCentered), by = sex),        # fixed effects
     random = list(idFactor = ~ 1 + scale(ageYearsCentered)), # random effects
   data = mydata,
   nthreads = num_cores)
@@ -1260,7 +1260,7 @@ summary(gammModel_standardized$gam)
 
 ```{r}
 gamm4Model <- gamm4::gamm4(
-  math ~ s(ageYearsCentered, by = sex),          # fixed effects
+  scale(math) ~ s(ageYearsCentered, by = sex),   # fixed effects
     random = ~ (1 + ageYearsCentered| idFactor), # random effects
   data = mydata
 )
@@ -1600,12 +1600,18 @@ moderatedMultilevelModel <- mgcv::gam(
   data = mydata
 )
 
-summary(moderatedMultilevelModel)
+moderatedMultilevelModel_standardized <- mgcv::gam(
+  scale(math) ~
+    s(scale(timeInStudy)) +                          # main effect
+    s(scale(ageAtT1Centered)) +                      # main effect
+    ti(scale(timeInStudy), scale(ageAtT1Centered)) + # interaction term
+    s(idFactor, bs = "re") +                         # random intercepts
+    s(idFactor, by = scale(timeInStudy), bs = "re"), # random slopes
+  data = mydata
+)
 
-print(effectsize::standardize_parameters(
-  moderatedMultilevelModel,
-  method = "refit"),
-  digits = 2)
+summary(moderatedMultilevelModel)
+summary(moderatedMultilevelModel_standardized)
 
 performance::model_performance(moderatedMultilevelModel)
 performance::r2(moderatedMultilevelModel)
