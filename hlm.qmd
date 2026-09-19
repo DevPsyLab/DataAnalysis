@@ -1187,6 +1187,8 @@ summary(MCMCglmmModel)
 
 ## Generalized Additive Mixed Model {#sec-gamm}
 
+Generalized additive mixed models (GAMMs) can be estimated using the `mgcv::gam()`, `mgcv::gamm()`, and `gamm4::gamm4()` functions.
+
 ### Fit Model
 
 ```{r}
@@ -1203,6 +1205,8 @@ num_true_cores <- parallelly::availableCores(logical = FALSE)
 num_cores <- parallelly::availableCores() - 1
 num_true_cores <- parallelly::availableCores(logical = FALSE) - 1
 ```
+
+`mgcv::gam()` function:
 
 ```{r}
 gamModel <- mgcv::gam(
@@ -1222,6 +1226,61 @@ print(effectsize::standardize_parameters(
 
 performance::model_performance(gamModel)
 performance::r2(gamModel)
+```
+
+`mgcv::gamm()` function:
+
+```{r}
+gammModel <- mgcv::gamm(
+  math ~ s(ageYearsCentered, by = sex),               # fixed effects
+    random = list(idFactor = ~ 1 + ageYearsCentered), # random effects
+  data = mydata,
+  nthreads = num_cores
+)
+
+gammModel
+summary(gammModel$lme)
+summary(gammModel$gam)
+
+performance::model_performance(gammModel)
+performance::r2(gammModel)
+
+gammModel_standardized <- mgcv::gamm(
+  math ~ s(scale(ageYearsCentered), by = sex),               # fixed effects
+    random = list(idFactor = ~ 1 + scale(ageYearsCentered)), # random effects
+  data = mydata,
+  nthreads = num_cores)
+
+gammModel_standardized
+summary(gammModel_standardized$lme)
+summary(gammModel_standardized$gam)
+```
+
+`gamm4::gamm4()` function:
+
+```{r}
+gamm4Model <- gamm4::gamm4(
+  math ~ s(ageYearsCentered, by = sex),          # fixed effects
+    random = ~ (1 + ageYearsCentered| idFactor), # random effects
+  data = mydata
+)
+
+gamm4Model
+summary(gamm4Model$mer)
+summary(gamm4Model$gam)
+
+performance::model_performance(gamm4Model)
+performance::r2(gamm4Model)
+
+gamm4Model_standardized <- gamm4::gamm4(
+  math ~ s(scale(ageYearsCentered), by = sex),          # fixed effects
+    random = ~ (1 + scale(ageYearsCentered)| idFactor), # random effects
+  data = mydata
+)
+
+gamm4Model_standardized
+summary(gamm4Model_standardized$lme)
+summary(gamm4Model_standardized$gam)
 ```
 
 ### Prototypical Growth Curve
