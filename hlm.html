@@ -3361,10 +3361,35 @@ lmer.REML score: 15659.75
 attr(,"class")
 [1] "gamm4" "list" </code></pre>
 </div>
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb162"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gamm4Model_standardized</span><span class="op">$</span><span class="va">lme</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb162"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gamm4Model_standardized</span><span class="op">$</span><span class="va">mer</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>Length  Class   Mode 
-     0   NULL   NULL </code></pre>
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+
+REML criterion at convergence: 15659.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3611 -0.5023 -0.0091  0.5091  2.3324 
+
+Random effects:
+ Groups   Name                                 Variance Std.Dev. Corr 
+ idFactor (Intercept)                          77.944   8.829         
+          scale(ageYearsCentered)               2.734   1.653    0.28 
+ Xr.0     s(scale(ageYearsCentered)):sexfemale 58.596   7.655         
+ Xr       s(scale(ageYearsCentered)):sexmale   78.770   8.875         
+ Residual                                      26.576   5.155         
+Number of obs: 2221, groups:  idFactor, 932; Xr.0, 8; Xr, 8
+
+Fixed effects:
+                                         Estimate Std. Error t value
+X(Intercept)                               45.959      0.312 147.294
+Xs(scale(ageYearsCentered)):sexmaleFx1    -10.074      2.083  -4.837
+Xs(scale(ageYearsCentered)):sexfemaleFx1   -9.347      1.909  -4.896
+
+Correlation of Fixed Effects:
+                         X(Int) Xs(scl(gYrsCntrd)):sxmF1
+Xs(scl(gYrsCntrd)):sxmF1 -0.005                         
+Xs(scl(gYrsCntrd)):sxfF1 -0.014  0.000                  </code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb164"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gamm4Model_standardized</span><span class="op">$</span><span class="va">gam</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
@@ -6155,7 +6180,7 @@ loaded via a namespace (and not attached):
 <span id="cb213-1398"><a href="#cb213-1398" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb213-1399"><a href="#cb213-1399" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb213-1400"><a href="#cb213-1400" aria-hidden="true" tabindex="-1"></a>gamm4Model_standardized</span>
-<span id="cb213-1401"><a href="#cb213-1401" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gamm4Model_standardized<span class="sc">$</span>lme)</span>
+<span id="cb213-1401"><a href="#cb213-1401" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gamm4Model_standardized<span class="sc">$</span>mer)</span>
 <span id="cb213-1402"><a href="#cb213-1402" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gamm4Model_standardized<span class="sc">$</span>gam)</span>
 <span id="cb213-1403"><a href="#cb213-1403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb213-1404"><a href="#cb213-1404" aria-hidden="true" tabindex="-1"></a></span>
