@@ -111,6 +111,11 @@ mydata$sex <- factor(
   levels = c(0, 1),
   labels = c("male", "female")
 )
+
+# Factor Variables
+mydata$idFactor <- factor(
+  mydata$id
+)
 ```
 
 # Estimator: ML or REML
@@ -1201,7 +1206,9 @@ num_true_cores <- parallelly::availableCores(logical = FALSE) - 1
 
 ```{r}
 gamModel <- mgcv::gam(
-  math ~ s(ageYearsCentered, by = sex) + s(id, ageYearsCentered, bs = "re"),
+  math ~ s(ageYearsCentered, by = sex) +      # fixed effects
+    s(idFactor, bs = "re") +                  # random intercepts
+    s(idFactor, ageYearsCentered, bs = "re"), # random slopes
   data = mydata,
   nthreads = num_cores
 )
@@ -1232,13 +1239,11 @@ newData$sex[which(newData$female == 0)] <- "male"
 newData$sex[which(newData$female == 1)] <- "female"
 newData$sex <- as.factor(newData$sex)
 
-# add a dummy id
-newData$id <- mydata$id[1]
-
 newData$predictedValue <- predict(
   gamModel,
   newdata = newData,
-  exclude = "s(ageYearsCentered,id)"
+  exclude = c("s(idFactor)","s(idFactor,ageYearsCentered)"),
+  newdata.guaranteed = TRUE # to indicate that idFactor is not in the newdata object
 )
 
 ggplot(
@@ -1264,9 +1269,12 @@ mydata$predictedValue <- predict(
   newdata = mydata
 )
 
-gamMethod <- function(formula, data, weights, ...) { # from here: https://stackoverflow.com/a/76762792/2029527 (archived at https://perma.cc/85C6-FKJ4)
-  if(nrow(data) < 4) return(lm(y ~ x, data = data, ...))
-  else  mgcv::gam(y ~ s(x, bs = "cs", k = 3), data = data, ...)
+gamMethod <- function(formula, data, weights = NULL, ...) { # from here: https://stackoverflow.com/a/76762792/2029527 (archived at https://perma.cc/85C6-FKJ4)
+  if (nrow(data) < 4) {
+    lm(formula, data = data, ...)
+  } else {
+    mgcv::gam(y ~ s(x, bs = "cs", k = 3), data = data, ...)
+  }
 }
 
 ggplot(
@@ -1525,11 +1533,11 @@ ggplot(
 ```{r}
 moderatedMultilevelModel <- mgcv::gam(
   math ~
-    s(timeInStudy) +
-    s(ageAtT1Centered) +
-    ti(timeInStudy, ageAtT1Centered) +
-    s(id, bs = "re") +
-    s(id, by = timeInStudy, bs = "re"),
+    s(timeInStudy) +                          # main effect
+    s(ageAtT1Centered) +                      # main effect
+    ti(timeInStudy, ageAtT1Centered) +        # interaction term
+    s(idFactor, bs = "re") +                  # random intercepts
+    s(idFactor, by = timeInStudy, bs = "re"), # random slopes
   data = mydata
 )
 
