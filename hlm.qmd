@@ -1299,10 +1299,10 @@ newData$sex[which(newData$female == 0)] <- "male"
 newData$sex[which(newData$female == 1)] <- "female"
 newData$sex <- as.factor(newData$sex)
 
-newData$predictedValue <- predict(
+newData$predictedValue <- predict( # predict.gam
   gamModel,
   newdata = newData,
-  exclude = c("s(idFactor)","s(idFactor,ageYearsCentered)"),
+  exclude = c("s(idFactor)","s(idFactor,ageYearsCentered)"), # terms must be spelled exactly as they appear in the model summary
   newdata.guaranteed = TRUE # to indicate that idFactor is not in the newdata object
 )
 
