@@ -568,12 +568,21 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#initial-processing" id="toc-initial-processing" class="nav-link" data-scroll-target="#initial-processing"><span class="header-section-number">3.1.3</span> Initial Processing</a></li>
   <li><a href="#bad-channel-detection" id="toc-bad-channel-detection" class="nav-link" data-scroll-target="#bad-channel-detection"><span class="header-section-number">3.1.4</span> Bad Channel Detection</a></li>
   <li><a href="#data-cleaning-sec-data-cleaning" id="toc-data-cleaning-sec-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning-sec-data-cleaning"><span class="header-section-number">3.1.5</span> Data Cleaning (#sec-data-cleaning)</a></li>
+  <li><a href="#channel-interpolation" id="toc-channel-interpolation" class="nav-link" data-scroll-target="#channel-interpolation"><span class="header-section-number">3.1.6</span> Channel Interpolation</a></li>
+  <li><a href="#segmentation" id="toc-segmentation" class="nav-link" data-scroll-target="#segmentation"><span class="header-section-number">3.1.7</span> Segmentation</a></li>
+  <li><a href="#baseline-correction-sec-base-cor" id="toc-baseline-correction-sec-base-cor" class="nav-link" data-scroll-target="#baseline-correction-sec-base-cor"><span class="header-section-number">3.1.8</span> Baseline Correction (#sec-base-cor)</a></li>
+  <li><a href="#segment-interpolation" id="toc-segment-interpolation" class="nav-link" data-scroll-target="#segment-interpolation"><span class="header-section-number">3.1.9</span> Segment Interpolation</a></li>
+  <li><a href="#segment-rejection" id="toc-segment-rejection" class="nav-link" data-scroll-target="#segment-rejection"><span class="header-section-number">3.1.10</span> Segment Rejection</a></li>
+  <li><a href="#dss" id="toc-dss" class="nav-link" data-scroll-target="#dss"><span class="header-section-number">3.1.11</span> DSS</a></li>
+  <li><a href="#re-referencing-sec-reref" id="toc-re-referencing-sec-reref" class="nav-link" data-scroll-target="#re-referencing-sec-reref"><span class="header-section-number">3.1.12</span> Re-Referencing (#sec-reref)</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">3.1.13</span> Visualization</a></li>
+  <li><a href="#saving" id="toc-saving" class="nav-link" data-scroll-target="#saving"><span class="header-section-number">3.1.14</span> Saving</a></li>
   </ul></li>
-  <li><a href="#channel-interpolation" id="toc-channel-interpolation" class="nav-link" data-scroll-target="#channel-interpolation"><span class="header-section-number">3.2</span> Channel Interpolation</a></li>
   </ul></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">4</span> Appendix</a>
   <ul>
   <li><a href="#check-onset-tags-sec-onset-tags" id="toc-check-onset-tags-sec-onset-tags" class="nav-link" data-scroll-target="#check-onset-tags-sec-onset-tags"><span class="header-section-number">4.1</span> Check Onset Tags (#sec-onset-tags)</a></li>
+  <li><a href="#discarding-short-segments-sec-short-eps" id="toc-discarding-short-segments-sec-short-eps" class="nav-link" data-scroll-target="#discarding-short-segments-sec-short-eps"><span class="header-section-number">4.2</span> Discarding Short Segments (#sec-short-eps)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -818,14 +827,47 @@ ICA
 <li><strong>NEAR: Perform additional artifact rejection after ASR processing?</strong> This prompt will only appear if you chose to run ASR in rejection mode. Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing. This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.</li>
 </ol>
 </section>
-</section>
-<section id="channel-interpolation" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="channel-interpolation"><span class="header-section-number">3.2</span> Channel Interpolation</h2>
+<section id="channel-interpolation" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="channel-interpolation"><span class="header-section-number">3.1.6</span> Channel Interpolation</h3>
+<p>Although channel interpolation occurs after segmentation in the processing pipeline, <code>MATLAB</code> collects the parameters for each in the opposite order. Not all files/tasks are segmented, so all of the segmentation and segment-related parameters are grouped together in <code>parameters.m</code>.</p>
 <ol type="1">
 <li><strong>Interpolate bad channels?</strong> Indicate whether you would like to interpolate channels identified by the bad channel detection step(s). Interpolation estimates the signal for a given channel based on the signal in nearby channels. A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels. However, interpolated data is only as good as the data informing it. If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable. If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., &gt; 10%) is recommended.</li>
 <li><strong>APICE: Enter channel-level interpolation methods</strong> This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline. Indicate which interpolation methods you would like to use on the data. According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp). If PCA is selected, APICE only applies it to sections of the data that are identified as “bad”. The <strong>spline1</strong> option applies spherical spline interpolation to sections of the data that are identified as “bad”, and the <strong>spline2</strong> option applies spherical spline interpolation to channels that are “bad” for the entire recording. Of note, the <strong>pca</strong> and <strong>spline1</strong> algorithms are applied prior to ICA (if enabled), and the <strong>spline2</strong> algorithm is applied afterward. All three options can be used in any combination.</li>
 <li><strong>APICE: Use custom parameters?</strong> This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline. Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation. If you choose to use custom parameters, you will need to modify the files directly–the script will not prompt you for them. Refer to <a href="https://doi.org/10.1016/j.dcn.2022.101077">Flo et al., 2022</a> for documentation on the various parameters. <code>MATLAB</code> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</li>
 </ol>
+<p>Note: The next several sections only apply to segmented data. If your data are not segmented, skip to <a href="#sec-reref">Re-Referencing</a>.</p>
+</section>
+<section id="segmentation" class="level3" data-number="3.1.7">
+<h3 data-number="3.1.7" class="anchored" data-anchor-id="segmentation"><span class="header-section-number">3.1.7</span> Segmentation</h3>
+<ol type="1">
+<li><strong>Segment/epoch data?</strong> Indicate whether you would like to split your data into smaller sections (i.e., segments/epochs) for analysis. If you are analyzing task data, it is extremely likely that it should be segmented. Baseline or resting state data can also be segmented if desired. If you choose not to segment your data, skip to <a href="#sec-reref">Re-Referencing</a>.</li>
+<li><strong>Segment start time</strong> This prompt will only appear if you are processing task (rather than baseline/resting state) data. Enter the start time of the segment relative to the start of the task trial. If you selected a pre-coded task (e.g., Oddball) at the beginning of the script, <code>MATLAB</code> will print the task timing details above this prompt. If you are applying <a href="#sec-base-cor">baseline correction</a>, the segment start time should be the time when you would like your baseline to start. For example, if you would like to include 400ms before the start of each trial for baseline correction, the segment start time should be -400. If you are not applying baseline correction, the segment start time will typically be 0.</li>
+<li><strong>Segment end time</strong> This prompt will only appear if you are processing task data. Enter the end time of the segment relative to the start of the task trial. This value effectively sets the duration of each segment/epoch, but it does not necessarily have to equal the trial duration. For example, if you are processing Fish-Shark data, not all trials are the same length, and there is no pre-trial baseline. If you set the segment end time to 2500ms, any trial where the participant responded in under 1750ms will partially overlap with the subsequent trial (e.g., a 750ms response time + the 750ms feedback screen only adds to 1500ms, so the remaining 1000ms of the segment will be from the next trial). To address this problem, determine how long you need each trial to be (typically ~1000ms), then exclude shorter trials from analysis (see the <a href="#sec-short-eps">Appendix</a>).</li>
+<li><strong>Offset delay</strong> This prompt will only appear if you are processing task data and you did <em>not</em> select a pre-coded task at the beginning of the script. If you selected a pre-coded task, this value is set automatically. Enter the duration of the delay between the task trigger and the stimulus presentation. For instructions on determining the offset delay, see the <a href="https://www.egi.com/knowledge-center/item/91-how-to-set-up-a-timing-test-in-net-station-5">EGI documentation</a>.</li>
+<li><strong>Segment length</strong> This prompt will only appear if you are processing baseline/resting state data. Enter the desired segment length for the data. Shorter segments may result in less data exclusion, but will increase processing time.</li>
+</ol>
+</section>
+<section id="baseline-correction-sec-base-cor" class="level3" data-number="3.1.8">
+<h3 data-number="3.1.8" class="anchored" data-anchor-id="baseline-correction-sec-base-cor"><span class="header-section-number">3.1.8</span> Baseline Correction (#sec-base-cor)</h3>
+</section>
+<section id="segment-interpolation" class="level3" data-number="3.1.9">
+<h3 data-number="3.1.9" class="anchored" data-anchor-id="segment-interpolation"><span class="header-section-number">3.1.9</span> Segment Interpolation</h3>
+</section>
+<section id="segment-rejection" class="level3" data-number="3.1.10">
+<h3 data-number="3.1.10" class="anchored" data-anchor-id="segment-rejection"><span class="header-section-number">3.1.10</span> Segment Rejection</h3>
+</section>
+<section id="dss" class="level3" data-number="3.1.11">
+<h3 data-number="3.1.11" class="anchored" data-anchor-id="dss"><span class="header-section-number">3.1.11</span> DSS</h3>
+</section>
+<section id="re-referencing-sec-reref" class="level3" data-number="3.1.12">
+<h3 data-number="3.1.12" class="anchored" data-anchor-id="re-referencing-sec-reref"><span class="header-section-number">3.1.12</span> Re-Referencing (#sec-reref)</h3>
+</section>
+<section id="visualization" class="level3" data-number="3.1.13">
+<h3 data-number="3.1.13" class="anchored" data-anchor-id="visualization"><span class="header-section-number">3.1.13</span> Visualization</h3>
+</section>
+<section id="saving" class="level3" data-number="3.1.14">
+<h3 data-number="3.1.14" class="anchored" data-anchor-id="saving"><span class="header-section-number">3.1.14</span> Saving</h3>
+</section>
 </section>
 </section>
 <section id="appendix" class="level1" data-number="4">
@@ -859,6 +901,9 @@ ICA
 <li>NOTE: There are often several onset tags for a given trial (e.g., <code>bgin</code>, <code>TRSP</code>, <code>resp</code>). Only include the onset tags that are relevant to the comparison(s) you are making. These tags often (but not always) end in ‘+’ and are usually added by the software used to run the task.</li>
 </ul></li>
 </ol>
+</section>
+<section id="discarding-short-segments-sec-short-eps" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="discarding-short-segments-sec-short-eps"><span class="header-section-number">4.2</span> Discarding Short Segments (#sec-short-eps)</h2>
 
 
 <!-- -->
@@ -1782,72 +1827,123 @@ ICA
 <span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing.</span>
 <span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a>This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.</span>
 <span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="fu">## Channel Interpolation</span></span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="fu">### Channel Interpolation</span></span>
 <span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Interpolate bad channels?**</span>
-<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).</span>
-<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a>Interpolation estimates the signal for a given channel based on the signal in nearby channels.</span>
-<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a>A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels.</span>
-<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a>However, interpolated data is only as good as the data informing it.</span>
-<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a>If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable.</span>
-<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., &gt; 10%) is recommended.</span>
-<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Enter channel-level interpolation methods**</span>
-<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
-<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>Indicate which interpolation methods you would like to use on the data.</span>
-<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a>According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp).</span>
-<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>If PCA is selected, APICE only applies it to sections of the data that are identified as "bad".</span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>The **spline1** option applies spherical spline interpolation to sections of the data that are identified as "bad", and the **spline2** option applies spherical spline interpolation to channels that are "bad" for the entire recording.</span>
-<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>Of note, the **pca** and **spline1** algorithms are applied prior to ICA (if enabled), and the **spline2** algorithm is applied afterward.</span>
-<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>All three options can be used in any combination.</span>
-<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
-<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
-<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation.</span>
-<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
-<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
-<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
-<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
-<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-492"><a href="#cb3-492" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a>Although channel interpolation occurs after segmentation in the processing pipeline, <span class="in">`MATLAB`</span> collects the parameters for each in the opposite order.</span>
+<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a>Not all files/tasks are segmented, so all of the segmentation and segment-related parameters are grouped together in <span class="in">`parameters.m`</span>.</span>
+<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Interpolate bad channels?**</span>
+<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).</span>
+<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a>Interpolation estimates the signal for a given channel based on the signal in nearby channels.</span>
+<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a>A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same channels.</span>
+<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a>However, interpolated data is only as good as the data informing it.</span>
+<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a>If your data are particularly noisy, or if you consistently have a high number of bad channels, the interpolated data will likely be unreliable.</span>
+<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a>If you choose to interpolate channels, excluding files with high proportions of interpolated data (e.g., &gt; 10%) is recommended.</span>
+<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Enter channel-level interpolation methods**</span>
+<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a>Indicate which interpolation methods you would like to use on the data.</span>
+<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a>According to the APICE documentation, target PCA reduces time-localized artifacts (e.g., artifacts caused by a yawn or a sneeze), while spline interpolation targets space-localized artifacts (e.g., artifacts caused by an electrode losing contact with the scalp).</span>
+<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a>If PCA is selected, APICE only applies it to sections of the data that are identified as "bad".</span>
+<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a>The **spline1** option applies spherical spline interpolation to sections of the data that are identified as "bad", and the **spline2** option applies spherical spline interpolation to channels that are "bad" for the entire recording.</span>
+<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a>Of note, the **pca** and **spline1** algorithms are applied prior to ICA (if enabled), and the **spline2** algorithm is applied afterward.</span>
+<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a>All three options can be used in any combination.</span>
+<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
+<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate channels and are using the APICE pipeline.</span>
+<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for channel interpolation.</span>
+<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
+<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
+<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
+<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a>Note: The next several sections only apply to segmented data.</span>
+<span id="cb3-467"><a href="#cb3-467" aria-hidden="true" tabindex="-1"></a>If your data are not segmented, skip to <span class="co">[</span><span class="ot">Re-Referencing</span><span class="co">](#sec-reref)</span>.</span>
+<span id="cb3-468"><a href="#cb3-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-469"><a href="#cb3-469" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segmentation</span></span>
+<span id="cb3-470"><a href="#cb3-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-471"><a href="#cb3-471" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Segment/epoch data?**</span>
+<span id="cb3-472"><a href="#cb3-472" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to split your data into smaller sections (i.e., segments/epochs) for analysis.</span>
+<span id="cb3-473"><a href="#cb3-473" aria-hidden="true" tabindex="-1"></a>If you are analyzing task data, it is extremely likely that it should be segmented.</span>
+<span id="cb3-474"><a href="#cb3-474" aria-hidden="true" tabindex="-1"></a>Baseline or resting state data can also be segmented if desired.</span>
+<span id="cb3-475"><a href="#cb3-475" aria-hidden="true" tabindex="-1"></a>If you choose not to segment your data, skip to <span class="co">[</span><span class="ot">Re-Referencing</span><span class="co">](#sec-reref)</span>.</span>
+<span id="cb3-476"><a href="#cb3-476" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Segment start time**</span>
+<span id="cb3-477"><a href="#cb3-477" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are processing task (rather than baseline/resting state) data.</span>
+<span id="cb3-478"><a href="#cb3-478" aria-hidden="true" tabindex="-1"></a>Enter the start time of the segment relative to the start of the task trial.</span>
+<span id="cb3-479"><a href="#cb3-479" aria-hidden="true" tabindex="-1"></a>If you selected a pre-coded task (e.g., Oddball) at the beginning of the script, <span class="in">`MATLAB`</span> will print the task timing details above this prompt.</span>
+<span id="cb3-480"><a href="#cb3-480" aria-hidden="true" tabindex="-1"></a>If you are applying <span class="co">[</span><span class="ot">baseline correction</span><span class="co">](#sec-base-cor)</span>, the segment start time should be the time when you would like your baseline to start.</span>
+<span id="cb3-481"><a href="#cb3-481" aria-hidden="true" tabindex="-1"></a>For example, if you would like to include 400ms before the start of each trial for baseline correction, the segment start time should be -400.</span>
+<span id="cb3-482"><a href="#cb3-482" aria-hidden="true" tabindex="-1"></a>If you are not applying baseline correction, the segment start time will typically be 0.</span>
+<span id="cb3-483"><a href="#cb3-483" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Segment end time**</span>
+<span id="cb3-484"><a href="#cb3-484" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are processing task data.</span>
+<span id="cb3-485"><a href="#cb3-485" aria-hidden="true" tabindex="-1"></a>Enter the end time of the segment relative to the start of the task trial.</span>
+<span id="cb3-486"><a href="#cb3-486" aria-hidden="true" tabindex="-1"></a>This value effectively sets the duration of each segment/epoch, but it does not necessarily have to equal the trial duration.</span>
+<span id="cb3-487"><a href="#cb3-487" aria-hidden="true" tabindex="-1"></a>For example, if you are processing Fish-Shark data, not all trials are the same length, and there is no pre-trial baseline.</span>
+<span id="cb3-488"><a href="#cb3-488" aria-hidden="true" tabindex="-1"></a>If you set the segment end time to 2500ms, any trial where the participant responded in under 1750ms will partially overlap with the subsequent trial (e.g., a 750ms response time + the 750ms feedback screen only adds to 1500ms, so the remaining 1000ms of the segment will be from the next trial).</span>
+<span id="cb3-489"><a href="#cb3-489" aria-hidden="true" tabindex="-1"></a>To address this problem, determine how long you need each trial to be (typically ~1000ms), then exclude shorter trials from analysis (see the <span class="co">[</span><span class="ot">Appendix</span><span class="co">](#sec-short-eps)</span>).</span>
+<span id="cb3-490"><a href="#cb3-490" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Offset delay**</span>
+<span id="cb3-491"><a href="#cb3-491" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are processing task data and you did *not* select a pre-coded task at the beginning of the script.</span>
+<span id="cb3-492"><a href="#cb3-492" aria-hidden="true" tabindex="-1"></a>If you selected a pre-coded task, this value is set automatically.</span>
+<span id="cb3-493"><a href="#cb3-493" aria-hidden="true" tabindex="-1"></a>Enter the duration of the delay between the task trigger and the stimulus presentation.</span>
+<span id="cb3-494"><a href="#cb3-494" aria-hidden="true" tabindex="-1"></a>For instructions on determining the offset delay, see the <span class="co">[</span><span class="ot">EGI documentation</span><span class="co">](https://www.egi.com/knowledge-center/item/91-how-to-set-up-a-timing-test-in-net-station-5)</span>.</span>
+<span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Segment length**</span>
+<span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are processing baseline/resting state data.</span>
+<span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a>Enter the desired segment length for the data.</span>
+<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a>Shorter segments may result in less data exclusion, but will increase processing time.</span>
+<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a><span class="fu">### Baseline Correction (#sec-base-cor)</span></span>
 <span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segment Interpolation</span></span>
 <span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segment Rejection</span></span>
+<span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a><span class="fu">### DSS</span></span>
+<span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Referencing (#sec-reref)</span></span>
+<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb3-511"><a href="#cb3-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
+<span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
