@@ -436,7 +436,10 @@ This prompt will only appear if you chose to run ASR in rejection mode.
 Indicate whether you would like to reject remaining artifacts in the data after the initial ASR processing.
 This setting removes portions of the data where a given number of channels exceed a given standard deviation threshold for a given time period.
 
-## Channel Interpolation
+### Channel Interpolation
+
+Although channel interpolation occurs after segmentation in the processing pipeline, `MATLAB` collects the parameters for each in the opposite order.
+Not all files/tasks are segmented, so all of the segmentation and segment-related parameters are grouped together in `parameters.m`.
 
 1. **Interpolate bad channels?**
 Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).
@@ -459,6 +462,54 @@ Indicate whether you would like to adjust any of the default APICE parameters fo
 If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
 Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
 `MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+
+Note: The next several sections only apply to segmented data.
+If your data are not segmented, skip to [Re-Referencing](#sec-reref).
+
+### Segmentation
+
+1. **Segment/epoch data?**
+Indicate whether you would like to split your data into smaller sections (i.e., segments/epochs) for analysis.
+If you are analyzing task data, it is extremely likely that it should be segmented.
+Baseline or resting state data can also be segmented if desired.
+If you choose not to segment your data, skip to [Re-Referencing](#sec-reref).
+1. **Segment start time**
+This prompt will only appear if you are processing task (rather than baseline/resting state) data.
+Enter the start time of the segment relative to the start of the task trial.
+If you selected a pre-coded task (e.g., Oddball) at the beginning of the script, `MATLAB` will print the task timing details above this prompt.
+If you are applying [baseline correction](#sec-base-cor), the segment start time should be the time when you would like your baseline to start.
+For example, if you would like to include 400ms before the start of each trial for baseline correction, the segment start time should be -400.
+If you are not applying baseline correction, the segment start time will typically be 0.
+1. **Segment end time**
+This prompt will only appear if you are processing task data.
+Enter the end time of the segment relative to the start of the task trial.
+This value effectively sets the duration of each segment/epoch, but it does not necessarily have to equal the trial duration.
+For example, if you are processing Fish-Shark data, not all trials are the same length, and there is no pre-trial baseline.
+If you set the segment end time to 2500ms, any trial where the participant responded in under 1750ms will partially overlap with the subsequent trial (e.g., a 750ms response time + the 750ms feedback screen only adds to 1500ms, so the remaining 1000ms of the segment will be from the next trial).
+To address this problem, determine how long you need each trial to be (typically ~1000ms), then exclude shorter trials from analysis (see the [Appendix](#sec-short-eps)).
+1. **Offset delay**
+This prompt will only appear if you are processing task data and you did *not* select a pre-coded task at the beginning of the script.
+If you selected a pre-coded task, this value is set automatically.
+Enter the duration of the delay between the task trigger and the stimulus presentation.
+For instructions on determining the offset delay, see the [EGI documentation](https://www.egi.com/knowledge-center/item/91-how-to-set-up-a-timing-test-in-net-station-5).
+1. **Segment length**
+This prompt will only appear if you are processing baseline/resting state data.
+Enter the desired segment length for the data.
+Shorter segments may result in less data exclusion, but will increase processing time.
+
+### Baseline Correction (#sec-base-cor)
+
+### Segment Interpolation
+
+### Segment Rejection
+
+### DSS
+
+### Re-Referencing (#sec-reref)
+
+### Visualization
+
+### Saving
 
 # Appendix
 
@@ -498,7 +549,7 @@ Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for docum
     Only include the onset tags that are relevant to the comparison(s) you are making.
     These tags often (but not always) end in '+' and are usually added by the software used to run the task.
 
-
+## Discarding Short Segments (#sec-short-eps)
 
 
 
