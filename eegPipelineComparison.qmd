@@ -499,6 +499,49 @@ Shorter segments may result in less data exclusion, but will increase processing
 
 ### Baseline Correction (#sec-base-cor)
 
+The following prompts will only appear if you chose to segment your data and if you are *not* processing Fish-Sharks task data.
+
+1. **Perform baseline correction?**
+Indicate whether you would like to normalize the data for each trial/segment using a baseline period prior to the trial start time.
+In most cases, `MATLAB` will apply baseline correction by subtraction, where the mean signal of the baseline period is subtracted from the signal across the rest of the segment.
+Because baseline correction is applied on a per-trial and per-channel basis, the magnitude of the correction can vary, which may cause issues with data interpolation.
+However, without baseline correction, the starting signal for each channel/trial varies, potentially leading to skewed results.
+Baseline correction is most helpful when there are low-frequency drifts and/or artifacts remaining in the data, so baseline correction may not be necessary if a high-pass filter was applied to the data earlier in the pipeline.
+1. **Baseline start time**
+This prompt will only appear if you chose to perform baseline correction.
+Enter the start time of the baseline period relative to the trial start.
+This time cannot be less than the segment start time provided earlier (e.g., if the segment start time is -400ms, the baseline period cannot start at -500ms--it must start at -400ms or later).
+The baseline period should be a minimum of 200ms for best performance.
+1. **Baseline end time**
+This prompt will only appear if you chose to perform baseline correction.
+Enter the end time of the baseline period relative to the trial start.
+This time cannot be greater than 0, but for best performance, the baseline period should end at least 50ms before the trial start time (i.e., the baseline end time should be less than -50).
+1. **RELAX-Jr: Use regression method?**
+This prompt will only appear if you chose to perform baseline correction and you are using the RELAX-Jr pipeline.
+Indicate whether you would like to perform baseline correction for the RELAX-Jr pipeline by regressing the mean of the baseline period signal out of the data (rather than subtracting it).
+Currently, the RELAX-Jr pipeline only supports baseline correction by regression for task designs with 0, 1, or 2 factors, with no more than 2 levels in a given factor.
+1. **Enter the number of factors**
+This prompt will only appear if you are performing baseline correction by regression and you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script.
+Indicate how many factors are present in your task:
+
+  - 0 factors: all trials are the same (e.g., a task where participants hear the same sound several times)
+  - 1 factor: trials differ across one variable (e.g., an Oddball task, where each trial is either "frequent" or "infrequent")
+  - 2 factors: trials differ across two variables (e.g., an emotional Go/No-Go task, where each trial is either "happy" or "sad" and either "go" or "no-go")
+
+The RELAX-Jr pipeline considers a maximum of two levels for each factor--the reference level (see next prompt) and the "active" level.
+If your task has more than two levels on a given factor, the pipeline will treat all of the non-reference levels as equivalent.
+For example, if the emotional Go/No-Go task included "angry" faces in addition to "happy" and "sad", and the "happy" level is set as the reference, then the "sad" and "angry" trials will be compared to the "happy" trials as one collective group.
+For certain designs, this may not be a problem, but use caution if applying this method to tasks with more than two levels on any given factor.
+
+Note: If you enter a value greater than 2, `MATLAB` will print a warning and set the baseline correction method back to the default (subtraction).
+1. **Enter the onset tag(s) for the event(s) to include as the reference for the first factor**
+This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 1 or 2 factors.
+Enter the onset tags for the level of the first factor that you would like to use as the reference level.
+If you have two factors, either factor's reference level can be entered for this step.
+1. **Enter the onset tag(s) for the event(s) to include as the reference for the second factor**
+This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 2 factors.
+Enter the onset tags for the level of the second factor that you would like to use as the reference level.
+
 ### Segment Interpolation
 
 ### Segment Rejection
