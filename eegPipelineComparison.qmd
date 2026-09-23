@@ -520,7 +520,7 @@ This time cannot be greater than 0, but for best performance, the baseline perio
 This prompt will only appear if you chose to perform baseline correction and you are using the RELAX-Jr pipeline.
 Indicate whether you would like to perform baseline correction for the RELAX-Jr pipeline by regressing the mean of the baseline period signal out of the data (rather than subtracting it).
 Currently, the RELAX-Jr pipeline only supports baseline correction by regression for task designs with 0, 1, or 2 factors, with no more than 2 levels in a given factor.
-1. **Enter the number of factors**
+1. **RELAX-Jr: Enter the number of factors**
 This prompt will only appear if you are performing baseline correction by regression and you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script.
 Indicate how many factors are present in your task:
 
@@ -534,15 +534,37 @@ For example, if the emotional Go/No-Go task included "angry" faces in addition t
 For certain designs, this may not be a problem, but use caution if applying this method to tasks with more than two levels on any given factor.
 
 Note: If you enter a value greater than 2, `MATLAB` will print a warning and set the baseline correction method back to the default (subtraction).
-1. **Enter the onset tag(s) for the event(s) to include as the reference for the first factor**
+1. **RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the first factor**
 This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 1 or 2 factors.
 Enter the onset tags for the level of the first factor that you would like to use as the reference level.
 If you have two factors, either factor's reference level can be entered for this step.
-1. **Enter the onset tag(s) for the event(s) to include as the reference for the second factor**
+1. **RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the second factor**
 This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 2 factors.
 Enter the onset tags for the level of the second factor that you would like to use as the reference level.
 
 ### Segment Interpolation
+
+The following prompts will only appear if you chose to segment your data.
+
+1. **Interpolate bad segments?**
+This prompt will only appear if you are using the APICE, MADE, and/or HAPPE pipeline.
+Indicate whether you would like to interpolate segments identified by the bad segment detection script.
+Segment interpolation is not applied in the NEAR or RELAX-Jr pipelines.
+1. **MADE: Exclude custom frontal channels?**
+This prompt will only appear if you are using the MADE pipeline and chose to interpolate segments.
+Indicate whether you would like to provide a custom list of frontal channels to exclude from segment interpolation.
+Because frontal channels often have more artifacts from their proximity to the eyes, the MADE pipeline excludes the data from these segments from the interpolation to avoid interpolating the artifacts into the cleaned data.
+If you choose not to provide custom frontal channels, the default list of channels will be used.
+If you do not want to exclude frontal channels, enter *n* for this prompt, then do not enter any channels in the next prompt.
+1. **MADE: Enter channels one at a time**
+This prompt will only appear if you chose to exclude custom frontal channels for the MADE pipeline's segment interpolation.
+Enter the channels you would like to exclude, using the "E#" label format.
+1. **APICE: Use custom parameters?**
+This prompt will only appear if you chose to interpolate segments and are using the APICE pipeline.
+Indicate whether you would like to adjust any of the default APICE parameters for segment interpolation.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
 
 ### Segment Rejection
 
