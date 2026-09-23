@@ -855,7 +855,7 @@ ICA
 <li><strong>Baseline start time</strong> This prompt will only appear if you chose to perform baseline correction. Enter the start time of the baseline period relative to the trial start. This time cannot be less than the segment start time provided earlier (e.g., if the segment start time is -400ms, the baseline period cannot start at -500ms–it must start at -400ms or later). The baseline period should be a minimum of 200ms for best performance.</li>
 <li><strong>Baseline end time</strong> This prompt will only appear if you chose to perform baseline correction. Enter the end time of the baseline period relative to the trial start. This time cannot be greater than 0, but for best performance, the baseline period should end at least 50ms before the trial start time (i.e., the baseline end time should be less than -50).</li>
 <li><strong>RELAX-Jr: Use regression method?</strong> This prompt will only appear if you chose to perform baseline correction and you are using the RELAX-Jr pipeline. Indicate whether you would like to perform baseline correction for the RELAX-Jr pipeline by regressing the mean of the baseline period signal out of the data (rather than subtracting it). Currently, the RELAX-Jr pipeline only supports baseline correction by regression for task designs with 0, 1, or 2 factors, with no more than 2 levels in a given factor.</li>
-<li><strong>Enter the number of factors</strong> This prompt will only appear if you are performing baseline correction by regression and you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script. Indicate how many factors are present in your task:</li>
+<li><strong>RELAX-Jr: Enter the number of factors</strong> This prompt will only appear if you are performing baseline correction by regression and you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script. Indicate how many factors are present in your task:</li>
 </ol>
 <ul>
 <li>0 factors: all trials are the same (e.g., a task where participants hear the same sound several times)</li>
@@ -863,10 +863,17 @@ ICA
 <li>2 factors: trials differ across two variables (e.g., an emotional Go/No-Go task, where each trial is either “happy” or “sad” and either “go” or “no-go”)</li>
 </ul>
 <p>The RELAX-Jr pipeline considers a maximum of two levels for each factor–the reference level (see next prompt) and the “active” level. If your task has more than two levels on a given factor, the pipeline will treat all of the non-reference levels as equivalent. For example, if the emotional Go/No-Go task included “angry” faces in addition to “happy” and “sad”, and the “happy” level is set as the reference, then the “sad” and “angry” trials will be compared to the “happy” trials as one collective group. For certain designs, this may not be a problem, but use caution if applying this method to tasks with more than two levels on any given factor.</p>
-<p>Note: If you enter a value greater than 2, <code>MATLAB</code> will print a warning and set the baseline correction method back to the default (subtraction). 1. <strong>Enter the onset tag(s) for the event(s) to include as the reference for the first factor</strong> This prompt will only appear if you are performing baseline correction by regression, you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 1 or 2 factors. Enter the onset tags for the level of the first factor that you would like to use as the reference level. If you have two factors, either factor’s reference level can be entered for this step. 1. <strong>Enter the onset tag(s) for the event(s) to include as the reference for the second factor</strong> This prompt will only appear if you are performing baseline correction by regression, you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 2 factors. Enter the onset tags for the level of the second factor that you would like to use as the reference level.</p>
+<p>Note: If you enter a value greater than 2, <code>MATLAB</code> will print a warning and set the baseline correction method back to the default (subtraction). 1. <strong>RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the first factor</strong> This prompt will only appear if you are performing baseline correction by regression, you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 1 or 2 factors. Enter the onset tags for the level of the first factor that you would like to use as the reference level. If you have two factors, either factor’s reference level can be entered for this step. 1. <strong>RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the second factor</strong> This prompt will only appear if you are performing baseline correction by regression, you did <em>not</em> select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 2 factors. Enter the onset tags for the level of the second factor that you would like to use as the reference level.</p>
 </section>
 <section id="segment-interpolation" class="level3" data-number="3.1.9">
 <h3 data-number="3.1.9" class="anchored" data-anchor-id="segment-interpolation"><span class="header-section-number">3.1.9</span> Segment Interpolation</h3>
+<p>The following prompts will only appear if you chose to segment your data.</p>
+<ol type="1">
+<li><strong>Interpolate bad segments?</strong> This prompt will only appear if you are using the APICE, MADE, and/or HAPPE pipeline. Indicate whether you would like to interpolate segments identified by the bad segment detection script. Segment interpolation is not applied in the NEAR or RELAX-Jr pipelines.</li>
+<li><strong>MADE: Exclude custom frontal channels?</strong> This prompt will only appear if you are using the MADE pipeline and chose to interpolate segments. Indicate whether you would like to provide a custom list of frontal channels to exclude from segment interpolation. Because frontal channels often have more artifacts from their proximity to the eyes, the MADE pipeline excludes the data from these segments from the interpolation to avoid interpolating the artifacts into the cleaned data. If you choose not to provide custom frontal channels, the default list of channels will be used. If you do not want to exclude frontal channels, enter <em>n</em> for this prompt, then do not enter any channels in the next prompt.</li>
+<li><strong>MADE: Enter channels one at a time</strong> This prompt will only appear if you chose to exclude custom frontal channels for the MADE pipeline’s segment interpolation. Enter the channels you would like to exclude, using the “E#” label format.</li>
+<li><strong>APICE: Use custom parameters?</strong> This prompt will only appear if you chose to interpolate segments and are using the APICE pipeline. Indicate whether you would like to adjust any of the default APICE parameters for segment interpolation. If you choose to use custom parameters, you will need to modify the files directly–the script will not prompt you for them. Refer to <a href="https://doi.org/10.1016/j.dcn.2022.101077">Flo et al., 2022</a> for documentation on the various parameters. <code>MATLAB</code> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</li>
+</ol>
 </section>
 <section id="segment-rejection" class="level3" data-number="3.1.10">
 <h3 data-number="3.1.10" class="anchored" data-anchor-id="segment-rejection"><span class="header-section-number">3.1.10</span> Segment Rejection</h3>
@@ -1926,7 +1933,7 @@ ICA
 <span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to perform baseline correction and you are using the RELAX-Jr pipeline.</span>
 <span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to perform baseline correction for the RELAX-Jr pipeline by regressing the mean of the baseline period signal out of the data (rather than subtracting it).</span>
 <span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a>Currently, the RELAX-Jr pipeline only supports baseline correction by regression for task designs with 0, 1, or 2 factors, with no more than 2 levels in a given factor.</span>
-<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter the number of factors**</span>
+<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RELAX-Jr: Enter the number of factors**</span>
 <span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are performing baseline correction by regression and you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script.</span>
 <span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a>Indicate how many factors are present in your task:</span>
 <span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a></span>
@@ -1940,68 +1947,90 @@ ICA
 <span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a>For certain designs, this may not be a problem, but use caution if applying this method to tasks with more than two levels on any given factor.</span>
 <span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a>Note: If you enter a value greater than 2, <span class="in">`MATLAB`</span> will print a warning and set the baseline correction method back to the default (subtraction).</span>
-<span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter the onset tag(s) for the event(s) to include as the reference for the first factor**</span>
+<span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the first factor**</span>
 <span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 1 or 2 factors.</span>
 <span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a>Enter the onset tags for the level of the first factor that you would like to use as the reference level.</span>
 <span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a>If you have two factors, either factor's reference level can be entered for this step.</span>
-<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter the onset tag(s) for the event(s) to include as the reference for the second factor**</span>
+<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RELAX-Jr: Enter the onset tag(s) for the event(s) to include as the reference for the second factor**</span>
 <span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are performing baseline correction by regression, you did *not* select a pre-coded task (e.g., Oddball) at the beginning of the script, and your task has 2 factors.</span>
 <span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a>Enter the onset tags for the level of the second factor that you would like to use as the reference level.</span>
 <span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segment Interpolation</span></span>
 <span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segment Rejection</span></span>
+<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a>The following prompts will only appear if you chose to segment your data.</span>
 <span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a><span class="fu">### DSS</span></span>
-<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Referencing (#sec-reref)</span></span>
-<span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
-<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
-<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
-<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Interpolate bad segments?**</span>
+<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the APICE, MADE, and/or HAPPE pipeline.</span>
+<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to interpolate segments identified by the bad segment detection script.</span>
+<span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a>Segment interpolation is not applied in the NEAR or RELAX-Jr pipelines.</span>
+<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**MADE: Exclude custom frontal channels?**</span>
+<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the MADE pipeline and chose to interpolate segments.</span>
+<span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to provide a custom list of frontal channels to exclude from segment interpolation.</span>
+<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a>Because frontal channels often have more artifacts from their proximity to the eyes, the MADE pipeline excludes the data from these segments from the interpolation to avoid interpolating the artifacts into the cleaned data.</span>
+<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>If you choose not to provide custom frontal channels, the default list of channels will be used.</span>
+<span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a>If you do not want to exclude frontal channels, enter *n* for this prompt, then do not enter any channels in the next prompt.</span>
+<span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**MADE: Enter channels one at a time**</span>
+<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to exclude custom frontal channels for the MADE pipeline's segment interpolation.</span>
+<span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a>Enter the channels you would like to exclude, using the "E#" label format.</span>
+<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
+<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to interpolate segments and are using the APICE pipeline.</span>
+<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for segment interpolation.</span>
+<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
+<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
+<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
+<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a><span class="fu">### Segment Rejection</span></span>
+<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a><span class="fu">### DSS</span></span>
+<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Referencing (#sec-reref)</span></span>
+<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
+<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
