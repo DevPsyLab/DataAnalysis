@@ -440,6 +440,7 @@ This setting removes portions of the data where a given number of channels excee
 
 Although channel interpolation occurs after segmentation in the processing pipeline, `MATLAB` collects the parameters for each in the opposite order.
 Not all files/tasks are segmented, so all of the segmentation and segment-related parameters are grouped together in `parameters.m`.
+If you choose not to perform channel interpolation, the rest of the prompts in this section will not appear.
 
 1. **Interpolate bad channels?**
 Indicate whether you would like to interpolate channels identified by the bad channel detection step(s).
@@ -463,16 +464,13 @@ If you choose to use custom parameters, you will need to modify the files direct
 Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
 `MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
 
-Note: The next several sections only apply to segmented data.
-If your data are not segmented, skip to [Re-Referencing](#sec-reref).
-
 ### Segmentation
 
 1. **Segment/epoch data?**
 Indicate whether you would like to split your data into smaller sections (i.e., segments/epochs) for analysis.
 If you are analyzing task data, it is extremely likely that it should be segmented.
 Baseline or resting state data can also be segmented if desired.
-If you choose not to segment your data, skip to [Re-Referencing](#sec-reref).
+If you choose not to segment your data, the rest of the prompts in this section, as well as the next several sections, will not appear--skip to [Re-Referencing](#sec-reref).
 1. **Segment start time**
 This prompt will only appear if you are processing task (rather than baseline/resting state) data.
 Enter the start time of the segment relative to the start of the task trial.
@@ -500,6 +498,7 @@ Shorter segments may result in less data exclusion, but will increase processing
 ### Baseline Correction (#sec-base-cor)
 
 The following prompts will only appear if you chose to segment your data and if you are *not* processing Fish-Sharks task data.
+If you choose not to baseline correct your data, the rest of the prompts in this section will not appear.
 
 1. **Perform baseline correction?**
 Indicate whether you would like to normalize the data for each trial/segment using a baseline period prior to the trial start time.
@@ -544,12 +543,17 @@ Enter the onset tags for the level of the second factor that you would like to u
 
 ### Segment Interpolation
 
-The following prompts will only appear if you chose to segment your data.
+The following prompts will only appear if you chose to segment your data, and if you are using the APICE, HAPPE, and/or MADE pipeline(s).
+If you choose not to perform segment interpolation, the rest of the prompts in this section will not appear.
 
 1. **Interpolate bad segments?**
-This prompt will only appear if you are using the APICE, MADE, and/or HAPPE pipeline.
 Indicate whether you would like to interpolate segments identified by the bad segment detection script.
-Segment interpolation is not applied in the NEAR or RELAX-Jr pipelines.
+Interpolation estimates the signal for a given segment based on the signal in nearby channels during that segment.
+A major benefit of interpolation is that it allows for future processing steps that require all data files to have the same segments.
+Additionally, since segment interpolation only applies to certain segment-channel combinations (rather than a channel over an entire recording, like channel interpolation), the percentage of interpolated data is often lower.
+However, interpolated data is only as good as the data informing it.
+If your data are particularly noisy, or if you consistently have a high number of bad segments/channels, the interpolated data will likely be unreliable.
+If you choose to interpolate segments, excluding files with high proportions of interpolated data (e.g., > 10%) is recommended.
 1. **MADE: Exclude custom frontal channels?**
 This prompt will only appear if you are using the MADE pipeline and chose to interpolate segments.
 Indicate whether you would like to provide a custom list of frontal channels to exclude from segment interpolation.
@@ -567,6 +571,46 @@ Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for docum
 `MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
 
 ### Segment Rejection
+
+The following prompts will only appear if you chose to segment your data, and if you are using the APICE, HAPPE, MADE, and/or RELAX-Jr pipeline(s).
+If you choose not to perform segment rejection, the rest of the prompts in this section will not appear.
+
+1. **Perform segment rejection?**
+Indicate whether you would like to discard segments identified by the bad segment detection script.
+Segment rejection can be applied with or without segment interpolation.
+1. **HAPPE/MADE/RELAX-Jr: Enter minimum signal amplitude**
+This prompt will only appear if you are using the HAPPE, MADE, and/or RELAX-Jr pipeline(s).
+Enter the lower signal amplitude threshold for retaining segments in the data.
+Any segments with signal *lower* (i.e., more negative) than this value will be removed.
+Because child EEG data tend to be noisier, a more lenient threshold, such as -150mV, is recommended.
+1. **HAPPE/MADE/RELAX-Jr: Enter maximum signal amplitude**
+This prompt will only appear if you are using the HAPPE, MADE, and/or RELAX-Jr pipeline(s).
+Enter the upper signal amplitude threshold for retaining segments in the data.
+Any segments with signal *higher* than this value will be removed.
+Because child EEG data tend to be noisier, a more lenient threshold, such as 150mV, is recommended.
+1. **HAPPE: Perform segment rejection based on similarity?**
+This prompt will only appear if you are using the HAPPE pipeline.
+Indicate whether you would like to reject segments based on joint-probability criteria, which assess how "typical" each segment is.
+1. **HAPPE: Use segment rejection in region of interest?**
+This prompt will only appear if you are using the HAPPE pipeline.
+Indicate whether you would like to restrict segment rejection to a subset of channels.
+1. **HAPPE: Enter channels to include**
+This prompt will only appear if you are using the HAPPE pipeline and chose to apply segment rejection in a region of interest.
+Enter the channels you would like to include, using the "E#" label format.
+1. **APICE: Use custom parameters?**
+This prompt will only appear if you are using the APICE pipeline.
+Indicate whether you would like to adjust any of the default APICE parameters for segment rejection.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+1. **RELAX-Jr: Remove segments showing muscle activity?**
+This prompt will only appear if you are using the RELAX-Jr pipeline.
+Indicate whether you would like the remove segments showing high levels of muscle artifacts.
+If you are removing muscle artifacts with MWF, this step is not recommended.
+Additionally, since child EEG data tend to have high muscle contamination, this setting will often remove a much higher proportion of segments than amplitude/similarity rejection criteria.
+1. **RELAX-Jr: Enter the maximum proportion of muscle-contaminated segments that can be removed**
+This prompt will only appear if you are using the RELAX-Jr pipeline and chose to reject segments showing muscle activity.
+To prevent RELAX-Jr from rejecting too many segments, enter the maximum proportion of segments the pipeline can reject.
 
 ### DSS
 
