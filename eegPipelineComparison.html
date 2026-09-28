@@ -891,9 +891,18 @@ ICA
 </section>
 <section id="dss" class="level3" data-number="3.1.11">
 <h3 data-number="3.1.11" class="anchored" data-anchor-id="dss"><span class="header-section-number">3.1.11</span> DSS</h3>
+<ol type="1">
+<li><strong>APICE: Apply DSS to ERP?</strong> This prompt will only appear if you are using the APICE pipeline and chose to do ERP processing. Indicate whether you would like to use <em>D</em>enoising <em>S</em>ource <em>S</em>eparation (DSS) to the ERP data to extract evoked activity. DSS identifies data components containing “evoked activity” (i.e., activity that is present across trials). It is specific to ERP analysis because it does not retain all non-phase-locked activity. See <a href="https://doi.org/10.1016/j.jneumeth.2008.03.015">de Cheveigne and Simon (2008)</a> and <a href="https://doi.org/10.1016/j.neuroimage.2014.05.068">de Cheveigne and Parra (2014)</a> for more information on DSS.</li>
+<li><strong>APICE: Use custom parameters?</strong> This prompt will only appear if you are using the APICE pipeline and chose to apply DSS. Indicate whether you would like to adjust any of the default APICE parameters for DSS. If you choose to use custom parameters, you will need to modify the files directly–the script will not prompt you for them. Refer to <a href="https://doi.org/10.1016/j.dcn.2022.101077">Flo et al., 2022</a> for documentation on the various parameters. <code>MATLAB</code> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</li>
+</ol>
 </section>
 <section id="re-referencing-sec-reref" class="level3" data-number="3.1.12">
 <h3 data-number="3.1.12" class="anchored" data-anchor-id="re-referencing-sec-reref"><span class="header-section-number">3.1.12</span> Re-Referencing (#sec-reref)</h3>
+<ol type="1">
+<li><strong>Re-reference data?</strong> Indicate whether you would like to re-reference your data. For many EEG systems, the neural signal is measured as the difference in electrical potential between each electrode and the reference electrode(s). Different EEG systems often use different locations for their reference electrode, making it difficult to compare results across systems and montages. Re-referencing transforms data to be “reference-independent” to make comparisons more straightforward. However, re-referencing transformations become more distorted as the number of electrodes decreases and as the scalp coverage of electrodes decreases. If you choose not to re-reference the data, the reference channel (for lab data, E129/Cz) should be excluded from analysis, because all data points will be 0.</li>
+<li><strong>Re-referencing method</strong> This prompt will only appear if you chose to re-reference your data. Indicate whether you would like to use average re-referencing or re-referencing to a subset of channels. Given the comparison difficulties without re-referencing, averaging re-referencing is typically preferred, because re-referencing to a subset effectively moves the reference location.</li>
+<li><strong>Enter channel/subset of channels to re-reference to</strong> This prompt will only appear if you chose to re-reference to a subset of channels. Enter the channels you would like to re-reference to, using the “E#” label format.</li>
+</ol>
 </section>
 <section id="visualization" class="level3" data-number="3.1.13">
 <h3 data-number="3.1.13" class="anchored" data-anchor-id="visualization"><span class="header-section-number">3.1.13</span> Visualization</h3>
@@ -2038,54 +2047,82 @@ ICA
 <span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="fu">### DSS</span></span>
 <span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Referencing (#sec-reref)</span></span>
-<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
-<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
-<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
-<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Apply DSS to ERP?**</span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the APICE pipeline and chose to do ERP processing.</span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use *D*enoising *S*ource *S*eparation (DSS) to the ERP data to extract evoked activity.</span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a>DSS identifies data components containing "evoked activity" (i.e., activity that is present across trials).</span>
+<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a>It is specific to ERP analysis because it does not retain all non-phase-locked activity.</span>
+<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">de Cheveigne and Simon (2008)</span><span class="co">](https://doi.org/10.1016/j.jneumeth.2008.03.015)</span> and <span class="co">[</span><span class="ot">de Cheveigne and Parra (2014)</span><span class="co">](https://doi.org/10.1016/j.neuroimage.2014.05.068)</span> for more information on DSS.</span>
+<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Use custom parameters?**</span>
+<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the APICE pipeline and chose to apply DSS.</span>
+<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to adjust any of the default APICE parameters for DSS.</span>
+<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a>If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.</span>
+<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a>Refer to <span class="co">[</span><span class="ot">Flo et al., 2022</span><span class="co">](https://doi.org/10.1016/j.dcn.2022.101077)</span> for documentation on the various parameters.</span>
+<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="in">`MATLAB`</span> will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.</span>
 <span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Referencing (#sec-reref)</span></span>
+<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Re-reference data?**</span>
+<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to re-reference your data.</span>
+<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a>For many EEG systems, the neural signal is measured as the difference in electrical potential between each electrode and the reference electrode(s).</span>
+<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a>Different EEG systems often use different locations for their reference electrode, making it difficult to compare results across systems and montages.</span>
+<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a>Re-referencing transforms data to be "reference-independent" to make comparisons more straightforward.</span>
+<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a>However, re-referencing transformations become more distorted as the number of electrodes decreases and as the scalp coverage of electrodes decreases.</span>
+<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a>If you choose not to re-reference the data, the reference channel (for lab data, E129/Cz) should be excluded from analysis, because all data points will be 0.</span>
+<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Re-referencing method**</span>
+<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to re-reference your data.</span>
+<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to use average re-referencing or re-referencing to a subset of channels.</span>
+<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a>Given the comparison difficulties without re-referencing, averaging re-referencing is typically preferred, because re-referencing to a subset effectively moves the reference location.</span>
+<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter channel/subset of channels to re-reference to**</span>
+<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose to re-reference to a subset of channels.</span>
+<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>Enter the channels you would like to re-reference to, using the "E#" label format.</span>
+<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags (#sec-onset-tags)</span></span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-687"><a href="#cb3-687" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-689"><a href="#cb3-689" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-691"><a href="#cb3-691" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
