@@ -614,7 +614,35 @@ To prevent RELAX-Jr from rejecting too many segments, enter the maximum proporti
 
 ### DSS
 
+1. **APICE: Apply DSS to ERP?**
+This prompt will only appear if you are using the APICE pipeline and chose to do ERP processing.
+Indicate whether you would like to use *D*enoising *S*ource *S*eparation (DSS) to the ERP data to extract evoked activity.
+DSS identifies data components containing "evoked activity" (i.e., activity that is present across trials).
+It is specific to ERP analysis because it does not retain all non-phase-locked activity.
+See [de Cheveigne and Simon (2008)](https://doi.org/10.1016/j.jneumeth.2008.03.015) and [de Cheveigne and Parra (2014)](https://doi.org/10.1016/j.neuroimage.2014.05.068) for more information on DSS.
+1. **APICE: Use custom parameters?**
+This prompt will only appear if you are using the APICE pipeline and chose to apply DSS.
+Indicate whether you would like to adjust any of the default APICE parameters for DSS.
+If you choose to use custom parameters, you will need to modify the files directly--the script will not prompt you for them.
+Refer to [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for documentation on the various parameters.
+`MATLAB` will display the file path and the relevant parameter files, and it will wait until you confirm that you have finished editing the parameters.
+
 ### Re-Referencing (#sec-reref)
+
+1. **Re-reference data?**
+Indicate whether you would like to re-reference your data.
+For many EEG systems, the neural signal is measured as the difference in electrical potential between each electrode and the reference electrode(s).
+Different EEG systems often use different locations for their reference electrode, making it difficult to compare results across systems and montages.
+Re-referencing transforms data to be "reference-independent" to make comparisons more straightforward.
+However, re-referencing transformations become more distorted as the number of electrodes decreases and as the scalp coverage of electrodes decreases.
+If you choose not to re-reference the data, the reference channel (for lab data, E129/Cz) should be excluded from analysis, because all data points will be 0.
+1. **Re-referencing method**
+This prompt will only appear if you chose to re-reference your data.
+Indicate whether you would like to use average re-referencing or re-referencing to a subset of channels.
+Given the comparison difficulties without re-referencing, averaging re-referencing is typically preferred, because re-referencing to a subset effectively moves the reference location.
+1. **Enter channel/subset of channels to re-reference to**
+This prompt will only appear if you chose to re-reference to a subset of channels.
+Enter the channels you would like to re-reference to, using the "E#" label format.
 
 ### Visualization
 
