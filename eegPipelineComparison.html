@@ -935,6 +935,19 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </section>
 <section id="visualization" class="level3" data-number="3.1.13">
 <h3 data-number="3.1.13" class="anchored" data-anchor-id="visualization"><span class="header-section-number">3.1.13</span> Visualization</h3>
+<p>If you are processing data using Argon, you will not be able to use pipeline visualizations, so none of the following prompts will appear.</p>
+<ol type="1">
+<li><strong>HAPPE: Run with visualizations?</strong> This prompt will only appear if you are using the HAPPE pipeline. Indicate whether you would like to generate figures for each data file. The HAPPE pipeline creators recommend running a subset of participants with visualizations to confirm parameter settings before running the full data set without visualization. For each file, the HAPPE pipeline will generate a power spectrum figure with spatial topoplots at specified frequencies across the top of the figure. If you enabled ICA for the HAPPE pipeline, it will generate a comparison of the data before and after ICA, a topoplot and power spectrum figure for each identified independent component, and a diagnostic plot for each independent component. If you are conducting ERP analysis, the HAPPE pipeline will also generate an ERP timeseries figure with spatial topoplots at specified latencies.</li>
+<li><strong>HAPPE: Minimum value for power spectrum figure.</strong> This prompt will only appear if you enabled visualization for HAPPE. Enter the lowest frequency you would like to include for the power spectrum plots. If you are using a high-pass filter, this value should be greater than or equal to the filter cutoff.</li>
+<li><strong>HAPPE: Maximum value for power spectrum figure.</strong> This prompt will only appear if you enabled visualization for HAPPE. Enter the highest frequency you would like to include for the power spectrum plots. If you are using a low-pass filter, this value should be less than or equal to the filter cutoff.</li>
+<li><strong>HAPPE: Enter frequencies.</strong> This prompt will only appear if you enabled visualization for HAPPE. Enter each frequency you like a spatial topoplot for in the power spectrum figures. One topoplot per frequency band (delta, theta, etc.) is typical.</li>
+<li><strong>HAPPE: Start time for the ERP timeseries figure.</strong> This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis. Enter the earliest time relative to stimulus onset that you would like in the ERP timeseries figure. This value is typically set to the stimulus time (i.e., 0), and it cannot be earlier than the segment start time.</li>
+<li><strong>HAPPE: End time for the ERP timeseries figure.</strong> This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis. Enter the latest time relative to stimulus onset that you would like in the ERP timeseries figure. This value depends on the specific ERP you are interested in, but it must be <em>less than</em> (not equal to or greater than) the segment end time.</li>
+<li><strong>HAPPE: Enter latencies.</strong> This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis. Enter each latency (time) you would like a spatial topoplot for in the ERP timeseries figures.</li>
+<li><strong>APICE: Run with visualizations?</strong> This prompt will only appear if you are using the APICE pipeline. Indicate whether you would like to plot rejection matrices for each file during APICE processing. These matrices are generated after bad channel rejection and after data cleaning.</li>
+<li><strong>NEAR: Run with visualizations?</strong> This prompt will only appear if you are using the NEAR pipeline and you are <em>not</em> completing pipeline-specific processing in parallel. Indicate whether you would like to visualize bad channel identification and rejection results for each file during NEAR processing. For each file, the NEAR pipeline will generate a plot of the LOF scores by channel. If periodogram analysis is enabled for bad channel detection, the NEAR pipeline will also generate a histogram of signal power across the periodogram frequency range (1Hz to 30Hz) for each channel.</li>
+<li><strong>NEAR: Plot bad channels for manual rejection?</strong> This prompt will only appear if you enabled visualization for NEAR. Indicate whether you would like to manually inspect (and reject) channels identified as “bad” by the NEAR pipeline. For each file, the NEAR pipeline will show the signal for each channel. Flat-line channels and channels with high LOF are marked in red, and channels with outlier power spectrum values are marked in yellow. The plot is interactive, so you can mark additional channels for removal and/or choose to keep channels that were marked by the NEAR pipeline. Keep in mind that processing will pause until the channel rejection list is confirmed, so manual inspection/rejection may not be practical for all data sets.</li>
+</ol>
 </section>
 <section id="saving" class="level3" data-number="3.1.14">
 <h3 data-number="3.1.14" class="anchored" data-anchor-id="saving"><span class="header-section-number">3.1.14</span> Saving</h3>
@@ -1625,11 +1638,11 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>The initial output is only generated once, regardless of how many pipelines are used.</span>
 <span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison</span>
 <span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Task        <span class="pp">|</span> Files <span class="pp">|</span> Initial Output <span class="pp">|</span> HAPPE Output <span class="pp">|</span> Total  <span class="pp">|</span></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------|-------|----------------|--------------|--------|</span></span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Oddball     <span class="pp">|</span> 569   <span class="pp">|</span> 269 GB         <span class="pp">|</span> 118 GB       <span class="pp">|</span> 391 GB <span class="pp">|</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fish-Sharks <span class="pp">|</span> 566   <span class="pp">|</span> 362 GB         <span class="pp">|</span>  49 GB       <span class="pp">|</span> 412 GB <span class="pp">|</span></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Stop-Signal <span class="pp">|</span> 546   <span class="pp">|</span> 567 GB         <span class="pp">|</span> 114 GB       <span class="pp">|</span> 682 GB <span class="pp">|</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a>  <span class="pp">|</span> Task        <span class="pp">|</span> Files <span class="pp">|</span> Initial Output <span class="pp">|</span> HAPPE Output <span class="pp">|</span> Total  <span class="pp">|</span></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>  <span class="pp">|-------------|-------|----------------|--------------|--------|</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>  <span class="pp">|</span> Oddball     <span class="pp">|</span> 569   <span class="pp">|</span> 269 GB         <span class="pp">|</span> 118 GB       <span class="pp">|</span> 391 GB <span class="pp">|</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>  <span class="pp">|</span> Fish-Sharks <span class="pp">|</span> 566   <span class="pp">|</span> 362 GB         <span class="pp">|</span>  49 GB       <span class="pp">|</span> 412 GB <span class="pp">|</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>  <span class="pp">|</span> Stop-Signal <span class="pp">|</span> 546   <span class="pp">|</span> 567 GB         <span class="pp">|</span> 114 GB       <span class="pp">|</span> 682 GB <span class="pp">|</span></span>
 <span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Enter the pipeline(s) you would like to run**</span>
 <span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you chose not to run all pipelines.</span>
@@ -2115,54 +2128,103 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
 <span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a>If you are processing data using Argon, you will not be able to use pipeline visualizations, so none of the following prompts will appear.</span>
 <span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
-<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
-<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
-<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-687"><a href="#cb3-687" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-689"><a href="#cb3-689" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-691"><a href="#cb3-691" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-693"><a href="#cb3-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-694"><a href="#cb3-694" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-695"><a href="#cb3-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-696"><a href="#cb3-696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-697"><a href="#cb3-697" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Run with visualizations?**</span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the HAPPE pipeline.</span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to generate figures for each data file.</span>
+<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a>The HAPPE pipeline creators recommend running a subset of participants with visualizations to confirm parameter settings before running the full data set without visualization.</span>
+<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a>For each file, the HAPPE pipeline will generate a power spectrum figure with spatial topoplots at specified frequencies across the top of the figure.</span>
+<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a>If you enabled ICA for the HAPPE pipeline, it will generate a comparison of the data before and after ICA, a topoplot and power spectrum figure for each identified independent component, and a diagnostic plot for each independent component.</span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>If you are conducting ERP analysis, the HAPPE pipeline will also generate an ERP timeseries figure with spatial topoplots at specified latencies.</span>
+<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Minimum value for power spectrum figure.**</span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE.</span>
+<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a>Enter the lowest frequency you would like to include for the power spectrum plots.</span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a>If you are using a high-pass filter, this value should be greater than or equal to the filter cutoff.</span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Maximum value for power spectrum figure.**</span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE.</span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a>Enter the highest frequency you would like to include for the power spectrum plots.</span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a>If you are using a low-pass filter, this value should be less than or equal to the filter cutoff.</span>
+<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Enter frequencies.**</span>
+<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE.</span>
+<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>Enter each frequency you like a spatial topoplot for in the power spectrum figures.</span>
+<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a>One topoplot per frequency band (delta, theta, etc.) is typical.</span>
+<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Start time for the ERP timeseries figure.**</span>
+<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.</span>
+<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a>Enter the earliest time relative to stimulus onset that you would like in the ERP timeseries figure.</span>
+<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a>This value is typically set to the stimulus time (i.e., 0), and it cannot be earlier than the segment start time.</span>
+<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: End time for the ERP timeseries figure.**</span>
+<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.</span>
+<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a>Enter the latest time relative to stimulus onset that you would like in the ERP timeseries figure.</span>
+<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a>This value depends on the specific ERP you are interested in, but it must be *less than* (not equal to or greater than) the segment end time.</span>
+<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**HAPPE: Enter latencies.**</span>
+<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.</span>
+<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a>Enter each latency (time) you would like a spatial topoplot for in the ERP timeseries figures.</span>
+<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**APICE: Run with visualizations?**</span>
+<span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the APICE pipeline.</span>
+<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to plot rejection matrices for each file during APICE processing.</span>
+<span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a>These matrices are generated after bad channel rejection and after data cleaning.</span>
+<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**NEAR: Run with visualizations?**</span>
+<span id="cb3-687"><a href="#cb3-687" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are using the NEAR pipeline and you are *not* completing pipeline-specific processing in parallel.</span>
+<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to visualize bad channel identification and rejection results for each file during NEAR processing.</span>
+<span id="cb3-689"><a href="#cb3-689" aria-hidden="true" tabindex="-1"></a>For each file, the NEAR pipeline will generate a plot of the LOF scores by channel.</span>
+<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a>If periodogram analysis is enabled for bad channel detection, the NEAR pipeline will also generate a histogram of signal power across the periodogram frequency range (1Hz to 30Hz) for each channel.</span>
+<span id="cb3-691"><a href="#cb3-691" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**NEAR: Plot bad channels for manual rejection?**</span>
+<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you enabled visualization for NEAR.</span>
+<span id="cb3-693"><a href="#cb3-693" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like to manually inspect (and reject) channels identified as "bad" by the NEAR pipeline.</span>
+<span id="cb3-694"><a href="#cb3-694" aria-hidden="true" tabindex="-1"></a>For each file, the NEAR pipeline will show the signal for each channel.</span>
+<span id="cb3-695"><a href="#cb3-695" aria-hidden="true" tabindex="-1"></a>Flat-line channels and channels with high LOF are marked in red, and channels with outlier power spectrum values are marked in yellow.</span>
+<span id="cb3-696"><a href="#cb3-696" aria-hidden="true" tabindex="-1"></a>The plot is interactive, so you can mark additional channels for removal and/or choose to keep channels that were marked by the NEAR pipeline.</span>
+<span id="cb3-697"><a href="#cb3-697" aria-hidden="true" tabindex="-1"></a>Keep in mind that processing will pause until the channel rejection list is confirmed, so manual inspection/rejection may not be practical for all data sets.</span>
+<span id="cb3-698"><a href="#cb3-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-699"><a href="#cb3-699" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
+<span id="cb3-700"><a href="#cb3-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-701"><a href="#cb3-701" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
+<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-705"><a href="#cb3-705" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
+<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
+<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-710"><a href="#cb3-710" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-711"><a href="#cb3-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-712"><a href="#cb3-712" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-713"><a href="#cb3-713" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-714"><a href="#cb3-714" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-715"><a href="#cb3-715" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-716"><a href="#cb3-716" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-717"><a href="#cb3-717" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-718"><a href="#cb3-718" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-719"><a href="#cb3-719" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-720"><a href="#cb3-720" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-721"><a href="#cb3-721" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-722"><a href="#cb3-722" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-723"><a href="#cb3-723" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-724"><a href="#cb3-724" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-725"><a href="#cb3-725" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-726"><a href="#cb3-726" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-727"><a href="#cb3-727" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-728"><a href="#cb3-728" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-729"><a href="#cb3-729" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-730"><a href="#cb3-730" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-731"><a href="#cb3-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-732"><a href="#cb3-732" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-733"><a href="#cb3-733" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-734"><a href="#cb3-734" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-735"><a href="#cb3-735" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-736"><a href="#cb3-736" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-737"><a href="#cb3-737" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-738"><a href="#cb3-738" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-739"><a href="#cb3-739" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-740"><a href="#cb3-740" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-741"><a href="#cb3-741" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-742"><a href="#cb3-742" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-743"><a href="#cb3-743" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-744"><a href="#cb3-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-745"><a href="#cb3-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-746"><a href="#cb3-746" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
