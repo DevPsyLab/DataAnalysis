@@ -157,11 +157,11 @@ For reference, folder sizes for each task for one pipeline are shown below.
 The initial output is only generated once, regardless of how many pipelines are used.
 The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison
 
-| Task        | Files | Initial Output | HAPPE Output | Total  |
-|-------------|-------|----------------|--------------|--------|
-| Oddball     | 569   | 269 GB         | 118 GB       | 391 GB |
-| Fish-Sharks | 566   | 362 GB         |  49 GB       | 412 GB |
-| Stop-Signal | 546   | 567 GB         | 114 GB       | 682 GB |
+  | Task        | Files | Initial Output | HAPPE Output | Total  |
+  |-------------|-------|----------------|--------------|--------|
+  | Oddball     | 569   | 269 GB         | 118 GB       | 391 GB |
+  | Fish-Sharks | 566   | 362 GB         |  49 GB       | 412 GB |
+  | Stop-Signal | 546   | 567 GB         | 114 GB       | 682 GB |
 
 1. **Enter the pipeline(s) you would like to run**
 This prompt will only appear if you chose not to run all pipelines.
@@ -646,6 +646,55 @@ This prompt will only appear if you chose to re-reference to a subset of channel
 Enter the channels you would like to re-reference to, using the "E#" label format.
 
 ### Visualization
+
+If you are processing data using Argon, you will not be able to use pipeline visualizations, so none of the following prompts will appear.
+
+1. **HAPPE: Run with visualizations?**
+This prompt will only appear if you are using the HAPPE pipeline.
+Indicate whether you would like to generate figures for each data file.
+The HAPPE pipeline creators recommend running a subset of participants with visualizations to confirm parameter settings before running the full data set without visualization.
+For each file, the HAPPE pipeline will generate a power spectrum figure with spatial topoplots at specified frequencies across the top of the figure.
+If you enabled ICA for the HAPPE pipeline, it will generate a comparison of the data before and after ICA, a topoplot and power spectrum figure for each identified independent component, and a diagnostic plot for each independent component.
+If you are conducting ERP analysis, the HAPPE pipeline will also generate an ERP timeseries figure with spatial topoplots at specified latencies.
+1. **HAPPE: Minimum value for power spectrum figure.**
+This prompt will only appear if you enabled visualization for HAPPE.
+Enter the lowest frequency you would like to include for the power spectrum plots.
+If you are using a high-pass filter, this value should be greater than or equal to the filter cutoff.
+1. **HAPPE: Maximum value for power spectrum figure.**
+This prompt will only appear if you enabled visualization for HAPPE.
+Enter the highest frequency you would like to include for the power spectrum plots.
+If you are using a low-pass filter, this value should be less than or equal to the filter cutoff.
+1. **HAPPE: Enter frequencies.**
+This prompt will only appear if you enabled visualization for HAPPE.
+Enter each frequency you like a spatial topoplot for in the power spectrum figures.
+One topoplot per frequency band (delta, theta, etc.) is typical.
+1. **HAPPE: Start time for the ERP timeseries figure.**
+This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.
+Enter the earliest time relative to stimulus onset that you would like in the ERP timeseries figure.
+This value is typically set to the stimulus time (i.e., 0), and it cannot be earlier than the segment start time.
+1. **HAPPE: End time for the ERP timeseries figure.**
+This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.
+Enter the latest time relative to stimulus onset that you would like in the ERP timeseries figure.
+This value depends on the specific ERP you are interested in, but it must be *less than* (not equal to or greater than) the segment end time.
+1. **HAPPE: Enter latencies.**
+This prompt will only appear if you enabled visualization for HAPPE and are conducting ERP analysis.
+Enter each latency (time) you would like a spatial topoplot for in the ERP timeseries figures.
+1. **APICE: Run with visualizations?**
+This prompt will only appear if you are using the APICE pipeline.
+Indicate whether you would like to plot rejection matrices for each file during APICE processing.
+These matrices are generated after bad channel rejection and after data cleaning.
+1. **NEAR: Run with visualizations?**
+This prompt will only appear if you are using the NEAR pipeline and you are *not* completing pipeline-specific processing in parallel.
+Indicate whether you would like to visualize bad channel identification and rejection results for each file during NEAR processing.
+For each file, the NEAR pipeline will generate a plot of the LOF scores by channel.
+If periodogram analysis is enabled for bad channel detection, the NEAR pipeline will also generate a histogram of signal power across the periodogram frequency range (1Hz to 30Hz) for each channel.
+1. **NEAR: Plot bad channels for manual rejection?**
+This prompt will only appear if you enabled visualization for NEAR.
+Indicate whether you would like to manually inspect (and reject) channels identified as "bad" by the NEAR pipeline.
+For each file, the NEAR pipeline will show the signal for each channel.
+Flat-line channels and channels with high LOF are marked in red, and channels with outlier power spectrum values are marked in yellow.
+The plot is interactive, so you can mark additional channels for removal and/or choose to keep channels that were marked by the NEAR pipeline.
+Keep in mind that processing will pause until the channel rejection list is confirmed, so manual inspection/rejection may not be practical for all data sets.
 
 ### Saving
 
