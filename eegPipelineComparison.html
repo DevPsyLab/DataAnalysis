@@ -577,8 +577,10 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#sec-reref" id="toc-sec-reref" class="nav-link" data-scroll-target="#sec-reref"><span class="header-section-number">3.1.12</span> Re-Referencing</a></li>
   <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">3.1.13</span> Visualization</a></li>
   <li><a href="#saving" id="toc-saving" class="nav-link" data-scroll-target="#saving"><span class="header-section-number">3.1.14</span> Saving</a></li>
+  <li><a href="#confirmation" id="toc-confirmation" class="nav-link" data-scroll-target="#confirmation"><span class="header-section-number">3.1.15</span> Confirmation</a></li>
   </ul></li>
-  <li><a href="#sec-comparison" id="toc-sec-comparison" class="nav-link" data-scroll-target="#sec-comparison"><span class="header-section-number">3.2</span> Pipeline Comparison</a></li>
+  <li><a href="#argon-processing" id="toc-argon-processing" class="nav-link" data-scroll-target="#argon-processing"><span class="header-section-number">3.2</span> Argon Processing</a></li>
+  <li><a href="#sec-comparison" id="toc-sec-comparison" class="nav-link" data-scroll-target="#sec-comparison"><span class="header-section-number">3.3</span> Pipeline Comparison</a></li>
   </ul></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">4</span> Appendix</a>
   <ul>
@@ -951,10 +953,25 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </section>
 <section id="saving" class="level3" data-number="3.1.14">
 <h3 data-number="3.1.14" class="anchored" data-anchor-id="saving"><span class="header-section-number">3.1.14</span> Saving</h3>
+<ol type="1">
+<li><strong>Format to save processed data.</strong> Indicate which format you would like to save the processed data in. Both save formats take up roughly the same amount of storage space, so the decision primarily depends on the format(s) needed for post-processing steps. If you are processing ERP data, the ERP data will be saved to .txt files in addition to the selected format.</li>
+<li><strong>Save intermediate outputs?</strong> This prompt will only appear if you are <em>not</em> using Argon for data processing. Indicate whether you would like <code>MATLAB</code> to save files after each major processing step (filtering, cleaning, and segmentation) in addition to the final processed data. This will substantially increase the storage space required for processing, especially if you are using more than one pipeline. Ensure you have sufficient storage space to avoid overwriting data.</li>
+<li><strong>Save data by onset tag?</strong> This prompt will only appear if you are <em>not</em> using Argon for data processing and if you are processing task data with more than one onset tag. Indicate whether you would like <code>MATLAB</code> to save the events from each onset tag as a separate file in addition to the full processed data set. This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled). This will substantially increase the storage space required for processing, especially if you are using more than one pipeline. Ensure you have sufficient storage space to avoid overwriting data.</li>
+<li><strong>Save data by condition?</strong> This prompt will only appear if you are <em>not</em> using Argon for data processing and if you are processing task data with more than one condition. Indicate whether you would like <code>MATLAB</code> to save the events from each condition as a separate file in addition to the full processed data set. This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled). This will substantially increase the storage space required for processing, especially if you are using more than one pipeline. Ensure you have sufficient storage space to avoid overwriting data.</li>
+</ol>
+</section>
+<section id="confirmation" class="level3" data-number="3.1.15">
+<h3 data-number="3.1.15" class="anchored" data-anchor-id="confirmation"><span class="header-section-number">3.1.15</span> Confirmation</h3>
+<p>At this point, <code>MATLAB</code> will print a summary of the parameters you selected in the Command Window. If the parameters are correct, confirm your selections by entering <strong>y</strong> into the Command Window.</p>
+<p>If you need to modify any parameters, enter <strong>n</strong> into the Command Window. A list of parameter categories will appear. Enter the name of the category that needs to be modified, and <code>MATLAB</code> will repeat all of the prompts from that category. The list of parameter categories will re-appear after each modified category until you input <strong>done</strong>.</p>
+<p>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list. To modify these settings, enter <strong>Ctrl+C</strong> to exit the parameter script, and re-run the <code>processing.m</code> script from the beginning.</p>
 </section>
 </section>
-<section id="sec-comparison" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-comparison"><span class="header-section-number">3.2</span> Pipeline Comparison</h2>
+<section id="argon-processing" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="argon-processing"><span class="header-section-number">3.2</span> Argon Processing</h2>
+</section>
+<section id="sec-comparison" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-comparison"><span class="header-section-number">3.3</span> Pipeline Comparison</h2>
 </section>
 </section>
 <section id="appendix" class="level1" data-number="4">
@@ -2179,52 +2196,89 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb3-698"><a href="#cb3-698" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-699"><a href="#cb3-699" aria-hidden="true" tabindex="-1"></a><span class="fu">### Saving</span></span>
 <span id="cb3-700"><a href="#cb3-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-701"><a href="#cb3-701" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
-<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-705"><a href="#cb3-705" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
-<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
-<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-710"><a href="#cb3-710" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-711"><a href="#cb3-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-712"><a href="#cb3-712" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-713"><a href="#cb3-713" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-714"><a href="#cb3-714" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-715"><a href="#cb3-715" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-716"><a href="#cb3-716" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-717"><a href="#cb3-717" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-718"><a href="#cb3-718" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-719"><a href="#cb3-719" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-720"><a href="#cb3-720" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-721"><a href="#cb3-721" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-722"><a href="#cb3-722" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-723"><a href="#cb3-723" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-724"><a href="#cb3-724" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-725"><a href="#cb3-725" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-726"><a href="#cb3-726" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-727"><a href="#cb3-727" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-728"><a href="#cb3-728" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-729"><a href="#cb3-729" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-730"><a href="#cb3-730" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-731"><a href="#cb3-731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-732"><a href="#cb3-732" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-733"><a href="#cb3-733" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-734"><a href="#cb3-734" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-735"><a href="#cb3-735" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-736"><a href="#cb3-736" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-737"><a href="#cb3-737" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-738"><a href="#cb3-738" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-739"><a href="#cb3-739" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-740"><a href="#cb3-740" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-741"><a href="#cb3-741" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-742"><a href="#cb3-742" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-743"><a href="#cb3-743" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-744"><a href="#cb3-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-701"><a href="#cb3-701" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Format to save processed data.**</span>
+<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a>Indicate which format you would like to save the processed data in.</span>
+<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a>Both save formats take up roughly the same amount of storage space, so the decision primarily depends on the format(s) needed for post-processing steps.</span>
+<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a>If you are processing ERP data, the ERP data will be saved to .txt files in addition to the selected format.</span>
+<span id="cb3-705"><a href="#cb3-705" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Save intermediate outputs?**</span>
+<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are *not* using Argon for data processing.</span>
+<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like <span class="in">`MATLAB`</span> to save files after each major processing step (filtering, cleaning, and segmentation) in addition to the final processed data.</span>
+<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a>This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.</span>
+<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a>Ensure you have sufficient storage space to avoid overwriting data.</span>
+<span id="cb3-710"><a href="#cb3-710" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Save data by onset tag?**</span>
+<span id="cb3-711"><a href="#cb3-711" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are *not* using Argon for data processing and if you are processing task data with more than one onset tag.</span>
+<span id="cb3-712"><a href="#cb3-712" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like <span class="in">`MATLAB`</span> to save the events from each onset tag as a separate file in addition to the full processed data set.</span>
+<span id="cb3-713"><a href="#cb3-713" aria-hidden="true" tabindex="-1"></a>This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled).</span>
+<span id="cb3-714"><a href="#cb3-714" aria-hidden="true" tabindex="-1"></a>This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.</span>
+<span id="cb3-715"><a href="#cb3-715" aria-hidden="true" tabindex="-1"></a>Ensure you have sufficient storage space to avoid overwriting data.</span>
+<span id="cb3-716"><a href="#cb3-716" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Save data by condition?**</span>
+<span id="cb3-717"><a href="#cb3-717" aria-hidden="true" tabindex="-1"></a>This prompt will only appear if you are *not* using Argon for data processing and if you are processing task data with more than one condition.</span>
+<span id="cb3-718"><a href="#cb3-718" aria-hidden="true" tabindex="-1"></a>Indicate whether you would like <span class="in">`MATLAB`</span> to save the events from each condition as a separate file in addition to the full processed data set.</span>
+<span id="cb3-719"><a href="#cb3-719" aria-hidden="true" tabindex="-1"></a>This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled).</span>
+<span id="cb3-720"><a href="#cb3-720" aria-hidden="true" tabindex="-1"></a>This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.</span>
+<span id="cb3-721"><a href="#cb3-721" aria-hidden="true" tabindex="-1"></a>Ensure you have sufficient storage space to avoid overwriting data.</span>
+<span id="cb3-722"><a href="#cb3-722" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-723"><a href="#cb3-723" aria-hidden="true" tabindex="-1"></a><span class="fu">### Confirmation</span></span>
+<span id="cb3-724"><a href="#cb3-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-725"><a href="#cb3-725" aria-hidden="true" tabindex="-1"></a>At this point, <span class="in">`MATLAB`</span> will print a summary of the parameters you selected in the Command Window.</span>
+<span id="cb3-726"><a href="#cb3-726" aria-hidden="true" tabindex="-1"></a>If the parameters are correct, confirm your selections by entering **y** into the Command Window.</span>
+<span id="cb3-727"><a href="#cb3-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-728"><a href="#cb3-728" aria-hidden="true" tabindex="-1"></a>If you need to modify any parameters, enter **n** into the Command Window.</span>
+<span id="cb3-729"><a href="#cb3-729" aria-hidden="true" tabindex="-1"></a>A list of parameter categories will appear.</span>
+<span id="cb3-730"><a href="#cb3-730" aria-hidden="true" tabindex="-1"></a>Enter the name of the category that needs to be modified, and <span class="in">`MATLAB`</span> will repeat all of the prompts from that category.</span>
+<span id="cb3-731"><a href="#cb3-731" aria-hidden="true" tabindex="-1"></a>The list of parameter categories will re-appear after each modified category until you input **done**.</span>
+<span id="cb3-732"><a href="#cb3-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-733"><a href="#cb3-733" aria-hidden="true" tabindex="-1"></a>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list.</span>
+<span id="cb3-734"><a href="#cb3-734" aria-hidden="true" tabindex="-1"></a>To modify these settings, enter **Ctrl+C** to exit the parameter script, and re-run the <span class="in">`processing.m`</span> script from the beginning.</span>
+<span id="cb3-735"><a href="#cb3-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-736"><a href="#cb3-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Argon Processing</span></span>
+<span id="cb3-737"><a href="#cb3-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-738"><a href="#cb3-738" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
+<span id="cb3-739"><a href="#cb3-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-740"><a href="#cb3-740" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-741"><a href="#cb3-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-742"><a href="#cb3-742" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
+<span id="cb3-743"><a href="#cb3-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-744"><a href="#cb3-744" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
 <span id="cb3-745"><a href="#cb3-745" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-746"><a href="#cb3-746" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-746"><a href="#cb3-746" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-747"><a href="#cb3-747" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-748"><a href="#cb3-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-749"><a href="#cb3-749" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-750"><a href="#cb3-750" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-751"><a href="#cb3-751" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-752"><a href="#cb3-752" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-753"><a href="#cb3-753" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-754"><a href="#cb3-754" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-755"><a href="#cb3-755" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-756"><a href="#cb3-756" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-757"><a href="#cb3-757" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-758"><a href="#cb3-758" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-759"><a href="#cb3-759" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-760"><a href="#cb3-760" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-761"><a href="#cb3-761" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-762"><a href="#cb3-762" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-763"><a href="#cb3-763" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-764"><a href="#cb3-764" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-765"><a href="#cb3-765" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-766"><a href="#cb3-766" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-767"><a href="#cb3-767" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-768"><a href="#cb3-768" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-769"><a href="#cb3-769" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-770"><a href="#cb3-770" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-771"><a href="#cb3-771" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-772"><a href="#cb3-772" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-773"><a href="#cb3-773" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-774"><a href="#cb3-774" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-775"><a href="#cb3-775" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-776"><a href="#cb3-776" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-777"><a href="#cb3-777" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-778"><a href="#cb3-778" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-779"><a href="#cb3-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-780"><a href="#cb3-780" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-781"><a href="#cb3-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-782"><a href="#cb3-782" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-783"><a href="#cb3-783" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
