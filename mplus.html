@@ -1363,7 +1363,7 @@ MODEL: ! A = construct 1; B = construct 2
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
     A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
-    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances 
+    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0
     A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change
     B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change
     A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
@@ -2789,7 +2789,7 @@ loaded via a namespace (and not attached):
 <span id="cb52-896"><a href="#cb52-896" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
 <span id="cb52-897"><a href="#cb52-897" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
 <span id="cb52-898"><a href="#cb52-898" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances </span></span>
+<span id="cb52-899"><a href="#cb52-899" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0</span></span>
 <span id="cb52-900"><a href="#cb52-900" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
 <span id="cb52-901"><a href="#cb52-901" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
 <span id="cb52-902"><a href="#cb52-902" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
