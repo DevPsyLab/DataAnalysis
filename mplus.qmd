@@ -892,7 +892,7 @@ MODEL: ! A = construct 1; B = construct 2
   %BETWEEN%
     [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
     A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
-    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances 
+    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0
     A Alin ON sex (XtoYint XtoYlin);   ! sex -> A int, A linear change
     B Blin ON sex (XtoYint XtoYlin);   ! sex -> B int, B linear change
     A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
