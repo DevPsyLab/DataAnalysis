@@ -698,6 +698,43 @@ Keep in mind that processing will pause until the channel rejection list is conf
 
 ### Saving
 
+1. **Format to save processed data.**
+Indicate which format you would like to save the processed data in.
+Both save formats take up roughly the same amount of storage space, so the decision primarily depends on the format(s) needed for post-processing steps.
+If you are processing ERP data, the ERP data will be saved to .txt files in addition to the selected format.
+1. **Save intermediate outputs?**
+This prompt will only appear if you are *not* using Argon for data processing.
+Indicate whether you would like `MATLAB` to save files after each major processing step (filtering, cleaning, and segmentation) in addition to the final processed data.
+This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.
+Ensure you have sufficient storage space to avoid overwriting data.
+1. **Save data by onset tag?**
+This prompt will only appear if you are *not* using Argon for data processing and if you are processing task data with more than one onset tag.
+Indicate whether you would like `MATLAB` to save the events from each onset tag as a separate file in addition to the full processed data set.
+This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled).
+This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.
+Ensure you have sufficient storage space to avoid overwriting data.
+1. **Save data by condition?**
+This prompt will only appear if you are *not* using Argon for data processing and if you are processing task data with more than one condition.
+Indicate whether you would like `MATLAB` to save the events from each condition as a separate file in addition to the full processed data set.
+This setting only applies to the final processed data, so separate files are not generated after intermediate processing steps (if enabled).
+This will substantially increase the storage space required for processing, especially if you are using more than one pipeline.
+Ensure you have sufficient storage space to avoid overwriting data.
+
+### Confirmation
+
+At this point, `MATLAB` will print a summary of the parameters you selected in the Command Window.
+If the parameters are correct, confirm your selections by entering **y** into the Command Window.
+
+If you need to modify any parameters, enter **n** into the Command Window.
+A list of parameter categories will appear.
+Enter the name of the category that needs to be modified, and `MATLAB` will repeat all of the prompts from that category.
+The list of parameter categories will re-appear after each modified category until you input **done**.
+
+NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list.
+To modify these settings, enter **Ctrl+C** to exit the parameter script, and re-run the `processing.m` script from the beginning.
+
+## Argon Processing
+
 ## Pipeline Comparison {#sec-comparison}
 
 # Appendix
