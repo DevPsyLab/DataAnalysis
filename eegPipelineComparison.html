@@ -339,7 +339,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">EEG Processing Pipeline Comparison</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eegPipelineComparison.html">EEG Pipeline Comparison</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -379,6 +379,12 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <div class="sidebar-item-container"> 
   <a href="./dags.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Directed Acyclic Graphs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eegPipelineComparison.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">EEG Pipeline Comparison</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -579,7 +585,7 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#saving" id="toc-saving" class="nav-link" data-scroll-target="#saving"><span class="header-section-number">3.1.14</span> Saving</a></li>
   <li><a href="#confirmation" id="toc-confirmation" class="nav-link" data-scroll-target="#confirmation"><span class="header-section-number">3.1.15</span> Confirmation</a></li>
   </ul></li>
-  <li><a href="#argon-processing" id="toc-argon-processing" class="nav-link" data-scroll-target="#argon-processing"><span class="header-section-number">3.2</span> Argon Processing</a></li>
+  <li><a href="#sec-argon-proc" id="toc-sec-argon-proc" class="nav-link" data-scroll-target="#sec-argon-proc"><span class="header-section-number">3.2</span> Argon Processing</a></li>
   <li><a href="#sec-comparison" id="toc-sec-comparison" class="nav-link" data-scroll-target="#sec-comparison"><span class="header-section-number">3.3</span> Pipeline Comparison</a></li>
   </ul></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">4</span> Appendix</a>
@@ -926,13 +932,30 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 </section>
 <section id="confirmation" class="level3" data-number="3.1.15">
 <h3 data-number="3.1.15" class="anchored" data-anchor-id="confirmation"><span class="header-section-number">3.1.15</span> Confirmation</h3>
-<p>At this point, <code>MATLAB</code> will print a summary of the parameters you selected in the Command Window. If the parameters are correct, confirm your selections by entering <strong>y</strong> into the Command Window.</p>
+<p>At this point, <code>MATLAB</code> will print a summary of the parameters you selected in the Command Window. If the parameters are correct, confirm your selections by entering <strong>y</strong> into the Command Window. If you are using Argon for data processing, proceed to the <a href="#sec-argon-proc">Argon Processing</a> section. If not, processing will begin immediately.</p>
 <p>If you need to modify any parameters, enter <strong>n</strong> into the Command Window. A list of parameter categories will appear. Enter the name of the category that needs to be modified, and <code>MATLAB</code> will repeat all of the prompts from that category. The list of parameter categories will re-appear after each modified category until you input <strong>done</strong>.</p>
-<p>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list. To modify these settings, enter <strong>Ctrl+C</strong> to exit the parameter script, and re-run the <code>processing.m</code> script from the beginning.</p>
+<p>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list. If you need to change these settings, enter <strong>Ctrl+C</strong> to exit the script, and re-run <code>processing.m</code> from the beginning.</p>
 </section>
 </section>
-<section id="argon-processing" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="argon-processing"><span class="header-section-number">3.2</span> Argon Processing</h2>
+<section id="sec-argon-proc" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-argon-proc"><span class="header-section-number">3.2</span> Argon Processing</h2>
+<p>After you confirm the processing parameters, <code>MATLAB</code> will save all of the necessary variables to your Argon home directory in a file called <code>procVars.mat</code>. It will also copy <code>eeg_processing_script.m</code> and <code>eeg_processing.job</code> into your Argon home directory. Lastly, it will copy all of the scripts from the <code>pipeline_scripts</code> folder into your Argon home directory to ensure you have the most recent versions. However, because the pipeline-specific scripts do not change often, the rest of the repository <em>does not get copied over</em>–you must do this manually the first time you use Argon to run the processing script. The pipeline folders should be in the “first level” of your Argon home directory (i.e., when you open the directory, it should have folders called <code>APICE</code>, <code>HAPPE</code>, etc.). Once <code>MATLAB</code> finishes transferring the files, the script will end, and you can proceed with the steps below.</p>
+<ol type="1">
+<li>Update the <code>.job</code> file
+<ol type="1">
+<li>Open your Argon home directory, then open the <code>eeg_processing.job</code> file</li>
+<li>Update the output and error log paths (<code>-o</code> and <code>-e</code>) to include your HawkID instead of “HAWKID”</li>
+<li>Update the email field (<code>-M</code>) to your UIowa email address instead of “first-last@uiowa.edu”</li>
+<li>Update the name of the container file to match the name of your container instead of “CONTAINERNAME.sif”
+<ul>
+<li>NOTE: Your container must be on the first level of your Argon home directory</li>
+<li>If you do not have a container, see the build instructions <a href="@hpc.qmd#sec-create-container">here</a></li>
+</ul></li>
+</ol></li>
+<li>Log in to Argon (see the <a href="@hpc.qmd#sec-access-argon">Argon documentation</a> for more detailed instructions)</li>
+<li>Enter <code>qsub eeg_processing.job</code></li>
+<li>When processing finishes (or if it crashes), you will receive an email</li>
+</ol>
 </section>
 <section id="sec-comparison" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-comparison"><span class="header-section-number">3.3</span> Pipeline Comparison</h2>
@@ -2184,63 +2207,83 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <span id="cb3-722"><a href="#cb3-722" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-723"><a href="#cb3-723" aria-hidden="true" tabindex="-1"></a>At this point, <span class="in">`MATLAB`</span> will print a summary of the parameters you selected in the Command Window.</span>
 <span id="cb3-724"><a href="#cb3-724" aria-hidden="true" tabindex="-1"></a>If the parameters are correct, confirm your selections by entering **y** into the Command Window.</span>
-<span id="cb3-725"><a href="#cb3-725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-726"><a href="#cb3-726" aria-hidden="true" tabindex="-1"></a>If you need to modify any parameters, enter **n** into the Command Window.</span>
-<span id="cb3-727"><a href="#cb3-727" aria-hidden="true" tabindex="-1"></a>A list of parameter categories will appear.</span>
-<span id="cb3-728"><a href="#cb3-728" aria-hidden="true" tabindex="-1"></a>Enter the name of the category that needs to be modified, and <span class="in">`MATLAB`</span> will repeat all of the prompts from that category.</span>
-<span id="cb3-729"><a href="#cb3-729" aria-hidden="true" tabindex="-1"></a>The list of parameter categories will re-appear after each modified category until you input **done**.</span>
-<span id="cb3-730"><a href="#cb3-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-731"><a href="#cb3-731" aria-hidden="true" tabindex="-1"></a>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list.</span>
-<span id="cb3-732"><a href="#cb3-732" aria-hidden="true" tabindex="-1"></a>To modify these settings, enter **Ctrl+C** to exit the parameter script, and re-run the <span class="in">`processing.m`</span> script from the beginning.</span>
-<span id="cb3-733"><a href="#cb3-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-734"><a href="#cb3-734" aria-hidden="true" tabindex="-1"></a><span class="fu">## Argon Processing</span></span>
+<span id="cb3-725"><a href="#cb3-725" aria-hidden="true" tabindex="-1"></a>If you are using Argon for data processing, proceed to the <span class="co">[</span><span class="ot">Argon Processing</span><span class="co">](#sec-argon-proc)</span> section.</span>
+<span id="cb3-726"><a href="#cb3-726" aria-hidden="true" tabindex="-1"></a>If not, processing will begin immediately.</span>
+<span id="cb3-727"><a href="#cb3-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-728"><a href="#cb3-728" aria-hidden="true" tabindex="-1"></a>If you need to modify any parameters, enter **n** into the Command Window.</span>
+<span id="cb3-729"><a href="#cb3-729" aria-hidden="true" tabindex="-1"></a>A list of parameter categories will appear.</span>
+<span id="cb3-730"><a href="#cb3-730" aria-hidden="true" tabindex="-1"></a>Enter the name of the category that needs to be modified, and <span class="in">`MATLAB`</span> will repeat all of the prompts from that category.</span>
+<span id="cb3-731"><a href="#cb3-731" aria-hidden="true" tabindex="-1"></a>The list of parameter categories will re-appear after each modified category until you input **done**.</span>
+<span id="cb3-732"><a href="#cb3-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-733"><a href="#cb3-733" aria-hidden="true" tabindex="-1"></a>NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list.</span>
+<span id="cb3-734"><a href="#cb3-734" aria-hidden="true" tabindex="-1"></a>If you need to change these settings, enter **Ctrl+C** to exit the script, and re-run <span class="in">`processing.m`</span> from the beginning.</span>
 <span id="cb3-735"><a href="#cb3-735" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-736"><a href="#cb3-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
+<span id="cb3-736"><a href="#cb3-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Argon Processing {#sec-argon-proc}</span></span>
 <span id="cb3-737"><a href="#cb3-737" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-738"><a href="#cb3-738" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-739"><a href="#cb3-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-740"><a href="#cb3-740" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
-<span id="cb3-741"><a href="#cb3-741" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-742"><a href="#cb3-742" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
-<span id="cb3-743"><a href="#cb3-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-744"><a href="#cb3-744" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-745"><a href="#cb3-745" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-746"><a href="#cb3-746" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-747"><a href="#cb3-747" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-748"><a href="#cb3-748" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-749"><a href="#cb3-749" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-750"><a href="#cb3-750" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-751"><a href="#cb3-751" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-752"><a href="#cb3-752" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-753"><a href="#cb3-753" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-754"><a href="#cb3-754" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-755"><a href="#cb3-755" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-756"><a href="#cb3-756" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-757"><a href="#cb3-757" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-758"><a href="#cb3-758" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-759"><a href="#cb3-759" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-760"><a href="#cb3-760" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-761"><a href="#cb3-761" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-762"><a href="#cb3-762" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-763"><a href="#cb3-763" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-764"><a href="#cb3-764" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-765"><a href="#cb3-765" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-738"><a href="#cb3-738" aria-hidden="true" tabindex="-1"></a>After you confirm the processing parameters, <span class="in">`MATLAB`</span> will save all of the necessary variables to your Argon home directory in a file called <span class="in">`procVars.mat`</span>.</span>
+<span id="cb3-739"><a href="#cb3-739" aria-hidden="true" tabindex="-1"></a>It will also copy <span class="in">`eeg_processing_script.m`</span> and <span class="in">`eeg_processing.job`</span> into your Argon home directory.</span>
+<span id="cb3-740"><a href="#cb3-740" aria-hidden="true" tabindex="-1"></a>Lastly, it will copy all of the scripts from the <span class="in">`pipeline_scripts`</span> folder into your Argon home directory to ensure you have the most recent versions.</span>
+<span id="cb3-741"><a href="#cb3-741" aria-hidden="true" tabindex="-1"></a>However, because the pipeline-specific scripts do not change often, the rest of the repository *does not get copied over*--you must do this manually the first time you use Argon to run the processing script.</span>
+<span id="cb3-742"><a href="#cb3-742" aria-hidden="true" tabindex="-1"></a>The pipeline folders should be in the "first level" of your Argon home directory (i.e., when you open the directory, it should have folders called <span class="in">`APICE`</span>, <span class="in">`HAPPE`</span>, etc.).</span>
+<span id="cb3-743"><a href="#cb3-743" aria-hidden="true" tabindex="-1"></a>Once <span class="in">`MATLAB`</span> finishes transferring the files, the script will end, and you can proceed with the steps below.</span>
+<span id="cb3-744"><a href="#cb3-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-745"><a href="#cb3-745" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update the <span class="in">`.job`</span> file</span>
+<span id="cb3-746"><a href="#cb3-746" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Open your Argon home directory, then open the <span class="in">`eeg_processing.job`</span> file</span>
+<span id="cb3-747"><a href="#cb3-747" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Update the output and error log paths (<span class="in">`-o`</span> and <span class="in">`-e`</span>) to include your HawkID instead of "HAWKID"</span>
+<span id="cb3-748"><a href="#cb3-748" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Update the email field (<span class="in">`-M`</span>) to your UIowa email address instead of "first-last@uiowa.edu"</span>
+<span id="cb3-749"><a href="#cb3-749" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. </span>Update the name of the container file to match the name of your container instead of "CONTAINERNAME.sif"</span>
+<span id="cb3-750"><a href="#cb3-750" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>NOTE: Your container must be on the first level of your Argon home directory</span>
+<span id="cb3-751"><a href="#cb3-751" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>If you do not have a container, see the build instructions <span class="co">[</span><span class="ot">here</span><span class="co">](@hpc.qmd#sec-create-container)</span></span>
+<span id="cb3-752"><a href="#cb3-752" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Log in to Argon (see the <span class="co">[</span><span class="ot">Argon documentation</span><span class="co">](@hpc.qmd#sec-access-argon)</span> for more detailed instructions)</span>
+<span id="cb3-753"><a href="#cb3-753" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Enter <span class="in">`qsub eeg_processing.job`</span></span>
+<span id="cb3-754"><a href="#cb3-754" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>When processing finishes (or if it crashes), you will receive an email</span>
+<span id="cb3-755"><a href="#cb3-755" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-756"><a href="#cb3-756" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline Comparison {#sec-comparison}</span></span>
+<span id="cb3-757"><a href="#cb3-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-758"><a href="#cb3-758" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-759"><a href="#cb3-759" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-760"><a href="#cb3-760" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
+<span id="cb3-761"><a href="#cb3-761" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-762"><a href="#cb3-762" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
+<span id="cb3-763"><a href="#cb3-763" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-764"><a href="#cb3-764" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-765"><a href="#cb3-765" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
 <span id="cb3-766"><a href="#cb3-766" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-767"><a href="#cb3-767" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-768"><a href="#cb3-768" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-769"><a href="#cb3-769" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-768"><a href="#cb3-768" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-769"><a href="#cb3-769" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
 <span id="cb3-770"><a href="#cb3-770" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-771"><a href="#cb3-771" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-772"><a href="#cb3-772" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-773"><a href="#cb3-773" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-774"><a href="#cb3-774" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-775"><a href="#cb3-775" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-776"><a href="#cb3-776" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-777"><a href="#cb3-777" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-778"><a href="#cb3-778" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-779"><a href="#cb3-779" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-780"><a href="#cb3-780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-781"><a href="#cb3-781" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-771"><a href="#cb3-771" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-772"><a href="#cb3-772" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-773"><a href="#cb3-773" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-774"><a href="#cb3-774" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-775"><a href="#cb3-775" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-776"><a href="#cb3-776" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-777"><a href="#cb3-777" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-778"><a href="#cb3-778" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-779"><a href="#cb3-779" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-780"><a href="#cb3-780" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-781"><a href="#cb3-781" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-782"><a href="#cb3-782" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-783"><a href="#cb3-783" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-784"><a href="#cb3-784" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-785"><a href="#cb3-785" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-786"><a href="#cb3-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-787"><a href="#cb3-787" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-788"><a href="#cb3-788" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-789"><a href="#cb3-789" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-790"><a href="#cb3-790" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-791"><a href="#cb3-791" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-792"><a href="#cb3-792" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-793"><a href="#cb3-793" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-794"><a href="#cb3-794" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-795"><a href="#cb3-795" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-796"><a href="#cb3-796" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-797"><a href="#cb3-797" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-798"><a href="#cb3-798" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-799"><a href="#cb3-799" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-800"><a href="#cb3-800" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-801"><a href="#cb3-801" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
