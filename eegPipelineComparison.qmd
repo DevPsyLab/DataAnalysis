@@ -722,6 +722,8 @@ Ensure you have sufficient storage space to avoid overwriting data.
 
 At this point, `MATLAB` will print a summary of the parameters you selected in the Command Window.
 If the parameters are correct, confirm your selections by entering **y** into the Command Window.
+If you are using Argon for data processing, proceed to the [Argon Processing](#sec-argon-proc) section.
+If not, processing will begin immediately.
 
 If you need to modify any parameters, enter **n** into the Command Window.
 A list of parameter categories will appear.
@@ -729,9 +731,27 @@ Enter the name of the category that needs to be modified, and `MATLAB` will repe
 The list of parameter categories will re-appear after each modified category until you input **done**.
 
 NOTE: Because parameter prompts are determined by file paths, processing mode, and pipeline selection, these settings cannot be modified from the confirmation list.
-To modify these settings, enter **Ctrl+C** to exit the parameter script, and re-run the `processing.m` script from the beginning.
+If you need to change these settings, enter **Ctrl+C** to exit the script, and re-run `processing.m` from the beginning.
 
-## Argon Processing
+## Argon Processing {#sec-argon-proc}
+
+After you confirm the processing parameters, `MATLAB` will save all of the necessary variables to your Argon home directory in a file called `procVars.mat`.
+It will also copy `eeg_processing_script.m` and `eeg_processing.job` into your Argon home directory.
+Lastly, it will copy all of the scripts from the `pipeline_scripts` folder into your Argon home directory to ensure you have the most recent versions.
+However, because the pipeline-specific scripts do not change often, the rest of the repository *does not get copied over*--you must do this manually the first time you use Argon to run the processing script.
+The pipeline folders should be in the "first level" of your Argon home directory (i.e., when you open the directory, it should have folders called `APICE`, `HAPPE`, etc.).
+Once `MATLAB` finishes transferring the files, the script will end, and you can proceed with the steps below.
+
+1. Update the `.job` file
+    1. Open your Argon home directory, then open the `eeg_processing.job` file
+    1. Update the output and error log paths (`-o` and `-e`) to include your HawkID instead of "HAWKID"
+    1. Update the email field (`-M`) to your UIowa email address instead of "first-last@uiowa.edu"
+    1. Update the name of the container file to match the name of your container instead of "CONTAINERNAME.sif"
+        - NOTE: Your container must be on the first level of your Argon home directory
+        - If you do not have a container, see the build instructions [here](@hpc.qmd#sec-create-container)
+1. Log in to Argon (see the [Argon documentation](@hpc.qmd#sec-access-argon) for more detailed instructions)
+1. Enter `qsub eeg_processing.job`
+1. When processing finishes (or if it crashes), you will receive an email
 
 ## Pipeline Comparison {#sec-comparison}
 
