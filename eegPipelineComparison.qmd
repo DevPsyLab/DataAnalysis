@@ -139,9 +139,9 @@ If there is an error at this step, the parameter file you specified is likely fr
 See the [Appendix](#sec-missing-params) for further instructions.
 If you confirm the parameters, `MATLAB` will proceed to the next processing step.
 If not, you will be directed to the parameter change menu.
-1. **Run pipeline comparison after processing?**
-This prompt will only appear if your parameter file has multiple pipelines selected.
-This option will generate a few additional files to use in the `generalizability.Rmd` script (see the [Comparison](#sec-comparison) section).
+1. **Include generalizability in pipeline evaluation/comparison?**
+This option will generate a few additional files to use in the pipeline evaluation script (see the [Pipeline Evaluation Outputs](#sec-evaluation) section).
+It adds a few minutes to the processing time, and it produces 
 
 #### New Parameter File
 
@@ -155,12 +155,14 @@ This option includes APICE, HAPPE, MADE, NEAR, and RELAX-Jr.
 If you are running multiple pipelines, verify that your computer has enough space to store all of the data.
 For reference, folder sizes for each task for one pipeline are shown below.
 The initial output is only generated once, regardless of how many pipelines are used.
-The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison
+The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison.
+  
   | Task        | Files | Initial Output | HAPPE Output | Total  |
   |-------------|-------|----------------|--------------|--------|
   | Oddball     | 569   | 269 GB         | 118 GB       | 391 GB |
   | Fish-Sharks | 566   | 362 GB         |  49 GB       | 412 GB |
   | Stop-Signal | 546   | 567 GB         | 114 GB       | 682 GB |
+  
 1. **Enter the pipeline(s) you would like to run**
 This prompt will only appear if you chose not to run all pipelines.
 Enter at least one pipeline to use for processing.
@@ -753,7 +755,146 @@ Once `MATLAB` finishes transferring the files, the script will end, and you can 
 1. Enter `qsub eeg_processing.job`
 1. When processing finishes (or if it crashes), you will receive an email
 
-## Pipeline Comparison {#sec-comparison}
+## Pipeline Evaluation Outputs {#sec-evaluation}
+
+Once the data are pre-processed (5-10 minutes per file per pipeline), you can run the comparison script to generate an overview of the pipeline performance.
+If you processed the data using Argon, the script will run automatically.
+Otherwise, you will need to open `generate_comparison.R` in `R` or `RStudio` and run the full script by pressing `Ctrl+Shift+Enter` or by clicking "Run" in the top right corner of the script display window.
+If you chose to include generalizability estimates in the pipeline evaluation, this script will take roughly one hour per onset tag (or per condition, if specified) per pipeline to run.
+
+Throughout processing, the following files are produced (or added to).
+
+### Initial Processing
+
+These files are saved in `1_initial_output` within the output directory when initial processing is complete.
+
+1. **init_dataQC_YYYY-MM-DD (`.mat` and `.csv`)**
+The duration in seconds (`file_length_s`), initial number of channels (`initial_chans_n`), initial percentage of "good" data points (`good_times_pre_perc`), and initial processing time (`processing_time`) for the data files processed on the date in the file name.
+The good data points are identified using APICE's artifact identification algorithm (see [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for details).
+The timer for the processing time starts before `MATLAB` attempts to load the file and ends after the file is saved (or when an error occurs).
+If there was an error during initial processing, any values that could not be calculated are filled in with an error tag.
+The `.csv` file contains 5 columns (`file` plus the four columns listed above) with *n* rows of data.
+The `.mat` file contains two variables: `initQCrows` contains the data (*n* rows by 5 columns), and `allQCnames` contains the column names.
+1. **init_qc_all (`.mat` and `.csv`)**
+The duration in seconds (`file_length_s`), initial number of channels (`initial_chans_n`), initial percentage of "good" data points (`good_times_pre_perc`), and initial processing time (`processing_time`) for *all* files processed in the current output directory.
+When new files are processed, they are added to the end of this file, so files may not be completely alphabetical.
+The `.csv` file contains 5 columns (`file` plus the four columns listed above) with *n* rows of data.
+The `.mat` file contains two variables: `allQC` contains the data (*N* rows by 5 columns), and `allQCnames` contains the column names.
+1. **init_errorLog_YYYY-MM-DD (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for each error that occurred during the round of processing completed on the date in the file name.
+The `Pipeline` column is set to "init" (for "*init*ial processing") for all rows.
+These files are only generated if errors occurred during initial processing.
+For parallel processing, errors are added in the order they occur, so files may not be listed alphabetically.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `errorLog`, which holds the same data as the `.csv` file.
+1. **init_error_log_all (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for *all* errors that occurred during *any* round of processing in the current output directory.
+The `Pipeline` column is set to "init" (for "*init*ial processing") for all rows.
+When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `allErrors`, which holds the same data as the `.csv` file.
+
+### Individual Pipelines
+
+A version of each of these files is produced for each pipeline used for data processing.
+The files are saved in the pipeline-specific output folder(s) when the corresponding pipeline finishes processing.
+
+  <details>
+  <summary>QC File Column Descriptions</summary>
+  
+  Each pipeline relies on its own algorithm for identifying "bad" data in a given recording.
+  However, because each algorithm is different (and tailored to the pipeline it is associated with), the results are difficult to compare across pipelines.
+  To facilitate comparison, bad data are initially identified by the pipeline-specific algorithms, while the final bad data metrics are computed using the APICE algorithm (see [Flo et al., 2022](https://doi.org/10.1016/j.dcn.2022.101077) for details).
+  The data cleaning algorithms are also pipeline-specific, so allowing each pipeline to identify bad data using its own identification algorithm allows the corresponding data cleaning algorithms to operate as designed.
+  Using the same bad data identification algorithm after processing then allows users a more standardized comparison metric.
+  The post-processing metrics for data processed using APICE should be interpreted in the context of *all* output metrics, because the final "good data" evaluations are performed using the APICE algorithms.
+  
+  **All Analyses**
+  
+  1. `Row`: the name of the raw data file.
+  1. `file_length_s`: the duration of the full (un-segmented) recording, in seconds
+  1. `initial_chans_n`: the number of channels detected, excluding flat-line reference, before any processing
+  1. `good_chans_pre_n`: the number of channels identified as "good" by the current pipeline's algorithm; set to `initial_chans_n` if bad channel detection is not enabled
+  1. `good_chans_pre_perc`: the percentage of channels identified as "good" by the current pipeline's algorithm; set to `100` if bad channel detection is not enabled
+  1. `bad_chans_pre_idx`: a list of the channels marked as "bad" by the current pipeline's algorithm; set to `NA` if none are identified or if bad channel detection is not enabled
+  1. `good_times_pre_perc`: the percentage of time points identified as "good" by the APICE pipeline's artifact identification algorithm
+  1. `ics_rej_n`: the number of independent components rejected during ICA; set to `NA` if ICA is not enabled (including for ERP analysis) or not included in the current pipeline
+  1. `ics_rej_perc`: the percentage of independent components rejected during ICA; set to `NA` if ICA is not enabled (including for ERP analysis) or not included in the current pipeline
+  1. `good_chans_post_n`: the number of channels identified as "good" by the APICE pipeline's artifact identification algorithm after processing is complete
+  1. `good_chans_post_perc`: the percentage of channels identified as "good" by the APICE pipeline's artifact identification algorithm after processing is complete
+  1. `bad_chans_post_idx`: a list of the channels marked as "bad" by the APICE pipeline's artifact identification algorithm after  processing is complete
+  1. `good_times_post_perc`: the percentage of time points identified as "good" by the APICE pipeline's artifact identification algorithm after processing is complete
+  1. `variance_post`: the total variance of the data after processing is complete; there is no established acceptable range for variance, but values that are extremely high or low within a given pipeline are dubious
+  1. `processing_time`: the total amount of time spent processing the file, including initial processing; timing starts before `MATLAB` attempts to load the file and ends after the file is saved (or when an error occurs)
+  1. `pipeline`: the current pipeline
+  
+  **Non-ERP Analyses**
+  
+  1. `snr_ave`: the average signal-to-noise ratio, calculated as the ratio of the data amplitudes after cleaning to the amplitudes before cleaning, averaged across all data points (channels, time points, and segments, if applicable)
+  1. `snr_peak`: the highest signal-to-noise ratio, calculated as the ratio of the data amplitudes after cleaning to the amplitudes before cleaning, observed within all data points
+  
+  **Analyses with Segments**
+  
+  For processing with multiple onset tags and/or conditions specified, the QC files will also have tag- and condition-specific versions of each of the following columns.
+  
+  1. `initial_segs_n`: the total number of segments found in the data before any processing
+  1. `good_segs_pre_n`: the number of segments identified as "good" by the current pipeline's algorithm
+  1. `good_segs_pre_perc`: the percentage of segments identified as "good" by 
+  1. `good_segs_post_n`: the number of segments identified as "good" by the APICE pipeline's artifact identification algorithm after processing is complete
+  1. `good_segs_post_perc`: the percentage of segments identified as "good" by the APICE pipeline's artifact identification algorithm after processing is complete
+  
+  </details>
+
+1. **PIPELINE_dataQC_YYYY-MM-DD (`.mat` and `.csv`)**
+The quality assessment indices (see above) for the data files processed on the date in the file name.
+If there was an error during processing, any values that could not be calculated are filled in with an error tag.
+The `.csv` file contains a varying number of columns depending on processing parameters with *n* rows of data.
+The `.mat` file contains two variables: `dataQCrows` contains the data (*n* rows by at least 16 columns), and `allQCnames` contains the column names.
+1. **pipeline_qc_all (`.mat` and `.csv`)**
+The quality assessment indices (see above) for *all* data files processed in the current output directory.
+If there was an error during processing, any values that could not be calculated are filled in with an error tag.
+The `.csv` file contains a varying number of columns depending on processing parameters with *n* rows of data.
+The `.mat` file contains two variables: `allQC` contains the data (*N* rows by 5 columns), and `allQCnames` contains the column names.
+1. **PIPELINE_errorLog_YYYY-MM-DD (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for each error that occurred during the round of processing completed on the date in the file name.
+The `Pipeline` column is set to the current pipeline name for all rows.
+These files are only generated if errors occurred during processing.
+For parallel processing, errors are added in the order they occur, so files may not be listed alphabetically.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `errorLog`, which holds the same data as the `.csv` file.
+1. **pipeline_error_log_all (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for *all* errors that occurred during *any* round of processing in the current output directory.
+The `Pipeline` column is set to the current pipeline name for all rows.
+When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `allErrors`, which holds the same data as the `.csv` file.
+
+### All Pipelines
+
+These files are saved in the output folder when processing for all pipelines is complete.
+
+1. **dataQC_YYYY-MM-DD (`.mat` and `.csv`)**
+The quality assessment indices (see above) for the data files processed on the date in the file name across all pipelines.
+If there was an error during processing, any values that could not be calculated are filled in with an error tag.
+The `.csv` file contains a varying number of columns depending on processing parameters with *n* rows of data.
+The `.mat` file contains two variables: `dataQCrows` contains the data (*n* rows by at least 16 columns), and `allQCnames` contains the column names.
+1. **data_qc_all (`.mat` and `.csv`)**
+The quality assessment indices (see above) for *all* data files processed in the current output directory across all pipelines.
+If there was an error during processing, any values that could not be calculated are filled in with an error tag.
+The `.csv` file contains a varying number of columns depending on processing parameters with *n* rows of data.
+The `.mat` file contains two variables: `allQC` contains the data (*N* rows by 5 columns), and `allQCnames` contains the column names.
+1. **errorLog_YYYY-MM-DD (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for each error that occurred during the round of processing completed on the date in the file name across all pipelines.
+These files are only generated if errors occurred during processing.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `errorLog`, which holds the same data as the `.csv` file.
+1. **error_log_all (`.mat` and `.csv`)**
+The pipeline (`Pipeline`), error description (`Error Message`), and debugging information (`Stack Trace`) for *all* errors that occurred during *any* round of processing in the current output directory across all pipelines.
+When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.
+The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
+The `.mat` file contains a variable named `allErrors`, which holds the same data as the `.csv` file.
+
+### Visualizations
 
 # Appendix
 
