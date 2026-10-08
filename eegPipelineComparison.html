@@ -83,6 +83,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-7e332052b267abddad7613605182c7d6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -589,9 +592,9 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
   <li><a href="#sec-evaluation" id="toc-sec-evaluation" class="nav-link" data-scroll-target="#sec-evaluation"><span class="header-section-number">3.3</span> Pipeline Evaluation Outputs</a>
   <ul>
   <li><a href="#initial-processing-1" id="toc-initial-processing-1" class="nav-link" data-scroll-target="#initial-processing-1"><span class="header-section-number">3.3.1</span> Initial Processing</a></li>
-  <li><a href="#individual-pipelines" id="toc-individual-pipelines" class="nav-link" data-scroll-target="#individual-pipelines"><span class="header-section-number">3.3.2</span> Individual Pipelines</a></li>
+  <li><a href="#sec-indiv-pipelines" id="toc-sec-indiv-pipelines" class="nav-link" data-scroll-target="#sec-indiv-pipelines"><span class="header-section-number">3.3.2</span> Individual Pipelines</a></li>
   <li><a href="#all-pipelines" id="toc-all-pipelines" class="nav-link" data-scroll-target="#all-pipelines"><span class="header-section-number">3.3.3</span> All Pipelines</a></li>
-  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations"><span class="header-section-number">3.3.4</span> Visualizations</a></li>
+  <li><a href="#comparison-outputs" id="toc-comparison-outputs" class="nav-link" data-scroll-target="#comparison-outputs"><span class="header-section-number">3.3.4</span> Comparison Outputs</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">4</span> Appendix</a>
@@ -1013,8 +1016,8 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
 <li><strong>init_error_log_all (<code>.mat</code> and <code>.csv</code>)</strong> The pipeline (<code>Pipeline</code>), error description (<code>Error Message</code>), and debugging information (<code>Stack Trace</code>) for <em>all</em> errors that occurred during <em>any</em> round of processing in the current output directory. The <code>Pipeline</code> column is set to “init” (for “<em>init</em>ial processing”) for all rows. When new errors occur, they are added to the end of this file, so files may not be completely alphabetical. The <code>.csv</code> file contains 4 columns (<code>File Name</code> plus the three columns listed above) with one row per error. The <code>.mat</code> file contains a variable named <code>allErrors</code>, which holds the same data as the <code>.csv</code> file.</li>
 </ol>
 </section>
-<section id="individual-pipelines" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="individual-pipelines"><span class="header-section-number">3.3.2</span> Individual Pipelines</h3>
+<section id="sec-indiv-pipelines" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-indiv-pipelines"><span class="header-section-number">3.3.2</span> Individual Pipelines</h3>
 <p>A version of each of these files is produced for each pipeline used for data processing. The files are saved in the pipeline-specific output folder(s) when the corresponding pipeline finishes processing.</p>
 <details>
 <summary>
@@ -1064,16 +1067,51 @@ QC File Column Descriptions
 </section>
 <section id="all-pipelines" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="all-pipelines"><span class="header-section-number">3.3.3</span> All Pipelines</h3>
-<p>These files are saved in the output folder when processing for all pipelines is complete.</p>
+<p>These files are saved in the output folder when processing for all pipelines is complete. They include information from all pipelines used in the current output folder.</p>
 <ol type="1">
 <li><strong>dataQC_YYYY-MM-DD (<code>.mat</code> and <code>.csv</code>)</strong> The quality assessment indices (see above) for the data files processed on the date in the file name across all pipelines. If there was an error during processing, any values that could not be calculated are filled in with an error tag. The <code>.csv</code> file contains a varying number of columns depending on processing parameters with <em>n</em> rows of data. The <code>.mat</code> file contains two variables: <code>dataQCrows</code> contains the data (<em>n</em> rows by at least 16 columns), and <code>allQCnames</code> contains the column names.</li>
 <li><strong>data_qc_all (<code>.mat</code> and <code>.csv</code>)</strong> The quality assessment indices (see above) for <em>all</em> data files processed in the current output directory across all pipelines. If there was an error during processing, any values that could not be calculated are filled in with an error tag. The <code>.csv</code> file contains a varying number of columns depending on processing parameters with <em>n</em> rows of data. The <code>.mat</code> file contains two variables: <code>allQC</code> contains the data (<em>N</em> rows by 5 columns), and <code>allQCnames</code> contains the column names.</li>
 <li><strong>errorLog_YYYY-MM-DD (<code>.mat</code> and <code>.csv</code>)</strong> The pipeline (<code>Pipeline</code>), error description (<code>Error Message</code>), and debugging information (<code>Stack Trace</code>) for each error that occurred during the round of processing completed on the date in the file name across all pipelines. These files are only generated if errors occurred during processing. The <code>.csv</code> file contains 4 columns (<code>File Name</code> plus the three columns listed above) with one row per error. The <code>.mat</code> file contains a variable named <code>errorLog</code>, which holds the same data as the <code>.csv</code> file.</li>
 <li><strong>error_log_all (<code>.mat</code> and <code>.csv</code>)</strong> The pipeline (<code>Pipeline</code>), error description (<code>Error Message</code>), and debugging information (<code>Stack Trace</code>) for <em>all</em> errors that occurred during <em>any</em> round of processing in the current output directory across all pipelines. When new errors occur, they are added to the end of this file, so files may not be completely alphabetical. The <code>.csv</code> file contains 4 columns (<code>File Name</code> plus the three columns listed above) with one row per error. The <code>.mat</code> file contains a variable named <code>allErrors</code>, which holds the same data as the <code>.csv</code> file.</li>
+<li><strong>processed_files_YYYY-MM-DD.mat</strong> A list of the raw data files processed on the date in the file name. When the file is loaded in <code>MATLAB</code>, it produces a variable named <code>fileNames</code>.</li>
+<li><strong>processed_files_all.mat</strong> A list of <em>all</em> of the raw data files processed in the current output directory. When the file is loaded in <code>MATLAB</code>, it produces a variable named <code>processedFiles</code>.</li>
 </ol>
 </section>
-<section id="visualizations" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="visualizations"><span class="header-section-number">3.3.4</span> Visualizations</h3>
+<section id="comparison-outputs" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="comparison-outputs"><span class="header-section-number">3.3.4</span> Comparison Outputs</h3>
+<p>These files are saved in the <code>4_comparison_outputs</code> folder after the <code>generate_comparison.R</code> script finishes running. They are generated regardless of how many pipelines are used for processing so users can evaluate results even when running a single pipeline.</p>
+<ol type="1">
+<li><strong>generalizability.RData</strong> This file is only produced if you requested generalizability estimates. Because it takes a significant amount of time to estimate generalizability coefficients for the data, the <code>R</code> variables are saved so they can be re-loaded as needed rather than re-calculating. The file contains the following variables:</li>
+</ol>
+<ul>
+<li><code>pio_gtab</code>: a dataframe with PxIxO generalizability coefficients (<code>g_coef</code>) for each pipeline x tag x channel x sample combination in the subset of channels and samples associated with the current task</li>
+<li><code>pio_sing_fit</code>: the rows of <code>pio_gtab</code> where the model had singular fit, indicating lack of variability in the data</li>
+<li><code>po_gtab</code>: a dataframe with the PxO generalizability coefficients for each pipeline x tag x channel x sample combination in the limited sample range associated with the current task</li>
+<li><code>po_sing_fit</code>: the rows of <code>po_gtab</code> where the model had singular fit, indicating lack of variability in the data The PxIxO generalizability coefficients represent how generalizable a task is across participants (P), trials (I), and timepoints (O), while the PxO generalizability coefficients represent how generalizable a task is across participants and timepoints. The coefficients range from 0 to 1, with higher values indicating better generalizability (i.e., most of the variance in the data is coming from the participants, timepoints, and/or trials).</li>
+</ul>
+<ol type="1">
+<li><strong>pio_topoplots.png</strong> A <code>.png</code> showing topoplots of the PxIxO generalizability coefficients for the subset of channels and samples associated with the current task, separated by pipeline and onset tag (or condition). PxIxO models are generated for the following channel x sample combinations for each task: | Task | Channels | Samples | | ———– | ————————————- | ——————————————- | | Oddball | E6, E37, E53, E87, E105 | 250, 300, 350, 400, 450, 500, 550, 600, 650 | | Fish-Sharks | E3, E16, E23 | 250, 300, 350, 400, 450, 500, 550 | | Stop Signal | E3, E6, E16, E23, E37, E53, E87, E105 | 250, 300, 350, 400, 450, 500, 550, 600, 650 | For resting state data, no PxIxO models are fit, because there are no trials. Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints. Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.</li>
+<li><strong>pio_violin.png</strong> A violin plot of the PxIxO generalizability coefficients, separated by pipeline (columns) and onset tag (or condition; rows). Horizontal lines within plots represent the 25th, 50th, and 75th percentiles. Plot widths indicate the frequency of the y-axis generalizability coefficient values. Data with good generalizability typically produce a “stingray” shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) “tail” toward the bottom of the plot:</li>
+</ol>
+<p><a href="images/pio_violin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/pio_violin.png" class="img-fluid"></a></p>
+<ol type="1">
+<li><strong>po_topoplots.png</strong> A <code>.png</code> showing topoplots of the PxO generalizability coefficients for all channels in a subset of samples, separated by pipeline and onset tag (or condition). PxO models are generated for all channels at samples 201 to 700 (for Oddball and Stop Signal), samples 201 to 600 (for Fish-Sharks), or samples 30001 to 30500 (for resting state). However, topoplots are only generated at 50-sample intervals (e.g., 250, 300, 350, etc.). Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints. Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.</li>
+<li><strong>po_violin.png</strong> A violin plot of the PxO generalizability coefficients, separated by pipeline (column) and onset tag (or condition; rows). Horizontal lines within plots represent the 25th, 50th, and 75th percentiles. Plot widths indicate the frequency of the y-axis generalizability coefficient values. Data with good generalizability typically produce a “stingray” shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) “tail” toward the bottom of the plot.</li>
+<li><strong>pipeline_comparison.html</strong> A summary of various performance metrics for each pipeline used for pre-processing.</li>
+</ol>
+<ul>
+<li><p><strong>QC Summary - Continuous Data</strong> A table with the average percentage of good channels (<code>good_chans_post_perc_mean</code>), good samples (<code>good_times_post_perc_mean</code>), and data variance (<code>variance_post_mean</code>) for each pipeline after processing, along with the average processing time (<code>processing_time_mean</code>) for each pipeline. For non-ERP analysis, there are also columns with the average percentage of components rejected during ICA (<code>ics_rej_perc_mean</code>), (file-level) average signal-to-noise ratio (<code>snr_ave_mean</code>), and peak signal-to-noise ratio (<code>snr_peak_mean</code>). For segmented data, there is a column with the average percentage of good segments remaining after processing (<code>good_segs_post_perc_mean</code>), as well as columns for each condition (if provided) or onset tag (if the task has two or more onset tags and no conditions are specified). See the <a href="@sec-indiv-pipelines">Individual Pipeline Output</a> column descriptions for more information on these metrics.</p></li>
+<li><p><strong>QC Summary Plots</strong> A series of plots showing how many participants are retained and how much variance is retained for a variety of channel (and trial, if applicable) retention cutoffs.</p>
+<ul>
+<li><strong>Number of Participants Retained by Pipeline</strong> This plot will have the number of good channels after processing along the x-axis and the number of recordings retained along the y-axis. The lines (one for each pipeline) indicate how many recordings would be available if the analysis only included recordings with at least as many good channels as the x-axis value. If the data are segmented, this plot is faceted by number of good trials after processing. Each panel in the faceted plot shows the good channel by retained recordings plot for recordings with at least as many good trials (per condition/onset tag) as the panel title. For example, in the image below, the circle on the plot represents the number of recordings we would have (roughly 1105; y-axis) if we only kept recordings with 110 or more good channels (x-axis) and 15 or more good trials per condition (facet panel label). If the data are segmented, there is a second plot (with the same title) with minimum good trials along the x-axis and minimum good channels as the faceting variable. For these plots, the “ideal” cutoffs produce values closest to the upper right corner of the plot.</li>
+</ul>
+<p><a href="images/eegRetentionThresholds.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/eegRetentionThresholds.png" class="img-fluid"></a></p>
+<ul>
+<li><strong>Post-Processing Data Variance by Pipeline</strong> This plot will have the number of good channels after processing along the x-axis and the average variance of the retained recordings along the y-axis. The lines (one for each pipeline) indicate how much variance would be present in the data if the analysis only included recordings with at least as many good channels as the x-axis value. If the data are segmented, this plot is faceted by number of good trials after processing. Each panel in the faceted plot shows the good channel by average variance plot for recordings with at least as many good trials (per condition/onset tag) as the panel title. For this plot, values between 100 and 500 are typical. There is not a “recommended” amount of variance, but pipelines that produce significantly more or less variance than the others may not be best suited for your particular analysis.</li>
+</ul></li>
+<li><p><strong>QC Min/Max Percentiles</strong> A series of tables showing which pipelines the top or bottom 15% of recordings came from. To generate these tables, a list of all recordings from all pipelines is sorted by the number of good channels (or trials) after processing. The top (or bottom) 15% of recordings are kept, then the number of recordings from each pipeline is tallied and shown in the table. Pipelines with several recordings in the “Top 15%” tables are performing well, while pipelines with several recordings in the “Bottom 15%” tables are performing poorly.</p></li>
+<li><p><strong>Generalizability Data</strong> The violin plots and topoplots described above.</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -2395,7 +2433,7 @@ QC File Column Descriptions
 <span id="cb3-794"><a href="#cb3-794" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains 4 columns (<span class="in">`File Name`</span> plus the three columns listed above) with one row per error.</span>
 <span id="cb3-795"><a href="#cb3-795" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains a variable named <span class="in">`allErrors`</span>, which holds the same data as the <span class="in">`.csv`</span> file.</span>
 <span id="cb3-796"><a href="#cb3-796" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-797"><a href="#cb3-797" aria-hidden="true" tabindex="-1"></a><span class="fu">### Individual Pipelines</span></span>
+<span id="cb3-797"><a href="#cb3-797" aria-hidden="true" tabindex="-1"></a><span class="fu">### Individual Pipelines {#sec-indiv-pipelines}</span></span>
 <span id="cb3-798"><a href="#cb3-798" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-799"><a href="#cb3-799" aria-hidden="true" tabindex="-1"></a>A version of each of these files is produced for each pipeline used for data processing.</span>
 <span id="cb3-800"><a href="#cb3-800" aria-hidden="true" tabindex="-1"></a>The files are saved in the pipeline-specific output folder(s) when the corresponding pipeline finishes processing.</span>
@@ -2473,78 +2511,195 @@ QC File Column Descriptions
 <span id="cb3-872"><a href="#cb3-872" aria-hidden="true" tabindex="-1"></a><span class="fu">### All Pipelines</span></span>
 <span id="cb3-873"><a href="#cb3-873" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-874"><a href="#cb3-874" aria-hidden="true" tabindex="-1"></a>These files are saved in the output folder when processing for all pipelines is complete.</span>
-<span id="cb3-875"><a href="#cb3-875" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-876"><a href="#cb3-876" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**dataQC_YYYY-MM-DD (`.mat` and `.csv`)**</span>
-<span id="cb3-877"><a href="#cb3-877" aria-hidden="true" tabindex="-1"></a>The quality assessment indices (see above) for the data files processed on the date in the file name across all pipelines.</span>
-<span id="cb3-878"><a href="#cb3-878" aria-hidden="true" tabindex="-1"></a>If there was an error during processing, any values that could not be calculated are filled in with an error tag.</span>
-<span id="cb3-879"><a href="#cb3-879" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains a varying number of columns depending on processing parameters with *n* rows of data.</span>
-<span id="cb3-880"><a href="#cb3-880" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains two variables: <span class="in">`dataQCrows`</span> contains the data (*n* rows by at least 16 columns), and <span class="in">`allQCnames`</span> contains the column names.</span>
-<span id="cb3-881"><a href="#cb3-881" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**data_qc_all (`.mat` and `.csv`)**</span>
-<span id="cb3-882"><a href="#cb3-882" aria-hidden="true" tabindex="-1"></a>The quality assessment indices (see above) for *all* data files processed in the current output directory across all pipelines.</span>
-<span id="cb3-883"><a href="#cb3-883" aria-hidden="true" tabindex="-1"></a>If there was an error during processing, any values that could not be calculated are filled in with an error tag.</span>
-<span id="cb3-884"><a href="#cb3-884" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains a varying number of columns depending on processing parameters with *n* rows of data.</span>
-<span id="cb3-885"><a href="#cb3-885" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains two variables: <span class="in">`allQC`</span> contains the data (*N* rows by 5 columns), and <span class="in">`allQCnames`</span> contains the column names.</span>
-<span id="cb3-886"><a href="#cb3-886" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**errorLog_YYYY-MM-DD (`.mat` and `.csv`)**</span>
-<span id="cb3-887"><a href="#cb3-887" aria-hidden="true" tabindex="-1"></a>The pipeline (<span class="in">`Pipeline`</span>), error description (<span class="in">`Error Message`</span>), and debugging information (<span class="in">`Stack Trace`</span>) for each error that occurred during the round of processing completed on the date in the file name across all pipelines.</span>
-<span id="cb3-888"><a href="#cb3-888" aria-hidden="true" tabindex="-1"></a>These files are only generated if errors occurred during processing.</span>
-<span id="cb3-889"><a href="#cb3-889" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains 4 columns (<span class="in">`File Name`</span> plus the three columns listed above) with one row per error.</span>
-<span id="cb3-890"><a href="#cb3-890" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains a variable named <span class="in">`errorLog`</span>, which holds the same data as the <span class="in">`.csv`</span> file.</span>
-<span id="cb3-891"><a href="#cb3-891" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**error_log_all (`.mat` and `.csv`)**</span>
-<span id="cb3-892"><a href="#cb3-892" aria-hidden="true" tabindex="-1"></a>The pipeline (<span class="in">`Pipeline`</span>), error description (<span class="in">`Error Message`</span>), and debugging information (<span class="in">`Stack Trace`</span>) for *all* errors that occurred during *any* round of processing in the current output directory across all pipelines.</span>
-<span id="cb3-893"><a href="#cb3-893" aria-hidden="true" tabindex="-1"></a>When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.</span>
-<span id="cb3-894"><a href="#cb3-894" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains 4 columns (<span class="in">`File Name`</span> plus the three columns listed above) with one row per error.</span>
-<span id="cb3-895"><a href="#cb3-895" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains a variable named <span class="in">`allErrors`</span>, which holds the same data as the <span class="in">`.csv`</span> file.</span>
-<span id="cb3-896"><a href="#cb3-896" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-897"><a href="#cb3-897" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualizations</span></span>
-<span id="cb3-898"><a href="#cb3-898" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-899"><a href="#cb3-899" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb3-900"><a href="#cb3-900" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-901"><a href="#cb3-901" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
-<span id="cb3-902"><a href="#cb3-902" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-903"><a href="#cb3-903" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
-<span id="cb3-904"><a href="#cb3-904" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-905"><a href="#cb3-905" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
-<span id="cb3-906"><a href="#cb3-906" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
-<span id="cb3-907"><a href="#cb3-907" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-908"><a href="#cb3-908" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-909"><a href="#cb3-909" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
-<span id="cb3-910"><a href="#cb3-910" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
-<span id="cb3-911"><a href="#cb3-911" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-912"><a href="#cb3-912" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
-<span id="cb3-913"><a href="#cb3-913" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
-<span id="cb3-914"><a href="#cb3-914" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-915"><a href="#cb3-915" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
-<span id="cb3-916"><a href="#cb3-916" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-917"><a href="#cb3-917" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-918"><a href="#cb3-918" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
-<span id="cb3-919"><a href="#cb3-919" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
-<span id="cb3-920"><a href="#cb3-920" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
-<span id="cb3-921"><a href="#cb3-921" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
-<span id="cb3-922"><a href="#cb3-922" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
-<span id="cb3-923"><a href="#cb3-923" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-924"><a href="#cb3-924" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-925"><a href="#cb3-925" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
-<span id="cb3-926"><a href="#cb3-926" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
-<span id="cb3-927"><a href="#cb3-927" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-928"><a href="#cb3-928" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
-<span id="cb3-929"><a href="#cb3-929" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
-<span id="cb3-930"><a href="#cb3-930" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
-<span id="cb3-931"><a href="#cb3-931" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-932"><a href="#cb3-932" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
-<span id="cb3-933"><a href="#cb3-933" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
-<span id="cb3-934"><a href="#cb3-934" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
-<span id="cb3-935"><a href="#cb3-935" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
-<span id="cb3-936"><a href="#cb3-936" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
-<span id="cb3-937"><a href="#cb3-937" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
-<span id="cb3-938"><a href="#cb3-938" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-939"><a href="#cb3-939" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
-<span id="cb3-940"><a href="#cb3-940" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-941"><a href="#cb3-941" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-942"><a href="#cb3-942" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-875"><a href="#cb3-875" aria-hidden="true" tabindex="-1"></a>They include information from all pipelines used in the current output folder.</span>
+<span id="cb3-876"><a href="#cb3-876" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-877"><a href="#cb3-877" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**dataQC_YYYY-MM-DD (`.mat` and `.csv`)**</span>
+<span id="cb3-878"><a href="#cb3-878" aria-hidden="true" tabindex="-1"></a>The quality assessment indices (see above) for the data files processed on the date in the file name across all pipelines.</span>
+<span id="cb3-879"><a href="#cb3-879" aria-hidden="true" tabindex="-1"></a>If there was an error during processing, any values that could not be calculated are filled in with an error tag.</span>
+<span id="cb3-880"><a href="#cb3-880" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains a varying number of columns depending on processing parameters with *n* rows of data.</span>
+<span id="cb3-881"><a href="#cb3-881" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains two variables: <span class="in">`dataQCrows`</span> contains the data (*n* rows by at least 16 columns), and <span class="in">`allQCnames`</span> contains the column names.</span>
+<span id="cb3-882"><a href="#cb3-882" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**data_qc_all (`.mat` and `.csv`)**</span>
+<span id="cb3-883"><a href="#cb3-883" aria-hidden="true" tabindex="-1"></a>The quality assessment indices (see above) for *all* data files processed in the current output directory across all pipelines.</span>
+<span id="cb3-884"><a href="#cb3-884" aria-hidden="true" tabindex="-1"></a>If there was an error during processing, any values that could not be calculated are filled in with an error tag.</span>
+<span id="cb3-885"><a href="#cb3-885" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains a varying number of columns depending on processing parameters with *n* rows of data.</span>
+<span id="cb3-886"><a href="#cb3-886" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains two variables: <span class="in">`allQC`</span> contains the data (*N* rows by 5 columns), and <span class="in">`allQCnames`</span> contains the column names.</span>
+<span id="cb3-887"><a href="#cb3-887" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**errorLog_YYYY-MM-DD (`.mat` and `.csv`)**</span>
+<span id="cb3-888"><a href="#cb3-888" aria-hidden="true" tabindex="-1"></a>The pipeline (<span class="in">`Pipeline`</span>), error description (<span class="in">`Error Message`</span>), and debugging information (<span class="in">`Stack Trace`</span>) for each error that occurred during the round of processing completed on the date in the file name across all pipelines.</span>
+<span id="cb3-889"><a href="#cb3-889" aria-hidden="true" tabindex="-1"></a>These files are only generated if errors occurred during processing.</span>
+<span id="cb3-890"><a href="#cb3-890" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains 4 columns (<span class="in">`File Name`</span> plus the three columns listed above) with one row per error.</span>
+<span id="cb3-891"><a href="#cb3-891" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains a variable named <span class="in">`errorLog`</span>, which holds the same data as the <span class="in">`.csv`</span> file.</span>
+<span id="cb3-892"><a href="#cb3-892" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**error_log_all (`.mat` and `.csv`)**</span>
+<span id="cb3-893"><a href="#cb3-893" aria-hidden="true" tabindex="-1"></a>The pipeline (<span class="in">`Pipeline`</span>), error description (<span class="in">`Error Message`</span>), and debugging information (<span class="in">`Stack Trace`</span>) for *all* errors that occurred during *any* round of processing in the current output directory across all pipelines.</span>
+<span id="cb3-894"><a href="#cb3-894" aria-hidden="true" tabindex="-1"></a>When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.</span>
+<span id="cb3-895"><a href="#cb3-895" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.csv`</span> file contains 4 columns (<span class="in">`File Name`</span> plus the three columns listed above) with one row per error.</span>
+<span id="cb3-896"><a href="#cb3-896" aria-hidden="true" tabindex="-1"></a>The <span class="in">`.mat`</span> file contains a variable named <span class="in">`allErrors`</span>, which holds the same data as the <span class="in">`.csv`</span> file.</span>
+<span id="cb3-897"><a href="#cb3-897" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**processed_files_YYYY-MM-DD.mat**</span>
+<span id="cb3-898"><a href="#cb3-898" aria-hidden="true" tabindex="-1"></a>A list of the raw data files processed on the date in the file name.</span>
+<span id="cb3-899"><a href="#cb3-899" aria-hidden="true" tabindex="-1"></a>When the file is loaded in <span class="in">`MATLAB`</span>, it produces a variable named <span class="in">`fileNames`</span>.</span>
+<span id="cb3-900"><a href="#cb3-900" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**processed_files_all.mat**</span>
+<span id="cb3-901"><a href="#cb3-901" aria-hidden="true" tabindex="-1"></a>A list of *all* of the raw data files processed in the current output directory.</span>
+<span id="cb3-902"><a href="#cb3-902" aria-hidden="true" tabindex="-1"></a>When the file is loaded in <span class="in">`MATLAB`</span>, it produces a variable named <span class="in">`processedFiles`</span>.</span>
+<span id="cb3-903"><a href="#cb3-903" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-904"><a href="#cb3-904" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparison Outputs</span></span>
+<span id="cb3-905"><a href="#cb3-905" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-906"><a href="#cb3-906" aria-hidden="true" tabindex="-1"></a>These files are saved in the <span class="in">`4_comparison_outputs`</span> folder after the <span class="in">`generate_comparison.R`</span> script finishes running.</span>
+<span id="cb3-907"><a href="#cb3-907" aria-hidden="true" tabindex="-1"></a>They are generated regardless of how many pipelines are used for processing so users can evaluate results even when running a single pipeline.</span>
+<span id="cb3-908"><a href="#cb3-908" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-909"><a href="#cb3-909" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**generalizability.RData**</span>
+<span id="cb3-910"><a href="#cb3-910" aria-hidden="true" tabindex="-1"></a>This file is only produced if you requested generalizability estimates.</span>
+<span id="cb3-911"><a href="#cb3-911" aria-hidden="true" tabindex="-1"></a>Because it takes a significant amount of time to estimate generalizability coefficients for the data, the <span class="in">`R`</span> variables are saved so they can be re-loaded as needed rather than re-calculating.</span>
+<span id="cb3-912"><a href="#cb3-912" aria-hidden="true" tabindex="-1"></a>The file contains the following variables:</span>
+<span id="cb3-913"><a href="#cb3-913" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`pio_gtab`</span>: a dataframe with PxIxO generalizability coefficients (<span class="in">`g_coef`</span>) for each pipeline x tag x channel x sample combination in the subset of channels and samples associated with the current task</span>
+<span id="cb3-914"><a href="#cb3-914" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`pio_sing_fit`</span>: the rows of <span class="in">`pio_gtab`</span> where the model had singular fit, indicating lack of variability in the data</span>
+<span id="cb3-915"><a href="#cb3-915" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`po_gtab`</span>: a dataframe with the PxO generalizability coefficients for each pipeline x tag x channel x sample combination in the limited sample range associated with the current task</span>
+<span id="cb3-916"><a href="#cb3-916" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`po_sing_fit`</span>: the rows of <span class="in">`po_gtab`</span> where the model had singular fit, indicating lack of variability in the data</span>
+<span id="cb3-917"><a href="#cb3-917" aria-hidden="true" tabindex="-1"></a>The PxIxO generalizability coefficients represent how generalizable a task is across participants (P), trials (I), and timepoints (O), while the PxO generalizability coefficients represent how generalizable a task is across participants and timepoints.</span>
+<span id="cb3-918"><a href="#cb3-918" aria-hidden="true" tabindex="-1"></a>The coefficients range from 0 to 1, with higher values indicating better generalizability (i.e., most of the variance in the data is coming from the participants, timepoints, and/or trials).</span>
+<span id="cb3-919"><a href="#cb3-919" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**pio_topoplots.png**</span>
+<span id="cb3-920"><a href="#cb3-920" aria-hidden="true" tabindex="-1"></a>A <span class="in">`.png`</span> showing topoplots of the PxIxO generalizability coefficients for the subset of channels and samples associated with the current task, separated by pipeline and onset tag (or condition).</span>
+<span id="cb3-921"><a href="#cb3-921" aria-hidden="true" tabindex="-1"></a>PxIxO models are generated for the following channel x sample combinations for each task:</span>
+<span id="cb3-922"><a href="#cb3-922" aria-hidden="true" tabindex="-1"></a>  | Task        | Channels                              | Samples                                     |</span>
+<span id="cb3-923"><a href="#cb3-923" aria-hidden="true" tabindex="-1"></a>  | ----------- | ------------------------------------- | ------------------------------------------- |</span>
+<span id="cb3-924"><a href="#cb3-924" aria-hidden="true" tabindex="-1"></a>  | Oddball     | E6, E37, E53, E87, E105               | 250, 300, 350, 400, 450, 500, 550, 600, 650 |</span>
+<span id="cb3-925"><a href="#cb3-925" aria-hidden="true" tabindex="-1"></a>  | Fish-Sharks | E3, E16, E23                          | 250, 300, 350, 400, 450, 500, 550           |</span>
+<span id="cb3-926"><a href="#cb3-926" aria-hidden="true" tabindex="-1"></a>  | Stop Signal | E3, E6, E16, E23, E37, E53, E87, E105 | 250, 300, 350, 400, 450, 500, 550, 600, 650 |</span>
+<span id="cb3-927"><a href="#cb3-927" aria-hidden="true" tabindex="-1"></a>For resting state data, no PxIxO models are fit, because there are no trials.</span>
+<span id="cb3-928"><a href="#cb3-928" aria-hidden="true" tabindex="-1"></a>Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints.</span>
+<span id="cb3-929"><a href="#cb3-929" aria-hidden="true" tabindex="-1"></a>Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.</span>
+<span id="cb3-930"><a href="#cb3-930" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**pio_violin.png**</span>
+<span id="cb3-931"><a href="#cb3-931" aria-hidden="true" tabindex="-1"></a>A violin plot of the PxIxO generalizability coefficients, separated by pipeline (columns) and onset tag (or condition; rows).</span>
+<span id="cb3-932"><a href="#cb3-932" aria-hidden="true" tabindex="-1"></a>Horizontal lines within plots represent the 25th, 50th, and 75th percentiles.</span>
+<span id="cb3-933"><a href="#cb3-933" aria-hidden="true" tabindex="-1"></a>Plot widths indicate the frequency of the y-axis generalizability coefficient values.</span>
+<span id="cb3-934"><a href="#cb3-934" aria-hidden="true" tabindex="-1"></a>Data with good generalizability typically produce a "stingray" shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) "tail" toward the bottom of the plot:</span>
+<span id="cb3-935"><a href="#cb3-935" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-936"><a href="#cb3-936" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/pio_violin.png)</span></span>
+<span id="cb3-937"><a href="#cb3-937" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-938"><a href="#cb3-938" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**po_topoplots.png**</span>
+<span id="cb3-939"><a href="#cb3-939" aria-hidden="true" tabindex="-1"></a>A <span class="in">`.png`</span> showing topoplots of the PxO generalizability coefficients for all channels in a subset of samples, separated by pipeline and onset tag (or condition).</span>
+<span id="cb3-940"><a href="#cb3-940" aria-hidden="true" tabindex="-1"></a>PxO models are generated for all channels at samples 201 to 700 (for Oddball and Stop Signal), samples 201 to 600 (for Fish-Sharks), or samples 30001 to 30500 (for resting state).</span>
+<span id="cb3-941"><a href="#cb3-941" aria-hidden="true" tabindex="-1"></a>However, topoplots are only generated at 50-sample intervals (e.g., 250, 300, 350, etc.).</span>
+<span id="cb3-942"><a href="#cb3-942" aria-hidden="true" tabindex="-1"></a>Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints.</span>
+<span id="cb3-943"><a href="#cb3-943" aria-hidden="true" tabindex="-1"></a>Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.</span>
+<span id="cb3-944"><a href="#cb3-944" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**po_violin.png**</span>
+<span id="cb3-945"><a href="#cb3-945" aria-hidden="true" tabindex="-1"></a>A violin plot of the PxO generalizability coefficients, separated by pipeline (column) and onset tag (or condition; rows).</span>
+<span id="cb3-946"><a href="#cb3-946" aria-hidden="true" tabindex="-1"></a>Horizontal lines within plots represent the 25th, 50th, and 75th percentiles.</span>
+<span id="cb3-947"><a href="#cb3-947" aria-hidden="true" tabindex="-1"></a>Plot widths indicate the frequency of the y-axis generalizability coefficient values.</span>
+<span id="cb3-948"><a href="#cb3-948" aria-hidden="true" tabindex="-1"></a>Data with good generalizability typically produce a "stingray" shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) "tail" toward the bottom of the plot.</span>
+<span id="cb3-949"><a href="#cb3-949" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**pipeline_comparison.html**</span>
+<span id="cb3-950"><a href="#cb3-950" aria-hidden="true" tabindex="-1"></a>A summary of various performance metrics for each pipeline used for pre-processing.</span>
+<span id="cb3-951"><a href="#cb3-951" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**QC Summary - Continuous Data**</span>
+<span id="cb3-952"><a href="#cb3-952" aria-hidden="true" tabindex="-1"></a>  A table with the average percentage of good channels (<span class="in">`good_chans_post_perc_mean`</span>), good samples (<span class="in">`good_times_post_perc_mean`</span>), and data variance (<span class="in">`variance_post_mean`</span>) for each pipeline after processing, along with the average processing time (<span class="in">`processing_time_mean`</span>) for each pipeline.</span>
+<span id="cb3-953"><a href="#cb3-953" aria-hidden="true" tabindex="-1"></a>  For non-ERP analysis, there are also columns with the average percentage of components rejected during ICA (<span class="in">`ics_rej_perc_mean`</span>), (file-level) average signal-to-noise ratio (<span class="in">`snr_ave_mean`</span>), and peak signal-to-noise ratio (<span class="in">`snr_peak_mean`</span>).</span>
+<span id="cb3-954"><a href="#cb3-954" aria-hidden="true" tabindex="-1"></a>  For segmented data, there is a column with the average percentage of good segments remaining after processing (<span class="in">`good_segs_post_perc_mean`</span>), as well as columns for each condition (if provided) or onset tag (if the task has two or more onset tags and no conditions are specified).</span>
+<span id="cb3-955"><a href="#cb3-955" aria-hidden="true" tabindex="-1"></a>  See the <span class="co">[</span><span class="ot">Individual Pipeline Output</span><span class="co">](@sec-indiv-pipelines)</span> column descriptions for more information on these metrics.</span>
+<span id="cb3-956"><a href="#cb3-956" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**QC Summary Plots**</span>
+<span id="cb3-957"><a href="#cb3-957" aria-hidden="true" tabindex="-1"></a>  A series of plots showing how many participants are retained and how much variance is retained for a variety of channel (and trial, if applicable) retention cutoffs.</span>
+<span id="cb3-958"><a href="#cb3-958" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>**Number of Participants Retained by Pipeline**</span>
+<span id="cb3-959"><a href="#cb3-959" aria-hidden="true" tabindex="-1"></a>    This plot will have the number of good channels after processing along the x-axis and the number of recordings retained along the y-axis.</span>
+<span id="cb3-960"><a href="#cb3-960" aria-hidden="true" tabindex="-1"></a>    The lines (one for each pipeline) indicate how many recordings would be available if the analysis only included recordings with at least as many good channels as the x-axis value.</span>
+<span id="cb3-961"><a href="#cb3-961" aria-hidden="true" tabindex="-1"></a>    If the data are segmented, this plot is faceted by number of good trials after processing.</span>
+<span id="cb3-962"><a href="#cb3-962" aria-hidden="true" tabindex="-1"></a>    Each panel in the faceted plot shows the good channel by retained recordings plot for recordings with at least as many good trials (per condition/onset tag) as the panel title.</span>
+<span id="cb3-963"><a href="#cb3-963" aria-hidden="true" tabindex="-1"></a>    For example, in the image below, the circle on the plot represents the number of recordings we would have (roughly 1105; y-axis) if we only kept recordings with 110 or more good channels (x-axis) and 15 or more good trials per condition (facet panel label).</span>
+<span id="cb3-964"><a href="#cb3-964" aria-hidden="true" tabindex="-1"></a>    If the data are segmented, there is a second plot (with the same title) with minimum good trials along the x-axis and minimum good channels as the faceting variable.</span>
+<span id="cb3-965"><a href="#cb3-965" aria-hidden="true" tabindex="-1"></a>    For these plots, the "ideal" cutoffs produce values closest to the upper right corner of the plot.</span>
+<span id="cb3-966"><a href="#cb3-966" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-967"><a href="#cb3-967" aria-hidden="true" tabindex="-1"></a>    <span class="al">![](images/eegRetentionThresholds.png)</span></span>
+<span id="cb3-968"><a href="#cb3-968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-969"><a href="#cb3-969" aria-hidden="true" tabindex="-1"></a><span class="in">    - **Post-Processing Data Variance by Pipeline**</span></span>
+<span id="cb3-970"><a href="#cb3-970" aria-hidden="true" tabindex="-1"></a><span class="in">    This plot will have the number of good channels after processing along the x-axis and the average variance of the retained recordings along the y-axis.</span></span>
+<span id="cb3-971"><a href="#cb3-971" aria-hidden="true" tabindex="-1"></a><span class="in">    The lines (one for each pipeline) indicate how much variance would be present in the data if the analysis only included recordings with at least as many good channels as the x-axis value.</span></span>
+<span id="cb3-972"><a href="#cb3-972" aria-hidden="true" tabindex="-1"></a><span class="in">    If the data are segmented, this plot is faceted by number of good trials after processing.</span></span>
+<span id="cb3-973"><a href="#cb3-973" aria-hidden="true" tabindex="-1"></a><span class="in">    Each panel in the faceted plot shows the good channel by average variance plot for recordings with at least as many good trials (per condition/onset tag) as the panel title.</span></span>
+<span id="cb3-974"><a href="#cb3-974" aria-hidden="true" tabindex="-1"></a><span class="in">    For this plot, values between 100 and 500 are typical.</span></span>
+<span id="cb3-975"><a href="#cb3-975" aria-hidden="true" tabindex="-1"></a><span class="in">    There is not a "recommended" amount of variance, but pipelines that produce significantly more or less variance than the others may not be best suited for your particular analysis.</span></span>
+<span id="cb3-976"><a href="#cb3-976" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**QC Min/Max Percentiles**</span>
+<span id="cb3-977"><a href="#cb3-977" aria-hidden="true" tabindex="-1"></a>  A series of tables showing which pipelines the top or bottom 15% of recordings came from.</span>
+<span id="cb3-978"><a href="#cb3-978" aria-hidden="true" tabindex="-1"></a>  To generate these tables, a list of all recordings from all pipelines is sorted by the number of good channels (or trials) after processing.</span>
+<span id="cb3-979"><a href="#cb3-979" aria-hidden="true" tabindex="-1"></a>  The top (or bottom) 15% of recordings are kept, then the number of recordings from each pipeline is tallied and shown in the table.</span>
+<span id="cb3-980"><a href="#cb3-980" aria-hidden="true" tabindex="-1"></a>  Pipelines with several recordings in the "Top 15%" tables are performing well, while pipelines with several recordings in the "Bottom 15%" tables are performing poorly.</span>
+<span id="cb3-981"><a href="#cb3-981" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**Generalizability Data**</span>
+<span id="cb3-982"><a href="#cb3-982" aria-hidden="true" tabindex="-1"></a>  The violin plots and topoplots described above.</span>
+<span id="cb3-983"><a href="#cb3-983" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-984"><a href="#cb3-984" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb3-985"><a href="#cb3-985" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-986"><a href="#cb3-986" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing Parameter File Fields {#sec-missing-params}</span></span>
+<span id="cb3-987"><a href="#cb3-987" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-988"><a href="#cb3-988" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check Onset Tags {#sec-onset-tags}</span></span>
+<span id="cb3-989"><a href="#cb3-989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-990"><a href="#cb3-990" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository</span>
+<span id="cb3-991"><a href="#cb3-991" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Add the necessary folders to the <span class="in">`MATLAB`</span> path:</span>
+<span id="cb3-992"><a href="#cb3-992" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-993"><a href="#cb3-993" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-994"><a href="#cb3-994" aria-hidden="true" tabindex="-1"></a>    <span class="co">% add pipeline_scripts to path</span></span>
+<span id="cb3-995"><a href="#cb3-995" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="va">genpath</span>([<span class="va">pwd</span> <span class="va">filesep</span> <span class="ss">'pipeline_scripts'</span>]))<span class="op">;</span></span>
+<span id="cb3-996"><a href="#cb3-996" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-997"><a href="#cb3-997" aria-hidden="true" tabindex="-1"></a>    <span class="co">% temporary variable to cut down on text</span></span>
+<span id="cb3-998"><a href="#cb3-998" aria-hidden="true" tabindex="-1"></a>    <span class="va">eeglabDir</span> <span class="op">=</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">;</span></span>
+<span id="cb3-999"><a href="#cb3-999" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-1000"><a href="#cb3-1000" aria-hidden="true" tabindex="-1"></a>    <span class="co">% pipeline paths</span></span>
+<span id="cb3-1001"><a href="#cb3-1001" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>(<span class="ss">'HAPPE'</span><span class="op">,</span> [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-1002"><a href="#cb3-1002" aria-hidden="true" tabindex="-1"></a>    [<span class="ss">'HAPPE'</span> <span class="va">filesep</span> <span class="ss">'packages'</span> <span class="va">filesep</span> <span class="ss">'eeglab2024.0'</span>]<span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-1003"><a href="#cb3-1003" aria-hidden="true" tabindex="-1"></a>    <span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span>]))<span class="op">;</span></span>
+<span id="cb3-1004"><a href="#cb3-1004" aria-hidden="true" tabindex="-1"></a>    <span class="va">rmpath</span>(<span class="va">genpath</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'functions'</span> <span class="va">filesep</span> <span class="ss">'octavefunc'</span>]))<span class="op">;</span></span>
+<span id="cb3-1005"><a href="#cb3-1005" aria-hidden="true" tabindex="-1"></a>    <span class="va">pluginDir</span> <span class="op">=</span> <span class="va">strcat</span>(<span class="va">eeglabDir</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="ss">'plugins'</span><span class="op">,</span> <span class="va">filesep</span><span class="op">,</span> <span class="op">...</span></span>
+<span id="cb3-1006"><a href="#cb3-1006" aria-hidden="true" tabindex="-1"></a>    {<span class="va">dir</span>([<span class="va">eeglabDir</span> <span class="va">filesep</span> <span class="ss">'plugins'</span>]).<span class="va">name</span>}<span class="op">,</span> <span class="ss">'; '</span>)<span class="op">;</span></span>
+<span id="cb3-1007"><a href="#cb3-1007" aria-hidden="true" tabindex="-1"></a>    <span class="va">addpath</span>([<span class="va">pluginDir</span>{<span class="op">:</span>}])<span class="op">;</span></span>
+<span id="cb3-1008"><a href="#cb3-1008" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-1009"><a href="#cb3-1009" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-1010"><a href="#cb3-1010" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the folder containing the raw data</span>
+<span id="cb3-1011"><a href="#cb3-1011" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load a raw data file:</span>
+<span id="cb3-1012"><a href="#cb3-1012" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1013"><a href="#cb3-1013" aria-hidden="true" tabindex="-1"></a>    <span class="in">```matlab</span></span>
+<span id="cb3-1014"><a href="#cb3-1014" aria-hidden="true" tabindex="-1"></a>    <span class="va">EEG</span> <span class="op">=</span> <span class="va">pop_loadset</span>(<span class="ss">'name_of_file.mff'</span><span class="op">,</span> <span class="ss">'code'</span>)<span class="op">;</span></span>
+<span id="cb3-1015"><a href="#cb3-1015" aria-hidden="true" tabindex="-1"></a>    <span class="in">```</span></span>
+<span id="cb3-1016"><a href="#cb3-1016" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-1017"><a href="#cb3-1017" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Once the file loads, double click on the <span class="in">`EEG`</span> variable in the Workspace to open the structure</span>
+<span id="cb3-1018"><a href="#cb3-1018" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In the <span class="in">`EEG`</span> structure, locate the <span class="in">`events`</span> field, then double click on it to open</span>
+<span id="cb3-1019"><a href="#cb3-1019" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The <span class="in">`code`</span> column will show the onset tags for the entire task</span>
+<span id="cb3-1020"><a href="#cb3-1020" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>NOTE: There are often several onset tags for a given trial (e.g., <span class="in">`bgin`</span>, <span class="in">`TRSP`</span>, <span class="in">`resp`</span>).</span>
+<span id="cb3-1021"><a href="#cb3-1021" aria-hidden="true" tabindex="-1"></a>    Only include the onset tags that are relevant to the comparison(s) you are making.</span>
+<span id="cb3-1022"><a href="#cb3-1022" aria-hidden="true" tabindex="-1"></a>    These tags often (but not always) end in '+' and are usually added by the software used to run the task.</span>
+<span id="cb3-1023"><a href="#cb3-1023" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1024"><a href="#cb3-1024" aria-hidden="true" tabindex="-1"></a><span class="fu">## Discarding Short Segments (#sec-short-eps)</span></span>
+<span id="cb3-1025"><a href="#cb3-1025" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1026"><a href="#cb3-1026" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1027"><a href="#cb3-1027" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/DevPsyLab/DataAnalysis/edit/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/blob/main/eegPipelineComparison.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/DevPsyLab/DataAnalysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
