@@ -794,7 +794,7 @@ When new errors occur, they are added to the end of this file, so files may not 
 The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
 The `.mat` file contains a variable named `allErrors`, which holds the same data as the `.csv` file.
 
-### Individual Pipelines
+### Individual Pipelines {#sec-indiv-pipelines}
 
 A version of each of these files is produced for each pipeline used for data processing.
 The files are saved in the pipeline-specific output folder(s) when the corresponding pipeline finishes processing.
@@ -872,6 +872,7 @@ The `.mat` file contains a variable named `allErrors`, which holds the same data
 ### All Pipelines
 
 These files are saved in the output folder when processing for all pipelines is complete.
+They include information from all pipelines used in the current output folder.
 
 1. **dataQC_YYYY-MM-DD (`.mat` and `.csv`)**
 The quality assessment indices (see above) for the data files processed on the date in the file name across all pipelines.
@@ -893,8 +894,92 @@ The pipeline (`Pipeline`), error description (`Error Message`), and debugging in
 When new errors occur, they are added to the end of this file, so files may not be completely alphabetical.
 The `.csv` file contains 4 columns (`File Name` plus the three columns listed above) with one row per error.
 The `.mat` file contains a variable named `allErrors`, which holds the same data as the `.csv` file.
+1. **processed_files_YYYY-MM-DD.mat**
+A list of the raw data files processed on the date in the file name.
+When the file is loaded in `MATLAB`, it produces a variable named `fileNames`.
+1. **processed_files_all.mat**
+A list of *all* of the raw data files processed in the current output directory.
+When the file is loaded in `MATLAB`, it produces a variable named `processedFiles`.
 
-### Visualizations
+### Comparison Outputs
+
+These files are saved in the `4_comparison_outputs` folder after the `generate_comparison.R` script finishes running.
+They are generated regardless of how many pipelines are used for processing so users can evaluate results even when running a single pipeline.
+
+1. **generalizability.RData**
+This file is only produced if you requested generalizability estimates.
+Because it takes a significant amount of time to estimate generalizability coefficients for the data, the `R` variables are saved so they can be re-loaded as needed rather than re-calculating.
+The file contains the following variables:
+  - `pio_gtab`: a dataframe with PxIxO generalizability coefficients (`g_coef`) for each pipeline x tag x channel x sample combination in the subset of channels and samples associated with the current task
+  - `pio_sing_fit`: the rows of `pio_gtab` where the model had singular fit, indicating lack of variability in the data
+  - `po_gtab`: a dataframe with the PxO generalizability coefficients for each pipeline x tag x channel x sample combination in the limited sample range associated with the current task
+  - `po_sing_fit`: the rows of `po_gtab` where the model had singular fit, indicating lack of variability in the data
+The PxIxO generalizability coefficients represent how generalizable a task is across participants (P), trials (I), and timepoints (O), while the PxO generalizability coefficients represent how generalizable a task is across participants and timepoints.
+The coefficients range from 0 to 1, with higher values indicating better generalizability (i.e., most of the variance in the data is coming from the participants, timepoints, and/or trials).
+1. **pio_topoplots.png**
+A `.png` showing topoplots of the PxIxO generalizability coefficients for the subset of channels and samples associated with the current task, separated by pipeline and onset tag (or condition).
+PxIxO models are generated for the following channel x sample combinations for each task:
+  | Task        | Channels                              | Samples                                     |
+  | ----------- | ------------------------------------- | ------------------------------------------- |
+  | Oddball     | E6, E37, E53, E87, E105               | 250, 300, 350, 400, 450, 500, 550, 600, 650 |
+  | Fish-Sharks | E3, E16, E23                          | 250, 300, 350, 400, 450, 500, 550           |
+  | Stop Signal | E3, E6, E16, E23, E37, E53, E87, E105 | 250, 300, 350, 400, 450, 500, 550, 600, 650 |
+For resting state data, no PxIxO models are fit, because there are no trials.
+Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints.
+Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.
+1. **pio_violin.png**
+A violin plot of the PxIxO generalizability coefficients, separated by pipeline (columns) and onset tag (or condition; rows).
+Horizontal lines within plots represent the 25th, 50th, and 75th percentiles.
+Plot widths indicate the frequency of the y-axis generalizability coefficient values.
+Data with good generalizability typically produce a "stingray" shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) "tail" toward the bottom of the plot:
+
+![](images/pio_violin.png)
+
+1. **po_topoplots.png**
+A `.png` showing topoplots of the PxO generalizability coefficients for all channels in a subset of samples, separated by pipeline and onset tag (or condition).
+PxO models are generated for all channels at samples 201 to 700 (for Oddball and Stop Signal), samples 201 to 600 (for Fish-Sharks), or samples 30001 to 30500 (for resting state).
+However, topoplots are only generated at 50-sample intervals (e.g., 250, 300, 350, etc.).
+Data with good generalizability will produce topoplots with high coefficients (i.e., more pigmented spots on the topoplots) across all channels and timepoints.
+Regardless of generalizability, coefficients typically decrease toward the end of the trial, starting around 500ms.
+1. **po_violin.png**
+A violin plot of the PxO generalizability coefficients, separated by pipeline (column) and onset tag (or condition; rows).
+Horizontal lines within plots represent the 25th, 50th, and 75th percentiles.
+Plot widths indicate the frequency of the y-axis generalizability coefficient values.
+Data with good generalizability typically produce a "stingray" shape, with most coefficients toward the top of the violin plot and a narrow (or non-existent) "tail" toward the bottom of the plot.
+1. **pipeline_comparison.html**
+A summary of various performance metrics for each pipeline used for pre-processing.
+  - **QC Summary - Continuous Data**
+  A table with the average percentage of good channels (`good_chans_post_perc_mean`), good samples (`good_times_post_perc_mean`), and data variance (`variance_post_mean`) for each pipeline after processing, along with the average processing time (`processing_time_mean`) for each pipeline.
+  For non-ERP analysis, there are also columns with the average percentage of components rejected during ICA (`ics_rej_perc_mean`), (file-level) average signal-to-noise ratio (`snr_ave_mean`), and peak signal-to-noise ratio (`snr_peak_mean`).
+  For segmented data, there is a column with the average percentage of good segments remaining after processing (`good_segs_post_perc_mean`), as well as columns for each condition (if provided) or onset tag (if the task has two or more onset tags and no conditions are specified).
+  See the [Individual Pipeline Output](@sec-indiv-pipelines) column descriptions for more information on these metrics.
+  - **QC Summary Plots**
+  A series of plots showing how many participants are retained and how much variance is retained for a variety of channel (and trial, if applicable) retention cutoffs.
+    - **Number of Participants Retained by Pipeline**
+    This plot will have the number of good channels after processing along the x-axis and the number of recordings retained along the y-axis.
+    The lines (one for each pipeline) indicate how many recordings would be available if the analysis only included recordings with at least as many good channels as the x-axis value.
+    If the data are segmented, this plot is faceted by number of good trials after processing.
+    Each panel in the faceted plot shows the good channel by retained recordings plot for recordings with at least as many good trials (per condition/onset tag) as the panel title.
+    For example, in the image below, the circle on the plot represents the number of recordings we would have (roughly 1105; y-axis) if we only kept recordings with 110 or more good channels (x-axis) and 15 or more good trials per condition (facet panel label).
+    If the data are segmented, there is a second plot (with the same title) with minimum good trials along the x-axis and minimum good channels as the faceting variable.
+    For these plots, the "ideal" cutoffs produce values closest to the upper right corner of the plot.
+    
+    ![](images/eegRetentionThresholds.png)
+
+    - **Post-Processing Data Variance by Pipeline**
+    This plot will have the number of good channels after processing along the x-axis and the average variance of the retained recordings along the y-axis.
+    The lines (one for each pipeline) indicate how much variance would be present in the data if the analysis only included recordings with at least as many good channels as the x-axis value.
+    If the data are segmented, this plot is faceted by number of good trials after processing.
+    Each panel in the faceted plot shows the good channel by average variance plot for recordings with at least as many good trials (per condition/onset tag) as the panel title.
+    For this plot, values between 100 and 500 are typical.
+    There is not a "recommended" amount of variance, but pipelines that produce significantly more or less variance than the others may not be best suited for your particular analysis.
+  - **QC Min/Max Percentiles**
+  A series of tables showing which pipelines the top or bottom 15% of recordings came from.
+  To generate these tables, a list of all recordings from all pipelines is sorted by the number of good channels (or trials) after processing.
+  The top (or bottom) 15% of recordings are kept, then the number of recordings from each pipeline is tallied and shown in the table.
+  Pipelines with several recordings in the "Top 15%" tables are performing well, while pipelines with several recordings in the "Bottom 15%" tables are performing poorly.
+  - **Generalizability Data**
+  The violin plots and topoplots described above.
 
 # Appendix
 
