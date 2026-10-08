@@ -188,12 +188,12 @@ Transform data from wide to long format:
 Demo.growth$id <- 1:nrow(Demo.growth)
 
 Demo.growth_long <- Demo.growth |> 
-  pivot_longer(
+  tidyr::pivot_longer(
     cols = c(t1,t2,t3,t4),
     names_to = "variable",
     values_to = "value",
     names_pattern = "t(.)") |> 
-  rename(
+  dplyr::rename(
     timepoint = variable,
     score = value
   )
@@ -204,7 +204,7 @@ Demo.growth_long$timepoint <- as.numeric(Demo.growth_long$timepoint)
 Plot the observed trajectory for each participant:
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = Demo.growth_long,
   mapping = aes(
     x = timepoint,
@@ -222,7 +222,7 @@ ggplot(
 
 ```{r}
 facetedPlots <- Demo.growth_long |>
-  ggplot(
+  ggplot2::ggplot(
     aes(
       x = timepoint,
       y = score,
@@ -343,7 +343,7 @@ lgcm2_syntax <- '
 #### Abbreviated
 
 ```{r}
-lgcm1_fit <- growth(
+lgcm1_fit <- lavaan::growth(
   lgcm1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -359,7 +359,7 @@ lgcm1_fit <- growth(
 #### Full
 
 ```{r}
-lgcm2_fit <- sem(
+lgcm2_fit <- lavaan::sem(
   lgcm2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -395,7 +395,7 @@ summary(
 ### Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   lgcm1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -417,7 +417,7 @@ residuals(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   lgcm1_fit,
   sort = TRUE)
 ```
@@ -425,7 +425,7 @@ modificationindices(
 ### Internal Consistency Reliability
 
 ```{r}
-compRelSEM(lgcm1_fit)
+semTools::compRelSEM(lgcm1_fit)
 ```
 
 ### Path Diagram
@@ -475,7 +475,7 @@ newData$predictedValue <- NA
 newData$predictedValue[which(newData$time == 1)] <- lgcm1_intercept
 newData$predictedValue[which(newData$time == 4)] <- lgcm1_intercept + (timepoints - 1)*lgcm1_slope
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = time,
@@ -501,16 +501,16 @@ newData1$id <- row.names(newData1)
 newData1$t1 <- newData1$intercept
 newData1$t4 <- newData1$intercept + (timepoints - 1)*newData1$slope
 
-newData2 <- pivot_longer(
+newData2 <- tidyr::pivot_longer(
   newData1,
   cols = c(t1, t4)) |> 
-  select(-intercept, -slope)
+  dplyr::select(-intercept, -slope)
 
 newData2$time <- NA
 newData2$time[which(newData2$name == "t1")] <- 1
 newData2$time[which(newData2$name == "t4")] <- 4
 
-ggplot(
+ggplot2::ggplot(
   data = newData2,
   mapping = aes(
     x = time,
@@ -527,7 +527,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
+ggplot2::ggplot() +
   geom_line( # individuals' trajectories
     data = newData2,
     mapping = aes(
@@ -611,7 +611,7 @@ lbgcm2_syntax <- '
 #### Abbreviated
 
 ```{r}
-lbgcm1_fit <- growth(
+lbgcm1_fit <- lavaan::growth(
   lbgcm1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -627,7 +627,7 @@ lbgcm1_fit <- growth(
 #### Full
 
 ```{r}
-lbgcm2_fit <- sem(
+lbgcm2_fit <- lavaan::sem(
   lbgcm2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -663,7 +663,7 @@ summary(
 ### Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   lbgcm1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -685,7 +685,7 @@ residuals(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   lbgcm1_fit,
   sort = TRUE)
 ```
@@ -693,13 +693,13 @@ modificationindices(
 ### Internal Consistency Reliability
 
 ```{r}
-compRelSEM(lbgcm1_fit)
+semTools::compRelSEM(lbgcm1_fit)
 ```
 
 ### Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   lbgcm1_fit,
   what = "Std.all",
   layout = "tree2",
@@ -745,7 +745,7 @@ newData <- data.frame(
 newData$predictedValue <- NA
 newData$predictedValue <- lbgcm1_intercept + lbgcm1_slope * newData$slopeloading
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = time,
@@ -772,24 +772,24 @@ slope_loadings <- c(0, lbgcm1_slopeloadingt2, lbgcm1_slopeloadingt3, 1)
 
 # Compute model-implied values for each person at each time point
 individual_trajectories <- person_factors |>
-  rowwise() |>
-  mutate(
+  dplyr::rowwise() |>
+  dplyr::mutate(
     t1 = intercept + slope * slope_loadings[1],
     t2 = intercept + slope * slope_loadings[2],
     t3 = intercept + slope * slope_loadings[3],
     t4 = intercept + slope * slope_loadings[4]
   ) |>
-  ungroup() |>
-  select(id, t1, t2, t3, t4) |>
-  pivot_longer(
+  dplyr::ungroup() |>
+  dplyr::select(id, t1, t2, t3, t4) |>
+  tidyr::pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") |>
-  mutate(
+  dplyr::mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
 
-ggplot(
+ggplot2::ggplot(
   data = individual_trajectories,
   mapping = aes(
     x = time,
@@ -806,7 +806,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
+ggplot2::ggplot() +
   geom_line( # individuals' model-implied trajectories
     data = individual_trajectories,
     aes(
@@ -911,7 +911,7 @@ quadraticGCM2_syntax <- '
 #### Abbreviated
 
 ```{r}
-quadraticGCM1_fit <- growth(
+quadraticGCM1_fit <- lavaan::growth(
   quadraticGCM1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -926,7 +926,7 @@ quadraticGCM1_fit <- growth(
 #### Full
 
 ```{r}
-quadraticGCM2_fit <- sem(
+quadraticGCM2_fit <- lavaan::sem(
   quadraticGCM2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -961,7 +961,7 @@ summary(
 ### Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   quadraticGCM1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -983,7 +983,7 @@ residuals(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   quadraticGCM1_fit,
   sort = TRUE)
 ```
@@ -991,7 +991,7 @@ modificationindices(
 ### Internal Consistency Reliability
 
 ```{r}
-compRelSEM(quadraticGCM1_fit)
+semTools::compRelSEM(quadraticGCM1_fit)
 ```
 
 ### Path Diagram
@@ -1045,7 +1045,7 @@ newData <- data.frame(
 newData$predictedValue <- NA
 newData$predictedValue <- quadraticGCM1_intercept + (quadraticGCM1_linear * newData$linearLoading) + (quadraticGCM1_quadratic * newData$quadraticLoading)
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = time,
@@ -1076,24 +1076,24 @@ quadratic_loadings <- c(0, 1, 4, 9)
 
 # Compute model-implied values for each person at each time point
 individual_trajectories <- person_factors |>
-  rowwise() |>
-  mutate(
+  dplyr::rowwise() |>
+  dplyr::mutate(
     t1 = intercept + (linear * linear_loadings[1]) + (quadratic * quadratic_loadings[1]),
     t2 = intercept + (linear * linear_loadings[2]) + (quadratic * quadratic_loadings[2]),
     t3 = intercept + (linear * linear_loadings[3]) + (quadratic * quadratic_loadings[3]),
     t4 = intercept + (linear * linear_loadings[4]) + (quadratic * quadratic_loadings[4])
   ) |>
-  ungroup() |>
-  select(id, t1, t2, t3, t4) |>
-  pivot_longer(
+  dplyr::ungroup() |>
+  dplyr::select(id, t1, t2, t3, t4) |>
+  tidyr::pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") |>
-  mutate(
+  dplyr::mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
 
-ggplot(
+ggplot2::ggplot(
   data = individual_trajectories,
   mapping = aes(
     x = time,
@@ -1115,7 +1115,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
+ggplot2::ggplot() +
   geom_smooth( # individuals' model-implied trajectories
     data = individual_trajectories,
     mapping = aes(
@@ -1214,7 +1214,7 @@ logGCM2_syntax <- '
 #### Abbreviated
 
 ```{r}
-logGCM1_fit <- growth(
+logGCM1_fit <- lavaan::growth(
   logGCM1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -1229,7 +1229,7 @@ logGCM1_fit <- growth(
 #### Full
 
 ```{r}
-logGCM2_fit <- sem(
+logGCM2_fit <- lavaan::sem(
   logGCM2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -1264,7 +1264,7 @@ summary(
 ### Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   logGCM1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -1286,7 +1286,7 @@ residuals(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   logGCM1_fit,
   sort = TRUE)
 ```
@@ -1294,7 +1294,7 @@ modificationindices(
 ### Internal Consistency Reliability
 
 ```{r}
-compRelSEM(logGCM1_fit)
+semTools::compRelSEM(logGCM1_fit)
 ```
 
 ### Path Diagram
@@ -1344,7 +1344,7 @@ newData <- data.frame(
 newData$predictedValue <- NA
 newData$predictedValue <- logGCM1_intercept + (logGCM1_slope * newData$logLoading)
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = time,
@@ -1376,24 +1376,24 @@ log_loadings <- c(0, 0.6931472, 1.0986123, 1.3862944)
 
 # Compute model-implied values for each person at each time point
 individual_trajectories <- person_factors |>
-  rowwise() |>
-  mutate(
+  dplyr::rowwise() |>
+  dplyr::mutate(
     t1 = intercept + (slope * log_loadings[1]),
     t2 = intercept + (slope * log_loadings[2]),
     t3 = intercept + (slope * log_loadings[3]),
     t4 = intercept + (slope * log_loadings[4])
   ) |>
-  ungroup() |>
-  select(id, t1, t2, t3, t4) |>
-  pivot_longer(
+  dplyr::ungroup() |>
+  dplyr::select(id, t1, t2, t3, t4) |>
+  tidyr::pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") |>
-  mutate(
+  dplyr::mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
 
-ggplot(
+ggplot2::ggplot(
   data = individual_trajectories,
   mapping = aes(
     x = time,
@@ -1415,7 +1415,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
+ggplot2::ggplot() +
   geom_smooth( # individuals' model-implied trajectories
     data = individual_trajectories,
     mapping = aes(
@@ -1524,7 +1524,7 @@ splineGCM2_syntax <- '
 #### Abbreviated
 
 ```{r}
-splineGCM1_fit <- growth(
+splineGCM1_fit <- lavaan::growth(
   splineGCM1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -1539,7 +1539,7 @@ splineGCM1_fit <- growth(
 #### Full
 
 ```{r}
-splineGCM2_fit <- sem(
+splineGCM2_fit <- lavaan::sem(
   splineGCM2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -1574,7 +1574,7 @@ summary(
 ### Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   splineGCM1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -1596,7 +1596,7 @@ residuals(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   splineGCM1_fit,
   sort = TRUE)
 ```
@@ -1604,7 +1604,7 @@ modificationindices(
 ### Internal Consistency Reliability
 
 ```{r}
-compRelSEM(splineGCM1_fit)
+semTools::compRelSEM(splineGCM1_fit)
 ```
 
 ### Path Diagram
@@ -1658,7 +1658,7 @@ newData <- data.frame(
 newData$predictedValue <- NA
 newData$predictedValue <- splineGCM1_intercept + (splineGCM1_slope * newData$linearLoading) + (splineGCM1_knot * newData$knotLoading)
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = time,
@@ -1686,24 +1686,24 @@ knot_loadings <- c(0, 0, 1, 1)
 
 # Compute model-implied values for each person at each time point
 individual_trajectories <- person_factors |>
-  rowwise() |>
-  mutate(
+  dplyr::rowwise() |>
+  dplyr::mutate(
     t1 = intercept + (slope * slope_loadings[1]) + (knot * knot_loadings[1]),
     t2 = intercept + (slope * slope_loadings[2]) + (knot * knot_loadings[2]),
     t3 = intercept + (slope * slope_loadings[3]) + (knot * knot_loadings[3]),
     t4 = intercept + (slope * slope_loadings[4]) + (knot * knot_loadings[4])
   ) |>
-  ungroup() |>
-  select(id, t1, t2, t3, t4) |>
-  pivot_longer(
+  dplyr::ungroup() |>
+  dplyr::select(id, t1, t2, t3, t4) |>
+  tidyr::pivot_longer(
     cols = t1:t4,
     names_to = "timepoint",
     values_to = "value") |>
-  mutate(
+  dplyr::mutate(
     time = as.integer(substr(timepoint, 2, 2)) # extract number from "t1", "t2", etc.
   )
 
-ggplot(
+ggplot2::ggplot(
   data = individual_trajectories,
   mapping = aes(
     x = time,
@@ -1720,7 +1720,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot() +
+ggplot2::ggplot() +
   geom_line( # individuals' model-implied trajectories
     data = individual_trajectories,
     aes(
@@ -1821,7 +1821,7 @@ summary(
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   bivariateLCSM_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -1843,7 +1843,7 @@ residuals(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   bivariateLCSM_fit,
   sort = TRUE)
 ```
@@ -1851,7 +1851,7 @@ modificationindices(
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   bivariateLCSM_fit,
   what = "Std.all",
   layout = "tree2",
@@ -1943,7 +1943,7 @@ clpm_syntax <- '
 ## Fit the Model
 
 ```{r}
-clpm_fit <- sem(
+clpm_fit <- lavaan::sem(
   clpm_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -1967,7 +1967,7 @@ summary(
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   clpm_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -1989,7 +1989,7 @@ residuals(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   clpm_fit,
   sort = TRUE)
 ```
@@ -1997,7 +1997,7 @@ modificationindices(
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   clpm_fit,
   what = "Std.all",
   layout = "tree2",
@@ -2203,7 +2203,7 @@ riclpm2_syntax <- '
 ### Abbreviated
 
 ```{r}
-riclpm1_fit <- lavaan(
+riclpm1_fit <- lavaan::lavaan(
   riclpm1_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -2217,7 +2217,7 @@ riclpm1_fit <- lavaan(
 ### Full
 
 ```{r}
-riclpm2_fit <- sem(
+riclpm2_fit <- lavaan::sem(
   riclpm2_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -2251,7 +2251,7 @@ summary(
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   riclpm1_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -2273,7 +2273,7 @@ residuals(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   riclpm1_fit,
   sort = TRUE)
 ```
@@ -2281,13 +2281,13 @@ modificationindices(
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(riclpm1_fit)
+semTools::compRelSEM(riclpm1_fit)
 ```
 
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   riclpm1_fit,
   what = "Std.all",
   layout = "tree2",
@@ -2358,7 +2358,7 @@ alt_syntax <- '
 ## Fit the Model
 
 ```{r}
-alt_fit <- sem(
+alt_fit <- lavaan::sem(
   alt_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -2380,7 +2380,7 @@ summary(
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   alt_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -2402,7 +2402,7 @@ residuals(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   alt_fit,
   sort = TRUE)
 ```
@@ -2410,13 +2410,13 @@ modificationindices(
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(alt_fit)
+semTools::compRelSEM(alt_fit)
 ```
 
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   alt_fit,
   what = "Std.all",
   layout = "tree2",
@@ -2584,7 +2584,7 @@ lcmsr_syntax <- '
 ## Fit the Model
 
 ```{r}
-lcmsr_fit <- sem(
+lcmsr_fit <- lavaan::sem(
   lcmsr_syntax,
   data = Demo.growth,
   missing = "ML",
@@ -2606,7 +2606,7 @@ summary(
 ## Estimates of Model Fit
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   lcmsr_fit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -2628,7 +2628,7 @@ residuals(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   lcmsr_fit,
   sort = TRUE)
 ```
@@ -2636,13 +2636,13 @@ modificationindices(
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(lcmsr_fit)
+semTools::compRelSEM(lcmsr_fit)
 ```
 
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   lcmsr_fit,
   what = "Std.all",
   layout = "tree2",
@@ -2708,7 +2708,7 @@ To get a robust estimate of the indirect effect, we obtain bootstrapped estimate
 Typically, we would obtain bootstrapped estimates from 10,000 bootstrap draws, but this example uses only 1,000 bootstrap draws for a shorter runtime.
 
 ```{r}
-mediationFit <- sem(
+mediationFit <- lavaan::sem(
   mediationModel,
   data = mydata,
   se = "bootstrap",
@@ -2738,7 +2738,7 @@ summary(
 Adjusted bootstrap percentile (BCa) method, but with no correction for acceleration (only for bias):
 
 ```{r}
-mediationFit_estimates_bca <- parameterEstimates(
+mediationFit_estimates_bca <- lavaan::parameterEstimates(
   mediationFit,
   boot_ci_type = "bca.simple",
   standardized = TRUE)
@@ -2751,7 +2751,7 @@ mediationFit_estimates_bca
 ### Percentile Bootstrap
 
 ```{r}
-mediationFit_estimates_perc <- parameterEstimates(
+mediationFit_estimates_perc <- lavaan::parameterEstimates(
   mediationFit,
   boot_ci_type = "perc",
   standardized = TRUE)
@@ -2774,7 +2774,7 @@ Percentile Bootstrap:
 
 ```{r}
 mediationFit_estimates_perc |> 
-  filter(label == "indirect")
+  dplyr::filter(label == "indirect")
 ```
 
 ### Effect Size {#sec-effectSizeMediation}
@@ -2787,8 +2787,8 @@ $$
 
 ```{r}
 mediationFit_indirect <- mediationFit_estimates |> 
-  filter(label == "indirect") |> 
-  select(std.all) |> 
+  dplyr::filter(label == "indirect") |> 
+  dplyr::select(std.all) |> 
   as.numeric()
 
 mediationFit_indirect
@@ -2804,8 +2804,8 @@ Effect size: Proportion mediated (*P*<sub>*M*</sub>); i.e., the proportion of th
 
 ```{r}
 mediationFit_total <- mediationFit_estimates |> 
-  filter(label == "totalAbs") |> 
-  select(std.all) |> 
+  dplyr::filter(label == "totalAbs") |> 
+  dplyr::select(std.all) |> 
   as.numeric()
 
 mediationFit_pm <- abs(mediationFit_indirect) / abs(mediationFit_total)
@@ -2847,18 +2847,18 @@ RsquaredMed1 <- (rMY^2) - (RsquaredYmx - (rXY^2))
 RsquaredMed1
 
 betaYMgivenX <- mediationFit_estimates |> 
-  filter(label == "b") |> 
-  select(std.all) |> 
+  dplyr::filter(label == "b") |> 
+  dplyr::select(std.all) |> 
   as.numeric()
 
 betaYXgivenM <- mediationFit_estimates |> 
-  filter(label == "direct") |> 
-  select(std.all) |> 
+  dplyr::filter(label == "direct") |> 
+  dplyr::select(std.all) |> 
   as.numeric()
 
 betaMX <- mediationFit_estimates |> 
-  filter(label == "a") |> 
-  select(std.all) |> 
+  dplyr::filter(label == "a") |> 
+  dplyr::select(std.all) |> 
   as.numeric()
 
 betaYX <- as.numeric(cor.test(
@@ -2895,7 +2895,7 @@ upsilon2
 upsilon3 <- mediationFit_indirect ^ 2
 upsilon3
 
-upsilon(
+MBESS::upsilon(
   x = mydata$X,
   mediator = mydata$M,
   dv = mydata$Y,
@@ -2915,7 +2915,7 @@ This estimate is no longer recommended (Wen & Fan, 2015).
 #### Other Effect Sizes {#sec-effectSizeMediationOther}
 
 ```{r}
-mediation(
+MBESS::mediation(
   x = mydata$X,
   mediator = mydata$M,
   dv = mydata$Y,
@@ -2929,7 +2929,7 @@ The model is saturated because it has as many estimated parameters as there are 
 Because the model is saturated, it has "perfect" fit.
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   mediationFit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -2946,19 +2946,19 @@ residuals(mediationFit, type = "cor")
 ## Modification Indices
 
 ```{r}
-modificationindices(mediationFit, sort = TRUE)
+lavaan::modificationindices(mediationFit, sort = TRUE)
 ```
 
 ## Internal Consistency Reliability
 
 ```{r}
-compRelSEM(mediationFit)
+semTools::compRelSEM(mediationFit)
 ```
 
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   mediationFit,
   what = "Std.all",
   layout = "tree2",
@@ -3038,7 +3038,7 @@ moderationModel <- '
 ## Fit the Model
 
 ```{r}
-moderationFit <- sem(
+moderationFit <- lavaan::sem(
   moderationModel,
   data = states,
   missing = "ML",
@@ -3063,7 +3063,7 @@ The model is saturated because it has as many estimated parameters as there are 
 Because the model is saturated, it has "perfect" fit.
 
 ```{r}
-fitMeasures(
+lavaan::fitMeasures(
   moderationFit,
   fit_measures = c(
     "chisq", "df", "pvalue",
@@ -3080,13 +3080,13 @@ residuals(moderationFit, type = "cor")
 ## Modification Indices
 
 ```{r}
-modificationindices(moderationFit, sort = TRUE)
+lavaan::modificationindices(moderationFit, sort = TRUE)
 ```
 
 ## Path Diagram
 
 ```{r}
-semPaths(
+semPlot::semPaths(
   moderationFit,
   what = "Std.all",
   layout = "tree2",
@@ -3133,23 +3133,23 @@ Murder_centered_mean <- mean(states$Murder_centered, na.rm = TRUE)
 Murder_centered_sd <- sd(states$Murder_centered, na.rm = TRUE)
 
 modelImpliedPredictedData <- modelImpliedPredictedData |>
-  mutate(
-    Illiteracy = case_when(
+  dplyr::mutate(
+    Illiteracy = dplyr::case_when(
       Illiteracy_factor == "Low" ~ Illiteracy_mean - Illiteracy_sd,
       Illiteracy_factor == "Middle" ~ Illiteracy_mean,
       Illiteracy_factor == "High" ~ Illiteracy_mean + Illiteracy_sd
     ),
-    Illiteracy_centered = case_when(
+    Illiteracy_centered = dplyr::case_when(
       Illiteracy_factor == "Low" ~ Illiteracy_centered_mean - Illiteracy_centered_sd,
       Illiteracy_factor == "Middle" ~ Illiteracy_centered_mean,
       Illiteracy_factor == "High" ~ Illiteracy_centered_mean + Illiteracy_centered_sd
     ),
-    Murder = case_when(
+    Murder = dplyr::case_when(
       Murder_factor == "Low" ~ Murder_mean - Murder_sd,
       Murder_factor == "Middle" ~ Murder_mean,
       Murder_factor == "High" ~ Murder_mean + Murder_sd
     ),
-    Murder_centered = case_when(
+    Murder_centered = dplyr::case_when(
       Murder_factor == "Low" ~ Murder_centered_mean - Murder_centered_sd,
       Murder_factor == "Middle" ~ Murder_centered_mean,
       Murder_factor == "High" ~ Murder_centered_mean + Murder_centered_sd
@@ -3164,7 +3164,7 @@ Murder_labels <- factor(
   levels = c("High", "Middle", "Low"),
   labels = c("High (+1 SD)", "Middle (mean)", "Low (−1 SD)"))
 
-modelImpliedPredictedData$Income_rescaled <- lavPredictY(
+modelImpliedPredictedData$Income_rescaled <- lavaan::lavPredictY(
   moderationFit,
   newdata = modelImpliedPredictedData,
   ynames = "Income_rescaled"
@@ -3172,7 +3172,7 @@ modelImpliedPredictedData$Income_rescaled <- lavPredictY(
   as.vector()
 
 # Verify Computation Manually
-moderationFit_parameters <- parameterEstimates(moderationFit)
+moderationFit_parameters <- lavaan::parameterEstimates(moderationFit)
 
 moderationFit_parameters
 
@@ -3183,14 +3183,14 @@ b_interaction <- moderationFit_parameters[which(moderationFit_parameters$lhs == 
 b_HS.Grad <- moderationFit_parameters[which(moderationFit_parameters$lhs == "Income_rescaled" & moderationFit_parameters$rhs == "HS.Grad"), "est"]
 
 modelImpliedPredictedData <- modelImpliedPredictedData |>
-  mutate(
+  dplyr::mutate(
     Income_rescaled_calculatedManually = intercept + (b_Illiteracy_centered * Illiteracy_centered) + (b_Murder_centered * Murder_centered) + (b_interaction * interaction) + (b_HS.Grad * HS.Grad))
 
 # Model-Implied Predicted Data
 modelImpliedPredictedData
 
 # Plot
-ggplot(
+ggplot2::ggplot(
   data = modelImpliedPredictedData,
   mapping = aes(
     x = Illiteracy,
@@ -3238,7 +3238,7 @@ moderationModelSimpleSlopes <- paste0('
 # Fit the Model
 set.seed(52242) # for reproducibility
 
-moderationModelSimpleSlopes_fit <- sem(
+moderationModelSimpleSlopes_fit <- lavaan::sem(
   model = moderationModelSimpleSlopes, 
   data = states,
   missing = "ML",
@@ -3254,7 +3254,7 @@ summary(
   standardized = TRUE,
   rsquare = TRUE)
 
-moderationModelSimpleSlopesFit_parameters <- parameterEstimates(
+moderationModelSimpleSlopesFit_parameters <- lavaan::parameterEstimates(
   moderationModelSimpleSlopes_fit,
   level = 0.95,
   boot.ci.type = "bca.simple")
@@ -3354,7 +3354,7 @@ plot_data$significantRegionNumber[which(plot_data$Murder_centered > 3.75)] <- 2 
 min(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
 max(plot_data$Murder[which(plot_data$significant_slope == FALSE)])
 
-ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
+ggplot2::ggplot(plot_data, aes(x = Murder, y = predicted_slopes)) +
   geom_ribbon(
     data = plot_data |> filter(significant_slope == FALSE),
     aes(ymin = lower_ci, ymax = upper_ci),
@@ -3540,7 +3540,7 @@ configuralInvariance_syntax <- '
 ### Fit Model
 
 ```{r}
-configuralInvariance_fit <- cfa(
+configuralInvariance_fit <- lavaan::cfa(
   configuralInvariance_syntax,
   data = longitudinalMI,
   missing = "ML",
@@ -3563,7 +3563,7 @@ summary(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   configuralInvariance_fit,
   sort = TRUE)
 ```
@@ -3751,7 +3751,7 @@ configuralInvarianceCorrelatedResiduals_syntax <- '
 ### Fit Model
 
 ```{r}
-configuralInvarianceCorrelatedResiduals_fit <- cfa(
+configuralInvarianceCorrelatedResiduals_fit <- lavaan::cfa(
   configuralInvarianceCorrelatedResiduals_syntax,
   data = longitudinalMI,
   missing = "ML",
@@ -3774,7 +3774,7 @@ summary(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   configuralInvarianceCorrelatedResiduals_fit,
   sort = TRUE)
 ```
@@ -3973,7 +3973,7 @@ metricInvariance_syntax <- '
 ### Fit Model
 
 ```{r}
-metricInvariance_fit <- cfa(
+metricInvariance_fit <- lavaan::cfa(
   metricInvariance_syntax,
   data = longitudinalMI,
   missing = "ML",
@@ -3996,7 +3996,7 @@ summary(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   metricInvariance_fit,
   sort = TRUE)
 ```
@@ -4191,7 +4191,7 @@ scalarInvariance_syntax <- '
 ### Fit Model
 
 ```{r}
-scalarInvariance_fit <- cfa(
+scalarInvariance_fit <- lavaan::cfa(
   scalarInvariance_syntax,
   data = longitudinalMI,
   missing = "ML",
@@ -4214,7 +4214,7 @@ summary(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   scalarInvariance_fit,
   sort = TRUE)
 ```
@@ -4410,7 +4410,7 @@ residualInvariance_syntax <- '
 ### Fit Model
 
 ```{r}
-residualInvariance_fit <- cfa(
+residualInvariance_fit <- lavaan::cfa(
   residualInvariance_syntax,
   data = longitudinalMI,
   missing = "ML",
@@ -4433,7 +4433,7 @@ summary(
 ### Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   residualInvariance_fit,
   sort = TRUE)
 ```
@@ -4466,10 +4466,10 @@ anova(
 )
 
 round(cbind(
-  configural = inspect(configuralInvarianceCorrelatedResiduals_fit, "fit_measures"),
-  weak = inspect(metricInvariance_fit, "fit_measures"),
-  strong = inspect(scalarInvariance_fit, "fit_measures"),
-  strict = inspect(residualInvariance_fit, "fit_measures")), 3)
+  configural = lavaan::inspect(configuralInvarianceCorrelatedResiduals_fit, "fit_measures"),
+  weak = lavaan::inspect(metricInvariance_fit, "fit_measures"),
+  strong = lavaan::inspect(scalarInvariance_fit, "fit_measures"),
+  strict = lavaan::inspect(residualInvariance_fit, "fit_measures")), 3)
 ```
 
 # Multilevel SEM {#sec-multilevelSEM}
@@ -4482,8 +4482,8 @@ round(cbind(
 mydata_long$sexFactor <- factor(mydata_long$sex)
 
 mydata_long <- mydata_long |>
-  group_by(ID) |>
-  mutate(
+  dplyr::group_by(ID) |>
+  dplyr::mutate(
     # Compute person mean and mean-centered variables
     ses_personMean = mean(ses, na.rm = TRUE),
     ses_personMeanCentered = ses - ses_personMean,
@@ -4506,7 +4506,7 @@ mydata_long <- mydata_long |>
 
 # Convert data from long to wide (widen data by timepoint)
 mydata_wide <- mydata_long |>
-  select(-age) |>
+  dplyr::select(-age) |>
   tidyr::pivot_wider(
     names_from  = timepoint, # widen by timepoint
     values_from = c( # widen time-varying variables
@@ -4558,7 +4558,7 @@ summary(
 ## Modification Indices
 
 ```{r}
-modificationindices(
+lavaan::modificationindices(
   multilevelSEM_fit,
   sort = TRUE)
 ```
@@ -4595,9 +4595,9 @@ anova(
 )
 
 round(cbind(
-  model1 = inspect(model1, "fit_measures"),
-  model2 = inspect(model2, "fit_measures"),
-  model3 = inspect(model3, "fit_measures")), 3)
+  model1 = lavaan::inspect(model1, "fit_measures"),
+  model2 = lavaan::inspect(model2, "fit_measures"),
+  model3 = lavaan::inspect(model3, "fit_measures")), 3)
 ```
 
 For non-nested models:
@@ -4606,9 +4606,9 @@ For non-nested models:
 #| eval: false
 
 round(cbind(
-  model1 = inspect(model1, "fit_measures"),
-  model2 = inspect(model2, "fit_measures"),
-  model3 = inspect(model3, "fit_measures")), 3)
+  model1 = lavaan::inspect(model1, "fit_measures"),
+  model2 = lavaan::inspect(model2, "fit_measures"),
+  model3 = lavaan::inspect(model3, "fit_measures")), 3)
 
 nonnest2::vuongtest(
   model1,
@@ -4625,7 +4625,7 @@ HS.model <- '
   speed   =~ x7 + x8 + x9
 '
 
-includingAuxVars <- cfa(
+includingAuxVars <- lavaan::cfa(
   HS.model,
   data = HolzingerSwineford1939,
   missing = "ML",
@@ -4649,7 +4649,7 @@ HS.model <- '
 ```{r}
 #| output: false
 
-fit1 <- cfa(
+fit1 <- lavaan::cfa(
   HS.model,
   data = HolzingerSwineford1939,
   missing = "ML",
@@ -4658,7 +4658,7 @@ fit1 <- cfa(
   rstarts = 10, # random starts
   verbose = TRUE) # print all output
 
-fit2 <- cfa(
+fit2 <- lavaan::cfa(
   HS.model,
   data = HolzingerSwineford1939,
   missing = "ML",
@@ -4716,7 +4716,7 @@ myModel <- '
 '
 
 # fit the model
-fit <- sem(
+fit <- lavaan::sem(
   model = myModel,
   data = PoliticalDemocracy)
 
@@ -4733,7 +4733,7 @@ ry <- resid(lm(dem65 ~ dem60 + z1 + z2, data = mydata))
 rx <- resid(lm(ind60 ~ dem60 + z1 + z2, data = mydata))
 
 # create the partial regression plot
-ggplot(
+ggplot2::ggplot(
   data = data.frame(rx, ry),
   mapping = aes(rx, ry)) +
   geom_point() +
@@ -4782,19 +4782,19 @@ hist(longitudinalMI$JOBSAT11)
 - Examine whether the model converged:
 
 ```{r}
-lavInspect(configuralInvariance_fit, "converged")
+lavaan::lavInspect(configuralInvariance_fit, "converged")
 ```
 
 - Examine degrees of freedom:
 
 ```{r}
-fitMeasures(configuralInvariance_fit, "df")
+lavaan::fitMeasures(configuralInvariance_fit, "df")
 ```
 
 - Examine the model parameters for standardized loadings or covariances > 1, variances < 0, etc.:
 
 ```{r}
-parameterEstimates(configuralInvariance_fit, standardized = TRUE)
+lavaan::parameterEstimates(configuralInvariance_fit, standardized = TRUE)
 ```
 
 Examine the variance-covariance matrix of the model parameters:
@@ -4802,8 +4802,8 @@ Examine the variance-covariance matrix of the model parameters:
 ```{r}
 #| eval: false
 
-lavInspect(configuralInvariance_fit, "vcov")
-cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
+lavaan::lavInspect(configuralInvariance_fit, "vcov")
+cov2cor(lavaan::lavInspect(configuralInvariance_fit, "vcov"))
 ```
 
 - Examine the model-implied variance-covariance matrix of the observed variables:
@@ -4811,15 +4811,15 @@ cov2cor(lavInspect(configuralInvariance_fit, "vcov"))
 ```{r}
 #| eval: false
 
-lavInspect(configuralInvariance_fit, "sigma_hat")
-cov2cor(lavInspect(configuralInvariance_fit, "sigma_hat"))
+lavaan::lavInspect(configuralInvariance_fit, "sigma_hat")
+cov2cor(lavaan::lavInspect(configuralInvariance_fit, "sigma_hat"))
 ```
 
 - Examine the model-implied variance-covariance matrix of the latent variables (for redundancy):
 
 ```{r}
-lavInspect(configuralInvariance_fit, "cov_lv")
-cov2cor(lavInspect(configuralInvariance_fit, "cov_lv"))
+lavaan::lavInspect(configuralInvariance_fit, "cov_lv")
+cov2cor(lavaan::lavInspect(configuralInvariance_fit, "cov_lv"))
 ```
 
 - Check eigenvalues for negative and near-zero values:
@@ -4827,12 +4827,12 @@ cov2cor(lavInspect(configuralInvariance_fit, "cov_lv"))
 ```{r}
 #| eval: false
 
-eigen(lavInspect(configuralInvariance_fit, "vcov"))$values
+eigen(lavaan::lavInspect(configuralInvariance_fit, "vcov"))$values
 ```
 
 ```{r}
-eigen(lavInspect(configuralInvariance_fit, "sigma_hat"))$values
-eigen(lavInspect(configuralInvariance_fit, "cov_lv"))$values
+eigen(lavaan::lavInspect(configuralInvariance_fit, "sigma_hat"))$values
+eigen(lavaan::lavInspect(configuralInvariance_fit, "cov_lv"))$values
 ```
 
 - Examine residuals for large values (i.e., local misfit):
@@ -4848,13 +4848,13 @@ residuals(configuralInvariance_fit, type = "standardized")
 - Examine modification indices:
 
 ```{r}
-modindices(configuralInvariance_fit, sort = TRUE)
+lavaan::modindices(configuralInvariance_fit, sort = TRUE)
 ```
 
 - Examine fit indices:
 
 ```{r}
-fitMeasures(configuralInvariance_fit)
+lavaan::fitMeasures(configuralInvariance_fit)
 ```
 
 # Session Info
