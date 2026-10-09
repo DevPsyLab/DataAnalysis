@@ -1138,7 +1138,7 @@ ggplot2::ggplot(
 ## `lmer`
 
 ```{r}
-generalizedLinearMixedModel <- lmer::glmer(
+generalizedLinearMixedModel <- lme4::glmer(
   outcome ~ female + ageYearsCentered + (ageYearsCentered | id),
   family = poisson(link = "log"),
   data = mydata,
@@ -1528,7 +1528,7 @@ newData$modelImpliedDepression <- predict( # predict.merMod
   re.form = NA # include no random effects
 )
 
-ggplot2::gplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = age,

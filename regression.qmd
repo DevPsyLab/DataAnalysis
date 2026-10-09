@@ -130,6 +130,7 @@ rmsMultipleRegressionModel <- rms::robcov(rms::ols(
   y = TRUE))
 
 rmsMultipleRegressionModel
+summary(rmsMultipleRegressionModel)
 confint(rmsMultipleRegressionModel)
 print(effectsize::standardize_parameters(rmsMultipleRegressionModel), digits = 2)
 ```
@@ -202,6 +203,9 @@ In this example, we predict a count variable that has a poisson distribution.
 We could change the distribution.
 
 ```{r}
+mydata_dataDistributions <- rms::datadist(mydata)
+options(datadist = "mydata_dataDistributions")
+
 rmsGeneralizedRegressionModel <- rms::Glm(
   countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
@@ -210,7 +214,8 @@ rmsGeneralizedRegressionModel <- rms::Glm(
   family = "poisson")
 
 rmsGeneralizedRegressionModel
-confint(rmsGeneralizedRegressionModel)
+summary(rmsGeneralizedRegressionModel)
+confint.default(rmsGeneralizedRegressionModel) #confint(rmsGeneralizedRegressionModel) throws error
 print(effectsize::standardize_parameters(rmsGeneralizedRegressionModel), digits = 2)
 ```
 
@@ -247,7 +252,7 @@ robustGeneralizedRegression <- robustbase::glmrob(
   na.action = na.exclude)
 
 summary(robustGeneralizedRegression)
-confint(robustGeneralizedRegression)
+confint.default(robustGeneralizedRegression) #confint(robustGeneralizedRegression) throws error
 print(effectsize::standardize_parameters(robustGeneralizedRegression), digits = 2)
 ```
 
@@ -337,7 +342,8 @@ logisticRegressionModel <- rms::robcov(rms::lrm(
   y = TRUE))
 
 logisticRegressionModel
-confint(logisticRegressionModel)
+summary(logisticRegressionModel)
+confint.default(logisticRegressionModel) #confint(logisticRegressionModel) throws error
 print(effectsize::standardize_parameters(logisticRegressionModel), digits = 2)
 ```
 
@@ -986,7 +992,7 @@ generalizedAdditiveModel <- mgcv::gam(
   na.action = na.exclude)
 
 summary(generalizedAdditiveModel)
-confint(generalizedAdditiveModel)
+confint.default(generalizedAdditiveModel) #confint(generalizedAdditiveModel) throws error
 ```
 
 ###### Non-parametric: Nearest-Neighbor Kernel Regression
@@ -1144,12 +1150,19 @@ car::ncvTest(
 Standard errors (SEs) on the diagonal increase
 
 ```{r}
+multipleRegressionModel_naOmit <- update(
+  multipleRegressionModel,
+  na.action = na.omit
+)
+
+
+
 vcov(multipleRegressionModel)
-car::hccm(multipleRegressionModel)
+car::hccm(multipleRegressionModel_naOmit)
 
 summary(multipleRegressionModel)
 lmtest::coeftest(multipleRegressionModel, vcov = sandwich)
-lmtest::coeftest(multipleRegressionModel, vcov = hccm)
+lmtest::coeftest(multipleRegressionModel_naOmit, vcov = hccm)
 
 rms::robcov(rms::ols(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
@@ -1721,10 +1734,8 @@ qqnorm(resid(robustLinearRegression))
 qqnorm(resid(ltsRegression))
 
 qqnorm(resid(generalizedRegressionModel))
-qqnorm(resid(rmsGeneralizedRegressionModel))
 qqnorm(resid(robustGeneralizedRegression))
-
-qqnorm(resid(multilevelRegressionModel))
+qqnorm(resid(rmsGeneralizedRegressionModel, type = "deviance")) # types: "deviance", "pearson", "response", "working", "partial", "score"; https://search.r-project.org/R/refmans/stats/html/glm.summaries.html; https://search.r-project.org/CRAN/refmans/rms/html/residuals.Glm.html
 ```
 
 #### PP plots {#sec-ppPlot}
@@ -1736,7 +1747,7 @@ petersenlab::ppPlot(robustLinearRegression)
 petersenlab::ppPlot(ltsRegression)
 
 petersenlab::ppPlot(generalizedRegressionModel)
-petersenlab::ppPlot(rmsGeneralizedRegressionModel)
+petersenlab::ppPlot(rmsGeneralizedRegressionModel) # types: "deviance", "pearson", "response", "working", "partial", "score"; https://search.r-project.org/R/refmans/stats/html/glm.summaries.html; https://search.r-project.org/CRAN/refmans/rms/html/residuals.Glm.html
 petersenlab::ppPlot(robustGeneralizedRegression)
 ```
 
@@ -1878,7 +1889,8 @@ hist(dfbeta(multipleRegressionModel))
 
 car::dfbetasPlots(
   multipleRegressionModel,
-  id = TRUE)
+  id.method = "y",
+  id.n = 2)
 ```
 
 ### DFFITS {#sec-dffits}
