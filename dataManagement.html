@@ -813,7 +813,7 @@ window.Quarto = {
 <p>For example:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/DevPsyLab/petersenlab">"petersenlab"</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://devpsylab.github.io/petersenlab/reference/load_or_install.html">load_or_install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>,<span class="st">"psych"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu">petersenlab</span><span class="fu">::</span><span class="fu"><a href="https://devpsylab.github.io/petersenlab/reference/load_or_install.html">load_or_install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>,<span class="st">"psych"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section><section id="sec-seed" class="level1" data-number="5"><h1 data-number="5">
@@ -1156,7 +1156,7 @@ window.Quarto = {
 <span class="header-section-number">11.3.2</span> Tidyverse</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">survived</span>, <span class="va">age</span>, <span class="va">prediction</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">survived</span>, <span class="va">age</span>, <span class="va">prediction</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1165,7 +1165,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">survived</span><span class="op">:</span><span class="va">prediction</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">survived</span><span class="op">:</span><span class="va">prediction</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1174,7 +1174,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">subsetVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">subsetVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1186,7 +1186,7 @@ window.Quarto = {
 <p>Or, to drop columns:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">sibsp</span>, <span class="op">-</span><span class="va">parch</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">sibsp</span>, <span class="op">-</span><span class="va">parch</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1195,7 +1195,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sibsp</span><span class="op">:</span><span class="va">parch</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sibsp</span><span class="op">:</span><span class="va">parch</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1204,7 +1204,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu">all_of</span><span class="op">(</span><span class="va">dropVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu">all_of</span><span class="op">(</span><span class="va">dropVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1251,7 +1251,7 @@ window.Quarto = {
 <span class="header-section-number">11.4.2</span> Tidyverse</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1260,7 +1260,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">parch</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">parch</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1269,7 +1269,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">parch</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">parch</span> <span class="op">&lt;=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1314,8 +1314,8 @@ window.Quarto = {
 <span class="header-section-number">11.5.2</span> Tidyverse</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">subsetVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">subsetVars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1354,7 +1354,7 @@ window.Quarto = {
 <span class="header-section-number">13</span> Sort Data</h1>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">survived</span>, <span class="va">age</span><span class="op">)</span> <span class="co">#sort by survived (ascending) then by age (ascending)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">survived</span>, <span class="va">age</span><span class="op">)</span> <span class="co">#sort by survived (ascending) then by age (ascending)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1363,7 +1363,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">survived</span>, <span class="op">-</span><span class="va">age</span><span class="op">)</span> <span class="co">#sort by survived (ascending) then by age (descending)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">survived</span>, <span class="op">-</span><span class="va">age</span><span class="op">)</span> <span class="co">#sort by survived (ascending) then by age (descending)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1485,12 +1485,13 @@ window.Quarto = {
 <p>Recode multiple variables:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    <span class="va">survived</span><span class="op">:</span><span class="va">pclass</span><span class="op">)</span>,</span>
-<span>    <span class="op">~</span> <span class="fu">case_match</span><span class="op">(</span></span>
-<span>      <span class="va">.</span>,</span>
-<span>      <span class="fl">0</span> <span class="op">~</span> <span class="st">"No"</span>,</span>
-<span>      <span class="fl">1</span> <span class="op">~</span> <span class="st">"Yes"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span></span>
+<span>      <span class="va">survived</span><span class="op">:</span><span class="va">pclass</span>,</span>
+<span>      <span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode-and-replace-values.html">recode_values</a></span><span class="op">(</span></span>
+<span>        <span class="va">.</span>,</span>
+<span>        <span class="fl">0</span> <span class="op">~</span> <span class="st">"No"</span>,</span>
+<span>        <span class="fl">1</span> <span class="op">~</span> <span class="st">"Yes"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1499,12 +1500,13 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>    <span class="va">survived</span><span class="op">:</span><span class="va">pclass</span><span class="op">)</span>,</span>
-<span>    <span class="op">~</span> <span class="fu">case_match</span><span class="op">(</span></span>
-<span>      <span class="va">.</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span></span>
+<span>      <span class="va">survived</span><span class="op">:</span><span class="va">pclass</span>,</span>
+<span>      <span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode-and-replace-values.html">recode_values</a></span><span class="op">(</span></span>
+<span>        <span class="va">.</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">~</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1517,7 +1519,7 @@ window.Quarto = {
 <span class="header-section-number">18</span> Rename Variables</h1>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">rename</span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
 <span>    newVar1 <span class="op">=</span> <span class="va">oldVar1</span>,</span>
 <span>    newVar2 <span class="op">=</span> <span class="va">oldVar2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1528,7 +1530,7 @@ window.Quarto = {
 <span><span class="va">varNamesTo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"newVar1"</span>,<span class="st">"newVar2"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">rename_with</span><span class="op">(</span><span class="op">~</span> <span class="va">varNamesTo</span>, <span class="fu">all_of</span><span class="op">(</span><span class="va">varNamesFrom</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename_with</a></span><span class="op">(</span><span class="op">~</span> <span class="va">varNamesTo</span>, <span class="fu">all_of</span><span class="op">(</span><span class="va">varNamesFrom</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section><section id="sec-convertVarTypes" class="level1" data-number="19"><h1 data-number="19">
@@ -1544,7 +1546,7 @@ window.Quarto = {
 <p>Multiple variables:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    <span class="va">age</span>,</span>
 <span>    <span class="va">parch</span>,</span>
 <span>    <span class="va">prediction</span><span class="op">)</span>,</span>
@@ -1557,7 +1559,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb112"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">across</span><span class="op">(</span></span>
 <span>    <span class="va">age</span><span class="op">:</span><span class="va">parch</span>,</span>
 <span>    <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -1568,7 +1570,7 @@ window.Quarto = {
 </div>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1647,7 +1649,7 @@ window.Quarto = {
 </div>
 <p>Or, alternatively, using <code>tidyverse</code>:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">full_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1677,7 +1679,7 @@ window.Quarto = {
 </div>
 <p>Or, alternatively, using <code>tidyverse</code>:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">left_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1707,7 +1709,7 @@ window.Quarto = {
 </div>
 <p>Or, alternatively, using <code>tidyverse</code>:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb131"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">right_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb131"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1737,7 +1739,7 @@ window.Quarto = {
 </div>
 <p>Or, alternatively, using <code>tidyverse</code>:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb135"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">inner_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb135"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1750,7 +1752,7 @@ window.Quarto = {
 <span class="header-section-number">20.3.6</span> Semi Join</h3>
 <p>A semi join is a filter. A left semi join returns all rows from <span class="math inline">\(x\)</span> <strong>with</strong> a match in <span class="math inline">\(y\)</span>. That is, it filters out records from <span class="math inline">\(x\)</span> that are not in <span class="math inline">\(y\)</span>. Unlike an <a href="#sec-innerJoin">inner join</a>, a left semi join will never duplicate rows of <span class="math inline">\(x\)</span>, and it includes columns from only <span class="math inline">\(x\)</span> (not from <span class="math inline">\(y\)</span>). Here is how to merge two data frames using a left semi join:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">semiJoinData</span> <span class="op">&lt;-</span> <span class="fu">semi_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">semiJoinData</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">semiJoinData</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -1769,7 +1771,7 @@ window.Quarto = {
 <span class="header-section-number">20.3.7</span> Anti Join</h3>
 <p>An anti join is a filter. A left anti join returns all rows from <span class="math inline">\(x\)</span> <strong>without</strong> a match in <span class="math inline">\(y\)</span>. That is, it filters out records from <span class="math inline">\(x\)</span> that are in <span class="math inline">\(y\)</span>. It returns columns from only <span class="math inline">\(x\)</span> (not from <span class="math inline">\(y\)</span>). Here is how to merge two data frames using a left anti join:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb139"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">antiJoinData</span> <span class="op">&lt;-</span> <span class="fu">anti_join</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb139"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">antiJoinData</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="va">mydata2</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">antiJoinData</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -1788,7 +1790,7 @@ window.Quarto = {
 <span class="header-section-number">20.3.8</span> Cross Join</h3>
 <p>A cross join combines each row in <span class="math inline">\(x\)</span> with each row in <span class="math inline">\(y\)</span>.</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">crossJoinData</span> <span class="op">&lt;-</span> <span class="fu">cross_join</span><span class="op">(</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">crossJoinData</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>rater <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mother"</span>,<span class="st">"Father"</span>,<span class="st">"Teacher"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>timepoint <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -1812,7 +1814,7 @@ window.Quarto = {
 <span></span>
 <span><span class="va">mergedData</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html">reduce</a></span><span class="op">(</span></span>
 <span>  <span class="va">dfsToMerge</span>,</span>
-<span>  <span class="va">left_join</span>, <span class="co"># could change to full_join (or whichever join is preferred)</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>, <span class="co"># could change to full_join (or whichever join is preferred)</span></span>
 <span>  by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mergedData</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1840,7 +1842,7 @@ window.Quarto = {
 <p>Data widened by a variable (<code>station</code>), using <code>tidyverse</code>:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb147"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fish_encounters</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
 <span>    names_from <span class="op">=</span> <span class="va">station</span>,</span>
 <span>    values_from <span class="op">=</span> <span class="va">seen</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -1867,7 +1869,7 @@ window.Quarto = {
 <p>Data in long form, transformed from wide form using <code>tidyverse</code>:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb149"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
 <span>    cols <span class="op">=</span> <span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    names_to <span class="op">=</span> <span class="st">"variable"</span>,</span>
 <span>    values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1896,7 +1898,7 @@ window.Quarto = {
 <span><span class="va">idWaveCoder</span><span class="op">$</span><span class="va">negativeAffect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">idWaveCoder</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">idWaveCoder</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">id</span>, <span class="va">wave</span>, <span class="va">coder</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">wave</span>, <span class="va">coder</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -1908,12 +1910,12 @@ window.Quarto = {
 <p>Average data across coders:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb151"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">idWave</span> <span class="op">&lt;-</span> <span class="va">idWaveCoder</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">id</span>, <span class="va">wave</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarise</span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">wave</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    <span class="fu">across</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>      <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">coder</span><span class="op">)</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">coder</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">idWave</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -2718,7 +2720,7 @@ loaded via a namespace (and not attached):
 <span id="cb167-219"><a href="#cb167-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-222"><a href="#cb167-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-223"><a href="#cb167-223" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"petersenlab"</span>)</span>
-<span id="cb167-224"><a href="#cb167-224" aria-hidden="true" tabindex="-1"></a><span class="fu">load_or_install</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"psych"</span>))</span>
+<span id="cb167-224"><a href="#cb167-224" aria-hidden="true" tabindex="-1"></a>petersenlab<span class="sc">::</span><span class="fu">load_or_install</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>,<span class="st">"psych"</span>))</span>
 <span id="cb167-225"><a href="#cb167-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-226"><a href="#cb167-226" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-227"><a href="#cb167-227" aria-hidden="true" tabindex="-1"></a><span class="fu"># Set a Seed {#sec-seed}</span></span>
@@ -3076,26 +3078,26 @@ loaded via a namespace (and not attached):
 <span id="cb167-661"><a href="#cb167-661" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-664"><a href="#cb167-664" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-665"><a href="#cb167-665" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-666"><a href="#cb167-666" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(survived, age, prediction)</span>
+<span id="cb167-666"><a href="#cb167-666" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(survived, age, prediction)</span>
 <span id="cb167-667"><a href="#cb167-667" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-668"><a href="#cb167-668" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-669"><a href="#cb167-669" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(survived<span class="sc">:</span>prediction)</span>
+<span id="cb167-669"><a href="#cb167-669" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(survived<span class="sc">:</span>prediction)</span>
 <span id="cb167-670"><a href="#cb167-670" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-671"><a href="#cb167-671" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-672"><a href="#cb167-672" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(subsetVars))</span>
+<span id="cb167-672"><a href="#cb167-672" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(subsetVars))</span>
 <span id="cb167-673"><a href="#cb167-673" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-674"><a href="#cb167-674" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-675"><a href="#cb167-675" aria-hidden="true" tabindex="-1"></a>Or, to drop columns:</span>
 <span id="cb167-676"><a href="#cb167-676" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-679"><a href="#cb167-679" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-680"><a href="#cb167-680" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-681"><a href="#cb167-681" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sibsp, <span class="sc">-</span>parch)</span>
+<span id="cb167-681"><a href="#cb167-681" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>sibsp, <span class="sc">-</span>parch)</span>
 <span id="cb167-682"><a href="#cb167-682" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-683"><a href="#cb167-683" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-684"><a href="#cb167-684" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(sibsp<span class="sc">:</span>parch))</span>
+<span id="cb167-684"><a href="#cb167-684" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(sibsp<span class="sc">:</span>parch))</span>
 <span id="cb167-685"><a href="#cb167-685" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-686"><a href="#cb167-686" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-687"><a href="#cb167-687" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">all_of</span>(dropVars))</span>
+<span id="cb167-687"><a href="#cb167-687" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">all_of</span>(dropVars))</span>
 <span id="cb167-688"><a href="#cb167-688" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-689"><a href="#cb167-689" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-690"><a href="#cb167-690" aria-hidden="true" tabindex="-1"></a><span class="fu">## Particular Rows</span></span>
@@ -3116,13 +3118,13 @@ loaded via a namespace (and not attached):
 <span id="cb167-707"><a href="#cb167-707" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-710"><a href="#cb167-710" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-711"><a href="#cb167-711" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-712"><a href="#cb167-712" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb167-712"><a href="#cb167-712" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>)</span>
 <span id="cb167-713"><a href="#cb167-713" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-714"><a href="#cb167-714" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-715"><a href="#cb167-715" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>, parch <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
+<span id="cb167-715"><a href="#cb167-715" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>, parch <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
 <span id="cb167-716"><a href="#cb167-716" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-717"><a href="#cb167-717" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-718"><a href="#cb167-718" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> parch <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
+<span id="cb167-718"><a href="#cb167-718" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> parch <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
 <span id="cb167-719"><a href="#cb167-719" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-720"><a href="#cb167-720" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-721"><a href="#cb167-721" aria-hidden="true" tabindex="-1"></a><span class="fu">## Particular Rows and Columns</span></span>
@@ -3141,8 +3143,8 @@ loaded via a namespace (and not attached):
 <span id="cb167-736"><a href="#cb167-736" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-739"><a href="#cb167-739" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-740"><a href="#cb167-740" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-741"><a href="#cb167-741" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb167-742"><a href="#cb167-742" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(subsetVars))</span>
+<span id="cb167-741"><a href="#cb167-741" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(survived <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb167-742"><a href="#cb167-742" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(subsetVars))</span>
 <span id="cb167-743"><a href="#cb167-743" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-744"><a href="#cb167-744" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-745"><a href="#cb167-745" aria-hidden="true" tabindex="-1"></a><span class="fu"># View Data {#sec-viewData}</span></span>
@@ -3170,10 +3172,10 @@ loaded via a namespace (and not attached):
 <span id="cb167-771"><a href="#cb167-771" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-774"><a href="#cb167-774" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-775"><a href="#cb167-775" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span> </span>
-<span id="cb167-776"><a href="#cb167-776" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(survived, age) <span class="co">#sort by survived (ascending) then by age (ascending)</span></span>
+<span id="cb167-776"><a href="#cb167-776" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(survived, age) <span class="co">#sort by survived (ascending) then by age (ascending)</span></span>
 <span id="cb167-777"><a href="#cb167-777" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-778"><a href="#cb167-778" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span> </span>
-<span id="cb167-779"><a href="#cb167-779" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(survived, <span class="sc">-</span>age) <span class="co">#sort by survived (ascending) then by age (descending)</span></span>
+<span id="cb167-779"><a href="#cb167-779" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(survived, <span class="sc">-</span>age) <span class="co">#sort by survived (ascending) then by age (descending)</span></span>
 <span id="cb167-780"><a href="#cb167-780" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-781"><a href="#cb167-781" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-782"><a href="#cb167-782" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Characteristics {#sec-dataCharacteristics}</span></span>
@@ -3271,415 +3273,417 @@ loaded via a namespace (and not attached):
 <span id="cb167-896"><a href="#cb167-896" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-899"><a href="#cb167-899" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb167-900"><a href="#cb167-900" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-901"><a href="#cb167-901" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(</span>
-<span id="cb167-902"><a href="#cb167-902" aria-hidden="true" tabindex="-1"></a>    survived<span class="sc">:</span>pclass),</span>
-<span id="cb167-903"><a href="#cb167-903" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">case_match</span>(</span>
-<span id="cb167-904"><a href="#cb167-904" aria-hidden="true" tabindex="-1"></a>      .,</span>
-<span id="cb167-905"><a href="#cb167-905" aria-hidden="true" tabindex="-1"></a>      <span class="dv">0</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
-<span id="cb167-906"><a href="#cb167-906" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>)))</span>
-<span id="cb167-907"><a href="#cb167-907" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-908"><a href="#cb167-908" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-909"><a href="#cb167-909" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(</span>
-<span id="cb167-910"><a href="#cb167-910" aria-hidden="true" tabindex="-1"></a>    survived<span class="sc">:</span>pclass),</span>
-<span id="cb167-911"><a href="#cb167-911" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">case_match</span>(</span>
-<span id="cb167-912"><a href="#cb167-912" aria-hidden="true" tabindex="-1"></a>      .,</span>
-<span id="cb167-913"><a href="#cb167-913" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb167-914"><a href="#cb167-914" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>) <span class="sc">~</span> <span class="dv">2</span>)))</span>
-<span id="cb167-915"><a href="#cb167-915" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-916"><a href="#cb167-916" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-917"><a href="#cb167-917" aria-hidden="true" tabindex="-1"></a><span class="fu"># Rename Variables {#sec-renameVars}</span></span>
+<span id="cb167-901"><a href="#cb167-901" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb167-902"><a href="#cb167-902" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb167-903"><a href="#cb167-903" aria-hidden="true" tabindex="-1"></a>      survived<span class="sc">:</span>pclass,</span>
+<span id="cb167-904"><a href="#cb167-904" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> dplyr<span class="sc">::</span><span class="fu">recode_values</span>(</span>
+<span id="cb167-905"><a href="#cb167-905" aria-hidden="true" tabindex="-1"></a>        .,</span>
+<span id="cb167-906"><a href="#cb167-906" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span> <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb167-907"><a href="#cb167-907" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>)))</span>
+<span id="cb167-908"><a href="#cb167-908" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-909"><a href="#cb167-909" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
+<span id="cb167-910"><a href="#cb167-910" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb167-911"><a href="#cb167-911" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb167-912"><a href="#cb167-912" aria-hidden="true" tabindex="-1"></a>      survived<span class="sc">:</span>pclass,</span>
+<span id="cb167-913"><a href="#cb167-913" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> dplyr<span class="sc">::</span><span class="fu">recode_values</span>(</span>
+<span id="cb167-914"><a href="#cb167-914" aria-hidden="true" tabindex="-1"></a>        .,</span>
+<span id="cb167-915"><a href="#cb167-915" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb167-916"><a href="#cb167-916" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">~</span> <span class="dv">2</span>)))</span>
+<span id="cb167-917"><a href="#cb167-917" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-918"><a href="#cb167-918" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-921"><a href="#cb167-921" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-922"><a href="#cb167-922" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">|&gt;</span> </span>
-<span id="cb167-923"><a href="#cb167-923" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb167-924"><a href="#cb167-924" aria-hidden="true" tabindex="-1"></a>    <span class="at">newVar1 =</span> oldVar1,</span>
-<span id="cb167-925"><a href="#cb167-925" aria-hidden="true" tabindex="-1"></a>    <span class="at">newVar2 =</span> oldVar2)</span>
-<span id="cb167-926"><a href="#cb167-926" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-927"><a href="#cb167-927" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-928"><a href="#cb167-928" aria-hidden="true" tabindex="-1"></a>Using a vector of variable names:</span>
+<span id="cb167-919"><a href="#cb167-919" aria-hidden="true" tabindex="-1"></a><span class="fu"># Rename Variables {#sec-renameVars}</span></span>
+<span id="cb167-920"><a href="#cb167-920" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-923"><a href="#cb167-923" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-924"><a href="#cb167-924" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">|&gt;</span> </span>
+<span id="cb167-925"><a href="#cb167-925" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb167-926"><a href="#cb167-926" aria-hidden="true" tabindex="-1"></a>    <span class="at">newVar1 =</span> oldVar1,</span>
+<span id="cb167-927"><a href="#cb167-927" aria-hidden="true" tabindex="-1"></a>    <span class="at">newVar2 =</span> oldVar2)</span>
+<span id="cb167-928"><a href="#cb167-928" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-929"><a href="#cb167-929" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-932"><a href="#cb167-932" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-933"><a href="#cb167-933" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb167-934"><a href="#cb167-934" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-935"><a href="#cb167-935" aria-hidden="true" tabindex="-1"></a>varNamesFrom <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"oldVar1"</span>,<span class="st">"oldVar2"</span>)</span>
-<span id="cb167-936"><a href="#cb167-936" aria-hidden="true" tabindex="-1"></a>varNamesTo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"newVar1"</span>,<span class="st">"newVar2"</span>)</span>
-<span id="cb167-937"><a href="#cb167-937" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-938"><a href="#cb167-938" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">|&gt;</span> </span>
-<span id="cb167-939"><a href="#cb167-939" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> varNamesTo, <span class="fu">all_of</span>(varNamesFrom))</span>
-<span id="cb167-940"><a href="#cb167-940" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-941"><a href="#cb167-941" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-942"><a href="#cb167-942" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert the Types of Variables {#sec-convertVarTypes}</span></span>
+<span id="cb167-930"><a href="#cb167-930" aria-hidden="true" tabindex="-1"></a>Using a vector of variable names:</span>
+<span id="cb167-931"><a href="#cb167-931" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-934"><a href="#cb167-934" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-935"><a href="#cb167-935" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb167-936"><a href="#cb167-936" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-937"><a href="#cb167-937" aria-hidden="true" tabindex="-1"></a>varNamesFrom <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"oldVar1"</span>,<span class="st">"oldVar2"</span>)</span>
+<span id="cb167-938"><a href="#cb167-938" aria-hidden="true" tabindex="-1"></a>varNamesTo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"newVar1"</span>,<span class="st">"newVar2"</span>)</span>
+<span id="cb167-939"><a href="#cb167-939" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-940"><a href="#cb167-940" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">|&gt;</span> </span>
+<span id="cb167-941"><a href="#cb167-941" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>(<span class="sc">~</span> varNamesTo, <span class="fu">all_of</span>(varNamesFrom))</span>
+<span id="cb167-942"><a href="#cb167-942" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-943"><a href="#cb167-943" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-944"><a href="#cb167-944" aria-hidden="true" tabindex="-1"></a>One variable:</span>
+<span id="cb167-944"><a href="#cb167-944" aria-hidden="true" tabindex="-1"></a><span class="fu"># Convert the Types of Variables {#sec-convertVarTypes}</span></span>
 <span id="cb167-945"><a href="#cb167-945" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-948"><a href="#cb167-948" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-949"><a href="#cb167-949" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>factorVar <span class="ot">&lt;-</span> <span class="fu">factor</span>(mydata<span class="sc">$</span>sex)</span>
-<span id="cb167-950"><a href="#cb167-950" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>numericVar <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata<span class="sc">$</span>prediction)</span>
-<span id="cb167-951"><a href="#cb167-951" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>integerVar <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(mydata<span class="sc">$</span>parch)</span>
-<span id="cb167-952"><a href="#cb167-952" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>characterVar <span class="ot">&lt;-</span> <span class="fu">as.character</span>(mydata<span class="sc">$</span>sex)</span>
-<span id="cb167-953"><a href="#cb167-953" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-954"><a href="#cb167-954" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-955"><a href="#cb167-955" aria-hidden="true" tabindex="-1"></a>Multiple variables:</span>
+<span id="cb167-946"><a href="#cb167-946" aria-hidden="true" tabindex="-1"></a>One variable:</span>
+<span id="cb167-947"><a href="#cb167-947" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-950"><a href="#cb167-950" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-951"><a href="#cb167-951" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>factorVar <span class="ot">&lt;-</span> <span class="fu">factor</span>(mydata<span class="sc">$</span>sex)</span>
+<span id="cb167-952"><a href="#cb167-952" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>numericVar <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mydata<span class="sc">$</span>prediction)</span>
+<span id="cb167-953"><a href="#cb167-953" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>integerVar <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(mydata<span class="sc">$</span>parch)</span>
+<span id="cb167-954"><a href="#cb167-954" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>characterVar <span class="ot">&lt;-</span> <span class="fu">as.character</span>(mydata<span class="sc">$</span>sex)</span>
+<span id="cb167-955"><a href="#cb167-955" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-956"><a href="#cb167-956" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-959"><a href="#cb167-959" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-960"><a href="#cb167-960" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-961"><a href="#cb167-961" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(</span>
-<span id="cb167-962"><a href="#cb167-962" aria-hidden="true" tabindex="-1"></a>    age,</span>
-<span id="cb167-963"><a href="#cb167-963" aria-hidden="true" tabindex="-1"></a>    parch,</span>
-<span id="cb167-964"><a href="#cb167-964" aria-hidden="true" tabindex="-1"></a>    prediction),</span>
-<span id="cb167-965"><a href="#cb167-965" aria-hidden="true" tabindex="-1"></a>    as.numeric))</span>
-<span id="cb167-966"><a href="#cb167-966" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-967"><a href="#cb167-967" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-968"><a href="#cb167-968" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
-<span id="cb167-969"><a href="#cb167-969" aria-hidden="true" tabindex="-1"></a>    age<span class="sc">:</span>parch,</span>
-<span id="cb167-970"><a href="#cb167-970" aria-hidden="true" tabindex="-1"></a>    as.numeric))</span>
-<span id="cb167-971"><a href="#cb167-971" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-972"><a href="#cb167-972" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
-<span id="cb167-973"><a href="#cb167-973" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.factor), as.character))</span>
-<span id="cb167-974"><a href="#cb167-974" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-975"><a href="#cb167-975" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-976"><a href="#cb167-976" aria-hidden="true" tabindex="-1"></a><span class="fu"># Merging/Joins {#sec-merging}</span></span>
+<span id="cb167-957"><a href="#cb167-957" aria-hidden="true" tabindex="-1"></a>Multiple variables:</span>
+<span id="cb167-958"><a href="#cb167-958" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-961"><a href="#cb167-961" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-962"><a href="#cb167-962" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
+<span id="cb167-963"><a href="#cb167-963" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(</span>
+<span id="cb167-964"><a href="#cb167-964" aria-hidden="true" tabindex="-1"></a>    age,</span>
+<span id="cb167-965"><a href="#cb167-965" aria-hidden="true" tabindex="-1"></a>    parch,</span>
+<span id="cb167-966"><a href="#cb167-966" aria-hidden="true" tabindex="-1"></a>    prediction),</span>
+<span id="cb167-967"><a href="#cb167-967" aria-hidden="true" tabindex="-1"></a>    as.numeric))</span>
+<span id="cb167-968"><a href="#cb167-968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-969"><a href="#cb167-969" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
+<span id="cb167-970"><a href="#cb167-970" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb167-971"><a href="#cb167-971" aria-hidden="true" tabindex="-1"></a>    age<span class="sc">:</span>parch,</span>
+<span id="cb167-972"><a href="#cb167-972" aria-hidden="true" tabindex="-1"></a>    as.numeric))</span>
+<span id="cb167-973"><a href="#cb167-973" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-974"><a href="#cb167-974" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">|&gt;</span></span>
+<span id="cb167-975"><a href="#cb167-975" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.factor), as.character))</span>
+<span id="cb167-976"><a href="#cb167-976" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-977"><a href="#cb167-977" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-978"><a href="#cb167-978" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb167-978"><a href="#cb167-978" aria-hidden="true" tabindex="-1"></a><span class="fu"># Merging/Joins {#sec-merging}</span></span>
 <span id="cb167-979"><a href="#cb167-979" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-980"><a href="#cb167-980" aria-hidden="true" tabindex="-1"></a>Merging (also called joining) merges two data objects using a shared set of variables called "keys."</span>
-<span id="cb167-981"><a href="#cb167-981" aria-hidden="true" tabindex="-1"></a>The keys are the variable(s) that uniquely identify each row (i.e., they account for the levels of nesting).</span>
-<span id="cb167-982"><a href="#cb167-982" aria-hidden="true" tabindex="-1"></a>In some data objects, the key might be the participant's ID (e.g., <span class="in">`participantID`</span>).</span>
-<span id="cb167-983"><a href="#cb167-983" aria-hidden="true" tabindex="-1"></a>However, some data objects have multiple keys.</span>
-<span id="cb167-984"><a href="#cb167-984" aria-hidden="true" tabindex="-1"></a>For instance, in long form data objects, each participant may have multiple rows corresponding to multiple timepoints.</span>
-<span id="cb167-985"><a href="#cb167-985" aria-hidden="true" tabindex="-1"></a>In this case, the keys are <span class="in">`participantID`</span> and <span class="in">`timepoint`</span>.</span>
-<span id="cb167-986"><a href="#cb167-986" aria-hidden="true" tabindex="-1"></a>If a participant has multiple rows corresponding to timepoints and measures, the keys are <span class="in">`participantID`</span>, <span class="in">`timepoint`</span>, and <span class="in">`measure`</span>.</span>
-<span id="cb167-987"><a href="#cb167-987" aria-hidden="true" tabindex="-1"></a>In general, each row should have a value on each of the keys; there should be no missingness in the keys.</span>
-<span id="cb167-988"><a href="#cb167-988" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-989"><a href="#cb167-989" aria-hidden="true" tabindex="-1"></a>To merge two objects, the keys must be present in both objects.</span>
-<span id="cb167-990"><a href="#cb167-990" aria-hidden="true" tabindex="-1"></a>The keys are used to merge the variables in object 1 (<span class="in">`x`</span>) with the variables in object 2 (<span class="in">`y`</span>).</span>
-<span id="cb167-991"><a href="#cb167-991" aria-hidden="true" tabindex="-1"></a>Different merge types select different rows to merge.</span>
-<span id="cb167-992"><a href="#cb167-992" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-993"><a href="#cb167-993" aria-hidden="true" tabindex="-1"></a>Note: if the two objects include variables with the same name (apart from the keys), <span class="in">`R`</span> will not know how you want each to appear in the merged object.</span>
-<span id="cb167-994"><a href="#cb167-994" aria-hidden="true" tabindex="-1"></a>So, it will add a suffix (e.g., <span class="in">`.x`</span>, <span class="in">`.y`</span>) to each common variable to indicate which object (i.e., object <span class="in">`x`</span> or object <span class="in">`y`</span>) the variable came from, where object <span class="in">`x`</span> is the first object—i.e., the object to which object <span class="in">`y`</span> (the second object) is merged.</span>
-<span id="cb167-995"><a href="#cb167-995" aria-hidden="true" tabindex="-1"></a>In general, apart from the keys, you should not include variables with the same name in two objects to be merged.</span>
-<span id="cb167-996"><a href="#cb167-996" aria-hidden="true" tabindex="-1"></a>To prevent this, either remove or rename the shared variable in one of the objects, or include the shared variable as a key.</span>
-<span id="cb167-997"><a href="#cb167-997" aria-hidden="true" tabindex="-1"></a>However, as described above, you should include it as a key ***only*** if it uniquely identifies each row in terms of levels of nesting.</span>
-<span id="cb167-998"><a href="#cb167-998" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-999"><a href="#cb167-999" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Before Merging</span></span>
+<span id="cb167-980"><a href="#cb167-980" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb167-981"><a href="#cb167-981" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-982"><a href="#cb167-982" aria-hidden="true" tabindex="-1"></a>Merging (also called joining) merges two data objects using a shared set of variables called "keys."</span>
+<span id="cb167-983"><a href="#cb167-983" aria-hidden="true" tabindex="-1"></a>The keys are the variable(s) that uniquely identify each row (i.e., they account for the levels of nesting).</span>
+<span id="cb167-984"><a href="#cb167-984" aria-hidden="true" tabindex="-1"></a>In some data objects, the key might be the participant's ID (e.g., <span class="in">`participantID`</span>).</span>
+<span id="cb167-985"><a href="#cb167-985" aria-hidden="true" tabindex="-1"></a>However, some data objects have multiple keys.</span>
+<span id="cb167-986"><a href="#cb167-986" aria-hidden="true" tabindex="-1"></a>For instance, in long form data objects, each participant may have multiple rows corresponding to multiple timepoints.</span>
+<span id="cb167-987"><a href="#cb167-987" aria-hidden="true" tabindex="-1"></a>In this case, the keys are <span class="in">`participantID`</span> and <span class="in">`timepoint`</span>.</span>
+<span id="cb167-988"><a href="#cb167-988" aria-hidden="true" tabindex="-1"></a>If a participant has multiple rows corresponding to timepoints and measures, the keys are <span class="in">`participantID`</span>, <span class="in">`timepoint`</span>, and <span class="in">`measure`</span>.</span>
+<span id="cb167-989"><a href="#cb167-989" aria-hidden="true" tabindex="-1"></a>In general, each row should have a value on each of the keys; there should be no missingness in the keys.</span>
+<span id="cb167-990"><a href="#cb167-990" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-991"><a href="#cb167-991" aria-hidden="true" tabindex="-1"></a>To merge two objects, the keys must be present in both objects.</span>
+<span id="cb167-992"><a href="#cb167-992" aria-hidden="true" tabindex="-1"></a>The keys are used to merge the variables in object 1 (<span class="in">`x`</span>) with the variables in object 2 (<span class="in">`y`</span>).</span>
+<span id="cb167-993"><a href="#cb167-993" aria-hidden="true" tabindex="-1"></a>Different merge types select different rows to merge.</span>
+<span id="cb167-994"><a href="#cb167-994" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-995"><a href="#cb167-995" aria-hidden="true" tabindex="-1"></a>Note: if the two objects include variables with the same name (apart from the keys), <span class="in">`R`</span> will not know how you want each to appear in the merged object.</span>
+<span id="cb167-996"><a href="#cb167-996" aria-hidden="true" tabindex="-1"></a>So, it will add a suffix (e.g., <span class="in">`.x`</span>, <span class="in">`.y`</span>) to each common variable to indicate which object (i.e., object <span class="in">`x`</span> or object <span class="in">`y`</span>) the variable came from, where object <span class="in">`x`</span> is the first object—i.e., the object to which object <span class="in">`y`</span> (the second object) is merged.</span>
+<span id="cb167-997"><a href="#cb167-997" aria-hidden="true" tabindex="-1"></a>In general, apart from the keys, you should not include variables with the same name in two objects to be merged.</span>
+<span id="cb167-998"><a href="#cb167-998" aria-hidden="true" tabindex="-1"></a>To prevent this, either remove or rename the shared variable in one of the objects, or include the shared variable as a key.</span>
+<span id="cb167-999"><a href="#cb167-999" aria-hidden="true" tabindex="-1"></a>However, as described above, you should include it as a key ***only*** if it uniquely identifies each row in terms of levels of nesting.</span>
 <span id="cb167-1000"><a href="#cb167-1000" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1001"><a href="#cb167-1001" aria-hidden="true" tabindex="-1"></a>Here are the data in the <span class="in">`mydata`</span> object:</span>
+<span id="cb167-1001"><a href="#cb167-1001" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Before Merging</span></span>
 <span id="cb167-1002"><a href="#cb167-1002" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1005"><a href="#cb167-1005" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1006"><a href="#cb167-1006" aria-hidden="true" tabindex="-1"></a>mydata</span>
-<span id="cb167-1007"><a href="#cb167-1007" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1008"><a href="#cb167-1008" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mydata)</span>
-<span id="cb167-1009"><a href="#cb167-1009" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1010"><a href="#cb167-1010" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1011"><a href="#cb167-1011" aria-hidden="true" tabindex="-1"></a>Here are the data in the <span class="in">`mydata2`</span> object:</span>
+<span id="cb167-1003"><a href="#cb167-1003" aria-hidden="true" tabindex="-1"></a>Here are the data in the <span class="in">`mydata`</span> object:</span>
+<span id="cb167-1004"><a href="#cb167-1004" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1007"><a href="#cb167-1007" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1008"><a href="#cb167-1008" aria-hidden="true" tabindex="-1"></a>mydata</span>
+<span id="cb167-1009"><a href="#cb167-1009" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1010"><a href="#cb167-1010" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mydata)</span>
+<span id="cb167-1011"><a href="#cb167-1011" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1012"><a href="#cb167-1012" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1015"><a href="#cb167-1015" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1016"><a href="#cb167-1016" aria-hidden="true" tabindex="-1"></a>mydata2</span>
-<span id="cb167-1017"><a href="#cb167-1017" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1018"><a href="#cb167-1018" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mydata2)</span>
-<span id="cb167-1019"><a href="#cb167-1019" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1020"><a href="#cb167-1020" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1021"><a href="#cb167-1021" aria-hidden="true" tabindex="-1"></a><span class="fu">## Types of Joins {#sec-mergeTypes}</span></span>
+<span id="cb167-1013"><a href="#cb167-1013" aria-hidden="true" tabindex="-1"></a>Here are the data in the <span class="in">`mydata2`</span> object:</span>
+<span id="cb167-1014"><a href="#cb167-1014" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1017"><a href="#cb167-1017" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1018"><a href="#cb167-1018" aria-hidden="true" tabindex="-1"></a>mydata2</span>
+<span id="cb167-1019"><a href="#cb167-1019" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1020"><a href="#cb167-1020" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mydata2)</span>
+<span id="cb167-1021"><a href="#cb167-1021" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1022"><a href="#cb167-1022" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1023"><a href="#cb167-1023" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visual Overview of Join Types</span></span>
+<span id="cb167-1023"><a href="#cb167-1023" aria-hidden="true" tabindex="-1"></a><span class="fu">## Types of Joins {#sec-mergeTypes}</span></span>
 <span id="cb167-1024"><a href="#cb167-1024" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1025"><a href="#cb167-1025" aria-hidden="true" tabindex="-1"></a>Below is a visual that depicts various types of merges/joins.</span>
-<span id="cb167-1026"><a href="#cb167-1026" aria-hidden="true" tabindex="-1"></a>Object <span class="in">`x`</span> is the circle labeled as <span class="in">`A`</span>.</span>
-<span id="cb167-1027"><a href="#cb167-1027" aria-hidden="true" tabindex="-1"></a>Object <span class="in">`y`</span> is the circle labeled as <span class="in">`B`</span>.</span>
-<span id="cb167-1028"><a href="#cb167-1028" aria-hidden="true" tabindex="-1"></a>The area of overlap in the Venn diagram indicates the rows on the keys that are shared between the two objects (e.g., <span class="in">`participantID`</span> values 1, 2, and 3).</span>
-<span id="cb167-1029"><a href="#cb167-1029" aria-hidden="true" tabindex="-1"></a>The non-overlapping area indicates the rows on the keys that are unique to each object (e.g., <span class="in">`participantID`</span> values 4, 5, and 6 in Object <span class="in">`x`</span> and values 7, 8, and 9 in Object <span class="in">`y`</span>).</span>
-<span id="cb167-1030"><a href="#cb167-1030" aria-hidden="true" tabindex="-1"></a>The shaded yellow area indicates which rows (on the keys) are kept in the merged object from each of the two objects, when using each of the merge types.</span>
-<span id="cb167-1031"><a href="#cb167-1031" aria-hidden="true" tabindex="-1"></a>For instance, a left outer join keeps the shared rows and the rows that are unique to object <span class="in">`x`</span>, but it drops the rows that are unique to object <span class="in">`y`</span>.</span>
-<span id="cb167-1032"><a href="#cb167-1032" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1033"><a href="#cb167-1033" aria-hidden="true" tabindex="-1"></a><span class="al">![Types of merges/joins](images/joins.png)</span></span>
+<span id="cb167-1025"><a href="#cb167-1025" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visual Overview of Join Types</span></span>
+<span id="cb167-1026"><a href="#cb167-1026" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1027"><a href="#cb167-1027" aria-hidden="true" tabindex="-1"></a>Below is a visual that depicts various types of merges/joins.</span>
+<span id="cb167-1028"><a href="#cb167-1028" aria-hidden="true" tabindex="-1"></a>Object <span class="in">`x`</span> is the circle labeled as <span class="in">`A`</span>.</span>
+<span id="cb167-1029"><a href="#cb167-1029" aria-hidden="true" tabindex="-1"></a>Object <span class="in">`y`</span> is the circle labeled as <span class="in">`B`</span>.</span>
+<span id="cb167-1030"><a href="#cb167-1030" aria-hidden="true" tabindex="-1"></a>The area of overlap in the Venn diagram indicates the rows on the keys that are shared between the two objects (e.g., <span class="in">`participantID`</span> values 1, 2, and 3).</span>
+<span id="cb167-1031"><a href="#cb167-1031" aria-hidden="true" tabindex="-1"></a>The non-overlapping area indicates the rows on the keys that are unique to each object (e.g., <span class="in">`participantID`</span> values 4, 5, and 6 in Object <span class="in">`x`</span> and values 7, 8, and 9 in Object <span class="in">`y`</span>).</span>
+<span id="cb167-1032"><a href="#cb167-1032" aria-hidden="true" tabindex="-1"></a>The shaded yellow area indicates which rows (on the keys) are kept in the merged object from each of the two objects, when using each of the merge types.</span>
+<span id="cb167-1033"><a href="#cb167-1033" aria-hidden="true" tabindex="-1"></a>For instance, a left outer join keeps the shared rows and the rows that are unique to object <span class="in">`x`</span>, but it drops the rows that are unique to object <span class="in">`y`</span>.</span>
 <span id="cb167-1034"><a href="#cb167-1034" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1035"><a href="#cb167-1035" aria-hidden="true" tabindex="-1"></a>Image source: <span class="co">[</span><span class="ot">Predictive Hacks</span><span class="co">](https://predictivehacks.com/?all-tips=anti-joins-with-pandas)</span> (archived at: <span class="ot">&lt;https://perma.cc/WV7U-BS68&gt;</span>)</span>
+<span id="cb167-1035"><a href="#cb167-1035" aria-hidden="true" tabindex="-1"></a><span class="al">![Types of merges/joins](images/joins.png)</span></span>
 <span id="cb167-1036"><a href="#cb167-1036" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1037"><a href="#cb167-1037" aria-hidden="true" tabindex="-1"></a><span class="fu">### Full Outer Join {#sec-fullJoin}</span></span>
+<span id="cb167-1037"><a href="#cb167-1037" aria-hidden="true" tabindex="-1"></a>Image source: <span class="co">[</span><span class="ot">Predictive Hacks</span><span class="co">](https://predictivehacks.com/?all-tips=anti-joins-with-pandas)</span> (archived at: <span class="ot">&lt;https://perma.cc/WV7U-BS68&gt;</span>)</span>
 <span id="cb167-1038"><a href="#cb167-1038" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1039"><a href="#cb167-1039" aria-hidden="true" tabindex="-1"></a>A full outer join includes all rows in $x$ **or** $y$.</span>
-<span id="cb167-1040"><a href="#cb167-1040" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
-<span id="cb167-1041"><a href="#cb167-1041" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a full outer join (i.e., "full join"):</span>
-<span id="cb167-1042"><a href="#cb167-1042" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1045"><a href="#cb167-1045" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1046"><a href="#cb167-1046" aria-hidden="true" tabindex="-1"></a>fullJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb167-1047"><a href="#cb167-1047" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1048"><a href="#cb167-1048" aria-hidden="true" tabindex="-1"></a>fullJoinData</span>
-<span id="cb167-1049"><a href="#cb167-1049" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(fullJoinData)</span>
-<span id="cb167-1050"><a href="#cb167-1050" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1051"><a href="#cb167-1051" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1052"><a href="#cb167-1052" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1039"><a href="#cb167-1039" aria-hidden="true" tabindex="-1"></a><span class="fu">### Full Outer Join {#sec-fullJoin}</span></span>
+<span id="cb167-1040"><a href="#cb167-1040" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1041"><a href="#cb167-1041" aria-hidden="true" tabindex="-1"></a>A full outer join includes all rows in $x$ **or** $y$.</span>
+<span id="cb167-1042"><a href="#cb167-1042" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
+<span id="cb167-1043"><a href="#cb167-1043" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a full outer join (i.e., "full join"):</span>
+<span id="cb167-1044"><a href="#cb167-1044" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1047"><a href="#cb167-1047" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1048"><a href="#cb167-1048" aria-hidden="true" tabindex="-1"></a>fullJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb167-1049"><a href="#cb167-1049" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1050"><a href="#cb167-1050" aria-hidden="true" tabindex="-1"></a>fullJoinData</span>
+<span id="cb167-1051"><a href="#cb167-1051" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(fullJoinData)</span>
+<span id="cb167-1052"><a href="#cb167-1052" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1053"><a href="#cb167-1053" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1056"><a href="#cb167-1056" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1057"><a href="#cb167-1057" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1058"><a href="#cb167-1058" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1059"><a href="#cb167-1059" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1060"><a href="#cb167-1060" aria-hidden="true" tabindex="-1"></a><span class="fu">### Left Outer Join {#sec-leftJoin}</span></span>
+<span id="cb167-1054"><a href="#cb167-1054" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1055"><a href="#cb167-1055" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1058"><a href="#cb167-1058" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1059"><a href="#cb167-1059" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">full_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1060"><a href="#cb167-1060" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1061"><a href="#cb167-1061" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1062"><a href="#cb167-1062" aria-hidden="true" tabindex="-1"></a>A left outer join includes all rows in $x$.</span>
-<span id="cb167-1063"><a href="#cb167-1063" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
-<span id="cb167-1064"><a href="#cb167-1064" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left outer join ("left join"):</span>
-<span id="cb167-1065"><a href="#cb167-1065" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1068"><a href="#cb167-1068" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1069"><a href="#cb167-1069" aria-hidden="true" tabindex="-1"></a>leftJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb167-1070"><a href="#cb167-1070" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1071"><a href="#cb167-1071" aria-hidden="true" tabindex="-1"></a>leftJoinData</span>
-<span id="cb167-1072"><a href="#cb167-1072" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(leftJoinData)</span>
-<span id="cb167-1073"><a href="#cb167-1073" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1074"><a href="#cb167-1074" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1075"><a href="#cb167-1075" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1062"><a href="#cb167-1062" aria-hidden="true" tabindex="-1"></a><span class="fu">### Left Outer Join {#sec-leftJoin}</span></span>
+<span id="cb167-1063"><a href="#cb167-1063" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1064"><a href="#cb167-1064" aria-hidden="true" tabindex="-1"></a>A left outer join includes all rows in $x$.</span>
+<span id="cb167-1065"><a href="#cb167-1065" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
+<span id="cb167-1066"><a href="#cb167-1066" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left outer join ("left join"):</span>
+<span id="cb167-1067"><a href="#cb167-1067" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1070"><a href="#cb167-1070" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1071"><a href="#cb167-1071" aria-hidden="true" tabindex="-1"></a>leftJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb167-1072"><a href="#cb167-1072" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1073"><a href="#cb167-1073" aria-hidden="true" tabindex="-1"></a>leftJoinData</span>
+<span id="cb167-1074"><a href="#cb167-1074" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(leftJoinData)</span>
+<span id="cb167-1075"><a href="#cb167-1075" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1076"><a href="#cb167-1076" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1079"><a href="#cb167-1079" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1080"><a href="#cb167-1080" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1081"><a href="#cb167-1081" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1082"><a href="#cb167-1082" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1083"><a href="#cb167-1083" aria-hidden="true" tabindex="-1"></a><span class="fu">### Right Outer Join {#sec-rightJoin}</span></span>
+<span id="cb167-1077"><a href="#cb167-1077" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1078"><a href="#cb167-1078" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1081"><a href="#cb167-1081" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1082"><a href="#cb167-1082" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1083"><a href="#cb167-1083" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1084"><a href="#cb167-1084" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1085"><a href="#cb167-1085" aria-hidden="true" tabindex="-1"></a>A right outer join includes all rows in $y$.</span>
-<span id="cb167-1086"><a href="#cb167-1086" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
-<span id="cb167-1087"><a href="#cb167-1087" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a right outer join ("right join"):</span>
-<span id="cb167-1088"><a href="#cb167-1088" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1091"><a href="#cb167-1091" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1092"><a href="#cb167-1092" aria-hidden="true" tabindex="-1"></a>rightJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb167-1093"><a href="#cb167-1093" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1094"><a href="#cb167-1094" aria-hidden="true" tabindex="-1"></a>rightJoinData</span>
-<span id="cb167-1095"><a href="#cb167-1095" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rightJoinData)</span>
-<span id="cb167-1096"><a href="#cb167-1096" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1097"><a href="#cb167-1097" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1098"><a href="#cb167-1098" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1085"><a href="#cb167-1085" aria-hidden="true" tabindex="-1"></a><span class="fu">### Right Outer Join {#sec-rightJoin}</span></span>
+<span id="cb167-1086"><a href="#cb167-1086" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1087"><a href="#cb167-1087" aria-hidden="true" tabindex="-1"></a>A right outer join includes all rows in $y$.</span>
+<span id="cb167-1088"><a href="#cb167-1088" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
+<span id="cb167-1089"><a href="#cb167-1089" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a right outer join ("right join"):</span>
+<span id="cb167-1090"><a href="#cb167-1090" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1093"><a href="#cb167-1093" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1094"><a href="#cb167-1094" aria-hidden="true" tabindex="-1"></a>rightJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb167-1095"><a href="#cb167-1095" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1096"><a href="#cb167-1096" aria-hidden="true" tabindex="-1"></a>rightJoinData</span>
+<span id="cb167-1097"><a href="#cb167-1097" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(rightJoinData)</span>
+<span id="cb167-1098"><a href="#cb167-1098" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1099"><a href="#cb167-1099" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1102"><a href="#cb167-1102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1103"><a href="#cb167-1103" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1104"><a href="#cb167-1104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1105"><a href="#cb167-1105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1106"><a href="#cb167-1106" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inner Join {#sec-innerJoin}</span></span>
+<span id="cb167-1100"><a href="#cb167-1100" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1101"><a href="#cb167-1101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1104"><a href="#cb167-1104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1105"><a href="#cb167-1105" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">right_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1106"><a href="#cb167-1106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1107"><a href="#cb167-1107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1108"><a href="#cb167-1108" aria-hidden="true" tabindex="-1"></a>An inner join includes all rows that are in **both** $x$ **and** $y$.</span>
-<span id="cb167-1109"><a href="#cb167-1109" aria-hidden="true" tabindex="-1"></a>An inner join will return one row of $x$ for each matching row of $y$, and can duplicate values of records on either side (left or right) if $x$ and $y$ have more than one matching record.</span>
-<span id="cb167-1110"><a href="#cb167-1110" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
-<span id="cb167-1111"><a href="#cb167-1111" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using an inner join:</span>
-<span id="cb167-1112"><a href="#cb167-1112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1115"><a href="#cb167-1115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1116"><a href="#cb167-1116" aria-hidden="true" tabindex="-1"></a>innerJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.x =</span> <span class="cn">FALSE</span>, <span class="at">all.y =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb167-1117"><a href="#cb167-1117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1118"><a href="#cb167-1118" aria-hidden="true" tabindex="-1"></a>innerJoinData</span>
-<span id="cb167-1119"><a href="#cb167-1119" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(innerJoinData)</span>
-<span id="cb167-1120"><a href="#cb167-1120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1121"><a href="#cb167-1121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1122"><a href="#cb167-1122" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1108"><a href="#cb167-1108" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inner Join {#sec-innerJoin}</span></span>
+<span id="cb167-1109"><a href="#cb167-1109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1110"><a href="#cb167-1110" aria-hidden="true" tabindex="-1"></a>An inner join includes all rows that are in **both** $x$ **and** $y$.</span>
+<span id="cb167-1111"><a href="#cb167-1111" aria-hidden="true" tabindex="-1"></a>An inner join will return one row of $x$ for each matching row of $y$, and can duplicate values of records on either side (left or right) if $x$ and $y$ have more than one matching record.</span>
+<span id="cb167-1112"><a href="#cb167-1112" aria-hidden="true" tabindex="-1"></a>It returns columns from $x$ and $y$.</span>
+<span id="cb167-1113"><a href="#cb167-1113" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using an inner join:</span>
+<span id="cb167-1114"><a href="#cb167-1114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1117"><a href="#cb167-1117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1118"><a href="#cb167-1118" aria-hidden="true" tabindex="-1"></a>innerJoinData <span class="ot">&lt;-</span> <span class="fu">merge</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>, <span class="at">all.x =</span> <span class="cn">FALSE</span>, <span class="at">all.y =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb167-1119"><a href="#cb167-1119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1120"><a href="#cb167-1120" aria-hidden="true" tabindex="-1"></a>innerJoinData</span>
+<span id="cb167-1121"><a href="#cb167-1121" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(innerJoinData)</span>
+<span id="cb167-1122"><a href="#cb167-1122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1123"><a href="#cb167-1123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1126"><a href="#cb167-1126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1127"><a href="#cb167-1127" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1128"><a href="#cb167-1128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1129"><a href="#cb167-1129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1130"><a href="#cb167-1130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Semi Join {#sec-semiJoin}</span></span>
+<span id="cb167-1124"><a href="#cb167-1124" aria-hidden="true" tabindex="-1"></a>Or, alternatively, using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1125"><a href="#cb167-1125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1128"><a href="#cb167-1128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1129"><a href="#cb167-1129" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">inner_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1130"><a href="#cb167-1130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1131"><a href="#cb167-1131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1132"><a href="#cb167-1132" aria-hidden="true" tabindex="-1"></a>A semi join is a filter.</span>
-<span id="cb167-1133"><a href="#cb167-1133" aria-hidden="true" tabindex="-1"></a>A left semi join returns all rows from $x$ **with** a match in $y$.</span>
-<span id="cb167-1134"><a href="#cb167-1134" aria-hidden="true" tabindex="-1"></a>That is, it filters out records from $x$ that are not in $y$.</span>
-<span id="cb167-1135"><a href="#cb167-1135" aria-hidden="true" tabindex="-1"></a>Unlike an <span class="co">[</span><span class="ot">inner join</span><span class="co">](#sec-innerJoin)</span>, a left semi join will never duplicate rows of $x$, and it includes columns from only $x$ (not from $y$). </span>
-<span id="cb167-1136"><a href="#cb167-1136" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left semi join:</span>
-<span id="cb167-1137"><a href="#cb167-1137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1140"><a href="#cb167-1140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1141"><a href="#cb167-1141" aria-hidden="true" tabindex="-1"></a>semiJoinData <span class="ot">&lt;-</span> <span class="fu">semi_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1142"><a href="#cb167-1142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1143"><a href="#cb167-1143" aria-hidden="true" tabindex="-1"></a>semiJoinData</span>
-<span id="cb167-1144"><a href="#cb167-1144" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(semiJoinData)</span>
-<span id="cb167-1145"><a href="#cb167-1145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1146"><a href="#cb167-1146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1147"><a href="#cb167-1147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Anti Join {#sec-antiJoin}</span></span>
+<span id="cb167-1132"><a href="#cb167-1132" aria-hidden="true" tabindex="-1"></a><span class="fu">### Semi Join {#sec-semiJoin}</span></span>
+<span id="cb167-1133"><a href="#cb167-1133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1134"><a href="#cb167-1134" aria-hidden="true" tabindex="-1"></a>A semi join is a filter.</span>
+<span id="cb167-1135"><a href="#cb167-1135" aria-hidden="true" tabindex="-1"></a>A left semi join returns all rows from $x$ **with** a match in $y$.</span>
+<span id="cb167-1136"><a href="#cb167-1136" aria-hidden="true" tabindex="-1"></a>That is, it filters out records from $x$ that are not in $y$.</span>
+<span id="cb167-1137"><a href="#cb167-1137" aria-hidden="true" tabindex="-1"></a>Unlike an <span class="co">[</span><span class="ot">inner join</span><span class="co">](#sec-innerJoin)</span>, a left semi join will never duplicate rows of $x$, and it includes columns from only $x$ (not from $y$). </span>
+<span id="cb167-1138"><a href="#cb167-1138" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left semi join:</span>
+<span id="cb167-1139"><a href="#cb167-1139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1142"><a href="#cb167-1142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1143"><a href="#cb167-1143" aria-hidden="true" tabindex="-1"></a>semiJoinData <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1144"><a href="#cb167-1144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1145"><a href="#cb167-1145" aria-hidden="true" tabindex="-1"></a>semiJoinData</span>
+<span id="cb167-1146"><a href="#cb167-1146" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(semiJoinData)</span>
+<span id="cb167-1147"><a href="#cb167-1147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1148"><a href="#cb167-1148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1149"><a href="#cb167-1149" aria-hidden="true" tabindex="-1"></a>An anti join is a filter.</span>
-<span id="cb167-1150"><a href="#cb167-1150" aria-hidden="true" tabindex="-1"></a>A left anti join returns all rows from $x$ **without** a match in $y$.</span>
-<span id="cb167-1151"><a href="#cb167-1151" aria-hidden="true" tabindex="-1"></a>That is, it filters out records from $x$ that are in $y$.</span>
-<span id="cb167-1152"><a href="#cb167-1152" aria-hidden="true" tabindex="-1"></a>It returns columns from only $x$ (not from $y$).</span>
-<span id="cb167-1153"><a href="#cb167-1153" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left anti join:</span>
-<span id="cb167-1154"><a href="#cb167-1154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1157"><a href="#cb167-1157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1158"><a href="#cb167-1158" aria-hidden="true" tabindex="-1"></a>antiJoinData <span class="ot">&lt;-</span> <span class="fu">anti_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1159"><a href="#cb167-1159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1160"><a href="#cb167-1160" aria-hidden="true" tabindex="-1"></a>antiJoinData</span>
-<span id="cb167-1161"><a href="#cb167-1161" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(antiJoinData)</span>
-<span id="cb167-1162"><a href="#cb167-1162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1163"><a href="#cb167-1163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1164"><a href="#cb167-1164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cross Join {#sec-crossJoin}</span></span>
+<span id="cb167-1149"><a href="#cb167-1149" aria-hidden="true" tabindex="-1"></a><span class="fu">### Anti Join {#sec-antiJoin}</span></span>
+<span id="cb167-1150"><a href="#cb167-1150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1151"><a href="#cb167-1151" aria-hidden="true" tabindex="-1"></a>An anti join is a filter.</span>
+<span id="cb167-1152"><a href="#cb167-1152" aria-hidden="true" tabindex="-1"></a>A left anti join returns all rows from $x$ **without** a match in $y$.</span>
+<span id="cb167-1153"><a href="#cb167-1153" aria-hidden="true" tabindex="-1"></a>That is, it filters out records from $x$ that are in $y$.</span>
+<span id="cb167-1154"><a href="#cb167-1154" aria-hidden="true" tabindex="-1"></a>It returns columns from only $x$ (not from $y$).</span>
+<span id="cb167-1155"><a href="#cb167-1155" aria-hidden="true" tabindex="-1"></a>Here is how to merge two data frames using a left anti join:</span>
+<span id="cb167-1156"><a href="#cb167-1156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1159"><a href="#cb167-1159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1160"><a href="#cb167-1160" aria-hidden="true" tabindex="-1"></a>antiJoinData <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">anti_join</span>(mydata, mydata2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1161"><a href="#cb167-1161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1162"><a href="#cb167-1162" aria-hidden="true" tabindex="-1"></a>antiJoinData</span>
+<span id="cb167-1163"><a href="#cb167-1163" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(antiJoinData)</span>
+<span id="cb167-1164"><a href="#cb167-1164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1165"><a href="#cb167-1165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1166"><a href="#cb167-1166" aria-hidden="true" tabindex="-1"></a>A cross join combines each row in $x$ with each row in $y$.</span>
+<span id="cb167-1166"><a href="#cb167-1166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cross Join {#sec-crossJoin}</span></span>
 <span id="cb167-1167"><a href="#cb167-1167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1170"><a href="#cb167-1170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1171"><a href="#cb167-1171" aria-hidden="true" tabindex="-1"></a>crossJoinData <span class="ot">&lt;-</span> <span class="fu">cross_join</span>(</span>
-<span id="cb167-1172"><a href="#cb167-1172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">rater =</span> <span class="fu">c</span>(<span class="st">"Mother"</span>,<span class="st">"Father"</span>,<span class="st">"Teacher"</span>)),</span>
-<span id="cb167-1173"><a href="#cb167-1173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">timepoint =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))</span>
-<span id="cb167-1174"><a href="#cb167-1174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1175"><a href="#cb167-1175" aria-hidden="true" tabindex="-1"></a>crossJoinData</span>
-<span id="cb167-1176"><a href="#cb167-1176" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crossJoinData)</span>
-<span id="cb167-1177"><a href="#cb167-1177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1178"><a href="#cb167-1178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1179"><a href="#cb167-1179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging Three or More Objects</span></span>
+<span id="cb167-1168"><a href="#cb167-1168" aria-hidden="true" tabindex="-1"></a>A cross join combines each row in $x$ with each row in $y$.</span>
+<span id="cb167-1169"><a href="#cb167-1169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1172"><a href="#cb167-1172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1173"><a href="#cb167-1173" aria-hidden="true" tabindex="-1"></a>crossJoinData <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">cross_join</span>(</span>
+<span id="cb167-1174"><a href="#cb167-1174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">rater =</span> <span class="fu">c</span>(<span class="st">"Mother"</span>,<span class="st">"Father"</span>,<span class="st">"Teacher"</span>)),</span>
+<span id="cb167-1175"><a href="#cb167-1175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">timepoint =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))</span>
+<span id="cb167-1176"><a href="#cb167-1176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1177"><a href="#cb167-1177" aria-hidden="true" tabindex="-1"></a>crossJoinData</span>
+<span id="cb167-1178"><a href="#cb167-1178" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crossJoinData)</span>
+<span id="cb167-1179"><a href="#cb167-1179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1180"><a href="#cb167-1180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1183"><a href="#cb167-1183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1184"><a href="#cb167-1184" aria-hidden="true" tabindex="-1"></a>dfsToMerge <span class="ot">&lt;-</span> <span class="fu">list</span>(mydata, mydata2, mydata3)</span>
-<span id="cb167-1185"><a href="#cb167-1185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1186"><a href="#cb167-1186" aria-hidden="true" tabindex="-1"></a>mergedData <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(</span>
-<span id="cb167-1187"><a href="#cb167-1187" aria-hidden="true" tabindex="-1"></a>  dfsToMerge,</span>
-<span id="cb167-1188"><a href="#cb167-1188" aria-hidden="true" tabindex="-1"></a>  left_join, <span class="co"># could change to full_join (or whichever join is preferred)</span></span>
-<span id="cb167-1189"><a href="#cb167-1189" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb167-1190"><a href="#cb167-1190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1191"><a href="#cb167-1191" aria-hidden="true" tabindex="-1"></a>mergedData</span>
-<span id="cb167-1192"><a href="#cb167-1192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1193"><a href="#cb167-1193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1194"><a href="#cb167-1194" aria-hidden="true" tabindex="-1"></a><span class="fu"># Long to Wide {#sec-longToWide}</span></span>
+<span id="cb167-1181"><a href="#cb167-1181" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging Three or More Objects</span></span>
+<span id="cb167-1182"><a href="#cb167-1182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1185"><a href="#cb167-1185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1186"><a href="#cb167-1186" aria-hidden="true" tabindex="-1"></a>dfsToMerge <span class="ot">&lt;-</span> <span class="fu">list</span>(mydata, mydata2, mydata3)</span>
+<span id="cb167-1187"><a href="#cb167-1187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1188"><a href="#cb167-1188" aria-hidden="true" tabindex="-1"></a>mergedData <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(</span>
+<span id="cb167-1189"><a href="#cb167-1189" aria-hidden="true" tabindex="-1"></a>  dfsToMerge,</span>
+<span id="cb167-1190"><a href="#cb167-1190" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span>left_join, <span class="co"># could change to full_join (or whichever join is preferred)</span></span>
+<span id="cb167-1191"><a href="#cb167-1191" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb167-1192"><a href="#cb167-1192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1193"><a href="#cb167-1193" aria-hidden="true" tabindex="-1"></a>mergedData</span>
+<span id="cb167-1194"><a href="#cb167-1194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1195"><a href="#cb167-1195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1196"><a href="#cb167-1196" aria-hidden="true" tabindex="-1"></a>Original data:</span>
+<span id="cb167-1196"><a href="#cb167-1196" aria-hidden="true" tabindex="-1"></a><span class="fu"># Long to Wide {#sec-longToWide}</span></span>
 <span id="cb167-1197"><a href="#cb167-1197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1200"><a href="#cb167-1200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1201"><a href="#cb167-1201" aria-hidden="true" tabindex="-1"></a>fish_encounters</span>
-<span id="cb167-1202"><a href="#cb167-1202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1203"><a href="#cb167-1203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1204"><a href="#cb167-1204" aria-hidden="true" tabindex="-1"></a>Data widened by a variable (<span class="in">`station`</span>), using <span class="in">`tidyverse`</span>: </span>
+<span id="cb167-1198"><a href="#cb167-1198" aria-hidden="true" tabindex="-1"></a>Original data:</span>
+<span id="cb167-1199"><a href="#cb167-1199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1202"><a href="#cb167-1202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1203"><a href="#cb167-1203" aria-hidden="true" tabindex="-1"></a>fish_encounters</span>
+<span id="cb167-1204"><a href="#cb167-1204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1205"><a href="#cb167-1205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1208"><a href="#cb167-1208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1209"><a href="#cb167-1209" aria-hidden="true" tabindex="-1"></a>fish_encounters <span class="sc">|&gt;</span> </span>
-<span id="cb167-1210"><a href="#cb167-1210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb167-1211"><a href="#cb167-1211" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> station,</span>
-<span id="cb167-1212"><a href="#cb167-1212" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> seen)</span>
-<span id="cb167-1213"><a href="#cb167-1213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1214"><a href="#cb167-1214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1215"><a href="#cb167-1215" aria-hidden="true" tabindex="-1"></a><span class="fu"># Wide to Long {#sec-wideToLong}</span></span>
+<span id="cb167-1206"><a href="#cb167-1206" aria-hidden="true" tabindex="-1"></a>Data widened by a variable (<span class="in">`station`</span>), using <span class="in">`tidyverse`</span>: </span>
+<span id="cb167-1207"><a href="#cb167-1207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1210"><a href="#cb167-1210" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1211"><a href="#cb167-1211" aria-hidden="true" tabindex="-1"></a>fish_encounters <span class="sc">|&gt;</span> </span>
+<span id="cb167-1212"><a href="#cb167-1212" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb167-1213"><a href="#cb167-1213" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> station,</span>
+<span id="cb167-1214"><a href="#cb167-1214" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> seen)</span>
+<span id="cb167-1215"><a href="#cb167-1215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1216"><a href="#cb167-1216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1217"><a href="#cb167-1217" aria-hidden="true" tabindex="-1"></a>Original data:</span>
+<span id="cb167-1217"><a href="#cb167-1217" aria-hidden="true" tabindex="-1"></a><span class="fu"># Wide to Long {#sec-wideToLong}</span></span>
 <span id="cb167-1218"><a href="#cb167-1218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1221"><a href="#cb167-1221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1222"><a href="#cb167-1222" aria-hidden="true" tabindex="-1"></a>mtcars</span>
-<span id="cb167-1223"><a href="#cb167-1223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1224"><a href="#cb167-1224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1225"><a href="#cb167-1225" aria-hidden="true" tabindex="-1"></a>Data in long form, transformed from wide form using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1219"><a href="#cb167-1219" aria-hidden="true" tabindex="-1"></a>Original data:</span>
+<span id="cb167-1220"><a href="#cb167-1220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1223"><a href="#cb167-1223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1224"><a href="#cb167-1224" aria-hidden="true" tabindex="-1"></a>mtcars</span>
+<span id="cb167-1225"><a href="#cb167-1225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1226"><a href="#cb167-1226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1229"><a href="#cb167-1229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1230"><a href="#cb167-1230" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb167-1231"><a href="#cb167-1231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb167-1232"><a href="#cb167-1232" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb167-1233"><a href="#cb167-1233" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb167-1234"><a href="#cb167-1234" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
-<span id="cb167-1235"><a href="#cb167-1235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1236"><a href="#cb167-1236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1237"><a href="#cb167-1237" aria-hidden="true" tabindex="-1"></a><span class="fu"># Average Ratings Across Coders {#sec-avgAcrossCoders}</span></span>
+<span id="cb167-1227"><a href="#cb167-1227" aria-hidden="true" tabindex="-1"></a>Data in long form, transformed from wide form using <span class="in">`tidyverse`</span>:</span>
+<span id="cb167-1228"><a href="#cb167-1228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1231"><a href="#cb167-1231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1232"><a href="#cb167-1232" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb167-1233"><a href="#cb167-1233" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb167-1234"><a href="#cb167-1234" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb167-1235"><a href="#cb167-1235" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb167-1236"><a href="#cb167-1236" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb167-1237"><a href="#cb167-1237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1238"><a href="#cb167-1238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1239"><a href="#cb167-1239" aria-hidden="true" tabindex="-1"></a>Create data with multiple coders:</span>
+<span id="cb167-1239"><a href="#cb167-1239" aria-hidden="true" tabindex="-1"></a><span class="fu"># Average Ratings Across Coders {#sec-avgAcrossCoders}</span></span>
 <span id="cb167-1240"><a href="#cb167-1240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1243"><a href="#cb167-1243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1244"><a href="#cb167-1244" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb167-1245"><a href="#cb167-1245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1246"><a href="#cb167-1246" aria-hidden="true" tabindex="-1"></a>idWaveCoder <span class="ot">&lt;-</span> </span>
-<span id="cb167-1247"><a href="#cb167-1247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
-<span id="cb167-1248"><a href="#cb167-1248" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb167-1249"><a href="#cb167-1249" aria-hidden="true" tabindex="-1"></a>    <span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb167-1250"><a href="#cb167-1250" aria-hidden="true" tabindex="-1"></a>    <span class="at">coder =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb167-1251"><a href="#cb167-1251" aria-hidden="true" tabindex="-1"></a>    <span class="at">positiveAffect =</span> <span class="cn">NA</span>,</span>
-<span id="cb167-1252"><a href="#cb167-1252" aria-hidden="true" tabindex="-1"></a>    <span class="at">negativeAffect =</span> <span class="cn">NA</span></span>
-<span id="cb167-1253"><a href="#cb167-1253" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb167-1254"><a href="#cb167-1254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1255"><a href="#cb167-1255" aria-hidden="true" tabindex="-1"></a>idWaveCoder<span class="sc">$</span>positiveAffect <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(idWaveCoder))</span>
-<span id="cb167-1256"><a href="#cb167-1256" aria-hidden="true" tabindex="-1"></a>idWaveCoder<span class="sc">$</span>negativeAffect <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(idWaveCoder))</span>
-<span id="cb167-1257"><a href="#cb167-1257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1258"><a href="#cb167-1258" aria-hidden="true" tabindex="-1"></a>idWaveCoder <span class="sc">|&gt;</span> </span>
-<span id="cb167-1259"><a href="#cb167-1259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(id, wave, coder)</span>
-<span id="cb167-1260"><a href="#cb167-1260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1261"><a href="#cb167-1261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1262"><a href="#cb167-1262" aria-hidden="true" tabindex="-1"></a>Average data across coders:</span>
+<span id="cb167-1241"><a href="#cb167-1241" aria-hidden="true" tabindex="-1"></a>Create data with multiple coders:</span>
+<span id="cb167-1242"><a href="#cb167-1242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1245"><a href="#cb167-1245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1246"><a href="#cb167-1246" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb167-1247"><a href="#cb167-1247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1248"><a href="#cb167-1248" aria-hidden="true" tabindex="-1"></a>idWaveCoder <span class="ot">&lt;-</span> </span>
+<span id="cb167-1249"><a href="#cb167-1249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
+<span id="cb167-1250"><a href="#cb167-1250" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb167-1251"><a href="#cb167-1251" aria-hidden="true" tabindex="-1"></a>    <span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb167-1252"><a href="#cb167-1252" aria-hidden="true" tabindex="-1"></a>    <span class="at">coder =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb167-1253"><a href="#cb167-1253" aria-hidden="true" tabindex="-1"></a>    <span class="at">positiveAffect =</span> <span class="cn">NA</span>,</span>
+<span id="cb167-1254"><a href="#cb167-1254" aria-hidden="true" tabindex="-1"></a>    <span class="at">negativeAffect =</span> <span class="cn">NA</span></span>
+<span id="cb167-1255"><a href="#cb167-1255" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb167-1256"><a href="#cb167-1256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1257"><a href="#cb167-1257" aria-hidden="true" tabindex="-1"></a>idWaveCoder<span class="sc">$</span>positiveAffect <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(idWaveCoder))</span>
+<span id="cb167-1258"><a href="#cb167-1258" aria-hidden="true" tabindex="-1"></a>idWaveCoder<span class="sc">$</span>negativeAffect <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(idWaveCoder))</span>
+<span id="cb167-1259"><a href="#cb167-1259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1260"><a href="#cb167-1260" aria-hidden="true" tabindex="-1"></a>idWaveCoder <span class="sc">|&gt;</span> </span>
+<span id="cb167-1261"><a href="#cb167-1261" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(id, wave, coder)</span>
+<span id="cb167-1262"><a href="#cb167-1262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1263"><a href="#cb167-1263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1266"><a href="#cb167-1266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1267"><a href="#cb167-1267" aria-hidden="true" tabindex="-1"></a>idWave <span class="ot">&lt;-</span> idWaveCoder <span class="sc">|&gt;</span> </span>
-<span id="cb167-1268"><a href="#cb167-1268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id, wave) <span class="sc">|&gt;</span> </span>
-<span id="cb167-1269"><a href="#cb167-1269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb167-1270"><a href="#cb167-1270" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(),</span>
-<span id="cb167-1271"><a href="#cb167-1271" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb167-1272"><a href="#cb167-1272" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb167-1273"><a href="#cb167-1273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>coder)</span>
-<span id="cb167-1274"><a href="#cb167-1274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1275"><a href="#cb167-1275" aria-hidden="true" tabindex="-1"></a>idWave</span>
-<span id="cb167-1276"><a href="#cb167-1276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1277"><a href="#cb167-1277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1278"><a href="#cb167-1278" aria-hidden="true" tabindex="-1"></a><span class="fu"># Loops {#sec-loops}</span></span>
+<span id="cb167-1264"><a href="#cb167-1264" aria-hidden="true" tabindex="-1"></a>Average data across coders:</span>
+<span id="cb167-1265"><a href="#cb167-1265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1268"><a href="#cb167-1268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1269"><a href="#cb167-1269" aria-hidden="true" tabindex="-1"></a>idWave <span class="ot">&lt;-</span> idWaveCoder <span class="sc">|&gt;</span> </span>
+<span id="cb167-1270"><a href="#cb167-1270" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id, wave) <span class="sc">|&gt;</span> </span>
+<span id="cb167-1271"><a href="#cb167-1271" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb167-1272"><a href="#cb167-1272" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(),</span>
+<span id="cb167-1273"><a href="#cb167-1273" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb167-1274"><a href="#cb167-1274" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb167-1275"><a href="#cb167-1275" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>coder)</span>
+<span id="cb167-1276"><a href="#cb167-1276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1277"><a href="#cb167-1277" aria-hidden="true" tabindex="-1"></a>idWave</span>
+<span id="cb167-1278"><a href="#cb167-1278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1279"><a href="#cb167-1279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1280"><a href="#cb167-1280" aria-hidden="true" tabindex="-1"></a>If you want to perform the same computation multiple times, it can be faster to do it in a loop compared to writing out the same computation many times.</span>
-<span id="cb167-1281"><a href="#cb167-1281" aria-hidden="true" tabindex="-1"></a>For instance, here is a loop that prints each element of a vector and the loop index (<span class="in">`i`</span>) that indicates where the loop is in terms of its iterations:</span>
-<span id="cb167-1282"><a href="#cb167-1282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1285"><a href="#cb167-1285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1286"><a href="#cb167-1286" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>)</span>
-<span id="cb167-1287"><a href="#cb167-1287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1288"><a href="#cb167-1288" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fruits)){</span>
-<span id="cb167-1289"><a href="#cb167-1289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"The loop is at index:"</span>, i, <span class="at">sep =</span> <span class="st">" "</span>))</span>
-<span id="cb167-1290"><a href="#cb167-1290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruits[i])</span>
-<span id="cb167-1291"><a href="#cb167-1291" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb167-1292"><a href="#cb167-1292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1293"><a href="#cb167-1293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1294"><a href="#cb167-1294" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create a Function {#sec-createFunction}</span></span>
+<span id="cb167-1280"><a href="#cb167-1280" aria-hidden="true" tabindex="-1"></a><span class="fu"># Loops {#sec-loops}</span></span>
+<span id="cb167-1281"><a href="#cb167-1281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1282"><a href="#cb167-1282" aria-hidden="true" tabindex="-1"></a>If you want to perform the same computation multiple times, it can be faster to do it in a loop compared to writing out the same computation many times.</span>
+<span id="cb167-1283"><a href="#cb167-1283" aria-hidden="true" tabindex="-1"></a>For instance, here is a loop that prints each element of a vector and the loop index (<span class="in">`i`</span>) that indicates where the loop is in terms of its iterations:</span>
+<span id="cb167-1284"><a href="#cb167-1284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1287"><a href="#cb167-1287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1288"><a href="#cb167-1288" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>)</span>
+<span id="cb167-1289"><a href="#cb167-1289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1290"><a href="#cb167-1290" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fruits)){</span>
+<span id="cb167-1291"><a href="#cb167-1291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"The loop is at index:"</span>, i, <span class="at">sep =</span> <span class="st">" "</span>))</span>
+<span id="cb167-1292"><a href="#cb167-1292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(fruits[i])</span>
+<span id="cb167-1293"><a href="#cb167-1293" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb167-1294"><a href="#cb167-1294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1295"><a href="#cb167-1295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1296"><a href="#cb167-1296" aria-hidden="true" tabindex="-1"></a>Now, let's put together what we have learned to create a useful function.</span>
-<span id="cb167-1297"><a href="#cb167-1297" aria-hidden="true" tabindex="-1"></a>Functions are useful if you want to perform an operation multiple times.</span>
-<span id="cb167-1298"><a href="#cb167-1298" aria-hidden="true" tabindex="-1"></a>Any operation that you want to perform multiple times, you can create a function to accomplish.</span>
-<span id="cb167-1299"><a href="#cb167-1299" aria-hidden="true" tabindex="-1"></a>Use of a function can save you time without needed to retype out all of the code each time.</span>
-<span id="cb167-1300"><a href="#cb167-1300" aria-hidden="true" tabindex="-1"></a>For instance, let's say you want to convert temperature between Fahrenheit and Celsius, you could create a function to do that.</span>
-<span id="cb167-1301"><a href="#cb167-1301" aria-hidden="true" tabindex="-1"></a>In this case, our function has two arguments: <span class="in">`temperature`</span> (in degrees) and <span class="in">`unit`</span> of the original temperature (<span class="in">`F`</span> for Fahrenheit or <span class="in">`C`</span> for Celsius, where the default unit is Fahrenheit).</span>
-<span id="cb167-1302"><a href="#cb167-1302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1305"><a href="#cb167-1305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1306"><a href="#cb167-1306" aria-hidden="true" tabindex="-1"></a>convert_temperature <span class="ot">&lt;-</span> <span class="cf">function</span>(temperature, <span class="at">unit =</span> <span class="st">"F"</span>){</span>
-<span id="cb167-1307"><a href="#cb167-1307" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(unit <span class="sc">==</span> <span class="st">"F"</span>){ <span class="co"># if the input temperature(s) in Fahrenheit</span></span>
-<span id="cb167-1308"><a href="#cb167-1308" aria-hidden="true" tabindex="-1"></a>    newtemp <span class="ot">&lt;-</span> (temperature <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> (<span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>)</span>
-<span id="cb167-1309"><a href="#cb167-1309" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span>(unit <span class="sc">==</span> <span class="st">"C"</span>){ <span class="co"># if the input temperature(s) in Celsius</span></span>
-<span id="cb167-1310"><a href="#cb167-1310" aria-hidden="true" tabindex="-1"></a>    newtemp <span class="ot">&lt;-</span> (temperature <span class="sc">*</span> (<span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>)) <span class="sc">+</span> <span class="dv">32</span></span>
-<span id="cb167-1311"><a href="#cb167-1311" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb167-1312"><a href="#cb167-1312" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb167-1313"><a href="#cb167-1313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(newtemp)</span>
-<span id="cb167-1314"><a href="#cb167-1314" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb167-1315"><a href="#cb167-1315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1316"><a href="#cb167-1316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1317"><a href="#cb167-1317" aria-hidden="true" tabindex="-1"></a>Now we can use the function to convert temperatures between Fahrenheit and Celsius.</span>
-<span id="cb167-1318"><a href="#cb167-1318" aria-hidden="true" tabindex="-1"></a>A temperature of 32°F is equal to 0°C.</span>
-<span id="cb167-1319"><a href="#cb167-1319" aria-hidden="true" tabindex="-1"></a>A temperature of 0°C is equal to 89.6°F.</span>
-<span id="cb167-1320"><a href="#cb167-1320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1323"><a href="#cb167-1323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1324"><a href="#cb167-1324" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
-<span id="cb167-1325"><a href="#cb167-1325" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="dv">32</span>,</span>
-<span id="cb167-1326"><a href="#cb167-1326" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"F"</span></span>
-<span id="cb167-1327"><a href="#cb167-1327" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb167-1328"><a href="#cb167-1328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1329"><a href="#cb167-1329" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
-<span id="cb167-1330"><a href="#cb167-1330" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="dv">32</span>,</span>
-<span id="cb167-1331"><a href="#cb167-1331" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"C"</span></span>
-<span id="cb167-1332"><a href="#cb167-1332" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb167-1333"><a href="#cb167-1333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1334"><a href="#cb167-1334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1335"><a href="#cb167-1335" aria-hidden="true" tabindex="-1"></a>We can also convert the temperature for a vector of values at once:</span>
+<span id="cb167-1296"><a href="#cb167-1296" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create a Function {#sec-createFunction}</span></span>
+<span id="cb167-1297"><a href="#cb167-1297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1298"><a href="#cb167-1298" aria-hidden="true" tabindex="-1"></a>Now, let's put together what we have learned to create a useful function.</span>
+<span id="cb167-1299"><a href="#cb167-1299" aria-hidden="true" tabindex="-1"></a>Functions are useful if you want to perform an operation multiple times.</span>
+<span id="cb167-1300"><a href="#cb167-1300" aria-hidden="true" tabindex="-1"></a>Any operation that you want to perform multiple times, you can create a function to accomplish.</span>
+<span id="cb167-1301"><a href="#cb167-1301" aria-hidden="true" tabindex="-1"></a>Use of a function can save you time without needed to retype out all of the code each time.</span>
+<span id="cb167-1302"><a href="#cb167-1302" aria-hidden="true" tabindex="-1"></a>For instance, let's say you want to convert temperature between Fahrenheit and Celsius, you could create a function to do that.</span>
+<span id="cb167-1303"><a href="#cb167-1303" aria-hidden="true" tabindex="-1"></a>In this case, our function has two arguments: <span class="in">`temperature`</span> (in degrees) and <span class="in">`unit`</span> of the original temperature (<span class="in">`F`</span> for Fahrenheit or <span class="in">`C`</span> for Celsius, where the default unit is Fahrenheit).</span>
+<span id="cb167-1304"><a href="#cb167-1304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1307"><a href="#cb167-1307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1308"><a href="#cb167-1308" aria-hidden="true" tabindex="-1"></a>convert_temperature <span class="ot">&lt;-</span> <span class="cf">function</span>(temperature, <span class="at">unit =</span> <span class="st">"F"</span>){</span>
+<span id="cb167-1309"><a href="#cb167-1309" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(unit <span class="sc">==</span> <span class="st">"F"</span>){ <span class="co"># if the input temperature(s) in Fahrenheit</span></span>
+<span id="cb167-1310"><a href="#cb167-1310" aria-hidden="true" tabindex="-1"></a>    newtemp <span class="ot">&lt;-</span> (temperature <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">/</span> (<span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>)</span>
+<span id="cb167-1311"><a href="#cb167-1311" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span>(unit <span class="sc">==</span> <span class="st">"C"</span>){ <span class="co"># if the input temperature(s) in Celsius</span></span>
+<span id="cb167-1312"><a href="#cb167-1312" aria-hidden="true" tabindex="-1"></a>    newtemp <span class="ot">&lt;-</span> (temperature <span class="sc">*</span> (<span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>)) <span class="sc">+</span> <span class="dv">32</span></span>
+<span id="cb167-1313"><a href="#cb167-1313" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb167-1314"><a href="#cb167-1314" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb167-1315"><a href="#cb167-1315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(newtemp)</span>
+<span id="cb167-1316"><a href="#cb167-1316" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb167-1317"><a href="#cb167-1317" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb167-1318"><a href="#cb167-1318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1319"><a href="#cb167-1319" aria-hidden="true" tabindex="-1"></a>Now we can use the function to convert temperatures between Fahrenheit and Celsius.</span>
+<span id="cb167-1320"><a href="#cb167-1320" aria-hidden="true" tabindex="-1"></a>A temperature of 32°F is equal to 0°C.</span>
+<span id="cb167-1321"><a href="#cb167-1321" aria-hidden="true" tabindex="-1"></a>A temperature of 0°C is equal to 89.6°F.</span>
+<span id="cb167-1322"><a href="#cb167-1322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1325"><a href="#cb167-1325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1326"><a href="#cb167-1326" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
+<span id="cb167-1327"><a href="#cb167-1327" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="dv">32</span>,</span>
+<span id="cb167-1328"><a href="#cb167-1328" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"F"</span></span>
+<span id="cb167-1329"><a href="#cb167-1329" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb167-1330"><a href="#cb167-1330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1331"><a href="#cb167-1331" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
+<span id="cb167-1332"><a href="#cb167-1332" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="dv">32</span>,</span>
+<span id="cb167-1333"><a href="#cb167-1333" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"C"</span></span>
+<span id="cb167-1334"><a href="#cb167-1334" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb167-1335"><a href="#cb167-1335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1336"><a href="#cb167-1336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1339"><a href="#cb167-1339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1340"><a href="#cb167-1340" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
-<span id="cb167-1341"><a href="#cb167-1341" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
-<span id="cb167-1342"><a href="#cb167-1342" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"F"</span></span>
-<span id="cb167-1343"><a href="#cb167-1343" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb167-1344"><a href="#cb167-1344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1345"><a href="#cb167-1345" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
-<span id="cb167-1346"><a href="#cb167-1346" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
-<span id="cb167-1347"><a href="#cb167-1347" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"C"</span></span>
-<span id="cb167-1348"><a href="#cb167-1348" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb167-1349"><a href="#cb167-1349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1350"><a href="#cb167-1350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1351"><a href="#cb167-1351" aria-hidden="true" tabindex="-1"></a>Because the default unit is "F", we do not need to specify the unit if our input temperatures are in Fahrenheit:</span>
+<span id="cb167-1337"><a href="#cb167-1337" aria-hidden="true" tabindex="-1"></a>We can also convert the temperature for a vector of values at once:</span>
+<span id="cb167-1338"><a href="#cb167-1338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1341"><a href="#cb167-1341" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1342"><a href="#cb167-1342" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
+<span id="cb167-1343"><a href="#cb167-1343" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb167-1344"><a href="#cb167-1344" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"F"</span></span>
+<span id="cb167-1345"><a href="#cb167-1345" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb167-1346"><a href="#cb167-1346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1347"><a href="#cb167-1347" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
+<span id="cb167-1348"><a href="#cb167-1348" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb167-1349"><a href="#cb167-1349" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"C"</span></span>
+<span id="cb167-1350"><a href="#cb167-1350" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb167-1351"><a href="#cb167-1351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1352"><a href="#cb167-1352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1355"><a href="#cb167-1355" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1356"><a href="#cb167-1356" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
-<span id="cb167-1357"><a href="#cb167-1357" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
-<span id="cb167-1358"><a href="#cb167-1358" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb167-1359"><a href="#cb167-1359" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb167-1360"><a href="#cb167-1360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1361"><a href="#cb167-1361" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb167-1353"><a href="#cb167-1353" aria-hidden="true" tabindex="-1"></a>Because the default unit is "F", we do not need to specify the unit if our input temperatures are in Fahrenheit:</span>
+<span id="cb167-1354"><a href="#cb167-1354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1357"><a href="#cb167-1357" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1358"><a href="#cb167-1358" aria-hidden="true" tabindex="-1"></a><span class="fu">convert_temperature</span>(</span>
+<span id="cb167-1359"><a href="#cb167-1359" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb167-1360"><a href="#cb167-1360" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb167-1361"><a href="#cb167-1361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb167-1362"><a href="#cb167-1362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1365"><a href="#cb167-1365" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb167-1366"><a href="#cb167-1366" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb167-1367"><a href="#cb167-1367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb167-1368"><a href="#cb167-1368" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb167-1369"><a href="#cb167-1369" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb167-1363"><a href="#cb167-1363" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb167-1364"><a href="#cb167-1364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1367"><a href="#cb167-1367" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb167-1368"><a href="#cb167-1368" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb167-1369"><a href="#cb167-1369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-1370"><a href="#cb167-1370" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb167-1371"><a href="#cb167-1371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
