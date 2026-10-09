@@ -63,41 +63,41 @@ library("anonymizer")
 library("tidyverse")
 
 # Generate Random Anonymized ID
-mydata$anonymizedID <- anonymize(c(
+mydata$anonymizedID <- anonymizer::anonymize(c(
   mydata$ID),
   .algo = "crc32",
   .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
 
 # Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
 mydata <- mydata |>
-  select(anonymizedID, everything()) |>
-  arrange(anonymizedID)
+  dplyr::select(anonymizedID, everything()) |>
+  dplyr::arrange(anonymizedID)
 
 # Remove the Original ID Column
 mydata <- mydata |>
-  select(-ID)
+  dplyr::select(-ID)
 ```
 
 ```{r}
 #| code-fold: true
 
 # Generate Random Anonymized ID
-mydata$anonymizedID <- anonymize(c(
+mydata$anonymizedID <- anonymizer::anonymize(c(
   mydata$ID),
   .algo = "crc32",
   .seed = 20230426) # change seed for every paper (based on the date) so that participant gets a new code each time
 
 # Re-Sort Data by Random Anonymized ID to Mix-Up Participants (so they are not in the same order for every paper)
 mydata <- mydata |>
-  select(anonymizedID, everything()) |>
-  arrange(anonymizedID)
+  dplyr::select(anonymizedID, everything()) |>
+  dplyr::arrange(anonymizedID)
 
 # Print the Data
 mydata
 
 # Remove the Original ID Column
 mydata <- mydata |>
-  select(-ID)
+  dplyr::select(-ID)
 ```
 
 # Session Info

@@ -75,9 +75,9 @@ For instance, we can subtract the youngest participant age to set the intercepts
 ```{r}
 # Timepoint
 mydata <- mydata |>
-  arrange(id, age) |> 
-  group_by(id) |>
-  mutate(timepoint = 1:n())
+  dplyr::arrange(id, age) |> 
+  dplyr::group_by(id) |>
+  dplyr::mutate(timepoint = 1:n())
 
 # Age
 mydata$ageYears <- mydata$age / 12
@@ -88,15 +88,15 @@ mydata$ageYearsCenteredSquared <- mydata$ageYearsCentered ^ 2
 
 # Age at T1
 ageAtT1 <- mydata |> 
-  ungroup() |> 
-  filter(timepoint == 1) |> 
-  mutate( # if we had date of birth, we could compute birth cohort (e.g., birth year), if we had time of measurement, we could compute period (e.g., year) at T1
+  dplyr::ungroup() |> 
+  dplyr::filter(timepoint == 1) |> 
+  dplyr::mutate( # if we had date of birth, we could compute birth cohort (e.g., birth year), if we had time of measurement, we could compute period (e.g., year) at T1
     ageAtT1 = ageYears, # use age at baseline (T1) or birth year to reduce bias from attrition-related missing data
     ageAtT1Centered = ageAtT1 - min(ageAtT1, na.rm = TRUE),
     ageAtT1CenteredSquared = ageAtT1Centered ^ 2) |>
-  select(id, ageAtT1, ageAtT1Centered, ageAtT1CenteredSquared)
+  dplyr::select(id, ageAtT1, ageAtT1Centered, ageAtT1CenteredSquared)
 
-mydata <- left_join(
+mydata <- dplyr::left_join(
   mydata,
   ageAtT1,
   by = c("id")
@@ -135,7 +135,7 @@ To simultaneously compare fixed and random effects, use ML.
 ## Spaghetti Plot
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -153,7 +153,7 @@ ggplot(
 
 ```{r}
 facetedPlots <- mydata |>
-  ggplot(
+  ggplot2::ggplot(
     aes(
       x = ageYears,
       y = math,
@@ -216,7 +216,7 @@ The following models are models that are fit in a linear mixed modeling framewor
 #### `lme4`
 
 ```{r}
-linearMixedModel <- lmer(
+linearMixedModel <- lmerTest::lmer(
   math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -257,7 +257,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -281,7 +281,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -302,7 +302,7 @@ ggplot(
 ##### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -333,13 +333,13 @@ ggplot(
 ```{r}
 #| output: false
 
-ranef(linearMixedModel)
+lme4::ranef(linearMixedModel)
 ```
 
 ```{r}
 #| echo: false
 
-linearMixedModel_re <- ranef(linearMixedModel)
+linearMixedModel_re <- lme4::ranef(linearMixedModel)
 
 linearMixedModel_re$id <- head(linearMixedModel_re$id)
 linearMixedModel_re
@@ -365,7 +365,7 @@ linearMixedModel_coef
 #### `nlme`
 
 ```{r}
-linearMixedModel_nlme <- lme(
+linearMixedModel_nlme <- nlme::lme(
   math ~ sex + ageYearsCentered + sex:ageYearsCentered, # sex as a fixed-effect predictor of the intercepts and slopes
   random = ~ 1 + ageYearsCentered|id, # random intercepts and slopes
   data = mydata,
@@ -395,8 +395,8 @@ performance::r2(linearMixedModel_nlme)
 #### Intraclass Correlation Coefficent {#sec-icc}
 
 ```{r}
-icc(linearMixedModel)
-icc(linearMixedModel_nlme)
+performance::icc(linearMixedModel)
+performance::icc(linearMixedModel_nlme)
 ```
 
 ### Growth Curve Model with Timepoint-Specific Errors {#sec-timepointSpecificErrorsGCM}
@@ -404,7 +404,7 @@ icc(linearMixedModel_nlme)
 Adapted from Usami & Murayama (2018):
 
 ```{r}
-timepointSpecificErrorsMixedModel <- lmer(
+timepointSpecificErrorsMixedModel <- lmerTest::lmer(
   math ~ sex + ageYearsCentered + sex:ageYearsCentered + (1 | id) + (1 | ageYearsCentered), # timepoint-specific errors: observations are cross-classified with person and timepoint; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -443,7 +443,7 @@ quadraticLoadings
 #### Fit Model
 
 ```{r}
-quadraticGCM <- lmer(
+quadraticGCM <- lmerTest::lmer(
   math ~ sex + ageYearsCentered + ageYearsCenteredSquared + sex:ageYearsCentered + sex:ageYearsCenteredSquared + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -464,7 +464,7 @@ performance::r2(quadraticGCM)
 This is equivalent to:
 
 ```{r}
-quadraticGCM <- lmer(
+quadraticGCM <- lmerTest::lmer(
   math ~ sex + ageYearsCentered + I(ageYearsCentered^2) + sex:ageYearsCentered + sex:I(ageYearsCentered^2) + (1 + ageYearsCentered | id), # random intercepts and slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -503,7 +503,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -527,7 +527,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -553,7 +553,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -589,13 +589,13 @@ ggplot(
 ```{r}
 #| output: false
 
-ranef(quadraticGCM)
+lme4::ranef(quadraticGCM)
 ```
 
 ```{r}
 #| echo: false
 
-quadraticGCM_re <- ranef(quadraticGCM)
+quadraticGCM_re <- lme4::ranef(quadraticGCM)
 
 quadraticGCM_re$id <- head(quadraticGCM_re$id)
 quadraticGCM_re
@@ -608,7 +608,7 @@ quadraticGCM_re
 #### Fit Model
 
 ```{r}
-logGCM <- lmer(
+logGCM <- lmerTest::lmer(
   math ~ sex + log(ageYearsCentered + 1) + sex:log(ageYearsCentered + 1) + (1 + log(ageYearsCentered + 1) | id), # random intercepts and logarithmic slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -646,7 +646,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -670,7 +670,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -696,7 +696,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -732,13 +732,13 @@ ggplot(
 ```{r}
 #| output: false
 
-ranef(logGCM)
+lme4::ranef(logGCM)
 ```
 
 ```{r}
 #| echo: false
 
-logGCM_re <- ranef(logGCM)
+logGCM_re <- lme4::ranef(logGCM)
 
 logGCM_re$id <- head(logGCM_re$id)
 logGCM_re
@@ -757,7 +757,7 @@ mydata$knot[which(mydata$ageYears > 11)] <- 1
 #### Fit Model
 
 ```{r}
-splineGCM <- lmer(
+splineGCM <- lmerTest::lmer(
   math ~ sex + ageYearsCentered + sex:ageYearsCentered + knot + knot:ageYearsCentered + sex:knot + sex:knot:ageYearsCentered + (1 + ageYearsCentered | id), # random intercepts and linear slopes; fixed quadratic slopes; sex as a fixed-effect predictor of the intercepts and slopes
   data = mydata,
   REML = FALSE, #for ML
@@ -799,7 +799,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -823,7 +823,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -844,7 +844,7 @@ ggplot(
 #### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -875,13 +875,13 @@ ggplot(
 ```{r}
 #| output: false
 
-ranef(splineGCM)
+lme4::ranef(splineGCM)
 ```
 
 ```{r}
 #| echo: false
 
-splineGCM_re <- ranef(splineGCM)
+splineGCM_re <- lme4::ranef(splineGCM)
 
 splineGCM_re$id <- head(splineGCM_re$id)
 splineGCM_re
@@ -894,7 +894,7 @@ Per Hoffman ([here](https://www.cilvr.umd.edu/Conference2010/CILVRposts2010/Hoff
 #### Linear
 
 ```{r}
-acceleratedLongitudinalMixedModel_linear <- lmer(
+acceleratedLongitudinalMixedModel_linear <- lmerTest::lmer(
   math ~ timeInStudy*sex*ageAtT1Centered + (1 + timeInStudy | id),
   data = mydata,
   REML = FALSE, #for ML
@@ -935,7 +935,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -959,7 +959,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -980,7 +980,7 @@ ggplot(
 ##### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -1009,7 +1009,7 @@ ggplot(
 #### Quadratic
 
 ```{r}
-acceleratedLongitudinalMixedModel_quadratic <- lmer(
+acceleratedLongitudinalMixedModel_quadratic <- lmerTest::lmer(
   math ~ timeInStudy*sex*ageAtT1Centered + timeInStudySquared*sex*ageAtT1Centered + ageAtT1CenteredSquared + (1 + timeInStudy | id),
   data = mydata,
   REML = FALSE, #for ML
@@ -1052,7 +1052,7 @@ newData$predictedValue <- predict( # predict.merMod
   re.form = NA
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -1076,7 +1076,7 @@ mydata$predictedValue <- predict(
   re.form = NULL
 )
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -1101,7 +1101,7 @@ ggplot(
 ##### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -1138,7 +1138,7 @@ ggplot(
 ## `lmer`
 
 ```{r}
-generalizedLinearMixedModel <- glmer(
+generalizedLinearMixedModel <- lmer::glmer(
   outcome ~ female + ageYearsCentered + (ageYearsCentered | id),
   family = poisson(link = "log"),
   data = mydata,
@@ -1158,7 +1158,7 @@ performance::r2(generalizedLinearMixedModel)
 ## `MASS`
 
 ```{r}
-glmmPQLmodel <- glmmPQL(
+glmmPQLmodel <- MASS::glmmPQL(
   outcome ~ female + ageYearsCentered,
   random = ~ 1 + ageYearsCentered|id,
   family = poisson(link = "log"),
@@ -1175,7 +1175,7 @@ print(effectsize::standardize_parameters(
 ## `MCMCglmm`
 
 ```{r}
-MCMCglmmModel <- MCMCglmm(
+MCMCglmmModel <- MCMCglmm::MCMCglmm(
   outcome ~ female + ageYearsCentered,
   random = ~ us(ageYearsCentered):id,
   family = "poisson",
@@ -1207,7 +1207,7 @@ num_cores <- parallelly::availableCores() - 1
 num_true_cores <- parallelly::availableCores(logical = FALSE) - 1
 ```
 
-`mgcv::gam()` function:
+#### `mgcv::gam()` Function
 
 ```{r}
 gamModel <- mgcv::gam(
@@ -1229,7 +1229,7 @@ performance::model_performance(gamModel)
 performance::r2(gamModel)
 ```
 
-`mgcv::gamm()` function:
+#### `mgcv::gamm()` Function
 
 ```{r}
 gammModel <- mgcv::gamm(
@@ -1257,7 +1257,7 @@ summary(gammModel_standardized$lme)
 summary(gammModel_standardized$gam)
 ```
 
-`gamm4::gamm4()` function:
+#### `gamm4::gamm4()` Function
 
 ```{r}
 gamm4Model <- gamm4::gamm4(
@@ -1306,7 +1306,7 @@ newData$predictedValue <- predict( # predict.gam
   newdata.guaranteed = TRUE # to indicate that idFactor is not in the newdata object
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = ageYears,
@@ -1348,7 +1348,7 @@ gamMethod <- function(formula, data, weights = NULL, ...) { # from here: https:/
 #  }
 #}
 
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -1373,7 +1373,7 @@ ggplot(
 ### Individuals' Trajectories Overlaid with Prototypical Trajectory
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   data = mydata,
   mapping = aes(
     x = ageYears,
@@ -1406,7 +1406,7 @@ ggplot(
 ## Asymptotic Growth {#sec-nonlinearAsymptotic}
 
 ```{r}
-nonlinearModel <- nlme(
+nonlinearModel <- nlme::nlme(
   height ~ SSasymp(age, Asym, R0, lrc),
   data = Loblolly,
   fixed = Asym + R0 + lrc ~ 1,
@@ -1431,12 +1431,12 @@ mydata_long$ageCenteredSquared <- mydata_long$ageCentered ^ 2
 
 ```{r}
 mydata_long <- mydata_long |>
-  group_by(ID) |>
-  mutate(
+  dplyr::group_by(ID) |>
+  dplyr::mutate(
     sleep_personMean = mean(sleep, na.rm = TRUE),
     sleep_personMeanCentered = sleep - sleep_personMean
   ) |>
-  ungroup()
+  dplyr::ungroup()
 ```
 
 ## Fit the Model
@@ -1528,7 +1528,7 @@ newData$modelImpliedDepression <- predict( # predict.merMod
   re.form = NA # include no random effects
 )
 
-ggplot(
+ggplot2::gplot(
   data = newData,
   mapping = aes(
     x = age,
@@ -1580,7 +1580,7 @@ newData$modelImpliedDepression <- predict( # predict.merMod
   re.form = NA # include no random effects
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newData,
   mapping = aes(
     x = age,
@@ -1748,13 +1748,13 @@ Vary the level from 0, 1, to 2 so that you can check the between- and within-sub
 ```{r}
 qqnorm(
   linearMixedModel_nlme,
-  ~ ranef(., level = 1))
+  ~ nlme::ranef(., level = 1))
 ```
 
 ## PP Plots
 
 ```{r}
-ppPlot(linearMixedModel)
+petersenlab::ppPlot(linearMixedModel)
 ```
 
 ## QQ Plot of residuals
@@ -1791,7 +1791,7 @@ plot(
 ## Can model heteroscedasticity of the within-group error with the weights argument
 
 ```{r}
-linearMixedModel_nlmeVarStructure <- lme(
+linearMixedModel_nlmeVarStructure <- nlme::lme(
   math ~ female + ageYearsCentered,
   random = ~ 1 + ageYearsCentered|id,
   weights = varIdent(form = ~ 1 | female),
@@ -1826,15 +1826,15 @@ Vary the level from 0, 1, to 2 so that you can check the between- and within-sub
 ```{r}
 qqnorm(
   linearMixedModel_nlme,
-  ~ ranef(., level = 0))
+  ~ nlme::ranef(., level = 0))
 
 qqnorm(
   linearMixedModel_nlme,
-  ~ ranef(., level = 1))
+  ~ nlme::ranef(., level = 1))
 
 qqnorm(
   linearMixedModel_nlme,
-  ~ ranef(., level = 2))
+  ~ nlme::ranef(., level = 2))
 ```
 
 ## QQ plot of random effects by levels of a predictor
@@ -1842,7 +1842,7 @@ qqnorm(
 ```{r}
 qqnorm(
   linearMixedModel_nlme,
-  ~ ranef(., level = 1) | female)
+  ~ nlme::ranef(., level = 1) | female)
 ```
 
 ## Pairs plot
@@ -1852,7 +1852,7 @@ pairs(linearMixedModel_nlme)
 
 pairs(
   linearMixedModel_nlme,
-  ~ ranef(., level = 1) | female)
+  ~ nlme::ranef(., level = 1) | female)
 ```
 
 ## Variance functions for modeling heteroscedasticity

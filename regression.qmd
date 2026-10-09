@@ -123,7 +123,7 @@ multipleRegressionModelPairwise[c("coefficients","se","Probability","R2","shrunk
 ## Linear regression model with robust covariance matrix (rms)
 
 ```{r}
-rmsMultipleRegressionModel <- robcov(ols(
+rmsMultipleRegressionModel <- rms::robcov(rms::ols(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
@@ -137,7 +137,7 @@ print(effectsize::standardize_parameters(rmsMultipleRegressionModel), digits = 2
 ## Robust linear regression (MM-type iteratively reweighted least squares regression)
 
 ```{r}
-robustLinearRegression <- lmrob(
+robustLinearRegression <- robustbase::lmrob(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = na.exclude)
@@ -223,7 +223,7 @@ For example, we could use Gamma regression, `family = Gamma`, when the response 
 ```{r}
 #| output: false
 
-bayesianGeneralizedLinearRegression <- brm(
+bayesianGeneralizedLinearRegression <- brms::brm(
   countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = poisson,
@@ -286,7 +286,7 @@ print(effectsize::standardize_parameters(ordinalRegressionModel3), digits = 2)
 ```{r}
 #| output: false
 
-bayesianOrdinalRegression <- brm(
+bayesianOrdinalRegression <- brms::brm(
   orderedVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = cumulative(),
@@ -297,7 +297,11 @@ bayesianOrdinalRegression <- brm(
 
 ```{r}
 summary(bayesianOrdinalRegression)
-print(effectsize::standardize_parameters(bayesianOrdinalRegression, method = "basic"), digits = 2)
+print(
+  effectsize::standardize_parameters(
+    bayesianOrdinalRegression,
+    method = "basic"),
+  digits = 2)
 ```
 
 ## Bayesian count regression model
@@ -305,7 +309,7 @@ print(effectsize::standardize_parameters(bayesianOrdinalRegression, method = "ba
 ```{r}
 #| output: false
 
-bayesianCountRegression <- brm(
+bayesianCountRegression <- brms::brm(
   countVariable ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = "poisson",
@@ -316,7 +320,11 @@ bayesianCountRegression <- brm(
 
 ```{r}
 summary(bayesianCountRegression)
-print(effectsize::standardize_parameters(bayesianCountRegression, method = "basic"), digits = 2)
+print(
+  effectsize::standardize_parameters(
+    bayesianCountRegression,
+    method = "basic"),
+  digits = 2)
 ```
 
 ## Logistic regression model (rms)
@@ -338,7 +346,7 @@ print(effectsize::standardize_parameters(logisticRegressionModel), digits = 2)
 ```{r}
 #| output: false
 
-bayesianLogisticRegression <- brm(
+bayesianLogisticRegression <- brms::brm(
   female ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = bernoulli,
@@ -349,7 +357,11 @@ bayesianLogisticRegression <- brm(
 
 ```{r}
 summary(bayesianLogisticRegression)
-print(effectsize::standardize_parameters(bayesianLogisticRegression, method = "basic"), digits = 2)
+print(
+  effectsize::standardize_parameters(
+    bayesianLogisticRegression,
+    method = "basic"),
+  digits = 2)
 ```
 
 # Hierarchical Linear Regression
@@ -406,7 +418,9 @@ interactionModel <- lm(
   data = states)
 
 summary(interactionModel)
-print(effectsize::standardize_parameters(interactionModel), digits = 2)
+print(
+  effectsize::standardize_parameters(interactionModel),
+  digits = 2)
 ```
 
 ### Plots
@@ -509,7 +523,7 @@ newdata$Income <- predict(
   newdata = newdata
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newdata,
   mapping = aes(
     x = Illiteracy_centered,
@@ -547,7 +561,7 @@ newdata$outcome <- predict(
   newdata = newdata
 )
 
-ggplot(
+ggplot2::ggplot(
   data = newdata,
   mapping = aes(
     x = bpi_antisocialT1Sum,
@@ -679,6 +693,8 @@ summary(
 
 ## Multiple imputation {#sec-imputation}
 
+For more info how to perform multiple imputation, see [here](multipleImputation.qmd).
+
 ```{r}
 modelData_imputed <- mice::mice(
   modelData,
@@ -689,7 +705,7 @@ imputedData_fit <- with(
   modelData_imputed,
   lm(bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum))
 
-imputedData_pooledEstimates <- pool(imputedData_fit)
+imputedData_pooledEstimates <- mice::pool(imputedData_fit)
 summary(imputedData_pooledEstimates)
 ```
 
@@ -701,7 +717,7 @@ rockchalk::getDeltaRsquare(multipleRegressionModel)
 
 # Partial Regression Plot {#sec-partialRegressionPlot}
 
-A partial regression plot (aka added-variable) examines the association between the predictor and the outcome after controlling for the covariates.
+A partial regression plot (aka added-variable plot) examines the association between the predictor and the outcome after controlling for the covariates.
 
 ```{r}
 car::avPlots(
@@ -725,7 +741,7 @@ rx <- resid(lm(
 # Create the partial regression plot
 df_plot <- data.frame(rx, ry)
 
-ggplot(
+ggplot2::ggplot(
   data = df_plot,
   mapping = aes(x = rx, y = ry)) +
   geom_point(alpha = 0.6) +
@@ -776,7 +792,7 @@ commonalityAnalysis
 
 # Model Building Steps
 
-1. Examine extent and type of missing data, consider [how to handle missing values](#sec-missingness) ([multiple imputation](#imputation), [FIML](#sec-fiml), [pairwise deletion](#sec-pairwiseDeletion), [listwise deletion](#sec-listwiseDeletion))
+1. Examine extent and type of missing data, consider [how to handle missing values](#sec-missingness) ([multiple imputation](#sec-imputation), [FIML](#sec-fiml), [pairwise deletion](#sec-pairwiseDeletion), [listwise deletion](#sec-listwiseDeletion))
     - Little's MCAR test from `mcar_test()` function of the `njtierney/naniar` package
     - Bayesian handling of missing data: <https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html> (archived at <https://perma.cc/Z4HT-QXWR>)
 1. Examine descriptive statistics, consider variable transformations
@@ -800,7 +816,7 @@ To determine the confidence intervals of parameter estimates
 ## Linear Regression
 
 ```{r}
-multipleRegressionModelBootstrapped <- Boot(multipleRegressionModelNoMissing, R = 1000)
+multipleRegressionModelBootstrapped <- car::Boot(multipleRegressionModelNoMissing, R = 1000)
 summary(multipleRegressionModelBootstrapped)
 confint(multipleRegressionModelBootstrapped, level = .95, type = "bca")
 hist(multipleRegressionModelBootstrapped)
@@ -809,7 +825,7 @@ hist(multipleRegressionModelBootstrapped)
 ## Generalized Regression
 
 ```{r}
-generalizedRegressionModelBootstrapped <- Boot(multipleRegressionModelNoMissing, R = 1000)
+generalizedRegressionModelBootstrapped <- car::Boot(multipleRegressionModelNoMissing, R = 1000)
 summary(generalizedRegressionModelBootstrapped)
 confint(generalizedRegressionModelBootstrapped, level = .95, type = "bca")
 hist(generalizedRegressionModelBootstrapped)
@@ -827,45 +843,48 @@ To examine degree of prediction error and over-fitting to determine best model
 kFolds <- 10
 replications <- 20
 
-folds <- cvFolds(nrow(mydata), K = kFolds, R = replications)
+folds <- cvTools::cvFolds(
+  nrow(mydata),
+  K = kFolds,
+  R = replications)
 
 fitLm <- lm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = "na.exclude")
 
-fitLmrob <- lmrob(
+fitLmrob <- robustbase::lmrob(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = "na.exclude")
 
-fitLts <- ltsReg(
+fitLts <- robustbase::ltsReg(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = "na.exclude")
 
-cvFitLm <- cvLm(
+cvFitLm <- cvTools::cvLm(
   fitLm,
   K = kFolds,
   R = replications)
 
-cvFitLmrob <- cvLmrob(
+cvFitLmrob <- cvTools::cvLmrob(
   fitLmrob,
   K = kFolds,
   R = replications)
 
-cvFitLts <- cvLts(
+cvFitLts <- cvTools::cvLts(
   fitLts,
   K = kFolds,
   R = replications)
 
-cvFits <- cvSelect(
+cvFits <- cvTools::cvSelect(
   OLS = cvFitLm,
   MM = cvFitLmrob,
   LTS = cvFitLts)
 cvFits
 
-bwplot(
+lattice::bwplot(
   cvFits,
   xlab = "Root Mean Square Error",
   xlim = c(0, max(cvFits$cv$CV) + 0.2))
@@ -876,14 +895,14 @@ bwplot(
 ## Effect Plots
 
 ```{r}
-allEffects(multipleRegressionModel)
-plot(allEffects(multipleRegressionModel))
+effects::allEffects(multipleRegressionModel)
+plot(effects::allEffects(multipleRegressionModel))
 ```
 
 ## Confidence Ellipses
 
 ```{r}
-confidenceEllipse(
+car::confidenceEllipse(
   multipleRegressionModel,
   levels = c(0.5, .95))
 ```
@@ -892,7 +911,8 @@ confidenceEllipse(
 
 ```{r}
 mydata_nomissing <- na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")])
-dataEllipse(
+
+car::dataEllipse(
   mydata_nomissing$bpi_antisocialT1Sum,
   mydata_nomissing$bpi_antisocialT2Sum,
   levels = c(0.5, .95))
@@ -914,7 +934,7 @@ dataEllipse(
 ###### Scatterplot Matrix
 
 ```{r}
-scatterplotMatrix(
+car::scatterplotMatrix(
   ~ bpi_antisocialT2Sum + bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata)
 ```
@@ -924,7 +944,7 @@ scatterplotMatrix(
 The distance correlation is an index of the degree of the linear and non-linear association between two variables.
 
 ```{r}
-correlation(
+correlation::correlation(
   mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
   method = "distance",
   p_adjust = "none")
@@ -959,7 +979,7 @@ Often, the simpler (generalized) linear model is preferable to semi-paremetric o
 <http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models> (archived at <https://web.archive.org/web/20170213041653/http://documents.software.dell.com/Statistics/Textbook/Generalized-Additive-Models>)
 
 ```{r}
-generalizedAdditiveModel <- gam(
+generalizedAdditiveModel <- mgcv::gam(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   family = gaussian(),
   data = mydata,
@@ -986,7 +1006,7 @@ The instrumental variables (2SLS) estimator is implemented in the `R` package `A
 ```{r}
 #| eval: false
 
-ivreg(y ~ x1 + x2 + w1 + w2 | z1 + z2 + z3 + w1 + w2)
+AER::ivreg(y ~ x1 + x2 + w1 + w2 | z1 + z2 + z3 + w1 + w2)
 ```
 
 where `x1` and `x2` are endogenous regressors, `w1` and `w2` exogeneous regressors, and `z1` to `z3` are excluded instruments.
@@ -1002,11 +1022,11 @@ hsng2 <- read.dta("https://www.stata-press.com/data/r11/hsng2.dta") #archived at
 ```{r}
 #| include: false
 
-hsng2 <- read.dta("./data/hsng2.dta") #https://www.stata-press.com/data/r11/hsng2.dta archived at https://perma.cc/7P2Q-ARKR
+hsng2 <- foreign::read.dta("./data/hsng2.dta") #https://www.stata-press.com/data/r11/hsng2.dta archived at https://perma.cc/7P2Q-ARKR
 ```
 
 ```{r}
-fiv <- ivreg(
+fiv <- AER::ivreg(
   rent ~ hsngval + pcturban | pcturban + faminc + reg2 + reg3 + reg4,
   data = hsng2) #Housing values are likely endogeneous and therefore instrumented by median family income (faminc) and 3 regional dummies (reg2, reg4, reg4)
 
@@ -1031,7 +1051,7 @@ summary(first)
 In case of a single endogenous variable (K = 1), the F-statistic to assess weak instruments is reported after estimating the first stage with, for example:
 
 ```{r}
-waldtest(
+lmtest::waldtest(
   first,
   . ~ . - faminc - reg2 - reg3 - reg4)
 ```
@@ -1039,7 +1059,7 @@ waldtest(
 or in case of heteroscedatistic errors:
 
 ```{r}
-waldtest(
+lmtest::waldtest(
   first,
   . ~ . - faminc - reg2 - reg3- reg4,
   vcov = sandwich)
@@ -1075,7 +1095,7 @@ Rather, here we are examining whether there is change in the variance as a funct
 Examining whether level (e.g., mean) depends on spread (e.g., variance)—plot of log of the absolute Studentized residuals against the log of the fitted values
 
 ```{r}
-spreadLevelPlot(multipleRegressionModel)
+car::spreadLevelPlot(multipleRegressionModel)
 ```
 
 ##### Breusch-Pagan test
@@ -1083,25 +1103,25 @@ spreadLevelPlot(multipleRegressionModel)
 <https://www.rdocumentation.org/packages/lmtest/versions/0.9-40/topics/bptest> (archived at <https://perma.cc/K4WC-7TVW>)
 
 ```{r}
-bptest(multipleRegressionModel)
+lmtest::bptest(multipleRegressionModel)
 ```
 
 ##### Goldfeld-Quandt Test
 
 ```{r}
-gqtest(multipleRegressionModel)
+lmtest::gqtest(multipleRegressionModel)
 ```
 
 ##### Test of dependence of spread on level
 
 ```{r}
-ncvTest(multipleRegressionModel)
+car::ncvTest(multipleRegressionModel)
 ```
 
 ##### Test of dependence of spread on predictors
 
 ```{r}
-ncvTest(
+car::ncvTest(
   multipleRegressionModel,
   ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum)
 ```
@@ -1125,13 +1145,13 @@ Standard errors (SEs) on the diagonal increase
 
 ```{r}
 vcov(multipleRegressionModel)
-hccm(multipleRegressionModel)
+car::hccm(multipleRegressionModel)
 
 summary(multipleRegressionModel)
-coeftest(multipleRegressionModel, vcov = sandwich)
-coeftest(multipleRegressionModel, vcov = hccm)
+lmtest::coeftest(multipleRegressionModel, vcov = sandwich)
+lmtest::coeftest(multipleRegressionModel, vcov = hccm)
 
-robcov(ols(
+rms::robcov(rms::ols(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   x = TRUE,
@@ -1143,7 +1163,7 @@ Use "cluster" variable to account for nested data within-subject:
 ```{r}
 #| eval: false
 
-robcov(ols(
+robcov::robcov(robcov::ols(
   t_ext ~ m_ext + age,
   data = mydata,
   x = TRUE,
@@ -1200,7 +1220,7 @@ VIF = 1: Not correlated\
 VIF > 5 to 10: Highly correlated (multicollinearity present)
 
 ```{r}
-vif(multipleRegressionModel)
+car::vif(multipleRegressionModel)
 ```
 
 ##### Generalized Variance Inflation Factor (GVIF)
@@ -1237,7 +1257,7 @@ Values > 30 indicate strong multicollinearity.
 For how to interpret, see here: <https://stats.stackexchange.com/a/87610/20338> (archived at <https://perma.cc/Y4J8-MY7Q>)
 
 ```{r}
-ols_eigen_cindex(multipleRegressionModel)
+olsrr::ols_eigen_cindex(multipleRegressionModel)
 ```
 
 #### Ways to Handle
@@ -1255,9 +1275,9 @@ ols_eigen_cindex(multipleRegressionModel)
 #### Ways to Test
 
 - Probability Plots
-    - [Normal Quantile (QQ) Plots](#qqPlot) (based on non-cumulative distribution of residuals)
-    - [Normal Probability (PP) Plots](#ppPlot) (based on cumulative distribution of residuals)
-- [Density Plot of Residuals](#densityPlotResiduals)
+    - [Normal Quantile (QQ) Plots](#sec-qqPlot) (based on non-cumulative distribution of residuals)
+    - [Normal Probability (PP) Plots](#sec-ppPlot) (based on cumulative distribution of residuals)
+- [Density Plot of Residuals](#sec-densityPlotResiduals)
 - Statistical Tests
     - Kolmogorov-Smirnov test
     - Shapiro-Wilk test
@@ -1322,9 +1342,9 @@ strictlyPositiveDV <- lm(
 Consider rounding the power to a common value (square root = .5; cube root = .333; squared = 2)
 
 ```{r}
-boxCox(strictlyPositiveDV)
-powerTransform(strictlyPositiveDV) 
-transformedDV <- powerTransform(strictlyPositiveDV)
+car::boxCox(strictlyPositiveDV)
+car::powerTransform(strictlyPositiveDV) 
+transformedDV <- car::powerTransform(strictlyPositiveDV)
 
 summary(transformedDV)
 ```
@@ -1332,7 +1352,9 @@ summary(transformedDV)
 ####### Transform the DV
 
 ```{r}
-mydata$bpi_antisocialT2SumTransformed <- bcPower(mydata$bpi_antisocialT2Sum + 1, coef(transformedDV))
+mydata$bpi_antisocialT2SumTransformed <- car::bcPower(
+  mydata$bpi_antisocialT2Sum + 1,
+  coef(transformedDV))
 
 plot(density(na.omit(mydata$bpi_antisocialT2SumTransformed)))
 ```
@@ -1374,7 +1396,9 @@ summary(multipleRegressionModel_constructedVariable)$coef["boxCoxVariable(bpi_an
 Plot allows us to see whether the need for transformation is spread through data or whether it is just dependent on a small fraction of observations:
 
 ```{r}
-avPlots(multipleRegressionModel_constructedVariable, "boxCoxVariable(bpi_antisocialT1Sum + 1)")
+car::avPlots(
+  multipleRegressionModel_constructedVariable,
+  "boxCoxVariable(bpi_antisocialT1Sum + 1)")
 ```
 
 ####### Inverse Response Plot
@@ -1382,7 +1406,7 @@ avPlots(multipleRegressionModel_constructedVariable, "boxCoxVariable(bpi_antisoc
 The black line is the best-fitting power transformation:
 
 ```{r}
-inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2))
+car::inverseResponsePlot(strictlyPositiveDV, lambda = c(-1,-0.5,0,1/3,.5,1,2))
 ```
 
 ###### Yeo-Johnson Transformations
@@ -1392,7 +1416,7 @@ Useful if the outcome is not strictly positive.
 ```{r}
 #| eval: false
 
-yjPower(DV, lambda)
+car::yjPower(DV, lambda)
 ```
 
 ##### Transformations of Predictor Variable
@@ -1402,13 +1426,13 @@ yjPower(DV, lambda)
 Linear model:
 
 ```{r}
-crPlots(multipleRegressionModelNoMissing, order = 1)
+car::crPlots(multipleRegressionModelNoMissing, order = 1)
 ```
 
 Quadratic model:
 
 ```{r}
-crPlots(multipleRegressionModelNoMissing, order = 2)
+car::crPlots(multipleRegressionModelNoMissing, order = 2)
 ```
 
 
@@ -1422,7 +1446,7 @@ summary(multipleRegressionModel_quadratic)
 anova(
   multipleRegressionModel_quadratic,
   multipleRegressionModel)
-crPlots(multipleRegressionModel_quadratic, order = 1)
+car::crPlots(multipleRegressionModel_quadratic, order = 1)
 ```
 
 ###### CERES Plot (Combining conditional Expectations and RESiduals)
@@ -1430,8 +1454,8 @@ crPlots(multipleRegressionModel_quadratic, order = 1)
 Useful when nonlinear associations among the predictors are very strong (component-plus-residual plots may appear nonlinear even though the true partial regression is linear, a phenonomen called leakage)
 
 ```{r}
-ceresPlots(multipleRegressionModel)
-ceresPlots(multipleRegressionModel_quadratic)
+car::ceresPlots(multipleRegressionModel)
+car::ceresPlots(multipleRegressionModel_quadratic)
 ```
 
 ###### Box-Tidwell Method for Choosing Predictor Transformations
@@ -1439,7 +1463,7 @@ ceresPlots(multipleRegressionModel_quadratic)
 predictors must be strictly positive (or add a constant to make it strictly positive)
 
 ```{r}
-boxTidwell(
+car::boxTidwell(
   bpi_antisocialT2Sum ~ I(bpi_antisocialT1Sum + 1) + I(bpi_anxiousDepressedSum + 1),
   other.x = NULL, #list variables not to be transformed in other.x
   data = mydata,
@@ -1457,8 +1481,8 @@ multipleRegressionModel_cv <- lm(
 summary(multipleRegressionModel_cv)$coef["I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum))", , drop = FALSE]
 summary(multipleRegressionModel_cv)$coef["I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum))", , drop = FALSE]
 
-avPlots(multipleRegressionModel_cv, "I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum))")
-avPlots(multipleRegressionModel_cv, "I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum))")
+car::avPlots(multipleRegressionModel_cv, "I(bpi_antisocialT1Sum * log(bpi_antisocialT1Sum))")
+car::avPlots(multipleRegressionModel_cv, "I(bpi_anxiousDepressedSum * log(bpi_anxiousDepressedSum))")
 ```
 
 ##### Robust models
@@ -1477,7 +1501,6 @@ Resources
 Spearman's rho is a non-parametric correlation.
 
 ```{r}
-
 cor.test(
   mydata$bpi_antisocialT1Sum,
   mydata$bpi_antisocialT2Sum) #Pearson r, correlation that is sensitive to outliers
@@ -1492,7 +1515,7 @@ cor.test(
 ```{r}
 #| eval: false
 
-cov.mve(
+MASS::cov.mve(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
 ```
@@ -1500,7 +1523,7 @@ cov.mve(
 ```{r}
 #| echo: false
 
-cov.mve.fit <- cov.mve(
+cov.mve.fit <- MASS::cov.mve(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
 
@@ -1511,13 +1534,9 @@ cov.mve.fit
 ####### Minimum covariance determinant
 
 ```{r}
-
-```
-
-```{r}
 #| eval: false
 
-cov.mcd(
+MASS::cov.mcd(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
 ```
@@ -1525,7 +1544,7 @@ cov.mcd(
 ```{r}
 #| echo: false
 
-cov.mcd.fit <- cov.mcd(
+cov.mcd.fit <- MASS::cov.mcd(
   na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")]),
   cor = TRUE)
 
@@ -1536,7 +1555,7 @@ cov.mcd.fit
 ####### Winsorized correlation
 
 ```{r}
-correlation(
+correlation::correlation(
   mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
   winsorize = 0.2,
   p_adjust = "none")
@@ -1545,7 +1564,7 @@ correlation(
 ####### Percentage bend correlation
 
 ```{r}
-correlation(
+correlation::correlation(
   mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
   method = "percentage",
   p_adjust = "none")
@@ -1554,7 +1573,7 @@ correlation(
 ####### Biweight midcorrelation
 
 ```{r}
-correlation(
+correlation::correlation(
   mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")],
   method = "biweight",
   p_adjust = "none")
@@ -1585,7 +1604,8 @@ The Theil-Sen single median estimator is robust to outliers; have to remove miss
 
 ```{r}
 mydata_subset <- na.omit(mydata[,c("bpi_antisocialT1Sum","bpi_antisocialT2Sum")])[1:400,]
-mblm(
+
+mblm::mblm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum,
   dataframe = mydata_subset,
   repeated = FALSE)
@@ -1600,7 +1620,7 @@ Best when no outliers: MM-type regression estimator
 MM-type regression estimator (best):
 
 ```{r}
-lmrob(
+robustbase::lmrob(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = na.exclude)
@@ -1609,7 +1629,7 @@ lmrob(
 Iteratively reweighted least squares (IRLS): <http://www.ats.ucla.edu/stat/r/dae/rreg.htm> (archived at <https://web.archive.org/web/20161119025907/http://www.ats.ucla.edu/stat/r/dae/rreg.htm>)
 
 ```{r}
-rlm(
+MASS::rlm(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = na.exclude)
@@ -1618,7 +1638,7 @@ rlm(
 ####### Robust generalized regression
 
 ```{r}
-glmrob(
+robustbase::glmrob(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   family = "poisson",
@@ -1628,7 +1648,7 @@ glmrob(
 Most resistant to outliers: Least trimmed squares (LTS)—but not good as a standalone estimator, better for identifying outliers
 
 ```{r}
-ltsReg(
+robustbase::ltsReg(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   na.action = na.exclude)
@@ -1643,7 +1663,7 @@ Quantile (L1) regression: `rq()` function of quantreg package
 ```{r}
 quantiles <- 1:9/10
 
-quantileRegressionModel <- rq(
+quantileRegressionModel <- quantreg::rq(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
   tau = quantiles,
@@ -1656,9 +1676,11 @@ summary(quantileRegressionModel)
 Plot to examine the association between the predictor and the outcome at different levels (i.e., quantiles) of the predictor:
 
 ```{r}
-ggplot(
+ggplot2::ggplot(
   mydata,
-  aes(bpi_antisocialT1Sum, bpi_antisocialT2Sum)) + 
+  aes(
+    x = bpi_antisocialT1Sum,
+    y = bpi_antisocialT2Sum)) + 
   geom_point() + 
   geom_quantile(
     quantiles = quantiles,
@@ -1688,7 +1710,10 @@ plot(
 <https://www.ucd.ie/ecomodel/Resources/QQplots_WebVersion.html> (archived at <https://perma.cc/9UC3-3WRX>)
 
 ```{r}
-qqPlot(multipleRegressionModel, main = "QQ Plot", id = TRUE)
+car::qqPlot(
+  multipleRegressionModel,
+  main = "QQ Plot",
+  id = TRUE)
 
 qqnorm(resid(multipleRegressionModel))
 qqnorm(resid(rmsMultipleRegressionModel))
@@ -1705,27 +1730,30 @@ qqnorm(resid(multilevelRegressionModel))
 #### PP plots {#sec-ppPlot}
 
 ```{r}
-ppPlot(multipleRegressionModel)
-ppPlot(rmsMultipleRegressionModel)
-ppPlot(robustLinearRegression)
-ppPlot(ltsRegression)
+petersenlab::ppPlot(multipleRegressionModel)
+petersenlab::ppPlot(rmsMultipleRegressionModel)
+petersenlab::ppPlot(robustLinearRegression)
+petersenlab::ppPlot(ltsRegression)
 
-ppPlot(generalizedRegressionModel)
-ppPlot(rmsGeneralizedRegressionModel)
-ppPlot(robustGeneralizedRegression)
+petersenlab::ppPlot(generalizedRegressionModel)
+petersenlab::ppPlot(rmsGeneralizedRegressionModel)
+petersenlab::ppPlot(robustGeneralizedRegression)
 ```
 
 #### Density Plot of Residuals {#sec-densityPlotResiduals}
 
 ```{r}
 studentizedResiduals <- na.omit(rstudent(multipleRegressionModel))
+
 plot(
   density(studentizedResiduals),
   col="red")
+
 xfit <- seq(
   min(studentizedResiduals, na.rm = TRUE),
   max(studentizedResiduals, na.rm = TRUE),
   length = 40)
+
 lines(
   xfit,
   dnorm(xfit),
@@ -1746,7 +1774,7 @@ Tests include:
 - Tukey's test for nonadditivity: adding the squares of the fitted values to the model and refitting (evaluates adequacy of model fit)
 
 ```{r}
-residualPlots(
+car::residualPlots(
   multipleRegressionModelNoMissing,
   id = TRUE)
 ```
@@ -1758,7 +1786,7 @@ Marginal model plots are plots of the outcome versus predictors/fitted values.
 Includes plots of a) observed outcome values versus values on predictors (ignoring the other predictors) and b) observed outcome values versus model fitted values.
 
 ```{r}
-marginalModelPlots(
+car::marginalModelPlots(
   multipleRegressionModel,
   sd = TRUE,
   id = TRUE)
@@ -1775,7 +1803,7 @@ y-axis: residuals from model with all predictors excluding the predictor of inte
 x-axis: residuals from model regressing predictor of interest on all other predictors
 
 ```{r}
-avPlots(
+car::avPlots(
   multipleRegressionModel,
   id = TRUE)
 ```
@@ -1789,11 +1817,11 @@ multipleRegressionModel_removeJointlyInfluentialObs <- lm(
   na.action = na.exclude,
   subset = -c(6318,6023,4022,4040))
 
-avPlots(
+car::avPlots(
   multipleRegressionModel_removeJointlyInfluentialObs,
   id = TRUE)
 
-compareCoefs(
+car::compareCoefs(
   multipleRegressionModel,
   multipleRegressionModel_removeJointlyInfluentialObs)
 ```
@@ -1807,7 +1835,7 @@ Test of outlyingness, i.e., how likely one would have a residual of a given magn
 Note: it does not test how extreme an observation is relative to its distribution (i.e., leverage)
 
 ```{r}
-outlierTest(multipleRegressionModel)
+car::outlierTest(multipleRegressionModel)
 ```
 
 ### Observations with high leverage
@@ -1820,15 +1848,15 @@ hat values are an index of leverage (observations that are far from the center o
 hist(hatvalues(multipleRegressionModel))
 plot(hatvalues(multipleRegressionModel))
 
-influenceIndexPlot(
+car::influenceIndexPlot(
   multipleRegressionModel,
   id = TRUE)
 
-influencePlot(
+car::influencePlot(
   multipleRegressionModel,
   id = TRUE) # circle size is proportional to Cook's Distance
 
-leveragePlots(
+car::leveragePlots(
   multipleRegressionModel,
   id = TRUE)
 ```
@@ -1847,7 +1875,8 @@ head(influence.measures(multipleRegressionModel)$infmat)
 head(dfbeta(multipleRegressionModel))
 
 hist(dfbeta(multipleRegressionModel))
-dfbetasPlots(
+
+car::dfbetasPlots(
   multipleRegressionModel,
   id = TRUE)
 ```
@@ -1918,7 +1947,7 @@ multipleRegressionModel_7 <- lm(
 ##### Examine how much regression coefficients change when excluding influential observations
 
 ```{r}
-compareCoefs(
+car::compareCoefs(
   multipleRegressionModel,
   multipleRegressionModel_2,
   multipleRegressionModel_3,

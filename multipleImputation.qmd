@@ -30,6 +30,7 @@ library("future")
 library("furrr")
 library("nlme")
 library("lme4")
+library("lmerTest")
 library("broom.mixed")
 library("MplusAutomation")
 ```
@@ -41,7 +42,7 @@ data(Oxboys, package = "nlme")
 
 Oxboys_addNA <- data.frame(Oxboys)
 Oxboys_addNA <- Oxboys_addNA |> 
-  rename(id = Subject)
+  dplyr::rename(id = Subject)
 
 Oxboys_addNA$id <- as.integer(Oxboys_addNA$id)
 Oxboys_addNA$Occasion <- as.integer(Oxboys_addNA$Occasion)
@@ -224,7 +225,7 @@ numCores <- parallelly::availableCores() - 1
 #### Specifying the Imputation Method
 
 ```{r}
-meth <- make.method(dataToImpute)
+meth <- mice::make.method(dataToImpute)
 meth[1:length(meth)] <- ""
 meth[Y] <- "2l.pmm" # specify the imputation method here; this can differ by outcome variable
 ```
@@ -246,7 +247,7 @@ The values are:
 - include cluster mean of predictor in addition to fixed effect and random effect of predictor: `4`
 
 ```{r}
-pred <- make.predictorMatrix(dataToImpute)
+pred <- mice::make.predictorMatrix(dataToImpute)
 pred[1:nrow(pred), 1:ncol(pred)] <- 0
 pred[Y, "id"] <- (-2) # cluster variable
 pred[Y, "Occasion"] <- 1 # fixed effect predictor
@@ -260,7 +261,7 @@ pred
 #### Syntax
 
 ```{r}
-mi_mice <- mice(
+mi_mice <- mice::mice(
   as.data.frame(dataToImpute),
   method = meth,
   predictorMatrix = pred,
@@ -281,7 +282,7 @@ fullyObservedCovariates <- c("age","Occasion")
 
 set.seed(52242)
 
-mi_jomo <- jomo(
+mi_jomo <- jomo::jomo(
   Y = data.frame(dataToImpute[, level1Vars]),
   #Y2 = data.frame(dataToImpute[, level2Vars]),
   X = data.frame(dataToImpute[, fullyObservedCovariates]),
@@ -306,7 +307,7 @@ varBounds <- cbind(boundCols, boundLower, boundUpper)
 
 set.seed(52242)
 
-mi_amelia <- amelia(
+mi_amelia <- Amelia::amelia(
   dataToImpute,
   m = numImputations,
   ts = "age",
@@ -327,7 +328,7 @@ mi_amelia <- amelia(
 Save `R` object as `Mplus` data file:
 
 ```{r}
-prepareMplusData(dataToImpute, file.path("dataToImpute.dat"))
+MplusAutomation::prepareMplusData(dataToImpute, file.path("dataToImpute.dat"))
 ```
 
 #### `Mplus` Syntax for Multilevel Imputation
@@ -370,7 +371,7 @@ This would save a `implist.dat` file that can be used to run the model on the mu
 <https://www.gerkovink.com/miceVignettes/futuremice/Vignette_futuremice.html> (archived at <https://perma.cc/4SNE-RCSR>)
 
 ```{r}
-mi_parallel_mice <- futuremice(
+mi_parallel_mice <- mice::futuremice(
   dataToImpute,
   method = meth,
   predictorMatrix = pred,
@@ -403,15 +404,15 @@ plot(mi_mice, c("height"))
 ## Density Plots
 
 ```{r}
-densityplot(mi_mice)
-densityplot(mi_mice, ~ height)
+mice::densityplot(mi_mice)
+mice::densityplot(mi_mice, ~ height)
 ```
 
 ## Strip Plots
 
 ```{r}
-stripplot(mi_mice)
-stripplot(mi_mice, height ~ .imp)
+mice::stripplot(mi_mice)
+mice::stripplot(mi_mice, height ~ .imp)
 ```
 
 # Post-Processing
@@ -421,7 +422,7 @@ stripplot(mi_mice, height ~ .imp)
 ### `mice`
 
 ```{r}
-mi_mice_long <- complete(
+mi_mice_long <- mice::complete(
   mi_mice,
   action = "long",
   include = TRUE)
@@ -435,7 +436,7 @@ mi_mice_long$newVar <- mi_mice_long$age * mi_mice_long$height
 #| eval: false
 
 mi_jomo <- mi_jomo |> 
-  rename(height = dataToImpute...level1Vars.)
+  dplyr::rename(height = dataToImpute...level1Vars.)
 
 mi_jomo$newVar <- mi_jomo$age * mi_jomo$height
 ```
@@ -453,7 +454,7 @@ for(i in 1:length(mi_amelia$imputations)){
 ### `mice`
 
 ```{r}
-mi_mice_mids <- as.mids(mi_mice_long)
+mi_mice_mids <- mice::as.mids(mi_mice_long)
 ```
 
 ### `jomo`
@@ -475,9 +476,9 @@ mi_amelia_mids <- miceadds::datlist2mids(mi_amelia$imputations)
 ```{r}
 #| eval: false
 
-mids2mplus(mi_mice_mids, path = file.path("InsertFilePathHere", fsep = ""))
-mids2mplus(mi_jomo_mids, path = file.path("InsertFilePathHere", fsep = ""))
-mids2mplus(mi_amelia_mids, path = file.path("InsertFilePathHere", fsep = ""))
+mice::mids2mplus(mi_mice_mids, path = file.path("InsertFilePathHere", fsep = ""))
+mice::mids2mplus(mi_jomo_mids, path = file.path("InsertFilePathHere", fsep = ""))
+mice::mids2mplus(mi_amelia_mids, path = file.path("InsertFilePathHere", fsep = ""))
 ```
 
 # Fit Model to Multiply Imputed Data
@@ -515,7 +516,7 @@ rmarkdown::paged_table(summary(fit_lm_pooled))
 ```{r}
 fit_lmer <- with(
   data = mi_mice,
-  expr = lme4::lmer(height ~ age + Occasion + (1|id)))
+  expr = lmerTest::lmer(height ~ age + Occasion + (1|id)))
 ```
 
 ### Pool Results Across Models
