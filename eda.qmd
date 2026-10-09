@@ -121,7 +121,7 @@ mydata |>
   dplyr::summarise(across(
     everything(),
     .fns = list(mean = ~ mean(., na.rm = TRUE)))) |> 
-  round(., 2)
+  round(2)
 ```
 
 - Median
@@ -133,7 +133,7 @@ mydata |>
   dplyr::summarise(across(
     everything(),
     .fns = list(median = ~ median(., na.rm = TRUE)))) |> 
-  round(., 2)
+  round(2)
 ```
 
 - Mode
@@ -145,7 +145,7 @@ mydata |>
   dplyr::summarise(across(
     everything(),
     .fns = list(mode = ~ Mode(., multipleModes = "mean")))) |> 
-  round(., 2)
+  round(2)
 ```
 
 Compute all of these measures of central tendency:
@@ -159,7 +159,7 @@ mydata |>
       median = ~ median(., na.rm = TRUE),
       mode = ~ Mode(., multipleModes = "mean")),
       .names = "{.col}.{.fn}")) |> 
-  round(., 2) |> 
+  round(2) |> 
   tidyr::pivot_longer(
     cols = everything(),
     names_to = c("variable","index"),
@@ -180,7 +180,7 @@ Compute all of these measures of dispersion:
 
 ```{r}
 mydata |> 
-  summarise(across(
+  dplyr::summarise(across(
     everything(),
     .fns = list(
       SD = ~ sd(., na.rm = TRUE),
@@ -189,7 +189,7 @@ mydata |>
       skewness = ~ skew(., na.rm = TRUE),
       kurtosis = ~ kurtosi(., na.rm = TRUE)),
       .names = "{.col}.{.fn}")) |> 
-  round(., 2) |> 
+  round(2) |> 
   tidyr::pivot_longer(
     cols = everything(),
     names_to = c("variable","index"),
@@ -235,7 +235,7 @@ summaryTableTransposed <- summaryTable[-1] |>
   t() |> 
   as.data.frame() |> 
   setNames(summaryTable$variable) |> 
-  round(., digits = 2)
+  round(digits = 2)
 
 summaryTableTransposed
 ```

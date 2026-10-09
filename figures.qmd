@@ -710,7 +710,7 @@ ggplot2::ggplot(
   coord_fixed(
     ratio = (max(predictor, na.rm = TRUE) - min(predictor, na.rm = TRUE))/(max(outcome, na.rm = TRUE) - min(outcome, na.rm = TRUE)),
     xlim = c(0, max(predictor, na.rm = TRUE)),
-    lim = c(0, max(outcome, na.rm = TRUE))) +
+    ylim = c(0, max(outcome, na.rm = TRUE))) +
   theme_classic() +
   theme(text = element_text(family = "Gotham"))
 ```
@@ -1008,7 +1008,7 @@ petersenlab::vwReg(
   bw = FALSE,
   B = 1000)
 
-petersenlab::wReg(
+petersenlab::vwReg(
   outcome ~ predictor,
   data = df,
   shade = FALSE,
