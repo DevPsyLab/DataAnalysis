@@ -123,6 +123,9 @@ multipleRegressionModelPairwise[c("coefficients","se","Probability","R2","shrunk
 ## Linear regression model with robust covariance matrix (rms)
 
 ```{r}
+mydata_dataDistributions <- rms::datadist(mydata)
+options(datadist = "mydata_dataDistributions")
+
 rmsMultipleRegressionModel <- rms::robcov(rms::ols(
   bpi_antisocialT2Sum ~ bpi_antisocialT1Sum + bpi_anxiousDepressedSum,
   data = mydata,
@@ -132,7 +135,9 @@ rmsMultipleRegressionModel <- rms::robcov(rms::ols(
 rmsMultipleRegressionModel
 summary(rmsMultipleRegressionModel)
 confint(rmsMultipleRegressionModel)
-print(effectsize::standardize_parameters(rmsMultipleRegressionModel), digits = 2)
+print(
+  effectsize::standardize_parameters(rmsMultipleRegressionModel),
+  digits = 2)
 ```
 
 ## Robust linear regression (MM-type iteratively reweighted least squares regression)
