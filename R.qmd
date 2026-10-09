@@ -14,7 +14,7 @@ title: "R"
 
 # Learning `R` {#sec-learn}
 
-## Base R
+## Base R {#sec-baseR}
 
 Here are a slew of resources for learning base `R` (in addition to the documents in the lab's [Primer Articles folder](https://drive.google.com/drive/u/0/folders/1U0pNrjF2_tIPU6BiyCv0HqbOUA5P516r)):
 
@@ -40,7 +40,7 @@ Here are a slew of resources for learning base `R` (in addition to the documents
 - Use the `learnr` package: <https://blog.rstudio.com/2017/07/11/introducing-learnr/> (archived at <https://perma.cc/XGJ8-EXSN>)
 - You will sometimes find relevant articles on `R-bloggers`: <https://www.r-bloggers.com> (archived at <https://perma.cc/EL3X-ZXBB>)
 
-## Statistics (using `R`)
+## Statistics (using `R`) {#sec-statsR}
 
 The following are resources for learning statistics using `R`.
 
@@ -52,7 +52,7 @@ The following are resources for learning statistics using `R`.
 - An excellent introductory textbook on Discovering Statistics using `R`: <https://www.amazon.com/Discovering-Statistics-Using-Andy-Field/dp/1446200469> (archived at <https://perma.cc/9LGU-7ZME>)
 - My textbook that teaches `R`/statistics through the lens of fantasy football: <https://isaactpetersen.github.io/Fantasy-Football-Analytics-Textbook>
 
-## `tidyverse`
+## `tidyverse` {#sec-tidyverse}
 
 The following are resources for learning `tidyverse`, which is a collection of `R` packages for data management:
 
@@ -210,7 +210,7 @@ However, unlike containers, environments created using `renv` are specific to `R
 
 `renv` Documentation: <https://rstudio.github.io/renv/index.html>
 
-## Creating an Environment
+## Creating an Environment {#sec-renvCreateEnvironment}
 
 1. Create a directory where you want you want to store the project.
 1. Start R
@@ -252,7 +252,7 @@ To restore the state of your library from the lock file: `renv::restore()`
 
 To disable `renv` on a project: `renv::deactivate()`
 
-## To control which packages to install with `renv` using a `DESCRIPTION` file
+## To control which packages to install with `renv` using a `DESCRIPTION` file {#sec-renvDESCRIPTION}
 
 If you want to control which packages are installed in a `renv` project, you can use a `DESCRIPTION` file to specify the packages that should be installed:
 
@@ -270,7 +270,7 @@ If you want to control which packages are installed in a `renv` project, you can
 1. Run `renv::settings$snapshot.type("explicit")` to suppress dependency discover and to enable "explicit" mode: <https://rstudio.github.io/renv/reference/dependencies.html#explicit-dependencies>
 1. Run `renv::init(bare=TRUE)` to initialize the project without attempting to discover and install `R` package dependencies
 
-## To install a new package for a project after `renv` has been initialized
+## To install a new package for a project after `renv` has been initialized {#sec-renvInstallNewPackage}
 
 1. First, load the `R` environment module (see `Install R packages` section above)
 1. cd to the directory of the `R` project
@@ -304,17 +304,17 @@ Instructions adapted from: <https://mirror.las.iastate.edu/CRAN/bin/windows/base
 
 # Style Guide and Best Practices {#sec-bestPractices}
 
-## Create `Rstudio Project`
+## Create `RStudio Project` {#sec-rstudioProject}
 
 For each data analysis project (i.e., each [`GitLab`/`GitHub`](#sec-git) repo), create an RStudio Project.
 This helps keep your project files organized.
 
-## Use `R` Notebooks for "Computational Notebooks"
+## Use `R` Notebooks for "Computational Notebooks" {#sec-rComputationalNotebook}
 
 Using `R` Notebooks for "Computational Notebooks" is helpful for reproducible code that can be shared with others.
 To create computational notebooks see the `Markdown` section on [computational notebooks](markdown.qmd#sec-computationalNotebook) in the Data Analysis guides.
 
-## Separate sections in code
+## Separate sections in code {#sec-separateCodeSections}
 
 - In `R` scripts, use sections.
     - To insert a section in `RStudio`, use `CTRL-Shift-R` or "Code" - "Insert Section"
@@ -322,7 +322,7 @@ To create computational notebooks see the `Markdown` section on [computational n
     - Headers: 1, 2, or 3 pound signs
     - Code Chunks: `Ctrl+Alt+I`; or click "Insert" button then "R"
 
-## Naming variables
+## Naming variables {#sec-namingVars}
 
 - Use meaningful variable names; we want to know what a variable represents without having to consult an external codebook for every variable
 - Variable names should include the prefix for the measure followed by an underscore
@@ -331,7 +331,7 @@ To create computational notebooks see the `Markdown` section on [computational n
     - e.g., `prefix_thisIsTheVariableName`
 - Do **not** include spaces in variable names
 
-## Comment code frequently and clearly!
+## Comment code frequently and clearly! {#sec-commentCode}
 
 It is important to comment code frequently and clearly.
 You want you (and others) to easily be able to understand your code if you come back to it several years later!
@@ -346,19 +346,19 @@ When you exit `RStudio`, `RStudio` asks if you want to "Save workspace image to 
 Make sure to select "Don't Save"!
 However, do make sure to save your `R` scripts before exiting Rstudio.
 
-# Data Management
+# Data Management {#sec-dataManagement}
 
 - The lab's [Data Analysis Guides on Data Management](dataManagement.qmd)
 - Tidyverse: <https://www.tidyverse.org>
 - University of Iowa Workshops
 
-# Saving Plots
+# Saving Plots {#sec-savePlots}
 
 `png(); dev.off()`
 
 - The lab's [Data Analysis Guides on Figures](figures.qmd)
 
-# Saving Output
+# Saving Output {#sec-saveOutput}
 
 `R Markdown`
 
@@ -367,7 +367,7 @@ However, do make sure to save your `R` scripts before exiting Rstudio.
 - <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf> (archived at <https://perma.cc/3NMT-4L25>)
 - <https://bookdown.org/yihui/rmarkdown/> (archived at <https://perma.cc/UJC8-ZZVC>)
 
-# Shortcuts
+# Shortcuts {#sec-shortcuts}
 
 - Run selected line(s) of code: Ctrl + Enter
 - Comment/uncomment code: Ctrl + Shift + C
@@ -378,7 +378,7 @@ However, do make sure to save your `R` scripts before exiting Rstudio.
 - Search: Ctrl + Shift + F
 - Show all keyboard shortcuts: Alt + Shift + K
 
-# Statistics Examples
+# Statistics Examples {#sec-statsExamples}
 
 - [Bayesian Analysis](bayesian.qmd)
 - [Data Management](dataManagement.qmd)
@@ -395,7 +395,7 @@ However, do make sure to save your `R` scripts before exiting Rstudio.
 - [Regression](regression.qmd)
 - [Structural Equation Modeling](sem.qmd)
 
-# Running Scripts Automatically with Windows
+# Running Scripts Automatically with Windows {#sec-runningScriptsAutomaticallyWindows}
 
 <https://www.spsanderson.com/steveondata/posts/2023-06-29/index.html> (archived at <https://perma.cc/9EXK-W99Y>)
 
@@ -424,9 +424,9 @@ For example, it can be helpful to have an `R` markdown report run automatically 
 1. **Note: When `R` is updated, the path to the `bin` folder within `R` needs to be updated to reflect an accurate absolute path to R.**
     - Example: `C:\R\4.1.3\bin\R CMD BATCH` changed to `C:\R\4.3.0\bin\R CMD BATCH`
 
-## Troubleshooting
+## Troubleshooting {#sec-troubleshooting}
 
-### Pandoc error
+### Pandoc error {#sec-pandoc}
 
 This error may appear if you are attempting to render a markdown file
 
@@ -567,7 +567,7 @@ try({source(path/to/file/file_b.R)})
 try({source(path/to/file_c.R)})    
 ```
 
-# Reading Password Protected Excel Databases
+# Reading Password Protected Excel Databases {#sec-readExcelPasswordProtected}
 
 A helpful post can be found here: <br>
 
@@ -580,12 +580,13 @@ install.packages("excel.link")
 
 library("excel.link")
 
-passwordProtectedBook <- xl.read.file(file.path("full path to workbook"), #Full path to workbook
-password = "pass", #password
-write.res.password="pass") #writing the reset password
+passwordProtectedBook <- excel.link::xl.read.file(
+  file.path("full path to workbook"), #Full path to workbook
+  password = "pass", #password
+  write.res.password="pass") #writing the reset password
 ```
 
-# Sending slacks with `R`
+# Sending Slacks with `R` {#sec-sendSlacks}
 
 Occasionally, it can be helpful to send a Slack message using `R`.
 For example, if a script does not run, a Slack message can be sent to inform the appropriate team members.
@@ -617,17 +618,17 @@ tryCatch(
 {
   #message to send if the code doesn't run
   my_message <- paste( "example message")
-  slackr_msg(my_message, channel = "#recruitment")
+  slackr::slackr_msg(my_message, channel = "#recruitment")
 })
 ```
 
-## Slacking Specific Users
+## Slacking Specific Users {#sec-slackSpecificUsers}
 
 It is also possible to slack specific users with instructions found [at this link](https://stackoverflow.com/questions/32419756/how-do-you-tag-people-with-a-slack-bot) (archived at <https://perma.cc/59U5-V4GQ>).
 
-# Replacing `//n` with a space
+# Replacing `//n` with a space {#sec-replacingWithSpace}
 
-Many notes in projects that are exported from REDCap come with spaces denotes as `//n`.
+Many notes in projects that are exported from REDCap come with spaces (or new lines) denoted as `//n`.
 Use the below code to make these fields more readable in the future.
 
 ```{r}
@@ -636,7 +637,7 @@ Use the below code to make these fields more readable in the future.
 gsub('\\n', ', ', df$notesField)
 ```
 
-# Working with `R` on a Network Drive
+# Working with `R` on a Network Drive {#sec-networkDrive}
 
 When working with `R` on a network drive, it may be helpful to configure the project to store `.Rproj.user` on the local `C:/` drive rather than on the network drive, which results in slow execution times.
 
@@ -646,9 +647,9 @@ For more info:
 - <https://github.com/rstudio/rstudio/issues/14619#issuecomment-2189855598>
 - <https://github.com/rstudio/rstudio/issues/10417#issuecomment-2199930385>
 
-# Package Development
+# Package Development {#sec-packageDevelopment}
 
-## Working with `renv` for Package Management
+## Working with `renv` for Package Management {#sec-packageDevelopmentRenv}
 
 `renv` is used for reproducibility, by helping with package management (tracking package versions, etc.):
 
@@ -658,7 +659,7 @@ Before updating a package locally, make sure that it is available in the Posit P
 
 <https://packagemanager.posit.co>
 
-### Updating the Package
+### Updating the Package {#sec-packageDevelopmentUpdatePackage}
 
 To update the package, run the following in `R`:
 
@@ -716,7 +717,7 @@ renv::install("C:/R/Packages/petersenlab") #PC
 renv::install("/Library/Frameworks/R.framework/Packages/petersenlab") #Mac
 ```
 
-### Installing Packages
+### Installing Packages {#sec-packageDevelopmentInstallingPackages}
 
 To install new packages in the package environment, run the following in `R`:
 
@@ -758,9 +759,9 @@ devtools::build() # or: devtools::build(pkg = "E:/Documents/GitHub/petersenlab")
     R.exe CMD check --as-cran petersenlab_1.0.0.tar.gz
     ```
 
-### Troubleshooting
+### Troubleshooting {#sec-packageDevelopmentTroubleshooting}
 
-#### If errors compiling the PDF manual
+#### If errors compiling the PDF manual {#sec-packageDevelopmentTroubleshootingErrorCompilingPDFmanual}
 
 1. In the terminal:
 
@@ -786,7 +787,7 @@ devtools::build(pkg = "D:/Documents/GitHub/petersenlab")
     R CMD check --as-cran petersenlab_1.0.0.tar.gz
     ```
 
-#### `no visible binding for global variable`; `Undefined global functions or variables`
+#### `no visible binding for global variable`; `Undefined global functions or variables` {#sec-packageDevelopmentTroubleshootingNoVisibleBinding}
 
 For example:
 ```r
@@ -803,7 +804,7 @@ For example:
 predictorVal_centered <- moderatorVal_centered <- NULL
 ```
 
-## `R CMD check` via GitHub Actions
+## `R CMD check` via GitHub Actions {#sec-packageDevelopmentRcmdCheckGH}
 
 ```{r}
 #| eval: false
@@ -811,7 +812,7 @@ predictorVal_centered <- moderatorVal_centered <- NULL
 usethis::use_github_action("check-standard")
 ```
 
-## Useful keyboard shortcuts for package authoring:
+## Useful keyboard shortcuts for package authoring: {#sec-packageDevelopmentShortcuts}
 
  Install Package:           'Ctrl + Shift + B'
  
@@ -827,7 +828,7 @@ renv::snapshot()
 renv::install()
 ```
 
-## `pkgdown`
+## `pkgdown` {#sec-packageDevelopmentPkgdown}
 
 Run once to configure your package to use pkgdown:
 
@@ -845,7 +846,7 @@ Then use `pkgdown` to build your website:
 pkgdown::build_site()
 ```
 
-## Steps to Add Functions
+## Steps to Add Functions {#sec-packageDevelopmentSteps}
 
 1. Add `.R` file with the function
 1. Add the function to the `_pkgdown.yml` file
@@ -860,7 +861,7 @@ pkgdown::build_site()
 1. Commit and push changes
 1. Update release version in GitHub
 
-## Add sub-packages
+## Add sub-packages {#sec-packageDevelopmentAddSubpackages}
 
 ```{r}
 #| eval: false
@@ -875,11 +876,11 @@ remotes::install_local("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage
 remotes::install_local("D:/Documents/GitHub/petersenlab/inst/extdata/testpackage2_0.1.0.tar.gz")
 ```
 
-## Submit Package to CRAN
+## Submit Package to CRAN {#sec-packageDevelopmentSubmitCran}
 
 <https://cran.r-project.org/submit.html>
 
-## Resources
+## Resources {#sec-packageDevelopmentResources}
 
 Official documentation for CRAN:
 
@@ -894,20 +895,20 @@ Unofficial documentation:
 - <https://web.mit.edu/insong/www/pdf/rpackage_instructions.pdf>
 - <https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/>
 
-### For Package Development Tasks
+### For Package Development Tasks {#sec-packageDevelopmentResourcesTasks}
 
 - <https://usethis.r-lib.org/index.html>
 
-### For Documentation
+### For Documentation {#sec-packageDevelopmentResourcesDocumentation}
 
 - <https://github.com/r-lib/roxygen2#roxygen2>
 - <https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/>
 
-### Creating Vignettes
+### Creating Vignettes {#sec-packageDevelopmentResourcesVignettes}
 
 - <https://bookdown.org/yihui/rmarkdown-cookbook/package-vignette.html>
 
-### For Licensing
+### For Licensing {#sec-packageDevelopmentResourcesLicensing}
 
 - <https://usethis.r-lib.org/reference/licenses.html>
 
@@ -918,7 +919,7 @@ Try googling the error message or issue you are experiencing.
 See [here](#sec-questions) for a list of places you can pose `R`-related questions for help.
 In addition, particular errors/warnings/issues are included below:
 
-## General Troubleshooting Tips
+## General Troubleshooting Tips {#sec-troubleshootingRgeneralTips}
 
 1. **Run code line-by-line to identify the source of the error**
    - If you are using RStudio, a red line will often appear on the lefthand side of the screen to indicate the particular line(s) of code that result in an error
@@ -953,7 +954,7 @@ In addition, particular errors/warnings/issues are included below:
        Such values may not be an issue or error in all cases, but if you are not expecting that as a result of your computations, this might suggest an issue with the code and/or data structure
        - Check whether the computed values are reasonable 
 
-## A single error preventing a Wiki site from rendering
+## A single error preventing a Wiki site from rendering {#sec-troubleshootingRwiki}
 
 Code can be wrapped in `try()` statements so that if an error occurs, the script will simply "skip" to the next line of code.
 These `try()` statements are particularly useful when rendering a site; if they are not used, a single error will halt the entire process. `try()` statements allow the code to continue running in spite of a line or two erroring out.
@@ -961,7 +962,7 @@ These `try()` statements are particularly useful when rendering a site; if they 
 If you have already incorporated `try()` statements and are still experiencing fatal errors in code, check to make sure that the smallest possible "unit" of code is wrapped in `try()` statements, rather than large sections of code. 
 See [here](#sec-try) for more information.
 
-## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated
+## Warning: `PACKAGENAME` package in `FILEPATH` library will not be updated {#sec-troubleshootingRpackageNotUpdated}
 
 This warning might indicate that it cannot update the package because it is part of the base `R` installation.
 To fix this:
@@ -996,7 +997,7 @@ To save the current state of your library: `packrat::snapshot()`; if that comman
 
 To disable `packrat` on a project: `disable(restart = FALSE)`
 
-### To install a new package for a project after `packrat` has been initialized
+### To install a new package for a project after `packrat` has been initialized {#sec-packratInstallPackage}
 
 1. First, load the `R` environment module (see `Install R packages` section above)
 1. cd to the directory of the `R` project
@@ -1007,7 +1008,7 @@ To disable `packrat` on a project: `disable(restart = FALSE)`
     - `install.packages(c("packrat","psych","tidyverse","data.table","nlme","lme4","mirt","TeachingDemos","Amelia","mice","miceadds","abind","future","lavaan","blavaan","Rcpp","igraph","shinystan","StanHeaders","brms","rstan","rjags","renv"), repos = "http://cran.r-project.org", type = "source", dependencies = TRUE, Ncpus = 40)`
 1. `packrat::snapshot()`; if that command fails due to an error when fetching sources, try `packrat::snapshot(snapshot.sources = FALSE)`
 
-### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages)
+### Build `packrat` environment on a compute node (only if necessary if package load fails due to issues building packages) {#sec-packratBuildOnComputeNode}
 
 This is relevant if building a `packrat` on [Argon/HPC](hpc.qmd).
 
@@ -1024,7 +1025,7 @@ This is relevant if building a `packrat` on [Argon/HPC](hpc.qmd).
 Note: Your `packrat` environment will then be linked to the proper `glpk` library and will run on any Argon node.
 You do not need to use the `2020.2-base_arch` module at run time, only build time.
 
-# Session Info
+# Session Info {#sec-sessionInfo}
 
 ```{r}
 #| code-fold: true
