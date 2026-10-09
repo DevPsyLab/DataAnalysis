@@ -183,7 +183,7 @@ For example:
 
 ```{r}
 library("petersenlab")
-load_or_install(c("tidyverse","psych"))
+petersenlab::load_or_install(c("tidyverse","psych"))
 ```
 
 # Set a Seed {#sec-seed}
@@ -541,26 +541,26 @@ mydata[,names(mydata) %ni% dropVars]
 
 ```{r}
 mydata |>
-  select(survived, age, prediction)
+  dplyr::select(survived, age, prediction)
 
 mydata |>
-  select(survived:prediction)
+  dplyr::select(survived:prediction)
 
 mydata |>
-  select(all_of(subsetVars))
+  dplyr::select(all_of(subsetVars))
 ```
 
 Or, to drop columns:
 
 ```{r}
 mydata |>
-  select(-sibsp, -parch)
+  dplyr::select(-sibsp, -parch)
 
 mydata |>
-  select(-c(sibsp:parch))
+  dplyr::select(-c(sibsp:parch))
 
 mydata |>
-  select(-all_of(dropVars))
+  dplyr::select(-all_of(dropVars))
 ```
 
 ## Particular Rows
@@ -581,13 +581,13 @@ mydata[which(mydata$survived == 1),]
 
 ```{r}
 mydata |>
-  filter(survived == 1)
+  dplyr::filter(survived == 1)
 
 mydata |>
-  filter(survived == 1, parch <= 1)
+  dplyr::filter(survived == 1, parch <= 1)
 
 mydata |>
-  filter(survived == 1 | parch <= 1)
+  dplyr::filter(survived == 1 | parch <= 1)
 ```
 
 ## Particular Rows and Columns
@@ -606,8 +606,8 @@ mydata[which(mydata$survived == 1), subsetVars]
 
 ```{r}
 mydata |>
-  filter(survived == 1) |>
-  select(all_of(subsetVars))
+  dplyr::filter(survived == 1) |>
+  dplyr::select(all_of(subsetVars))
 ```
 
 # View Data {#sec-viewData}
@@ -635,10 +635,10 @@ head(mydata$age)
 
 ```{r}
 mydata |> 
-  arrange(survived, age) #sort by survived (ascending) then by age (ascending)
+  dplyr::arrange(survived, age) #sort by survived (ascending) then by age (ascending)
 
 mydata |> 
-  arrange(survived, -age) #sort by survived (ascending) then by age (descending)
+  dplyr::arrange(survived, -age) #sort by survived (ascending) then by age (descending)
 ```
 
 # Data Characteristics {#sec-dataCharacteristics}
@@ -736,27 +736,29 @@ Recode multiple variables:
 
 ```{r}
 mydata |>
-  mutate(across(c(
-    survived:pclass),
-    ~ case_match(
-      .,
-      0 ~ "No",
-      1 ~ "Yes")))
+  dplyr::mutate(
+    dplyr::across(
+      survived:pclass,
+      ~ dplyr::recode_values(
+        .,
+        0 ~ "No",
+        1 ~ "Yes")))
 
 mydata |>
-  mutate(across(c(
-    survived:pclass),
-    ~ case_match(
-      .,
-      c(0,1) ~ 1,
-      c(2,3) ~ 2)))
+  dplyr::mutate(
+    dplyr::across(
+      survived:pclass,
+      ~ dplyr::recode_values(
+        .,
+        c(0, 1) ~ 1,
+        c(2, 3) ~ 2)))
 ```
 
 # Rename Variables {#sec-renameVars}
 
 ```{r}
 mydata <- mydata |> 
-  rename(
+  dplyr::rename(
     newVar1 = oldVar1,
     newVar2 = oldVar2)
 ```
@@ -770,7 +772,7 @@ varNamesFrom <- c("oldVar1","oldVar2")
 varNamesTo <- c("newVar1","newVar2")
 
 mydata <- mydata |> 
-  rename_with(~ varNamesTo, all_of(varNamesFrom))
+  dplyr::rename_with(~ varNamesTo, all_of(varNamesFrom))
 ```
 
 # Convert the Types of Variables {#sec-convertVarTypes}
@@ -788,19 +790,19 @@ Multiple variables:
 
 ```{r}
 mydata |>
-  mutate(across(c(
+  dplyr::mutate(across(c(
     age,
     parch,
     prediction),
     as.numeric))
 
 mydata |>
-  mutate(across(
+  dplyr::mutate(across(
     age:parch,
     as.numeric))
 
 mydata |>
-  mutate(across(where(is.factor), as.character))
+  dplyr::mutate(across(where(is.factor), as.character))
 ```
 
 # Merging/Joins {#sec-merging}
@@ -876,7 +878,7 @@ dim(fullJoinData)
 Or, alternatively, using `tidyverse`:
 
 ```{r}
-full_join(mydata, mydata2, by = "ID")
+dplyr::full_join(mydata, mydata2, by = "ID")
 ```
 
 ### Left Outer Join {#sec-leftJoin}
@@ -895,7 +897,7 @@ dim(leftJoinData)
 Or, alternatively, using `tidyverse`:
 
 ```{r}
-left_join(mydata, mydata2, by = "ID")
+dplyr::left_join(mydata, mydata2, by = "ID")
 ```
 
 ### Right Outer Join {#sec-rightJoin}
@@ -914,7 +916,7 @@ dim(rightJoinData)
 Or, alternatively, using `tidyverse`:
 
 ```{r}
-right_join(mydata, mydata2, by = "ID")
+dplyr::right_join(mydata, mydata2, by = "ID")
 ```
 
 ### Inner Join {#sec-innerJoin}
@@ -934,7 +936,7 @@ dim(innerJoinData)
 Or, alternatively, using `tidyverse`:
 
 ```{r}
-inner_join(mydata, mydata2, by = "ID")
+dplyr::inner_join(mydata, mydata2, by = "ID")
 ```
 
 ### Semi Join {#sec-semiJoin}
@@ -946,7 +948,7 @@ Unlike an [inner join](#sec-innerJoin), a left semi join will never duplicate ro
 Here is how to merge two data frames using a left semi join:
 
 ```{r}
-semiJoinData <- semi_join(mydata, mydata2, by = "ID")
+semiJoinData <- dplyr::semi_join(mydata, mydata2, by = "ID")
 
 semiJoinData
 dim(semiJoinData)
@@ -961,7 +963,7 @@ It returns columns from only $x$ (not from $y$).
 Here is how to merge two data frames using a left anti join:
 
 ```{r}
-antiJoinData <- anti_join(mydata, mydata2, by = "ID")
+antiJoinData <- dplyr::anti_join(mydata, mydata2, by = "ID")
 
 antiJoinData
 dim(antiJoinData)
@@ -972,7 +974,7 @@ dim(antiJoinData)
 A cross join combines each row in $x$ with each row in $y$.
 
 ```{r}
-crossJoinData <- cross_join(
+crossJoinData <- dplyr::cross_join(
   data.frame(rater = c("Mother","Father","Teacher")),
   data.frame(timepoint = 1:3))
 
@@ -987,7 +989,7 @@ dfsToMerge <- list(mydata, mydata2, mydata3)
 
 mergedData <- purrr::reduce(
   dfsToMerge,
-  left_join, # could change to full_join (or whichever join is preferred)
+  dplyr::left_join, # could change to full_join (or whichever join is preferred)
   by = "ID")
 
 mergedData
@@ -1005,7 +1007,7 @@ Data widened by a variable (`station`), using `tidyverse`:
 
 ```{r}
 fish_encounters |> 
-  pivot_wider(
+  tidyr::pivot_wider(
     names_from = station,
     values_from = seen)
 ```
@@ -1022,7 +1024,7 @@ Data in long form, transformed from wide form using `tidyverse`:
 
 ```{r}
 mtcars |> 
-  pivot_longer(
+  tidyr::pivot_longer(
     cols = everything(),
     names_to = "variable",
     values_to = "value")
@@ -1048,19 +1050,19 @@ idWaveCoder$positiveAffect <- rnorm(nrow(idWaveCoder))
 idWaveCoder$negativeAffect <- rnorm(nrow(idWaveCoder))
 
 idWaveCoder |> 
-  arrange(id, wave, coder)
+  dplyr::arrange(id, wave, coder)
 ```
 
 Average data across coders:
 
 ```{r}
 idWave <- idWaveCoder |> 
-  group_by(id, wave) |> 
-  summarise(
+  dplyr::group_by(id, wave) |> 
+  dplyr::summarise(
     across(everything(),
       ~ mean(.x, na.rm = TRUE)),
     .groups = "drop") |> 
-  select(-coder)
+  dplyr::select(-coder)
 
 idWave
 ```

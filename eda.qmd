@@ -94,7 +94,7 @@ length(unique(mydata$ID))
     - Here are the proportion of missing data in each variable:
     
 ```{r}
-map(mydata, ~mean(is.na(.))) |> t() |> t()
+purrr::map(mydata, ~mean(is.na(.))) |> t() |> t()
 ```
 
 ## Distribution
@@ -104,7 +104,7 @@ map(mydata, ~mean(is.na(.))) |> t() |> t()
 
 ```{r}
 mydata |> 
-  select(categorical1, categorical2) |>
+  dplyr::select(categorical1, categorical2) |>
   sapply(function(x) table(x, useNA = "always")) |> 
   t()
 ```
@@ -118,8 +118,9 @@ round(colMeans(mydata, na.rm = TRUE), 2)
 round(apply(mydata, 2, function(x) mean(x, na.rm = TRUE)), 2)
 
 mydata |> 
-  summarise(across(everything(),
-                   .fns = list(mean = ~ mean(., na.rm = TRUE)))) |> 
+  dplyr::summarise(across(
+    everything(),
+    .fns = list(mean = ~ mean(., na.rm = TRUE)))) |> 
   round(., 2)
 ```
 
@@ -129,8 +130,9 @@ mydata |>
 round(apply(mydata, 2, function(x) median(x, na.rm = TRUE)), 2)
 
 mydata |> 
-  summarise(across(everything(),
-                   .fns = list(median = ~ median(., na.rm = TRUE)))) |> 
+  dplyr::summarise(across(
+    everything(),
+    .fns = list(median = ~ median(., na.rm = TRUE)))) |> 
   round(., 2)
 ```
 
@@ -140,8 +142,9 @@ mydata |>
 round(apply(mydata, 2, function(x) Mode(x, multipleModes = "mean")), 2)
 
 mydata |> 
-  summarise(across(everything(),
-                   .fns = list(mode = ~ Mode(., multipleModes = "mean")))) |> 
+  dplyr::summarise(across(
+    everything(),
+    .fns = list(mode = ~ Mode(., multipleModes = "mean")))) |> 
   round(., 2)
 ```
 
@@ -149,17 +152,21 @@ Compute all of these measures of central tendency:
 
 ```{r}
 mydata |> 
-  summarise(across(everything(),
-                   .fns = list(mean = ~ mean(., na.rm = TRUE),
-                               median = ~ median(., na.rm = TRUE),
-                               mode = ~ Mode(., multipleModes = "mean")),
-                   .names = "{.col}.{.fn}")) |> 
+  dplyr::summarise(across(
+    everything(),
+    .fns = list(
+      mean = ~ mean(., na.rm = TRUE),
+      median = ~ median(., na.rm = TRUE),
+      mode = ~ Mode(., multipleModes = "mean")),
+      .names = "{.col}.{.fn}")) |> 
   round(., 2) |> 
-  pivot_longer(cols = everything(),
-               names_to = c("variable","index"),
-               names_sep = "\\.") |> 
-  pivot_wider(names_from = index,
-              values_from = value)
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = c("variable","index"),
+    names_sep = "\\.") |> 
+  tidyr::pivot_wider(
+    names_from = index,
+    values_from = value)
 ```
 
 ## Dispersion
@@ -173,19 +180,23 @@ Compute all of these measures of dispersion:
 
 ```{r}
 mydata |> 
-  summarise(across(everything(),
-                   .fns = list(SD = ~ sd(., na.rm = TRUE),
-                               min = ~ min(., na.rm = TRUE),
-                               max = ~ max(., na.rm = TRUE),
-                               skewness = ~ skew(., na.rm = TRUE),
-                               kurtosis = ~ kurtosi(., na.rm = TRUE)),
-                   .names = "{.col}.{.fn}")) |> 
+  summarise(across(
+    everything(),
+    .fns = list(
+      SD = ~ sd(., na.rm = TRUE),
+      min = ~ min(., na.rm = TRUE),
+      max = ~ max(., na.rm = TRUE),
+      skewness = ~ skew(., na.rm = TRUE),
+      kurtosis = ~ kurtosi(., na.rm = TRUE)),
+      .names = "{.col}.{.fn}")) |> 
   round(., 2) |> 
-  pivot_longer(cols = everything(),
-               names_to = c("variable","index"),
-               names_sep = "\\.") |> 
-  pivot_wider(names_from = index,
-              values_from = value)
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = c("variable","index"),
+    names_sep = "\\.") |> 
+  tidyr::pivot_wider(
+    names_from = index,
+    values_from = value)
 ```
 
 Consider transforming data if skewness > |0.8| or if kurtosis > |3.0|.
@@ -195,24 +206,30 @@ Consider transforming data if skewness > |0.8| or if kurtosis > |3.0|.
 Add summary statistics to the bottom of correlation matrices in papers:
 
 ```{r}
-cor.table(mydata, type = "manuscript")
+petersenlab::cor.table(
+  mydata,
+  type = "manuscript")
 
 summaryTable <- mydata |> 
-  summarise(across(everything(),
-                   .fns = list(n = ~ length(na.omit(.)),
-                               missingness = ~ mean(is.na(.)) * 100,
-                               M = ~ mean(., na.rm = TRUE),
-                               SD = ~ sd(., na.rm = TRUE),
-                               min = ~ min(., na.rm = TRUE),
-                               max = ~ max(., na.rm = TRUE),
-                               skewness = ~ skew(., na.rm = TRUE),
-                               kurtosis = ~ kurtosi(., na.rm = TRUE)),
-                   .names = "{.col}.{.fn}")) |>  
-  pivot_longer(cols = everything(),
-               names_to = c("variable","index"),
-               names_sep = "\\.") |> 
-  pivot_wider(names_from = index,
-              values_from = value)
+  dplyr::summarise(across(
+    everything(),
+    .fns = list(
+      n = ~ length(na.omit(.)),
+      missingness = ~ mean(is.na(.)) * 100,
+      M = ~ mean(., na.rm = TRUE),
+      SD = ~ sd(., na.rm = TRUE),
+      min = ~ min(., na.rm = TRUE),
+      max = ~ max(., na.rm = TRUE),
+      skewness = ~ skew(., na.rm = TRUE),
+      kurtosis = ~ kurtosi(., na.rm = TRUE)),
+      .names = "{.col}.{.fn}")) |>  
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = c("variable","index"),
+    names_sep = "\\.") |> 
+  tidyr::pivot_wider(
+    names_from = index,
+    values_from = value)
 
 summaryTableTransposed <- summaryTable[-1] |> 
   t() |> 
@@ -238,7 +255,9 @@ hist(mydata$outcome)
 #### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = outcome)) +
+ggplot2::ggplot(
+  mydata,
+  aes(x = outcome)) +
   geom_histogram(color = 1)
 ```
 
@@ -255,7 +274,9 @@ rug(mydata$outcome)
 #### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = outcome)) +
+ggplot2::ggplot(
+  mydata,
+  aes(x = outcome)) +
   geom_histogram(aes(y = after_stat(density)), color = 1) +
   geom_density() +
   geom_rug()
@@ -272,7 +293,9 @@ plot(density(mydata$outcome, na.rm = TRUE))
 #### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = outcome)) +
+ggplot2::ggplot(
+  mydata,
+  aes(x = outcome)) +
   geom_density()
 ```
 
@@ -287,7 +310,9 @@ boxplot(mydata$outcome, horizontal = TRUE)
 #### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = outcome)) +
+ggplot2::ggplot(
+  mydata,
+  aes(x = outcome)) +
   geom_boxplot()
 ```
 
@@ -302,7 +327,9 @@ vioplot(na.omit(mydata$outcome), horizontal = TRUE)
 #### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = "", y = outcome)) +
+ggplot2::ggplot(
+  mydata,
+  aes(x = "", y = outcome)) +
   geom_violin()
 ```
 
@@ -318,7 +345,7 @@ For an overview of correlation analysis, see [here](https://isaactpetersen.githu
 ```{r}
 cor(mydata, use = "pairwise.complete.obs")
 cor.test( ~ predictor + outcome, data = mydata)
-cor.table(mydata)
+petersenlab::cor.table(mydata)
 ```
 
 ### Spearman Correlation
@@ -326,7 +353,9 @@ cor.table(mydata)
 ```{r}
 cor(mydata, use = "pairwise.complete.obs", method = "spearman")
 cor.test( ~ predictor + outcome, data = mydata, method = "spearman")
-cor.table(mydata, correlation = "spearman")
+petersenlab::cor.table(
+  mydata,
+  correlation = "spearman")
 ```
 
 ### Xi ($\xi$)
@@ -336,7 +365,7 @@ Xi ($\xi$) is an index of the degree of dependence between two variables, which 
 Chatterjee, S. (2021). A new coefficient of correlation. *Journal of the American Statistical Association, 116*(536), 2009-2022. <https://doi.org/10.1080/01621459.2020.1758115>
 
 ```{r}
-calculateXI(
+XICOR::calculateXI(
   mydata$predictor,
   mydata$outcome)
 ```
@@ -358,7 +387,11 @@ abline(lm(
 ### `ggplot2`
 
 ```{r}
-ggplot(mydata, aes(x = predictor, y = outcome)) + 
+ggplot2::ggplot(
+  mydata,
+  aes(
+    x = predictor,
+    y = outcome)) + 
   geom_point() +
   geom_smooth(method = "lm", se = TRUE)
 ```
@@ -387,7 +420,11 @@ print(densityMarginal, newpage = TRUE)
 ## High Density Scatterplot
 
 ```{r}
-ggplot(mydata, aes(x = predictorOverplot, y = outcomeOverplot)) + 
+ggplot2::ggplot(
+  mydata,
+  aes(
+    x = predictorOverplot,
+    y = outcomeOverplot)) + 
   geom_point(position = "jitter", alpha = 0.3) + 
   geom_density2d()
 
@@ -406,7 +443,7 @@ dataEllipse(mydata_nomissing$predictor, mydata_nomissing$outcome, levels = c(0.5
 ```{r}
 #| results: false
 
-vwReg(outcome ~ predictor, data = mydata)
+petersenlab::vwReg(outcome ~ predictor, data = mydata)
 ```
 
 # Basic inferential statistics
@@ -427,7 +464,7 @@ shapiro.test(na.omit(mydata$outcome)) #subset to keep only the first 5000 rows: 
 mydata |> 
   na.omit() |> 
   t() |> 
-  mshapiro.test
+  mvnormtest::mshapiro.test
 ```
 
 ## Tests of systematic missingness (i.e., whether missingness on a variable depends on other variables)
@@ -444,7 +481,7 @@ mydata |>
 ### Little's MCAR Test
 
 ```{r}
-mcar_test(mydata)
+naniar::mcar_test(mydata)
 ```
 
 ## Multivariate Associations
@@ -454,17 +491,34 @@ mcar_test(mydata)
 #### Pearson Correlations
 
 ```{r}
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscript")
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscriptBig")
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
+
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  type = "manuscript")
+
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  type = "manuscriptBig")
 ```
 
 #### Spearman Correlations
 
 ```{r}
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], correlation = "spearman")
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscript", correlation = "spearman")
-cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], type = "manuscriptBig", correlation = "spearman")
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  correlation = "spearman")
+
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  type = "manuscript",
+  correlation = "spearman")
+
+petersenlab::cor.table(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  type = "manuscriptBig",
+  correlation = "spearman")
 ```
 
 #### Partial Correlations
@@ -472,27 +526,43 @@ cor.table(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")
 Examine the associations among variables controlling for a covariate (`outcomeOverplot`).
 
 ```{r}
-partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")])
-partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")], type = "manuscript")
-partialcor.table(mydata[,c("predictor","outcome","predictorOverplot")], z = mydata[,c("outcomeOverplot")], type = "manuscriptBig")
+petersenlab::partialcor.table(
+  mydata[,c("predictor","outcome","predictorOverplot")],
+  z = mydata[,c("outcomeOverplot")])
+
+petersenlab::partialcor.table(
+  mydata[,c("predictor","outcome","predictorOverplot")],
+  z = mydata[,c("outcomeOverplot")],
+  type = "manuscript")
+
+petersenlab::partialcor.table(
+  mydata[,c("predictor","outcome","predictorOverplot")],
+  z = mydata[,c("outcomeOverplot")],
+  type = "manuscriptBig")
 ```
 
 ### Correlogram
 
 ```{r}
-corrplot(cor(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")], use = "pairwise.complete.obs"))
+corrplot::corrplot(cor(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")],
+  use = "pairwise.complete.obs"))
 ```
 
 ### Scatterplot matrix
 
 ```{r}
-scatterplotMatrix(~ predictor + outcome + predictorOverplot + outcomeOverplot, data = mydata, use = "pairwise.complete.obs")
+car::scatterplotMatrix(
+  ~ predictor + outcome + predictorOverplot + outcomeOverplot,
+  data = mydata,
+  use = "pairwise.complete.obs")
 ```
 
 ### Pairs panels
 
 ```{r}
-pairs.panels(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
+psych::pairs.panels(
+  mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplot")])
 ```
 
 ## Effect Plots
@@ -500,24 +570,27 @@ pairs.panels(mydata[,c("predictor","outcome","predictorOverplot","outcomeOverplo
 ### Multiple Regression Model
 
 ```{r}
-multipleRegressionModel <- lm(outcome ~ predictor + predictorOverplot,
-                              data = mydata,
-                              na.action = "na.exclude")
+multipleRegressionModel <- lm(
+  outcome ~ predictor + predictorOverplot,
+  data = mydata,
+  na.action = "na.exclude")
 
-allEffects(multipleRegressionModel)
-plot(allEffects(multipleRegressionModel))
+effects::allEffects(multipleRegressionModel)
+plot(effects::allEffects(multipleRegressionModel))
 ```
 
 ### Multilevel Regression Model
 
 ```{r}
-multilevelRegressionModel <- lme(outcome ~ predictor + predictorOverplot, random = ~ 1|ID,
-                                 method = "ML",
-                                 data = mydata,
-                                 na.action = "na.exclude")
+multilevelRegressionModel <- lme(
+  outcome ~ predictor + predictorOverplot,
+  random = ~ 1|ID,
+  method = "ML",
+  data = mydata,
+  na.action = "na.exclude")
 
-allEffects(multilevelRegressionModel)
-plot(allEffects(multilevelRegressionModel))
+effects::allEffects(multilevelRegressionModel)
+plot(effects::allEffects(multilevelRegressionModel))
 ```
 
 # Session Info

@@ -61,7 +61,7 @@ data("sleepstudy", package = "lme4")
 ## Prepare Data
 
 ```{r}
-conditions <- make_conditions(sleepstudy, "Subject")
+conditions <- brms::make_conditions(sleepstudy, "Subject")
 ```
 
 # brms
@@ -81,7 +81,7 @@ methods(class = "brmsfit")
 ```{r}
 #| output: false
 
-fit_sleep1 <- brm(
+fit_sleep1 <- brms::brm(
   Reaction ~ 1 + Days,
   data = sleepstudy,
   seed  = 52242)
@@ -92,7 +92,7 @@ fit_sleep1 <- brm(
 ```{r}
 #| output: false
 
-fit_sleep2 <- brm(
+fit_sleep2 <- brms::brm(
   Reaction ~ 1 + Days + (1 | Subject), 
   data = sleepstudy,
   seed  = 52242)
@@ -103,7 +103,7 @@ fit_sleep2 <- brm(
 ```{r}
 #| output: false
 
-fit_sleep3 <- brm(
+fit_sleep3 <- brms::brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
   seed  = 52242
@@ -121,13 +121,13 @@ summary(fit_sleep3)
 ## Model Priors
 
 ```{r}
-prior_summary(fit_sleep3)
+brms::prior_summary(fit_sleep3)
 ```
 
 ## Model Parameters
 
 ```{r}
-variables(fit_sleep3)
+brms::variables(fit_sleep3)
 ```
 
 ## Model Coefficients
@@ -177,7 +177,7 @@ plot(conditional_effects(fit_sleep1), points = TRUE)
 
 ```{r}
 # re_formula = NULL ensures that group-level effects are included
-ce2 <- conditional_effects(
+ce2 <- brms::conditional_effects(
   fit_sleep3,
   conditions = conditions,
   re_formula = NULL)
@@ -193,9 +193,9 @@ Evaluate how closely the posterior predictions match the observed values.
 If they do not match the general pattern of the observed values, a different response distribution may be necessary.
 
 ```{r}
-pp_check(fit_sleep3)
-pp_check(fit_sleep3, type = "dens_overlay")
-pp_check(fit_sleep3, "error_scatter_avg")
+brms::pp_check(fit_sleep3)
+brms::pp_check(fit_sleep3, type = "dens_overlay")
+brms::pp_check(fit_sleep3, "error_scatter_avg")
 ```
 
 ## Fitted Values
@@ -234,16 +234,16 @@ head(residuals(fit_sleep3))
 `elpd_diff` values that are greater than ~2 standard errors of the `elpd_diff` values indicate a significantly better model (i.e., if `elpd_diff` value is greater than 2 times the `se_diff` value).
 
 ```{r}
-loo(fit_sleep1, fit_sleep2, fit_sleep3)
-print(loo(fit_sleep1, fit_sleep2, fit_sleep3), simplify = FALSE)
+brms::loo(fit_sleep1, fit_sleep2, fit_sleep3)
+print(brms::loo(fit_sleep1, fit_sleep2, fit_sleep3), simplify = FALSE)
 ```
 
 ### Compute Model Weights
 
 ```{r}
-model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo")
+brms::model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo")
 
-round(model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo"))
+round(brms::model_weights(fit_sleep1, fit_sleep2, fit_sleep3, weights = "loo"))
 ```
 
 # Multilevel Mediation {#sec-multilevelMediation}
@@ -260,7 +260,7 @@ bayesianMediationSyntax <-
 ```{r}
 #| output: false
 
-bayesianMediationModel <- brm(
+bayesianMediationModel <- brms::brm(
   bayesianMediationSyntax,
   data  = mydata,
   seed  = 52242
@@ -278,14 +278,14 @@ summary(bayesianMediationModel)
 #performance::model_performance(bayesianMediationModel) # errors out perhaps due to joint model
 performance::r2(bayesianMediationModel)
 
-hypothesis(
+brms::hypothesis(
   bayesianMediationModel,
   "b_M_X * b_Y_M = 0", # indirect effect = a path * b path
   class = NULL,
   seed  =  52242
 )
 
-mediation(bayesianMediationModel)
+bayestestR::mediation(bayesianMediationModel)
 ```
 
 # Multilevel Moderation {#sec-multilevelModeration}
@@ -299,7 +299,7 @@ bayesianModerationSyntax <-
 ```{r}
 #| output: false
 
-bayesianModerationModel <- brm(
+bayesianModerationModel <- brms::brm(
   bayesianModerationSyntax,
   data  = mydata,
   seed  = 52242
@@ -323,7 +323,7 @@ performance::r2(bayesianModerationModel)
 ## Parameters for Which to Set Priors
 
 ```{r}
-get_prior(
+brms::get_prior(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy)
 ```
@@ -346,7 +346,7 @@ Fit the model with these priors, and sample from these priors:
 ```{r}
 #| output: false
 
-fit_sleep4 <- brm(
+fit_sleep4 <- brms::brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
   prior = bprior, 
@@ -359,14 +359,14 @@ fit_sleep4 <- brm(
 
 ```{r}
 # Evid.Ratio is the ratio of P(Days > 7) / P(Days <= 7)
-(hyp1 <- hypothesis(fit_sleep4, "Days < 7"))
+(hyp1 <- brms::hypothesis(fit_sleep4, "Days < 7"))
 plot(hyp1)
 ```
 
 ```{r}
 # Evid.Ratio is the Bayes Factor of the posterior
 # vs the prior that Days = 10 is TRUE (Savage-Dickey Ratio)
-(hyp2 <- hypothesis(fit_sleep4, "Days = 10"))
+(hyp2 <- brms::hypothesis(fit_sleep4, "Days = 10"))
 plot(hyp2)
 ```
 
@@ -377,7 +377,7 @@ plot(hyp2)
 ```{r}
 #| output: false
 
-fit_sleep3 <- brm(
+fit_sleep3 <- brms::brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
   cores = 4, # between-chain parallelization
@@ -392,7 +392,7 @@ fit_sleep3 <- brm(
 ```{r}
 #| output: false
 
-fit_sleep3 <- brm(
+fit_sleep3 <- brms::brm(
   Reaction ~ 1 + Days + (1 + Days | Subject), 
   data = sleepstudy,
   threads = threading(4), # within-chain parallelization (threads per chain)
@@ -420,7 +420,7 @@ imp <- mice::mice(
 ```{r}
 #| output: false
 
-fit_imp <- brm_multiple(
+fit_imp <- brms::brm_multiple(
   bayesianMediationSyntax,
   data = imp,
   chains = 2)
@@ -437,7 +437,7 @@ summary(fit_imp)
 #performance::model_performance(fit_imp) # errors out perhaps due to joint model
 performance::r2(fit_imp)
 
-hypothesis(
+brms::hypothesis(
   fit_imp,
   "b_M_X * b_Y_M = 0", # indirect effect = a path * b path
   class = NULL,
@@ -466,7 +466,7 @@ bayesianRegressionImputationSyntax <-
 ```{r}
 #| output: false
 
-bayesianRegressionModel <- brm(
+bayesianRegressionModel <- brms::brm(
   bayesianRegressionImputationSyntax,
   data = mydata,
   seed = 52242
@@ -484,7 +484,7 @@ summary(bayesianRegressionModel)
 #performance::model_performance(bayesianRegressionModel) # errors out perhaps due to joint model
 performance::r2(bayesianRegressionModel)
 
-hypothesis(
+brms::hypothesis(
   bayesianRegressionModel,
   "bsp_M_miX * bsp_Y_miM = 0", # indirect effect = a path * b path
   class = NULL,

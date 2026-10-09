@@ -147,17 +147,17 @@ dat_concurrent <- data.frame(
 
 # transform data to long format for Bayesian item response modeling
 dat_long <- dat_concurrent |>
-  pivot_longer(
+  tidyr::pivot_longer(
     cols = all_of(all_items),
     names_to = "item",
     values_to = "response"
   ) |>
-  filter(!is.na(response)) |>
-  mutate(
+  dplyr::filter(!is.na(response)) |>
+  dplyr::mutate(
     item = factor(item),
     response = factor(response, ordered = TRUE)
   ) |>
-  arrange(id, timepoint, item)
+  dplyr::arrange(id, timepoint, item)
 
 dat_long$time <- NA
 dat_long$time[which(dat_long$timepoint == "T1")] <- 1
@@ -252,7 +252,7 @@ configuralInvarianceStandardizeT1Latent_syntax <- '
   depressed3 ~~ depressed3
 '
 
-configuralInvarianceStandardizeT1Latent_fit <- cfa(
+configuralInvarianceStandardizeT1Latent_fit <- lavaan::cfa(
   configuralInvarianceStandardizeT1Latent_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -326,7 +326,7 @@ metricInvarianceStandardizeT1Latent_syntax <- '
   depressed3 ~~ depressed3
 '
 
-metricInvarianceStandardizeT1Latent_fit <- cfa(
+metricInvarianceStandardizeT1Latent_fit <- lavaan::cfa(
   metricInvarianceStandardizeT1Latent_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -404,7 +404,7 @@ scalarInvarianceStandardizeT1Latent_syntax <- '
   depressed3 ~~ depressed3
 '
 
-scalarInvarianceStandardizeT1Latent_fit <- cfa(
+scalarInvarianceStandardizeT1Latent_fit <- lavaan::cfa(
   scalarInvarianceStandardizeT1Latent_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -482,7 +482,7 @@ partialStrongInvarianceStandardizeT1Latent_syntax <- '
   depressed3 ~~ depressed3
 '
 
-partialStrongInvarianceStandardizeT1Latent_fit <- cfa(
+partialStrongInvarianceStandardizeT1Latent_fit <- lavaan::cfa(
   partialStrongInvarianceStandardizeT1Latent_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -566,7 +566,7 @@ partialStrongInvarianceGrowthCurve_syntax <- '
 #### Fit Model
 
 ```{r}
-partialStrongInvarianceGrowthCurve_fit <- cfa(
+partialStrongInvarianceGrowthCurve_fit <- lavaan::cfa(
   partialStrongInvarianceGrowthCurve_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -655,7 +655,7 @@ configuralInvarianceStandardizeAllLatent_syntax <- '
 #### Fit Model
 
 ```{r}
-configuralInvarianceStandardizeAllLatent_fit <- cfa(
+configuralInvarianceStandardizeAllLatent_fit <- lavaan::cfa(
   configuralInvarianceStandardizeAllLatent_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -681,8 +681,8 @@ Adapted from Lai (2013; [code](https://github.com/marklhc/awc-growth-supp/blob/m
 
 ```{r}
 # Extract loadings and intercepts for alignment
-lam_mat <- lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$lambda
-nu_vec <- lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$nu
+lam_mat <- lavaan::lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$lambda
+nu_vec <- lavaan::lavInspect(configuralInvarianceStandardizeAllLatent_fit, what = "est")$nu
 
 # Put them into T x p matrices
 num_items <- 3
@@ -819,7 +819,7 @@ equivalentConfiguralModelAligned_syntax <- '
   latent_t1 + latent_t2 + latent_t3 ~ NA*1
 '
 
-equivalentConfiguralModelAligned_fit <- cfa(
+equivalentConfiguralModelAligned_fit <- lavaan::cfa(
   equivalentConfiguralModelAligned_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -900,7 +900,7 @@ awcGrowthModel_syntax <- '
 #### Fit Model
 
 ```{r}
-awcGrowthModel_fit <- cfa(
+awcGrowthModel_fit <- lavaan::cfa(
   awcGrowthModel_syntax,
   data = mydata_wide,
   missing = "ML",
@@ -1084,7 +1084,7 @@ modelPriors <- c(
 )
 
 # Parallel Processing
-rstan_options(auto_write = TRUE)
+rstan::rstan_options(auto_write = TRUE)
 
 fallback <- parallel::detectCores()
 NSLOTS <- as.integer(Sys.getenv("NSLOTS"))
