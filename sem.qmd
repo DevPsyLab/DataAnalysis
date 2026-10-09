@@ -4583,7 +4583,19 @@ lavaangui::plot_lavaan(multilevelSEM_fit)
 
 # Compare Models
 
-For nested models:
+The approaches used to compare models depend on whether the models are nested.
+One model is considered "nested" within another model if the more complex model includes all of the terms of the simpler model along with additional terms.
+To determine whether the models are nested, you can use the `lavaan::lavTestNET()` function.
+
+```{r}
+lavaan::lavTestNET(
+  lgcm1_fit,
+  lbgcm1_fit,
+  quadraticGCM1_fit
+)
+```
+
+## Nested Models
 
 ```{r}
 #| eval: false
@@ -4600,7 +4612,24 @@ round(cbind(
   model3 = lavaan::inspect(model3, "fit_measures")), 3)
 ```
 
-For non-nested models:
+```{r}
+anova(
+  lgcm1_fit,
+  quadraticGCM1_fit
+)
+
+anova(
+  lgcm1_fit,
+  lbgcm1_fit
+)
+
+round(cbind(
+  linear = lavaan::inspect(lgcm1_fit, "fit_measures"),
+  quadratic = lavaan::inspect(quadraticGCM1_fit, "fit_measures"),
+  latentBasis = lavaan::inspect(lbgcm1_fit, "fit_measures")), 3)
+```
+
+## Non-Nested Models
 
 ```{r}
 #| eval: false
@@ -4613,6 +4642,20 @@ round(cbind(
 nonnest2::vuongtest(
   model1,
   model2,
+  nested = FALSE)
+```
+
+```{r}
+#| eval: false
+
+round(cbind(
+  linear = lavaan::inspect(lgcm1_fit, "fit_measures"),
+  quadratic = lavaan::inspect(quadraticGCM1_fit, "fit_measures"),
+  latentBasis = lavaan::inspect(lbgcm1_fit, "fit_measures")), 3)
+
+nonnest2::vuongtest(
+  quadraticGCM1_fit,
+  lbgcm1_fit,
   nested = FALSE)
 ```
 
