@@ -4610,6 +4610,11 @@ round(cbind(
   model1 = lavaan::inspect(model1, "fit_measures"),
   model2 = lavaan::inspect(model2, "fit_measures"),
   model3 = lavaan::inspect(model3, "fit_measures")), 3)
+
+nonnest2::vuongtest(
+  model1,
+  model2,
+  nested = TRUE)
 ```
 
 ```{r}
