@@ -43,7 +43,7 @@ This helps with version control—individually changed sentences will be highlig
 - Add linked content (e.g., images) to sub-directories
 - Use no spaces in file or folder names.
 Use a dash (-) instead of a space.
-- If you use `Visual Studio Code` to edit the Lab Wiki, you can view the source code side-by-side with the markdown Preview (after selecting the code type as `markdown`):
+- If you use `Visual Studio Code` or `Positron` to edit the Lab Wiki, you can view the source code side-by-side with the markdown Preview (after selecting the code type as `markdown`):
 ![Visual Studio Code](images/vsCode.png)
 - When making numbered (ordered) lists, just use `1. ` for all numbers.
 Markdown will make them sequential automatically.
@@ -120,19 +120,28 @@ Instead, the output of the chunk when it was last run in the editor is displayed
 
 # Computational Notebook {#sec-computationalNotebook}
 
+Computational notebooks are valuable for sharing your code, output, figures, and interpretive text all in-line in a reproducible format.
+For more information on the value of computational notebooks, see the article titled "The Scientific Paper Is Obsolete" (<https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/>; archived at <https://perma.cc/XHW4-K89V>)".
+
 ## General Info {#sec-general}
 
-You can use an `R` Markdown Notebook to create a computational notebook.
-For more information on the value of computational notebooks, see the article titled "The Scientific Paper Is Obsolete" (<https://www.theatlantic.com/science/archive/2018/04/the-scientific-paper-is-obsolete/556676/>; archived at <https://perma.cc/XHW4-K89V>)".
+You can use a Quarto document (`.qmd`) or an `R` Markdown Notebook (`.Rmd`) to create a computational notebook.
+Quarto is more recent/advanced than `R` Markdown and is generally preferred.
+
+For more information about Quarto documents, see here:
+
+- <https://quarto.org>
+
 For more information about how to create `R` Notebooks, see here:
 
-<https://garrettgman.github.io/rmarkdown/r_notebooks> (archived at <https://perma.cc/L78P-G73Z>)
+- <https://garrettgman.github.io/rmarkdown/r_notebooks> (archived at <https://perma.cc/L78P-G73Z>)
+- <https://bookdown.org/yihui/rmarkdown/notebook.html> (archived at <https://perma.cc/P5YT-395F>)
 
-<https://bookdown.org/yihui/rmarkdown/notebook.html> (archived at <https://perma.cc/P5YT-395F>)
+For more information about how to create `Quarto`
 
 ## Files {#sec-files}
 
-Consistent with the [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for how to structure your repo, you should have two computational notebooks: 1) a "Prepare Data" script (`prepareData.Rmd`) and 2) a "Computational Notebook" script (`computationalNotebook.Rmd`).
+Consistent with the [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template) for how to structure your repo, you should have two computational notebooks: 1) a "Prepare Data" script (`prepareData.qmd` or `prepareData.Rmd`) and 2) a "Computational Notebook" script (`computationalNotebook.qmd` or `computationalNotebook.Rmd`).
 The "Prepare Data" script is used to update the data file by re-exporting, merging, re-running calculations, etc.
 This script should be separate from the "Computational Notebook" file that is used for running analyses on the data.
 Every time you run the "Computational Notebook" file with the exact same data, you should get the exact same findings (i.e., reproducibility).
@@ -143,10 +152,38 @@ Thus, we keep the "Prepare Data script" separate from the "Computational Noteboo
 When creating a computational notebook, follow the structure of the computational notebooks in the [Petersen Lab template](https://research-git.uiowa.edu/PetersenLab/Template).
 
 To use the lab templates for the "Prepare Data" and "Computational Notebook" scripts, first install the [`petersenlab` package](R.qmd#sec-petersenlab).
-Then, in `RStudio`, select "File" > "New File" > "R Markdown".
+Then, in `RStudio`, select "File" > "New File" > "Quarto Document" or "R Markdown".
 Then, select "From Template", and select either the "prepareData" or "computationalNotebook" template.
 
-If you want to create a computational notebook manually (instead of using the lab template), create a `.Rmd` file with the following `YAML` header at the top of the file:
+### Quarto Document {#sec-quartoDocument}
+
+If you want to create a Quarto document computational notebook manually (instead of using the lab template), create a `.qmd` file with the following `YAML` header at the top of the file:
+
+```yaml
+---
+---
+title: "INSERT TITLE"
+author: "INSERT AUTHOR NAME(S)"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    number-depth: 4
+    code-fold: show
+    echo: true
+    error: true
+    embed-resources: true
+    self-contained-math: true
+---
+```
+
+Then, include whatever text and/or code chunks.
+
+### `R` Markdown Notebook {#sec-rMarkdownNotebook}
+
+If you want to create an `R` Markdown notebook computational notebook manually (instead of using the lab template), create a `.Rmd` file with the following `YAML` header at the top of the file:
 
 ```yaml
 ---
