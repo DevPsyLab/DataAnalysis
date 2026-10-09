@@ -340,6 +340,39 @@ It is helpful to specify the package for a given function so that a) it is clear
 To specify the package for a function, follow the following structure: `package::function()`.
 For instance, to use the `describe()` function from the `psych` package, write: `psych::describe()`.
 
+## Specify relative filepaths that are reproducible by others {#specifyReproducibleFilepaths}
+
+When sourcing `R` scripts and reading/saving files, make sure to specify relative filepaths that are reproducible on other machines and by other people.
+For instance, the following is NOT a filepath that is reproducible by others: `C:\Users\Isaac\Desktop\data.csv`.
+To specify a filepath that is reproducible by others, specify the filepath relative to a base path.
+The base path may be a path to the project folder on your computer, or it may be the path to the lab drive.
+
+Here is an example of using a filepath that with the base path on your computer (the `path` variable is set by your [`.Rprofile` file](https://research-git.uiowa.edu/PetersenLab/R-InitialSetup/-/blob/master/R%20Setup%20Files/.Rprofile), as set up [here](https://devpsylab.github.io/DataAnalysis/R.html#sec-setup)):
+
+```{r}
+#| eval: false
+
+library("petersenlab")
+
+mydata <- read.csv(
+  file = file.path(path, "/GitHub/SRS-CBCL-Modeling/Data/cbcl.rdata",
+  fsep = ""))
+```
+
+Here is an example of using a filepath with the base path on the lab drive:
+
+```{r}
+#| eval: false
+
+library("petersenlab")
+
+petersenLabPath <- petersenlab::setLabPath()
+
+mydata <- read.csv(
+  file = file.path(petersenLabPath, "/Lab/Studies/School Readiness Study/Data/data.csv",
+  fsep = ""))
+```
+
 ## Comment code frequently and clearly! {#sec-commentCode}
 
 It is important to comment code frequently and clearly.
