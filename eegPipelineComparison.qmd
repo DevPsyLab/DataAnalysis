@@ -36,7 +36,7 @@ NOTE: This page is under construction and is not complete.
 1. Clone the EEG Pipeline Comparison [GitLab repository](https://research-git.uiowa.edu/PetersenLab/SRS/srs-eeg-pipelinecomparison) to your computer
 1. If you plan to use Argon/HPC for processing, also copy the EEG Pipeline Comparison repository into your Argon home directory
 
-# Running the Pipeline Comparison
+# Running the Pipeline Comparison {#sec-run-comp}
 
 1. Open `MATLAB`
 1. Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository and open the `processing.m` file
@@ -135,8 +135,6 @@ Enter the complete path to the parameter file you would like to use, including t
 If `MATLAB` cannot locate the file, it will prompt you to re-enter it.
 1. **Change an existing parameter?**
 `MATLAB` will display the parameters from the loaded parameter file.
-If there is an error at this step, the parameter file you specified is likely from an older version of the pipeline comparison script and is missing necessary parameters.
-See the [Appendix](#sec-missing-params) for further instructions.
 If you confirm the parameters, `MATLAB` will proceed to the next processing step.
 If not, you will be directed to the parameter change menu.
 1. **Include generalizability in pipeline evaluation/comparison?**
@@ -157,11 +155,12 @@ For reference, folder sizes for each task for one pipeline are shown below.
 The initial output is only generated once, regardless of how many pipelines are used.
 The "Total" column includes initial output, HAPPE output, error files, and output logs, but does not include intermediate outputs or pipeline comparison.
   
-  | Task        | Files | Initial Output | HAPPE Output | Total  |
-  |-------------|-------|----------------|--------------|--------|
-  | Oddball     | 569   | 269 GB         | 118 GB       | 391 GB |
-  | Fish-Sharks | 566   | 362 GB         |  49 GB       | 412 GB |
-  | Stop-Signal | 546   | 567 GB         | 114 GB       | 682 GB |
+    | Task        | Files | Initial Output | HAPPE Output | Total  |
+    |-------------|-------|----------------|--------------|--------|
+    | Oddball     | 569   | 269 GB         | 118 GB       | 391 GB |
+    | Fish-Sharks | 566   | 362 GB         |  49 GB       | 412 GB |
+    | Stop-Signal | 546   | 567 GB         | 114 GB       | 682 GB |
+    
 1. **Enter the pipeline(s) you would like to run**
 This prompt will only appear if you chose not to run all pipelines.
 Enter at least one pipeline to use for processing.
@@ -483,7 +482,7 @@ Enter the end time of the segment relative to the start of the task trial.
 This value effectively sets the duration of each segment/epoch, but it does not necessarily have to equal the trial duration.
 For example, if you are processing Fish-Shark data, not all trials are the same length, and there is no pre-trial baseline.
 If you set the segment end time to 2500ms, any trial where the participant responded in under 1750ms will partially overlap with the subsequent trial (e.g., a 750ms response time + the 750ms feedback screen only adds to 1500ms, so the remaining 1000ms of the segment will be from the next trial).
-To address this problem, determine how long you need each trial to be (typically ~1000ms), then exclude shorter trials from analysis (see the [Appendix](#sec-short-eps)).
+To address this problem, determine how long you need each trial to be (typically ~1000ms), then exclude shorter trials from analysis (If you are processing lab Fish-Sharks or Stop Signal data, see the [Appendix](#sec-short-eps) for instructions).
 1. **Offset delay.**
 This prompt will only appear if you are processing task data and you did *not* select a pre-coded task at the beginning of the script.
 If you selected a pre-coded task, this value is set automatically.
@@ -982,8 +981,6 @@ A summary of various performance metrics for each pipeline used for pre-processi
 
 # Appendix
 
-## Missing Parameter File Fields {#sec-missing-params}
-
 ## Check Onset Tags {#sec-onset-tags}
 
 1. Using either the "Files" window on the left or the "FILE" input under the toolbar, navigate to the EEG Pipeline Comparison repository
@@ -1016,12 +1013,48 @@ A summary of various performance metrics for each pipeline used for pre-processi
 1. Once the file loads, double click on the `EEG` variable in the Workspace to open the structure
 1. In the `EEG` structure, locate the `events` field, then double click on it to open
 1. The `code` column will show the onset tags for the entire task
-    - NOTE: There are often several onset tags for a given trial (e.g., `bgin`, `TRSP`, `resp`).
-    Only include the onset tags that are relevant to the comparison(s) you are making.
-    These tags often (but not always) end in '+' and are usually added by the software used to run the task.
+  - NOTE: There are often several onset tags for a given trial (e.g., `bgin`, `TRSP`, `resp`).
+  Only include the onset tags that are relevant to the comparison(s) you are making.
+  These tags often (but not always) end in '+' and are usually added by the software used to run the task.
 
-## Discarding Short Segments (#sec-short-eps)
+## Handling Short Trials {#sec-short-eps}
 
+During processing, some researchers will exclude trials with very short response times, because they often represent either delayed responses to the preceding trial or accidental responses.
+The automated scoring scripts for Fish-Sharks and Stop Signal mark any trial with a response time under 200 milliseconds as incorrect.
+Therefore, if you are only using accurate trials for your analysis, these trials will automatically be excluded.
+However, if you are using inaccurate trials for anything (including contrasts), you may choose to remove trials with response times below a certain threshold.
+You may also choose to modify the 200-millisecond threshold to be more or less strict.
 
+To discard segments that are below a certain response time threshold:
 
+1. Before running `processing.m`, go to the `pipeline_scripts` folder in the repository and open `parInitProcess.m` (if using parallel processing) or `initProcess.m` (if not using parallel processing)
+1. Locate the function call to `fishsharkAccuracy` (if processing Fish-Sharks) or `stopsignalAccuracy` (if processing Stop Signal)
+  - NOTE: As of 10/09/2026, these calls are on lines 77 and 79 (`parInitProcess.m`) or on lines 84 and 86 (`initProcess.m`), respectively, but you can use `Ctrl+F` to search for them within the script
+1. Make the following changes to the function call:
+  - Add `Discard` to the end of the function name
+  - After the EEG argument, add a comma followed by the the minimum response time to keep, in milliseconds
+  - Do **not** change variable names, even if they differ from the example below--only change the function name and add the response time threshold
+  
+    ```matlab
+    % before changes
+    EEG = fishsharkAccuracy(EEG);
+    
+    % after changes
+    EEG = fishsharkAccuracyDiscard(EEG, 250);
+    ```
+  
+1. Save the changes
+1. Run `processing.m` according to the [instructions](#sec-run-comp)
+1. **Do not commit any changes to the GitLab repository**
 
+To modify threshold for accuracy coding *without* discarding trials:
+
+1. Before running `processing.m`, go to the `pipeline_scripts` folder in the repository, then go to the `helper_functions` folder
+1. Open `fishsharkAccuracy.m` (if processing Fish-Sharks) or `stopsignalProcessing.m` (if processing Stop Signal)
+1. Press `Ctrl+F` to open the search menu within the script, and click the triangle next to the "Find" field to open the "Replace" field
+1. Find each instance of "200" and replace it with the threshold you would like to use
+  - The Fish-Sharks accuracy script has 1 instance in the main script (plus 1 instance in a comment)
+  - The Stop Signal accuracy script has 4 instances in the main script (plus 1 instance in a comment)
+1. Save the changes
+1. Run `processing.m` according to the [instructions](#sec-run-comp)
+1. **Do not commit any changes to the GitLab repository**
