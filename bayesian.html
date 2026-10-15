@@ -737,42 +737,43 @@ gtag('config', 'G-TYR0QMREEW', { 'anonymize_ip': true});
  [61] get_residuals           get_simulated           get_varcov             
  [64] get_variance            get_weights             getCall                
  [67] hdi                     hypothesis              inits                  
- [70] kfold                   link_function           link_inverse           
- [73] log_lik                 log_posterior           logLik                 
- [76] loo_compare             loo_epred               loo_linpred            
- [79] loo_model_weights       loo_moment_match        loo_predict            
- [82] loo_predictive_interval loo_R2                  loo_subsample          
- [85] loo                     LOO                     map_estimate           
- [88] marginal_effects        marginal_smooths        mcmc_plot              
- [91] mcse                    mediation               model_info             
- [94] model_parameters        model_performance       model_to_priors        
- [97] model_weights           model.frame             n_parameters           
-[100] nchains                 ndraws                  neff_ratio             
-[103] ngrps                   niterations             nobs                   
-[106] nsamples                nuts_params             nvariables             
-[109] p_direction             p_map                   p_rope                 
-[112] p_significance          p_value                 pairs                  
-[115] parnames                performance_logloss     plot                   
-[118] point_estimate          post_prob               posterior_average      
-[121] posterior_epred         posterior_interval      posterior_linpred      
-[124] posterior_predict       posterior_samples       posterior_smooths      
-[127] posterior_summary       pp_average              pp_check               
-[130] pp_mixture              predict                 predictive_error       
-[133] predictive_interval     prepare_predictions     print                  
-[136] prior_draws             prior_summary           psis                   
-[139] r2_loo_posterior        r2_posterior            r2                     
-[142] ranef                   reloo                   report_effectsize      
-[145] report_info             report_intercept        report_model           
-[148] report_parameters       report_performance      report_priors          
-[151] report_random           report_statistics       report_table           
-[154] report_text             report                  residuals              
-[157] restructure             rhat                    rope                   
-[160] sexit_thresholds        si                      simulate_prior         
-[163] spi                     stancode                standard_error         
-[166] standardize             standata                stanplot               
-[169] summary                 unupdate                update                 
-[172] VarCorr                 variables               vcov                   
-[175] waic                    WAIC                    weighted_posteriors    
+ [70] is_converged            kfold                   link_function          
+ [73] link_inverse            log_lik                 log_posterior          
+ [76] logLik                  loo_compare             loo_epred              
+ [79] loo_linpred             loo_model_weights       loo_moment_match       
+ [82] loo_predict             loo_predictive_interval loo_R2                 
+ [85] loo_subsample           loo                     LOO                    
+ [88] map_estimate            marginal_effects        marginal_smooths       
+ [91] mcmc_plot               mcse                    mediation              
+ [94] model_info              model_parameters        model_performance      
+ [97] model_to_priors         model_weights           model.frame            
+[100] n_obs                   n_parameters            nchains                
+[103] ndraws                  neff_ratio              ngrps                  
+[106] niterations             nobs                    nsamples               
+[109] nuts_params             nvariables              p_direction            
+[112] p_map                   p_rope                  p_significance         
+[115] p_value                 pairs                   parnames               
+[118] performance_logloss     plot                    point_estimate         
+[121] post_prob               posterior_average       posterior_epred        
+[124] posterior_interval      posterior_linpred       posterior_predict      
+[127] posterior_samples       posterior_smooths       posterior_summary      
+[130] pp_average              pp_check                pp_mixture             
+[133] predict                 predictive_error        predictive_interval    
+[136] prepare_predictions     print                   prior_draws            
+[139] prior_summary           psis                    r2_loo_posterior       
+[142] r2_posterior            r2                      ranef                  
+[145] reloo                   report_effectsize       report_info            
+[148] report_intercept        report_model            report_parameters      
+[151] report_performance      report_priors           report_random          
+[154] report_statistics       report_table            report_text            
+[157] report                  residuals               restructure            
+[160] rhat                    rope                    sexit_thresholds       
+[163] si                      simulate_prior          spi                    
+[166] stancode                standard_error          standardize            
+[169] standata                stanplot                summary                
+[172] unupdate                update                  VarCorr                
+[175] variables               vcov                    waic                   
+[178] WAIC                    weighted_posteriors    
 see '?methods' for accessing help and source code</code></pre>
 </div>
 </div>
@@ -1412,6 +1413,11 @@ conditional |        sM_1 |      -67.42 | [-2200.78, 1142.17]
 conditional |      t2XM_1 |      -10.18 | [ -288.18,  137.64]
 conditional |      t2XM_2 |       38.62 | [  -99.34,  379.78]
 conditional |      t2XM_3 |        3.22 | [   -4.17,   14.51]
+smooth_sd   |        sX_1 |        0.81 | [    0.12,    2.92]
+smooth_sd   |        sM_1 |        0.24 | [    0.00,    1.36]
+smooth_sd   |      t2XM_1 |        0.76 | [    0.07,    2.89]
+smooth_sd   |      t2XM_2 |        0.86 | [    0.07,    2.87]
+smooth_sd   |      t2XM_3 |       18.92 | [   11.13,   34.73]
 sigma       |       sigma |        0.62 | [    0.59,    0.64]</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html">model_performance</a></span><span class="op">(</span><span class="va">bayesianModerationModel</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1821,7 +1827,7 @@ attached base packages:
 
 other attached packages:
  [1] future_1.76.0      see_0.14.2         report_0.6.4       parameters_0.29.3 
- [5] performance_0.18.2 modelbased_0.17.0  insight_1.5.4      effectsize_1.0.3  
+ [5] performance_0.18.2 modelbased_0.17.0  insight_1.6.0      effectsize_1.0.3  
  [9] datawizard_1.4.0   correlation_0.8.8  easystats_0.7.6    mice_3.19.0       
 [13] bayestestR_0.19.0  brms_2.23.0        Rcpp_1.1.2         rstan_2.32.7      
 [17] StanHeaders_2.39.1 lme4_2.0-6         Matrix_1.7-5      
