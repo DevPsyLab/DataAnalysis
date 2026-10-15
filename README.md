@@ -17,4 +17,6 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 
 # Citation
 
-Petersen, I. T. (2026). *Data analysis guides for the Developmental Psychopathology Lab*. <https://devpsylab.github.io/DataAnalysis>
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23399057.svg)](https://doi.org/10.5281/zenodo.23399057)
+
+Petersen, I. T. (2026). *Data analysis guides for the Developmental Psychopathology Lab*. <https://devpsylab.github.io/DataAnalysis>; <https://doi.org/10.5281/zenodo.23399057>
