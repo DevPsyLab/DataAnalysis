@@ -202,7 +202,7 @@ ANALYSIS:
 
 - `MLR`: for likert/continuous data
 - `WLSMV`: for ordinal/categorical data
-- `BAYES`
+- `BAYES`: for [Bayesian estimation](#sec-bayesian)
 
 ## Bootstrap Draws {#sec-bootstrap}
 
@@ -916,8 +916,72 @@ PLOT:
 
 Further extensions:
 
-- Distinguish between (a) time in study versus (b) age at baseline (as a moderator)
 - Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects); see Hamaker's note [here](https://www.statmodel.com/discussion/messages/11/25297.html?1579816772) (archived at <https://perma.cc/VRA2-FTGL>)
+
+### LCM-SR in Accelerated Longitudinal Study: Accounting for Age at T1 and Time in Study {#sec-msem-lcm-sr-ageAtT1}
+
+```
+TITLE: Latent Curve Model with Structured Residuals with Long-Form
+       Data in Multilevel SEM
+
+DATA: 
+    FILE = "C:/[insert_filepath]/filename.dat";
+
+VARIABLE:
+    NAMES = PersonID sex A B time timesq ageAtT1; ! List of variables in data file
+    MISSING = .;                                  ! Missing data identifier
+    USEVARIABLES = sex A B time timesq ageAtT1;   ! Variables to be analyzed in this model
+    ! MLM options
+    CLUSTER = PersonID;      ! Level-2 ID
+    BETWEEN = sex ageAtT1;   ! Observed ONLY level-2 predictors
+    WITHIN  = time timesq;   ! Observed ONLY level-1 predictors
+    LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables (i.e., t-1)
+
+ANALYSIS: 
+    TYPE = TWOLEVEL RANDOM;
+    ESTIMATOR = BAYES;
+    BITERATIONS = 50000;
+    CHAINS = 4;     ! number of chains
+    PROCESSORS = 4; ! number of computer processors to use
+    BSEED = 52242;  ! set seed for replicability
+    STVALUES = ml;  ! set starting values based on ML estimation
+
+MODEL: ! A = construct 1; B = construct 2
+  %WITHIN%
+    A B (Aresvar Bresvar);  ! L1 residual variances (labels)
+    Alin  | A ON time;      ! Placeholder for A linear change
+    Aquad | A ON timesq;    ! Placeholder for A quadratic change
+    Blin  | B ON time;      ! Placeholder for B linear change
+    A WITH B (ResCov);      ! L1 WP covariance for concurrent B->A
+    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B->A
+    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A->B
+    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A
+    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B
+
+  %BETWEEN%
+    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes
+    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)
+    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0
+    A Alin ON sex ageAtT1;             ! sex + ageAtT1 -> A int, A linear change
+    B Blin ON sex ageAtT1;             ! sex + ageAtT1 -> B int, B linear change
+    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes
+    Aquad@0;                           ! No quadratic change variance
+
+MODEL CONSTRAINT:  
+    NEW(A2Bsd B2Asd);
+    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)
+    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A->B lagged effect
+    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B->A lagged effect
+
+OUTPUT:
+    STAND;     ! standardized estimates
+    TECH1;     ! model priors
+    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)
+    CINTERVAL; ! posterior predictive intervals (credible intervals)
+
+PLOT:
+    TYPE = PLOT3; ! trace plots, histogram, and kernel density
+```
 
 # Session Info
 
