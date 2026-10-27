@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e21500bb30e7ce080c64316834ee3be8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7e332052b267abddad7613605182c7d6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d2fa81a14839e122db681fe50664731a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -656,7 +656,7 @@ window.Quarto = {
   <li><a href="#sec-formatting" id="toc-sec-formatting" class="nav-link" data-scroll-target="#sec-formatting"><span class="header-section-number">12</span> Formatting</a></li>
   <li><a href="#sec-codeHighlighting" id="toc-sec-codeHighlighting" class="nav-link" data-scroll-target="#sec-codeHighlighting"><span class="header-section-number">13</span> Code/Syntax Highlighting</a></li>
   <li><a href="#sec-formulas" id="toc-sec-formulas" class="nav-link" data-scroll-target="#sec-formulas"><span class="header-section-number">14</span> Math Formulas</a></li>
-  <li><a href="#sec-links" id="toc-sec-links" class="nav-link" data-scroll-target="#sec-links"><span class="header-section-number">15</span> Links</a></li>
+  <li><a href="#sec-links" id="toc-sec-links" class="nav-link" data-scroll-target="#sec-links"><span class="header-section-number">15</span> Links and Cross-References</a></li>
   <li><a href="#sec-footnotes" id="toc-sec-footnotes" class="nav-link" data-scroll-target="#sec-footnotes"><span class="header-section-number">16</span> Footnotes</a></li>
   <li>
 <a href="#sec-symbols" id="toc-sec-symbols" class="nav-link" data-scroll-target="#sec-symbols"><span class="header-section-number">17</span> Symbols</a>
@@ -835,7 +835,7 @@ window.Quarto = {
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"INSERT TITLE"</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"INSERT AUTHOR NAME(S)"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">'October 17, 2026'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">'October 27, 2026'</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
@@ -1321,8 +1321,12 @@ This text is centered.
 y = \frac{x}{7} \cdot 4 + 3 \times 2 - 1_{a1}/2^{1c/2} \dots
 \]</span></p>
 </section><section id="sec-links" class="level1" data-number="15"><h1 data-number="15">
-<span class="header-section-number">15</span> Links</h1>
-<p>To link to a heading that is in the same wiki, make sure the heading has a label (e.g., <code>{#sec-label}</code>), as shown <a href="#sec-headings">here</a>. Then, link to the heading with the following syntax: <code>[text to show](#sec-label)</code>. For example, to link to the links section, you would specify: <code>[text to show](#sec-links)</code>. If the heading is on a different page of the same wiki, specify the html file before the label, e.g.: <code>[text to show](dataManagement.qmd#sec-saveData)</code>. If the heading is on a different page of a different wiki, specify the full path before the label, e.g.: <code>[text to show](https://devpsylab.github.io/LabWiki/manual.html#basicsLab)</code>. Do not use the website-derived link for a given heading because it is not a stable link; the heading path can change if other headings are added.</p>
+<span class="header-section-number">15</span> Links and Cross-References</h1>
+<p>See Quarto documentation for cross-referencing: <a href="https://quarto.org/docs/authoring/cross-references.html" class="uri">https://quarto.org/docs/authoring/cross-references.html</a></p>
+<p>To cross-reference a section: <code>@sec-NAMEOFSECTION</code> or <a href="#sec-NAMEOFSECTION">text to show</a></p>
+<p>To cross-reference a table: <code>@tbl-NAMEOFTABLE</code> or <a href="#tbl-NAMEOFTABLE">text to show</a></p>
+<p>To cross-reference a figure: <code>@fig-NAMEOFFIGURE</code> or <a href="#tbl-NAMEOFFIGURE">text to show</a></p>
+<p>To link to a heading that is in the same wiki, make sure the heading has a label (e.g., <code>{#sec-label}</code>), as shown <a href="#sec-headings">here</a>. Then, link to the heading with the following syntax: <code>[text to show](#sec-label)</code>. For example, to link to the links section, you would specify: <code>[text to show](#sec-links)</code>. If the heading is on a different page of the same wiki, specify the <code>.qmd</code> file before the label, e.g.: <code>[text to show](dataManagement.qmd#sec-saveData)</code>. If the heading is on a different page of a different wiki, specify the full path before the label, e.g.: <code>[text to show](https://devpsylab.github.io/LabWiki/manual.html#basicsLab)</code>. Do not use the website-derived link for a given heading because it is not a stable link; the heading path can change if other headings are added.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link</span><span class="co">](https://www.google.com)</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link with title</span><span class="co">](https://www.google.com "Google's Homepage")</span></span>
@@ -2698,355 +2702,363 @@ This footnote also has been made with a different syntax using 4 spaces for new 
 <span id="cb48-631"><a href="#cb48-631" aria-hidden="true" tabindex="-1"></a>y = \frac{x}{7} \cdot 4 + 3 \times 2 - 1_{a1}/2^{1c/2} \dots</span>
 <span id="cb48-632"><a href="#cb48-632" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb48-633"><a href="#cb48-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-634"><a href="#cb48-634" aria-hidden="true" tabindex="-1"></a><span class="fu"># Links {#sec-links}</span></span>
+<span id="cb48-634"><a href="#cb48-634" aria-hidden="true" tabindex="-1"></a><span class="fu"># Links and Cross-References {#sec-links}</span></span>
 <span id="cb48-635"><a href="#cb48-635" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-636"><a href="#cb48-636" aria-hidden="true" tabindex="-1"></a>To link to a heading that is in the same wiki, make sure the heading has a label (e.g., <span class="in">`{#sec-label}`</span>), as shown <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-headings)</span>.</span>
-<span id="cb48-637"><a href="#cb48-637" aria-hidden="true" tabindex="-1"></a>Then, link to the heading with the following syntax: <span class="in">`[text to show](#sec-label)`</span>.</span>
-<span id="cb48-638"><a href="#cb48-638" aria-hidden="true" tabindex="-1"></a>For example, to link to the links section, you would specify: <span class="in">`[text to show](#sec-links)`</span>.</span>
-<span id="cb48-639"><a href="#cb48-639" aria-hidden="true" tabindex="-1"></a>If the heading is on a different page of the same wiki, specify the html file before the label, e.g.: <span class="in">`[text to show](dataManagement.qmd#sec-saveData)`</span>.</span>
-<span id="cb48-640"><a href="#cb48-640" aria-hidden="true" tabindex="-1"></a>If the heading is on a different page of a different wiki, specify the full path before the label, e.g.: <span class="in">`[text to show](https://devpsylab.github.io/LabWiki/manual.html#basicsLab)`</span>.</span>
-<span id="cb48-641"><a href="#cb48-641" aria-hidden="true" tabindex="-1"></a>Do not use the website-derived link for a given heading because it is not a stable link; the heading path can change if other headings are added.</span>
-<span id="cb48-642"><a href="#cb48-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-643"><a href="#cb48-643" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-644"><a href="#cb48-644" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link</span><span class="co">](https://www.google.com)</span></span>
-<span id="cb48-645"><a href="#cb48-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-646"><a href="#cb48-646" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link with title</span><span class="co">](https://www.google.com "Google's Homepage")</span></span>
-<span id="cb48-647"><a href="#cb48-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-648"><a href="#cb48-648" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a reference-style link</span><span class="co">][Arbitrary case-insensitive reference text]</span></span>
-<span id="cb48-649"><a href="#cb48-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-650"><a href="#cb48-650" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a relative reference to a repository file</span><span class="co">](../blob/master/LICENSE)</span></span>
-<span id="cb48-651"><a href="#cb48-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-652"><a href="#cb48-652" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">You can use numbers for reference-style link definitions</span><span class="co">][1]</span></span>
+<span id="cb48-636"><a href="#cb48-636" aria-hidden="true" tabindex="-1"></a>See Quarto documentation for cross-referencing: <span class="ot">&lt;https://quarto.org/docs/authoring/cross-references.html&gt;</span></span>
+<span id="cb48-637"><a href="#cb48-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-638"><a href="#cb48-638" aria-hidden="true" tabindex="-1"></a>To cross-reference a section: <span class="in">`@sec-NAMEOFSECTION`</span> or <span class="co">[</span><span class="ot">text to show</span><span class="co">](#sec-NAMEOFSECTION)</span></span>
+<span id="cb48-639"><a href="#cb48-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-640"><a href="#cb48-640" aria-hidden="true" tabindex="-1"></a>To cross-reference a table: <span class="in">`@tbl-NAMEOFTABLE`</span> or <span class="co">[</span><span class="ot">text to show</span><span class="co">](#tbl-NAMEOFTABLE)</span></span>
+<span id="cb48-641"><a href="#cb48-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-642"><a href="#cb48-642" aria-hidden="true" tabindex="-1"></a>To cross-reference a figure: <span class="in">`@fig-NAMEOFFIGURE`</span> or <span class="co">[</span><span class="ot">text to show</span><span class="co">](#tbl-NAMEOFFIGURE)</span></span>
+<span id="cb48-643"><a href="#cb48-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-644"><a href="#cb48-644" aria-hidden="true" tabindex="-1"></a>To link to a heading that is in the same wiki, make sure the heading has a label (e.g., <span class="in">`{#sec-label}`</span>), as shown <span class="co">[</span><span class="ot">here</span><span class="co">](#sec-headings)</span>.</span>
+<span id="cb48-645"><a href="#cb48-645" aria-hidden="true" tabindex="-1"></a>Then, link to the heading with the following syntax: <span class="in">`[text to show](#sec-label)`</span>.</span>
+<span id="cb48-646"><a href="#cb48-646" aria-hidden="true" tabindex="-1"></a>For example, to link to the links section, you would specify: <span class="in">`[text to show](#sec-links)`</span>.</span>
+<span id="cb48-647"><a href="#cb48-647" aria-hidden="true" tabindex="-1"></a>If the heading is on a different page of the same wiki, specify the <span class="in">`.qmd`</span> file before the label, e.g.: <span class="in">`[text to show](dataManagement.qmd#sec-saveData)`</span>.</span>
+<span id="cb48-648"><a href="#cb48-648" aria-hidden="true" tabindex="-1"></a>If the heading is on a different page of a different wiki, specify the full path before the label, e.g.: <span class="in">`[text to show](https://devpsylab.github.io/LabWiki/manual.html#basicsLab)`</span>.</span>
+<span id="cb48-649"><a href="#cb48-649" aria-hidden="true" tabindex="-1"></a>Do not use the website-derived link for a given heading because it is not a stable link; the heading path can change if other headings are added.</span>
+<span id="cb48-650"><a href="#cb48-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-651"><a href="#cb48-651" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-652"><a href="#cb48-652" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link</span><span class="co">](https://www.google.com)</span></span>
 <span id="cb48-653"><a href="#cb48-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-654"><a href="#cb48-654" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.qmd#sec-overview)</span></span>
+<span id="cb48-654"><a href="#cb48-654" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link with title</span><span class="co">](https://www.google.com "Google's Homepage")</span></span>
 <span id="cb48-655"><a href="#cb48-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-656"><a href="#cb48-656" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link within this document</span><span class="co">](#sec-headings)</span></span>
+<span id="cb48-656"><a href="#cb48-656" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a reference-style link</span><span class="co">][Arbitrary case-insensitive reference text]</span></span>
 <span id="cb48-657"><a href="#cb48-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-658"><a href="#cb48-658" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link that opens in a new tab</span><span class="co">](https://example.com)</span>{target="_blank"}</span>
+<span id="cb48-658"><a href="#cb48-658" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a relative reference to a repository file</span><span class="co">](../blob/master/LICENSE)</span></span>
 <span id="cb48-659"><a href="#cb48-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-660"><a href="#cb48-660" aria-hidden="true" tabindex="-1"></a>URLs in angle brackets will automatically get turned into links. </span>
-<span id="cb48-661"><a href="#cb48-661" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;http://www.example.com&gt;</span></span>
-<span id="cb48-662"><a href="#cb48-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-663"><a href="#cb48-663" aria-hidden="true" tabindex="-1"></a>Some text to show that the reference links can follow later.</span>
-<span id="cb48-664"><a href="#cb48-664" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-665"><a href="#cb48-665" aria-hidden="true" tabindex="-1"></a><span class="ot">[arbitrary case-insensitive reference text]: &lt;https://www.mozilla.org&gt;</span></span>
-<span id="cb48-666"><a href="#cb48-666" aria-hidden="true" tabindex="-1"></a><span class="ot">[1]: &lt;https://slashdot.org/&gt;</span></span>
+<span id="cb48-660"><a href="#cb48-660" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">You can use numbers for reference-style link definitions</span><span class="co">][1]</span></span>
+<span id="cb48-661"><a href="#cb48-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-662"><a href="#cb48-662" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.qmd#sec-overview)</span></span>
+<span id="cb48-663"><a href="#cb48-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-664"><a href="#cb48-664" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link within this document</span><span class="co">](#sec-headings)</span></span>
+<span id="cb48-665"><a href="#cb48-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-666"><a href="#cb48-666" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link that opens in a new tab</span><span class="co">](https://example.com)</span>{target="_blank"}</span>
 <span id="cb48-667"><a href="#cb48-667" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-668"><a href="#cb48-668" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DevPsyLab](images/formalLogo.png)</span><span class="co">](https://developmental-psychopathology.lab.uiowa.edu/)</span></span>
-<span id="cb48-669"><a href="#cb48-669" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-668"><a href="#cb48-668" aria-hidden="true" tabindex="-1"></a>URLs in angle brackets will automatically get turned into links. </span>
+<span id="cb48-669"><a href="#cb48-669" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;http://www.example.com&gt;</span></span>
 <span id="cb48-670"><a href="#cb48-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-671"><a href="#cb48-671" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link</span><span class="co">](https://www.google.com)</span></span>
+<span id="cb48-671"><a href="#cb48-671" aria-hidden="true" tabindex="-1"></a>Some text to show that the reference links can follow later.</span>
 <span id="cb48-672"><a href="#cb48-672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-673"><a href="#cb48-673" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link with title</span><span class="co">](https://www.google.com "Google's Homepage")</span></span>
-<span id="cb48-674"><a href="#cb48-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-675"><a href="#cb48-675" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a reference-style link</span><span class="co">][Arbitrary case-insensitive reference text]</span></span>
-<span id="cb48-676"><a href="#cb48-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-677"><a href="#cb48-677" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a relative reference to a repository file</span><span class="co">](../blob/master/LICENSE)</span></span>
+<span id="cb48-673"><a href="#cb48-673" aria-hidden="true" tabindex="-1"></a><span class="ot">[arbitrary case-insensitive reference text]: &lt;https://www.mozilla.org&gt;</span></span>
+<span id="cb48-674"><a href="#cb48-674" aria-hidden="true" tabindex="-1"></a><span class="ot">[1]: &lt;https://slashdot.org/&gt;</span></span>
+<span id="cb48-675"><a href="#cb48-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-676"><a href="#cb48-676" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DevPsyLab](images/formalLogo.png)</span><span class="co">](https://developmental-psychopathology.lab.uiowa.edu/)</span></span>
+<span id="cb48-677"><a href="#cb48-677" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
 <span id="cb48-678"><a href="#cb48-678" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-679"><a href="#cb48-679" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">You can use numbers for reference-style link definitions</span><span class="co">][1]</span></span>
+<span id="cb48-679"><a href="#cb48-679" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link</span><span class="co">](https://www.google.com)</span></span>
 <span id="cb48-680"><a href="#cb48-680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-681"><a href="#cb48-681" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.html#sec-overview)</span></span>
+<span id="cb48-681"><a href="#cb48-681" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm an inline-style link with title</span><span class="co">](https://www.google.com "Google's Homepage")</span></span>
 <span id="cb48-682"><a href="#cb48-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-683"><a href="#cb48-683" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.qmd#sec-overview)</span></span>
+<span id="cb48-683"><a href="#cb48-683" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a reference-style link</span><span class="co">][Arbitrary case-insensitive reference text]</span></span>
 <span id="cb48-684"><a href="#cb48-684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-685"><a href="#cb48-685" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link within this document</span><span class="co">](#sec-headings)</span></span>
+<span id="cb48-685"><a href="#cb48-685" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a relative reference to a repository file</span><span class="co">](../blob/master/LICENSE)</span></span>
 <span id="cb48-686"><a href="#cb48-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-687"><a href="#cb48-687" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link that opens in a new tab</span><span class="co">](https://example.com)</span>{target="_blank"}</span>
+<span id="cb48-687"><a href="#cb48-687" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">You can use numbers for reference-style link definitions</span><span class="co">][1]</span></span>
 <span id="cb48-688"><a href="#cb48-688" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-689"><a href="#cb48-689" aria-hidden="true" tabindex="-1"></a>URLs and URLs in angle brackets will automatically get turned into links. </span>
-<span id="cb48-690"><a href="#cb48-690" aria-hidden="true" tabindex="-1"></a>http://www.example.com or <span class="ot">&lt;http://www.example.com&gt;</span></span>
-<span id="cb48-691"><a href="#cb48-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-692"><a href="#cb48-692" aria-hidden="true" tabindex="-1"></a>Some text to show that the reference links can follow later.</span>
-<span id="cb48-693"><a href="#cb48-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-694"><a href="#cb48-694" aria-hidden="true" tabindex="-1"></a><span class="ot">[arbitrary case-insensitive reference text]: &lt;https://www.mozilla.org&gt;</span></span>
-<span id="cb48-695"><a href="#cb48-695" aria-hidden="true" tabindex="-1"></a><span class="ot">[1]: &lt;http://slashdot.org&gt;</span></span>
+<span id="cb48-689"><a href="#cb48-689" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.html#sec-overview)</span></span>
+<span id="cb48-690"><a href="#cb48-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-691"><a href="#cb48-691" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I am a link to another file in this project</span><span class="co">](pca.qmd#sec-overview)</span></span>
+<span id="cb48-692"><a href="#cb48-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-693"><a href="#cb48-693" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link within this document</span><span class="co">](#sec-headings)</span></span>
+<span id="cb48-694"><a href="#cb48-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-695"><a href="#cb48-695" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">I'm a link that opens in a new tab</span><span class="co">](https://example.com)</span>{target="_blank"}</span>
 <span id="cb48-696"><a href="#cb48-696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-697"><a href="#cb48-697" aria-hidden="true" tabindex="-1"></a>Link from an image: </span>
-<span id="cb48-698"><a href="#cb48-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-699"><a href="#cb48-699" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DevPsyLab](images/formalLogo.png)</span><span class="co">](https://developmental-psychopathology.lab.uiowa.edu/)</span></span>
-<span id="cb48-700"><a href="#cb48-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-697"><a href="#cb48-697" aria-hidden="true" tabindex="-1"></a>URLs and URLs in angle brackets will automatically get turned into links. </span>
+<span id="cb48-698"><a href="#cb48-698" aria-hidden="true" tabindex="-1"></a>http://www.example.com or <span class="ot">&lt;http://www.example.com&gt;</span></span>
+<span id="cb48-699"><a href="#cb48-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-700"><a href="#cb48-700" aria-hidden="true" tabindex="-1"></a>Some text to show that the reference links can follow later.</span>
 <span id="cb48-701"><a href="#cb48-701" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-702"><a href="#cb48-702" aria-hidden="true" tabindex="-1"></a><span class="fu"># Footnotes {#sec-footnotes}</span></span>
-<span id="cb48-703"><a href="#cb48-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-704"><a href="#cb48-704" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-705"><a href="#cb48-705" aria-hidden="true" tabindex="-1"></a>Here is a simple footnote<span class="ot">[^1]</span>.</span>
+<span id="cb48-702"><a href="#cb48-702" aria-hidden="true" tabindex="-1"></a><span class="ot">[arbitrary case-insensitive reference text]: &lt;https://www.mozilla.org&gt;</span></span>
+<span id="cb48-703"><a href="#cb48-703" aria-hidden="true" tabindex="-1"></a><span class="ot">[1]: &lt;http://slashdot.org&gt;</span></span>
+<span id="cb48-704"><a href="#cb48-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-705"><a href="#cb48-705" aria-hidden="true" tabindex="-1"></a>Link from an image: </span>
 <span id="cb48-706"><a href="#cb48-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-707"><a href="#cb48-707" aria-hidden="true" tabindex="-1"></a>A footnote can also have multiple lines<span class="ot">[^2]</span>.  </span>
+<span id="cb48-707"><a href="#cb48-707" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DevPsyLab](images/formalLogo.png)</span><span class="co">](https://developmental-psychopathology.lab.uiowa.edu)</span></span>
 <span id="cb48-708"><a href="#cb48-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-709"><a href="#cb48-709" aria-hidden="true" tabindex="-1"></a>You can also use words, to fit your writing style more closely<span class="ot">[^note]</span>.</span>
-<span id="cb48-710"><a href="#cb48-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-711"><a href="#cb48-711" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>My reference.</span>
-<span id="cb48-712"><a href="#cb48-712" aria-hidden="true" tabindex="-1"></a><span class="ot">[^2]: </span>Every new line should be prefixed with 2 spaces.  </span>
-<span id="cb48-713"><a href="#cb48-713" aria-hidden="true" tabindex="-1"></a>  This allows you to have a footnote with multiple lines.</span>
-<span id="cb48-714"><a href="#cb48-714" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
-<span id="cb48-715"><a href="#cb48-715" aria-hidden="true" tabindex="-1"></a>    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  </span>
-<span id="cb48-716"><a href="#cb48-716" aria-hidden="true" tabindex="-1"></a>    This footnote also has been made with a different syntax using 4 spaces for new lines.</span>
-<span id="cb48-717"><a href="#cb48-717" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-709"><a href="#cb48-709" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-710"><a href="#cb48-710" aria-hidden="true" tabindex="-1"></a><span class="fu"># Footnotes {#sec-footnotes}</span></span>
+<span id="cb48-711"><a href="#cb48-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-712"><a href="#cb48-712" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-713"><a href="#cb48-713" aria-hidden="true" tabindex="-1"></a>Here is a simple footnote<span class="ot">[^1]</span>.</span>
+<span id="cb48-714"><a href="#cb48-714" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-715"><a href="#cb48-715" aria-hidden="true" tabindex="-1"></a>A footnote can also have multiple lines<span class="ot">[^2]</span>.  </span>
+<span id="cb48-716"><a href="#cb48-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-717"><a href="#cb48-717" aria-hidden="true" tabindex="-1"></a>You can also use words, to fit your writing style more closely<span class="ot">[^note]</span>.</span>
 <span id="cb48-718"><a href="#cb48-718" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-719"><a href="#cb48-719" aria-hidden="true" tabindex="-1"></a>Here is a simple footnote<span class="ot">[^1]</span>.</span>
-<span id="cb48-720"><a href="#cb48-720" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-721"><a href="#cb48-721" aria-hidden="true" tabindex="-1"></a>A footnote can also have multiple lines<span class="ot">[^2]</span>.  </span>
-<span id="cb48-722"><a href="#cb48-722" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-723"><a href="#cb48-723" aria-hidden="true" tabindex="-1"></a>You can also use words, to fit your writing style more closely<span class="ot">[^note]</span>.</span>
-<span id="cb48-724"><a href="#cb48-724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-725"><a href="#cb48-725" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>My reference.</span>
-<span id="cb48-726"><a href="#cb48-726" aria-hidden="true" tabindex="-1"></a><span class="ot">[^2]: </span>Every new line should be prefixed with 2 spaces.  </span>
-<span id="cb48-727"><a href="#cb48-727" aria-hidden="true" tabindex="-1"></a>  This allows you to have a footnote with multiple lines.</span>
-<span id="cb48-728"><a href="#cb48-728" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
-<span id="cb48-729"><a href="#cb48-729" aria-hidden="true" tabindex="-1"></a>    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  </span>
-<span id="cb48-730"><a href="#cb48-730" aria-hidden="true" tabindex="-1"></a>    This footnote also has been made with a different syntax using 4 spaces for new lines.</span>
-<span id="cb48-731"><a href="#cb48-731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-732"><a href="#cb48-732" aria-hidden="true" tabindex="-1"></a><span class="fu"># Symbols {#sec-symbols}</span></span>
-<span id="cb48-733"><a href="#cb48-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-734"><a href="#cb48-734" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-735"><a href="#cb48-735" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>degree: (°) <span class="dv">&amp;#176;</span></span>
-<span id="cb48-736"><a href="#cb48-736" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-737"><a href="#cb48-737" aria-hidden="true" tabindex="-1"></a><span class="in">- degree: (°) &amp;#176;</span></span>
-<span id="cb48-738"><a href="#cb48-738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-739"><a href="#cb48-739" aria-hidden="true" tabindex="-1"></a><span class="in">## Arrows {#sec-arrows}</span></span>
-<span id="cb48-740"><a href="#cb48-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-741"><a href="#cb48-741" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-742"><a href="#cb48-742" aria-hidden="true" tabindex="-1"></a><span class="in">- left arrow: ← &amp;#8592;</span></span>
-<span id="cb48-743"><a href="#cb48-743" aria-hidden="true" tabindex="-1"></a><span class="in">- upward arrow: ↑ &amp;#8593;</span></span>
-<span id="cb48-744"><a href="#cb48-744" aria-hidden="true" tabindex="-1"></a><span class="in">- right arrow: → &amp;#8594;</span></span>
-<span id="cb48-745"><a href="#cb48-745" aria-hidden="true" tabindex="-1"></a><span class="in">- downward arrow: ↓ &amp;#8595;</span></span>
-<span id="cb48-746"><a href="#cb48-746" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-747"><a href="#cb48-747" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-748"><a href="#cb48-748" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>left arrow: ← <span class="dv">&amp;#8592;</span></span>
-<span id="cb48-749"><a href="#cb48-749" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>upward arrow: ↑ <span class="dv">&amp;#8593;</span></span>
-<span id="cb48-750"><a href="#cb48-750" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>right arrow: → <span class="dv">&amp;#8594;</span></span>
-<span id="cb48-751"><a href="#cb48-751" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>downward arrow: ↓ <span class="dv">&amp;#8595;</span></span>
-<span id="cb48-752"><a href="#cb48-752" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-753"><a href="#cb48-753" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dashes and Hyphens {#sec-dashes}</span></span>
-<span id="cb48-754"><a href="#cb48-754" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-755"><a href="#cb48-755" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-756"><a href="#cb48-756" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>hyphen: -</span>
-<span id="cb48-757"><a href="#cb48-757" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>en dash: –</span>
-<span id="cb48-758"><a href="#cb48-758" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>em dash: —</span>
-<span id="cb48-759"><a href="#cb48-759" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-719"><a href="#cb48-719" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>My reference.</span>
+<span id="cb48-720"><a href="#cb48-720" aria-hidden="true" tabindex="-1"></a><span class="ot">[^2]: </span>Every new line should be prefixed with 2 spaces.  </span>
+<span id="cb48-721"><a href="#cb48-721" aria-hidden="true" tabindex="-1"></a>  This allows you to have a footnote with multiple lines.</span>
+<span id="cb48-722"><a href="#cb48-722" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
+<span id="cb48-723"><a href="#cb48-723" aria-hidden="true" tabindex="-1"></a>    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  </span>
+<span id="cb48-724"><a href="#cb48-724" aria-hidden="true" tabindex="-1"></a>    This footnote also has been made with a different syntax using 4 spaces for new lines.</span>
+<span id="cb48-725"><a href="#cb48-725" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-726"><a href="#cb48-726" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-727"><a href="#cb48-727" aria-hidden="true" tabindex="-1"></a>Here is a simple footnote<span class="ot">[^1]</span>.</span>
+<span id="cb48-728"><a href="#cb48-728" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-729"><a href="#cb48-729" aria-hidden="true" tabindex="-1"></a>A footnote can also have multiple lines<span class="ot">[^2]</span>.  </span>
+<span id="cb48-730"><a href="#cb48-730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-731"><a href="#cb48-731" aria-hidden="true" tabindex="-1"></a>You can also use words, to fit your writing style more closely<span class="ot">[^note]</span>.</span>
+<span id="cb48-732"><a href="#cb48-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-733"><a href="#cb48-733" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>My reference.</span>
+<span id="cb48-734"><a href="#cb48-734" aria-hidden="true" tabindex="-1"></a><span class="ot">[^2]: </span>Every new line should be prefixed with 2 spaces.  </span>
+<span id="cb48-735"><a href="#cb48-735" aria-hidden="true" tabindex="-1"></a>  This allows you to have a footnote with multiple lines.</span>
+<span id="cb48-736"><a href="#cb48-736" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
+<span id="cb48-737"><a href="#cb48-737" aria-hidden="true" tabindex="-1"></a>    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  </span>
+<span id="cb48-738"><a href="#cb48-738" aria-hidden="true" tabindex="-1"></a>    This footnote also has been made with a different syntax using 4 spaces for new lines.</span>
+<span id="cb48-739"><a href="#cb48-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-740"><a href="#cb48-740" aria-hidden="true" tabindex="-1"></a><span class="fu"># Symbols {#sec-symbols}</span></span>
+<span id="cb48-741"><a href="#cb48-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-742"><a href="#cb48-742" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-743"><a href="#cb48-743" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>degree: (°) <span class="dv">&amp;#176;</span></span>
+<span id="cb48-744"><a href="#cb48-744" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-745"><a href="#cb48-745" aria-hidden="true" tabindex="-1"></a><span class="in">- degree: (°) &amp;#176;</span></span>
+<span id="cb48-746"><a href="#cb48-746" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-747"><a href="#cb48-747" aria-hidden="true" tabindex="-1"></a><span class="in">## Arrows {#sec-arrows}</span></span>
+<span id="cb48-748"><a href="#cb48-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-749"><a href="#cb48-749" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-750"><a href="#cb48-750" aria-hidden="true" tabindex="-1"></a><span class="in">- left arrow: ← &amp;#8592;</span></span>
+<span id="cb48-751"><a href="#cb48-751" aria-hidden="true" tabindex="-1"></a><span class="in">- upward arrow: ↑ &amp;#8593;</span></span>
+<span id="cb48-752"><a href="#cb48-752" aria-hidden="true" tabindex="-1"></a><span class="in">- right arrow: → &amp;#8594;</span></span>
+<span id="cb48-753"><a href="#cb48-753" aria-hidden="true" tabindex="-1"></a><span class="in">- downward arrow: ↓ &amp;#8595;</span></span>
+<span id="cb48-754"><a href="#cb48-754" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-755"><a href="#cb48-755" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-756"><a href="#cb48-756" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>left arrow: ← <span class="dv">&amp;#8592;</span></span>
+<span id="cb48-757"><a href="#cb48-757" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>upward arrow: ↑ <span class="dv">&amp;#8593;</span></span>
+<span id="cb48-758"><a href="#cb48-758" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>right arrow: → <span class="dv">&amp;#8594;</span></span>
+<span id="cb48-759"><a href="#cb48-759" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>downward arrow: ↓ <span class="dv">&amp;#8595;</span></span>
 <span id="cb48-760"><a href="#cb48-760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-761"><a href="#cb48-761" aria-hidden="true" tabindex="-1"></a><span class="in">- hyphen: -</span></span>
-<span id="cb48-762"><a href="#cb48-762" aria-hidden="true" tabindex="-1"></a><span class="in">- en dash: –</span></span>
-<span id="cb48-763"><a href="#cb48-763" aria-hidden="true" tabindex="-1"></a><span class="in">- em dash: —</span></span>
-<span id="cb48-764"><a href="#cb48-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-765"><a href="#cb48-765" aria-hidden="true" tabindex="-1"></a><span class="in">## Subscript/Superscript {#sec-subSuperscript}</span></span>
-<span id="cb48-766"><a href="#cb48-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-767"><a href="#cb48-767" aria-hidden="true" tabindex="-1"></a><span class="in">### Markdown {#sec-markdownSubSuperscript}</span></span>
+<span id="cb48-761"><a href="#cb48-761" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dashes and Hyphens {#sec-dashes}</span></span>
+<span id="cb48-762"><a href="#cb48-762" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-763"><a href="#cb48-763" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-764"><a href="#cb48-764" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>hyphen: -</span>
+<span id="cb48-765"><a href="#cb48-765" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>en dash: –</span>
+<span id="cb48-766"><a href="#cb48-766" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>em dash: —</span>
+<span id="cb48-767"><a href="#cb48-767" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
 <span id="cb48-768"><a href="#cb48-768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-769"><a href="#cb48-769" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-770"><a href="#cb48-770" aria-hidden="true" tabindex="-1"></a><span class="in">H~2O</span></span>
-<span id="cb48-771"><a href="#cb48-771" aria-hidden="true" tabindex="-1"></a><span class="in">X^2</span></span>
-<span id="cb48-772"><a href="#cb48-772" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-773"><a href="#cb48-773" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-774"><a href="#cb48-774" aria-hidden="true" tabindex="-1"></a>H~2O</span>
-<span id="cb48-775"><a href="#cb48-775" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-776"><a href="#cb48-776" aria-hidden="true" tabindex="-1"></a>X^2</span>
-<span id="cb48-777"><a href="#cb48-777" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-778"><a href="#cb48-778" aria-hidden="true" tabindex="-1"></a><span class="fu">### HTML {#sec-htmlSubSuperscript}</span></span>
-<span id="cb48-779"><a href="#cb48-779" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-780"><a href="#cb48-780" aria-hidden="true" tabindex="-1"></a><span class="in">````html</span></span>
-<span id="cb48-781"><a href="#cb48-781" aria-hidden="true" tabindex="-1"></a>H<span class="op">&lt;</span>sub<span class="op">&gt;</span><span class="dv">2</span><span class="op">&lt;/</span>sub<span class="op">&gt;</span>O</span>
-<span id="cb48-782"><a href="#cb48-782" aria-hidden="true" tabindex="-1"></a>X<span class="op">&lt;</span>sup<span class="op">&gt;</span><span class="dv">2</span><span class="op">&lt;/</span>sup<span class="op">&gt;</span></span>
-<span id="cb48-783"><a href="#cb48-783" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-784"><a href="#cb48-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-785"><a href="#cb48-785" aria-hidden="true" tabindex="-1"></a>H<span class="dt">&lt;</span><span class="kw">sub</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">sub</span><span class="dt">&gt;</span>O</span>
-<span id="cb48-786"><a href="#cb48-786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-787"><a href="#cb48-787" aria-hidden="true" tabindex="-1"></a>X<span class="dt">&lt;</span><span class="kw">sup</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">sup</span><span class="dt">&gt;</span></span>
-<span id="cb48-788"><a href="#cb48-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-789"><a href="#cb48-789" aria-hidden="true" tabindex="-1"></a><span class="fu">## Definition List {#sec-definitions}</span></span>
-<span id="cb48-790"><a href="#cb48-790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-791"><a href="#cb48-791" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-792"><a href="#cb48-792" aria-hidden="true" tabindex="-1"></a>term</span>
-<span id="cb48-793"><a href="#cb48-793" aria-hidden="true" tabindex="-1"></a>: definition</span>
-<span id="cb48-794"><a href="#cb48-794" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-795"><a href="#cb48-795" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-796"><a href="#cb48-796" aria-hidden="true" tabindex="-1"></a>term</span>
-<span id="cb48-797"><a href="#cb48-797" aria-hidden="true" tabindex="-1"></a>: definition</span>
+<span id="cb48-769"><a href="#cb48-769" aria-hidden="true" tabindex="-1"></a><span class="in">- hyphen: -</span></span>
+<span id="cb48-770"><a href="#cb48-770" aria-hidden="true" tabindex="-1"></a><span class="in">- en dash: –</span></span>
+<span id="cb48-771"><a href="#cb48-771" aria-hidden="true" tabindex="-1"></a><span class="in">- em dash: —</span></span>
+<span id="cb48-772"><a href="#cb48-772" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-773"><a href="#cb48-773" aria-hidden="true" tabindex="-1"></a><span class="in">## Subscript/Superscript {#sec-subSuperscript}</span></span>
+<span id="cb48-774"><a href="#cb48-774" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-775"><a href="#cb48-775" aria-hidden="true" tabindex="-1"></a><span class="in">### Markdown {#sec-markdownSubSuperscript}</span></span>
+<span id="cb48-776"><a href="#cb48-776" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-777"><a href="#cb48-777" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-778"><a href="#cb48-778" aria-hidden="true" tabindex="-1"></a><span class="in">H~2O</span></span>
+<span id="cb48-779"><a href="#cb48-779" aria-hidden="true" tabindex="-1"></a><span class="in">X^2</span></span>
+<span id="cb48-780"><a href="#cb48-780" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-781"><a href="#cb48-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-782"><a href="#cb48-782" aria-hidden="true" tabindex="-1"></a>H~2O</span>
+<span id="cb48-783"><a href="#cb48-783" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-784"><a href="#cb48-784" aria-hidden="true" tabindex="-1"></a>X^2</span>
+<span id="cb48-785"><a href="#cb48-785" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-786"><a href="#cb48-786" aria-hidden="true" tabindex="-1"></a><span class="fu">### HTML {#sec-htmlSubSuperscript}</span></span>
+<span id="cb48-787"><a href="#cb48-787" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-788"><a href="#cb48-788" aria-hidden="true" tabindex="-1"></a><span class="in">````html</span></span>
+<span id="cb48-789"><a href="#cb48-789" aria-hidden="true" tabindex="-1"></a>H<span class="op">&lt;</span>sub<span class="op">&gt;</span><span class="dv">2</span><span class="op">&lt;/</span>sub<span class="op">&gt;</span>O</span>
+<span id="cb48-790"><a href="#cb48-790" aria-hidden="true" tabindex="-1"></a>X<span class="op">&lt;</span>sup<span class="op">&gt;</span><span class="dv">2</span><span class="op">&lt;/</span>sup<span class="op">&gt;</span></span>
+<span id="cb48-791"><a href="#cb48-791" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-792"><a href="#cb48-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-793"><a href="#cb48-793" aria-hidden="true" tabindex="-1"></a>H<span class="dt">&lt;</span><span class="kw">sub</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">sub</span><span class="dt">&gt;</span>O</span>
+<span id="cb48-794"><a href="#cb48-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-795"><a href="#cb48-795" aria-hidden="true" tabindex="-1"></a>X<span class="dt">&lt;</span><span class="kw">sup</span><span class="dt">&gt;</span>2<span class="dt">&lt;/</span><span class="kw">sup</span><span class="dt">&gt;</span></span>
+<span id="cb48-796"><a href="#cb48-796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-797"><a href="#cb48-797" aria-hidden="true" tabindex="-1"></a><span class="fu">## Definition List {#sec-definitions}</span></span>
 <span id="cb48-798"><a href="#cb48-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-799"><a href="#cb48-799" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task list {#sec-taskList}</span></span>
-<span id="cb48-800"><a href="#cb48-800" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-801"><a href="#cb48-801" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-802"><a href="#cb48-802" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> Create the website</span>
-<span id="cb48-803"><a href="#cb48-803" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Conduct the study</span>
-<span id="cb48-804"><a href="#cb48-804" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Write it up</span>
-<span id="cb48-805"><a href="#cb48-805" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-799"><a href="#cb48-799" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-800"><a href="#cb48-800" aria-hidden="true" tabindex="-1"></a>term</span>
+<span id="cb48-801"><a href="#cb48-801" aria-hidden="true" tabindex="-1"></a>: definition</span>
+<span id="cb48-802"><a href="#cb48-802" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-803"><a href="#cb48-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-804"><a href="#cb48-804" aria-hidden="true" tabindex="-1"></a>term</span>
+<span id="cb48-805"><a href="#cb48-805" aria-hidden="true" tabindex="-1"></a>: definition</span>
 <span id="cb48-806"><a href="#cb48-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-807"><a href="#cb48-807" aria-hidden="true" tabindex="-1"></a><span class="in">- [x] Create the website</span></span>
-<span id="cb48-808"><a href="#cb48-808" aria-hidden="true" tabindex="-1"></a><span class="in">- [ ] Conduct the study</span></span>
-<span id="cb48-809"><a href="#cb48-809" aria-hidden="true" tabindex="-1"></a><span class="in">- [ ] Write it up</span></span>
-<span id="cb48-810"><a href="#cb48-810" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-811"><a href="#cb48-811" aria-hidden="true" tabindex="-1"></a><span class="in"># Table {#sec-table}</span></span>
-<span id="cb48-812"><a href="#cb48-812" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-813"><a href="#cb48-813" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
-<span id="cb48-814"><a href="#cb48-814" aria-hidden="true" tabindex="-1"></a><span class="in">| Syntax      | Description |</span></span>
-<span id="cb48-815"><a href="#cb48-815" aria-hidden="true" tabindex="-1"></a><span class="in">| ----------- | ----------- |</span></span>
-<span id="cb48-816"><a href="#cb48-816" aria-hidden="true" tabindex="-1"></a><span class="in">| Header      | Title |</span></span>
-<span id="cb48-817"><a href="#cb48-817" aria-hidden="true" tabindex="-1"></a><span class="in">| Paragraph   | First paragraph. &lt;br&gt;&lt;br&gt; Second paragraph. |</span></span>
+<span id="cb48-807"><a href="#cb48-807" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task list {#sec-taskList}</span></span>
+<span id="cb48-808"><a href="#cb48-808" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-809"><a href="#cb48-809" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-810"><a href="#cb48-810" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> Create the website</span>
+<span id="cb48-811"><a href="#cb48-811" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Conduct the study</span>
+<span id="cb48-812"><a href="#cb48-812" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Write it up</span>
+<span id="cb48-813"><a href="#cb48-813" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-814"><a href="#cb48-814" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-815"><a href="#cb48-815" aria-hidden="true" tabindex="-1"></a><span class="in">- [x] Create the website</span></span>
+<span id="cb48-816"><a href="#cb48-816" aria-hidden="true" tabindex="-1"></a><span class="in">- [ ] Conduct the study</span></span>
+<span id="cb48-817"><a href="#cb48-817" aria-hidden="true" tabindex="-1"></a><span class="in">- [ ] Write it up</span></span>
 <span id="cb48-818"><a href="#cb48-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-819"><a href="#cb48-819" aria-hidden="true" tabindex="-1"></a><span class="in">| Syntax      | Description |</span></span>
-<span id="cb48-820"><a href="#cb48-820" aria-hidden="true" tabindex="-1"></a><span class="in">| ----------- | ----------- |</span></span>
-<span id="cb48-821"><a href="#cb48-821" aria-hidden="true" tabindex="-1"></a><span class="in">| Header      | Title |</span></span>
-<span id="cb48-822"><a href="#cb48-822" aria-hidden="true" tabindex="-1"></a><span class="in">| List        | Here's a list! &lt;ul&gt;&lt;li&gt;Item one.&lt;/li&gt;&lt;li&gt;Item two.&lt;/li&gt;&lt;/ul&gt; |</span></span>
-<span id="cb48-823"><a href="#cb48-823" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-824"><a href="#cb48-824" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-825"><a href="#cb48-825" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Syntax      <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb48-826"><a href="#cb48-826" aria-hidden="true" tabindex="-1"></a><span class="pp">| -----------</span> <span class="pp">| -----------</span> <span class="pp">|</span></span>
-<span id="cb48-827"><a href="#cb48-827" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Header      <span class="pp">|</span> Title <span class="pp">|</span></span>
-<span id="cb48-828"><a href="#cb48-828" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paragraph   <span class="pp">|</span> First paragraph. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span> Second paragraph. <span class="pp">|</span></span>
-<span id="cb48-829"><a href="#cb48-829" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-830"><a href="#cb48-830" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Syntax      <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb48-831"><a href="#cb48-831" aria-hidden="true" tabindex="-1"></a><span class="pp">| -----------</span> <span class="pp">| -----------</span> <span class="pp">|</span></span>
-<span id="cb48-832"><a href="#cb48-832" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Header      <span class="pp">|</span> Title <span class="pp">|</span></span>
-<span id="cb48-833"><a href="#cb48-833" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> List        <span class="pp">|</span> Here's a list! <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item one.<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item two.<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span> <span class="pp">|</span></span>
-<span id="cb48-834"><a href="#cb48-834" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-835"><a href="#cb48-835" aria-hidden="true" tabindex="-1"></a>You can easily create tables in Markdown from an Excel or csv file using the following website:</span>
-<span id="cb48-836"><a href="#cb48-836" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.tablesgenerator.com/markdown_tables&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/53TQ-DQJ9&gt;</span>)</span>
+<span id="cb48-819"><a href="#cb48-819" aria-hidden="true" tabindex="-1"></a><span class="in"># Table {#sec-table}</span></span>
+<span id="cb48-820"><a href="#cb48-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-821"><a href="#cb48-821" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb48-822"><a href="#cb48-822" aria-hidden="true" tabindex="-1"></a><span class="in">| Syntax      | Description |</span></span>
+<span id="cb48-823"><a href="#cb48-823" aria-hidden="true" tabindex="-1"></a><span class="in">| ----------- | ----------- |</span></span>
+<span id="cb48-824"><a href="#cb48-824" aria-hidden="true" tabindex="-1"></a><span class="in">| Header      | Title |</span></span>
+<span id="cb48-825"><a href="#cb48-825" aria-hidden="true" tabindex="-1"></a><span class="in">| Paragraph   | First paragraph. &lt;br&gt;&lt;br&gt; Second paragraph. |</span></span>
+<span id="cb48-826"><a href="#cb48-826" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-827"><a href="#cb48-827" aria-hidden="true" tabindex="-1"></a><span class="in">| Syntax      | Description |</span></span>
+<span id="cb48-828"><a href="#cb48-828" aria-hidden="true" tabindex="-1"></a><span class="in">| ----------- | ----------- |</span></span>
+<span id="cb48-829"><a href="#cb48-829" aria-hidden="true" tabindex="-1"></a><span class="in">| Header      | Title |</span></span>
+<span id="cb48-830"><a href="#cb48-830" aria-hidden="true" tabindex="-1"></a><span class="in">| List        | Here's a list! &lt;ul&gt;&lt;li&gt;Item one.&lt;/li&gt;&lt;li&gt;Item two.&lt;/li&gt;&lt;/ul&gt; |</span></span>
+<span id="cb48-831"><a href="#cb48-831" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-832"><a href="#cb48-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-833"><a href="#cb48-833" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Syntax      <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb48-834"><a href="#cb48-834" aria-hidden="true" tabindex="-1"></a><span class="pp">| -----------</span> <span class="pp">| -----------</span> <span class="pp">|</span></span>
+<span id="cb48-835"><a href="#cb48-835" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Header      <span class="pp">|</span> Title <span class="pp">|</span></span>
+<span id="cb48-836"><a href="#cb48-836" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paragraph   <span class="pp">|</span> First paragraph. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;&lt;</span><span class="kw">br</span><span class="dt">&gt;</span> Second paragraph. <span class="pp">|</span></span>
 <span id="cb48-837"><a href="#cb48-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-838"><a href="#cb48-838" aria-hidden="true" tabindex="-1"></a>To cross-reference a table, add a caption below the table, then include a <span class="in">`#tbl-`</span> label in braces at the end of the caption.</span>
-<span id="cb48-839"><a href="#cb48-839" aria-hidden="true" tabindex="-1"></a>For example:</span>
-<span id="cb48-840"><a href="#cb48-840" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-841"><a href="#cb48-841" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-842"><a href="#cb48-842" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Col1 <span class="pp">|</span> Col2 <span class="pp">|</span> Col3 <span class="pp">|</span></span>
-<span id="cb48-843"><a href="#cb48-843" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|------|</span></span>
-<span id="cb48-844"><a href="#cb48-844" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A    <span class="pp">|</span> B    <span class="pp">|</span> C    <span class="pp">|</span></span>
-<span id="cb48-845"><a href="#cb48-845" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> E    <span class="pp">|</span> F    <span class="pp">|</span> G    <span class="pp">|</span></span>
-<span id="cb48-846"><a href="#cb48-846" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A    <span class="pp">|</span> G    <span class="pp">|</span> G    <span class="pp">|</span></span>
-<span id="cb48-847"><a href="#cb48-847" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-848"><a href="#cb48-848" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-letters}</span>
-<span id="cb48-849"><a href="#cb48-849" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-850"><a href="#cb48-850" aria-hidden="true" tabindex="-1"></a>See @tbl-letters.</span>
-<span id="cb48-851"><a href="#cb48-851" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-852"><a href="#cb48-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-853"><a href="#cb48-853" aria-hidden="true" tabindex="-1"></a><span class="fu"># Adding a Drop Down List {#sec-dropDownList}</span></span>
-<span id="cb48-854"><a href="#cb48-854" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-855"><a href="#cb48-855" aria-hidden="true" tabindex="-1"></a>**Note:**: When creating dropdown menus, it is important to have spaces between font breaks <span class="in">`&lt;/font&gt;`</span>.</span>
-<span id="cb48-856"><a href="#cb48-856" aria-hidden="true" tabindex="-1"></a>Without these breaks, Markdown cannot detect how to </span>
+<span id="cb48-838"><a href="#cb48-838" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Syntax      <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb48-839"><a href="#cb48-839" aria-hidden="true" tabindex="-1"></a><span class="pp">| -----------</span> <span class="pp">| -----------</span> <span class="pp">|</span></span>
+<span id="cb48-840"><a href="#cb48-840" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Header      <span class="pp">|</span> Title <span class="pp">|</span></span>
+<span id="cb48-841"><a href="#cb48-841" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> List        <span class="pp">|</span> Here's a list! <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item one.<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Item two.<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span> <span class="pp">|</span></span>
+<span id="cb48-842"><a href="#cb48-842" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-843"><a href="#cb48-843" aria-hidden="true" tabindex="-1"></a>You can easily create tables in Markdown from an Excel or csv file using the following website:</span>
+<span id="cb48-844"><a href="#cb48-844" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.tablesgenerator.com/markdown_tables&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/53TQ-DQJ9&gt;</span>)</span>
+<span id="cb48-845"><a href="#cb48-845" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-846"><a href="#cb48-846" aria-hidden="true" tabindex="-1"></a>To cross-reference a table, add a caption below the table, then include a <span class="in">`#tbl-`</span> label in braces at the end of the caption.</span>
+<span id="cb48-847"><a href="#cb48-847" aria-hidden="true" tabindex="-1"></a>For example:</span>
+<span id="cb48-848"><a href="#cb48-848" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-849"><a href="#cb48-849" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-850"><a href="#cb48-850" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Col1 <span class="pp">|</span> Col2 <span class="pp">|</span> Col3 <span class="pp">|</span></span>
+<span id="cb48-851"><a href="#cb48-851" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|------|</span></span>
+<span id="cb48-852"><a href="#cb48-852" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A    <span class="pp">|</span> B    <span class="pp">|</span> C    <span class="pp">|</span></span>
+<span id="cb48-853"><a href="#cb48-853" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> E    <span class="pp">|</span> F    <span class="pp">|</span> G    <span class="pp">|</span></span>
+<span id="cb48-854"><a href="#cb48-854" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A    <span class="pp">|</span> G    <span class="pp">|</span> G    <span class="pp">|</span></span>
+<span id="cb48-855"><a href="#cb48-855" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-856"><a href="#cb48-856" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-letters}</span>
 <span id="cb48-857"><a href="#cb48-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-858"><a href="#cb48-858" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown </span></span>
-<span id="cb48-859"><a href="#cb48-859" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-860"><a href="#cb48-860" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb48-861"><a href="#cb48-861" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>**&lt;font size = "6"&gt;This is a dropdown menu**<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb48-858"><a href="#cb48-858" aria-hidden="true" tabindex="-1"></a>See @tbl-letters.</span>
+<span id="cb48-859"><a href="#cb48-859" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-860"><a href="#cb48-860" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-861"><a href="#cb48-861" aria-hidden="true" tabindex="-1"></a><span class="fu"># Adding a Drop Down List {#sec-dropDownList}</span></span>
 <span id="cb48-862"><a href="#cb48-862" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-863"><a href="#cb48-863" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> size </span><span class="op">=</span> <span class="st">"4"</span><span class="dt">&gt;</span></span>
-<span id="cb48-864"><a href="#cb48-864" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-865"><a href="#cb48-865" aria-hidden="true" tabindex="-1"></a>Insert Text Here</span>
-<span id="cb48-866"><a href="#cb48-866" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-867"><a href="#cb48-867" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span></span>
-<span id="cb48-868"><a href="#cb48-868" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb48-869"><a href="#cb48-869" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb48-870"><a href="#cb48-870" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb48-871"><a href="#cb48-871" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>**&lt;font size = "6"&gt;This is a dropdown menu** </span>
+<span id="cb48-863"><a href="#cb48-863" aria-hidden="true" tabindex="-1"></a>**Note:**: When creating dropdown menus, it is important to have spaces between font breaks <span class="in">`&lt;/font&gt;`</span>.</span>
+<span id="cb48-864"><a href="#cb48-864" aria-hidden="true" tabindex="-1"></a>Without these breaks, Markdown cannot detect how to </span>
+<span id="cb48-865"><a href="#cb48-865" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-866"><a href="#cb48-866" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown </span></span>
+<span id="cb48-867"><a href="#cb48-867" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-868"><a href="#cb48-868" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb48-869"><a href="#cb48-869" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>**&lt;font size = "6"&gt;This is a dropdown menu**<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb48-870"><a href="#cb48-870" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-871"><a href="#cb48-871" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> size </span><span class="op">=</span> <span class="st">"4"</span><span class="dt">&gt;</span></span>
 <span id="cb48-872"><a href="#cb48-872" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-873"><a href="#cb48-873" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span></span>
+<span id="cb48-873"><a href="#cb48-873" aria-hidden="true" tabindex="-1"></a>Insert Text Here</span>
 <span id="cb48-874"><a href="#cb48-874" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-875"><a href="#cb48-875" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb48-876"><a href="#cb48-876" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-877"><a href="#cb48-877" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> size </span><span class="op">=</span> <span class="st">"4"</span><span class="dt">&gt;</span></span>
-<span id="cb48-878"><a href="#cb48-878" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-879"><a href="#cb48-879" aria-hidden="true" tabindex="-1"></a>Insert Text Here</span>
+<span id="cb48-875"><a href="#cb48-875" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span></span>
+<span id="cb48-876"><a href="#cb48-876" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb48-877"><a href="#cb48-877" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb48-878"><a href="#cb48-878" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb48-879"><a href="#cb48-879" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>**&lt;font size = "6"&gt;This is a dropdown menu** </span>
 <span id="cb48-880"><a href="#cb48-880" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-881"><a href="#cb48-881" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span></span>
 <span id="cb48-882"><a href="#cb48-882" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-883"><a href="#cb48-883" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb48-883"><a href="#cb48-883" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
 <span id="cb48-884"><a href="#cb48-884" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-885"><a href="#cb48-885" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb48-886"><a href="#cb48-886" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb48-887"><a href="#cb48-887" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-888"><a href="#cb48-888" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a Picture {#sec-picture}</span></span>
-<span id="cb48-889"><a href="#cb48-889" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-890"><a href="#cb48-890" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-891"><a href="#cb48-891" aria-hidden="true" tabindex="-1"></a><span class="al">![Insert Figure Caption here](Insert image filename and location here)</span></span>
-<span id="cb48-892"><a href="#cb48-892" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-893"><a href="#cb48-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-894"><a href="#cb48-894" aria-hidden="true" tabindex="-1"></a>For instance:</span>
+<span id="cb48-885"><a href="#cb48-885" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">font</span><span class="ot"> size </span><span class="op">=</span> <span class="st">"4"</span><span class="dt">&gt;</span></span>
+<span id="cb48-886"><a href="#cb48-886" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-887"><a href="#cb48-887" aria-hidden="true" tabindex="-1"></a>Insert Text Here</span>
+<span id="cb48-888"><a href="#cb48-888" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-889"><a href="#cb48-889" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">font</span><span class="dt">&gt;</span></span>
+<span id="cb48-890"><a href="#cb48-890" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-891"><a href="#cb48-891" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb48-892"><a href="#cb48-892" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-893"><a href="#cb48-893" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb48-894"><a href="#cb48-894" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
 <span id="cb48-895"><a href="#cb48-895" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-896"><a href="#cb48-896" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-897"><a href="#cb48-897" aria-hidden="true" tabindex="-1"></a><span class="al">![Visual Studio Code](images/vsCode.png)</span></span>
-<span id="cb48-898"><a href="#cb48-898" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-899"><a href="#cb48-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-900"><a href="#cb48-900" aria-hidden="true" tabindex="-1"></a>To create a cross-reference to a figure, image followed by the caption inside the div:</span>
+<span id="cb48-896"><a href="#cb48-896" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a Picture {#sec-picture}</span></span>
+<span id="cb48-897"><a href="#cb48-897" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-898"><a href="#cb48-898" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-899"><a href="#cb48-899" aria-hidden="true" tabindex="-1"></a><span class="al">![Insert Figure Caption here](Insert image filename and location here)</span></span>
+<span id="cb48-900"><a href="#cb48-900" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb48-901"><a href="#cb48-901" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-902"><a href="#cb48-902" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-903"><a href="#cb48-903" aria-hidden="true" tabindex="-1"></a>::: {#fig-vsCode}</span>
-<span id="cb48-904"><a href="#cb48-904" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-905"><a href="#cb48-905" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/vsCode.png)</span></span>
-<span id="cb48-906"><a href="#cb48-906" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-907"><a href="#cb48-907" aria-hidden="true" tabindex="-1"></a>VS Code Example Image</span>
-<span id="cb48-908"><a href="#cb48-908" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb48-902"><a href="#cb48-902" aria-hidden="true" tabindex="-1"></a>For instance:</span>
+<span id="cb48-903"><a href="#cb48-903" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-904"><a href="#cb48-904" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-905"><a href="#cb48-905" aria-hidden="true" tabindex="-1"></a><span class="al">![Visual Studio Code](images/vsCode.png)</span></span>
+<span id="cb48-906"><a href="#cb48-906" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-907"><a href="#cb48-907" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-908"><a href="#cb48-908" aria-hidden="true" tabindex="-1"></a>To create a cross-reference to a figure, image followed by the caption inside the div:</span>
 <span id="cb48-909"><a href="#cb48-909" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-910"><a href="#cb48-910" aria-hidden="true" tabindex="-1"></a>See @fig-vsCode.</span>
-<span id="cb48-911"><a href="#cb48-911" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-910"><a href="#cb48-910" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-911"><a href="#cb48-911" aria-hidden="true" tabindex="-1"></a>::: {#fig-vsCode}</span>
 <span id="cb48-912"><a href="#cb48-912" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-913"><a href="#cb48-913" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a Video {#sec-video}</span></span>
+<span id="cb48-913"><a href="#cb48-913" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/vsCode.png)</span></span>
 <span id="cb48-914"><a href="#cb48-914" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-915"><a href="#cb48-915" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the file is to be stored on a <span class="in">`GitHub`</span> repo, the video file needs to be less than 50 MB.</span>
-<span id="cb48-916"><a href="#cb48-916" aria-hidden="true" tabindex="-1"></a>You may need to convert the video to a lower quality to make it smaller than 50 MB.</span>
-<span id="cb48-917"><a href="#cb48-917" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By contrast, if the file is to be stored on a <span class="in">`GitLab`</span> repo (on the <span class="co">[</span><span class="ot">UI Enterprise version of GitLab</span><span class="co">](https://research-git.uiowa.edu/)</span>), the file may be larger than 50 MB, but first make sure the repository is configured for large file storage.</span>
-<span id="cb48-918"><a href="#cb48-918" aria-hidden="true" tabindex="-1"></a>Follow the instructions <span class="co">[</span><span class="ot">here</span><span class="co">](git.qmd#sec-gitLfs)</span> to do so.</span>
-<span id="cb48-919"><a href="#cb48-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-920"><a href="#cb48-920" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A helpful example repository for embedding videos can be found <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/PLAY-behaviorome/PLAY-project.org/blob/master/collection_homevisit.Rmd)</span> (archived at <span class="ot">&lt;https://perma.cc/6RWF-PNR7&gt;</span>)</span>
-<span id="cb48-921"><a href="#cb48-921" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-922"><a href="#cb48-922" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-923"><a href="#cb48-923" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">video</span><span class="ot"> width</span><span class="op">=</span><span class="st">"100%"</span><span class="ot"> controls</span><span class="op">=</span><span class="st">""</span><span class="ot"> preload</span><span class="op">=</span><span class="st">"none"</span><span class="dt">&gt;</span> #video settings</span>
-<span id="cb48-924"><a href="#cb48-924" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">source</span><span class="ot"> src</span><span class="op">=</span><span class="st">"images/lv2-saving-procedures.mp4"</span><span class="ot"> type</span><span class="op">=</span><span class="st">"video/mp4"</span><span class="dt">&gt;</span> #location and type of video</span>
-<span id="cb48-925"><a href="#cb48-925" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">video</span><span class="dt">&gt;</span></span>
-<span id="cb48-926"><a href="#cb48-926" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-915"><a href="#cb48-915" aria-hidden="true" tabindex="-1"></a>VS Code Example Image</span>
+<span id="cb48-916"><a href="#cb48-916" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb48-917"><a href="#cb48-917" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-918"><a href="#cb48-918" aria-hidden="true" tabindex="-1"></a>See @fig-vsCode.</span>
+<span id="cb48-919"><a href="#cb48-919" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-920"><a href="#cb48-920" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-921"><a href="#cb48-921" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a Video {#sec-video}</span></span>
+<span id="cb48-922"><a href="#cb48-922" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-923"><a href="#cb48-923" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the file is to be stored on a <span class="in">`GitHub`</span> repo, the video file needs to be less than 50 MB.</span>
+<span id="cb48-924"><a href="#cb48-924" aria-hidden="true" tabindex="-1"></a>You may need to convert the video to a lower quality to make it smaller than 50 MB.</span>
+<span id="cb48-925"><a href="#cb48-925" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By contrast, if the file is to be stored on a <span class="in">`GitLab`</span> repo (on the <span class="co">[</span><span class="ot">UI Enterprise version of GitLab</span><span class="co">](https://research-git.uiowa.edu/)</span>), the file may be larger than 50 MB, but first make sure the repository is configured for large file storage.</span>
+<span id="cb48-926"><a href="#cb48-926" aria-hidden="true" tabindex="-1"></a>Follow the instructions <span class="co">[</span><span class="ot">here</span><span class="co">](git.qmd#sec-gitLfs)</span> to do so.</span>
 <span id="cb48-927"><a href="#cb48-927" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-928"><a href="#cb48-928" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a PDF in a Markdown document {#sec-pdf}</span></span>
+<span id="cb48-928"><a href="#cb48-928" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A helpful example repository for embedding videos can be found <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/PLAY-behaviorome/PLAY-project.org/blob/master/collection_homevisit.Rmd)</span> (archived at <span class="ot">&lt;https://perma.cc/6RWF-PNR7&gt;</span>)</span>
 <span id="cb48-929"><a href="#cb48-929" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-930"><a href="#cb48-930" aria-hidden="true" tabindex="-1"></a>PDF's can be embedded within markdown documents.</span>
-<span id="cb48-931"><a href="#cb48-931" aria-hidden="true" tabindex="-1"></a>Make sure the document you wish to embed is in a local folder (if you are adding it to a Wiki document). <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb48-932"><a href="#cb48-932" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-933"><a href="#cb48-933" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Note:** Height and width can be adjusted to fit the page</span>
-<span id="cb48-934"><a href="#cb48-934" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-935"><a href="#cb48-935" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-936"><a href="#cb48-936" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">embed</span><span class="ot"> src</span><span class="op">=</span><span class="st">"path to file"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"1000"</span><span class="ot"> height</span><span class="op">=</span><span class="st">"600"</span><span class="dt">&gt;</span></span>
-<span id="cb48-937"><a href="#cb48-937" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-938"><a href="#cb48-938" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-939"><a href="#cb48-939" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a HTML file within a Markdown document {#sec-htmlEmbed}</span></span>
+<span id="cb48-930"><a href="#cb48-930" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-931"><a href="#cb48-931" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">video</span><span class="ot"> width</span><span class="op">=</span><span class="st">"100%"</span><span class="ot"> controls</span><span class="op">=</span><span class="st">""</span><span class="ot"> preload</span><span class="op">=</span><span class="st">"none"</span><span class="dt">&gt;</span> #video settings</span>
+<span id="cb48-932"><a href="#cb48-932" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">source</span><span class="ot"> src</span><span class="op">=</span><span class="st">"images/lv2-saving-procedures.mp4"</span><span class="ot"> type</span><span class="op">=</span><span class="st">"video/mp4"</span><span class="dt">&gt;</span> #location and type of video</span>
+<span id="cb48-933"><a href="#cb48-933" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">video</span><span class="dt">&gt;</span></span>
+<span id="cb48-934"><a href="#cb48-934" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-935"><a href="#cb48-935" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-936"><a href="#cb48-936" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a PDF in a Markdown document {#sec-pdf}</span></span>
+<span id="cb48-937"><a href="#cb48-937" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-938"><a href="#cb48-938" aria-hidden="true" tabindex="-1"></a>PDF's can be embedded within markdown documents.</span>
+<span id="cb48-939"><a href="#cb48-939" aria-hidden="true" tabindex="-1"></a>Make sure the document you wish to embed is in a local folder (if you are adding it to a Wiki document). <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
 <span id="cb48-940"><a href="#cb48-940" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-941"><a href="#cb48-941" aria-hidden="true" tabindex="-1"></a>The below line of code will embed a html document in a markdown file.</span>
-<span id="cb48-942"><a href="#cb48-942" aria-hidden="true" tabindex="-1"></a>The best way to configure formatting for this is still in progress. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb48-943"><a href="#cb48-943" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-944"><a href="#cb48-944" aria-hidden="true" tabindex="-1"></a>**Note:** The <span class="in">`htmltools`</span> package will need to be installed as a package dependency</span>
-<span id="cb48-945"><a href="#cb48-945" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-946"><a href="#cb48-946" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
-<span id="cb48-947"><a href="#cb48-947" aria-hidden="true" tabindex="-1"></a>htmltools::includeHTML("path to html file")</span>
-<span id="cb48-948"><a href="#cb48-948" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-949"><a href="#cb48-949" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-950"><a href="#cb48-950" aria-hidden="true" tabindex="-1"></a><span class="fu"># Converting Word Documents to Markdown {#sec-Word}</span></span>
+<span id="cb48-941"><a href="#cb48-941" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Note:** Height and width can be adjusted to fit the page</span>
+<span id="cb48-942"><a href="#cb48-942" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-943"><a href="#cb48-943" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-944"><a href="#cb48-944" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">embed</span><span class="ot"> src</span><span class="op">=</span><span class="st">"path to file"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"1000"</span><span class="ot"> height</span><span class="op">=</span><span class="st">"600"</span><span class="dt">&gt;</span></span>
+<span id="cb48-945"><a href="#cb48-945" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-946"><a href="#cb48-946" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-947"><a href="#cb48-947" aria-hidden="true" tabindex="-1"></a><span class="fu"># Embedding a HTML file within a Markdown document {#sec-htmlEmbed}</span></span>
+<span id="cb48-948"><a href="#cb48-948" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-949"><a href="#cb48-949" aria-hidden="true" tabindex="-1"></a>The below line of code will embed a html document in a markdown file.</span>
+<span id="cb48-950"><a href="#cb48-950" aria-hidden="true" tabindex="-1"></a>The best way to configure formatting for this is still in progress. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
 <span id="cb48-951"><a href="#cb48-951" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-952"><a href="#cb48-952" aria-hidden="true" tabindex="-1"></a>The process of converting word documents to Markdown is aided by having knowledge of the <span class="co">[</span><span class="ot">best practices</span><span class="co">](#sec-bestPractices)</span> steps.</span>
+<span id="cb48-952"><a href="#cb48-952" aria-hidden="true" tabindex="-1"></a>**Note:** The <span class="in">`htmltools`</span> package will need to be installed as a package dependency</span>
 <span id="cb48-953"><a href="#cb48-953" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-954"><a href="#cb48-954" aria-hidden="true" tabindex="-1"></a>To convert documents, follow these steps:</span>
-<span id="cb48-955"><a href="#cb48-955" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-956"><a href="#cb48-956" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open both word doc to be converted and new markdown document</span>
-<span id="cb48-957"><a href="#cb48-957" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Copy and paste the text to convert</span>
-<span id="cb48-958"><a href="#cb48-958" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Follow the <span class="co">[</span><span class="ot">best practices</span><span class="co">](#sec-bestPractices)</span> to convert the document to Markdown format</span>
-<span id="cb48-959"><a href="#cb48-959" aria-hidden="true" tabindex="-1"></a><span class="ss">   -  </span>For example, in the manuals for the School Readiness Study, each <span class="co">[</span><span class="ot">new header</span><span class="co">](#sec-headings)</span> should denote a new task</span>
-<span id="cb48-960"><a href="#cb48-960" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Importantly, each sentence will correspond to one line in markdown.**</span>
-<span id="cb48-961"><a href="#cb48-961" aria-hidden="true" tabindex="-1"></a>To convert sentences out of paragraph form: </span>
-<span id="cb48-962"><a href="#cb48-962" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Press <span class="in">`Ctrl f`</span></span>
-<span id="cb48-963"><a href="#cb48-963" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>search <span class="in">`. `</span></span>
-<span id="cb48-964"><a href="#cb48-964" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Next, click the arrow on the left side of the search window to open up the replace function in Visual Studio Code.</span>
-<span id="cb48-965"><a href="#cb48-965" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>The goal of this process is to create one sentence per line.</span>
-<span id="cb48-966"><a href="#cb48-966" aria-hidden="true" tabindex="-1"></a>   Creating one sentence per line.</span>
-<span id="cb48-967"><a href="#cb48-967" aria-hidden="true" tabindex="-1"></a>   By using one sentence for line, changes can be tracked easier.</span>
-<span id="cb48-968"><a href="#cb48-968" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>In the <span class="in">`Replace`</span> line, type <span class="in">`Ctrl Enter`</span> to create a new line.</span>
-<span id="cb48-969"><a href="#cb48-969" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Go through each find to determine if a new line should be created.</span>
-<span id="cb48-970"><a href="#cb48-970" aria-hidden="true" tabindex="-1"></a>**Do not replace all**.</span>
-<span id="cb48-971"><a href="#cb48-971" aria-hidden="true" tabindex="-1"></a>Bulleted lists may also contain a <span class="in">`. `</span> that should not be removed.</span>
-<span id="cb48-972"><a href="#cb48-972" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-973"><a href="#cb48-973" aria-hidden="true" tabindex="-1"></a><span class="fu"># Video formatting for Wiki {#sec-videoFormatting}</span></span>
-<span id="cb48-974"><a href="#cb48-974" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-975"><a href="#cb48-975" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Handbrake</span><span class="co">](https://handbrake.fr)</span> can be used to lower video quality, and convert files to <span class="in">`.mp4`</span> format, in order for them to be incorporated into the wiki.</span>
-<span id="cb48-976"><a href="#cb48-976" aria-hidden="true" tabindex="-1"></a>It is important to lower the quality (i.e., file size) of videos so that we do not exceed the 1gb file size limit on any given repo.</span>
-<span id="cb48-977"><a href="#cb48-977" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-978"><a href="#cb48-978" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lowering File Size {#sec-lowerFileSize}</span></span>
-<span id="cb48-979"><a href="#cb48-979" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-980"><a href="#cb48-980" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Open Handbrake and drag and drop the video that you would like to lower the file size of.</span>
-<span id="cb48-981"><a href="#cb48-981" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select the <span class="in">`video`</span> tab and lower the <span class="in">`Constant Quality`</span> to <span class="in">`30`</span>, and the <span class="in">`Framerate (FPS):`</span> to <span class="in">`20`</span></span>
-<span id="cb48-982"><a href="#cb48-982" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>We have found this lowers file size, but saves video quality</span>
+<span id="cb48-954"><a href="#cb48-954" aria-hidden="true" tabindex="-1"></a><span class="in">```markdown</span></span>
+<span id="cb48-955"><a href="#cb48-955" aria-hidden="true" tabindex="-1"></a>htmltools::includeHTML("path to html file")</span>
+<span id="cb48-956"><a href="#cb48-956" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb48-957"><a href="#cb48-957" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-958"><a href="#cb48-958" aria-hidden="true" tabindex="-1"></a><span class="fu"># Converting Word Documents to Markdown {#sec-Word}</span></span>
+<span id="cb48-959"><a href="#cb48-959" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-960"><a href="#cb48-960" aria-hidden="true" tabindex="-1"></a>The process of converting word documents to Markdown is aided by having knowledge of the <span class="co">[</span><span class="ot">best practices</span><span class="co">](#sec-bestPractices)</span> steps.</span>
+<span id="cb48-961"><a href="#cb48-961" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-962"><a href="#cb48-962" aria-hidden="true" tabindex="-1"></a>To convert documents, follow these steps:</span>
+<span id="cb48-963"><a href="#cb48-963" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-964"><a href="#cb48-964" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open both word doc to be converted and new markdown document</span>
+<span id="cb48-965"><a href="#cb48-965" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Copy and paste the text to convert</span>
+<span id="cb48-966"><a href="#cb48-966" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Follow the <span class="co">[</span><span class="ot">best practices</span><span class="co">](#sec-bestPractices)</span> to convert the document to Markdown format</span>
+<span id="cb48-967"><a href="#cb48-967" aria-hidden="true" tabindex="-1"></a><span class="ss">   -  </span>For example, in the manuals for the School Readiness Study, each <span class="co">[</span><span class="ot">new header</span><span class="co">](#sec-headings)</span> should denote a new task</span>
+<span id="cb48-968"><a href="#cb48-968" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Importantly, each sentence will correspond to one line in markdown.**</span>
+<span id="cb48-969"><a href="#cb48-969" aria-hidden="true" tabindex="-1"></a>To convert sentences out of paragraph form: </span>
+<span id="cb48-970"><a href="#cb48-970" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Press <span class="in">`Ctrl f`</span></span>
+<span id="cb48-971"><a href="#cb48-971" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>search <span class="in">`. `</span></span>
+<span id="cb48-972"><a href="#cb48-972" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Next, click the arrow on the left side of the search window to open up the replace function in Visual Studio Code.</span>
+<span id="cb48-973"><a href="#cb48-973" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>The goal of this process is to create one sentence per line.</span>
+<span id="cb48-974"><a href="#cb48-974" aria-hidden="true" tabindex="-1"></a>   Creating one sentence per line.</span>
+<span id="cb48-975"><a href="#cb48-975" aria-hidden="true" tabindex="-1"></a>   By using one sentence for line, changes can be tracked easier.</span>
+<span id="cb48-976"><a href="#cb48-976" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>In the <span class="in">`Replace`</span> line, type <span class="in">`Ctrl Enter`</span> to create a new line.</span>
+<span id="cb48-977"><a href="#cb48-977" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Go through each find to determine if a new line should be created.</span>
+<span id="cb48-978"><a href="#cb48-978" aria-hidden="true" tabindex="-1"></a>**Do not replace all**.</span>
+<span id="cb48-979"><a href="#cb48-979" aria-hidden="true" tabindex="-1"></a>Bulleted lists may also contain a <span class="in">`. `</span> that should not be removed.</span>
+<span id="cb48-980"><a href="#cb48-980" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-981"><a href="#cb48-981" aria-hidden="true" tabindex="-1"></a><span class="fu"># Video formatting for Wiki {#sec-videoFormatting}</span></span>
+<span id="cb48-982"><a href="#cb48-982" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-983"><a href="#cb48-983" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Handbrake</span><span class="co">](https://handbrake.fr)</span> can be used to lower video quality, and convert files to <span class="in">`.mp4`</span> format, in order for them to be incorporated into the wiki.</span>
+<span id="cb48-984"><a href="#cb48-984" aria-hidden="true" tabindex="-1"></a>It is important to lower the quality (i.e., file size) of videos so that we do not exceed the 1gb file size limit on any given repo.</span>
+<span id="cb48-985"><a href="#cb48-985" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-986"><a href="#cb48-986" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lowering File Size {#sec-lowerFileSize}</span></span>
+<span id="cb48-987"><a href="#cb48-987" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-988"><a href="#cb48-988" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Open Handbrake and drag and drop the video that you would like to lower the file size of.</span>
+<span id="cb48-989"><a href="#cb48-989" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select the <span class="in">`video`</span> tab and lower the <span class="in">`Constant Quality`</span> to <span class="in">`30`</span>, and the <span class="in">`Framerate (FPS):`</span> to <span class="in">`20`</span></span>
+<span id="cb48-990"><a href="#cb48-990" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>We have found this lowers file size, but saves video quality</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
