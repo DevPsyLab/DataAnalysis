@@ -332,6 +332,51 @@ OUTPUT:
     CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI
 ```
 
+## Moderation {#sec-moderation}
+
+### Observed Variables {#sec-moderationObserved}
+
+<https://www.figureitout.org.uk/model1a.htm> (archived at <https://perma.cc/EL62-UGNH>)
+
+```
+! Observed predictor variable: X
+! Observed moderator variable: W
+! Observed outcome variable: Y
+
+USEVARIABLES = X W Y XW; ! Note that interaction term has to be placed in the USEVARIABLES command
+
+DEFINE:
+   XW = X*W; ! Create interaction term; consider mean-centering X and W beforehand
+
+MODEL:
+   Y ON X W XW;
+```
+
+### Latent Variables {#sec-moderationLatent}
+
+<https://www.figureitout.org.uk/model1alatent.htm> (archived at <https://perma.cc/ZXK7-44S2>)
+
+```
+! Observed predictor variable: X
+! Latent moderator W measured by: W1–W4
+! Observed outcome variable: Y
+
+USEVARIABLES =
+   X
+   W1 W2 W3 W4
+   Y;
+
+MODEL:
+
+   W BY W1* W2 W3 W4;
+
+   W@1;
+
+   XW | X XWITH W; ! Create latent interaction
+
+   Y ON X W XW;
+```
+
 ## Means/Intercepts {#sec-means}
 
 Freely estimate:
