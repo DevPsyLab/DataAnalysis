@@ -896,6 +896,7 @@ PLOT:
     x1 WITH x2;</code></pre>
 </section><section id="sec-indirectEffects" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="sec-indirectEffects">
 <span class="header-section-number">10.4</span> Indirect Effects (Mediation)</h2>
+<p><a href="https://www.figureitout.org.uk/mplusmedmod.htm" class="uri">https://www.figureitout.org.uk/mplusmedmod.htm</a></p>
 <pre><code>ANALYSIS:
     TYPE = GENERAL;
     ESTIMATOR = ML;
@@ -914,6 +915,7 @@ OUTPUT:
     CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI</code></pre>
 </section><section id="sec-moderation" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="sec-moderation">
 <span class="header-section-number">10.5</span> Moderation</h2>
+<p><a href="https://www.figureitout.org.uk/mplusmedmod.htm" class="uri">https://www.figureitout.org.uk/mplusmedmod.htm</a></p>
 <section id="sec-moderationObserved" class="level3" data-number="10.5.1"><h3 data-number="10.5.1" class="anchored" data-anchor-id="sec-moderationObserved">
 <span class="header-section-number">10.5.1</span> Observed Variables</h3>
 <p><a href="https://www.figureitout.org.uk/model1a.htm" class="uri">https://www.figureitout.org.uk/model1a.htm</a> (archived at <a href="https://perma.cc/EL62-UGNH" class="uri">https://perma.cc/EL62-UGNH</a>)</p>
@@ -2329,730 +2331,734 @@ loaded via a namespace (and not attached):
 <span id="cb55-315"><a href="#cb55-315" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-316"><a href="#cb55-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Indirect Effects (Mediation) {#sec-indirectEffects}</span></span>
 <span id="cb55-317"><a href="#cb55-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-318"><a href="#cb55-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-319"><a href="#cb55-319" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-320"><a href="#cb55-320" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = GENERAL;</span></span>
-<span id="cb55-321"><a href="#cb55-321" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = ML;</span></span>
-<span id="cb55-322"><a href="#cb55-322" aria-hidden="true" tabindex="-1"></a><span class="in">    BOOTSTRAP = 1000;</span></span>
-<span id="cb55-323"><a href="#cb55-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-324"><a href="#cb55-324" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-325"><a href="#cb55-325" aria-hidden="true" tabindex="-1"></a><span class="in">    m ON x;</span></span>
-<span id="cb55-326"><a href="#cb55-326" aria-hidden="true" tabindex="-1"></a><span class="in">    y ON m x;</span></span>
-<span id="cb55-327"><a href="#cb55-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-328"><a href="#cb55-328" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL INDIRECT:</span></span>
-<span id="cb55-329"><a href="#cb55-329" aria-hidden="true" tabindex="-1"></a><span class="in">    y IND x;</span></span>
-<span id="cb55-330"><a href="#cb55-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-331"><a href="#cb55-331" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-332"><a href="#cb55-332" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;</span></span>
-<span id="cb55-333"><a href="#cb55-333" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL (BOOTSTRAP); !percentile boostrap CI</span></span>
-<span id="cb55-334"><a href="#cb55-334" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI</span></span>
-<span id="cb55-335"><a href="#cb55-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-336"><a href="#cb55-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-337"><a href="#cb55-337" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moderation {#sec-moderation}</span></span>
+<span id="cb55-318"><a href="#cb55-318" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/mplusmedmod.htm&gt;</span></span>
+<span id="cb55-319"><a href="#cb55-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-320"><a href="#cb55-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-321"><a href="#cb55-321" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-322"><a href="#cb55-322" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = GENERAL;</span></span>
+<span id="cb55-323"><a href="#cb55-323" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = ML;</span></span>
+<span id="cb55-324"><a href="#cb55-324" aria-hidden="true" tabindex="-1"></a><span class="in">    BOOTSTRAP = 1000;</span></span>
+<span id="cb55-325"><a href="#cb55-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-326"><a href="#cb55-326" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-327"><a href="#cb55-327" aria-hidden="true" tabindex="-1"></a><span class="in">    m ON x;</span></span>
+<span id="cb55-328"><a href="#cb55-328" aria-hidden="true" tabindex="-1"></a><span class="in">    y ON m x;</span></span>
+<span id="cb55-329"><a href="#cb55-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-330"><a href="#cb55-330" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL INDIRECT:</span></span>
+<span id="cb55-331"><a href="#cb55-331" aria-hidden="true" tabindex="-1"></a><span class="in">    y IND x;</span></span>
+<span id="cb55-332"><a href="#cb55-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-333"><a href="#cb55-333" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-334"><a href="#cb55-334" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;</span></span>
+<span id="cb55-335"><a href="#cb55-335" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL (BOOTSTRAP); !percentile boostrap CI</span></span>
+<span id="cb55-336"><a href="#cb55-336" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL (BCBOOTSTRAP); !bias-corrected boostrap CI</span></span>
+<span id="cb55-337"><a href="#cb55-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-338"><a href="#cb55-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-339"><a href="#cb55-339" aria-hidden="true" tabindex="-1"></a><span class="fu">### Observed Variables {#sec-moderationObserved}</span></span>
+<span id="cb55-339"><a href="#cb55-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moderation {#sec-moderation}</span></span>
 <span id="cb55-340"><a href="#cb55-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-341"><a href="#cb55-341" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/model1a.htm&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/EL62-UGNH&gt;</span>)</span>
+<span id="cb55-341"><a href="#cb55-341" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/mplusmedmod.htm&gt;</span></span>
 <span id="cb55-342"><a href="#cb55-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-343"><a href="#cb55-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-344"><a href="#cb55-344" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed predictor variable: X</span></span>
-<span id="cb55-345"><a href="#cb55-345" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed moderator variable: W</span></span>
-<span id="cb55-346"><a href="#cb55-346" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed outcome variable: Y</span></span>
-<span id="cb55-347"><a href="#cb55-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-348"><a href="#cb55-348" aria-hidden="true" tabindex="-1"></a><span class="in">USEVARIABLES = X W Y XW; ! Note that interaction term has to be placed in the USEVARIABLES command</span></span>
-<span id="cb55-349"><a href="#cb55-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-350"><a href="#cb55-350" aria-hidden="true" tabindex="-1"></a><span class="in">DEFINE:</span></span>
-<span id="cb55-351"><a href="#cb55-351" aria-hidden="true" tabindex="-1"></a><span class="in">   XW = X*W; ! Create interaction term; consider mean-centering X and W beforehand</span></span>
-<span id="cb55-352"><a href="#cb55-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-353"><a href="#cb55-353" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-354"><a href="#cb55-354" aria-hidden="true" tabindex="-1"></a><span class="in">   Y ON X W XW;</span></span>
-<span id="cb55-355"><a href="#cb55-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-343"><a href="#cb55-343" aria-hidden="true" tabindex="-1"></a><span class="fu">### Observed Variables {#sec-moderationObserved}</span></span>
+<span id="cb55-344"><a href="#cb55-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-345"><a href="#cb55-345" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/model1a.htm&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/EL62-UGNH&gt;</span>)</span>
+<span id="cb55-346"><a href="#cb55-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-347"><a href="#cb55-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-348"><a href="#cb55-348" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed predictor variable: X</span></span>
+<span id="cb55-349"><a href="#cb55-349" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed moderator variable: W</span></span>
+<span id="cb55-350"><a href="#cb55-350" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed outcome variable: Y</span></span>
+<span id="cb55-351"><a href="#cb55-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-352"><a href="#cb55-352" aria-hidden="true" tabindex="-1"></a><span class="in">USEVARIABLES = X W Y XW; ! Note that interaction term has to be placed in the USEVARIABLES command</span></span>
+<span id="cb55-353"><a href="#cb55-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-354"><a href="#cb55-354" aria-hidden="true" tabindex="-1"></a><span class="in">DEFINE:</span></span>
+<span id="cb55-355"><a href="#cb55-355" aria-hidden="true" tabindex="-1"></a><span class="in">   XW = X*W; ! Create interaction term; consider mean-centering X and W beforehand</span></span>
 <span id="cb55-356"><a href="#cb55-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-357"><a href="#cb55-357" aria-hidden="true" tabindex="-1"></a><span class="fu">### Latent Variables {#sec-moderationLatent}</span></span>
-<span id="cb55-358"><a href="#cb55-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-359"><a href="#cb55-359" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/model1alatent.htm&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/ZXK7-44S2&gt;</span>)</span>
+<span id="cb55-357"><a href="#cb55-357" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-358"><a href="#cb55-358" aria-hidden="true" tabindex="-1"></a><span class="in">   Y ON X W XW;</span></span>
+<span id="cb55-359"><a href="#cb55-359" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-360"><a href="#cb55-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-361"><a href="#cb55-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-362"><a href="#cb55-362" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed predictor variable: X</span></span>
-<span id="cb55-363"><a href="#cb55-363" aria-hidden="true" tabindex="-1"></a><span class="in">! Latent moderator W measured by: W1–W4</span></span>
-<span id="cb55-364"><a href="#cb55-364" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed outcome variable: Y</span></span>
-<span id="cb55-365"><a href="#cb55-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-366"><a href="#cb55-366" aria-hidden="true" tabindex="-1"></a><span class="in">USEVARIABLES =</span></span>
-<span id="cb55-367"><a href="#cb55-367" aria-hidden="true" tabindex="-1"></a><span class="in">   X</span></span>
-<span id="cb55-368"><a href="#cb55-368" aria-hidden="true" tabindex="-1"></a><span class="in">   W1 W2 W3 W4</span></span>
-<span id="cb55-369"><a href="#cb55-369" aria-hidden="true" tabindex="-1"></a><span class="in">   Y;</span></span>
-<span id="cb55-370"><a href="#cb55-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-371"><a href="#cb55-371" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-372"><a href="#cb55-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-373"><a href="#cb55-373" aria-hidden="true" tabindex="-1"></a><span class="in">   W BY W1* W2 W3 W4;</span></span>
+<span id="cb55-361"><a href="#cb55-361" aria-hidden="true" tabindex="-1"></a><span class="fu">### Latent Variables {#sec-moderationLatent}</span></span>
+<span id="cb55-362"><a href="#cb55-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-363"><a href="#cb55-363" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.figureitout.org.uk/model1alatent.htm&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/ZXK7-44S2&gt;</span>)</span>
+<span id="cb55-364"><a href="#cb55-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-365"><a href="#cb55-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-366"><a href="#cb55-366" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed predictor variable: X</span></span>
+<span id="cb55-367"><a href="#cb55-367" aria-hidden="true" tabindex="-1"></a><span class="in">! Latent moderator W measured by: W1–W4</span></span>
+<span id="cb55-368"><a href="#cb55-368" aria-hidden="true" tabindex="-1"></a><span class="in">! Observed outcome variable: Y</span></span>
+<span id="cb55-369"><a href="#cb55-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-370"><a href="#cb55-370" aria-hidden="true" tabindex="-1"></a><span class="in">USEVARIABLES =</span></span>
+<span id="cb55-371"><a href="#cb55-371" aria-hidden="true" tabindex="-1"></a><span class="in">   X</span></span>
+<span id="cb55-372"><a href="#cb55-372" aria-hidden="true" tabindex="-1"></a><span class="in">   W1 W2 W3 W4</span></span>
+<span id="cb55-373"><a href="#cb55-373" aria-hidden="true" tabindex="-1"></a><span class="in">   Y;</span></span>
 <span id="cb55-374"><a href="#cb55-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-375"><a href="#cb55-375" aria-hidden="true" tabindex="-1"></a><span class="in">   W@1;</span></span>
+<span id="cb55-375"><a href="#cb55-375" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
 <span id="cb55-376"><a href="#cb55-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-377"><a href="#cb55-377" aria-hidden="true" tabindex="-1"></a><span class="in">   XW | X XWITH W; ! Create latent interaction</span></span>
+<span id="cb55-377"><a href="#cb55-377" aria-hidden="true" tabindex="-1"></a><span class="in">   W BY W1* W2 W3 W4;</span></span>
 <span id="cb55-378"><a href="#cb55-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-379"><a href="#cb55-379" aria-hidden="true" tabindex="-1"></a><span class="in">   Y ON X W XW;</span></span>
-<span id="cb55-380"><a href="#cb55-380" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-381"><a href="#cb55-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-382"><a href="#cb55-382" aria-hidden="true" tabindex="-1"></a><span class="fu">## Means/Intercepts {#sec-means}</span></span>
-<span id="cb55-383"><a href="#cb55-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-384"><a href="#cb55-384" aria-hidden="true" tabindex="-1"></a>Freely estimate:</span>
+<span id="cb55-379"><a href="#cb55-379" aria-hidden="true" tabindex="-1"></a><span class="in">   W@1;</span></span>
+<span id="cb55-380"><a href="#cb55-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-381"><a href="#cb55-381" aria-hidden="true" tabindex="-1"></a><span class="in">   XW | X XWITH W; ! Create latent interaction</span></span>
+<span id="cb55-382"><a href="#cb55-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-383"><a href="#cb55-383" aria-hidden="true" tabindex="-1"></a><span class="in">   Y ON X W XW;</span></span>
+<span id="cb55-384"><a href="#cb55-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-385"><a href="#cb55-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-386"><a href="#cb55-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-387"><a href="#cb55-387" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-388"><a href="#cb55-388" aria-hidden="true" tabindex="-1"></a><span class="in">    [x1];</span></span>
-<span id="cb55-389"><a href="#cb55-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-390"><a href="#cb55-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-391"><a href="#cb55-391" aria-hidden="true" tabindex="-1"></a>Fix to zero:</span>
-<span id="cb55-392"><a href="#cb55-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-386"><a href="#cb55-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Means/Intercepts {#sec-means}</span></span>
+<span id="cb55-387"><a href="#cb55-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-388"><a href="#cb55-388" aria-hidden="true" tabindex="-1"></a>Freely estimate:</span>
+<span id="cb55-389"><a href="#cb55-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-390"><a href="#cb55-390" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-391"><a href="#cb55-391" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-392"><a href="#cb55-392" aria-hidden="true" tabindex="-1"></a><span class="in">    [x1];</span></span>
 <span id="cb55-393"><a href="#cb55-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-394"><a href="#cb55-394" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-395"><a href="#cb55-395" aria-hidden="true" tabindex="-1"></a><span class="in">    [x1@0];</span></span>
-<span id="cb55-396"><a href="#cb55-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-397"><a href="#cb55-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-398"><a href="#cb55-398" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variances {#sec-variances}</span></span>
-<span id="cb55-399"><a href="#cb55-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-400"><a href="#cb55-400" aria-hidden="true" tabindex="-1"></a>Freely estimate:</span>
+<span id="cb55-394"><a href="#cb55-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-395"><a href="#cb55-395" aria-hidden="true" tabindex="-1"></a>Fix to zero:</span>
+<span id="cb55-396"><a href="#cb55-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-397"><a href="#cb55-397" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-398"><a href="#cb55-398" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-399"><a href="#cb55-399" aria-hidden="true" tabindex="-1"></a><span class="in">    [x1@0];</span></span>
+<span id="cb55-400"><a href="#cb55-400" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-401"><a href="#cb55-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-402"><a href="#cb55-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-403"><a href="#cb55-403" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-404"><a href="#cb55-404" aria-hidden="true" tabindex="-1"></a><span class="in">    x1;</span></span>
-<span id="cb55-405"><a href="#cb55-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-406"><a href="#cb55-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-407"><a href="#cb55-407" aria-hidden="true" tabindex="-1"></a>Fix to one:</span>
-<span id="cb55-408"><a href="#cb55-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-402"><a href="#cb55-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variances {#sec-variances}</span></span>
+<span id="cb55-403"><a href="#cb55-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-404"><a href="#cb55-404" aria-hidden="true" tabindex="-1"></a>Freely estimate:</span>
+<span id="cb55-405"><a href="#cb55-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-406"><a href="#cb55-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-407"><a href="#cb55-407" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-408"><a href="#cb55-408" aria-hidden="true" tabindex="-1"></a><span class="in">    x1;</span></span>
 <span id="cb55-409"><a href="#cb55-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-410"><a href="#cb55-410" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-411"><a href="#cb55-411" aria-hidden="true" tabindex="-1"></a><span class="in">    x1@1;</span></span>
-<span id="cb55-412"><a href="#cb55-412" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-413"><a href="#cb55-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-414"><a href="#cb55-414" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameter Label {#sec-parameterLabel}</span></span>
-<span id="cb55-415"><a href="#cb55-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-416"><a href="#cb55-416" aria-hidden="true" tabindex="-1"></a>To specify a parameter label, provide the label in parentheses after the parameter:</span>
+<span id="cb55-410"><a href="#cb55-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-411"><a href="#cb55-411" aria-hidden="true" tabindex="-1"></a>Fix to one:</span>
+<span id="cb55-412"><a href="#cb55-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-413"><a href="#cb55-413" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-414"><a href="#cb55-414" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-415"><a href="#cb55-415" aria-hidden="true" tabindex="-1"></a><span class="in">    x1@1;</span></span>
+<span id="cb55-416"><a href="#cb55-416" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-417"><a href="#cb55-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-418"><a href="#cb55-418" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-419"><a href="#cb55-419" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-420"><a href="#cb55-420" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3 (load1-3);</span></span>
-<span id="cb55-421"><a href="#cb55-421" aria-hidden="true" tabindex="-1"></a><span class="in">    latent2 BY x4* x5 (load5) x6;</span></span>
+<span id="cb55-418"><a href="#cb55-418" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameter Label {#sec-parameterLabel}</span></span>
+<span id="cb55-419"><a href="#cb55-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-420"><a href="#cb55-420" aria-hidden="true" tabindex="-1"></a>To specify a parameter label, provide the label in parentheses after the parameter:</span>
+<span id="cb55-421"><a href="#cb55-421" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-422"><a href="#cb55-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-423"><a href="#cb55-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-424"><a href="#cb55-424" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multigroup Model {#sec-multigroup}</span></span>
-<span id="cb55-425"><a href="#cb55-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-423"><a href="#cb55-423" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-424"><a href="#cb55-424" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3 (load1-3);</span></span>
+<span id="cb55-425"><a href="#cb55-425" aria-hidden="true" tabindex="-1"></a><span class="in">    latent2 BY x4* x5 (load5) x6;</span></span>
 <span id="cb55-426"><a href="#cb55-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-427"><a href="#cb55-427" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-428"><a href="#cb55-428" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
-<span id="cb55-429"><a href="#cb55-429" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
-<span id="cb55-430"><a href="#cb55-430" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
-<span id="cb55-431"><a href="#cb55-431" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3 y1;</span></span>
-<span id="cb55-432"><a href="#cb55-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-433"><a href="#cb55-433" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-434"><a href="#cb55-434" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
-<span id="cb55-435"><a href="#cb55-435" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
-<span id="cb55-436"><a href="#cb55-436" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-437"><a href="#cb55-437" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-438"><a href="#cb55-438" aria-hidden="true" tabindex="-1"></a><span class="in">        y ~ latent;</span></span>
-<span id="cb55-439"><a href="#cb55-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-440"><a href="#cb55-440" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
-<span id="cb55-441"><a href="#cb55-441" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
-<span id="cb55-442"><a href="#cb55-442" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-443"><a href="#cb55-443" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-444"><a href="#cb55-444" aria-hidden="true" tabindex="-1"></a><span class="in">        y ~ latent;</span></span>
-<span id="cb55-445"><a href="#cb55-445" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-446"><a href="#cb55-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-447"><a href="#cb55-447" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multigroup Measurement Invariance {#sec-measurementInvariance}</span></span>
-<span id="cb55-448"><a href="#cb55-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-449"><a href="#cb55-449" aria-hidden="true" tabindex="-1"></a><span class="fu">### Configural Invariance {#sec-configuralInvariance}</span></span>
+<span id="cb55-427"><a href="#cb55-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-428"><a href="#cb55-428" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multigroup Model {#sec-multigroup}</span></span>
+<span id="cb55-429"><a href="#cb55-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-430"><a href="#cb55-430" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-431"><a href="#cb55-431" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-432"><a href="#cb55-432" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
+<span id="cb55-433"><a href="#cb55-433" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
+<span id="cb55-434"><a href="#cb55-434" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
+<span id="cb55-435"><a href="#cb55-435" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3 y1;</span></span>
+<span id="cb55-436"><a href="#cb55-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-437"><a href="#cb55-437" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-438"><a href="#cb55-438" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
+<span id="cb55-439"><a href="#cb55-439" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
+<span id="cb55-440"><a href="#cb55-440" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-441"><a href="#cb55-441" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-442"><a href="#cb55-442" aria-hidden="true" tabindex="-1"></a><span class="in">        y ~ latent;</span></span>
+<span id="cb55-443"><a href="#cb55-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-444"><a href="#cb55-444" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
+<span id="cb55-445"><a href="#cb55-445" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
+<span id="cb55-446"><a href="#cb55-446" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-447"><a href="#cb55-447" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-448"><a href="#cb55-448" aria-hidden="true" tabindex="-1"></a><span class="in">        y ~ latent;</span></span>
+<span id="cb55-449"><a href="#cb55-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-450"><a href="#cb55-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-451"><a href="#cb55-451" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-452"><a href="#cb55-452" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-453"><a href="#cb55-453" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
-<span id="cb55-454"><a href="#cb55-454" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
-<span id="cb55-455"><a href="#cb55-455" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
-<span id="cb55-456"><a href="#cb55-456" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
-<span id="cb55-457"><a href="#cb55-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-458"><a href="#cb55-458" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-459"><a href="#cb55-459" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
-<span id="cb55-460"><a href="#cb55-460" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
-<span id="cb55-461"><a href="#cb55-461" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-462"><a href="#cb55-462" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-463"><a href="#cb55-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-464"><a href="#cb55-464" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
-<span id="cb55-465"><a href="#cb55-465" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
-<span id="cb55-466"><a href="#cb55-466" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-467"><a href="#cb55-467" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-468"><a href="#cb55-468" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-469"><a href="#cb55-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-470"><a href="#cb55-470" aria-hidden="true" tabindex="-1"></a><span class="fu">### Metric (Weak Factorial) Invariance {#sec-metricInvariance}</span></span>
-<span id="cb55-471"><a href="#cb55-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-451"><a href="#cb55-451" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multigroup Measurement Invariance {#sec-measurementInvariance}</span></span>
+<span id="cb55-452"><a href="#cb55-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-453"><a href="#cb55-453" aria-hidden="true" tabindex="-1"></a><span class="fu">### Configural Invariance {#sec-configuralInvariance}</span></span>
+<span id="cb55-454"><a href="#cb55-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-455"><a href="#cb55-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-456"><a href="#cb55-456" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-457"><a href="#cb55-457" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
+<span id="cb55-458"><a href="#cb55-458" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
+<span id="cb55-459"><a href="#cb55-459" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
+<span id="cb55-460"><a href="#cb55-460" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
+<span id="cb55-461"><a href="#cb55-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-462"><a href="#cb55-462" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-463"><a href="#cb55-463" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
+<span id="cb55-464"><a href="#cb55-464" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
+<span id="cb55-465"><a href="#cb55-465" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-466"><a href="#cb55-466" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-467"><a href="#cb55-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-468"><a href="#cb55-468" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
+<span id="cb55-469"><a href="#cb55-469" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* x2 x3;</span></span>
+<span id="cb55-470"><a href="#cb55-470" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-471"><a href="#cb55-471" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
 <span id="cb55-472"><a href="#cb55-472" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-473"><a href="#cb55-473" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-474"><a href="#cb55-474" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
-<span id="cb55-475"><a href="#cb55-475" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
-<span id="cb55-476"><a href="#cb55-476" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
-<span id="cb55-477"><a href="#cb55-477" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
-<span id="cb55-478"><a href="#cb55-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-479"><a href="#cb55-479" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-480"><a href="#cb55-480" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
-<span id="cb55-481"><a href="#cb55-481" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-482"><a href="#cb55-482" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-483"><a href="#cb55-483" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-484"><a href="#cb55-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-485"><a href="#cb55-485" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-486"><a href="#cb55-486" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-487"><a href="#cb55-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-488"><a href="#cb55-488" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
-<span id="cb55-489"><a href="#cb55-489" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-490"><a href="#cb55-490" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-491"><a href="#cb55-491" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-492"><a href="#cb55-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-493"><a href="#cb55-493" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-494"><a href="#cb55-494" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-495"><a href="#cb55-495" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-473"><a href="#cb55-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-474"><a href="#cb55-474" aria-hidden="true" tabindex="-1"></a><span class="fu">### Metric (Weak Factorial) Invariance {#sec-metricInvariance}</span></span>
+<span id="cb55-475"><a href="#cb55-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-476"><a href="#cb55-476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-477"><a href="#cb55-477" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-478"><a href="#cb55-478" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
+<span id="cb55-479"><a href="#cb55-479" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
+<span id="cb55-480"><a href="#cb55-480" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
+<span id="cb55-481"><a href="#cb55-481" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
+<span id="cb55-482"><a href="#cb55-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-483"><a href="#cb55-483" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-484"><a href="#cb55-484" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
+<span id="cb55-485"><a href="#cb55-485" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-486"><a href="#cb55-486" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-487"><a href="#cb55-487" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-488"><a href="#cb55-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-489"><a href="#cb55-489" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-490"><a href="#cb55-490" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-491"><a href="#cb55-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-492"><a href="#cb55-492" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
+<span id="cb55-493"><a href="#cb55-493" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-494"><a href="#cb55-494" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-495"><a href="#cb55-495" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
 <span id="cb55-496"><a href="#cb55-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-497"><a href="#cb55-497" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scalar (Strong Factorial) Invariance {#sec-scalarInvariance}</span></span>
-<span id="cb55-498"><a href="#cb55-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-497"><a href="#cb55-497" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-498"><a href="#cb55-498" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
 <span id="cb55-499"><a href="#cb55-499" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-500"><a href="#cb55-500" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-501"><a href="#cb55-501" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
-<span id="cb55-502"><a href="#cb55-502" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
-<span id="cb55-503"><a href="#cb55-503" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
-<span id="cb55-504"><a href="#cb55-504" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
-<span id="cb55-505"><a href="#cb55-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-506"><a href="#cb55-506" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-507"><a href="#cb55-507" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
-<span id="cb55-508"><a href="#cb55-508" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-509"><a href="#cb55-509" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-510"><a href="#cb55-510" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-511"><a href="#cb55-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-512"><a href="#cb55-512" aria-hidden="true" tabindex="-1"></a><span class="in">        [x1] (int1); ! constrain intercept across groups (same parameter label)</span></span>
-<span id="cb55-513"><a href="#cb55-513" aria-hidden="true" tabindex="-1"></a><span class="in">        [x2] (int2); ! constrain intercept across groups (same parameter label)</span></span>
-<span id="cb55-514"><a href="#cb55-514" aria-hidden="true" tabindex="-1"></a><span class="in">        [x3] (int3); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-500"><a href="#cb55-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-501"><a href="#cb55-501" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scalar (Strong Factorial) Invariance {#sec-scalarInvariance}</span></span>
+<span id="cb55-502"><a href="#cb55-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-503"><a href="#cb55-503" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-504"><a href="#cb55-504" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-505"><a href="#cb55-505" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = group x1 x2 x3 y1;</span></span>
+<span id="cb55-506"><a href="#cb55-506" aria-hidden="true" tabindex="-1"></a><span class="in">    GROUPING = group (0=boys, 1=girls);</span></span>
+<span id="cb55-507"><a href="#cb55-507" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;</span></span>
+<span id="cb55-508"><a href="#cb55-508" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = group x1 x2 x3;</span></span>
+<span id="cb55-509"><a href="#cb55-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-510"><a href="#cb55-510" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-511"><a href="#cb55-511" aria-hidden="true" tabindex="-1"></a><span class="in">    Model boys:</span></span>
+<span id="cb55-512"><a href="#cb55-512" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-513"><a href="#cb55-513" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-514"><a href="#cb55-514" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
 <span id="cb55-515"><a href="#cb55-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-516"><a href="#cb55-516" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-517"><a href="#cb55-517" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-518"><a href="#cb55-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-519"><a href="#cb55-519" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
-<span id="cb55-520"><a href="#cb55-520" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-521"><a href="#cb55-521" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-522"><a href="#cb55-522" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
-<span id="cb55-523"><a href="#cb55-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-524"><a href="#cb55-524" aria-hidden="true" tabindex="-1"></a><span class="in">        [x1] (int1); ! constrain intercept across groups (same parameter label)</span></span>
-<span id="cb55-525"><a href="#cb55-525" aria-hidden="true" tabindex="-1"></a><span class="in">        [x2] (int2); ! constrain intercept across groups (same parameter label)</span></span>
-<span id="cb55-526"><a href="#cb55-526" aria-hidden="true" tabindex="-1"></a><span class="in">        [x3] (int3); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-516"><a href="#cb55-516" aria-hidden="true" tabindex="-1"></a><span class="in">        [x1] (int1); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-517"><a href="#cb55-517" aria-hidden="true" tabindex="-1"></a><span class="in">        [x2] (int2); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-518"><a href="#cb55-518" aria-hidden="true" tabindex="-1"></a><span class="in">        [x3] (int3); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-519"><a href="#cb55-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-520"><a href="#cb55-520" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-521"><a href="#cb55-521" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-522"><a href="#cb55-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-523"><a href="#cb55-523" aria-hidden="true" tabindex="-1"></a><span class="in">    Model girls:</span></span>
+<span id="cb55-524"><a href="#cb55-524" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x1* (load1); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-525"><a href="#cb55-525" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x2* (load2); ! constrain factor loading across groups (same parameter label)</span></span>
+<span id="cb55-526"><a href="#cb55-526" aria-hidden="true" tabindex="-1"></a><span class="in">        latent BY x3* (load3); ! constrain factor loading across groups (same parameter label)</span></span>
 <span id="cb55-527"><a href="#cb55-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-528"><a href="#cb55-528" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
-<span id="cb55-529"><a href="#cb55-529" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
-<span id="cb55-530"><a href="#cb55-530" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-528"><a href="#cb55-528" aria-hidden="true" tabindex="-1"></a><span class="in">        [x1] (int1); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-529"><a href="#cb55-529" aria-hidden="true" tabindex="-1"></a><span class="in">        [x2] (int2); ! constrain intercept across groups (same parameter label)</span></span>
+<span id="cb55-530"><a href="#cb55-530" aria-hidden="true" tabindex="-1"></a><span class="in">        [x3] (int3); ! constrain intercept across groups (same parameter label)</span></span>
 <span id="cb55-531"><a href="#cb55-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-532"><a href="#cb55-532" aria-hidden="true" tabindex="-1"></a><span class="fu"># Model Constraint {#sec-modelConstrain}</span></span>
-<span id="cb55-533"><a href="#cb55-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-534"><a href="#cb55-534" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estimating Coefficient Omega {#sec-omega}</span></span>
+<span id="cb55-532"><a href="#cb55-532" aria-hidden="true" tabindex="-1"></a><span class="in">        [latent@0];</span></span>
+<span id="cb55-533"><a href="#cb55-533" aria-hidden="true" tabindex="-1"></a><span class="in">        latent@1;</span></span>
+<span id="cb55-534"><a href="#cb55-534" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-535"><a href="#cb55-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-536"><a href="#cb55-536" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.statmodel.com/download/Omega%20coefficient%20in%20Mplus.pdf&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/VW88-6NCQ&gt;</span>)</span>
+<span id="cb55-536"><a href="#cb55-536" aria-hidden="true" tabindex="-1"></a><span class="fu"># Model Constraint {#sec-modelConstrain}</span></span>
 <span id="cb55-537"><a href="#cb55-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-538"><a href="#cb55-538" aria-hidden="true" tabindex="-1"></a><span class="fu"># Comments {#sec-comments}</span></span>
+<span id="cb55-538"><a href="#cb55-538" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estimating Coefficient Omega {#sec-omega}</span></span>
 <span id="cb55-539"><a href="#cb55-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-540"><a href="#cb55-540" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-541"><a href="#cb55-541" aria-hidden="true" tabindex="-1"></a><span class="in">!This is a comment in Mplus</span></span>
-<span id="cb55-542"><a href="#cb55-542" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-540"><a href="#cb55-540" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://www.statmodel.com/download/Omega%20coefficient%20in%20Mplus.pdf&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/VW88-6NCQ&gt;</span>)</span>
+<span id="cb55-541"><a href="#cb55-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-542"><a href="#cb55-542" aria-hidden="true" tabindex="-1"></a><span class="fu"># Comments {#sec-comments}</span></span>
 <span id="cb55-543"><a href="#cb55-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-544"><a href="#cb55-544" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Parameter Constraints {#sec-parameterConstraints}</span></span>
-<span id="cb55-545"><a href="#cb55-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-546"><a href="#cb55-546" aria-hidden="true" tabindex="-1"></a><span class="fu">## Freeing a Parameter {#sec-freeParameter}</span></span>
+<span id="cb55-544"><a href="#cb55-544" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-545"><a href="#cb55-545" aria-hidden="true" tabindex="-1"></a><span class="in">!This is a comment in Mplus</span></span>
+<span id="cb55-546"><a href="#cb55-546" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-547"><a href="#cb55-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-548"><a href="#cb55-548" aria-hidden="true" tabindex="-1"></a>By default, the first loading on a factor is fixed to zero.</span>
-<span id="cb55-549"><a href="#cb55-549" aria-hidden="true" tabindex="-1"></a>You can freely estimate the parameter by adding an asterisk:</span>
-<span id="cb55-550"><a href="#cb55-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-551"><a href="#cb55-551" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-552"><a href="#cb55-552" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-553"><a href="#cb55-553" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3;</span></span>
-<span id="cb55-554"><a href="#cb55-554" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-555"><a href="#cb55-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-556"><a href="#cb55-556" aria-hidden="true" tabindex="-1"></a><span class="fu">## Constraining a Parameter {#sec-constrainParameter}</span></span>
-<span id="cb55-557"><a href="#cb55-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-548"><a href="#cb55-548" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setting Parameter Constraints {#sec-parameterConstraints}</span></span>
+<span id="cb55-549"><a href="#cb55-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-550"><a href="#cb55-550" aria-hidden="true" tabindex="-1"></a><span class="fu">## Freeing a Parameter {#sec-freeParameter}</span></span>
+<span id="cb55-551"><a href="#cb55-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-552"><a href="#cb55-552" aria-hidden="true" tabindex="-1"></a>By default, the first loading on a factor is fixed to zero.</span>
+<span id="cb55-553"><a href="#cb55-553" aria-hidden="true" tabindex="-1"></a>You can freely estimate the parameter by adding an asterisk:</span>
+<span id="cb55-554"><a href="#cb55-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-555"><a href="#cb55-555" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-556"><a href="#cb55-556" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-557"><a href="#cb55-557" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3;</span></span>
 <span id="cb55-558"><a href="#cb55-558" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-559"><a href="#cb55-559" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-560"><a href="#cb55-560" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1@1 x2 x3;</span></span>
-<span id="cb55-561"><a href="#cb55-561" aria-hidden="true" tabindex="-1"></a><span class="in">    [latent1@0];</span></span>
-<span id="cb55-562"><a href="#cb55-562" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1@1;</span></span>
-<span id="cb55-563"><a href="#cb55-563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-564"><a href="#cb55-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-565"><a href="#cb55-565" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting Two Parameters to be Equal {#sec-equalParameters}</span></span>
-<span id="cb55-566"><a href="#cb55-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-567"><a href="#cb55-567" aria-hidden="true" tabindex="-1"></a>To set two parameters to be equal, provide the same <span class="co">[</span><span class="ot">parameter label</span><span class="co">](#sec-parameterLabel)</span> for each parameter.</span>
+<span id="cb55-559"><a href="#cb55-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-560"><a href="#cb55-560" aria-hidden="true" tabindex="-1"></a><span class="fu">## Constraining a Parameter {#sec-constrainParameter}</span></span>
+<span id="cb55-561"><a href="#cb55-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-562"><a href="#cb55-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-563"><a href="#cb55-563" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-564"><a href="#cb55-564" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1@1 x2 x3;</span></span>
+<span id="cb55-565"><a href="#cb55-565" aria-hidden="true" tabindex="-1"></a><span class="in">    [latent1@0];</span></span>
+<span id="cb55-566"><a href="#cb55-566" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1@1;</span></span>
+<span id="cb55-567"><a href="#cb55-567" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-568"><a href="#cb55-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-569"><a href="#cb55-569" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting Lower and Upper Bounds on a Parameter {#sec-parameterBounds}</span></span>
+<span id="cb55-569"><a href="#cb55-569" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting Two Parameters to be Equal {#sec-equalParameters}</span></span>
 <span id="cb55-570"><a href="#cb55-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-571"><a href="#cb55-571" aria-hidden="true" tabindex="-1"></a>To set lower and upper bounds on a parameter, you can assign the parameter a <span class="co">[</span><span class="ot">parameter label</span><span class="co">](#sec-parameterLabel)</span>.</span>
-<span id="cb55-572"><a href="#cb55-572" aria-hidden="true" tabindex="-1"></a>Then, you can assign the constraint to the parameter (via the label) under the <span class="in">`MODEL CONSTRAINT`</span> section.</span>
-<span id="cb55-573"><a href="#cb55-573" aria-hidden="true" tabindex="-1"></a>For example, to constrain a parameter between 0–1, </span>
+<span id="cb55-571"><a href="#cb55-571" aria-hidden="true" tabindex="-1"></a>To set two parameters to be equal, provide the same <span class="co">[</span><span class="ot">parameter label</span><span class="co">](#sec-parameterLabel)</span> for each parameter.</span>
+<span id="cb55-572"><a href="#cb55-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-573"><a href="#cb55-573" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting Lower and Upper Bounds on a Parameter {#sec-parameterBounds}</span></span>
 <span id="cb55-574"><a href="#cb55-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-575"><a href="#cb55-575" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-576"><a href="#cb55-576" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-577"><a href="#cb55-577" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3 (load3);</span></span>
+<span id="cb55-575"><a href="#cb55-575" aria-hidden="true" tabindex="-1"></a>To set lower and upper bounds on a parameter, you can assign the parameter a <span class="co">[</span><span class="ot">parameter label</span><span class="co">](#sec-parameterLabel)</span>.</span>
+<span id="cb55-576"><a href="#cb55-576" aria-hidden="true" tabindex="-1"></a>Then, you can assign the constraint to the parameter (via the label) under the <span class="in">`MODEL CONSTRAINT`</span> section.</span>
+<span id="cb55-577"><a href="#cb55-577" aria-hidden="true" tabindex="-1"></a>For example, to constrain a parameter between 0–1, </span>
 <span id="cb55-578"><a href="#cb55-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-579"><a href="#cb55-579" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
-<span id="cb55-580"><a href="#cb55-580" aria-hidden="true" tabindex="-1"></a><span class="in">    load3 &gt; 0; load3 &lt; 1;</span></span>
-<span id="cb55-581"><a href="#cb55-581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-579"><a href="#cb55-579" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-580"><a href="#cb55-580" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-581"><a href="#cb55-581" aria-hidden="true" tabindex="-1"></a><span class="in">    latent1 BY x1* x2 x3 (load3);</span></span>
 <span id="cb55-582"><a href="#cb55-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-583"><a href="#cb55-583" aria-hidden="true" tabindex="-1"></a><span class="fu"># Output {#sec-output}</span></span>
-<span id="cb55-584"><a href="#cb55-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-583"><a href="#cb55-583" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
+<span id="cb55-584"><a href="#cb55-584" aria-hidden="true" tabindex="-1"></a><span class="in">    load3 &gt; 0; load3 &lt; 1;</span></span>
 <span id="cb55-585"><a href="#cb55-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-586"><a href="#cb55-586" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:  </span></span>
-<span id="cb55-587"><a href="#cb55-587" aria-hidden="true" tabindex="-1"></a><span class="in">    STDYX; </span></span>
-<span id="cb55-588"><a href="#cb55-588" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;</span></span>
-<span id="cb55-589"><a href="#cb55-589" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH4;</span></span>
-<span id="cb55-590"><a href="#cb55-590" aria-hidden="true" tabindex="-1"></a><span class="in">    SAMPSTAT;</span></span>
-<span id="cb55-591"><a href="#cb55-591" aria-hidden="true" tabindex="-1"></a><span class="in">    MODINDICES (ALL); ! specify number in parentheses to print only those mod indices that are above a particular chi-square value</span></span>
-<span id="cb55-592"><a href="#cb55-592" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL;</span></span>
-<span id="cb55-593"><a href="#cb55-593" aria-hidden="true" tabindex="-1"></a><span class="in">    RESIDUAL;</span></span>
-<span id="cb55-594"><a href="#cb55-594" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-595"><a href="#cb55-595" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-596"><a href="#cb55-596" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plot {#sec-plot}</span></span>
-<span id="cb55-597"><a href="#cb55-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-586"><a href="#cb55-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-587"><a href="#cb55-587" aria-hidden="true" tabindex="-1"></a><span class="fu"># Output {#sec-output}</span></span>
+<span id="cb55-588"><a href="#cb55-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-589"><a href="#cb55-589" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-590"><a href="#cb55-590" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:  </span></span>
+<span id="cb55-591"><a href="#cb55-591" aria-hidden="true" tabindex="-1"></a><span class="in">    STDYX; </span></span>
+<span id="cb55-592"><a href="#cb55-592" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;</span></span>
+<span id="cb55-593"><a href="#cb55-593" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH4;</span></span>
+<span id="cb55-594"><a href="#cb55-594" aria-hidden="true" tabindex="-1"></a><span class="in">    SAMPSTAT;</span></span>
+<span id="cb55-595"><a href="#cb55-595" aria-hidden="true" tabindex="-1"></a><span class="in">    MODINDICES (ALL); ! specify number in parentheses to print only those mod indices that are above a particular chi-square value</span></span>
+<span id="cb55-596"><a href="#cb55-596" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL;</span></span>
+<span id="cb55-597"><a href="#cb55-597" aria-hidden="true" tabindex="-1"></a><span class="in">    RESIDUAL;</span></span>
 <span id="cb55-598"><a href="#cb55-598" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-599"><a href="#cb55-599" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb55-600"><a href="#cb55-600" aria-hidden="true" tabindex="-1"></a><span class="in">    SERIES = </span></span>
-<span id="cb55-601"><a href="#cb55-601" aria-hidden="true" tabindex="-1"></a><span class="in">        ext36 (36) ext45 (45) ext54 (54) ext63 (63) </span></span>
-<span id="cb55-602"><a href="#cb55-602" aria-hidden="true" tabindex="-1"></a><span class="in">        ext72 (72) ext81 (81) ext90 (90);</span></span>
-<span id="cb55-603"><a href="#cb55-603" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3;</span></span>
-<span id="cb55-604"><a href="#cb55-604" aria-hidden="true" tabindex="-1"></a><span class="in">    OUTLIERS =</span></span>
-<span id="cb55-605"><a href="#cb55-605" aria-hidden="true" tabindex="-1"></a><span class="in">        MAHALANOBIS ! Mahalanobis distance and its p-value</span></span>
-<span id="cb55-606"><a href="#cb55-606" aria-hidden="true" tabindex="-1"></a><span class="in">        LOGLIKELIHOOD ! Loglikelihood contribution</span></span>
-<span id="cb55-607"><a href="#cb55-607" aria-hidden="true" tabindex="-1"></a><span class="in">        INFLUENCE ! Loglikelihood distance influence measure</span></span>
-<span id="cb55-608"><a href="#cb55-608" aria-hidden="true" tabindex="-1"></a><span class="in">        COOKS; ! Cook's D parameter estimate influence measure</span></span>
-<span id="cb55-609"><a href="#cb55-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-610"><a href="#cb55-610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-611"><a href="#cb55-611" aria-hidden="true" tabindex="-1"></a><span class="fu"># Save Data {#sec-saveData}</span></span>
-<span id="cb55-612"><a href="#cb55-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-599"><a href="#cb55-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-600"><a href="#cb55-600" aria-hidden="true" tabindex="-1"></a><span class="fu"># Plot {#sec-plot}</span></span>
+<span id="cb55-601"><a href="#cb55-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-602"><a href="#cb55-602" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-603"><a href="#cb55-603" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb55-604"><a href="#cb55-604" aria-hidden="true" tabindex="-1"></a><span class="in">    SERIES = </span></span>
+<span id="cb55-605"><a href="#cb55-605" aria-hidden="true" tabindex="-1"></a><span class="in">        ext36 (36) ext45 (45) ext54 (54) ext63 (63) </span></span>
+<span id="cb55-606"><a href="#cb55-606" aria-hidden="true" tabindex="-1"></a><span class="in">        ext72 (72) ext81 (81) ext90 (90);</span></span>
+<span id="cb55-607"><a href="#cb55-607" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3;</span></span>
+<span id="cb55-608"><a href="#cb55-608" aria-hidden="true" tabindex="-1"></a><span class="in">    OUTLIERS =</span></span>
+<span id="cb55-609"><a href="#cb55-609" aria-hidden="true" tabindex="-1"></a><span class="in">        MAHALANOBIS ! Mahalanobis distance and its p-value</span></span>
+<span id="cb55-610"><a href="#cb55-610" aria-hidden="true" tabindex="-1"></a><span class="in">        LOGLIKELIHOOD ! Loglikelihood contribution</span></span>
+<span id="cb55-611"><a href="#cb55-611" aria-hidden="true" tabindex="-1"></a><span class="in">        INFLUENCE ! Loglikelihood distance influence measure</span></span>
+<span id="cb55-612"><a href="#cb55-612" aria-hidden="true" tabindex="-1"></a><span class="in">        COOKS; ! Cook's D parameter estimate influence measure</span></span>
 <span id="cb55-613"><a href="#cb55-613" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-614"><a href="#cb55-614" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
-<span id="cb55-615"><a href="#cb55-615" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
-<span id="cb55-616"><a href="#cb55-616" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = </span></span>
-<span id="cb55-617"><a href="#cb55-617" aria-hidden="true" tabindex="-1"></a><span class="in">        FSCORES ! Factor scores</span></span>
-<span id="cb55-618"><a href="#cb55-618" aria-hidden="true" tabindex="-1"></a><span class="in">        LOGLIKELIHOOD ! Loglikelihood contribution from each observation</span></span>
-<span id="cb55-619"><a href="#cb55-619" aria-hidden="true" tabindex="-1"></a><span class="in">        INFLUENCE ! Loglikelihood distance influence measure (Cook &amp; Weisberg, 1982) for each observation</span></span>
-<span id="cb55-620"><a href="#cb55-620" aria-hidden="true" tabindex="-1"></a><span class="in">        COOKS; !Cook's D (Cook, 1977) for each observation</span></span>
-<span id="cb55-621"><a href="#cb55-621" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-622"><a href="#cb55-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-623"><a href="#cb55-623" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multiple Imputation {#sec-multipleImputation}</span></span>
-<span id="cb55-624"><a href="#cb55-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-625"><a href="#cb55-625" aria-hidden="true" tabindex="-1"></a>For examples of how to conduct <span class="co">[</span><span class="ot">multiple imputation</span><span class="co">](multipleImputation.qmd)</span> in <span class="co">[</span><span class="ot">`Mplus`</span><span class="co">](https://www.statmodel.com)</span>, see <span class="co">[</span><span class="ot">here</span><span class="co">](multipleImputation.qmd#sec-mplus)</span>.</span>
-<span id="cb55-626"><a href="#cb55-626" aria-hidden="true" tabindex="-1"></a>To run a model on multiply imputed data, use the following:</span>
-<span id="cb55-627"><a href="#cb55-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-628"><a href="#cb55-628" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-629"><a href="#cb55-629" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: FILE = "implist.dat"; ! where implist.dat is the name of the *list.dat file saved from the imputation step</span></span>
-<span id="cb55-630"><a href="#cb55-630" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = IMPUTATION;</span></span>
-<span id="cb55-631"><a href="#cb55-631" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-632"><a href="#cb55-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-633"><a href="#cb55-633" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Growth Curve Model {#sec-lgcm}</span></span>
-<span id="cb55-634"><a href="#cb55-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-635"><a href="#cb55-635" aria-hidden="true" tabindex="-1"></a><span class="fu">## Equally Spaced Time Points {#sec-equallySpaced}</span></span>
+<span id="cb55-614"><a href="#cb55-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-615"><a href="#cb55-615" aria-hidden="true" tabindex="-1"></a><span class="fu"># Save Data {#sec-saveData}</span></span>
+<span id="cb55-616"><a href="#cb55-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-617"><a href="#cb55-617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-618"><a href="#cb55-618" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
+<span id="cb55-619"><a href="#cb55-619" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
+<span id="cb55-620"><a href="#cb55-620" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = </span></span>
+<span id="cb55-621"><a href="#cb55-621" aria-hidden="true" tabindex="-1"></a><span class="in">        FSCORES ! Factor scores</span></span>
+<span id="cb55-622"><a href="#cb55-622" aria-hidden="true" tabindex="-1"></a><span class="in">        LOGLIKELIHOOD ! Loglikelihood contribution from each observation</span></span>
+<span id="cb55-623"><a href="#cb55-623" aria-hidden="true" tabindex="-1"></a><span class="in">        INFLUENCE ! Loglikelihood distance influence measure (Cook &amp; Weisberg, 1982) for each observation</span></span>
+<span id="cb55-624"><a href="#cb55-624" aria-hidden="true" tabindex="-1"></a><span class="in">        COOKS; !Cook's D (Cook, 1977) for each observation</span></span>
+<span id="cb55-625"><a href="#cb55-625" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-626"><a href="#cb55-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-627"><a href="#cb55-627" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multiple Imputation {#sec-multipleImputation}</span></span>
+<span id="cb55-628"><a href="#cb55-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-629"><a href="#cb55-629" aria-hidden="true" tabindex="-1"></a>For examples of how to conduct <span class="co">[</span><span class="ot">multiple imputation</span><span class="co">](multipleImputation.qmd)</span> in <span class="co">[</span><span class="ot">`Mplus`</span><span class="co">](https://www.statmodel.com)</span>, see <span class="co">[</span><span class="ot">here</span><span class="co">](multipleImputation.qmd#sec-mplus)</span>.</span>
+<span id="cb55-630"><a href="#cb55-630" aria-hidden="true" tabindex="-1"></a>To run a model on multiply imputed data, use the following:</span>
+<span id="cb55-631"><a href="#cb55-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-632"><a href="#cb55-632" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-633"><a href="#cb55-633" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: FILE = "implist.dat"; ! where implist.dat is the name of the *list.dat file saved from the imputation step</span></span>
+<span id="cb55-634"><a href="#cb55-634" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = IMPUTATION;</span></span>
+<span id="cb55-635"><a href="#cb55-635" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-636"><a href="#cb55-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-637"><a href="#cb55-637" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-638"><a href="#cb55-638" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
-<span id="cb55-639"><a href="#cb55-639" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb55-640"><a href="#cb55-640" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb55-641"><a href="#cb55-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-642"><a href="#cb55-642" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-643"><a href="#cb55-643" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
-<span id="cb55-644"><a href="#cb55-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-645"><a href="#cb55-645" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-646"><a href="#cb55-646" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0@0 y1@1 y2@2 y3@3 y4@4; ! intercept, linear slope, quadratic slope</span></span>
-<span id="cb55-647"><a href="#cb55-647" aria-hidden="true" tabindex="-1"></a><span class="in">    ! OR ALTERNATIVELY:</span></span>
-<span id="cb55-648"><a href="#cb55-648" aria-hidden="true" tabindex="-1"></a><span class="in">    !i BY y0@1 y1@1 y2@1 y3@1 y4@1;</span></span>
-<span id="cb55-649"><a href="#cb55-649" aria-hidden="true" tabindex="-1"></a><span class="in">    !s BY y0@0 y1@1 y2@2 y3@3 y4@4;</span></span>
-<span id="cb55-650"><a href="#cb55-650" aria-hidden="true" tabindex="-1"></a><span class="in">    !q BY y0@0 y1@1 y2@4 y3@9 y4@16;</span></span>
-<span id="cb55-651"><a href="#cb55-651" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
-<span id="cb55-652"><a href="#cb55-652" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-653"><a href="#cb55-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-654"><a href="#cb55-654" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unequally Spaced Time Points (Individually Varying Times of Observation) {#sec-tScores}</span></span>
-<span id="cb55-655"><a href="#cb55-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-656"><a href="#cb55-656" aria-hidden="true" tabindex="-1"></a>Unequally spaced time points can be accounted for using the <span class="in">`TSCORES`</span> option (i.e., person-specific factor loadings; Sterba, 2014).</span>
+<span id="cb55-637"><a href="#cb55-637" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Growth Curve Model {#sec-lgcm}</span></span>
+<span id="cb55-638"><a href="#cb55-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-639"><a href="#cb55-639" aria-hidden="true" tabindex="-1"></a><span class="fu">## Equally Spaced Time Points {#sec-equallySpaced}</span></span>
+<span id="cb55-640"><a href="#cb55-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-641"><a href="#cb55-641" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-642"><a href="#cb55-642" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
+<span id="cb55-643"><a href="#cb55-643" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb55-644"><a href="#cb55-644" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb55-645"><a href="#cb55-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-646"><a href="#cb55-646" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-647"><a href="#cb55-647" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
+<span id="cb55-648"><a href="#cb55-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-649"><a href="#cb55-649" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-650"><a href="#cb55-650" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0@0 y1@1 y2@2 y3@3 y4@4; ! intercept, linear slope, quadratic slope</span></span>
+<span id="cb55-651"><a href="#cb55-651" aria-hidden="true" tabindex="-1"></a><span class="in">    ! OR ALTERNATIVELY:</span></span>
+<span id="cb55-652"><a href="#cb55-652" aria-hidden="true" tabindex="-1"></a><span class="in">    !i BY y0@1 y1@1 y2@1 y3@1 y4@1;</span></span>
+<span id="cb55-653"><a href="#cb55-653" aria-hidden="true" tabindex="-1"></a><span class="in">    !s BY y0@0 y1@1 y2@2 y3@3 y4@4;</span></span>
+<span id="cb55-654"><a href="#cb55-654" aria-hidden="true" tabindex="-1"></a><span class="in">    !q BY y0@0 y1@1 y2@4 y3@9 y4@16;</span></span>
+<span id="cb55-655"><a href="#cb55-655" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
+<span id="cb55-656"><a href="#cb55-656" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-657"><a href="#cb55-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-658"><a href="#cb55-658" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Z7QY-TL6W&gt;</span>)</span>
+<span id="cb55-658"><a href="#cb55-658" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unequally Spaced Time Points (Individually Varying Times of Observation) {#sec-tScores}</span></span>
 <span id="cb55-659"><a href="#cb55-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-660"><a href="#cb55-660" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-661"><a href="#cb55-661" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
-<span id="cb55-662"><a href="#cb55-662" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb55-663"><a href="#cb55-663" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
-<span id="cb55-664"><a href="#cb55-664" aria-hidden="true" tabindex="-1"></a><span class="in">    TSCORES = t0 t1 t2 t3 t4;</span></span>
-<span id="cb55-665"><a href="#cb55-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-666"><a href="#cb55-666" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-667"><a href="#cb55-667" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
-<span id="cb55-668"><a href="#cb55-668" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-669"><a href="#cb55-669" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-670"><a href="#cb55-670" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes</span></span>
-<span id="cb55-671"><a href="#cb55-671" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
-<span id="cb55-672"><a href="#cb55-672" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-673"><a href="#cb55-673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-674"><a href="#cb55-674" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Class Growth Analysis {#sec-lcga}</span></span>
-<span id="cb55-675"><a href="#cb55-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-660"><a href="#cb55-660" aria-hidden="true" tabindex="-1"></a>Unequally spaced time points can be accounted for using the <span class="in">`TSCORES`</span> option (i.e., person-specific factor loadings; Sterba, 2014).</span>
+<span id="cb55-661"><a href="#cb55-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-662"><a href="#cb55-662" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://stats.oarc.ucla.edu/mplus/faq/how-can-i-run-a-growth-model-in-wide-form-with-unequally-spaced-time-points-tscore/&gt;</span> (archived at <span class="ot">&lt;https://perma.cc/Z7QY-TL6W&gt;</span>)</span>
+<span id="cb55-663"><a href="#cb55-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-664"><a href="#cb55-664" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-665"><a href="#cb55-665" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE: </span></span>
+<span id="cb55-666"><a href="#cb55-666" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = id t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb55-667"><a href="#cb55-667" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = t0 t1 t2 t3 t4 y0 y1 y2 y3 y4 x;</span></span>
+<span id="cb55-668"><a href="#cb55-668" aria-hidden="true" tabindex="-1"></a><span class="in">    TSCORES = t0 t1 t2 t3 t4;</span></span>
+<span id="cb55-669"><a href="#cb55-669" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-670"><a href="#cb55-670" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-671"><a href="#cb55-671" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = RANDOM;</span></span>
+<span id="cb55-672"><a href="#cb55-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-673"><a href="#cb55-673" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-674"><a href="#cb55-674" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y0 y1 y2 y3 y4 AT t0 t1 t2 t3 t4; ! intercept, linear slope, quadratic slopes</span></span>
+<span id="cb55-675"><a href="#cb55-675" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q ON x;</span></span>
 <span id="cb55-676"><a href="#cb55-676" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-677"><a href="#cb55-677" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-678"><a href="#cb55-678" aria-hidden="true" tabindex="-1"></a><span class="in">  NAMES = id y1 y2 y3 y4;</span></span>
-<span id="cb55-679"><a href="#cb55-679" aria-hidden="true" tabindex="-1"></a><span class="in">  USEVARIABLES = y1 y2 y3 y4;</span></span>
-<span id="cb55-680"><a href="#cb55-680" aria-hidden="true" tabindex="-1"></a><span class="in">  IDVARIABLE = id;</span></span>
-<span id="cb55-681"><a href="#cb55-681" aria-hidden="true" tabindex="-1"></a><span class="in">  CLASSES = c(3); ! 3 latent classes</span></span>
-<span id="cb55-682"><a href="#cb55-682" aria-hidden="true" tabindex="-1"></a><span class="in">  MISSING = .;</span></span>
-<span id="cb55-683"><a href="#cb55-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-684"><a href="#cb55-684" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-685"><a href="#cb55-685" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = MIXTURE;</span></span>
-<span id="cb55-686"><a href="#cb55-686" aria-hidden="true" tabindex="-1"></a><span class="in">  ESTIMATOR = MLR;</span></span>
-<span id="cb55-687"><a href="#cb55-687" aria-hidden="true" tabindex="-1"></a><span class="in">  STARTS = 500 20;</span></span>
-<span id="cb55-688"><a href="#cb55-688" aria-hidden="true" tabindex="-1"></a><span class="in">  STITERATIONS = 20;</span></span>
-<span id="cb55-689"><a href="#cb55-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-690"><a href="#cb55-690" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
-<span id="cb55-691"><a href="#cb55-691" aria-hidden="true" tabindex="-1"></a><span class="in">  %OVERALL%</span></span>
-<span id="cb55-692"><a href="#cb55-692" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope</span></span>
-<span id="cb55-693"><a href="#cb55-693" aria-hidden="true" tabindex="-1"></a><span class="in">    i@0; s@0; q@0; ! fix variances to zero (LCGA assumption)</span></span>
-<span id="cb55-694"><a href="#cb55-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-695"><a href="#cb55-695" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#1%</span></span>
-<span id="cb55-696"><a href="#cb55-696" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q]; ! freely estimate class-specific means</span></span>
-<span id="cb55-697"><a href="#cb55-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-698"><a href="#cb55-698" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#2%</span></span>
-<span id="cb55-699"><a href="#cb55-699" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
-<span id="cb55-700"><a href="#cb55-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-701"><a href="#cb55-701" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#3%</span></span>
-<span id="cb55-702"><a href="#cb55-702" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
-<span id="cb55-703"><a href="#cb55-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-704"><a href="#cb55-704" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-705"><a href="#cb55-705" aria-hidden="true" tabindex="-1"></a><span class="in">  standardized TECH1 TECH4 TECH8 TECH11 TECH14;</span></span>
-<span id="cb55-706"><a href="#cb55-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-707"><a href="#cb55-707" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb55-708"><a href="#cb55-708" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = PLOT3;</span></span>
-<span id="cb55-709"><a href="#cb55-709" aria-hidden="true" tabindex="-1"></a><span class="in">  SERIES = y1(0) y2(1) y3(2) y4(3);</span></span>
+<span id="cb55-677"><a href="#cb55-677" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-678"><a href="#cb55-678" aria-hidden="true" tabindex="-1"></a><span class="fu"># Latent Class Growth Analysis {#sec-lcga}</span></span>
+<span id="cb55-679"><a href="#cb55-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-680"><a href="#cb55-680" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-681"><a href="#cb55-681" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-682"><a href="#cb55-682" aria-hidden="true" tabindex="-1"></a><span class="in">  NAMES = id y1 y2 y3 y4;</span></span>
+<span id="cb55-683"><a href="#cb55-683" aria-hidden="true" tabindex="-1"></a><span class="in">  USEVARIABLES = y1 y2 y3 y4;</span></span>
+<span id="cb55-684"><a href="#cb55-684" aria-hidden="true" tabindex="-1"></a><span class="in">  IDVARIABLE = id;</span></span>
+<span id="cb55-685"><a href="#cb55-685" aria-hidden="true" tabindex="-1"></a><span class="in">  CLASSES = c(3); ! 3 latent classes</span></span>
+<span id="cb55-686"><a href="#cb55-686" aria-hidden="true" tabindex="-1"></a><span class="in">  MISSING = .;</span></span>
+<span id="cb55-687"><a href="#cb55-687" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-688"><a href="#cb55-688" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-689"><a href="#cb55-689" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = MIXTURE;</span></span>
+<span id="cb55-690"><a href="#cb55-690" aria-hidden="true" tabindex="-1"></a><span class="in">  ESTIMATOR = MLR;</span></span>
+<span id="cb55-691"><a href="#cb55-691" aria-hidden="true" tabindex="-1"></a><span class="in">  STARTS = 500 20;</span></span>
+<span id="cb55-692"><a href="#cb55-692" aria-hidden="true" tabindex="-1"></a><span class="in">  STITERATIONS = 20;</span></span>
+<span id="cb55-693"><a href="#cb55-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-694"><a href="#cb55-694" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL:</span></span>
+<span id="cb55-695"><a href="#cb55-695" aria-hidden="true" tabindex="-1"></a><span class="in">  %OVERALL%</span></span>
+<span id="cb55-696"><a href="#cb55-696" aria-hidden="true" tabindex="-1"></a><span class="in">    i s q | y1@0 y2@1 y3@2 y4@3; ! intercept, linear slope, quadratic slope</span></span>
+<span id="cb55-697"><a href="#cb55-697" aria-hidden="true" tabindex="-1"></a><span class="in">    i@0; s@0; q@0; ! fix variances to zero (LCGA assumption)</span></span>
+<span id="cb55-698"><a href="#cb55-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-699"><a href="#cb55-699" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#1%</span></span>
+<span id="cb55-700"><a href="#cb55-700" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q]; ! freely estimate class-specific means</span></span>
+<span id="cb55-701"><a href="#cb55-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-702"><a href="#cb55-702" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#2%</span></span>
+<span id="cb55-703"><a href="#cb55-703" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
+<span id="cb55-704"><a href="#cb55-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-705"><a href="#cb55-705" aria-hidden="true" tabindex="-1"></a><span class="in">  %c#3%</span></span>
+<span id="cb55-706"><a href="#cb55-706" aria-hidden="true" tabindex="-1"></a><span class="in">    [i s q];</span></span>
+<span id="cb55-707"><a href="#cb55-707" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-708"><a href="#cb55-708" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-709"><a href="#cb55-709" aria-hidden="true" tabindex="-1"></a><span class="in">  standardized TECH1 TECH4 TECH8 TECH11 TECH14;</span></span>
 <span id="cb55-710"><a href="#cb55-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-711"><a href="#cb55-711" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
-<span id="cb55-712"><a href="#cb55-712" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = lcga_3class_prob.dat;</span></span>
-<span id="cb55-713"><a href="#cb55-713" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = CPROBABILITIES;</span></span>
-<span id="cb55-714"><a href="#cb55-714" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-715"><a href="#cb55-715" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-716"><a href="#cb55-716" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Models in Batch {#sec-runModels}</span></span>
-<span id="cb55-717"><a href="#cb55-717" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-718"><a href="#cb55-718" aria-hidden="true" tabindex="-1"></a>Run models in batch via <span class="in">`R`</span>:</span>
+<span id="cb55-711"><a href="#cb55-711" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb55-712"><a href="#cb55-712" aria-hidden="true" tabindex="-1"></a><span class="in">  TYPE = PLOT3;</span></span>
+<span id="cb55-713"><a href="#cb55-713" aria-hidden="true" tabindex="-1"></a><span class="in">  SERIES = y1(0) y2(1) y3(2) y4(3);</span></span>
+<span id="cb55-714"><a href="#cb55-714" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-715"><a href="#cb55-715" aria-hidden="true" tabindex="-1"></a><span class="in">SAVEDATA:</span></span>
+<span id="cb55-716"><a href="#cb55-716" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = lcga_3class_prob.dat;</span></span>
+<span id="cb55-717"><a href="#cb55-717" aria-hidden="true" tabindex="-1"></a><span class="in">    SAVE = CPROBABILITIES;</span></span>
+<span id="cb55-718"><a href="#cb55-718" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-719"><a href="#cb55-719" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-722"><a href="#cb55-722" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-723"><a href="#cb55-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb55-724"><a href="#cb55-724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-725"><a href="#cb55-725" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"MplusAutomation"</span>)</span>
-<span id="cb55-726"><a href="#cb55-726" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-727"><a href="#cb55-727" aria-hidden="true" tabindex="-1"></a><span class="fu">runModels</span>(</span>
-<span id="cb55-728"><a href="#cb55-728" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(path, <span class="st">"/GitHub/Project_Name/Analyses/Mplus/"</span>),</span>
-<span id="cb55-729"><a href="#cb55-729" aria-hidden="true" tabindex="-1"></a>  <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb55-730"><a href="#cb55-730" aria-hidden="true" tabindex="-1"></a>  <span class="at">replaceOutfile =</span> <span class="st">"always"</span>,</span>
-<span id="cb55-731"><a href="#cb55-731" aria-hidden="true" tabindex="-1"></a>  <span class="at">showOutput =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb55-732"><a href="#cb55-732" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-733"><a href="#cb55-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-734"><a href="#cb55-734" aria-hidden="true" tabindex="-1"></a><span class="fu"># Monte Carlo Simulation/Power Analysis {#sec-monteCarlo}</span></span>
-<span id="cb55-735"><a href="#cb55-735" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-736"><a href="#cb55-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Single Group Model {#sec-monteCarloSingleGroup}</span></span>
+<span id="cb55-720"><a href="#cb55-720" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Models in Batch {#sec-runModels}</span></span>
+<span id="cb55-721"><a href="#cb55-721" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-722"><a href="#cb55-722" aria-hidden="true" tabindex="-1"></a>Run models in batch via <span class="in">`R`</span>:</span>
+<span id="cb55-723"><a href="#cb55-723" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-726"><a href="#cb55-726" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb55-727"><a href="#cb55-727" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb55-728"><a href="#cb55-728" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-729"><a href="#cb55-729" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"MplusAutomation"</span>)</span>
+<span id="cb55-730"><a href="#cb55-730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-731"><a href="#cb55-731" aria-hidden="true" tabindex="-1"></a><span class="fu">runModels</span>(</span>
+<span id="cb55-732"><a href="#cb55-732" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(path, <span class="st">"/GitHub/Project_Name/Analyses/Mplus/"</span>),</span>
+<span id="cb55-733"><a href="#cb55-733" aria-hidden="true" tabindex="-1"></a>  <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb55-734"><a href="#cb55-734" aria-hidden="true" tabindex="-1"></a>  <span class="at">replaceOutfile =</span> <span class="st">"always"</span>,</span>
+<span id="cb55-735"><a href="#cb55-735" aria-hidden="true" tabindex="-1"></a>  <span class="at">showOutput =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb55-736"><a href="#cb55-736" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-737"><a href="#cb55-737" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-738"><a href="#cb55-738" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-739"><a href="#cb55-739" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
-<span id="cb55-740"><a href="#cb55-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-741"><a href="#cb55-741" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
-<span id="cb55-742"><a href="#cb55-742" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
-<span id="cb55-743"><a href="#cb55-743" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500; ! number of participants in each sample</span></span>
-<span id="cb55-744"><a href="#cb55-744" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
-<span id="cb55-745"><a href="#cb55-745" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
-<span id="cb55-746"><a href="#cb55-746" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
-<span id="cb55-747"><a href="#cb55-747" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
-<span id="cb55-748"><a href="#cb55-748" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-749"><a href="#cb55-749" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-750"><a href="#cb55-750" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
-<span id="cb55-751"><a href="#cb55-751" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
-<span id="cb55-752"><a href="#cb55-752" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
-<span id="cb55-753"><a href="#cb55-753" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-754"><a href="#cb55-754" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb55-755"><a href="#cb55-755" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-756"><a href="#cb55-756" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-757"><a href="#cb55-757" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-758"><a href="#cb55-758" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
-<span id="cb55-759"><a href="#cb55-759" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
-<span id="cb55-760"><a href="#cb55-760" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
-<span id="cb55-761"><a href="#cb55-761" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
-<span id="cb55-762"><a href="#cb55-762" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
-<span id="cb55-763"><a href="#cb55-763" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-764"><a href="#cb55-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-765"><a href="#cb55-765" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb55-766"><a href="#cb55-766" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-767"><a href="#cb55-767" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-768"><a href="#cb55-768" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-769"><a href="#cb55-769" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
-<span id="cb55-770"><a href="#cb55-770" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
-<span id="cb55-771"><a href="#cb55-771" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
-<span id="cb55-772"><a href="#cb55-772" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
-<span id="cb55-773"><a href="#cb55-773" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
-<span id="cb55-774"><a href="#cb55-774" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-775"><a href="#cb55-775" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-776"><a href="#cb55-776" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
-<span id="cb55-777"><a href="#cb55-777" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt stdt1 stdt2 stdt3 noninvt noninvt1 noninvt2 noninvt3 diff);</span></span>
-<span id="cb55-778"><a href="#cb55-778" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-779"><a href="#cb55-779" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1 = (v1t1 + v2t1 + v3t1) / 3;</span></span>
-<span id="cb55-780"><a href="#cb55-780" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2 = (v1t2 + v2t2 + v3t2) / 3;</span></span>
-<span id="cb55-781"><a href="#cb55-781" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3 = (v1t3 + v2t3 + v3t3) / 3;</span></span>
+<span id="cb55-738"><a href="#cb55-738" aria-hidden="true" tabindex="-1"></a><span class="fu"># Monte Carlo Simulation/Power Analysis {#sec-monteCarlo}</span></span>
+<span id="cb55-739"><a href="#cb55-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-740"><a href="#cb55-740" aria-hidden="true" tabindex="-1"></a><span class="fu">## Single Group Model {#sec-monteCarloSingleGroup}</span></span>
+<span id="cb55-741"><a href="#cb55-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-742"><a href="#cb55-742" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-743"><a href="#cb55-743" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Single-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
+<span id="cb55-744"><a href="#cb55-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-745"><a href="#cb55-745" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
+<span id="cb55-746"><a href="#cb55-746" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
+<span id="cb55-747"><a href="#cb55-747" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500; ! number of participants in each sample</span></span>
+<span id="cb55-748"><a href="#cb55-748" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
+<span id="cb55-749"><a href="#cb55-749" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
+<span id="cb55-750"><a href="#cb55-750" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
+<span id="cb55-751"><a href="#cb55-751" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
+<span id="cb55-752"><a href="#cb55-752" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-753"><a href="#cb55-753" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-754"><a href="#cb55-754" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
+<span id="cb55-755"><a href="#cb55-755" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
+<span id="cb55-756"><a href="#cb55-756" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
+<span id="cb55-757"><a href="#cb55-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-758"><a href="#cb55-758" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb55-759"><a href="#cb55-759" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-760"><a href="#cb55-760" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-761"><a href="#cb55-761" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-762"><a href="#cb55-762" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
+<span id="cb55-763"><a href="#cb55-763" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
+<span id="cb55-764"><a href="#cb55-764" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
+<span id="cb55-765"><a href="#cb55-765" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
+<span id="cb55-766"><a href="#cb55-766" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
+<span id="cb55-767"><a href="#cb55-767" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-768"><a href="#cb55-768" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-769"><a href="#cb55-769" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb55-770"><a href="#cb55-770" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-771"><a href="#cb55-771" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-772"><a href="#cb55-772" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-773"><a href="#cb55-773" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1); [v1$2*1.0] (v1t2); [v1$3*1.5] (v1t3); ! item thresholds for v1</span></span>
+<span id="cb55-774"><a href="#cb55-774" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1); [v2$2*1.0] (v2t2); [v2$3*1.5] (v2t3); ! item thresholds for v2</span></span>
+<span id="cb55-775"><a href="#cb55-775" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1); [v3$2*1.0] (v3t2); [v3$3*1.5] (v3t3); ! item thresholds for v3</span></span>
+<span id="cb55-776"><a href="#cb55-776" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1); [v4$2*0.5] (v4t2); [v4$3*1.0] (v4t3); ! item thresholds for v4</span></span>
+<span id="cb55-777"><a href="#cb55-777" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1); [v5$2*0.5] (v5t2); [v5$3*1.0] (v5t3); ! item thresholds for v5</span></span>
+<span id="cb55-778"><a href="#cb55-778" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-779"><a href="#cb55-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-780"><a href="#cb55-780" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
+<span id="cb55-781"><a href="#cb55-781" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt stdt1 stdt2 stdt3 noninvt noninvt1 noninvt2 noninvt3 diff);</span></span>
 <span id="cb55-782"><a href="#cb55-782" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-783"><a href="#cb55-783" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt1 = (v4t1 + v5t1) / 2;</span></span>
-<span id="cb55-784"><a href="#cb55-784" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt2 = (v4t2 + v5t2) / 2;</span></span>
-<span id="cb55-785"><a href="#cb55-785" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt3 = (v4t3 + v5t3) / 2;</span></span>
+<span id="cb55-783"><a href="#cb55-783" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1 = (v1t1 + v2t1 + v3t1) / 3;</span></span>
+<span id="cb55-784"><a href="#cb55-784" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2 = (v1t2 + v2t2 + v3t2) / 3;</span></span>
+<span id="cb55-785"><a href="#cb55-785" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3 = (v1t3 + v2t3 + v3t3) / 3;</span></span>
 <span id="cb55-786"><a href="#cb55-786" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-787"><a href="#cb55-787" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt = (stdt1 + stdt2 + stdt3) / 3;</span></span>
-<span id="cb55-788"><a href="#cb55-788" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt = (noninvt1 + noninvt2 + noninvt3) / 3;</span></span>
-<span id="cb55-789"><a href="#cb55-789" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-790"><a href="#cb55-790" aria-hidden="true" tabindex="-1"></a><span class="in">    diff = noninvt - stdt;</span></span>
-<span id="cb55-791"><a href="#cb55-791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-792"><a href="#cb55-792" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-793"><a href="#cb55-793" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
-<span id="cb55-794"><a href="#cb55-794" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-787"><a href="#cb55-787" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt1 = (v4t1 + v5t1) / 2;</span></span>
+<span id="cb55-788"><a href="#cb55-788" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt2 = (v4t2 + v5t2) / 2;</span></span>
+<span id="cb55-789"><a href="#cb55-789" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt3 = (v4t3 + v5t3) / 2;</span></span>
+<span id="cb55-790"><a href="#cb55-790" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-791"><a href="#cb55-791" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt = (stdt1 + stdt2 + stdt3) / 3;</span></span>
+<span id="cb55-792"><a href="#cb55-792" aria-hidden="true" tabindex="-1"></a><span class="in">    noninvt = (noninvt1 + noninvt2 + noninvt3) / 3;</span></span>
+<span id="cb55-793"><a href="#cb55-793" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-794"><a href="#cb55-794" aria-hidden="true" tabindex="-1"></a><span class="in">    diff = noninvt - stdt;</span></span>
 <span id="cb55-795"><a href="#cb55-795" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-796"><a href="#cb55-796" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Group Model {#sec-monteCarloMultigroup}</span></span>
-<span id="cb55-797"><a href="#cb55-797" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-796"><a href="#cb55-796" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-797"><a href="#cb55-797" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
 <span id="cb55-798"><a href="#cb55-798" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-799"><a href="#cb55-799" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
-<span id="cb55-800"><a href="#cb55-800" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-801"><a href="#cb55-801" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
-<span id="cb55-802"><a href="#cb55-802" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
-<span id="cb55-803"><a href="#cb55-803" aria-hidden="true" tabindex="-1"></a><span class="in">    NGROUPS = 2; ! number of groups</span></span>
-<span id="cb55-804"><a href="#cb55-804" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500 300; ! number of participants in each sample</span></span>
-<span id="cb55-805"><a href="#cb55-805" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
-<span id="cb55-806"><a href="#cb55-806" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
-<span id="cb55-807"><a href="#cb55-807" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
-<span id="cb55-808"><a href="#cb55-808" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
-<span id="cb55-809"><a href="#cb55-809" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-810"><a href="#cb55-810" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
-<span id="cb55-811"><a href="#cb55-811" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
-<span id="cb55-812"><a href="#cb55-812" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
-<span id="cb55-813"><a href="#cb55-813" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
-<span id="cb55-814"><a href="#cb55-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-815"><a href="#cb55-815" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb55-816"><a href="#cb55-816" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-817"><a href="#cb55-817" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-818"><a href="#cb55-818" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-819"><a href="#cb55-819" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
-<span id="cb55-820"><a href="#cb55-820" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
-<span id="cb55-821"><a href="#cb55-821" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
-<span id="cb55-822"><a href="#cb55-822" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
-<span id="cb55-823"><a href="#cb55-823" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
-<span id="cb55-824"><a href="#cb55-824" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-825"><a href="#cb55-825" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-826"><a href="#cb55-826" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION-g2: ! tell Mplus how to generate the population data for group 2; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
-<span id="cb55-827"><a href="#cb55-827" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-828"><a href="#cb55-828" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-829"><a href="#cb55-829" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-830"><a href="#cb55-830" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
-<span id="cb55-831"><a href="#cb55-831" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
-<span id="cb55-832"><a href="#cb55-832" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
-<span id="cb55-833"><a href="#cb55-833" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
-<span id="cb55-834"><a href="#cb55-834" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
-<span id="cb55-835"><a href="#cb55-835" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-836"><a href="#cb55-836" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-837"><a href="#cb55-837" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb55-838"><a href="#cb55-838" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-839"><a href="#cb55-839" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-840"><a href="#cb55-840" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-841"><a href="#cb55-841" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
-<span id="cb55-842"><a href="#cb55-842" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
-<span id="cb55-843"><a href="#cb55-843" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
-<span id="cb55-844"><a href="#cb55-844" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
-<span id="cb55-845"><a href="#cb55-845" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
-<span id="cb55-846"><a href="#cb55-846" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-847"><a href="#cb55-847" aria-hidden="true" tabindex="-1"></a><span class="in">   </span></span>
-<span id="cb55-848"><a href="#cb55-848" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL g2: ! tell Mplus to estimate our model in group 2; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
-<span id="cb55-849"><a href="#cb55-849" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
-<span id="cb55-850"><a href="#cb55-850" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
-<span id="cb55-851"><a href="#cb55-851" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
-<span id="cb55-852"><a href="#cb55-852" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
-<span id="cb55-853"><a href="#cb55-853" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
-<span id="cb55-854"><a href="#cb55-854" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
-<span id="cb55-855"><a href="#cb55-855" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
-<span id="cb55-856"><a href="#cb55-856" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
-<span id="cb55-857"><a href="#cb55-857" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
-<span id="cb55-858"><a href="#cb55-858" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-859"><a href="#cb55-859" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
-<span id="cb55-860"><a href="#cb55-860" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt1g1 stdt2g1 stdt3g1 stdt1g2 stdt2g2 stdt3g2</span></span>
-<span id="cb55-861"><a href="#cb55-861" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 nonit2g1 nonit3g1 nonit1g2 nonit2g2 nonit3g2</span></span>
-<span id="cb55-862"><a href="#cb55-862" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 stdtg2 nonitg1 nonitg2 diffwg diffbg);</span></span>
-<span id="cb55-863"><a href="#cb55-863" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-864"><a href="#cb55-864" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g1 = (v1t1g1 + v2t1g1 + v3t1g1) / 3;</span></span>
-<span id="cb55-865"><a href="#cb55-865" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g1 = (v1t2g1 + v2t2g1 + v3t2g1) / 3;</span></span>
-<span id="cb55-866"><a href="#cb55-866" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g1 = (v1t3g1 + v2t3g1 + v3t3g1) / 3;</span></span>
+<span id="cb55-799"><a href="#cb55-799" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-800"><a href="#cb55-800" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Group Model {#sec-monteCarloMultigroup}</span></span>
+<span id="cb55-801"><a href="#cb55-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-802"><a href="#cb55-802" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-803"><a href="#cb55-803" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Multi-Group Monte Carlo Simulation with Ordinal Items and Common Factor;</span></span>
+<span id="cb55-804"><a href="#cb55-804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-805"><a href="#cb55-805" aria-hidden="true" tabindex="-1"></a><span class="in">MONTECARLO:</span></span>
+<span id="cb55-806"><a href="#cb55-806" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = v1-v5; ! variable names</span></span>
+<span id="cb55-807"><a href="#cb55-807" aria-hidden="true" tabindex="-1"></a><span class="in">    NGROUPS = 2; ! number of groups</span></span>
+<span id="cb55-808"><a href="#cb55-808" aria-hidden="true" tabindex="-1"></a><span class="in">    NOBSERVATIONS = 500 300; ! number of participants in each sample</span></span>
+<span id="cb55-809"><a href="#cb55-809" aria-hidden="true" tabindex="-1"></a><span class="in">    NREPS = 100000; ! number of samples to create</span></span>
+<span id="cb55-810"><a href="#cb55-810" aria-hidden="true" tabindex="-1"></a><span class="in">    SEED = 52242; ! random seed</span></span>
+<span id="cb55-811"><a href="#cb55-811" aria-hidden="true" tabindex="-1"></a><span class="in">    GENERATE = v1-v5 (3 p); ! specify the scale of the DVs; number of thresholds; probit (p)</span></span>
+<span id="cb55-812"><a href="#cb55-812" aria-hidden="true" tabindex="-1"></a><span class="in">    CATEGORICAL = v1-v5; ! specify the variables that are (ordered) categorical</span></span>
+<span id="cb55-813"><a href="#cb55-813" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-814"><a href="#cb55-814" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS:</span></span>
+<span id="cb55-815"><a href="#cb55-815" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4 1; ! number of processors; number of threads</span></span>
+<span id="cb55-816"><a href="#cb55-816" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = WLSMV;</span></span>
+<span id="cb55-817"><a href="#cb55-817" aria-hidden="true" tabindex="-1"></a><span class="in">    PARAMETERIZATION = THETA;</span></span>
+<span id="cb55-818"><a href="#cb55-818" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-819"><a href="#cb55-819" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION: ! tell Mplus how to generate the population data; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb55-820"><a href="#cb55-820" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-821"><a href="#cb55-821" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-822"><a href="#cb55-822" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-823"><a href="#cb55-823" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
+<span id="cb55-824"><a href="#cb55-824" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
+<span id="cb55-825"><a href="#cb55-825" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
+<span id="cb55-826"><a href="#cb55-826" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
+<span id="cb55-827"><a href="#cb55-827" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
+<span id="cb55-828"><a href="#cb55-828" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-829"><a href="#cb55-829" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-830"><a href="#cb55-830" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL POPULATION-g2: ! tell Mplus how to generate the population data for group 2; can use asterisks (*) and at symbols (@) interchangeably here, but they differ in the MODEL command (see below); I use the same symbol as in the MODEL command</span></span>
+<span id="cb55-831"><a href="#cb55-831" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-832"><a href="#cb55-832" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-833"><a href="#cb55-833" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-834"><a href="#cb55-834" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
+<span id="cb55-835"><a href="#cb55-835" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
+<span id="cb55-836"><a href="#cb55-836" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
+<span id="cb55-837"><a href="#cb55-837" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
+<span id="cb55-838"><a href="#cb55-838" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
+<span id="cb55-839"><a href="#cb55-839" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-840"><a href="#cb55-840" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-841"><a href="#cb55-841" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! tell Mplus to estimate our model; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb55-842"><a href="#cb55-842" aria-hidden="true" tabindex="-1"></a><span class="in">    dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-843"><a href="#cb55-843" aria-hidden="true" tabindex="-1"></a><span class="in">    [dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-844"><a href="#cb55-844" aria-hidden="true" tabindex="-1"></a><span class="in">    dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-845"><a href="#cb55-845" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g1); [v1$2*1.0] (v1t2g1); [v1$3*1.5] (v1t3g1); ! item thresholds for v1</span></span>
+<span id="cb55-846"><a href="#cb55-846" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g1); [v2$2*1.0] (v2t2g1); [v2$3*1.5] (v2t3g1); ! item thresholds for v2</span></span>
+<span id="cb55-847"><a href="#cb55-847" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g1); [v3$2*1.0] (v3t2g1); [v3$3*1.5] (v3t3g1); ! item thresholds for v3</span></span>
+<span id="cb55-848"><a href="#cb55-848" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.5] (v4t1g1); [v4$2*1.0] (v4t2g1); [v4$3*1.5] (v4t3g1); ! item thresholds for v4</span></span>
+<span id="cb55-849"><a href="#cb55-849" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.5] (v5t1g1); [v5$2*1.0] (v5t2g1); [v5$3*1.5] (v5t3g1); ! item thresholds for v5</span></span>
+<span id="cb55-850"><a href="#cb55-850" aria-hidden="true" tabindex="-1"></a><span class="in">    v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-851"><a href="#cb55-851" aria-hidden="true" tabindex="-1"></a><span class="in">   </span></span>
+<span id="cb55-852"><a href="#cb55-852" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL g2: ! tell Mplus to estimate our model in group 2; asterisks (*) are free estimates with a starting value; at symbols (@) are fixed estimates</span></span>
+<span id="cb55-853"><a href="#cb55-853" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep BY v1-v5*.7; ! factor loadings</span></span>
+<span id="cb55-854"><a href="#cb55-854" aria-hidden="true" tabindex="-1"></a><span class="in">    ![dep@0]; ! set factor mean to 0</span></span>
+<span id="cb55-855"><a href="#cb55-855" aria-hidden="true" tabindex="-1"></a><span class="in">    !dep@1; ! set factor variance to 1 (standardize)</span></span>
+<span id="cb55-856"><a href="#cb55-856" aria-hidden="true" tabindex="-1"></a><span class="in">    [v1$1*0.5] (v1t1g2); [v1$2*1.0] (v1t2g2); [v1$3*1.5] (v1t3g2); ! item thresholds for v1</span></span>
+<span id="cb55-857"><a href="#cb55-857" aria-hidden="true" tabindex="-1"></a><span class="in">    [v2$1*0.5] (v2t1g2); [v2$2*1.0] (v2t2g2); [v2$3*1.5] (v2t3g2); ! item thresholds for v2</span></span>
+<span id="cb55-858"><a href="#cb55-858" aria-hidden="true" tabindex="-1"></a><span class="in">    [v3$1*0.5] (v3t1g2); [v3$2*1.0] (v3t2g2); [v3$3*1.5] (v3t3g2); ! item thresholds for v3</span></span>
+<span id="cb55-859"><a href="#cb55-859" aria-hidden="true" tabindex="-1"></a><span class="in">    [v4$1*0.0] (v4t1g2); [v4$2*0.5] (v4t2g2); [v4$3*1.0] (v4t3g2); ! item thresholds for v4</span></span>
+<span id="cb55-860"><a href="#cb55-860" aria-hidden="true" tabindex="-1"></a><span class="in">    [v5$1*0.0] (v5t1g2); [v5$2*0.5] (v5t2g2); [v5$3*1.0] (v5t3g2); ! item thresholds for v5</span></span>
+<span id="cb55-861"><a href="#cb55-861" aria-hidden="true" tabindex="-1"></a><span class="in">    !v1-v5@1; ! item residual variances</span></span>
+<span id="cb55-862"><a href="#cb55-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-863"><a href="#cb55-863" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:</span></span>
+<span id="cb55-864"><a href="#cb55-864" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW (stdt1g1 stdt2g1 stdt3g1 stdt1g2 stdt2g2 stdt3g2</span></span>
+<span id="cb55-865"><a href="#cb55-865" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 nonit2g1 nonit3g1 nonit1g2 nonit2g2 nonit3g2</span></span>
+<span id="cb55-866"><a href="#cb55-866" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 stdtg2 nonitg1 nonitg2 diffwg diffbg);</span></span>
 <span id="cb55-867"><a href="#cb55-867" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-868"><a href="#cb55-868" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g2 = (v1t1g2 + v2t1g2 + v3t1g2) / 3;</span></span>
-<span id="cb55-869"><a href="#cb55-869" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g2 = (v1t2g2 + v2t2g2 + v3t2g2) / 3;</span></span>
-<span id="cb55-870"><a href="#cb55-870" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g2 = (v1t3g2 + v2t3g2 + v3t3g2) / 3;</span></span>
+<span id="cb55-868"><a href="#cb55-868" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g1 = (v1t1g1 + v2t1g1 + v3t1g1) / 3;</span></span>
+<span id="cb55-869"><a href="#cb55-869" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g1 = (v1t2g1 + v2t2g1 + v3t2g1) / 3;</span></span>
+<span id="cb55-870"><a href="#cb55-870" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g1 = (v1t3g1 + v2t3g1 + v3t3g1) / 3;</span></span>
 <span id="cb55-871"><a href="#cb55-871" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-872"><a href="#cb55-872" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 = (v4t1g1 + v5t1g1) / 2;</span></span>
-<span id="cb55-873"><a href="#cb55-873" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g1 = (v4t2g1 + v5t2g1) / 2;</span></span>
-<span id="cb55-874"><a href="#cb55-874" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g1 = (v4t3g1 + v5t3g1) / 2;</span></span>
+<span id="cb55-872"><a href="#cb55-872" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt1g2 = (v1t1g2 + v2t1g2 + v3t1g2) / 3;</span></span>
+<span id="cb55-873"><a href="#cb55-873" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt2g2 = (v1t2g2 + v2t2g2 + v3t2g2) / 3;</span></span>
+<span id="cb55-874"><a href="#cb55-874" aria-hidden="true" tabindex="-1"></a><span class="in">    stdt3g2 = (v1t3g2 + v2t3g2 + v3t3g2) / 3;</span></span>
 <span id="cb55-875"><a href="#cb55-875" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-876"><a href="#cb55-876" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g2 = (v4t1g2 + v5t1g2) / 2;</span></span>
-<span id="cb55-877"><a href="#cb55-877" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g2 = (v4t2g2 + v5t2g2) / 2;</span></span>
-<span id="cb55-878"><a href="#cb55-878" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g2 = (v4t3g2 + v5t3g2) / 2;</span></span>
+<span id="cb55-876"><a href="#cb55-876" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g1 = (v4t1g1 + v5t1g1) / 2;</span></span>
+<span id="cb55-877"><a href="#cb55-877" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g1 = (v4t2g1 + v5t2g1) / 2;</span></span>
+<span id="cb55-878"><a href="#cb55-878" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g1 = (v4t3g1 + v5t3g1) / 2;</span></span>
 <span id="cb55-879"><a href="#cb55-879" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-880"><a href="#cb55-880" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 = (stdt1g1 + stdt2g1 + stdt3g1) / 3;</span></span>
-<span id="cb55-881"><a href="#cb55-881" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg2 = (stdt1g2 + stdt2g2 + stdt3g2) / 3;</span></span>
-<span id="cb55-882"><a href="#cb55-882" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-883"><a href="#cb55-883" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg1 = (nonit1g1 + nonit2g1 + nonit3g1) / 3;</span></span>
-<span id="cb55-884"><a href="#cb55-884" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg2 = (nonit1g2 + nonit2g2 + nonit3g2) / 3;</span></span>
-<span id="cb55-885"><a href="#cb55-885" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-886"><a href="#cb55-886" aria-hidden="true" tabindex="-1"></a><span class="in">    diffwg = nonitg2 - stdtg2; ! difference within group</span></span>
-<span id="cb55-887"><a href="#cb55-887" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-888"><a href="#cb55-888" aria-hidden="true" tabindex="-1"></a><span class="in">    diffbg = nonitg2 - nonitg1; ! difference between groups</span></span>
+<span id="cb55-880"><a href="#cb55-880" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit1g2 = (v4t1g2 + v5t1g2) / 2;</span></span>
+<span id="cb55-881"><a href="#cb55-881" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit2g2 = (v4t2g2 + v5t2g2) / 2;</span></span>
+<span id="cb55-882"><a href="#cb55-882" aria-hidden="true" tabindex="-1"></a><span class="in">    nonit3g2 = (v4t3g2 + v5t3g2) / 2;</span></span>
+<span id="cb55-883"><a href="#cb55-883" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-884"><a href="#cb55-884" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg1 = (stdt1g1 + stdt2g1 + stdt3g1) / 3;</span></span>
+<span id="cb55-885"><a href="#cb55-885" aria-hidden="true" tabindex="-1"></a><span class="in">    stdtg2 = (stdt1g2 + stdt2g2 + stdt3g2) / 3;</span></span>
+<span id="cb55-886"><a href="#cb55-886" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-887"><a href="#cb55-887" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg1 = (nonit1g1 + nonit2g1 + nonit3g1) / 3;</span></span>
+<span id="cb55-888"><a href="#cb55-888" aria-hidden="true" tabindex="-1"></a><span class="in">    nonitg2 = (nonit1g2 + nonit2g2 + nonit3g2) / 3;</span></span>
 <span id="cb55-889"><a href="#cb55-889" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb55-890"><a href="#cb55-890" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-891"><a href="#cb55-891" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
-<span id="cb55-892"><a href="#cb55-892" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-893"><a href="#cb55-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-894"><a href="#cb55-894" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Structural Equation Modeling (M-SEM) {#sec-msem}</span></span>
-<span id="cb55-895"><a href="#cb55-895" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-896"><a href="#cb55-896" aria-hidden="true" tabindex="-1"></a><span class="fu">## Latent Curve Model with Structured Residuals (LCM-SR) {#sec-msem-lcm-sr}</span></span>
+<span id="cb55-890"><a href="#cb55-890" aria-hidden="true" tabindex="-1"></a><span class="in">    diffwg = nonitg2 - stdtg2; ! difference within group</span></span>
+<span id="cb55-891"><a href="#cb55-891" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-892"><a href="#cb55-892" aria-hidden="true" tabindex="-1"></a><span class="in">    diffbg = nonitg2 - nonitg1; ! difference between groups</span></span>
+<span id="cb55-893"><a href="#cb55-893" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb55-894"><a href="#cb55-894" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-895"><a href="#cb55-895" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH9;</span></span>
+<span id="cb55-896"><a href="#cb55-896" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-897"><a href="#cb55-897" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-898"><a href="#cb55-898" aria-hidden="true" tabindex="-1"></a>A latent curve model with structured residuals (LCM-SR) estimated with long-form data in multilevel SEM allows estimating a cross-lagged model to (a) determine the direction of effect between two constructs, (b) account for individual differences in level and change of each construct, (c) account for unbalanced time, and (d) disaggregate within-person from between-person effects.</span>
+<span id="cb55-898"><a href="#cb55-898" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multilevel Structural Equation Modeling (M-SEM) {#sec-msem}</span></span>
 <span id="cb55-899"><a href="#cb55-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-900"><a href="#cb55-900" aria-hidden="true" tabindex="-1"></a>The example below is adapted from Hoffman's <span class="co">[</span><span class="ot">Example 5b</span><span class="co">](https://www.lesahoffman.com/PSQF7375_AdvLong/index.html)</span> (archived at <span class="ot">&lt;https://perma.cc/N2AR-52S5&gt;</span>).</span>
-<span id="cb55-901"><a href="#cb55-901" aria-hidden="true" tabindex="-1"></a>For other examples, see <span class="co">[</span><span class="ot">here</span><span class="co">](https://research-git.uiowa.edu/PetersenLab/Mplus-Multilevel-SEM/-/tree/main/Analyses/Mplus)</span><span class="ot">[^1]</span>.</span>
-<span id="cb55-902"><a href="#cb55-902" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-903"><a href="#cb55-903" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-904"><a href="#cb55-904" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Latent Curve Model with Structured Residuals with Long-Form</span></span>
-<span id="cb55-905"><a href="#cb55-905" aria-hidden="true" tabindex="-1"></a><span class="in">       Data in Multilevel SEM</span></span>
+<span id="cb55-900"><a href="#cb55-900" aria-hidden="true" tabindex="-1"></a><span class="fu">## Latent Curve Model with Structured Residuals (LCM-SR) {#sec-msem-lcm-sr}</span></span>
+<span id="cb55-901"><a href="#cb55-901" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-902"><a href="#cb55-902" aria-hidden="true" tabindex="-1"></a>A latent curve model with structured residuals (LCM-SR) estimated with long-form data in multilevel SEM allows estimating a cross-lagged model to (a) determine the direction of effect between two constructs, (b) account for individual differences in level and change of each construct, (c) account for unbalanced time, and (d) disaggregate within-person from between-person effects.</span>
+<span id="cb55-903"><a href="#cb55-903" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-904"><a href="#cb55-904" aria-hidden="true" tabindex="-1"></a>The example below is adapted from Hoffman's <span class="co">[</span><span class="ot">Example 5b</span><span class="co">](https://www.lesahoffman.com/PSQF7375_AdvLong/index.html)</span> (archived at <span class="ot">&lt;https://perma.cc/N2AR-52S5&gt;</span>).</span>
+<span id="cb55-905"><a href="#cb55-905" aria-hidden="true" tabindex="-1"></a>For other examples, see <span class="co">[</span><span class="ot">here</span><span class="co">](https://research-git.uiowa.edu/PetersenLab/Mplus-Multilevel-SEM/-/tree/main/Analyses/Mplus)</span><span class="ot">[^1]</span>.</span>
 <span id="cb55-906"><a href="#cb55-906" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-907"><a href="#cb55-907" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: </span></span>
-<span id="cb55-908"><a href="#cb55-908" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
-<span id="cb55-909"><a href="#cb55-909" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-910"><a href="#cb55-910" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-911"><a href="#cb55-911" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = PersonID sex A B time timesq; ! List of variables in data file</span></span>
-<span id="cb55-912"><a href="#cb55-912" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;                          ! Missing data identifier</span></span>
-<span id="cb55-913"><a href="#cb55-913" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = sex A B time timesq;   ! Variables to be analyzed in this model</span></span>
-<span id="cb55-914"><a href="#cb55-914" aria-hidden="true" tabindex="-1"></a><span class="in">    ! MLM options</span></span>
-<span id="cb55-915"><a href="#cb55-915" aria-hidden="true" tabindex="-1"></a><span class="in">    CLUSTER = PersonID;      ! Level-2 ID</span></span>
-<span id="cb55-916"><a href="#cb55-916" aria-hidden="true" tabindex="-1"></a><span class="in">    BETWEEN = sex;           ! Observed ONLY level-2 predictors</span></span>
-<span id="cb55-917"><a href="#cb55-917" aria-hidden="true" tabindex="-1"></a><span class="in">    WITHIN  = time timesq;   ! Observed ONLY level-1 predictors</span></span>
-<span id="cb55-918"><a href="#cb55-918" aria-hidden="true" tabindex="-1"></a><span class="in">    LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables (i.e., t-1)</span></span>
-<span id="cb55-919"><a href="#cb55-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-920"><a href="#cb55-920" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS: </span></span>
-<span id="cb55-921"><a href="#cb55-921" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = TWOLEVEL RANDOM;</span></span>
-<span id="cb55-922"><a href="#cb55-922" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = BAYES;</span></span>
-<span id="cb55-923"><a href="#cb55-923" aria-hidden="true" tabindex="-1"></a><span class="in">    BITERATIONS = 50000;</span></span>
-<span id="cb55-924"><a href="#cb55-924" aria-hidden="true" tabindex="-1"></a><span class="in">    CHAINS = 4;     ! number of chains</span></span>
-<span id="cb55-925"><a href="#cb55-925" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4; ! number of computer processors to use</span></span>
-<span id="cb55-926"><a href="#cb55-926" aria-hidden="true" tabindex="-1"></a><span class="in">    BSEED = 52242;  ! set seed for replicability</span></span>
-<span id="cb55-927"><a href="#cb55-927" aria-hidden="true" tabindex="-1"></a><span class="in">    STVALUES = ml;  ! set starting values based on ML estimation</span></span>
-<span id="cb55-928"><a href="#cb55-928" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-929"><a href="#cb55-929" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
-<span id="cb55-930"><a href="#cb55-930" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
-<span id="cb55-931"><a href="#cb55-931" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
-<span id="cb55-932"><a href="#cb55-932" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
-<span id="cb55-933"><a href="#cb55-933" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
-<span id="cb55-934"><a href="#cb55-934" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
-<span id="cb55-935"><a href="#cb55-935" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
-<span id="cb55-936"><a href="#cb55-936" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
-<span id="cb55-937"><a href="#cb55-937" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
-<span id="cb55-938"><a href="#cb55-938" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A</span></span>
-<span id="cb55-939"><a href="#cb55-939" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B</span></span>
-<span id="cb55-940"><a href="#cb55-940" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-941"><a href="#cb55-941" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
-<span id="cb55-942"><a href="#cb55-942" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
-<span id="cb55-943"><a href="#cb55-943" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb55-944"><a href="#cb55-944" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0</span></span>
-<span id="cb55-945"><a href="#cb55-945" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
-<span id="cb55-946"><a href="#cb55-946" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
-<span id="cb55-947"><a href="#cb55-947" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
-<span id="cb55-948"><a href="#cb55-948" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
-<span id="cb55-949"><a href="#cb55-949" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-950"><a href="#cb55-950" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
-<span id="cb55-951"><a href="#cb55-951" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
-<span id="cb55-952"><a href="#cb55-952" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
-<span id="cb55-953"><a href="#cb55-953" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
-<span id="cb55-954"><a href="#cb55-954" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
-<span id="cb55-955"><a href="#cb55-955" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-956"><a href="#cb55-956" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-957"><a href="#cb55-957" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
-<span id="cb55-958"><a href="#cb55-958" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
-<span id="cb55-959"><a href="#cb55-959" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
-<span id="cb55-960"><a href="#cb55-960" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
-<span id="cb55-961"><a href="#cb55-961" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-962"><a href="#cb55-962" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb55-963"><a href="#cb55-963" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
-<span id="cb55-964"><a href="#cb55-964" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-907"><a href="#cb55-907" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-908"><a href="#cb55-908" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Latent Curve Model with Structured Residuals with Long-Form</span></span>
+<span id="cb55-909"><a href="#cb55-909" aria-hidden="true" tabindex="-1"></a><span class="in">       Data in Multilevel SEM</span></span>
+<span id="cb55-910"><a href="#cb55-910" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-911"><a href="#cb55-911" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: </span></span>
+<span id="cb55-912"><a href="#cb55-912" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
+<span id="cb55-913"><a href="#cb55-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-914"><a href="#cb55-914" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-915"><a href="#cb55-915" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = PersonID sex A B time timesq; ! List of variables in data file</span></span>
+<span id="cb55-916"><a href="#cb55-916" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;                          ! Missing data identifier</span></span>
+<span id="cb55-917"><a href="#cb55-917" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = sex A B time timesq;   ! Variables to be analyzed in this model</span></span>
+<span id="cb55-918"><a href="#cb55-918" aria-hidden="true" tabindex="-1"></a><span class="in">    ! MLM options</span></span>
+<span id="cb55-919"><a href="#cb55-919" aria-hidden="true" tabindex="-1"></a><span class="in">    CLUSTER = PersonID;      ! Level-2 ID</span></span>
+<span id="cb55-920"><a href="#cb55-920" aria-hidden="true" tabindex="-1"></a><span class="in">    BETWEEN = sex;           ! Observed ONLY level-2 predictors</span></span>
+<span id="cb55-921"><a href="#cb55-921" aria-hidden="true" tabindex="-1"></a><span class="in">    WITHIN  = time timesq;   ! Observed ONLY level-1 predictors</span></span>
+<span id="cb55-922"><a href="#cb55-922" aria-hidden="true" tabindex="-1"></a><span class="in">    LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables (i.e., t-1)</span></span>
+<span id="cb55-923"><a href="#cb55-923" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-924"><a href="#cb55-924" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS: </span></span>
+<span id="cb55-925"><a href="#cb55-925" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = TWOLEVEL RANDOM;</span></span>
+<span id="cb55-926"><a href="#cb55-926" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = BAYES;</span></span>
+<span id="cb55-927"><a href="#cb55-927" aria-hidden="true" tabindex="-1"></a><span class="in">    BITERATIONS = 50000;</span></span>
+<span id="cb55-928"><a href="#cb55-928" aria-hidden="true" tabindex="-1"></a><span class="in">    CHAINS = 4;     ! number of chains</span></span>
+<span id="cb55-929"><a href="#cb55-929" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4; ! number of computer processors to use</span></span>
+<span id="cb55-930"><a href="#cb55-930" aria-hidden="true" tabindex="-1"></a><span class="in">    BSEED = 52242;  ! set seed for replicability</span></span>
+<span id="cb55-931"><a href="#cb55-931" aria-hidden="true" tabindex="-1"></a><span class="in">    STVALUES = ml;  ! set starting values based on ML estimation</span></span>
+<span id="cb55-932"><a href="#cb55-932" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-933"><a href="#cb55-933" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
+<span id="cb55-934"><a href="#cb55-934" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
+<span id="cb55-935"><a href="#cb55-935" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
+<span id="cb55-936"><a href="#cb55-936" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
+<span id="cb55-937"><a href="#cb55-937" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
+<span id="cb55-938"><a href="#cb55-938" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
+<span id="cb55-939"><a href="#cb55-939" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
+<span id="cb55-940"><a href="#cb55-940" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
+<span id="cb55-941"><a href="#cb55-941" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
+<span id="cb55-942"><a href="#cb55-942" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A</span></span>
+<span id="cb55-943"><a href="#cb55-943" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B</span></span>
+<span id="cb55-944"><a href="#cb55-944" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-945"><a href="#cb55-945" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
+<span id="cb55-946"><a href="#cb55-946" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
+<span id="cb55-947"><a href="#cb55-947" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
+<span id="cb55-948"><a href="#cb55-948" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0</span></span>
+<span id="cb55-949"><a href="#cb55-949" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex (XtoYint XtoYlin);   ! sex -&gt; A int, A linear change</span></span>
+<span id="cb55-950"><a href="#cb55-950" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex (XtoYint XtoYlin);   ! sex -&gt; B int, B linear change</span></span>
+<span id="cb55-951"><a href="#cb55-951" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
+<span id="cb55-952"><a href="#cb55-952" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
+<span id="cb55-953"><a href="#cb55-953" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-954"><a href="#cb55-954" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
+<span id="cb55-955"><a href="#cb55-955" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
+<span id="cb55-956"><a href="#cb55-956" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
+<span id="cb55-957"><a href="#cb55-957" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
+<span id="cb55-958"><a href="#cb55-958" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
+<span id="cb55-959"><a href="#cb55-959" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-960"><a href="#cb55-960" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-961"><a href="#cb55-961" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
+<span id="cb55-962"><a href="#cb55-962" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
+<span id="cb55-963"><a href="#cb55-963" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
+<span id="cb55-964"><a href="#cb55-964" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
 <span id="cb55-965"><a href="#cb55-965" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-966"><a href="#cb55-966" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
-<span id="cb55-967"><a href="#cb55-967" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-968"><a href="#cb55-968" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects); see Hamaker's note <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.statmodel.com/discussion/messages/11/25297.html?1579816772)</span> (archived at <span class="ot">&lt;https://perma.cc/VRA2-FTGL&gt;</span>)</span>
+<span id="cb55-966"><a href="#cb55-966" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb55-967"><a href="#cb55-967" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
+<span id="cb55-968"><a href="#cb55-968" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb55-969"><a href="#cb55-969" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-970"><a href="#cb55-970" aria-hidden="true" tabindex="-1"></a><span class="fu">### LCM-SR in Accelerated Longitudinal Study: Accounting for Age at T1 and Time in Study {#sec-msem-lcm-sr-ageAtT1}</span></span>
+<span id="cb55-970"><a href="#cb55-970" aria-hidden="true" tabindex="-1"></a>Further extensions:</span>
 <span id="cb55-971"><a href="#cb55-971" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-972"><a href="#cb55-972" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-973"><a href="#cb55-973" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Latent Curve Model with Structured Residuals with Long-Form</span></span>
-<span id="cb55-974"><a href="#cb55-974" aria-hidden="true" tabindex="-1"></a><span class="in">       Data in Multilevel SEM</span></span>
+<span id="cb55-972"><a href="#cb55-972" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Allow the cross-lagged effects to vary as a function of time (add time as a moderator of those effects); see Hamaker's note <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.statmodel.com/discussion/messages/11/25297.html?1579816772)</span> (archived at <span class="ot">&lt;https://perma.cc/VRA2-FTGL&gt;</span>)</span>
+<span id="cb55-973"><a href="#cb55-973" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-974"><a href="#cb55-974" aria-hidden="true" tabindex="-1"></a><span class="fu">### LCM-SR in Accelerated Longitudinal Study: Accounting for Age at T1 and Time in Study {#sec-msem-lcm-sr-ageAtT1}</span></span>
 <span id="cb55-975"><a href="#cb55-975" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-976"><a href="#cb55-976" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: </span></span>
-<span id="cb55-977"><a href="#cb55-977" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
-<span id="cb55-978"><a href="#cb55-978" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-979"><a href="#cb55-979" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
-<span id="cb55-980"><a href="#cb55-980" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = PersonID sex A B time timesq ageAtT1; ! List of variables in data file</span></span>
-<span id="cb55-981"><a href="#cb55-981" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;                                  ! Missing data identifier</span></span>
-<span id="cb55-982"><a href="#cb55-982" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = sex A B time timesq ageAtT1;   ! Variables to be analyzed in this model</span></span>
-<span id="cb55-983"><a href="#cb55-983" aria-hidden="true" tabindex="-1"></a><span class="in">    ! MLM options</span></span>
-<span id="cb55-984"><a href="#cb55-984" aria-hidden="true" tabindex="-1"></a><span class="in">    CLUSTER = PersonID;      ! Level-2 ID</span></span>
-<span id="cb55-985"><a href="#cb55-985" aria-hidden="true" tabindex="-1"></a><span class="in">    BETWEEN = sex ageAtT1;   ! Observed ONLY level-2 predictors</span></span>
-<span id="cb55-986"><a href="#cb55-986" aria-hidden="true" tabindex="-1"></a><span class="in">    WITHIN  = time timesq;   ! Observed ONLY level-1 predictors</span></span>
-<span id="cb55-987"><a href="#cb55-987" aria-hidden="true" tabindex="-1"></a><span class="in">    LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables (i.e., t-1)</span></span>
-<span id="cb55-988"><a href="#cb55-988" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-989"><a href="#cb55-989" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS: </span></span>
-<span id="cb55-990"><a href="#cb55-990" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = TWOLEVEL RANDOM;</span></span>
-<span id="cb55-991"><a href="#cb55-991" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = BAYES;</span></span>
-<span id="cb55-992"><a href="#cb55-992" aria-hidden="true" tabindex="-1"></a><span class="in">    BITERATIONS = 50000;</span></span>
-<span id="cb55-993"><a href="#cb55-993" aria-hidden="true" tabindex="-1"></a><span class="in">    CHAINS = 4;     ! number of chains</span></span>
-<span id="cb55-994"><a href="#cb55-994" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4; ! number of computer processors to use</span></span>
-<span id="cb55-995"><a href="#cb55-995" aria-hidden="true" tabindex="-1"></a><span class="in">    BSEED = 52242;  ! set seed for replicability</span></span>
-<span id="cb55-996"><a href="#cb55-996" aria-hidden="true" tabindex="-1"></a><span class="in">    STVALUES = ml;  ! set starting values based on ML estimation</span></span>
-<span id="cb55-997"><a href="#cb55-997" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-998"><a href="#cb55-998" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
-<span id="cb55-999"><a href="#cb55-999" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
-<span id="cb55-1000"><a href="#cb55-1000" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
-<span id="cb55-1001"><a href="#cb55-1001" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
-<span id="cb55-1002"><a href="#cb55-1002" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
-<span id="cb55-1003"><a href="#cb55-1003" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
-<span id="cb55-1004"><a href="#cb55-1004" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
-<span id="cb55-1005"><a href="#cb55-1005" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
-<span id="cb55-1006"><a href="#cb55-1006" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
-<span id="cb55-1007"><a href="#cb55-1007" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A</span></span>
-<span id="cb55-1008"><a href="#cb55-1008" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B</span></span>
-<span id="cb55-1009"><a href="#cb55-1009" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1010"><a href="#cb55-1010" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
-<span id="cb55-1011"><a href="#cb55-1011" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
-<span id="cb55-1012"><a href="#cb55-1012" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
-<span id="cb55-1013"><a href="#cb55-1013" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0</span></span>
-<span id="cb55-1014"><a href="#cb55-1014" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex ageAtT1;             ! sex + ageAtT1 -&gt; A int, A linear change</span></span>
-<span id="cb55-1015"><a href="#cb55-1015" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex ageAtT1;             ! sex + ageAtT1 -&gt; B int, B linear change</span></span>
-<span id="cb55-1016"><a href="#cb55-1016" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
-<span id="cb55-1017"><a href="#cb55-1017" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
-<span id="cb55-1018"><a href="#cb55-1018" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1019"><a href="#cb55-1019" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
-<span id="cb55-1020"><a href="#cb55-1020" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
-<span id="cb55-1021"><a href="#cb55-1021" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
-<span id="cb55-1022"><a href="#cb55-1022" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
-<span id="cb55-1023"><a href="#cb55-1023" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
-<span id="cb55-1024"><a href="#cb55-1024" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1025"><a href="#cb55-1025" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
-<span id="cb55-1026"><a href="#cb55-1026" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
-<span id="cb55-1027"><a href="#cb55-1027" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
-<span id="cb55-1028"><a href="#cb55-1028" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
-<span id="cb55-1029"><a href="#cb55-1029" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
-<span id="cb55-1030"><a href="#cb55-1030" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1031"><a href="#cb55-1031" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
-<span id="cb55-1032"><a href="#cb55-1032" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
-<span id="cb55-1033"><a href="#cb55-1033" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-976"><a href="#cb55-976" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-977"><a href="#cb55-977" aria-hidden="true" tabindex="-1"></a><span class="in">TITLE: Latent Curve Model with Structured Residuals with Long-Form</span></span>
+<span id="cb55-978"><a href="#cb55-978" aria-hidden="true" tabindex="-1"></a><span class="in">       Data in Multilevel SEM</span></span>
+<span id="cb55-979"><a href="#cb55-979" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-980"><a href="#cb55-980" aria-hidden="true" tabindex="-1"></a><span class="in">DATA: </span></span>
+<span id="cb55-981"><a href="#cb55-981" aria-hidden="true" tabindex="-1"></a><span class="in">    FILE = "C:/[insert_filepath]/filename.dat";</span></span>
+<span id="cb55-982"><a href="#cb55-982" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-983"><a href="#cb55-983" aria-hidden="true" tabindex="-1"></a><span class="in">VARIABLE:</span></span>
+<span id="cb55-984"><a href="#cb55-984" aria-hidden="true" tabindex="-1"></a><span class="in">    NAMES = PersonID sex A B time timesq ageAtT1; ! List of variables in data file</span></span>
+<span id="cb55-985"><a href="#cb55-985" aria-hidden="true" tabindex="-1"></a><span class="in">    MISSING = .;                                  ! Missing data identifier</span></span>
+<span id="cb55-986"><a href="#cb55-986" aria-hidden="true" tabindex="-1"></a><span class="in">    USEVARIABLES = sex A B time timesq ageAtT1;   ! Variables to be analyzed in this model</span></span>
+<span id="cb55-987"><a href="#cb55-987" aria-hidden="true" tabindex="-1"></a><span class="in">    ! MLM options</span></span>
+<span id="cb55-988"><a href="#cb55-988" aria-hidden="true" tabindex="-1"></a><span class="in">    CLUSTER = PersonID;      ! Level-2 ID</span></span>
+<span id="cb55-989"><a href="#cb55-989" aria-hidden="true" tabindex="-1"></a><span class="in">    BETWEEN = sex ageAtT1;   ! Observed ONLY level-2 predictors</span></span>
+<span id="cb55-990"><a href="#cb55-990" aria-hidden="true" tabindex="-1"></a><span class="in">    WITHIN  = time timesq;   ! Observed ONLY level-1 predictors</span></span>
+<span id="cb55-991"><a href="#cb55-991" aria-hidden="true" tabindex="-1"></a><span class="in">    LAGGED  = A(1) B(1);     ! Create Mplus lag-1 variables (i.e., t-1)</span></span>
+<span id="cb55-992"><a href="#cb55-992" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-993"><a href="#cb55-993" aria-hidden="true" tabindex="-1"></a><span class="in">ANALYSIS: </span></span>
+<span id="cb55-994"><a href="#cb55-994" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = TWOLEVEL RANDOM;</span></span>
+<span id="cb55-995"><a href="#cb55-995" aria-hidden="true" tabindex="-1"></a><span class="in">    ESTIMATOR = BAYES;</span></span>
+<span id="cb55-996"><a href="#cb55-996" aria-hidden="true" tabindex="-1"></a><span class="in">    BITERATIONS = 50000;</span></span>
+<span id="cb55-997"><a href="#cb55-997" aria-hidden="true" tabindex="-1"></a><span class="in">    CHAINS = 4;     ! number of chains</span></span>
+<span id="cb55-998"><a href="#cb55-998" aria-hidden="true" tabindex="-1"></a><span class="in">    PROCESSORS = 4; ! number of computer processors to use</span></span>
+<span id="cb55-999"><a href="#cb55-999" aria-hidden="true" tabindex="-1"></a><span class="in">    BSEED = 52242;  ! set seed for replicability</span></span>
+<span id="cb55-1000"><a href="#cb55-1000" aria-hidden="true" tabindex="-1"></a><span class="in">    STVALUES = ml;  ! set starting values based on ML estimation</span></span>
+<span id="cb55-1001"><a href="#cb55-1001" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1002"><a href="#cb55-1002" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL: ! A = construct 1; B = construct 2</span></span>
+<span id="cb55-1003"><a href="#cb55-1003" aria-hidden="true" tabindex="-1"></a><span class="in">  %WITHIN%</span></span>
+<span id="cb55-1004"><a href="#cb55-1004" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aresvar Bresvar);  ! L1 residual variances (labels)</span></span>
+<span id="cb55-1005"><a href="#cb55-1005" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin  | A ON time;      ! Placeholder for A linear change</span></span>
+<span id="cb55-1006"><a href="#cb55-1006" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad | A ON timesq;    ! Placeholder for A quadratic change</span></span>
+<span id="cb55-1007"><a href="#cb55-1007" aria-hidden="true" tabindex="-1"></a><span class="in">    Blin  | B ON time;      ! Placeholder for B linear change</span></span>
+<span id="cb55-1008"><a href="#cb55-1008" aria-hidden="true" tabindex="-1"></a><span class="in">    A WITH B (ResCov);      ! L1 WP covariance for concurrent B-&gt;A</span></span>
+<span id="cb55-1009"><a href="#cb55-1009" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON B^1 (BALagEff);   ! L1 WP fixed effect of ^residual lagged B-&gt;A</span></span>
+<span id="cb55-1010"><a href="#cb55-1010" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON A^1 (ABLagEff);   ! L1 WP fixed effect of ^residual lagged A-&gt;B</span></span>
+<span id="cb55-1011"><a href="#cb55-1011" aria-hidden="true" tabindex="-1"></a><span class="in">    A^ ON A^1 (aAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual A</span></span>
+<span id="cb55-1012"><a href="#cb55-1012" aria-hidden="true" tabindex="-1"></a><span class="in">    B^ ON B^1 (bAR);        ! (optional) L1 WP fixed effect of autoregressive stability of ^residual B</span></span>
+<span id="cb55-1013"><a href="#cb55-1013" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1014"><a href="#cb55-1014" aria-hidden="true" tabindex="-1"></a><span class="in">  %BETWEEN%</span></span>
+<span id="cb55-1015"><a href="#cb55-1015" aria-hidden="true" tabindex="-1"></a><span class="in">    [A B Alin Aquad Blin];             ! Fixed intercepts, fixed change slopes</span></span>
+<span id="cb55-1016"><a href="#cb55-1016" aria-hidden="true" tabindex="-1"></a><span class="in">    A B (Aintvar Bintvar);             ! L2 G: Random intercept variances (labels)</span></span>
+<span id="cb55-1017"><a href="#cb55-1017" aria-hidden="true" tabindex="-1"></a><span class="in">    Alin Blin (Alinvar Blinvar);       ! L2 G: Random linear change variances; consider fixing slope variances at zero for fixed slopes: Alin@0 Blin@0</span></span>
+<span id="cb55-1018"><a href="#cb55-1018" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin ON sex ageAtT1;             ! sex + ageAtT1 -&gt; A int, A linear change</span></span>
+<span id="cb55-1019"><a href="#cb55-1019" aria-hidden="true" tabindex="-1"></a><span class="in">    B Blin ON sex ageAtT1;             ! sex + ageAtT1 -&gt; B int, B linear change</span></span>
+<span id="cb55-1020"><a href="#cb55-1020" aria-hidden="true" tabindex="-1"></a><span class="in">    A Alin B Blin WITH A Alin B Blin;  ! L2 G: covariances for random intercepts and change across outcomes</span></span>
+<span id="cb55-1021"><a href="#cb55-1021" aria-hidden="true" tabindex="-1"></a><span class="in">    Aquad@0;                           ! No quadratic change variance</span></span>
+<span id="cb55-1022"><a href="#cb55-1022" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1023"><a href="#cb55-1023" aria-hidden="true" tabindex="-1"></a><span class="in">MODEL CONSTRAINT:  </span></span>
+<span id="cb55-1024"><a href="#cb55-1024" aria-hidden="true" tabindex="-1"></a><span class="in">    NEW(A2Bsd B2Asd);</span></span>
+<span id="cb55-1025"><a href="#cb55-1025" aria-hidden="true" tabindex="-1"></a><span class="in">    ! STD = Unstd * SQRT(Xvar) / SQRT(Yvar)</span></span>
+<span id="cb55-1026"><a href="#cb55-1026" aria-hidden="true" tabindex="-1"></a><span class="in">    A2Bsd = ABLagEff * SQRT(8.3538)  / SQRT(0.08077); ! STD A-&gt;B lagged effect</span></span>
+<span id="cb55-1027"><a href="#cb55-1027" aria-hidden="true" tabindex="-1"></a><span class="in">    B2Asd = BALagEff * SQRT(0.08077) / SQRT(8.3538);  ! STD B-&gt;A lagged effect</span></span>
+<span id="cb55-1028"><a href="#cb55-1028" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1029"><a href="#cb55-1029" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT:</span></span>
+<span id="cb55-1030"><a href="#cb55-1030" aria-hidden="true" tabindex="-1"></a><span class="in">    STAND;     ! standardized estimates</span></span>
+<span id="cb55-1031"><a href="#cb55-1031" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH1;     ! model priors</span></span>
+<span id="cb55-1032"><a href="#cb55-1032" aria-hidden="true" tabindex="-1"></a><span class="in">    TECH8;     ! potential scale reduction (PSR); to evaluate convergence (should be near one)</span></span>
+<span id="cb55-1033"><a href="#cb55-1033" aria-hidden="true" tabindex="-1"></a><span class="in">    CINTERVAL; ! posterior predictive intervals (credible intervals)</span></span>
 <span id="cb55-1034"><a href="#cb55-1034" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1035"><a href="#cb55-1035" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
-<span id="cb55-1036"><a href="#cb55-1036" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1039"><a href="#cb55-1039" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-1040"><a href="#cb55-1040" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb55-1041"><a href="#cb55-1041" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1042"><a href="#cb55-1042" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb55-1043"><a href="#cb55-1043" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-1044"><a href="#cb55-1044" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-1045"><a href="#cb55-1045" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>Ask Dr. Petersen to give you access.</span>
+<span id="cb55-1035"><a href="#cb55-1035" aria-hidden="true" tabindex="-1"></a><span class="in">PLOT:</span></span>
+<span id="cb55-1036"><a href="#cb55-1036" aria-hidden="true" tabindex="-1"></a><span class="in">    TYPE = PLOT3; ! trace plots, histogram, and kernel density</span></span>
+<span id="cb55-1037"><a href="#cb55-1037" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-1038"><a href="#cb55-1038" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1039"><a href="#cb55-1039" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session Info</span></span>
+<span id="cb55-1040"><a href="#cb55-1040" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1043"><a href="#cb55-1043" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb55-1044"><a href="#cb55-1044" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb55-1045"><a href="#cb55-1045" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1046"><a href="#cb55-1046" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb55-1047"><a href="#cb55-1047" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb55-1048"><a href="#cb55-1048" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-1049"><a href="#cb55-1049" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span>Ask Dr. Petersen to give you access.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
